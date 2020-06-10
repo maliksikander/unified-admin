@@ -1,0 +1,268 @@
+@import '~@angular/material/theming';
+//@import '/tile.component';
+
+@include mat-core();
+
+$primary: mat-palette($mat-indigo);
+$accent: mat-palette($mat-blue, A200, A100, A400);
+$warn: mat-palette($mat-red);
+$theme: mat-light-theme($primary, $accent, $warn);
+
+@include angular-material-theme($theme);
+
+
+// Our dark theme
+.dark-theme {
+  color: $light-primary-text;
+  $dark-primary: mat-palette($mat-green);
+  $dark-accent: mat-palette($mat-green, A400, A100, A700);
+  $warn: mat-palette($mat-red);
+  $dark-theme: mat-dark-theme($dark-accent, $dark-primary, $warn);
+  @include angular-material-theme($dark-theme);
+}
+
+
+.dark-theme {
+  /**
+   * Backgrounds
+   */
+  $color-bg-darkest: #13141b;
+  $color-bg-darker: #1D2C3F;
+  $color-bg-dark: #182331;
+  $color-bg-med: #2f3646;
+  $color-bg-light: #455066;
+  $color-bg-lighter: #5b6882;
+
+  /**
+   * Text
+   */
+  $color-text-dark: #72809b;
+  $color-text-med-dark: #919db5;
+  $color-text-med: #A0AABE;
+  $color-text-med-light: #d9dce1;
+  $color-text-light: #f0f1f6;
+  $color-text-lighter: #fff;
+
+  &.main-section-area, .main-nav {
+    background: $color-bg-darker !important;
+
+    .mat-card {
+      background: $color-bg-dark;
+
+      &.code-header{
+        background: $color-bg-darkest;
+
+        h3{
+          color: $color-text-dark;
+        }
+      }
+    }
+  }
+
+  .topbar-right {
+
+    p {
+      color: #E67E22 !important;
+    }
+  }
+
+  .ngx-charts {
+
+    text {
+      fill: $color-text-med;
+    }
+
+    .tooltip-anchor {
+      fill: rgb(255, 255, 255);
+    }
+
+    .gridline-path {
+      stroke: $color-bg-med;
+    }
+
+    .refline-path {
+      stroke: $color-bg-light;
+    }
+
+    .reference-area {
+      fill: #fff;
+    }
+
+    .grid-panel {
+      &.odd {
+        rect {
+          fill: rgba(255, 255, 255, 0.05);
+        }
+      }
+    }
+
+    .force-directed-graph {
+      .edge {
+        stroke: $color-bg-light;
+      }
+    }
+
+    .number-card {
+      p {
+        color: $color-text-light;
+      }
+    }
+
+    .gauge {
+      .background-arc {
+        path {
+          fill: $color-bg-med;
+        }
+      }
+
+      .gauge-tick {
+        path {
+          stroke: $color-text-med;
+        }
+
+        text {
+          fill: $color-text-med;
+        }
+      }
+    }
+
+    .linear-gauge {
+      .background-bar {
+        path {
+          fill: $color-bg-med;
+        }
+      }
+
+      .units {
+        fill: $color-text-dark;
+      }
+    }
+
+    .timeline {
+      .brush-background {
+        fill: rgba(255, 255, 255, 0.05);
+      }
+
+      .brush {
+        .selection {
+          fill: rgba(255, 255, 255, 0.1);
+          stroke: #aaa;
+        }
+      }
+    }
+
+    .polar-chart .polar-chart-background {
+      fill: rgb(30, 34, 46);
+    }
+
+  }
+
+  .chart-legend {
+    .legend-item {
+      &:hover {
+        color: #fff;
+      }
+    }
+
+    .legend-label {
+      &:hover {
+        color: #fff !important;
+      }
+
+      .active {
+        .legend-label-text {
+          color: #fff !important;
+        }
+      }
+    }
+
+    .scale-legend-label {
+      color: $color-text-med;
+    }
+  }
+
+  .advanced-pie-legend {
+    color: $color-text-med;
+
+    .legend-item {
+      &:hover {
+        color: #fff !important;
+      }
+    }
+  }
+
+  .number-card .number-card-label {
+    font-size: 0.8em;
+    color: $color-text-med;
+  }
+
+  .mat-drawer-container {
+    background: transparent;
+  }
+
+  .login-agents {
+    table {
+      td {
+        border-color: $color-bg-dark;
+        background: #0F1924;
+        color: #BDC3C7;
+      }
+    }
+  }
+
+  .mat-stepper-horizontal, .mat-stepper-vertical {
+    background-color: transparent;
+  }
+
+  .template-selection-inner .template-design-inner {
+    background: darken($color-bg-darker, 7%) !important;
+    &:hover {
+      background: darken($color-bg-darker, 12%) !important;
+    }
+  }
+  .page-height-selection .main-page-content, .admin-panel{
+    background: darken($color-bg-darker, 7%) !important;
+  }
+  .admin-panel{
+
+    .mat-row .mat-cell{
+      color: $color-text-light;
+    }
+    .mat-table{
+      background: $color-bg-darker !important;
+    }
+  }
+
+  .template-design {
+    background: $color-bg-darker !important;
+
+    .reg {
+      border: 2px solid darken($color-bg-darker, 10%) !important;
+
+    }
+  }
+  ngx-charts-pie-chart span.legend-label-color:before {
+    background: #182331;
+  }
+  .main-sidebar{
+    .mat-drawer{
+      background: $color-bg-light !important;
+    }
+  }
+
+
+  .main-sidebar .mat-sidenav {
+    .mat-expansion-panel, a.mat-list-item span{
+      color: $color-text-med !important;
+    }
+  }
+  .menu-trigger{
+    background: $color-bg-light !important;
+    color: $color-text-med !important;
+  }
+  .main-tab-area {
+    .docs-source {
+      background: $color-bg-darker;
+    }
+  }
+}

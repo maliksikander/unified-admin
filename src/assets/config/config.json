@@ -1,0 +1,11 @@
+{
+  "languages": "en: English, de: German, zh: Chinese, fr: French, ar: Arabic",
+  "defaultLanguage": "en",
+  "defaultSidebarPosition": "left",
+  "theme": "light-theme",
+  "customThemeMode": false,
+  "customThemeColor": "#0c032d",
+  "logs": {
+    "enabled": true
+  }
+}

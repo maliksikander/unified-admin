@@ -1,0 +1,60 @@
+<div class="container-fluid main-section-area {{defaultTheme}}" [class.dark-theme]="otherTheme" [style.background-color]="appColor"
+     [class.rtl-language]="defaultLanguage == 'ar'" [class.right-sidebar]="sidebarPosition == 'right'" [class.custom-theme]="isCustomTheme" [ngClass]="defaultLanguage">
+  <div class="row">
+    <div class="col-sm-12 main-nav">
+      <button class="menu-trigger" mat-raised-button
+              (click)="opened = !opened ; barStatus = false;"><i class="material-icons">menu</i>
+      </button>
+      <app-top-bar></app-top-bar>
+    </div>
+
+    <mat-sidenav-container class="main-sidebar" hasBackdrop="false" [ngClass]="barStatus ? 'expand' : 'collapse'">
+      <mat-sidenav [position]="sidebarPosition == 'right' ? 'end': 'start'" #sidenav mode="over" [(opened)]="opened" (opened)="events.push('open!')">
+
+        <mat-nav-list class="action-area">
+          <mat-accordion>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <i class="material-icons">assignment</i>
+                <span class="sidebar-text">{{defaultLanguage == 'ar' ? 'الصفحات' : 'pages'}}</span>
+              </mat-expansion-panel-header>
+              <a mat-list-item>
+                <span class="sidebar-text">{{defaultLanguage == 'ar' ? 'صفحة أخرى' : 'Contacts'}}</span>
+              </a>
+              <a mat-list-item>
+                <span class="sidebar-text">{{defaultLanguage == 'ar' ? 'قائمة وهمية' : 'Login'}}</span>
+              </a>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <i class="material-icons">assignment</i>
+                <span class="sidebar-text">{{defaultLanguage == 'ar' ? 'قائمة وهمية' : 'Dummy list'}}</span>
+              </mat-expansion-panel-header>
+              <a mat-list-item>
+                <span class="sidebar-text">{{defaultLanguage == 'ar' ? 'الإكمال التلقائي' : 'Autocomplete'}}</span>
+              </a>
+            </mat-expansion-panel>
+
+          </mat-accordion>
+          <a mat-list-item>
+            <mat-slide-toggle (click)="changeTheme()" [checked]="true">
+              {{defaultLanguage == 'ar' ? 'غير الخلفية' : 'Change Theme'}}
+            </mat-slide-toggle>
+          </a>
+          <a mat-list-item (click)="clickEvent()"
+             matTooltip="{{barStatus ? 'expand icons' : 'collapse icons'}}" class="bottom-trigger">
+            <i class="fa" [ngClass]="barStatus ? 'fa-indent' : 'fa-outdent'"></i>
+          </a>
+        </mat-nav-list>
+      </mat-sidenav>
+
+      <mat-sidenav-content>
+        <div class="col-sm-12 main-outlet">
+          <router-outlet></router-outlet>
+        </div>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div>
+
+</div>
