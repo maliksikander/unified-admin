@@ -1250,7 +1250,45 @@ a.mat-list-item.active-link {
 }
 
 .custom-theme{
-  .mat-sidenav.mat-drawer{
-    background: rgba(0,0,0,0.50) !important;
+  //.mat-sidenav.mat-drawer{
+  //  background: rgba(0,0,0,0.50) !important;
+  //}
+
+  .topbar-right {
+    color: rgb(0,255,255);
+    mix-blend-mode: difference;
+  }
+
+  .mat-nav-list {
+    .sidebar-text {
+      color: rgb(0, 255, 255) !important;
+      mix-blend-mode: difference;
+    }
+
+    i {
+      color: rgb(0, 255, 255) !important;
+      mix-blend-mode: difference;
+    }
+  }
+  .them-selector {
+    position: absolute;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    opacity: .2;
+  }
+}
+.secondary-sidebar {
+  .logo-container {
+    margin-right: 65px;
+  }
+  &.rtl-language, &.right-sidebar {
+    .right-btn {
+      right: inherit !important;
+      left: 0 !important;
+    }
+    .logo-container {
+      margin-left: 65px !important;
+    }
   }
 }

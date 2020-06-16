@@ -13,6 +13,7 @@ export class ConfigService {
   sidebarPosition = 'left';
   appThemeColor = 'black';
   isCustomTheme;
+  isRightBarActive;
 
   constructor(private http: HttpClient) {
     this.readConfig();
@@ -33,6 +34,7 @@ export class ConfigService {
     console.log('config data', data);
     this.DefaultLanguage = data.defaultLanguage.trim();
     this.Theme = data.theme;
+    this.isRightBarActive = data.rightSidebarActive;
     this.appThemeColor = data.customThemeColor;
     this.sidebarPosition = data.defaultSidebarPosition;
     this.isCustomTheme = data.customThemeMode;

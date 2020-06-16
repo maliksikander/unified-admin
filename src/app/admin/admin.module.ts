@@ -9,6 +9,7 @@ import {TopBarComponent} from '../top-bar/top-bar.component';
 import {HttpClientModule} from '@angular/common/http';
 import {SnackbarService} from './services/snackbar.service';
 import {SharedModule} from '../shared/shared.module';
+import { FormComponent } from './form/form.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import {SharedModule} from '../shared/shared.module';
     ],
     declarations: [
         AdminMainComponent,
-        TopBarComponent
+        TopBarComponent,
+        FormComponent
     ],
     providers: [
         HttpClientModule,

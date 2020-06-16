@@ -1,15 +1,23 @@
-<div class="container-fluid main-section-area {{defaultTheme}}" [class.dark-theme]="otherTheme" [style.background-color]="appColor"
-     [class.rtl-language]="defaultLanguage == 'ar'" [class.right-sidebar]="sidebarPosition == 'right'" [class.custom-theme]="isCustomTheme" [ngClass]="defaultLanguage">
+<div class="container-fluid main-section-area {{defaultTheme}}" [class.dark-theme]="otherTheme"
+
+     [class.rtl-language]="defaultLanguage == 'ar'" [class.right-sidebar]="sidebarPosition == 'right'"
+     [class.secondary-sidebar]="isRightBarActive"
+     [class.custom-theme]="isCustomTheme" [ngClass]="defaultLanguage">
+  <div class="them-selector" [style.background-color]="appColor"></div>
   <div class="row">
-    <div class="col-sm-12 main-nav">
+    <div class="col-sm-12 main-nav" [style.background-color]="appColor">
       <button class="menu-trigger" mat-raised-button
               (click)="opened = !opened ; barStatus = false;"><i class="material-icons">menu</i>
+      </button>
+      <button *ngIf="isRightBarActive" class="menu-trigger right-btn" mat-raised-button
+              (click)="rightBarOpened = !rightBarOpened ; barStatus = false;"><i class="material-icons">menu</i>
       </button>
       <app-top-bar></app-top-bar>
     </div>
 
     <mat-sidenav-container class="main-sidebar" hasBackdrop="false" [ngClass]="barStatus ? 'expand' : 'collapse'">
-      <mat-sidenav [position]="sidebarPosition == 'right' ? 'end': 'start'" #sidenav mode="over" [(opened)]="opened" (opened)="events.push('open!')">
+      <mat-sidenav [position]="sidebarPosition == 'right' ? 'end': 'start'" #sidenav mode="over" [(opened)]="opened"
+                   (opened)="events.push('open!')" [style.background-color]="appColor">
 
         <mat-nav-list class="action-area">
           <mat-accordion>
@@ -48,13 +56,49 @@
           </a>
         </mat-nav-list>
       </mat-sidenav>
-
       <mat-sidenav-content>
-        <div class="col-sm-12 main-outlet">
-          <router-outlet></router-outlet>
-        </div>
+
+        <app-form></app-form>
+
+        <!--Right Sidebar-->
+        <mat-sidenav-container *ngIf="isRightBarActive" class="main-sidebar secondary-sidebar" hasBackdrop="true"
+                               [ngClass]="barStatus ? 'expand' : 'collapse'">
+          <mat-sidenav [position]="sidebarPosition == 'right' ? 'start': 'end'" #sidenav mode="side"
+                       [(opened)]="rightBarOpened" (opened)="events.push('open!')">
+
+            <mat-accordion>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <i class="material-icons">assignment</i>
+                  <span class="sidebar-text">{{defaultLanguage == 'ar' ? 'الصفحات' : 'pages'}}</span>
+                </mat-expansion-panel-header>
+                <a mat-list-item>
+                  <span class="sidebar-text">{{defaultLanguage == 'ar' ? 'صفحة أخرى' : 'Contacts'}}</span>
+                </a>
+                <a mat-list-item>
+                  <span class="sidebar-text">{{defaultLanguage == 'ar' ? 'قائمة وهمية' : 'Login'}}</span>
+                </a>
+              </mat-expansion-panel>
+
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <i class="material-icons">assignment</i>
+                  <span class="sidebar-text">{{defaultLanguage == 'ar' ? 'قائمة وهمية' : 'Dummy list'}}</span>
+                </mat-expansion-panel-header>
+                <a mat-list-item>
+                  <span class="sidebar-text">{{defaultLanguage == 'ar' ? 'الإكمال التلقائي' : 'Autocomplete'}}</span>
+                </a>
+              </mat-expansion-panel>
+
+            </mat-accordion>
+          </mat-sidenav>
+        </mat-sidenav-container>
+
+        <router-outlet></router-outlet>
+
       </mat-sidenav-content>
     </mat-sidenav-container>
+
   </div>
 
 </div>

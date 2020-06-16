@@ -2,9 +2,10 @@
   "languages": "en: English, de: German, zh: Chinese, fr: French, ar: Arabic",
   "defaultLanguage": "en",
   "defaultSidebarPosition": "left",
+  "rightSidebarActive": true,
   "theme": "light-theme",
   "customThemeMode": false,
-  "customThemeColor": "#0c032d",
+  "customThemeColor": "#760606",
   "logs": {
     "enabled": true
   }

@@ -18,6 +18,7 @@ export class AdminMainComponent implements OnInit {
   // document;
   events: string[] = [];
   opened = false;
+  rightBarOpened = false;
   otherTheme = false;
   barStatus = false;
   defaultTheme;
@@ -25,6 +26,7 @@ export class AdminMainComponent implements OnInit {
   defaultLanguage;
   sidebarPosition;
   isCustomTheme;
+  isRightBarActive;
 
   constructor(
     private commonService: CommonService,
@@ -40,6 +42,7 @@ export class AdminMainComponent implements OnInit {
       this.defaultLanguage = this.configService.DefaultLanguage;
       this.sidebarPosition = this.configService.sidebarPosition;
       this.isCustomTheme = this.configService.isCustomTheme;
+      this.isRightBarActive = this.configService.isRightBarActive;
       if (this.configService.isCustomTheme === true) {
         this.appColor = this.configService.appThemeColor;
       }
