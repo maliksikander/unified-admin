@@ -60,12 +60,20 @@
 
         <app-form></app-form>
 
-        <!--Right Sidebar-->
-        <mat-sidenav-container *ngIf="isRightBarActive" class="main-sidebar secondary-sidebar" hasBackdrop="true"
-                               [ngClass]="barStatus ? 'expand' : 'collapse'">
-          <mat-sidenav [position]="sidebarPosition == 'right' ? 'start': 'end'" #sidenav mode="side"
-                       [(opened)]="rightBarOpened" (opened)="events.push('open!')">
+        <router-outlet></router-outlet>
 
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+
+    <div class="secondary-sidebar-main">
+
+      <!--Right Sidebar-->
+      <mat-sidenav-container *ngIf="isRightBarActive" class="main-sidebar secondary-sidebar" hasBackdrop="false"
+                             [ngClass]="barStatus ? 'expand' : 'collapse'">
+        <mat-sidenav [position]="sidebarPosition == 'right' ? 'start': 'end'" #sidenav
+                     [(opened)]="rightBarOpened" (opened)="events.push('open!')">
+
+          <mat-nav-list class="action-area">
             <mat-accordion>
               <mat-expansion-panel>
                 <mat-expansion-panel-header>
@@ -91,13 +99,25 @@
               </mat-expansion-panel>
 
             </mat-accordion>
-          </mat-sidenav>
-        </mat-sidenav-container>
+            <a mat-list-item>
+              <mat-slide-toggle (click)="changeTheme()" [checked]="true">
+                {{defaultLanguage == 'ar' ? 'غير الخلفية' : 'Change Theme'}}
+              </mat-slide-toggle>
+            </a>
+            <a mat-list-item (click)="clickEvent()"
+               matTooltip="{{barStatus ? 'expand icons' : 'collapse icons'}}" class="bottom-trigger">
+              <i class="fa" [ngClass]="barStatus ? 'fa-indent' : 'fa-outdent'"></i>
+            </a>
+          </mat-nav-list>
+        </mat-sidenav>
 
-        <router-outlet></router-outlet>
+        <mat-sidenav-content>
 
-      </mat-sidenav-content>
-    </mat-sidenav-container>
+        </mat-sidenav-content>
+
+      </mat-sidenav-container>
+
+    </div>
 
   </div>
 

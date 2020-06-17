@@ -1292,3 +1292,23 @@ a.mat-list-item.active-link {
     }
   }
 }
+
+
+mat-sidenav-container.secondary-sidebar {
+  display: none;
+  top: 50px !important;
+  right: 0;
+  max-width: 300px;
+  left: inherit !important;
+
+  &.mat-drawer-opened {
+    display: block;
+  }
+}
+
+.right-sidebar.secondary-sidebar{
+  mat-sidenav-container.secondary-sidebar {
+    right: inherit !important;
+    left: 0 !important;
+  }
+}
