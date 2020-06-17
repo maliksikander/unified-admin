@@ -27,6 +27,7 @@ export class AdminMainComponent implements OnInit {
   sidebarPosition;
   isCustomTheme;
   isRightBarActive;
+  isBarIconView;
 
   constructor(
     private commonService: CommonService,
@@ -43,6 +44,7 @@ export class AdminMainComponent implements OnInit {
       this.sidebarPosition = this.configService.sidebarPosition;
       this.isCustomTheme = this.configService.isCustomTheme;
       this.isRightBarActive = this.configService.isRightBarActive;
+      this.barStatus = this.configService.isBarIconMode;
       if (this.configService.isCustomTheme === true) {
         this.appColor = this.configService.appThemeColor;
       }
@@ -61,7 +63,11 @@ export class AdminMainComponent implements OnInit {
 
 
   clickEvent() {
-    this.barStatus = !this.barStatus;
+    if (this.isBarIconView) {
+      this.barStatus = true;
+    } else {
+      this.barStatus = !this.barStatus;
+    }
   }
 
   changeTheme() {

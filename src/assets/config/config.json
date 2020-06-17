@@ -6,6 +6,7 @@
   "theme": "light-theme",
   "customThemeMode": false,
   "customThemeColor": "#760606",
+  "primaryBarIconMode": true,
   "logs": {
     "enabled": true
   }

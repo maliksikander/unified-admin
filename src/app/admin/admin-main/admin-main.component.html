@@ -7,15 +7,15 @@
   <div class="row">
     <div class="col-sm-12 main-nav" [style.background-color]="appColor">
       <button class="menu-trigger" mat-raised-button
-              (click)="opened = !opened ; barStatus = false;"><i class="material-icons">menu</i>
+              (click)="opened = !opened"><i class="material-icons">menu</i>
       </button>
       <button *ngIf="isRightBarActive" class="menu-trigger right-btn" mat-raised-button
-              (click)="rightBarOpened = !rightBarOpened ; barStatus = false;"><i class="material-icons">menu</i>
+              (click)="rightBarOpened = !rightBarOpened"><i class="material-icons">menu</i>
       </button>
       <app-top-bar></app-top-bar>
     </div>
 
-    <mat-sidenav-container class="main-sidebar" hasBackdrop="false" [ngClass]="barStatus ? 'expand' : 'collapse'">
+    <mat-sidenav-container class="main-sidebar" hasBackdrop="false" [ngClass]="barStatus ? 'expand' : 'collapse'" [class.right-sidebar]="sidebarPosition == 'right'">
       <mat-sidenav [position]="sidebarPosition == 'right' ? 'end': 'start'" #sidenav mode="over" [(opened)]="opened"
                    (opened)="events.push('open!')" [style.background-color]="appColor">
 
@@ -68,8 +68,7 @@
     <div class="secondary-sidebar-main">
 
       <!--Right Sidebar-->
-      <mat-sidenav-container *ngIf="isRightBarActive" class="main-sidebar secondary-sidebar" hasBackdrop="false"
-                             [ngClass]="barStatus ? 'expand' : 'collapse'">
+      <mat-sidenav-container *ngIf="isRightBarActive" class="main-sidebar secondary-sidebar" hasBackdrop="false">
         <mat-sidenav [position]="sidebarPosition == 'right' ? 'start': 'end'" #sidenav
                      [(opened)]="rightBarOpened" (opened)="events.push('open!')">
 

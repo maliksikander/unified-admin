@@ -14,6 +14,7 @@ export class ConfigService {
   appThemeColor = 'black';
   isCustomTheme;
   isRightBarActive;
+  isBarIconMode;
 
   constructor(private http: HttpClient) {
     this.readConfig();
@@ -38,6 +39,7 @@ export class ConfigService {
     this.appThemeColor = data.customThemeColor;
     this.sidebarPosition = data.defaultSidebarPosition;
     this.isCustomTheme = data.customThemeMode;
+    this.isBarIconMode = data.primaryBarIconMode;
     this.onReadConfig.next();
 
   }
