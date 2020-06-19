@@ -231,7 +231,11 @@ button:focus {
   }
 
   .mat-form-field-wrapper {
-    padding-bottom: 0;
+    padding-bottom: 15px;
+
+    mat-error, mat-error strong {
+      font-size: 11px !important;
+    }
   }
 
   .mat-form-field-outline-thick .mat-form-field-outline-end,
