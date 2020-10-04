@@ -5,7 +5,42 @@
         <div class="sub-heading">
           <h2>Locale Settings</h2>
         </div>
+        <div class="sub-heading-content">
+          <form class="form-horizontal form-bordered" [formGroup]="localeSettingForm">
+            <div class="form-group">
+              <mat-label>Timezone</mat-label>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="timezone">
+                <mat-error class="form-error">
+                  <!-- {{formErrors.name}} -->
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-label>Language</mat-label>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="language">
+                <mat-error class="form-error">
+                  <!-- {{formErrors.name}} -->
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-label>Supported Languages</mat-label>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="supportedLanguages">
+                <mat-error class="form-error">
+                  <!-- {{formErrors.name}} -->
+                </mat-error>
+              </mat-form-field>
+            </div>
 
+            <div class="action-area">
+              <button mat-raised-button class="blue-btn service-trigger" (click)="onSave()">Save</button>
+            </div>
+
+          </form>
+        </div>
       </div>
     </div>
   </div>

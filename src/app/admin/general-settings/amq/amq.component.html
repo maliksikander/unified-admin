@@ -5,7 +5,60 @@
         <div class="sub-heading">
           <h2>AMQ Settings</h2>
         </div>
+        <div class="sub-heading-content">
+          <form class="form-horizontal form-bordered" [formGroup]="amqSettingForm">
+            <div class="form-group">
+              <mat-label>AMQ Username</mat-label>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="amqUsername">
+                <mat-error class="form-error">
+                  <!-- {{formErrors.name}} -->
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-label>AMQ Password</mat-label>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="amqPwd">
+                <mat-error class="form-error">
+                  <!-- {{formErrors.name}} -->
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-label>AMQ Host</mat-label>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="amqHost">
+                <mat-error class="form-error">
+                  <!-- {{formErrors.name}} -->
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-label>AMQ Port</mat-label>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="amqPort">
+                <mat-error class="form-error">
+                  <!-- {{formErrors.name}} -->
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-label>AMQ URL</mat-label>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="amqUrl">
+                <mat-error class="form-error">
+                  <!-- {{formErrors.name}} -->
+                </mat-error>
+              </mat-form-field>
+            </div>
 
+            <div class="action-area">
+              <button mat-raised-button class="blue-btn service-trigger" (click)="onSave()">Save</button>
+            </div>
+
+          </form>
+        </div>
       </div>
     </div>
   </div>

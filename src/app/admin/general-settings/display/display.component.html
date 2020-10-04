@@ -5,7 +5,45 @@
         <div class="sub-heading">
           <h2>Display Settings</h2>
         </div>
+        <div class="sub-heading-content">
+          <form class="form-horizontal form-bordered" [formGroup]="displaySettingForm">
+            <div class="form-group">
+              <mat-label>Agent Alias</mat-label>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="agentAlias">
+                <mat-error class="form-error">
+                  <!-- {{formErrors.name}} -->
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-label>Company Name</mat-label>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="companyName">
+                <mat-error class="form-error">
+                  <!-- {{formErrors.name}} -->
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-label>Company Logo</mat-label>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="companyLogo">
+                <button class="select-file-button" mat-raised-button matSuffix (click)="selectFile()">
+                  Select File
+                </button>
+                <mat-error class="form-error">
+                  <!-- {{formErrors.name}} -->
+                </mat-error>
+              </mat-form-field>
+            </div>
 
+            <div class="action-area">
+              <button mat-raised-button class="blue-btn service-trigger" (click)="onSave()">Save</button>
+            </div>
+
+          </form>
+        </div>
       </div>
     </div>
   </div>

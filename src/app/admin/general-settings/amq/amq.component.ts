@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { SnackbarService } from '../../services/snackbar.service';
 
 @Component({
   selector: 'app-amq',
@@ -6,10 +8,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./amq.component.scss']
 })
 export class AmqComponent implements OnInit {
+  amqSettingForm: FormGroup;
 
-  constructor() { }
+  constructor(private snackbar: SnackbarService,
+    private fb: FormBuilder) { }
 
   ngOnInit() {
+    this.amqSettingForm = this.fb.group({
+      amqUsername: [''],
+      amqPwd: [''],
+      amqHost: [''],
+      amqPort: [''],
+      amqUrl: [''],
+    });
   }
+
+  onSave() { }
 
 }

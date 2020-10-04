@@ -5,7 +5,57 @@
         <div class="sub-heading">
           <h2>Log Settings</h2>
         </div>
+        <div class="sub-heading-content">
+          <form class="form-horizontal form-bordered" [formGroup]="logSettingForm">
+            <div class="form-group">
+              <mat-label>Agent Log Level</mat-label>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="agentLogLevel">
+                <mat-error class="form-error">
+                  <!-- {{formErrors.name}} -->
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-label>Agent Log Max Files</mat-label>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="agentLogMaxFiles">
+                <mat-error class="form-error">
+                  <!-- {{formErrors.name}} -->
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-label>Agent Logs File Size</mat-label>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="agentLogFileSize">
+                <mat-error class="form-error">
+                  <!-- {{formErrors.name}} -->
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-label>Agent Logs File Path</mat-label>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="agentLogFilePath">
+                <mat-error class="form-error">
+                  <!-- {{formErrors.name}} -->
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-group" style="padding: 20px 0px;">
+              <mat-label>Enable Logging</mat-label>
 
+                <mat-slide-toggle formControlName="enableLogs"></mat-slide-toggle>
+
+            </div>
+
+            <div class="action-area">
+              <button mat-raised-button class="blue-btn service-trigger" (click)="onSave()">Save</button>
+            </div>
+
+          </form>
+        </div>
       </div>
     </div>
   </div>

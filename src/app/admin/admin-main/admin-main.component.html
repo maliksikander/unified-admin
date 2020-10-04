@@ -1,23 +1,21 @@
 <div class="container-fluid main-section-area {{defaultTheme}}" [class.dark-theme]="otherTheme"
-
-     [class.rtl-language]="defaultLanguage == 'ar'" [class.right-sidebar]="sidebarPosition == 'right'"
-     [class.secondary-sidebar]="isRightBarActive"
-     [class.custom-theme]="isCustomTheme" [ngClass]="defaultLanguage">
+  [class.rtl-language]="defaultLanguage == 'ar'" [class.right-sidebar]="sidebarPosition == 'right'"
+  [class.secondary-sidebar]="isRightBarActive" [class.custom-theme]="isCustomTheme" [ngClass]="defaultLanguage">
   <div class="them-selector" [style.background-color]="appColor"></div>
   <div class="row">
     <div class="col-sm-12 main-nav" [style.background-color]="appColor">
-      <button class="menu-trigger" mat-raised-button
-              (click)="opened = !opened"><i class="material-icons">menu</i>
+      <button class="menu-trigger" mat-raised-button (click)="opened = !opened"><i class="material-icons">menu</i>
       </button>
       <button *ngIf="isRightBarActive" class="menu-trigger right-btn" mat-raised-button
-              (click)="rightBarOpened = !rightBarOpened"><i class="material-icons">menu</i>
+        (click)="rightBarOpened = !rightBarOpened"><i class="material-icons">menu</i>
       </button>
       <app-top-bar></app-top-bar>
     </div>
 
-    <mat-sidenav-container class="main-sidebar" hasBackdrop="false" [ngClass]="barStatus ? 'expand' : 'collapse'" [class.right-sidebar]="sidebarPosition == 'right'">
+    <mat-sidenav-container class="main-sidebar" hasBackdrop="false" [ngClass]="barStatus ? 'expand' : 'collapse'"
+      [class.right-sidebar]="sidebarPosition == 'right'">
       <mat-sidenav [position]="sidebarPosition == 'right' ? 'end': 'start'" #sidenav mode="over" [(opened)]="opened"
-                   (opened)="events.push('open!')" [style.background-color]="appColor">
+        (opened)="events.push('open!')" [style.background-color]="appColor">
 
         <mat-nav-list class="action-area">
           <mat-accordion>
@@ -50,42 +48,48 @@
                 <span class="sidebar-text">General Settings</span>
               </mat-expansion-panel-header>
 
-              <a mat-list-item [routerLinkActive]="['active-link']"
-              [routerLink]="['/general/display-settings']">
+              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/general/display-settings']">
                 <img src="/assets/images/display.svg" alt="">
                 <span class="sidebar-text">Display</span>
               </a>
-              <a mat-list-item [routerLinkActive]="['active-link']"
-              [routerLink]="['/general/locale-settings']">
-                 <img src="/assets/images/globe.svg" alt="">
-                 <span class="sidebar-text">Locale</span>
+              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/general/locale-settings']">
+                <img src="/assets/images/globe.svg" alt="">
+                <span class="sidebar-text">Locale</span>
               </a>
-              <a mat-list-item [routerLinkActive]="['active-link']"
-              [routerLink]="['/general/database-settings']">
+              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/general/database-settings']">
                 <img src="/assets/images/database.svg" alt="">
                 <span class="sidebar-text">Database</span>
               </a>
-              <a mat-list-item [routerLinkActive]="['active-link']"
-              [routerLink]="['/general/logging-settings']">
+              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/general/logging-settings']">
                 <img src="/assets/images/logging.svg" alt="">
                 <span class="sidebar-text">Logging</span>
               </a>
-              <a mat-list-item [routerLinkActive]="['active-link']"
-              [routerLink]="['/general/reporting-settings']">
+              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/general/reporting-settings']">
                 <img src="/assets/images/reporting.svg" alt="">
                 <span class="sidebar-text">Reporting</span>
               </a>
-              <a mat-list-item [routerLinkActive]="['active-link']"
-              [routerLink]="['/general/amq-settings']">
+              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/general/amq-settings']">
                 <img src="/assets/images/AMQ.svg" alt="">
                 <span class="sidebar-text">AMQ</span>
               </a>
-              <a mat-list-item [routerLinkActive]="['active-link']"
-              [routerLink]="['/general/security-settings']">
+              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/general/security-settings']">
                 <img src="/assets/images/security.svg" alt="">
                 <span class="sidebar-text">Security</span>
               </a>
 
+            </mat-expansion-panel>
+
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <i class="material-icons">domain</i>
+                <span class="sidebar-text">Routing</span>
+              </mat-expansion-panel-header>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <i class="material-icons">developer_board</i>
+                <span class="sidebar-text">CCM</span>
+              </mat-expansion-panel-header>
             </mat-expansion-panel>
 
           </mat-accordion>
@@ -94,8 +98,8 @@
               {{defaultLanguage == 'ar' ? 'غير الخلفية' : 'Change Theme'}}
             </mat-slide-toggle>
           </a> -->
-          <a mat-list-item (click)="clickEvent()"
-             matTooltip="{{barStatus ? 'expand icons' : 'collapse icons'}}" class="bottom-trigger">
+          <a mat-list-item (click)="clickEvent()" matTooltip="{{barStatus ? 'expand icons' : 'collapse icons'}}"
+            class="bottom-trigger">
             <i class="fa" [ngClass]="barStatus ? 'fa-indent' : 'fa-outdent'"></i>
           </a>
         </mat-nav-list>
@@ -106,7 +110,7 @@
 
       </mat-sidenav-content>
     </mat-sidenav-container>
- <!--Right Sidebar-->
+    <!--Right Sidebar-->
     <!-- <div class="secondary-sidebar-main">
 
 

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { SnackbarService } from '../../services/snackbar.service';
 
 @Component({
   selector: 'app-database',
@@ -7,9 +9,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DatabaseComponent implements OnInit {
 
-  constructor() { }
+  databaseSettingForm: FormGroup;
+
+  constructor(private snackbar: SnackbarService,
+    private fb: FormBuilder) { }
 
   ngOnInit() {
+
+    this.databaseSettingForm = this.fb.group({
+      dbUsername: [''],
+      dbPwd: [''],
+      dbDialect: [''],
+      dbDriver: [''],
+      dbUrl: [''],
+      dbEngine: [''],
+    });
   }
+
+  onSave() { }
 
 }
