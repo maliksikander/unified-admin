@@ -22,7 +22,7 @@ export class ConfigService {
 
   readConfig() {
     this.http.get('assets/config/config.json').subscribe((data) => {
-      console.log('[ConfigService console]', data);
+      // console.log('[ConfigService console]', data);
       this.setConfigurations(data);
     }, (error) => {
       alert('Unable to read configurations, Please contact administrator');
@@ -32,7 +32,7 @@ export class ConfigService {
   }
 
   setConfigurations(data) {
-    console.log('config data', data);
+    // console.log('config data', data);
     this.DefaultLanguage = data.defaultLanguage.trim();
     this.Theme = data.theme;
     this.isRightBarActive = data.rightSidebarActive;

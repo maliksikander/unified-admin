@@ -21,7 +21,7 @@
 
         <mat-nav-list class="action-area">
           <mat-accordion>
-            <mat-expansion-panel>
+            <!-- <mat-expansion-panel>
               <mat-expansion-panel-header>
                 <i class="material-icons">assignment</i>
                 <span class="sidebar-text">{{defaultLanguage == 'ar' ? 'الصفحات' : 'pages'}}</span>
@@ -32,9 +32,9 @@
               <a mat-list-item>
                 <span class="sidebar-text">{{defaultLanguage == 'ar' ? 'قائمة وهمية' : 'Login'}}</span>
               </a>
-            </mat-expansion-panel>
+            </mat-expansion-panel> -->
 
-            <mat-expansion-panel>
+            <!-- <mat-expansion-panel>
               <mat-expansion-panel-header>
                 <i class="material-icons">assignment</i>
                 <span class="sidebar-text">{{defaultLanguage == 'ar' ? 'قائمة وهمية' : 'Dummy list'}}</span>
@@ -42,14 +42,58 @@
               <a mat-list-item>
                 <span class="sidebar-text">{{defaultLanguage == 'ar' ? 'الإكمال التلقائي' : 'Autocomplete'}}</span>
               </a>
+            </mat-expansion-panel> -->
+
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <i class="material-icons">settings</i>
+                <span class="sidebar-text">General Settings</span>
+              </mat-expansion-panel-header>
+
+              <a mat-list-item [routerLinkActive]="['active-link']"
+              [routerLink]="['/general/display-settings']">
+                <img src="/assets/images/display.svg" alt="">
+                <span class="sidebar-text">Display</span>
+              </a>
+              <a mat-list-item [routerLinkActive]="['active-link']"
+              [routerLink]="['/general/locale-settings']">
+                 <img src="/assets/images/globe.svg" alt="">
+                 <span class="sidebar-text">Locale</span>
+              </a>
+              <a mat-list-item [routerLinkActive]="['active-link']"
+              [routerLink]="['/general/database-settings']">
+                <img src="/assets/images/database.svg" alt="">
+                <span class="sidebar-text">Database</span>
+              </a>
+              <a mat-list-item [routerLinkActive]="['active-link']"
+              [routerLink]="['/general/logging-settings']">
+                <img src="/assets/images/logging.svg" alt="">
+                <span class="sidebar-text">Logging</span>
+              </a>
+              <a mat-list-item [routerLinkActive]="['active-link']"
+              [routerLink]="['/general/reporting-settings']">
+                <img src="/assets/images/reporting.svg" alt="">
+                <span class="sidebar-text">Reporting</span>
+              </a>
+              <a mat-list-item [routerLinkActive]="['active-link']"
+              [routerLink]="['/general/amq-settings']">
+                <img src="/assets/images/AMQ.svg" alt="">
+                <span class="sidebar-text">AMQ</span>
+              </a>
+              <a mat-list-item [routerLinkActive]="['active-link']"
+              [routerLink]="['/general/security-settings']">
+                <img src="/assets/images/security.svg" alt="">
+                <span class="sidebar-text">Security</span>
+              </a>
+
             </mat-expansion-panel>
 
           </mat-accordion>
-          <a mat-list-item>
+          <!-- <a mat-list-item>
             <mat-slide-toggle (click)="changeTheme()" [checked]="true">
               {{defaultLanguage == 'ar' ? 'غير الخلفية' : 'Change Theme'}}
             </mat-slide-toggle>
-          </a>
+          </a> -->
           <a mat-list-item (click)="clickEvent()"
              matTooltip="{{barStatus ? 'expand icons' : 'collapse icons'}}" class="bottom-trigger">
             <i class="fa" [ngClass]="barStatus ? 'fa-indent' : 'fa-outdent'"></i>
@@ -58,16 +102,14 @@
       </mat-sidenav>
       <mat-sidenav-content>
 
-        <app-form></app-form>
-
         <router-outlet></router-outlet>
 
       </mat-sidenav-content>
     </mat-sidenav-container>
+ <!--Right Sidebar-->
+    <!-- <div class="secondary-sidebar-main">
 
-    <div class="secondary-sidebar-main">
 
-      <!--Right Sidebar-->
       <mat-sidenav-container *ngIf="isRightBarActive" class="main-sidebar secondary-sidebar" hasBackdrop="false">
         <mat-sidenav [position]="sidebarPosition == 'right' ? 'start': 'end'" #sidenav
                      [(opened)]="rightBarOpened" (opened)="events.push('open!')">
@@ -116,8 +158,7 @@
 
       </mat-sidenav-container>
 
-    </div>
+    </div> -->
 
   </div>
-
 </div>

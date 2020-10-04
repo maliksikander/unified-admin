@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-top-bar',
@@ -11,6 +11,14 @@ export class TopBarComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.clock();
+  }
+
+  clock() {
+    this.today = new Date();
+    let timeoutId = setInterval(() => {
+      this.today = new Date();
+    }, 1000);
   }
 
 }

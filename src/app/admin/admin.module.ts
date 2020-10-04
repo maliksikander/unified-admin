@@ -9,7 +9,13 @@ import {TopBarComponent} from '../top-bar/top-bar.component';
 import {HttpClientModule} from '@angular/common/http';
 import {SnackbarService} from './services/snackbar.service';
 import {SharedModule} from '../shared/shared.module';
-import { FormComponent } from './form/form.component';
+import { DisplayComponent } from './general-settings/display/display.component';
+import { LocaleComponent } from './general-settings/locale/locale.component';
+import { DatabaseComponent } from './general-settings/database/database.component';
+import { LoggingComponent } from './general-settings/logging/logging.component';
+import { ReportingComponent } from './general-settings/reporting/reporting.component';
+import { AmqComponent } from './general-settings/amq/amq.component';
+import { SecurityComponent } from './general-settings/security/security.component';
 
 
 @NgModule({
@@ -24,7 +30,13 @@ import { FormComponent } from './form/form.component';
     declarations: [
         AdminMainComponent,
         TopBarComponent,
-        FormComponent
+        DisplayComponent,
+        LocaleComponent,
+        DatabaseComponent,
+        LoggingComponent,
+        ReportingComponent,
+        AmqComponent,
+        SecurityComponent
     ],
     providers: [
         HttpClientModule,

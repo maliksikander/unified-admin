@@ -2,7 +2,7 @@
   "languages": "en: English, de: German, zh: Chinese, fr: French, ar: Arabic",
   "defaultLanguage": "en",
   "defaultSidebarPosition": "left",
-  "rightSidebarActive": true,
+  "rightSidebarActive": false,
   "theme": "light-theme",
   "customThemeMode": false,
   "customThemeColor": "#760606",
