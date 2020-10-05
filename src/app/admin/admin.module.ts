@@ -16,7 +16,7 @@ import { LoggingComponent } from './general-settings/logging/logging.component';
 import { ReportingComponent } from './general-settings/reporting/reporting.component';
 import { AmqComponent } from './general-settings/amq/amq.component';
 import { SecurityComponent } from './general-settings/security/security.component';
-
+import { FilterPipeModule } from 'ngx-filter-pipe';
 
 @NgModule({
     imports: [
@@ -26,6 +26,7 @@ import { SecurityComponent } from './general-settings/security/security.componen
         FormsModule,
         ReactiveFormsModule,
         BrowserModule,
+        FilterPipeModule
     ],
     declarations: [
         AdminMainComponent,
@@ -36,7 +37,7 @@ import { SecurityComponent } from './general-settings/security/security.componen
         LoggingComponent,
         ReportingComponent,
         AmqComponent,
-        SecurityComponent
+        SecurityComponent,
     ],
     providers: [
         HttpClientModule,

@@ -7,7 +7,7 @@
         </div>
         <div class="sub-heading-content">
           <form class="form-horizontal form-bordered" [formGroup]="databaseSettingForm">
-            <div class="form-group">
+            <div class="form-group col-md-5">
               <mat-label>Database Username</mat-label>
               <mat-form-field appearance="outline">
                 <input matInput formControlName="dbUsername">
@@ -16,7 +16,7 @@
                 </mat-error>
               </mat-form-field>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-5">
               <mat-label>Database Password</mat-label>
               <mat-form-field appearance="outline">
                 <input matInput formControlName="dbPwd">
@@ -25,7 +25,7 @@
                 </mat-error>
               </mat-form-field>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-5">
               <mat-label>Database Dialect</mat-label>
               <mat-form-field appearance="outline">
                 <input matInput formControlName="dbDialect">
@@ -34,7 +34,7 @@
                 </mat-error>
               </mat-form-field>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-5">
               <mat-label>Database Driver</mat-label>
               <mat-form-field appearance="outline">
                 <input matInput formControlName="dbDriver">
@@ -43,7 +43,7 @@
                 </mat-error>
               </mat-form-field>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-5">
               <mat-label>Database URL</mat-label>
               <mat-form-field appearance="outline">
                 <input matInput formControlName="dbUrl">
@@ -52,7 +52,7 @@
                 </mat-error>
               </mat-form-field>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-5">
               <mat-label>Database Engine</mat-label>
               <mat-form-field appearance="outline">
                 <input matInput formControlName="dbEngine">
@@ -63,7 +63,7 @@
             </div>
 
 
-            <div class="action-area">
+            <div class="action-area padding-btn">
 
               <button mat-raised-button class="blue-btn service-trigger" (click)="onSave()">Save</button>
             </div>

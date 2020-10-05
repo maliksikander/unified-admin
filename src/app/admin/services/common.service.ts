@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {Subject} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -7,6 +7,6 @@ import {Subject} from 'rxjs';
 
 export class CommonService {
   themeVersion = new Subject();
-
-  constructor() { }
+  constructor() {
+  }
 }

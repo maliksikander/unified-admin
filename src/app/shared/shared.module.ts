@@ -24,10 +24,12 @@ import {
 } from "@angular/material";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-
+import { MatSelectSearchComponent } from './mat-select-search/mat-select-search.component';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { SearchFilterPipe } from './search-filter.pipe';
 
 @NgModule({
-    declarations: [],
+    declarations: [MatSelectSearchComponent,SearchFilterPipe],
     imports: [
         MatIconModule, MatToolbarModule, MatSidenavModule, MatBadgeModule, MatDialogModule,
         BrowserAnimationsModule, MatCheckboxModule, MatButtonModule, MatMenuModule,
@@ -60,7 +62,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
         MatToolbarModule,
         MatTooltipModule,
         MatTreeModule,
-        MatBottomSheetModule
+        MatBottomSheetModule,
+        NgxMatSelectSearchModule,
 
 
     ],
@@ -95,7 +98,10 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
         MatToolbarModule,
         MatTooltipModule,
         MatTreeModule,
-        MatBottomSheetModule
+        MatBottomSheetModule,
+        MatSelectSearchComponent,
+        NgxMatSelectSearchModule,
+        SearchFilterPipe
 
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
