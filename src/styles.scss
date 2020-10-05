@@ -267,7 +267,6 @@ button:focus {
   }
 
   .mat-form-field-appearance-outline .mat-select-arrow-wrapper {
-
     position: absolute;
     right: -9px;
     border-radius: 0px 5px 5px 0px;
@@ -275,8 +274,8 @@ button:focus {
     width: 40px;
     height: 38px;
     line-height: 30px;
-    background: #EBEBEB;
-    border-left: 1px solid #C2C2C2;
+    background: #ebebeb;
+    border-left: 1px solid #c2c2c2;
   }
 
   .mat-select-arrow {
@@ -291,7 +290,7 @@ button:focus {
 
   .mat-select-trigger {
     width: 100%;
-}
+  }
 }
 
 .mat-form-field-appearance-outline {
@@ -1140,6 +1139,9 @@ ngx-charts-pie-chart span.legend-label-color {
           display: block !important;
         }
       }
+    }
+    .form-group .mat-form-field-appearance-outline .mat-select-arrow-wrapper {
+      right: -10px;
     }
   }
 }
