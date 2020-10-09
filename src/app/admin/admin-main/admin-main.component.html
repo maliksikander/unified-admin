@@ -4,15 +4,15 @@
   <div class="them-selector" [style.background-color]="appColor"></div>
   <div class="row">
     <div class="col-sm-12 main-nav" [style.background-color]="appColor">
-      <button class="menu-trigger" mat-raised-button (click)="opened = !opened"><i class="material-icons">menu</i>
-      </button>
+      <!-- <button class="menu-trigger" mat-raised-button (click)="opened = !opened"><i class="material-icons">menu</i>
+      </button> -->
       <button *ngIf="isRightBarActive" class="menu-trigger right-btn" mat-raised-button
         (click)="rightBarOpened = !rightBarOpened"><i class="material-icons">menu</i>
       </button>
       <app-top-bar></app-top-bar>
     </div>
 
-    <mat-sidenav-container class="main-sidebar" hasBackdrop="false" [ngClass]="barStatus ? 'expand' : 'collapse'"
+    <mat-sidenav-container class="main-sidebar" hasBackdrop="false" [ngClass]="barStatus ? 'mat-drawer-container mat-sidenav-container mat-drawer-transition mat-drawer-opened expand' : 'mat-drawer-container mat-sidenav-container mat-drawer-transition mat-drawer-opened collapse'"
       [class.right-sidebar]="sidebarPosition == 'right'">
       <mat-sidenav [position]="sidebarPosition == 'right' ? 'end': 'start'" #sidenav mode="over" [(opened)]="opened"
         (opened)="events.push('open!')" [style.background-color]="appColor">

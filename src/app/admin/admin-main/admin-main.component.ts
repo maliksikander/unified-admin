@@ -17,7 +17,7 @@ export class AdminMainComponent implements OnInit {
   elem;
   // document;
   events: string[] = [];
-  opened = false;
+  opened = true;
   rightBarOpened = false;
   otherTheme = false;
   barStatus = false;
@@ -38,6 +38,8 @@ export class AdminMainComponent implements OnInit {
   }
 
   ngOnInit() {
+
+
     this.configService.onReadConfig.subscribe(() => {
       this.defaultTheme = this.configService.Theme;
       this.defaultLanguage = this.configService.DefaultLanguage;

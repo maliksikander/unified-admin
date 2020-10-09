@@ -11,7 +11,7 @@ export class TopBarComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.clock();
+    // this.clock();
   }
 
   clock() {
@@ -20,5 +20,7 @@ export class TopBarComponent implements OnInit {
       this.today = new Date();
     }, 1000);
   }
+
+  logout(){}
 
 }

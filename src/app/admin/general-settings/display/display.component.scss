@@ -1,5 +1,5 @@
 .service-trigger {
-  background: #25AFCB;
+  background: #25afcb;
   color: #ffffff;
   height: 30px;
   line-height: 30px;
@@ -8,15 +8,26 @@
   width: 90px;
 }
 
-.select-file-button{
+.select-file-button {
   padding: 0px 7px 0px 7px;
-    position: relative;
-    top: -2px;
-    right: -9px;
-    background: #f9f9f9;
+  position: relative;
+  top: -3px;
+  right: -9px;
+  background: #f9f9f9;
+  color: #717171;
+  box-shadow: none;
+  border-left: 1px solid #c2c2c2;
+  height: 39px;
+  line-height: 39px;
+}
+
+.component-logo {
+  display: flex;
+  flex-wrap: wrap;
+  span {
+    position: absolute;
+    top: 45px;
     color: #717171;
-    box-shadow: none;
-    border-left: 1px solid #C2C2C2;
-    height: 37px;
-    line-height: 37px;
+    font-size: 11px;
+  }
 }

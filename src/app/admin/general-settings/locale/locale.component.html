@@ -12,7 +12,7 @@
               <mat-form-field appearance="outline">
                 <input matInput formControlName="timezone">
                 <mat-error class="form-error">
-                  <!-- {{formErrors.name}} -->
+                  {{formErrors.timezone}}
                 </mat-error>
               </mat-form-field>
             </div>
@@ -21,7 +21,7 @@
               <mat-form-field appearance="outline">
                 <input matInput formControlName="language">
                 <mat-error class="form-error">
-                  <!-- {{formErrors.name}} -->
+                  {{formErrors.language}}
                 </mat-error>
               </mat-form-field>
             </div>
@@ -39,9 +39,14 @@
                       </mat-chip>
                     </mat-chip-list>
                   </mat-select-trigger>
-                  <input class="search-filter" type="text" [(ngModel)]="searchTerm" [ngModelOptions]="{standalone: true}" placeholder="Search">
-                  <mat-option *ngFor="let lang of languages | searchFilter:searchTerm" [value]="lang">{{lang.name}}</mat-option>
+                  <input class="search-filter" type="text" [(ngModel)]="searchTerm"
+                    [ngModelOptions]="{standalone: true}" placeholder="Search">
+                  <mat-option *ngFor="let lang of languages | searchFilter:searchTerm" [value]="lang">{{lang.name}}
+                  </mat-option>
                 </mat-select>
+                <mat-error class="form-error">
+                  {{formErrors.supportedLanguages}}
+                </mat-error>
               </mat-form-field>
             </div>
 

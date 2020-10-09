@@ -8,11 +8,11 @@
         <div class="sub-heading-content">
           <form class="form-horizontal form-bordered" [formGroup]="displaySettingForm">
             <div class="form-group col-md-5">
-              <mat-label>Agent Alias</mat-label>
+              <mat-label>Agent Alias<span class="required">*</span></mat-label>
               <mat-form-field appearance="outline">
                 <input matInput formControlName="agentAlias">
                 <mat-error class="form-error">
-                  <!-- {{formErrors.name}} -->
+                  {{formErrors.agentAlias}}
                 </mat-error>
               </mat-form-field>
             </div>
@@ -21,21 +21,26 @@
               <mat-form-field appearance="outline">
                 <input matInput formControlName="companyName">
                 <mat-error class="form-error">
-                  <!-- {{formErrors.name}} -->
+                  {{formErrors.companyName}}
                 </mat-error>
               </mat-form-field>
             </div>
-            <div class="form-group col-md-5">
-              <mat-label>Company Logo</mat-label>
-              <mat-form-field appearance="outline">
-                <input matInput formControlName="companyLogo">
-                <button class="select-file-button" mat-raised-button matSuffix (click)="selectFile()">
-                  Select File
-                </button>
-                <mat-error class="form-error">
-                  <!-- {{formErrors.name}} -->
-                </mat-error>
-              </mat-form-field>
+            <div class="component-logo">
+              <div class="form-group col-md-5">
+                <mat-label>Company Logo</mat-label>
+                <mat-form-field appearance="outline">
+                  <input matInput formControlName="companyLogo">
+                  <button class="select-file-button" mat-raised-button matSuffix (click)="selectFile()">
+                    Select File
+                  </button>
+                  <mat-error class="form-error">
+                    <!-- {{formErrors.name}} -->
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form group col-md-4" style="padding: 0;">
+                <span>*Disclaimer Message</span>
+              </div>
             </div>
 
             <div class="action-area padding-btn">

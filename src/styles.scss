@@ -155,8 +155,7 @@ button:focus {
 }
 
 .sub-heading-content {
-  // padding: 30px 100px;
-  padding: 30px 0px 0px 30px;
+  padding: 30px 0px 0px 60px;
 }
 .main-section-area {
   background: #ffffff;
@@ -1285,6 +1284,7 @@ ngx-charts-pie-chart span.legend-label-color {
 
 .container.main-custom-container {
   max-width: calc(100% - 0px);
+  // padding: 0px;
 }
 
 .main-tab-area .mat-tab-group {
@@ -1448,6 +1448,40 @@ mat-sidenav-container.main-sidebar.mat-drawer-container.mat-sidenav-container.ma
   margin-left: 208px;
 }
 
+// gray-border
+mat-sidenav-content.mat-drawer-content.mat-sidenav-content {
+  border: 5px solid #E3E4E5;
+  border-bottom: 0;
+}
+mat-sidenav.mat-drawer.mat-sidenav.mat-drawer-over {
+  border: 5px solid #E3E4E5;
+  border-right: 0;
+  border-bottom: 0;
+}
+//
+
 .padding-btn {
   padding: 0px 15px;
+}
+
+//side-bar content height
+.mat-list-base .mat-list-item,
+.mat-list-base .mat-list-option {
+  height: 38px !important;
+}
+
+// removing margin bottom from bootstrap form field
+.form-group {
+  margin-bottom: 0px;
+}
+
+//removing padding from mat-side-nav-content bootstrap col
+.col-sm-12 {
+  padding: 0;
+}
+
+input.mat-input-element {
+  margin-top: -0.0625em;
+  line-height: 18px;
+  color: #8B8B8B;
 }
