@@ -18,6 +18,10 @@ export class DisplayComponent implements OnInit {
     companyLogo: ''
   };
   validations;
+  public imagePath;
+  imageName = '';
+  imgURL: any;
+  currentLogo;
 
   constructor(private snackbar: SnackbarService,
     private fb: FormBuilder,
@@ -34,12 +38,30 @@ export class DisplayComponent implements OnInit {
       companyLogo: ['']
     });
 
+    this.displaySettingForm.controls['companyLogo'].disable();
     this.displaySettingForm.valueChanges.subscribe((data) => {
       let result = this.commonService.logValidationErrors(this.displaySettingForm, this.formErrors, this.validations);
       this.formErrors = result[0];
       this.validations = result[1];
     });
   }
+
+  preview(files, e) {
+    var reader = new FileReader();
+    this.imagePath = files;
+    if (files.length != 0) {
+      if(files[0].size > 2097152) return this.snackbar.snackbarMessage('error-snackbar','Image Size should be less than 2Mb',2)
+      reader.readAsDataURL(files[0]);
+      reader.onload = (_event) => {
+        this.imgURL = reader.result;
+        this.imageName = e.target.files[0].name;
+        // if (this.imgURL) {
+        //   this.buttonCheck = true;
+        // }
+      }
+    }
+  }
+
 
   selectFile() { }
 
