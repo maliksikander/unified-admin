@@ -28,6 +28,7 @@ export class LocaleComponent implements OnInit {
   validations;
   timeZones = [];
   searchTerm: string;
+  selected=[];
   constructor(private snackbar: SnackbarService,
     private commonService: CommonService,
     private fb: FormBuilder) {
@@ -50,6 +51,8 @@ export class LocaleComponent implements OnInit {
       let result = this.commonService.logValidationErrors(this.localeSettingForm, this.formErrors, this.validations);
       this.formErrors = result[0];
       this.validations = result[1];
+
+       this.selected = this.localeSettingForm.value.supportedLanguages;
 
     });
   }
@@ -86,8 +89,11 @@ export class LocaleComponent implements OnInit {
         supportedLanguages:[this.languages[0]]
       });
     }
+    // this.selected = this.localeSettingForm.value.supportedLanguages.length;
   }
 
+chip(e){ console.log("chip E-->",e)}
+change(e){ console.log("change E-->",e)}
   onSave() { }
 
 }
