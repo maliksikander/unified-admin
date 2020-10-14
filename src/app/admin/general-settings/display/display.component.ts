@@ -25,7 +25,8 @@ export class DisplayComponent implements OnInit {
 
   constructor(private snackbar: SnackbarService,
     private fb: FormBuilder,
-    private commonService: CommonService) { }
+    private commonService: CommonService) {
+  }
 
   ngOnInit() {
 
@@ -50,7 +51,7 @@ export class DisplayComponent implements OnInit {
     var reader = new FileReader();
     this.imagePath = files;
     if (files.length != 0) {
-      if(files[0].size > 2097152) return this.snackbar.snackbarMessage('error-snackbar','Image Size should be less than 2Mb',2)
+      if (files[0].size > 2097152) return this.snackbar.snackbarMessage('error-snackbar', 'Image Size greater than 2Mb', 3);
       reader.readAsDataURL(files[0]);
       reader.onload = (_event) => {
         this.imgURL = reader.result;

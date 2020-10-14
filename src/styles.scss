@@ -912,33 +912,9 @@ ngx-charts-pie-chart span.legend-label-color {
   }
 }
 
-.template-action {
-  .action-area {
-    text-align: right;
-    padding-top: 36px;
-    padding-bottom: 26px;
 
-    button {
-      color: #ffffff;
-      margin-left: 10px;
-
-      &.gray-btn {
-        background: #919191;
-      }
-
-      &.green-btn {
-        background: #25cb8d;
-      }
-
-      &.blue-btn {
-        background: #25afcb;
-      }
-
-      &.dark-blue-btn {
-        background: #1c99c0;
-      }
-    }
-  }
+.action-area.padding-btn {
+  width: 42%;
 }
 
 //Custom Modal
@@ -1328,6 +1304,7 @@ a.mat-list-item.active-link {
 }
 
 .service-trigger {
+  float: right;
   .mat-button-wrapper {
     font-weight: bold;
     font-size: 13px;
@@ -1486,12 +1463,16 @@ input.mat-input-element {
   color: #8b8b8b;
 }
 
+//snackbar
+
 snack-bar-container {
-  background: #fff !important;
-  border: 2px solid #25afcb;
-  color: #000 !important;
+  background: #25CB8D !important;
+  border: 1px solid #25CB8D;
+  color: #fff !important;
   min-width: 250px !important;
   font-size: 16px !important;
+  min-height: 40px !important;
+  padding: 0 !important;
 
   .mat-simple-snackbar {
     justify-content: center;
@@ -1500,10 +1481,10 @@ snack-bar-container {
 
   &:before {
     content: "";
-    padding: 15px;
+    padding: 15px 25px;
     position: absolute;
     left: 0;
-    background-color: #25afcb;
+    // background-color: #25afcb;
     top: 0;
     bottom: 0;
     z-index: 1;
@@ -1513,10 +1494,11 @@ snack-bar-container {
     background-position: center;
   }
   &.error-snackbar {
-    border-color: rgb(212, 62, 62);
+    border-color: #FF585E;
+    background-color: #FF585E !important;
 
     &:before {
-      background-color: rgb(212, 62, 62);
+      // background-color: #FF585E;
       background-image: url(assets/images/wrong.png);
     }
   }
@@ -1535,8 +1517,7 @@ snack-bar-container {
     height: 39.8px !important;
   }
   .mat-chip.mat-standard-chip {
-    // background-color: #8b8b8b;
-    // color: #fff;
     font-size: 13px;
   }
 }
+

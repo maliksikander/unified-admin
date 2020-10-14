@@ -1,7 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { from, ReplaySubject, Subject } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
 import { SnackbarService } from '../../services/snackbar.service';
 import { CommonService } from '../../services/common.service'
 declare var require: any
@@ -28,7 +26,8 @@ export class LocaleComponent implements OnInit {
   validations;
   timeZones = [];
   searchTerm: string;
-  selected=[];
+  selectedCount=[];
+  selectedLanguages=["No Languages Selected"];
   constructor(private snackbar: SnackbarService,
     private commonService: CommonService,
     private fb: FormBuilder) {
@@ -52,7 +51,8 @@ export class LocaleComponent implements OnInit {
       this.formErrors = result[0];
       this.validations = result[1];
 
-       this.selected = this.localeSettingForm.value.supportedLanguages;
+       this.selectedCount = this.localeSettingForm.value.supportedLanguages;
+       this.selectedLanguages = this.localeSettingForm.value.supportedLanguages;
 
     });
   }
@@ -89,11 +89,10 @@ export class LocaleComponent implements OnInit {
         supportedLanguages:[this.languages[0]]
       });
     }
-    // this.selected = this.localeSettingForm.value.supportedLanguages.length;
+    this.selectedLanguages = this.localeSettingForm.value.supportedLanguages;
   }
 
-chip(e){ console.log("chip E-->",e)}
-change(e){ console.log("change E-->",e)}
+
   onSave() { }
 
 }
