@@ -912,7 +912,6 @@ ngx-charts-pie-chart span.legend-label-color {
   }
 }
 
-
 .action-area.padding-btn {
   width: 42%;
 }
@@ -1466,8 +1465,8 @@ input.mat-input-element {
 //snackbar
 
 snack-bar-container {
-  background: #25CB8D !important;
-  border: 1px solid #25CB8D;
+  background: #25cb8d !important;
+  border: 1px solid #25cb8d;
   color: #fff !important;
   min-width: 250px !important;
   font-size: 16px !important;
@@ -1494,8 +1493,8 @@ snack-bar-container {
     background-position: center;
   }
   &.error-snackbar {
-    border-color: #FF585E;
-    background-color: #FF585E !important;
+    border-color: #ff585e;
+    background-color: #ff585e !important;
 
     &:before {
       // background-color: #FF585E;
@@ -1521,3 +1520,9 @@ snack-bar-container {
   }
 }
 
+.toggle-save-btn {
+  // .action-area.padding-btn {
+    // width: 42%;
+    margin-top: 3px !important;
+  // }
+}
