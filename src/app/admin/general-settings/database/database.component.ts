@@ -105,7 +105,10 @@ export class DatabaseComponent implements OnInit {
     this.endPointService.createSetting(data, this.reqServiceType).subscribe(
       (res: any) => {
         this.spinner = false;
-        if (res.status == 200) this.snackbar.snackbarMessage('success-snackbar', "Settings Created", 1);
+        if (res.status == 200) {
+          this.snackbar.snackbarMessage('success-snackbar', "Settings Created", 1);
+          this.editData = res.databaseSetting;
+        }
       },
       (error: any) => {
         this.spinner = false;
@@ -114,7 +117,6 @@ export class DatabaseComponent implements OnInit {
       }
     );
   }
-
 
   updateDatabaseSetting(data) {
     this.endPointService.updateSetting(data, this.reqServiceType).subscribe(

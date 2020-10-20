@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonService } from '../../services/common.service';
+import { EndpointService } from '../../services/endpoint.service';
 import { SnackbarService } from '../../services/snackbar.service';
 @Component({
   selector: 'app-security',
@@ -11,27 +12,62 @@ export class SecurityComponent implements OnInit {
   securitySettingForm: FormGroup;
   formErrors = {
     certificatePath: '',
-    certificateKeyPath: '',
-    ssl: '',
-    certificateBundlePath: '',
-    privateKey: ''
+    certificateKeypath: '',
+    certificatePassphrase: '',
+    certificateAuthorityPath: '',
+    certificateAuthorityPassphrase: '',
+    keystorePath: '',
+    keystorePwd: '',
+    truststorePath: '',
+    truststorePwd: '',
+    jksKeystorePath: '',
+    jksKeystorePwd: '',
+    jksKeymanagerPwd: '',
+    amqCertificatePath: '',
+    amqCertificatePassphrase: '',
+    corsOrigin: '',
+    commBypassSSL: '',
+    enableSSL: '',
+    minioSSL: '',
+    mongoSSL: '',
+    stompSSLEnabled: '',
   };
   validations;
+  reqServiceType = 'security-setting';
+  spinner: any = true;
+  editData: any;
 
   constructor(private snackbar: SnackbarService,
     private fb: FormBuilder,
-    private commonService: CommonService) { }
+    private commonService: CommonService,
+    private endPointService: EndpointService,
+    private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit() {
 
     this.validations = this.commonService.securitySettingErrorMessages;
 
     this.securitySettingForm = this.fb.group({
-      certificatePath: ['',[Validators.required]],
-      certificateKeyPath: ['',[Validators.required]],
-      ssl: ['',[Validators.required]],
-      certificateBundlePath: ['',[Validators.required]],
-      privateKey: ['',[Validators.required]],
+      certificatePath: ['', [Validators.required]],
+      certificateKeypath: ['', [Validators.required]],
+      certificatePassphrase: ['', [Validators.required]],
+      certificateAuthorityPath: ['', [Validators.required]],
+      certificateAuthorityPassphrase: ['', [Validators.required]],
+      keystorePath: ['', [Validators.required]],
+      keystorePwd: ['', [Validators.required]],
+      truststorePath: ['', [Validators.required]],
+      truststorePwd: ['', [Validators.required]],
+      jksKeystorePath: ['', [Validators.required]],
+      jksKeystorePwd: ['', [Validators.required]],
+      jksKeymanagerPwd: ['', [Validators.required]],
+      amqCertificatePath: ['', [Validators.required]],
+      amqCertificatePassphrase: ['', [Validators.required]],
+      corsOrigin: ['', [Validators.required]],
+      commBypassSSL: [false],
+      enableSSL: [true],
+      minioSSL: [true],
+      mongoSSL: [true],
+      stompSSLEnabled: [true],
     });
 
     this.securitySettingForm.valueChanges.subscribe((data) => {
@@ -39,7 +75,93 @@ export class SecurityComponent implements OnInit {
       this.formErrors = result[0];
       this.validations = result[1];
     });
+
+    this.commonService._spinnerSubject.subscribe((res: any) => {
+      this.spinner = res;
+      this.changeDetector.markForCheck();
+    });
+
+    this.getSecuritySetting();
   }
 
-  onSave() { }
+  getSecuritySetting() {
+    this.endPointService.getSetting(this.reqServiceType).subscribe(
+      (res: any) => {
+        this.spinner = false;
+        // console.log("res->", res);
+        if (res.status == 200 && res.securitySetting.length > 0) {
+          this.editData = res.securitySetting[0];
+          this.securitySettingForm.patchValue({
+            certificatePath: this.editData.certificatePath,
+            certificateKeypath: this.editData.certificateKeypath,
+            certificatePassphrase: this.editData.certificatePassphrase,
+            certificateAuthorityPath: this.editData.certificateAuthorityPath,
+            certificateAuthorityPassphrase: this.editData.certificateAuthorityPassphrase,
+            keystorePath: this.editData.keystorePath,
+            keystorePwd: this.editData.keystorePwd,
+            truststorePath: this.editData.truststorePath,
+            truststorePwd: this.editData.truststorePwd,
+            jksKeystorePath: this.editData.jksKeystorePath,
+            jksKeystorePwd: this.editData.jksKeystorePwd,
+            jksKeymanagerPwd: this.editData.jksKeymanagerPwd,
+            amqCertificatePath: this.editData.amqCertificatePath,
+            amqCertificatePassphrase: this.editData.amqCertificatePassphrase,
+            corsOrigin: this.editData.corsOrigin,
+            commBypassSSL: this.editData.commBypassSSL,
+            enableSSL: this.editData.enableSSL,
+            minioSSL: this.editData.minioSSL,
+            mongoSSL: this.editData.mongoSSL,
+            stompSSLEnabled: this.editData.stompSSLEnabled,
+          });
+        }
+      },
+      error => {
+        this.spinner = false;
+        console.log("Error fetching:", error);
+        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
+      });
+  }
+
+  createSecuritySetting(data) {
+    this.spinner = true;
+    this.endPointService.createSetting(data, this.reqServiceType).subscribe(
+      (res: any) => {
+        this.spinner = false;
+        if (res.status == 200) {
+          this.snackbar.snackbarMessage('success-snackbar', "Settings Created", 1);
+          this.editData = res.securitySetting;
+        }
+      },
+      (error: any) => {
+        this.spinner = false;
+        console.log("Error creating", error);
+        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
+      }
+    );
+  }
+
+  updateSecuritySetting(data) {
+    this.endPointService.updateSetting(data, this.reqServiceType).subscribe(
+      (res: any) => {
+        this.spinner = false;
+        if (res.status == 200) this.snackbar.snackbarMessage('success-snackbar', "Settings Updated", 1);
+      },
+      (error: any) => {
+        this.spinner = false;
+        console.log("Error updating", error);
+        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
+      }
+    );
+  }
+
+  onSave() {
+    let data = this.securitySettingForm.value;
+    if (this.editData) {
+      data.id = this.editData.id;
+      this.updateSecuritySetting(data);
+    }
+    else {
+      this.createSecuritySetting(data);
+    }
+  }
 }

@@ -1448,7 +1448,9 @@ mat-sidenav.mat-drawer.mat-sidenav.mat-drawer-over {
 
 // removing margin bottom from bootstrap form field
 .form-group {
-  margin-bottom: 0px;
+  // input.mat-input-element {
+    margin-bottom: 0px;
+  // }
 }
 
 //removing padding from mat-side-nav-content bootstrap col
@@ -1522,8 +1524,8 @@ snack-bar-container {
 
 .toggle-save-btn {
   // .action-area.padding-btn {
-    // width: 42%;
-    margin-top: 3px !important;
+  // width: 42%;
+  margin-top: 3px !important;
   // }
 }
 

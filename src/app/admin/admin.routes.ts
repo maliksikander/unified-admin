@@ -11,7 +11,7 @@ export const adminRoutes: Routes = [
     {
         path: '', component: AdminMainComponent,
         children: [
-          { path: '', redirectTo: 'general/display-settings', pathMatch: 'full' },
+          { path: '', redirectTo: 'general/amq-settings', pathMatch: 'full' },
           { path: 'general/display-settings', component: DisplayComponent},
           { path: 'general/locale-settings', component: LocaleComponent},
           { path: 'general/database-settings', component: DatabaseComponent},

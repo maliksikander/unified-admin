@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import {  FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { SnackbarService } from './snackbar.service';
 
 @Injectable({
@@ -101,7 +101,7 @@ export class CommonService {
       'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
 
     },
-    'companyName': {
+    'companyDisplayName': {
       'required': "This field is required",
       'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
     },
@@ -120,7 +120,7 @@ export class CommonService {
       'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
 
     },
-    'language': {
+    'defaultLanguage': {
       'required': "This field is required",
       'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
     },
@@ -131,22 +131,26 @@ export class CommonService {
   };
   logSettingErrorMessages = {
 
-    'agentLogLevel': {
+    'logLevel': {
       'required': "This field is required",
       'minlength': "More characters required",
       'maxlength': "Less characters required",
       'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
 
     },
-    'agentLogMaxFiles': {
+    'agentLogsMaxFiles': {
       'required': "This field is required",
+      'min': "Min size should be 1 Mb",
+      'max': "Max size should be 1024 Mb",
       'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
     },
-    'agentLogFileSize': {
+    'agentLogsFileSize': {
       'required': "This field is required",
+      'min': "Min size should be 1 Mb",
+      'max': "Max size should be 1024 Mb",
       // 'pattern': this.service_url_pattern
     },
-    'agentLogFilePath': {
+    'logFilePath': {
       'required': "This field is required",
       // 'pattern': this.service_url_pattern
     }
@@ -154,22 +158,22 @@ export class CommonService {
   };
   reportSettingErrorMessages = {
 
-    'dbName': {
+    'rcDBName': {
       'required': "This field is required",
       'minlength': "More characters required",
       'maxlength': "Less characters required",
       'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
 
     },
-    'dbUsername': {
+    'rcDBUser': {
       'required': "This field is required",
       'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
     },
-    'dbPwd': {
+    'rcDBPwd': {
       'required': "This field is required",
       // 'pattern': this.service_url_pattern
     },
-    'dbUrl': {
+    'rcDBUrl': {
       'required': "This field is required",
       // 'pattern': this.service_url_pattern
     }
@@ -179,32 +183,87 @@ export class CommonService {
 
     'certificatePath': {
       'required': "This field is required",
-      'minlength': "More characters required",
-      'maxlength': "Less characters required",
-      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+      // 'pattern': this.service_url_pattern
     },
-    'certificateKeyPath': {
-      'required': "This field is required",
-      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
-    },
-    'ssl': {
+    'certificateKeypath': {
       'required': "This field is required",
       // 'pattern': this.service_url_pattern
     },
-    'certificateBundlePath': {
+    'certificatePassphrase': {
       'required': "This field is required",
       // 'pattern': this.service_url_pattern
     },
-    'privateKey': {
+    'certificateAuthorityPath': {
       'required': "This field is required",
       // 'pattern': this.service_url_pattern
-    }
-
+    },
+    'certificateAuthorityPassphrase': {
+      'required': "This field is required",
+      // 'pattern': this.service_url_pattern
+    },
+    'keystorePath': {
+      'required': "This field is required",
+      // 'pattern': this.service_url_pattern
+    },
+    'keystorePwd': {
+      'required': "This field is required",
+      // 'pattern': this.service_url_pattern
+    },
+    'truststorePath': {
+      'required': "This field is required",
+      // 'pattern': this.service_url_pattern
+    },
+    'truststorePwd': {
+      'required': "This field is required",
+      // 'pattern': this.service_url_pattern
+    },
+    'jksKeystorePath': {
+      'required': "This field is required",
+      // 'pattern': this.service_url_pattern
+    },
+    'jksKeystorePwd': {
+      'required': "This field is required",
+      // 'pattern': this.service_url_pattern
+    },
+    'jksKeymanagerPwd': {
+      'required': "This field is required",
+      // 'pattern': this.service_url_pattern
+    },
+    'amqCertificatePath': {
+      'required': "This field is required",
+      // 'pattern': this.service_url_pattern
+    },
+    'amqCertificatePassphrase': {
+      'required': "This field is required",
+      // 'pattern': this.service_url_pattern
+    },
+    'corsOrigin': {
+      'required': "This field is required",
+      // 'pattern': this.service_url_pattern
+    },
+    'commBypassSSL': {
+      'required': "This field is required",
+      // 'pattern': this.service_url_pattern
+    },
+    'enableSSL': {
+      'required': "This field is required",
+      // 'pattern': this.service_url_pattern
+    },
+    'minioSSL': {
+      'required': "This field is required",
+      // 'pattern': this.service_url_pattern
+    },
+    'mongoSSL': {
+      'required': "This field is required",
+      // 'pattern': this.service_url_pattern
+    },
+    'stompSSLEnabled': {
+      'required': "This field is required",
+      // 'pattern': this.service_url_pattern
+    },
   };
 
-
-  constructor(private snackbar: SnackbarService) {
-  }
+  constructor(private snackbar: SnackbarService) { }
 
   logValidationErrors(group: FormGroup, formErrors, validations) {
 

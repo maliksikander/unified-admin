@@ -84,7 +84,10 @@ export class AmqComponent implements OnInit {
     this.endPointService.createSetting(data, this.reqServiceType).subscribe(
       (res: any) => {
         this.spinner = false;
-        if (res.status == 200) this.snackbar.snackbarMessage('success-snackbar', "Settings Created", 1);
+        if (res.status == 200) {
+          this.snackbar.snackbarMessage('success-snackbar', "Settings Created", 1);
+          this.editData = res.amqSetting;
+        }
       },
       (error: any) => {
         this.spinner = false;
@@ -93,7 +96,6 @@ export class AmqComponent implements OnInit {
       }
     );
   }
-
 
   updateAmqSetting(data) {
     this.endPointService.updateSetting(data, this.reqServiceType).subscribe(

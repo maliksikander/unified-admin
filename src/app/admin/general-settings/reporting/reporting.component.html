@@ -1,3 +1,6 @@
+<div class="loading-area" *ngIf="spinner">
+  <mat-spinner></mat-spinner>
+</div>
 <div class="container main-custom-container">
   <div class="row">
     <div class="col-sm-12">
@@ -10,46 +13,46 @@
             <div class="form-group col-md-5">
               <mat-label>Database Name<span class="required">*</span></mat-label>
               <mat-form-field appearance="outline">
-                <input matInput formControlName="dbName">
+                <input matInput formControlName="rcDBName">
                 <mat-error class="form-error">
-                  {{formErrors.dbName}}
+                  {{formErrors.rcDBName}}
                 </mat-error>
               </mat-form-field>
             </div>
             <div class="form-group col-md-5">
-              <mat-label>Database Username<span class="required">*</span></mat-label>
+              <mat-label>Database User<span class="required">*</span></mat-label>
               <mat-form-field appearance="outline">
-                <input matInput formControlName="dbUsername">
+                <input matInput formControlName="rcDBUser">
                 <mat-error class="form-error">
-                  {{formErrors.dbUsername}}
+                  {{formErrors.rcDBUser}}
                 </mat-error>
               </mat-form-field>
             </div>
             <div class="form-group col-md-5">
               <mat-label>Database Password<span class="required">*</span></mat-label>
               <mat-form-field appearance="outline">
-                <input matInput formControlName="dbPwd">
+                <input matInput formControlName="rcDBPwd">
                 <mat-error class="form-error">
-                  {{formErrors.dbPwd}}
+                  {{formErrors.rcDBPwd}}
                 </mat-error>
               </mat-form-field>
             </div>
             <div class="form-group col-md-5">
               <mat-label>Database URL<span class="required">*</span></mat-label>
               <mat-form-field appearance="outline">
-                <input matInput formControlName="dbUrl">
+                <input matInput formControlName="rcDBUrl">
                 <mat-error class="form-error">
-                  {{formErrors.dbUrl}}
+                  {{formErrors.rcDBUrl}}
                 </mat-error>
               </mat-form-field>
             </div>
             <div class="form-group col-md-5 padding-btn">
               <mat-label>Enable Reporting</mat-label>
-                <mat-slide-toggle formControlName="enableReporting"></mat-slide-toggle>
+                <mat-slide-toggle formControlName="reportingEnabled"></mat-slide-toggle>
             </div>
 
             <div class="action-area padding-btn toggle-save-btn">
-              <button mat-raised-button class="blue-btn service-trigger" (click)="onSave()">Save</button>
+              <button [disabled]="!reportSettingForm.valid" mat-raised-button class="blue-btn service-trigger" (click)="onSave()">Save</button>
             </div>
 
           </form>

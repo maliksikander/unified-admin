@@ -57,7 +57,7 @@
             </div>
 
             <div class="action-area padding-btn">
-              <button mat-raised-button class="blue-btn service-trigger" (click)="onSave()">Save</button>
+              <button [disabled]="!amqSettingForm.valid" mat-raised-button class="blue-btn service-trigger" (click)="onSave()">Save</button>
             </div>
 
           </form>
