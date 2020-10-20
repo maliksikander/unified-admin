@@ -8,7 +8,7 @@
         <div class="sub-heading-content">
           <form class="form-horizontal form-bordered" [formGroup]="reportSettingForm">
             <div class="form-group col-md-5">
-              <mat-label>Database Name</mat-label>
+              <mat-label>Database Name<span class="required">*</span></mat-label>
               <mat-form-field appearance="outline">
                 <input matInput formControlName="dbName">
                 <mat-error class="form-error">
@@ -17,7 +17,7 @@
               </mat-form-field>
             </div>
             <div class="form-group col-md-5">
-              <mat-label>Database Username</mat-label>
+              <mat-label>Database Username<span class="required">*</span></mat-label>
               <mat-form-field appearance="outline">
                 <input matInput formControlName="dbUsername">
                 <mat-error class="form-error">
@@ -26,7 +26,7 @@
               </mat-form-field>
             </div>
             <div class="form-group col-md-5">
-              <mat-label>Database Password</mat-label>
+              <mat-label>Database Password<span class="required">*</span></mat-label>
               <mat-form-field appearance="outline">
                 <input matInput formControlName="dbPwd">
                 <mat-error class="form-error">
@@ -35,7 +35,7 @@
               </mat-form-field>
             </div>
             <div class="form-group col-md-5">
-              <mat-label>Database URL</mat-label>
+              <mat-label>Database URL<span class="required">*</span></mat-label>
               <mat-form-field appearance="outline">
                 <input matInput formControlName="dbUrl">
                 <mat-error class="form-error">

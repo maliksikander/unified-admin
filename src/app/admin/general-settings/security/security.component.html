@@ -8,7 +8,7 @@
         <div class="sub-heading-content">
           <form class="form-horizontal form-bordered" [formGroup]="securitySettingForm">
             <div class="form-group col-md-5">
-              <mat-label>Certificate Path</mat-label>
+              <mat-label>Certificate Path<span class="required">*</span></mat-label>
               <mat-form-field appearance="outline">
                 <input matInput formControlName="certificatePath">
                 <mat-error class="form-error">
@@ -17,7 +17,7 @@
               </mat-form-field>
             </div>
             <div class="form-group col-md-5">
-              <mat-label>Certificate Key Path</mat-label>
+              <mat-label>Certificate Key Path<span class="required">*</span></mat-label>
               <mat-form-field appearance="outline">
                 <input matInput formControlName="certificateKeyPath">
                 <mat-error class="form-error">
@@ -26,7 +26,7 @@
               </mat-form-field>
             </div>
             <div class="form-group col-md-5">
-              <mat-label>SSL</mat-label>
+              <mat-label>SSL<span class="required">*</span></mat-label>
               <mat-form-field appearance="outline">
                 <input matInput formControlName="ssl">
                 <mat-error class="form-error">
@@ -35,7 +35,7 @@
               </mat-form-field>
             </div>
             <div class="form-group col-md-5">
-              <mat-label>Certficate Bundle Path</mat-label>
+              <mat-label>Certficate Bundle Path<span class="required">*</span></mat-label>
               <mat-form-field appearance="outline">
                 <input matInput formControlName="certificateBundlePath">
                 <mat-error class="form-error">
@@ -44,7 +44,7 @@
               </mat-form-field>
             </div>
             <div class="form-group col-md-5">
-              <mat-label>Private Key</mat-label>
+              <mat-label>Private Key<span class="required">*</span></mat-label>
               <mat-form-field appearance="outline">
                 <input matInput formControlName="privateKey">
                 <mat-error class="form-error">

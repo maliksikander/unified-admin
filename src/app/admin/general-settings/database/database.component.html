@@ -1,3 +1,6 @@
+<div class="loading-area" *ngIf="spinner">
+  <mat-spinner></mat-spinner>
+</div>
 <div class="container main-custom-container">
   <div class="row">
     <div class="col-sm-12">
@@ -8,61 +11,113 @@
         <div class="sub-heading-content">
           <form class="form-horizontal form-bordered" [formGroup]="databaseSettingForm">
             <div class="form-group col-md-5">
-              <mat-label>Database Username</mat-label>
+              <mat-label>Mongo URL<span class="required">*</span></mat-label>
               <mat-form-field appearance="outline">
-                <input matInput formControlName="dbUsername">
+                <input matInput formControlName="mongoUrl">
                 <mat-error class="form-error">
-                  {{formErrors.dbUsername}}
+                  {{formErrors.mongoUrl}}
                 </mat-error>
               </mat-form-field>
             </div>
             <div class="form-group col-md-5">
-              <mat-label>Database Password</mat-label>
+              <mat-label>EABC DB URL<span class="required">*</span></mat-label>
               <mat-form-field appearance="outline">
-                <input matInput formControlName="dbPwd">
+                <input matInput formControlName="eabcDBUrl">
                 <mat-error class="form-error">
-                  {{formErrors.dbPwd}}
+                  {{formErrors.eabcDBUrl}}
                 </mat-error>
               </mat-form-field>
             </div>
             <div class="form-group col-md-5">
-              <mat-label>Database Dialect</mat-label>
+              <mat-label>EABC DB Driver<span class="required">*</span></mat-label>
               <mat-form-field appearance="outline">
-                <input matInput formControlName="dbDialect">
+                <input matInput formControlName="eabcDBDriver">
                 <mat-error class="form-error">
-                  {{formErrors.dbDialect}}
+                  {{formErrors.eabcDBDriver}}
                 </mat-error>
               </mat-form-field>
             </div>
             <div class="form-group col-md-5">
-              <mat-label>Database Driver</mat-label>
+              <mat-label>EABC DB Dialect<span class="required">*</span></mat-label>
               <mat-form-field appearance="outline">
-                <input matInput formControlName="dbDriver">
+                <input matInput formControlName="eabcDBDialect">
                 <mat-error class="form-error">
-                  {{formErrors.dbDriver}}
+                  {{formErrors.eabcDBDialect}}
                 </mat-error>
               </mat-form-field>
             </div>
             <div class="form-group col-md-5">
-              <mat-label>Database URL</mat-label>
+              <mat-label>EABC DB User<span class="required">*</span></mat-label>
               <mat-form-field appearance="outline">
-                <input matInput formControlName="dbUrl">
+                <input matInput formControlName="eabcDBUser">
                 <mat-error class="form-error">
-                  {{formErrors.dbUrl}}
+                  {{formErrors.eabcDBUser}}
                 </mat-error>
               </mat-form-field>
             </div>
             <div class="form-group col-md-5">
-              <mat-label>Database Engine</mat-label>
+              <mat-label>EABC DB Password<span class="required">*</span></mat-label>
               <mat-form-field appearance="outline">
-                <input matInput formControlName="dbEngine">
+                <input matInput formControlName="eabcDBPwd">
                 <mat-error class="form-error">
-                  {{formErrors.dbEngine}}
+                  {{formErrors.eabcDBPwd}}
                 </mat-error>
               </mat-form-field>
             </div>
-
-
+            <div class="form-group col-md-5">
+              <mat-label>ECM DB URL<span class="required">*</span></mat-label>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="ecmDBUrl">
+                <mat-error class="form-error">
+                  {{formErrors.ecmDBUrl}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-group col-md-5">
+              <mat-label>ECM DB Driver<span class="required">*</span></mat-label>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="ecmDBDriver">
+                <mat-error class="form-error">
+                  {{formErrors.ecmDBDriver}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-group col-md-5">
+              <mat-label>ECM DB Dialect<span class="required">*</span></mat-label>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="ecmDBDialect">
+                <mat-error class="form-error">
+                  {{formErrors.ecmDBDialect}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-group col-md-5">
+              <mat-label>ECM DB User<span class="required">*</span></mat-label>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="ecmDBUser">
+                <mat-error class="form-error">
+                  {{formErrors.ecmDBUser}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-group col-md-5">
+              <mat-label>ECM DB Password<span class="required">*</span></mat-label>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="ecmDBPwd">
+                <mat-error class="form-error">
+                  {{formErrors.ecmDBPwd}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-group col-md-5">
+              <mat-label>ECM DB Engine<span class="required">*</span></mat-label>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="ecmDBEngine">
+                <mat-error class="form-error">
+                  {{formErrors.ecmDBEngine}}
+                </mat-error>
+              </mat-form-field>
+            </div>
             <div class="action-area padding-btn">
 
               <button mat-raised-button class="blue-btn service-trigger" (click)="onSave()">Save</button>

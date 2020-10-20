@@ -8,7 +8,7 @@
         <div class="sub-heading-content">
           <form class="form-horizontal form-bordered" [formGroup]="localeSettingForm">
             <div class="form-group col-md-5">
-              <mat-label>Timezone</mat-label>
+              <mat-label>Timezone<span class="required">*</span></mat-label>
               <mat-form-field appearance="outline">
                 <!-- <input matInput formControlName="timezone"> -->
                 <mat-select formControlName="timezone">
@@ -24,7 +24,7 @@
             </div>
 
             <div class="form-group col-md-5 locale-select-dropdown">
-              <mat-label>Supported Languages</mat-label>
+              <mat-label>Supported Languages<span class="required">*</span></mat-label>
 
               <mat-form-field appearance="outline">
                 <mat-select formControlName="supportedLanguages" multiple>
@@ -53,7 +53,7 @@
             </div>
 
             <div class="form-group col-md-5 lein-height">
-              <mat-label>Default Language</mat-label>
+              <mat-label>Default Language<span class="required">*</span></mat-label>
               <mat-form-field appearance="outline">
                 <mat-select formControlName="language">
                   <input class="search-filter" type="text" [(ngModel)]="searchTerm"

@@ -17,6 +17,10 @@ import { ReportingComponent } from './general-settings/reporting/reporting.compo
 import { AmqComponent } from './general-settings/amq/amq.component';
 import { SecurityComponent } from './general-settings/security/security.component';
 import { FilterPipeModule } from 'ngx-filter-pipe';
+import { EndpointService } from './services/endpoint.service';
+import { HttpInterceptorService } from './services/http-interceptor.service';
+
+
 
 @NgModule({
     imports: [
@@ -41,7 +45,9 @@ import { FilterPipeModule } from 'ngx-filter-pipe';
     ],
     providers: [
         HttpClientModule,
-        SnackbarService
+        SnackbarService,
+        EndpointService,
+        HttpInterceptorService,
     ],
     exports: [],
 

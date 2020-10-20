@@ -27,7 +27,7 @@
 .component-logo {
   display: flex;
   flex-wrap: wrap;
-  span {
+  .logo-msg-span {
     position: absolute;
     top: 45px;
     color: #717171;

@@ -8,7 +8,7 @@
         <div class="sub-heading-content">
           <form class="form-horizontal form-bordered" [formGroup]="logSettingForm">
             <div class="form-group col-md-5">
-              <mat-label>Agent Log Level</mat-label>
+              <mat-label>Agent Log Level<span class="required">*</span></mat-label>
               <mat-form-field appearance="outline">
                 <input matInput formControlName="agentLogLevel">
                 <mat-error class="form-error">
@@ -17,7 +17,7 @@
               </mat-form-field>
             </div>
             <div class="form-group col-md-5">
-              <mat-label>Agent Log Max Files</mat-label>
+              <mat-label>Agent Log Max Files<span class="required">*</span></mat-label>
               <mat-form-field appearance="outline">
                 <input matInput formControlName="agentLogMaxFiles">
                 <mat-error class="form-error">
@@ -26,7 +26,7 @@
               </mat-form-field>
             </div>
             <div class="form-group col-md-5">
-              <mat-label>Agent Logs File Size</mat-label>
+              <mat-label>Agent Logs File Size<span class="required">*</span></mat-label>
               <mat-form-field appearance="outline">
                 <input matInput formControlName="agentLogFileSize">
                 <mat-error class="form-error">
@@ -35,7 +35,7 @@
               </mat-form-field>
             </div>
             <div class="form-group col-md-5">
-              <mat-label>Agent Logs File Path</mat-label>
+              <mat-label>Agent Logs File Path<span class="required">*</span></mat-label>
               <mat-form-field appearance="outline">
                 <input matInput formControlName="agentLogFilePath">
                 <mat-error class="form-error">

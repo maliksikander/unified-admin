@@ -4,9 +4,10 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MainComponent} from './main/main.component';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule,HTTP_INTERCEPTORS} from '@angular/common/http';
 import {AdminModule} from './admin/admin.module';
 import {SharedModule} from './shared/shared.module';
+import { HttpInterceptorService } from './admin/services/http-interceptor.service';
 // import { SearchFilterPipe } from './shared/search-filter.pipe';
 
 @NgModule({
@@ -22,7 +23,9 @@ import {SharedModule} from './shared/shared.module';
     HttpClientModule,
     // FilterPipeModule
   ],
-  providers: [],
+  providers: [ [
+    { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true }
+],],
   bootstrap: [MainComponent],
 })
 export class AppModule { }

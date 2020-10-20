@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {  FormGroup } from '@angular/forms';
+import { SnackbarService } from './snackbar.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 export class CommonService {
   themeVersion = new Subject();
+  _spinnerSubject = new Subject();
 
   amqSettingErrorMessages = {
 
@@ -38,30 +40,53 @@ export class CommonService {
   };
   databaseSettingErrorMessages = {
 
-    'dbUsername': {
+    'mongoUrl': {
       'required': "This field is required",
       'minlength': "More characters required",
       'maxlength': "Less characters required",
       'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
-
     },
-    'dbPwd': {
+    'eabcDBUrl': {
       'required': "This field is required",
       'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
     },
-    'dbDialect': {
+    'eabcDBDriver': {
       'required': "This field is required",
       // 'pattern': this.service_url_pattern
     },
-    'dbDriver': {
+    'eabcDBDialect': {
       'required': "This field is required",
       // 'pattern': this.service_url_pattern
     },
-    'dbUrl': {
+    'eabcDBUser': {
       'required': "This field is required",
       // 'pattern': this.service_url_pattern
     },
-    'dbEngine': {
+    'eabcDBPwd': {
+      'required': "This field is required",
+      // 'pattern': this.service_url_pattern
+    },
+    'ecmDBUrl': {
+      'required': "This field is required",
+      // 'pattern': this.service_url_pattern
+    },
+    'ecmDBDriver': {
+      'required': "This field is required",
+      // 'pattern': this.service_url_pattern
+    },
+    'ecmDBDialect': {
+      'required': "This field is required",
+      // 'pattern': this.service_url_pattern
+    },
+    'ecmDBUser': {
+      'required': "This field is required",
+      // 'pattern': this.service_url_pattern
+    },
+    'ecmDBPwd': {
+      'required': "This field is required",
+      // 'pattern': this.service_url_pattern
+    },
+    'ecmDBEngine': {
       'required': "This field is required",
       // 'pattern': this.service_url_pattern
     }
@@ -178,9 +203,7 @@ export class CommonService {
   };
 
 
-
-
-  constructor() {
+  constructor(private snackbar: SnackbarService) {
   }
 
   logValidationErrors(group: FormGroup, formErrors, validations) {

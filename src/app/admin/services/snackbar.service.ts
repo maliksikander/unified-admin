@@ -8,7 +8,7 @@ export class SnackbarService {
 
     snackbarMessage(panelClass: string , message: string , duration: number ) {
         const config: MatSnackBarConfig = new MatSnackBarConfig();
-        config.duration = duration * 3000;
+        config.duration = duration * 1000;
         config.panelClass = [panelClass];
         // config.verticalPosition='top';
 
