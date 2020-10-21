@@ -213,8 +213,13 @@ export class LocaleComponent implements OnInit {
     }
   }
 
-  test(e) {
-    console.log("change event-->", e);
+  manualDeselect(e) {
+    if (e.value.length == 0) {
+      this.localeSettingForm.controls['supportedLanguages'].setValue([this.languages[0]]);
+    }
+    else {
+      console.log("more");
+    }
   }
 
   panelClose(e) { if (e == false) this.searchTerm = ''; }

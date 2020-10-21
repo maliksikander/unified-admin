@@ -1541,7 +1541,11 @@ snack-bar-container {
 
   mat-spinner {
     margin: 15% auto;
-    stroke: #25afcb !important;
+    stroke: #50bad0 !important;
+  }
+  .mat-progress-spinner circle,
+  .mat-spinner circle {
+    stroke: #50bad0 !important;
   }
 }
 
