@@ -1449,7 +1449,7 @@ mat-sidenav.mat-drawer.mat-sidenav.mat-drawer-over {
 // removing margin bottom from bootstrap form field
 .form-group {
   // input.mat-input-element {
-    margin-bottom: 0px;
+  margin-bottom: 0px;
   // }
 }
 
@@ -1542,5 +1542,12 @@ snack-bar-container {
   mat-spinner {
     margin: 15% auto;
     stroke: #25afcb !important;
+  }
+}
+
+.security-toggle {
+  margin-bottom: 3px;
+  .form-group.col-md-5.padding-btn {
+    margin-bottom: 11px;
   }
 }

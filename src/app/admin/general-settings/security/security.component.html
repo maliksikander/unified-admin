@@ -146,27 +146,28 @@
                 </mat-error>
               </mat-form-field>
             </div>
-            <div class="form-group col-md-5 padding-btn">
-              <mat-label>Bypass SSL</mat-label>
-              <mat-slide-toggle formControlName="commBypassSSL"></mat-slide-toggle>
+            <div class="security-toggle">
+              <div class="form-group col-md-5 padding-btn">
+                <mat-label>Bypass SSL</mat-label>
+                <mat-slide-toggle formControlName="commBypassSSL"></mat-slide-toggle>
+              </div>
+              <div class="form-group col-md-5 padding-btn">
+                <mat-label>Enable SSL</mat-label>
+                <mat-slide-toggle formControlName="enableSSL"></mat-slide-toggle>
+              </div>
+              <div class="form-group col-md-5 padding-btn">
+                <mat-label>Minio SSL</mat-label>
+                <mat-slide-toggle formControlName="minioSSL"></mat-slide-toggle>
+              </div>
+              <div class="form-group col-md-5 padding-btn">
+                <mat-label>Mongo SSL</mat-label>
+                <mat-slide-toggle formControlName="mongoSSL"></mat-slide-toggle>
+              </div>
+              <div class="form-group col-md-5 padding-btn">
+                <mat-label>Stomp SSL</mat-label>
+                <mat-slide-toggle formControlName="stompSSLEnabled"></mat-slide-toggle>
+              </div>
             </div>
-            <div class="form-group col-md-5 padding-btn">
-              <mat-label>Enable SSL</mat-label>
-              <mat-slide-toggle formControlName="enableSSL"></mat-slide-toggle>
-            </div>
-            <div class="form-group col-md-5 padding-btn">
-              <mat-label>Minio SSL</mat-label>
-              <mat-slide-toggle formControlName="minioSSL"></mat-slide-toggle>
-            </div>
-            <div class="form-group col-md-5 padding-btn">
-              <mat-label>Mongo SSL</mat-label>
-              <mat-slide-toggle formControlName="mongoSSL"></mat-slide-toggle>
-            </div>
-            <div class="form-group col-md-5 padding-btn">
-              <mat-label>Stomp SSL</mat-label>
-              <mat-slide-toggle formControlName="stompSSLEnabled"></mat-slide-toggle>
-            </div>
-
 
             <div class="action-area padding-btn">
               <button [disabled]="!securitySettingForm.valid" mat-raised-button class="blue-btn service-trigger"

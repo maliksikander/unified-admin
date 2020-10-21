@@ -11,6 +11,7 @@ export class CommonService {
   themeVersion = new Subject();
   _spinnerSubject = new Subject();
 
+
   amqSettingErrorMessages = {
 
     'amqUsername': {
@@ -263,7 +264,7 @@ export class CommonService {
     },
   };
 
-  constructor(private snackbar: SnackbarService) { }
+  constructor(private snackbar: SnackbarService) {}
 
   logValidationErrors(group: FormGroup, formErrors, validations) {
 
@@ -288,4 +289,5 @@ export class CommonService {
     result = [formErrors, validations];
     return result;
   }
+
 }

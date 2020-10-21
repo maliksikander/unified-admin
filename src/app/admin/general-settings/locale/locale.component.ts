@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { SnackbarService } from '../../services/snackbar.service';
 import { CommonService } from '../../services/common.service'
 import { EndpointService } from '../../services/endpoint.service';
+import { TestBed } from '@angular/core/testing';
 declare var require: any
 @Component({
   selector: 'app-locale',
@@ -28,7 +29,11 @@ export class LocaleComponent implements OnInit {
   timeZones = [];
   searchTerm: string;
   selectedCount = [];
-  selectedLanguages = ["No Languages Selected"];
+  selectedLanguages = [];
+  // selectedLanguages = [
+  //   { code: "en", name: "English", flagUrl: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4A…R5TXHNbuDR2afTMbE/wLKX4rJxQ/68AAAAABJRU5ErkJggg==" },
+  //   { code: "ita", name: "Italian", flagUrl: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4A…S/YWftv60LbgZDGN/WZbzF01s670z3bQWAAAAAElFTkSuQmCC" }
+  // ];
   reqServiceType = 'locale-setting';
   spinner: any = true;
   editData: any;
@@ -46,9 +51,9 @@ export class LocaleComponent implements OnInit {
     this.validations = this.commonService.localeSettingErrorMessages;
 
     this.localeSettingForm = this.fb.group({
-      timezone: ['', [Validators.required]],
-      defaultLanguage: ['', [Validators.required]],
-      supportedLanguages: ['']
+      timezone: [{}, [Validators.required]],
+      defaultLanguage: [{}, [Validators.required]],
+      supportedLanguages: [[], [Validators.required]]
     });
 
     this.timezoneList();
@@ -66,13 +71,30 @@ export class LocaleComponent implements OnInit {
       this.changeDetector.markForCheck();
     });
 
-
   }
 
   onLanguageRemoved(lang) {
-    const languages = this.localeSettingForm.controls['supportedLanguages'].value;;
-    this.removeFirst(languages, lang);
-    this.localeSettingForm.controls.supportedLanguages.setValue(languages);
+
+    const languages = this.localeSettingForm.controls['supportedLanguages'].value;
+    if (languages.length > 1) {
+      if (this.localeSettingForm.value.defaultLanguage.name == lang.name) {
+        const length = this.selectedLanguages.length;
+        const itemIndex = this.selectedLanguages.indexOf(this.localeSettingForm.value.defaultLanguage);
+        let newIndex;
+        if (itemIndex != -1) {
+          if (itemIndex < length - 1) {
+            newIndex = itemIndex + 1;
+          }
+          else {
+            newIndex = itemIndex - 1;
+          }
+        }
+        this.localeSettingForm.controls['defaultLanguage'].setValue(this.localeSettingForm.value.supportedLanguages[newIndex]);
+      }
+      this.removeFirst(languages, lang);
+      this.localeSettingForm.controls.supportedLanguages.setValue(languages);
+
+    }
   }
 
   private removeFirst<T>(array: T[], toRemove: T): void {
@@ -87,57 +109,61 @@ export class LocaleComponent implements OnInit {
     let timeZoneList = moment.tz.names();
     this.timeZones = [];
     if (timeZoneList.length != 0) {
-      timeZoneList.filter((e) => {
-        this.timeZones.push({ "name": e });
-      });
       let i = 1;
-      this.timeZones.forEach(t => {
-        t.id = i;
+      timeZoneList.filter((e) => {
+        this.timeZones.push({ "name": e, "id": i });
         i++;
       });
-      // const index = this.timeZones.findIndex(item => item.name === 'UTC');
-      // this.localeSettingForm.patchValue({
-      // timezone: this.timeZones[index],
-      // supportedLanguages: [this.languages[0]]
-      // });
     }
-    // this.selectedLanguages = this.localeSettingForm.value.supportedLanguages;
+
     this.getLocaleSetting();
   }
 
+  defaultValues() {
+    const index = this.timeZones.findIndex(item => item.name === 'UTC');
+    this.localeSettingForm.patchValue({
+      timezone: this.timeZones[index],
+      supportedLanguages: [this.languages[0]],
+      defaultLanguage: this.languages[0]
+    });
+    this.selectedLanguages = this.localeSettingForm.value.supportedLanguages;
+  }
+
+  supportedLangVal(data) {
+    let temp = [];
+    this.languages.forEach((lang) => {
+      data.forEach((selected) => {
+        if (selected.name == lang.name) temp.push(lang);
+      });
+    });
+    return temp;
+  }
 
   getLocaleSetting() {
-    let savedLanguages = [];
     this.endPointService.getSetting(this.reqServiceType).subscribe(
       (res: any) => {
         this.spinner = false;
-        console.log("res-->", res);
+        // console.log("res-->", res);
         if (res.status == 200 && res.localeSetting.length > 0) {
           this.editData = res.localeSetting[0];
+          this.selectedLanguages = this.editData.supportedLanguages;
+          let supportedTemp = [];
+          if (this.editData && this.editData.supportedLanguages.length > 0) supportedTemp = this.supportedLangVal(this.editData.supportedLanguages);
           const tzIndex = this.timeZones.findIndex(item => item.name === this.editData.timezone.name);
-          savedLanguages = [
-            { code: "en", name: 'English', flagUrl: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABHNCSVQICAgIfAhkiAAABj9JREFUSImtl3tw1FcVxz/n7i+bkITNRkhMIA9ExqojpQK2ULUwFLBghgRsx1EL2nQoBnmER3mIQKltlfJUSigKrQwIFDsjVMY/AAHHqcCUAralpSS2SZOSbVJaFmJ2k93fPf6RbLJLAyyO35md38y9557ved1zzwpJorrh8oji3mk/PHt/2UhPJJKjqjkACM39VixszCub+NqUxfv+eGDtD04lo8+56e7oF9N8npZyj7gLxLoDRRSQjj3p/KLFIlIMjMDo7Kyxm2oguj4Y9b/I8UfCt0c8fk1GlnUqILhAMHnSRXJzqCoCgxCpynKCK+T+DWuuuP6qngwwPSnwW+dxEVkjQl5SjD1AhDyMrPOlBBf1tJ9ArKqebQdObU9P86x0VVAF0CRo4mREAbdz2TJ6cO6q82/Wb9d9+zzxJxJCba19+sclQ8u/NbiIJZuPc/TcR5jkohzHa3DFkJVmWDZtBKX9hUtPLCs/ffG9ZmBJTK7L47ode5e4bW2LDcKg4r7sfup7rJl5H5m9HMBik/JbwY0yZkg/Dj71XcbVnqV+7s/R6nqkoN/iwLF/ViZ4fGzA6LTGdVvmXjv2KkVL55D+xYGkeuHRyYP59tB8lj93FKMaR9Az6efSUnjmpyOYlG9oevJpPqmuAceLb8pEiuY8ipPlX6SqW0UkJAANf3qlsnHztg3y6X9we3nJnzmN/CmToJcXQYi6FrGKaY9wZswUPJH2BML+KxeSWzqR4EeXubL7ZZr3voyJKikFefSbP5O+990LRkCVq6G2edmZ6RsNwO8+7jW/aPsm0r45DE9bG43rq3h77lJa/10HgNdxSPF2l4NKh9exX0dyoX7tRj7e9RIeUvCVTuDLO7fQZ9RIpJP09Pl6xlXsnAcg1Q2BEbieE7nZ6WSkewlfCqCuRa0iaV7S83MRBAXcayHOjpmMJxqJKybot3I+uWUlhJqa0HAY46SSlp9DrDIFsKrUf3iZqAiIZ6QzwJdZ1mG3RVvDpPr9CbmzLaGuvEbCrahIQo6tCLY9gtvSSmpGBmRkdKy3hj5TBwX+9Ji5ZXJi+JjjIKN6qJcEGBWsCJ5oO0a775hFsZ4UMJrUje+A/t1xIjaPJO+qUYBEjwXB40ZJ6r518ZLnCOTdhqk3U3Y7yHP+H5z/CxysBkTIupWgKLjGIFgkLjeqgoi9LY9VCTiFqxYGBLmje/XGzLY9Qt2aKjzRaLwa/JO+g+/rd6G3SrTGPhpwckofOCmYUSogsc4giZKxpWhLiLq1VQm1qEDmXXfSp3Q8IgY01lgUE5NU7RocOjWedMoef2l/plcW/6piLIUF2SAdr5dta6f2hT20vvEGqh4GrVqAN9OHYFCJs14UK4B0v7CRcBvVv9lKtPZ9DIK3fwHFc6az/eAZjp5tIErKfucv6x8+eaE28EFhQU6RoCjC1bfeou7Xm4i8XYMi+ErGkOLzIbYr6j1HsvMhcVK9DKqYyqUde/lkx5+JnDrHuydOM3lhBRm9v1JfXjb8pAG4ozhnA1jccIj3N2/j4oxFtJ+/CJ/PoWj1CppLH+JKqDuv8b26m9Ry4Mg5gi1hEEjJ8lM4awYDtz6L5wsDaG8M8OGiX3L364fWQ9d7bLYG//VO4/nySj59YTfa3o6vZDwFz61jY43Lg8v/SjCU2J+vh0HYcaiGCZV7+MfZOrBgRPAPu5Ov/mEjfad9H2tsIGPnoeeh8z0WkdCpYeNWSCT8e5Ofy4B5s7iQXcBPnjnEhQ9aMB6DucV9UUBNlHfrQzy0bD/TS4awcOrd+Hunk+LzMaDyMfyj7l3eZ/iQcJzHcM/rh7f5Hxi7uvD531L1nsuDvzjIOw3XUNPjPHhjiBB1PVQdeJMJs/fw6rlabEfuV/cZPmRbTCxh5vrSsyuXDL2Ul10TaH3MYAC9rjMnAVVUFAEuNrZStvQVpk/62qbVs8YtiRf7jDtnds2YgepKxCXJcboLsfm765iAtWbV6lnj5lwv22Mcr/5t/pMWM1XRpuQoO9tCwlymTRamXjky94meTtwwgVcPV+4KRvzFCjMVrUku4IJCjbX8LBjxF189XLnrRpI3/+90/JFwELYAW1QevsdV/VFE9RsI+QbJ6ZRqVqUR5TXHNbuDR2afTMbE/wLKX4rJxQ/68AAAAABJRU5ErkJggg==' },
-            { code: "fr", name: 'French', flagUrl: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABHNCSVQICAgIfAhkiAAAAf9JREFUSIm9l0Fu2kAUhv83pFGyqqtE6rIWSFGz865lxw1CbuB10wr3BnACO1LpFuUE5QZlF6RUipsVSZSE7lopqPbOioL/LoDiAEZuMfNtLI9H883zG72ZATJydvHzgKRL8ivJc045H7e5j73rg6zjbSz9aroG1GbtjfXSAcRI6WWNnxWSTmB/CIbdM09F0fGLvh+kDa1SpaWmDfXsDoK6CNKkc4jAgEg93t6+u98rV/9NXPzkAmhBUqPMgiEFfBnsl91s4mKzBRFnBeEszuD129ZycbHpQWDnKB0hYg/2y95icalpQ1DLXTqllsz5SGy6BsiFucgTKaD127SMqVhtOisupKwY8daWMxWD6/zFTxGpAcAGSp+rAHVEO8G43ytXFciKRikAQAqoKMjfkqcNkpYC8Uq3WESeKwhM3WIAVvomsWYUyB/areR3BZG+di8QKBC+brGI+AoiHd1iDtFRuHnXBhHqszLcvTptT1a1t7RzvnjAZJOIHzwtUZOhiqKEuP8xgEj+J49Zbyz25OQ5LSCjXB+vz8rG7tVpe/L6tHLdHjkAT9YgPdnpdevJpvmSefPezjVysrHT686lcXGtvj1yADlcacGRIYc4nI10uRgY5Tx+MEE0CGaeAMEQZENFkZnM6X/z7eJXlaRHskPST1za/HGb93h5mXplmeUPyl7lPr2ykPIAAAAASUVORK5CYII=' }];
-          // savedLanguages.forEach((item) => {
-          //   // item.id = item._id;
-          //   delete item._id
-          // });
-          // console.log("saved language 1-->",this.editData.supportedLanguages);
-          // savedLanguages = this.editData.supportedLanguages;
-
-
-          this.localeSettingForm.patchValue({
+          const defLangIndex = this.languages.findIndex(item => item.name === this.editData.defaultLanguage.name)
+          let value = {
             timezone: this.timeZones[tzIndex],
-            defaultLanguage: this.editData.defaultLanguage,
-            supportedLanguages: savedLanguages,
-          });
-          // this.localeSettingForm.value.supportedLanguages = this.editData.supportedLanguages;
-          console.log(this.selectedLanguages, "<--form value-->", this.localeSettingForm.value);
-
-
+            supportedLanguages: supportedTemp,
+            defaultLanguage: this.languages[defLangIndex],
+          };
+          this.localeSettingForm.setValue(value);
+        }
+        else {
+          this.defaultValues();
         }
       },
       error => {
+        this.defaultValues();
         this.spinner = false;
         console.log("Error fetching:", error);
         if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
@@ -177,15 +203,19 @@ export class LocaleComponent implements OnInit {
   }
 
   onSave() {
-    let data = this.localeSettingForm.value;
-    console.log("data-->", data);
-    // if (this.editData) {
-    //   data.id = this.editData.id;
-    //   this.updateLocaleSetting(data);
-    // }
-    // else {
-    //   this.createLocaleSetting(data);
-    // }
+    let data = JSON.parse(JSON.stringify(this.localeSettingForm.value));
+    if (this.editData) {
+      data.id = this.editData.id;
+      this.updateLocaleSetting(data);
+    }
+    else {
+      this.createLocaleSetting(data);
+    }
   }
 
+  test(e) {
+    console.log("change event-->", e);
+  }
+
+  panelClose(e) { if (e == false) this.searchTerm = ''; }
 }
