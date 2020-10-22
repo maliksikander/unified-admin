@@ -28,12 +28,10 @@ export class LocaleComponent implements OnInit {
   validations;
   timeZones = [];
   searchTerm: string;
+  defLangSearchTerm: string;
+  langSearchTerm: string;
   selectedCount = [];
   selectedLanguages = [];
-  // selectedLanguages = [
-  //   { code: "en", name: "English", flagUrl: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4A…R5TXHNbuDR2afTMbE/wLKX4rJxQ/68AAAAABJRU5ErkJggg==" },
-  //   { code: "ita", name: "Italian", flagUrl: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4A…S/YWftv60LbgZDGN/WZbzF01s670z3bQWAAAAAElFTkSuQmCC" }
-  // ];
   reqServiceType = 'locale-setting';
   spinner: any = true;
   editData: any;
@@ -213,14 +211,7 @@ export class LocaleComponent implements OnInit {
     }
   }
 
-  manualDeselect(e) {
-    if (e.value.length == 0) {
-      this.localeSettingForm.controls['supportedLanguages'].setValue([this.languages[0]]);
-    }
-    else {
-      console.log("more");
-    }
-  }
+  manualDeselect(e) { if (e.value.length == 0) this.localeSettingForm.controls['supportedLanguages'].setValue([this.languages[0]]); }
 
   panelClose(e) { if (e == false) this.searchTerm = ''; }
 }
