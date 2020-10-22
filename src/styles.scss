@@ -1555,3 +1555,20 @@ snack-bar-container {
     margin-bottom: 11px;
   }
 }
+
+.line-height {
+  span {
+    line-height: 16px !important;
+  }
+  .mat-select-arrow-wrapper {
+    // position: absolute;
+    // right: -9px;
+    // border-radius: 0px 5px 5px 0px;
+    top: 0.3px !important;
+    // width: 40px;
+    height: 38.3px !important;
+    // line-height: 30px;
+    // background: #ebebeb;
+    // border-left: 1px solid #c2c2c2;
+  }
+}
