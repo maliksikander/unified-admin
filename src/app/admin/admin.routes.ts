@@ -7,6 +7,11 @@ import { LoggingComponent } from './general-settings/logging/logging.component';
 import { ReportingComponent } from './general-settings/reporting/reporting.component';
 import { AmqComponent } from './general-settings/amq/amq.component';
 import { SecurityComponent } from './general-settings/security/security.component';
+import { AttributeComponent } from './route-settings/attribute/attribute.component';
+import { MrdComponent } from './route-settings/mrd/mrd.component';
+import { PrecisionQueueComponent } from './route-settings/precision-queue/precision-queue.component';
+import { UsersComponent } from './route-settings/users/users.component';
+
 export const adminRoutes: Routes = [
     {
         path: '', component: AdminMainComponent,
@@ -19,6 +24,10 @@ export const adminRoutes: Routes = [
           { path: 'general/reporting-settings', component: ReportingComponent},
           { path: 'general/amq-settings', component: AmqComponent},
           { path: 'general/security-settings', component: SecurityComponent},
+          { path: 'routing/attributes', component: AttributeComponent},
+          { path: 'routing/media-routing-domain', component: MrdComponent},
+          { path: 'routing/precision-queue', component: PrecisionQueueComponent},
+          { path: 'routing/users', component: UsersComponent},
         ]
     }
 ];

@@ -80,10 +80,27 @@
             </mat-expansion-panel>
 
             <mat-expansion-panel>
-              <mat-expansion-panel-header>
-                <i class="material-icons">domain</i>
+              <mat-expansion-panel-header class='header-image-icon'>
+                <!-- <i class="material-icons">domain</i> -->
+                <img src="/assets/images/route-setting.svg" alt="">
                 <span class="sidebar-text">Routing</span>
               </mat-expansion-panel-header>
+              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/routing/attributes']">
+                <img src="/assets/images/attribute.svg" alt="">
+                <span class="sidebar-text">Attributes</span>
+              </a>
+              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/routing/media-routing-domain']">
+                <img src="/assets/images/mrd.svg" alt="">
+                <span class="sidebar-text">MRD's</span>
+              </a>
+              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/routing/precision-queue']">
+                <img src="/assets/images/precision_queue.svg" alt="">
+                <span class="sidebar-text">Precision Queues</span>
+              </a>
+              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/routing/users']">
+                <img src="/assets/images/users.svg" alt="">
+                <span class="sidebar-text">Users</span>
+              </a>
             </mat-expansion-panel>
             <mat-expansion-panel>
               <mat-expansion-panel-header>

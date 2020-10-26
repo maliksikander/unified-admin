@@ -11,16 +11,19 @@
         <div class="sub-heading-content">
           <form class="form-horizontal form-bordered" [formGroup]="logSettingForm">
             <div class="form-group col-md-5">
-              <mat-label>Log Level<span class="required">*</span></mat-label>
+              <mat-label>Log Level</mat-label>
               <mat-form-field appearance="outline">
-                <input matInput formControlName="logLevel">
+                <mat-select formControlName="logLevel">
+                  <mat-option *ngFor="let logVal of logLevel" [value]="logVal">{{logVal | uppercase}}
+                  </mat-option>
+                </mat-select>
                 <mat-error class="form-error">
                   {{formErrors.logLevel}}
                 </mat-error>
               </mat-form-field>
             </div>
             <div class="form-group col-md-5">
-              <mat-label>Logs File Path<span class="required">*</span></mat-label>
+              <mat-label>Logs File Path</mat-label>
               <mat-form-field appearance="outline">
                 <input matInput formControlName="logFilePath">
                 <mat-error class="form-error">
@@ -30,7 +33,7 @@
             </div>
 
             <div class="form-group col-md-5">
-              <mat-label>Agent Logs Max Files<span class="required">*</span></mat-label>
+              <mat-label>Agent Logs Max Files</mat-label>
               <mat-form-field appearance="outline">
                 <input type="number" min="0" matInput formControlName="agentLogsMaxFiles">
                 <mat-error class="form-error">
@@ -40,7 +43,7 @@
             </div>
             <div class="disclaimer-info">
               <div class="form-group col-md-5">
-                <mat-label>Agent Logs File Size<span class="required">*</span></mat-label>
+                <mat-label>Agent Logs File Size</mat-label>
                 <mat-form-field appearance="outline">
                   <input type="number" min="0" matInput formControlName="agentLogsFileSize">
                   <mat-error class="form-error">
@@ -49,7 +52,7 @@
                 </mat-form-field>
               </div>
               <div class="form-group col-md-4" style="padding: 0;">
-                <span class="logo-msg-span">*File size should be in Mb's</span>
+                <span class="logo-msg-span">*File size should be in MB's</span>
               </div>
             </div>
 

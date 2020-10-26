@@ -21,6 +21,7 @@ export class LoggingComponent implements OnInit {
   reqServiceType = 'log-setting';
   spinner: any = true;
   editData: any;
+  logLevel=['all','debug','error','fatal','info','off','trace','warn'];
   constructor(private snackbar: SnackbarService,
     private fb: FormBuilder,
     private commonService: CommonService,
@@ -32,7 +33,7 @@ export class LoggingComponent implements OnInit {
     this.validations = this.commonService.logSettingErrorMessages;
 
     this.logSettingForm = this.fb.group({
-      logLevel: ['', [Validators.required]],
+      logLevel: ['warn', [Validators.required]],
       agentLogsMaxFiles: ['', [Validators.required,Validators.min(1),,Validators.max(1024)]],
       agentLogsFileSize: ['', [Validators.required,Validators.min(1),,Validators.max(1024)]],
       logFilePath: ['', [Validators.required]],

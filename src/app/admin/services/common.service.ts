@@ -264,7 +264,26 @@ export class CommonService {
     },
   };
 
-  constructor(private snackbar: SnackbarService) {}
+  attributeFormErrorMessages = {
+
+    'name': {
+      'required': "This field is required",
+      'minlength': "More characters required",
+      'maxlength': "Less characters required",
+      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+
+    },
+    'description': {
+      'required': "This field is required",
+      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+    },
+    'type': {
+      'required': "This field is required",
+      // 'pattern': this.service_url_pattern
+    },
+  };
+
+  constructor(private snackbar: SnackbarService) { }
 
   logValidationErrors(group: FormGroup, formErrors, validations) {
 

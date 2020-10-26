@@ -19,6 +19,10 @@ import { SecurityComponent } from './general-settings/security/security.componen
 import { FilterPipeModule } from 'ngx-filter-pipe';
 import { EndpointService } from './services/endpoint.service';
 import { HttpInterceptorService } from './services/http-interceptor.service';
+import { AttributeComponent } from './route-settings/attribute/attribute.component';
+import { MrdComponent } from './route-settings/mrd/mrd.component';
+import { PrecisionQueueComponent } from './route-settings/precision-queue/precision-queue.component';
+import { UsersComponent } from './route-settings/users/users.component';
 
 
 
@@ -42,6 +46,10 @@ import { HttpInterceptorService } from './services/http-interceptor.service';
         ReportingComponent,
         AmqComponent,
         SecurityComponent,
+        AttributeComponent,
+        MrdComponent,
+        PrecisionQueueComponent,
+        UsersComponent,
     ],
     providers: [
         HttpClientModule,
