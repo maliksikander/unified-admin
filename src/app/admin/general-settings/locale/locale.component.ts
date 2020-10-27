@@ -1,11 +1,8 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { from, ReplaySubject, Subject } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
 import { SnackbarService } from '../../services/snackbar.service';
 import { CommonService } from '../../services/common.service'
-// import { FilterPipe } from 'ngx-filter-pipe';
-
+declare var require: any
 @Component({
   selector: 'app-locale',
   templateUrl: './locale.component.html',
@@ -27,11 +24,15 @@ export class LocaleComponent implements OnInit {
     supportedLanguages: ''
   };
   validations;
-
+  timeZones = [];
   searchTerm: string;
+  selectedCount=[];
+  selectedLanguages=["No Languages Selected"];
   constructor(private snackbar: SnackbarService,
     private commonService: CommonService,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder) {
+
+  }
 
   ngOnInit() {
 
@@ -43,10 +44,16 @@ export class LocaleComponent implements OnInit {
       supportedLanguages: ['', [Validators.required]]
     });
 
+    this.timezoneList();
+
     this.localeSettingForm.valueChanges.subscribe((data) => {
       let result = this.commonService.logValidationErrors(this.localeSettingForm, this.formErrors, this.validations);
       this.formErrors = result[0];
       this.validations = result[1];
+
+       this.selectedCount = this.localeSettingForm.value.supportedLanguages;
+       this.selectedLanguages = this.localeSettingForm.value.supportedLanguages;
+
     });
   }
 
@@ -62,6 +69,29 @@ export class LocaleComponent implements OnInit {
       array.splice(index, 1);
     }
   }
+
+  timezoneList() {
+    var moment = require('moment-timezone');
+    let timeZoneList = moment.tz.names();
+    this.timeZones = [];
+    if (timeZoneList.length != 0) {
+      timeZoneList.filter((e) => {
+        this.timeZones.push({ "name": e });
+      });
+      let i = 1;
+      this.timeZones.forEach(t => {
+        t.id = i;
+        i++;
+      });
+      const index = this.timeZones.findIndex(item => item.name === 'UTC');
+      this.localeSettingForm.patchValue({
+        timezone: this.timeZones[index],
+        supportedLanguages:[this.languages[0]]
+      });
+    }
+    this.selectedLanguages = this.localeSettingForm.value.supportedLanguages;
+  }
+
 
   onSave() { }
 

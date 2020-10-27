@@ -912,33 +912,8 @@ ngx-charts-pie-chart span.legend-label-color {
   }
 }
 
-.template-action {
-  .action-area {
-    text-align: right;
-    padding-top: 36px;
-    padding-bottom: 26px;
-
-    button {
-      color: #ffffff;
-      margin-left: 10px;
-
-      &.gray-btn {
-        background: #919191;
-      }
-
-      &.green-btn {
-        background: #25cb8d;
-      }
-
-      &.blue-btn {
-        background: #25afcb;
-      }
-
-      &.dark-blue-btn {
-        background: #1c99c0;
-      }
-    }
-  }
+.action-area.padding-btn {
+  width: 42%;
 }
 
 //Custom Modal
@@ -1328,6 +1303,7 @@ a.mat-list-item.active-link {
 }
 
 .service-trigger {
+  float: right;
   .mat-button-wrapper {
     font-weight: bold;
     font-size: 13px;
@@ -1450,11 +1426,11 @@ mat-sidenav-container.main-sidebar.mat-drawer-container.mat-sidenav-container.ma
 
 // gray-border
 mat-sidenav-content.mat-drawer-content.mat-sidenav-content {
-  border: 5px solid #E3E4E5;
+  border: 5px solid #e3e4e5;
   border-bottom: 0;
 }
 mat-sidenav.mat-drawer.mat-sidenav.mat-drawer-over {
-  border: 5px solid #E3E4E5;
+  border: 5px solid #e3e4e5;
   border-right: 0;
   border-bottom: 0;
 }
@@ -1483,5 +1459,70 @@ mat-sidenav.mat-drawer.mat-sidenav.mat-drawer-over {
 input.mat-input-element {
   margin-top: -0.0625em;
   line-height: 18px;
-  color: #8B8B8B;
+  color: #8b8b8b;
+}
+
+//snackbar
+
+snack-bar-container {
+  background: #25cb8d !important;
+  border: 1px solid #25cb8d;
+  color: #fff !important;
+  min-width: 250px !important;
+  font-size: 16px !important;
+  min-height: 40px !important;
+  padding: 0 !important;
+
+  .mat-simple-snackbar {
+    justify-content: center;
+    margin-left: 15px;
+  }
+
+  &:before {
+    content: "";
+    padding: 15px 25px;
+    position: absolute;
+    left: 0;
+    // background-color: #25afcb;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    background-image: url(assets/images/checked.png);
+    background-repeat: no-repeat;
+    background-size: 16px;
+    background-position: center;
+  }
+  &.error-snackbar {
+    border-color: #ff585e;
+    background-color: #ff585e !important;
+
+    &:before {
+      // background-color: #FF585E;
+      background-image: url(assets/images/wrong.png);
+    }
+  }
+}
+
+// locale-setting mat-chip dropdowm
+.locale-select-dropdown {
+  .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 5px 0px 0px 0px;
+  }
+  .mat-select-trigger {
+    top: -4px;
+  }
+  .mat-select-arrow-wrapper {
+    top: 6px !important;
+    height: 39.8px !important;
+  }
+  .mat-chip.mat-standard-chip {
+    font-size: 13px;
+  }
+}
+
+.toggle-save-btn {
+  // .action-area.padding-btn {
+    // width: 42%;
+    margin-top: 3px !important;
+  // }
 }
