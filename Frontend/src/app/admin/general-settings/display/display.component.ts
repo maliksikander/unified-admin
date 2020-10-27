@@ -40,8 +40,8 @@ export class DisplayComponent implements OnInit {
     this.validations = this.commonService.displaySettingErrorMessages;
 
     this.displaySettingForm = this.fb.group({
-      agentAlias: ['', [Validators.required]],
-      companyDisplayName: ['', [Validators.required]],
+      agentAlias: ['', [Validators.required,Validators.maxLength(40)]],
+      companyDisplayName: ['', [Validators.required,Validators.maxLength(40)]],
       companyLogo: ['']
     });
 

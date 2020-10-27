@@ -31,7 +31,8 @@
             <div class="form-group col-md-5">
               <mat-label>Database Password</mat-label>
               <mat-form-field appearance="outline">
-                <input matInput formControlName="rcDBPwd">
+                <input [type]="hide ? 'password' : 'text'" matInput formControlName="rcDBPwd">
+                <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                 <mat-error class="form-error">
                   {{formErrors.rcDBPwd}}
                 </mat-error>

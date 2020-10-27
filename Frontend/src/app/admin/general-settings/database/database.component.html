@@ -58,7 +58,8 @@
             <div class="form-group col-md-5">
               <mat-label>EABC DB Password</mat-label>
               <mat-form-field appearance="outline">
-                <input matInput formControlName="eabcDBPwd">
+                <input [type]="hide1 ? 'password' : 'text'" matInput formControlName="eabcDBPwd">
+                <mat-icon matSuffix (click)="hide1 = !hide1">{{hide1 ? 'visibility_off' : 'visibility'}}</mat-icon>
                 <mat-error class="form-error">
                   {{formErrors.eabcDBPwd}}
                 </mat-error>
@@ -103,7 +104,8 @@
             <div class="form-group col-md-5">
               <mat-label>ECM DB Password</mat-label>
               <mat-form-field appearance="outline">
-                <input matInput formControlName="ecmDBPwd">
+                <input [type]="hide2 ? 'password' : 'text'" matInput formControlName="ecmDBPwd">
+                <mat-icon matSuffix (click)="hide2 = !hide2">{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
                 <mat-error class="form-error">
                   {{formErrors.ecmDBPwd}}
                 </mat-error>

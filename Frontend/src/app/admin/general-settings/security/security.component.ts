@@ -36,6 +36,10 @@ export class SecurityComponent implements OnInit {
   reqServiceType = 'security-setting';
   spinner: any = true;
   editData: any;
+  hide1 = true;
+  hide2 = true;
+  hide3 = true;
+  hide4 = true;
 
   constructor(private snackbar: SnackbarService,
     private fb: FormBuilder,
@@ -48,22 +52,22 @@ export class SecurityComponent implements OnInit {
     this.validations = this.commonService.securitySettingErrorMessages;
 
     this.securitySettingForm = this.fb.group({
-      certificatePath: ['', [Validators.required]],
-      certificateKeypath: ['', [Validators.required]],
-      certificatePassphrase: ['', [Validators.required]],
-      certificateAuthorityPath: ['', [Validators.required]],
-      certificateAuthorityPassphrase: ['', [Validators.required]],
-      keystorePath: ['', [Validators.required]],
-      keystorePwd: ['', [Validators.required]],
-      truststorePath: ['', [Validators.required]],
-      truststorePwd: ['', [Validators.required]],
-      jksKeystorePath: ['', [Validators.required]],
-      jksKeystorePwd: ['', [Validators.required]],
-      jksKeymanagerPwd: ['', [Validators.required]],
-      amqCertificatePath: ['', [Validators.required]],
-      amqCertificatePassphrase: ['', [Validators.required]],
-      corsOrigin: ['', [Validators.required]],
-      commBypassSSL: [false],
+      certificatePath: ['', [Validators.required,Validators.maxLength(256)]],
+      certificateKeypath: ['', [Validators.required,Validators.maxLength(256)]],
+      certificatePassphrase: ['', [Validators.required,Validators.maxLength(256)]],
+      certificateAuthorityPath: ['', [Validators.required,Validators.maxLength(256)]],
+      certificateAuthorityPassphrase: ['', [Validators.required,Validators.maxLength(256)]],
+      keystorePath: ['', [Validators.required,Validators.maxLength(256)]],
+      keystorePwd: ['', [Validators.required,Validators.maxLength(256)]],
+      truststorePath: ['', [Validators.required,Validators.maxLength(256)]],
+      truststorePwd: ['', [Validators.required,Validators.maxLength(256)]],
+      jksKeystorePath: ['', [Validators.required,Validators.maxLength(256)]],
+      jksKeystorePwd: ['', [Validators.required,Validators.maxLength(256)]],
+      jksKeymanagerPwd: ['', [Validators.required,Validators.maxLength(256)]],
+      amqCertificatePath: ['', [Validators.required,Validators.maxLength(256)]],
+      amqCertificatePassphrase: ['', [Validators.required,Validators.maxLength(256)]],
+      corsOrigin: ['', [Validators.required,Validators.maxLength(40)]],
+      commBypassSSL: [true],
       enableSSL: [true],
       minioSSL: [true],
       mongoSSL: [true],

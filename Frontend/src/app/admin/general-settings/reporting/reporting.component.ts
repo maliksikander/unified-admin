@@ -21,6 +21,7 @@ export class ReportingComponent implements OnInit {
   reqServiceType = 'report-setting';
   spinner: any = true;
   editData: any;
+  hide = true;
 
   constructor(private snackbar: SnackbarService,
     private fb: FormBuilder,
@@ -34,10 +35,10 @@ export class ReportingComponent implements OnInit {
 
     this.reportSettingForm = this.fb.group({
       reportingEnabled: [true],
-      rcDBUrl: ['', [Validators.required]],
-      rcDBUser: ['', [Validators.required]],
-      rcDBPwd: ['', [Validators.required]],
-      rcDBName: ['', [Validators.required]],
+      rcDBUrl: ['', [Validators.required,Validators.pattern(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/)]],
+      rcDBUser: ['', [Validators.required,Validators.maxLength(40)]],
+      rcDBPwd: ['', [Validators.required,Validators.maxLength(256)]],
+      rcDBName: ['', [Validators.required,Validators.maxLength(40)]],
     });
     this.reportSettingForm.valueChanges.subscribe((data) => {
       let result = this.commonService.logValidationErrors(this.reportSettingForm, this.formErrors, this.validations);

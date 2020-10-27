@@ -36,7 +36,7 @@ export class LoggingComponent implements OnInit {
       logLevel: ['warn', [Validators.required]],
       agentLogsMaxFiles: ['', [Validators.required,Validators.min(1),,Validators.max(1024)]],
       agentLogsFileSize: ['', [Validators.required,Validators.min(1),,Validators.max(1024)]],
-      logFilePath: ['', [Validators.required]],
+      logFilePath: ['', [Validators.required,Validators.maxLength(256)]],
     });
 
     this.logSettingForm.valueChanges.subscribe((data) => {

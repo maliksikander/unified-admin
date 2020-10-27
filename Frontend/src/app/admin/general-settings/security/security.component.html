@@ -95,7 +95,8 @@
             <div class="form-group col-md-5">
               <mat-label>Keystore Pwd</mat-label>
               <mat-form-field appearance="outline">
-                <input matInput formControlName="keystorePwd">
+                <input [type]="hide1 ? 'password' : 'text'" matInput formControlName="keystorePwd">
+                <mat-icon matSuffix (click)="hide1 = !hide1">{{hide1 ? 'visibility_off' : 'visibility'}}</mat-icon>
                 <mat-error class="form-error">
                   {{formErrors.keystorePwd}}
                 </mat-error>
@@ -113,7 +114,8 @@
             <div class="form-group col-md-5">
               <mat-label>Truststore Pwd</mat-label>
               <mat-form-field appearance="outline">
-                <input matInput formControlName="truststorePwd">
+                <input [type]="hide2 ? 'password' : 'text'" matInput formControlName="truststorePwd">
+                <mat-icon matSuffix (click)="hide2 = !hide2">{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
                 <mat-error class="form-error">
                   {{formErrors.keystorePath}}
                 </mat-error>
@@ -131,7 +133,8 @@
             <div class="form-group col-md-5">
               <mat-label>JKS Keystore Password</mat-label>
               <mat-form-field appearance="outline">
-                <input matInput formControlName="jksKeystorePwd">
+                <input [type]="hide3 ? 'password' : 'text'" matInput formControlName="jksKeystorePwd">
+                <mat-icon matSuffix (click)="hide3 = !hide3">{{hide3 ? 'visibility_off' : 'visibility'}}</mat-icon>
                 <mat-error class="form-error">
                   {{formErrors.jksKeystorePwd}}
                 </mat-error>
@@ -140,7 +143,8 @@
             <div class="form-group col-md-5">
               <mat-label>JKS Key Manager Password</mat-label>
               <mat-form-field appearance="outline">
-                <input matInput formControlName="jksKeymanagerPwd">
+                <input [type]="hide4 ? 'password' : 'text'" matInput formControlName="jksKeymanagerPwd">
+                <mat-icon matSuffix (click)="hide4 = !hide4">{{hide4 ? 'visibility_off' : 'visibility'}}</mat-icon>
                 <mat-error class="form-error">
                   {{formErrors.jksKeymanagerPwd}}
                 </mat-error>

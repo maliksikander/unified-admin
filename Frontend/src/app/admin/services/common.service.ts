@@ -14,27 +14,33 @@ export class CommonService {
 
   amqSettingErrorMessages = {
 
-    'amqUsername': {
+    'amqUser': {
       'required': "This field is required",
       'minlength': "More characters required",
-      'maxlength': "Less characters required",
+      'maxlength': "Max 40 characters allowed",
       'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
 
     },
     'amqPwd': {
       'required': "This field is required",
+      'maxlength': "Max 256 characters allowed",
       'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
     },
     'amqHost': {
       'required': "This field is required",
+      'maxlength': "Max 256 characters allowed",
       // 'pattern': this.service_url_pattern
     },
     'amqPort': {
       'required': "This field is required",
+      'min': "Enter valid port number",
+      'max': "Enter valid port number",
+      'pattern': 'Enter valid port number'
       // 'pattern': this.service_url_pattern
     },
     'amqUrl': {
       'required': "This field is required",
+      'pattern': 'Enter a valid url'
       // 'pattern': this.service_url_pattern
     }
 
@@ -45,50 +51,61 @@ export class CommonService {
       'required': "This field is required",
       'minlength': "More characters required",
       'maxlength': "Less characters required",
-      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+      'pattern': 'Enter a valid url'
     },
     'eabcDBUrl': {
       'required': "This field is required",
-      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+      'maxlength': "Max 256 characters allowed",
+      'pattern': 'Enter a valid url'
     },
     'eabcDBDriver': {
       'required': "This field is required",
+      'maxlength': "Max 256 characters allowed",
       // 'pattern': this.service_url_pattern
     },
     'eabcDBDialect': {
       'required': "This field is required",
+      'maxlength': "Max 256 characters allowed",
       // 'pattern': this.service_url_pattern
     },
     'eabcDBUser': {
       'required': "This field is required",
+      'maxlength': "Max 40 characters allowed",
       // 'pattern': this.service_url_pattern
     },
     'eabcDBPwd': {
       'required': "This field is required",
+      'maxlength': "Max 256 characters allowed",
       // 'pattern': this.service_url_pattern
     },
     'ecmDBUrl': {
       'required': "This field is required",
-      // 'pattern': this.service_url_pattern
+      'maxlength': "Max 256 characters allowed",
+      'pattern': 'Enter a valid url'
     },
     'ecmDBDriver': {
       'required': "This field is required",
+      'maxlength': "Max 256 characters allowed",
       // 'pattern': this.service_url_pattern
     },
     'ecmDBDialect': {
       'required': "This field is required",
+      'maxlength': "Max 256 characters allowed",
       // 'pattern': this.service_url_pattern
     },
     'ecmDBUser': {
       'required': "This field is required",
+      'maxlength': "Max 40 characters allowed",
       // 'pattern': this.service_url_pattern
     },
     'ecmDBPwd': {
       'required': "This field is required",
+      'maxlength': "Max 256 characters allowed",
       // 'pattern': this.service_url_pattern
     },
     'ecmDBEngine': {
       'required': "This field is required",
+      'maxlength': "Max 256 characters allowed",
       // 'pattern': this.service_url_pattern
     }
 
@@ -98,12 +115,13 @@ export class CommonService {
     'agentAlias': {
       'required': "This field is required",
       'minlength': "More characters required",
-      'maxlength': "Less characters required",
+      'maxlength': "Max 40 characters allowed",
       'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
 
     },
     'companyDisplayName': {
       'required': "This field is required",
+      'maxlength': "Max 40 characters allowed",
       'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
     },
     'companyLogo': {
@@ -153,6 +171,7 @@ export class CommonService {
     },
     'logFilePath': {
       'required': "This field is required",
+      'maxlength': "Max 256 characters allowed",
       // 'pattern': this.service_url_pattern
     }
 
@@ -162,21 +181,23 @@ export class CommonService {
     'rcDBName': {
       'required': "This field is required",
       'minlength': "More characters required",
-      'maxlength': "Less characters required",
+      'maxlength': "Max 40 characters allowed",
       'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
 
     },
     'rcDBUser': {
       'required': "This field is required",
+      'maxlength': "Max 40 characters allowed",
       'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
     },
     'rcDBPwd': {
       'required': "This field is required",
+      'maxlength': "Max 256 characters allowed",
       // 'pattern': this.service_url_pattern
     },
     'rcDBUrl': {
       'required': "This field is required",
-      // 'pattern': this.service_url_pattern
+      'pattern': 'Enter a valid url'
     }
 
   };
@@ -184,62 +205,77 @@ export class CommonService {
 
     'certificatePath': {
       'required': "This field is required",
+      'maxlength': "Max 256 characters allowed",
       // 'pattern': this.service_url_pattern
     },
     'certificateKeypath': {
       'required': "This field is required",
+      'maxlength': "Max 256 characters allowed"
       // 'pattern': this.service_url_pattern
     },
     'certificatePassphrase': {
       'required': "This field is required",
+      'maxlength': "Max 256 characters allowed"
       // 'pattern': this.service_url_pattern
     },
     'certificateAuthorityPath': {
       'required': "This field is required",
+      'maxlength': "Max 256 characters allowed"
       // 'pattern': this.service_url_pattern
     },
     'certificateAuthorityPassphrase': {
       'required': "This field is required",
+      'maxlength': "Max 256 characters allowed"
       // 'pattern': this.service_url_pattern
     },
     'keystorePath': {
       'required': "This field is required",
+      'maxlength': "Max 256 characters allowed"
       // 'pattern': this.service_url_pattern
     },
     'keystorePwd': {
       'required': "This field is required",
+      'maxlength': "Max 256 characters allowed"
       // 'pattern': this.service_url_pattern
     },
     'truststorePath': {
       'required': "This field is required",
+      'maxlength': "Max 256 characters allowed"
       // 'pattern': this.service_url_pattern
     },
     'truststorePwd': {
       'required': "This field is required",
+      'maxlength': "Max 256 characters allowed"
       // 'pattern': this.service_url_pattern
     },
     'jksKeystorePath': {
       'required': "This field is required",
+      'maxlength': "Max 256 characters allowed"
       // 'pattern': this.service_url_pattern
     },
     'jksKeystorePwd': {
       'required': "This field is required",
+      'maxlength': "Max 256 characters allowed"
       // 'pattern': this.service_url_pattern
     },
     'jksKeymanagerPwd': {
       'required': "This field is required",
+      'maxlength': "Max 256 characters allowed"
       // 'pattern': this.service_url_pattern
     },
     'amqCertificatePath': {
       'required': "This field is required",
+      'maxlength': "Max 256 characters allowed"
       // 'pattern': this.service_url_pattern
     },
     'amqCertificatePassphrase': {
       'required': "This field is required",
+      'maxlength': "Max 256 characters allowed"
       // 'pattern': this.service_url_pattern
     },
     'corsOrigin': {
       'required': "This field is required",
+      'maxlength': "Max 40 characters allowed"
       // 'pattern': this.service_url_pattern
     },
     'commBypassSSL': {

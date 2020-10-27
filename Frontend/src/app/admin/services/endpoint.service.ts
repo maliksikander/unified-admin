@@ -19,7 +19,7 @@ export class EndpointService {
     private _router: Router) {
 
     // this.endpointUrl = location.origin + "/v1";
-    this.endpointUrl = "http://localhost:3000/v1";
+    this.endpointUrl = "http://localhost:3000/api";
 
   }
 

@@ -12,7 +12,7 @@ import { SnackbarService } from '../../services/snackbar.service';
 export class AmqComponent implements OnInit {
   amqSettingForm: FormGroup;
   formErrors = {
-    amqUsername: '',
+    amqUser: '',
     amqPwd: '',
     amqHost: '',
     amqPort: '',
@@ -22,7 +22,7 @@ export class AmqComponent implements OnInit {
   reqServiceType = 'amq-setting';
   spinner: any = true;
   editData: any;
-
+  hide = true;
 
   constructor(private snackbar: SnackbarService,
     private fb: FormBuilder,
@@ -35,11 +35,11 @@ export class AmqComponent implements OnInit {
     this.validations = this.commonService.amqSettingErrorMessages;
 
     this.amqSettingForm = this.fb.group({
-      amqUser: ['', [Validators.required]],
-      amqPwd: ['', [Validators.required]],
-      amqHost: ['', [Validators.required]],
-      amqPort: ['', [Validators.required]],
-      amqUrl: ['', [Validators.required]],
+      amqUser: ['', [Validators.required,Validators.maxLength(40)]],
+      amqPwd: ['', [Validators.required,Validators.maxLength(256)]],
+      amqHost: ['', [Validators.required,Validators.maxLength(256)]],
+      amqPort: ['', [Validators.required,Validators.min(10),Validators.max(10000)]],
+      amqUrl: ['', [Validators.required,Validators.pattern(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/)]],
     });
 
     this.amqSettingForm.valueChanges.subscribe((data) => {
@@ -65,7 +65,7 @@ export class AmqComponent implements OnInit {
           this.editData = res.amqSetting[0];
           this.amqSettingForm.patchValue({
             amqHost: this.editData.amqHost,
-            amqPort: this.editData.amqPort,
+            amqPort: JSON.parse(this.editData.amqPort),
             amqUser: this.editData.amqUser,
             amqPwd: this.editData.amqPwd,
             amqUrl: this.editData.amqUrl,
@@ -113,6 +113,7 @@ export class AmqComponent implements OnInit {
 
   onSave() {
     let data = this.amqSettingForm.value;
+    data.amqPort = JSON.stringify(this.amqSettingForm.value.amqPort)
     if (this.editData) {
       data.id = this.editData.id;
       this.updateAmqSetting(data);

@@ -1672,3 +1672,12 @@ snack-bar-container {
     line-height: 20px;
   }
 }
+
+.form-group {
+  .mat-form-field:not(.mat-form-field-appearance-legacy)
+    .mat-form-field-suffix
+    .mat-icon {
+    color: #8b8b8b;
+    cursor: pointer;
+  }
+}

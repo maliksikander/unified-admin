@@ -15,14 +15,15 @@
               <mat-form-field appearance="outline">
                 <input matInput formControlName="amqUser">
                 <mat-error class="form-error">
-                  {{formErrors.amqUsername}}
+                  {{formErrors.amqUser}}
                 </mat-error>
               </mat-form-field>
             </div>
             <div class="form-group col-md-5">
               <mat-label>AMQ Password</mat-label>
               <mat-form-field appearance="outline">
-                <input matInput formControlName="amqPwd">
+                <input [type]="hide ? 'password' : 'text'" matInput formControlName="amqPwd">
+                <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                 <mat-error class="form-error">
                   {{formErrors.amqPwd}}
                 </mat-error>
@@ -40,7 +41,7 @@
             <div class="form-group col-md-5">
               <mat-label>AMQ Port</mat-label>
               <mat-form-field appearance="outline">
-                <input matInput formControlName="amqPort">
+                <input type="number" matInput formControlName="amqPort">
                 <mat-error class="form-error">
                   {{formErrors.amqPort}}
                 </mat-error>
