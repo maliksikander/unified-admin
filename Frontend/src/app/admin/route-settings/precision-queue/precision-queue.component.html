@@ -1,3 +1,162 @@
-<p>
-  precision-queue works!
-</p>
+<div class="loading-area" *ngIf="spinner">
+  <mat-spinner></mat-spinner>
+</div>
+<div class="container main-custom-container">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel-body">
+        <div class="sub-heading">
+          <h2>Precision Queue Setting</h2>
+        </div>
+        <div class="routing-content">
+          <div class="filter-section">
+            <div class="form-group">
+              <mat-form-field appearance="outline">
+                <input matInput [(ngModel)]="searchTerm" placeholder="Search">
+                <mat-icon>search</mat-icon>
+              </mat-form-field>
+            </div>
+
+            <button mat-flat-button (click)="openModal(newQueue)">
+              <mat-icon>add</mat-icon>
+              Create Queue
+            </button>
+          </div>
+
+          <div class="routing-table">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Associated MRD</th>
+                  <th scope="col">Agent Criteria</th>
+                  <th scope="col">Service Level Type</th>
+                  <th scope="col">Service Level Threshold</th>
+                </tr>
+              </thead>
+              <!-- <tbody>
+                <ng-container *ngIf="dataBool">
+                  <tr
+                    *ngFor="let data of wallBoardData  | filterBy : searchTerm | paginate: { itemsPerPage: 10, currentPage: p }">
+                    <td scope="row"><span style="cursor: default;">{{data.name ? data.name : 'N/A'}}</span>
+                    </td>
+                    <td class="table-trigger">
+                      <span class="list-trigger-area">
+                        {{data.active ? 'Active' : 'Not Active'}}
+                                <mat-slide-toggle (change)="onChange($event,data)" [checked]="data.active">
+                                </mat-slide-toggle>
+
+                        <button matTooltip={{edit_text}} (click)="editDashBoard(data)" mat-mini-fab><i
+                            class="fa fa-pencil" aria-hidden="true"></i>
+                        </button>
+
+                        <button matTooltip={{link_text}} (click)="randomString(data.id)" mat-mini-fab><i
+                            class="fa fa-link" aria-hidden="true"></i>
+                        </button>
+
+                        <button matTooltip={{embedded_code_text}}
+                          (click)="embeddedCodeDialog(embeddedCodeModal,data.id)" mat-mini-fab><i class="fa fa-code"
+                            aria-hidden="true"></i>
+                        </button>
+
+                        <button matTooltip={{delete_text}} (click)="deleteConfirm(data)" mat-mini-fab><i
+                            class="fa fa-trash-o" aria-hidden="true"></i>
+                        </button>
+
+                        <button matTooltip={{copy_text}} (click)="copy(data)" mat-mini-fab><i class="fa fa-files-o"
+                            aria-hidden="true"></i>
+                        </button>
+                      </span>
+                    </td>
+                    <td style="cursor: default;">{{data.updatedOn | date }}</td>
+                    <td>{{data.updatedBy ? data.updatedBy : 'N/A'}}</td>
+                  </tr>
+                </ng-container>
+              </tbody> -->
+            </table>
+            <!-- <pagination-controls *ngIf="dataBool" (pageChange)="p = $event;pageChange($event)" previousLabel=""
+              nextLabel="" maxSize='7'></pagination-controls>
+            <h3 *ngIf="!dataBool" class="noData" translate>No_data</h3> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #newQueue>
+    <div class="dialog-container">
+      <div class="mat-card-header">
+        <mat-icon (click)="onClose()">close</mat-icon>
+        <h4 class="content-span full-width">{{formHeading}}</h4>
+      </div>
+      <div class="dialog-content">
+        <form class="form-horizontal form-bordered" [formGroup]="queueForm">
+          <div class="form-group">
+            <mat-label>Name</mat-label>
+            <mat-form-field appearance="outline">
+              <input matInput formControlName="name">
+              <mat-error class="form-error">
+                {{formErrors.name}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-label>Associated MRD</mat-label>
+            <mat-form-field appearance="outline">
+              <mat-select formControlName="associatedMrd">
+                <!-- <mat-option *ngFor="let criteria of agentCriteria" [value]="criteria">{{criteria | titlecase}} -->
+                <!-- </mat-option> -->
+                <mat-option>Item 1</mat-option>
+              </mat-select>
+              <mat-error class="form-error">
+                {{formErrors.associatedMrd}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-label>Agent Selection Criteria</mat-label>
+            <mat-form-field appearance="outline">
+              <mat-select formControlName="agentCriteria">
+                <mat-option *ngFor="let criteria of agentCriteria" [value]="criteria">{{criteria | titlecase}}
+                </mat-option>
+              </mat-select>
+              <mat-error class="form-error">
+                {{formErrors.agentCriteria}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-label>Service Level Type</mat-label>
+            <mat-form-field appearance="outline">
+              <mat-select formControlName="serviceLevelType">
+                <mat-option *ngFor="let type of serviceLevelType" [value]="type">{{type | titlecase}}
+                </mat-option>
+              </mat-select>
+              <mat-error class="form-error">
+                {{formErrors.serviceLevelType}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-label>Service Level Threshold</mat-label>
+            <mat-form-field appearance="outline">
+              <input type="number" min="1" max="10" matInput formControlName="serviceLevelThreshold">
+              <mat-error class="form-error">
+                {{formErrors.serviceLevelThreshold}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="template-action row">
+            <div class="col-md-12">
+              <div class="form-action-area">
+                <button mat-raised-button (click)="onClose()" class="gray-btn">Cancel</button>
+                <button mat-raised-button [disabled]="!queueForm.valid" (click)="onSave()" [mat-dialog-close]="true"
+                  class="blue-btn service-trigger">Create MRD</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-template>

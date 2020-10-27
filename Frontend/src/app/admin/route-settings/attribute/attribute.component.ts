@@ -22,6 +22,7 @@ export class AttributeComponent implements OnInit {
   validations;
   attributeForm: FormGroup;
   attrType = ['boolean', 'proficiency'];
+  formHeading ='Add New Attribute';
 
   constructor(
     private commonService: CommonService,
@@ -51,8 +52,8 @@ export class AttributeComponent implements OnInit {
   openModal(templateRef) {
     this.attributeForm.reset();
     let dialogRef = this.dialog.open(templateRef, {
-      width: '525px',
-      height: '375px',
+      width: '550px',
+      height: '400px',
       panelClass: 'add-attribute',
       disableClose: true,
     });

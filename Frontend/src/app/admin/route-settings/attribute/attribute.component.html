@@ -6,7 +6,7 @@
     <div class="col-sm-12">
       <div class="panel-body">
         <div class="sub-heading">
-          <h2>Attribute Settings</h2>
+          <h2>Attribute Setting</h2>
         </div>
         <div class="routing-content">
           <div class="filter-section">
@@ -86,7 +86,7 @@
     <div class="dialog-container">
       <div class="mat-card-header">
         <mat-icon (click)="onClose()">close</mat-icon>
-        <h4 class="content-span full-width">Add New Attribute</h4>
+        <h4 class="content-span full-width">{{formHeading}}</h4>
       </div>
       <div class="dialog-content">
         <form class="form-horizontal form-bordered" [formGroup]="attributeForm">
@@ -109,27 +109,27 @@
             </mat-form-field>
           </div>
 
-          <div class="form-group">
-            <mat-label>Type</mat-label>
-            <mat-form-field appearance="outline">
-              <mat-select formControlName="type">
-                <mat-option *ngFor="let type of attrType" [value]="type">{{type | titlecase}}
-                </mat-option>
-              </mat-select>
-              <mat-error class="form-error">
-                {{formErrors.type}}
-              </mat-error>
-            </mat-form-field>
+          <div [ngClass]="{'attribute-type-value': attributeForm.value.type == 'boolean'}">
+            <div class="form-group" [ngClass]="{'col-md-8': attributeForm.value.type == 'boolean'}">
+              <mat-label>Type</mat-label>
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="type">
+                  <mat-option *ngFor="let type of attrType" [value]="type">{{type | titlecase}}
+                  </mat-option>
+                </mat-select>
+                <mat-error class="form-error">
+                  {{formErrors.type}}
+                </mat-error>
+              </mat-form-field>
+            </div>
 
-            <div [ngStyle]="{'padding':attributeForm.value.type === 'boolean' ? '10px 0px' : '0px' }"
-              class="def-padding" *ngIf="attributeForm.value.type">
+            <div *ngIf="attributeForm.value.type" class="form-group" [ngClass]="{'col-md-4': attributeForm.value.type == 'boolean'}">
               <mat-label>Default Value</mat-label>
-              <mat-slider *ngIf="attributeForm.value.type == 'proficiency'" formControlName="profVal" thumbLabel
-                [displayWith]="formatLabel" tickInterval="1" min="0" max="10"></mat-slider>
+              <mat-slider *ngIf="attributeForm.value.type == 'proficiency'" formControlName="profVal" thumbLabel [displayWith]="formatLabel" tickInterval="1" min="0"
+                max="10"></mat-slider>
               <mat-slide-toggle *ngIf="attributeForm.value.type == 'boolean'" formControlName="boolVal">
               </mat-slide-toggle>
             </div>
-
           </div>
           <div class="template-action row">
             <div class="col-md-12">

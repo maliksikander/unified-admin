@@ -319,6 +319,56 @@ export class CommonService {
     },
   };
 
+
+  mrdFormErrorMessages = {
+
+    'name': {
+      'required': "This field is required",
+      'minlength': "More characters required",
+      'maxlength': "Less characters required",
+      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+
+    },
+    'description': {
+      'required': "This field is required",
+      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+    },
+    'enabled': {
+      'required': "This field is required",
+      // 'pattern': this.service_url_pattern
+    },
+  };
+
+
+  queueFormErrorMessages = {
+
+    'name': {
+      'required': "This field is required",
+      'minlength': "More characters required",
+      'maxlength': "Less characters required",
+      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+
+    },
+    'associatedMrd': {
+      'required': "This field is required",
+      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+    },
+    'agentCriteria': {
+      'required': "This field is required",
+      // 'pattern': this.service_url_pattern
+    },
+    'serviceLevelType': {
+      'required': "This field is required",
+      // 'pattern': this.service_url_pattern
+    },
+    'serviceLevelThreshold': {
+      'required': "This field is required",
+      'min': "Min 1 second required",
+      'max': "Max 10 seconds allowed",
+      // 'pattern': this.service_url_pattern
+    },
+  };
+
   constructor(private snackbar: SnackbarService) { }
 
   logValidationErrors(group: FormGroup, formErrors, validations) {

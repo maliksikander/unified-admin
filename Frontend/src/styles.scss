@@ -1681,3 +1681,25 @@ snack-bar-container {
     cursor: pointer;
   }
 }
+
+.attribute-type-value {
+  display: flex;
+  align-items: flex-start;
+
+  .form-group.col-md-8 {
+    padding: 0 !important;
+  }
+
+  .form-group.col-md-4 {
+    padding-left: 50px;
+  }
+  mat-slide-toggle {
+    position: relative;
+    top: 8px;
+  }
+}
+.form-group {
+  mat-slider {
+    width: 100%;
+  }
+}
