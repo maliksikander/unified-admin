@@ -29,49 +29,29 @@
                 <tr>
                   <th scope="col">Name</th>
                   <th scope="col">Description</th>
-                  <th></th>
                   <th scope="col">Status</th>
                 </tr>
               </thead>
-              <!-- <tbody>
-                <ng-container *ngIf="dataBool">
-                  <tr
-                    *ngFor="let data of wallBoardData  | filterBy : searchTerm | paginate: { itemsPerPage: 10, currentPage: p }">
-                    <td scope="row"><span style="cursor: default;">{{data.name ? data.name : 'N/A'}}</span>
-                    </td>
+              <tbody>
+                <ng-container>
+                  <tr *ngFor="let data of mrdData">
+                    <td scope="row">{{data.Name ? data.Name : 'N/A'}}</td>
+                    <td >{{data.Description ? data.Description : 'N/A'}}</td>
                     <td class="table-trigger">
+                      <mat-slide-toggle (change)="onStatusChange($event,data)" [checked]="data.Interruptible"> </mat-slide-toggle>
+
                       <span class="list-trigger-area">
-                        {{data.active ? 'Active' : 'Not Active'}}
-                                <mat-slide-toggle (change)="onChange($event,data)" [checked]="data.active">
-                                </mat-slide-toggle>
-
-                        <button matTooltip={{edit_text}} (click)="editDashBoard(data)" mat-mini-fab><i
-                            class="fa fa-pencil" aria-hidden="true"></i>
-                        </button>
-
-                        <button matTooltip={{link_text}} (click)="randomString(data.id)" mat-mini-fab><i
-                            class="fa fa-link" aria-hidden="true"></i>
-                        </button>
-
-                        <button matTooltip={{embedded_code_text}}
-                          (click)="embeddedCodeDialog(embeddedCodeModal,data.id)" mat-mini-fab><i class="fa fa-code"
+                        <button matTooltip="Edit" (click)="editMrd(newMrd,data)" mat-mini-fab><i class="fa fa-pencil"
                             aria-hidden="true"></i>
                         </button>
-
-                        <button matTooltip={{delete_text}} (click)="deleteConfirm(data)" mat-mini-fab><i
-                            class="fa fa-trash-o" aria-hidden="true"></i>
-                        </button>
-
-                        <button matTooltip={{copy_text}} (click)="copy(data)" mat-mini-fab><i class="fa fa-files-o"
+                        <button matTooltip="Delete" (click)="deleteConfirm(data)" mat-mini-fab><i class="fa fa-trash-o"
                             aria-hidden="true"></i>
                         </button>
                       </span>
                     </td>
-                    <td style="cursor: default;">{{data.updatedOn | date }}</td>
-                    <td>{{data.updatedBy ? data.updatedBy : 'N/A'}}</td>
                   </tr>
                 </ng-container>
-              </tbody> -->
+              </tbody>
             </table>
             <!-- <pagination-controls *ngIf="dataBool" (pageChange)="p = $event;pageChange($event)" previousLabel=""
               nextLabel="" maxSize='7'></pagination-controls>
@@ -120,7 +100,7 @@
               <div class="form-action-area">
                 <button mat-raised-button (click)="onClose()" class="gray-btn">Cancel</button>
                 <button mat-raised-button [disabled]="!mrdForm.valid" (click)="onSave()" [mat-dialog-close]="true"
-                  class="blue-btn service-trigger">Create MRD</button>
+                  class="blue-btn service-trigger">{{saveBtnText}} MRD</button>
               </div>
             </div>
           </div>

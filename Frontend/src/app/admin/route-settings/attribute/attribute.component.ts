@@ -25,9 +25,10 @@ export class AttributeComponent implements OnInit {
   attributeForm: FormGroup;
   attrType = ['Boolean', 'Proficient'];
   formHeading = 'Add New Attribute';
-  saveBtnText = 'Create'
+  saveBtnText = 'Create';
   attrData = [];
   editData;
+  reqServiceType = 'attribute';
 
   constructor(
     private commonService: CommonService,
@@ -77,14 +78,57 @@ export class AttributeComponent implements OnInit {
     this.searchTerm = "";
   }
 
+  createAttribute(data) {
+    this.endPointService.create(data, this.reqServiceType).subscribe(
+      (res: any) => {
+        this.getAttribute();
+        this.snackbar.snackbarMessage('success-snackbar', "Attribute Created Successfully", 1);
+      },
+      (error: any) => {
+        this.spinner = false;
+        console.log("Error fetching:", error);
+        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
+      });
+  }
+
   getAttribute() {
-    this.endPointService.getMREAttribute().subscribe(
+    this.endPointService.get(this.reqServiceType).subscribe(
       (res: any) => {
         this.spinner = false;
-        console.log("attr res-->", res);
+        // console.log("attr res-->", res);
         this.attrData = res;
       },
       error => {
+        this.spinner = false;
+        console.log("Error fetching:", error);
+        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
+      });
+  }
+
+  updateAttribute(data, id) {
+    this.endPointService.update(data, id, this.reqServiceType).subscribe(
+      (res: any) => {
+        this.snackbar.snackbarMessage('success-snackbar', "Attribute Updated Successfully", 1);
+        this.getAttribute();
+        this.dialog.closeAll();
+      },
+      (error: any) => {
+        this.spinner = false;
+        console.log("Error fetching:", error);
+        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
+      });
+  }
+
+  deleteAttribute(data, id) {
+    this.endPointService.delete(id, this.reqServiceType).subscribe(
+      (res: any) => {
+        this.spinner = false;
+        // console.log("delete res -->", res);
+        this.attrData = this.attrData.filter(i => i !== data)
+          .map((i, idx) => (i.position = (idx + 1), i));
+        this.snackbar.snackbarMessage('success-snackbar', "Attribute Deleted Successfully", 1);
+      },
+      (error) => {
         this.spinner = false;
         console.log("Error fetching:", error);
         if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
@@ -137,61 +181,11 @@ export class AttributeComponent implements OnInit {
     });
   }
 
-  deleteAttribute(data, id) {
-
-    this.endPointService.deleteMREAttribute(id).subscribe(
-      (res: any) => {
-        this.spinner = false;
-        // console.log("delete res -->", res);
-        this.attrData = this.attrData.filter(i => i !== data)
-          .map((i, idx) => (i.position = (idx + 1), i));
-        this.snackbar.snackbarMessage('success-snackbar', "Attribute Deleted Successfully", 1);
-
-      },
-      (error) => {
-        this.spinner = false;
-        console.log("Error fetching:", error);
-        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
-      }
-    );
-  }
-
-  updateAttribute(data, id) {
-
-    this.endPointService.updateMREAttribute(data, id).subscribe(
-      (res: any) => {
-        this.snackbar.snackbarMessage('success-snackbar', "Attribute Updated Successfully", 1);
-        this.getAttribute();
-        this.dialog.closeAll();
-      },
-      (error: any) => {
-        this.spinner = false;
-        console.log("Error fetching:", error);
-        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
-      }
-    );
-  }
-
-  createAttribute(data) {
-    this.endPointService.createMREAttribute(data).subscribe(
-      (res: any) => {
-        this.getAttribute();
-        this.snackbar.snackbarMessage('success-snackbar', "Attribute Created Successfully", 1);
-      },
-      (error: any) => {
-        this.spinner = false;
-        console.log("Error fetching:", error);
-        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
-      }
-    );
-  }
-
   onSave() {
 
     let data: any = this.onSaveObject()
     if (this.editData) {
-      data._id = this.editData._id;
-      this.updateAttribute(data, data._id);
+      this.updateAttribute(data, this.editData._id);
     }
     else {
       this.createAttribute(data);
@@ -222,5 +216,6 @@ export class AttributeComponent implements OnInit {
 
     return value;
   }
+  
 }
 

@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>Admin Panel</title>
@@ -9,7 +10,53 @@
   <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
   <link rel="stylesheet" href="/assets/styles/bootstrap.min.css">
 </head>
+
 <body>
-  <app-root></app-root>
+  <app-root>
+    <style>
+      app-root {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      body {
+        background: #1D2C3F !important;
+        margin: 0;
+        padding: 0;
+      }
+
+      @keyframes dots {
+        0% {
+          opacity: .01;
+        }
+
+        50% {
+          opacity: .8;
+        }
+
+        100% {
+          opacity: .01;
+        }
+      }
+
+      .main-loader {
+        animation: dots 3s ease-out;
+        animation-iteration-count: 1000;
+        animation-timing-function: linear;
+      }
+
+      img {
+        position: relative;
+        z-index: 2;
+        width: 140px;
+
+      }
+    </style>
+
+    <img class="main-loader" src="assets/images/ef-logo.svg">
+  </app-root>
 </body>
+
 </html>

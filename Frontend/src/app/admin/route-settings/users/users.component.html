@@ -21,143 +21,193 @@
               <mat-icon>sync</mat-icon>
             </button>
 
-            <button mat-flat-button (click)="openModal(userForm)">
+            <button mat-flat-button>
               <mat-icon>add</mat-icon>
               Add Users
             </button>
           </div>
 
-          <div class="routing-table">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">Name</th>
-                  <th scope="col">Role</th>
-                </tr>
-              </thead>
-              <!-- <tbody>
-                <ng-container *ngIf="dataBool">
-                  <tr
-                    *ngFor="let data of wallBoardData  | filterBy : searchTerm | paginate: { itemsPerPage: 10, currentPage: p }">
-                    <td scope="row"><span style="cursor: default;">{{data.name ? data.name : 'N/A'}}</span>
-                    </td>
-                    <td class="table-trigger">
-                      <span class="list-trigger-area">
-                        {{data.active ? 'Active' : 'Not Active'}}
-                                <mat-slide-toggle (change)="onChange($event,data)" [checked]="data.active">
-                                </mat-slide-toggle>
-
-                        <button matTooltip={{edit_text}} (click)="editDashBoard(data)" mat-mini-fab><i
-                            class="fa fa-pencil" aria-hidden="true"></i>
-                        </button>
-
-                        <button matTooltip={{link_text}} (click)="randomString(data.id)" mat-mini-fab><i
-                            class="fa fa-link" aria-hidden="true"></i>
-                        </button>
-
-                        <button matTooltip={{embedded_code_text}}
-                          (click)="embeddedCodeDialog(embeddedCodeModal,data.id)" mat-mini-fab><i class="fa fa-code"
-                            aria-hidden="true"></i>
-                        </button>
-
-                        <button matTooltip={{delete_text}} (click)="deleteConfirm(data)" mat-mini-fab><i
-                            class="fa fa-trash-o" aria-hidden="true"></i>
-                        </button>
-
-                        <button matTooltip={{copy_text}} (click)="copy(data)" mat-mini-fab><i class="fa fa-files-o"
-                            aria-hidden="true"></i>
-                        </button>
-                      </span>
-                    </td>
-                    <td style="cursor: default;">{{data.updatedOn | date }}</td>
-                    <td>{{data.updatedBy ? data.updatedBy : 'N/A'}}</td>
-                  </tr>
-                </ng-container>
-              </tbody> -->
-            </table>
-            <!-- <pagination-controls *ngIf="dataBool" (pageChange)="p = $event;pageChange($event)" previousLabel=""
-              nextLabel="" maxSize='7'></pagination-controls>
-            <h3 *ngIf="!dataBool" class="noData" translate>No_data</h3> -->
+          <div class="routing-accordion">
+            <mat-accordion>
+              <ul class="top-heading routing-group-list">
+                <li>Name</li>
+                <li>Role</li>
+              </ul>
+              <ng-container>
+                <mat-expansion-panel *ngFor="let data of userData">
+                  <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                    [expandedHeight]="customExpandedHeight">
+                    <mat-panel-title>
+                      <p class="group-name">{{data.firstName? data.firstName : 'N/A'}}</p>
+                    </mat-panel-title>
+                    <mat-panel-title>
+                      <p class="group-name">{{data.Role? data.Role : 'N/A'}}</p>
+                      <div class="table-trigger">
+                        <span class="list-trigger-area">
+                          <button mat-mini-fab matTooltip="Edit" (click)="editUser(userProfileForm,data)"><i
+                              class="fa fa-pencil" aria-hidden="true"></i>
+                          </button>
+                        </span>
+                      </div>
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                </mat-expansion-panel>
+              </ng-container>
+            </mat-accordion>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <ng-template #userForm>
-    <!-- <div class="dialog-container">
+  <ng-template #userProfileForm>
+    <div class="dialog-container">
       <div class="mat-card-header">
         <mat-icon (click)="onClose()">close</mat-icon>
         <h4 class="content-span full-width">{{formHeading}}</h4>
       </div>
-      <div class="dialog-content">
-        <form class="form-horizontal form-bordered" [formGroup]="queueForm">
-          <div class="form-group">
-            <mat-label>Name</mat-label>
-            <mat-form-field appearance="outline">
-              <input matInput formControlName="name">
-              <mat-error class="form-error">
-                {{formErrors.name}}
-              </mat-error>
-            </mat-form-field>
+      <div class="form-dialog-content">
+        <form class="form-horizontal form-bordered" [formGroup]="userForm">
+          <div class="form-expansion-panel">
+            <mat-accordion>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                  [expandedHeight]="customExpandedHeight">
+                  <mat-panel-title>
+                    User Details
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="user-disclaimer">
+                  <img src="/assets/images/warning.svg" alt="warning">
+                  <span>This information is only editable from Keycloak.</span>
+                </div>
+                <div class="user-profile-section">
+                  <div class="form-group col-md-6">
+                    <mat-label>First Name</mat-label>
+                    <mat-form-field appearance="outline">
+                      <input matInput formControlName="firstName">
+                    </mat-form-field>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <mat-label>Last Name</mat-label>
+                    <mat-form-field appearance="outline">
+                      <input matInput formControlName="lastName">
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="user-profile-section">
+                  <div class="form-group col-md-6">
+                    <mat-label>Agent ID</mat-label>
+                    <mat-form-field appearance="outline">
+                      <input matInput formControlName="agentId">
+                    </mat-form-field>
+                  </div>
+                  <!-- <div class="form-group col-md-6">
+                    <mat-label>Last Name</mat-label>
+                    <mat-form-field appearance="outline">
+                      <input matInput formControlName="lastName">
+                    </mat-form-field>
+                  </div> -->
+                </div>
+              </mat-expansion-panel>
+
+              <mat-expansion-panel [expanded]="true">
+                <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                  [expandedHeight]="customExpandedHeight">
+                  <mat-panel-title>
+                    Attributes
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <!-- <div class="user-profile-section">
+                  <div class="form-group col-md-6">
+                    <mat-label>First Name</mat-label>
+                    <mat-form-field appearance="outline">
+                      <input matInput formControlName="firstName">
+                    </mat-form-field>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <mat-label>Last Name</mat-label>
+                    <mat-form-field appearance="outline">
+                      <input matInput formControlName="lastName">
+                    </mat-form-field>
+                  </div>
+                </div> -->
+
+                <!--  -->
+                <div class="user-profile-section attribute-section-label">
+                  <div class="form-group col-md-5">
+                    <mat-label>Available Attributes</mat-label>
+                    <div class="available-attribute-section row m-0">
+                      <div class="search-filter-area">
+                        <input type="text" placeholder="Search" [(ngModel)]="attributeFilter.name"
+                          [ngModelOptions]="{standalone: true}">
+                      </div>
+                      <ul class="attributes-area">
+                        <li *ngFor="let item of attrData">
+                          <p class="checbox-custom checkbox-team">
+                            <input class="mat-checkbox mat-accent" formControlName="attributes" type="checkbox"
+                              (change)="checkFilterState($event,item);filterValue(item)" [checked]="item.isChecked">
+                            <span class="checkmark"></span>
+                            <label class="attribute-name attr-field">{{item?.name | titlecase}}</label>
+                          </p>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-7">
+                    <mat-label>Selected Attributes</mat-label>
+                    <div class="available-attribute-section row m-0">
+                      <div class="search-filter-area">
+                        <input type="text" placeholder="Search" [(ngModel)]="selectedAttributeFilter.name"
+                          [ngModelOptions]="{standalone: true}">
+                      </div>
+
+                      <div class="selected-attribute-panel">
+                        <mat-accordion>
+                          <!-- <ul class="top-heading routing-group-list"> -->
+                          <!-- <li>Name</li> -->
+                          <!-- <li>Role</li> -->
+                          <!-- </ul> -->
+                          <!-- <ng-container> -->
+                          <mat-expansion-panel *ngFor="let data of attrData">
+                            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                              [expandedHeight]="customExpandedHeight">
+                              <mat-panel-title>
+                                <p class="group-name">
+                                  {{data.name? data.name : 'N/A'}}({{data.value? data.value : 'N/A'}})</p>
+                              </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div *ngIf="data.type">
+                              <mat-slider *ngIf="data.type == 'Proficient'"  [value]="data.value"
+                                thumbLabel [displayWith]="formatLabel" tickInterval="1" min="0" max="10"></mat-slider>
+                              <mat-slide-toggle *ngIf="data.type == 'Boolean'" [checked]="data.value">
+                              </mat-slide-toggle>
+                            </div>
+                          </mat-expansion-panel>
+                          <!-- </ng-container> -->
+                        </mat-accordion>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--  -->
+              </mat-expansion-panel>
+            </mat-accordion>
           </div>
-          <div class="form-group">
-            <mat-label>Associated MRD</mat-label>
-            <mat-form-field appearance="outline">
-              <mat-select formControlName="associatedMrd">
-                <mat-option *ngFor="let criteria of agentCriteria" [value]="criteria">{{criteria | titlecase}}
-                </mat-option>
-                <mat-option>Item 1</mat-option>
-              </mat-select>
-              <mat-error class="form-error">
-                {{formErrors.associatedMrd}}
-              </mat-error>
-            </mat-form-field>
-          </div>
-          <div class="form-group">
-            <mat-label>Agent Selection Criteria</mat-label>
-            <mat-form-field appearance="outline">
-              <mat-select formControlName="agentCriteria">
-                <mat-option *ngFor="let criteria of agentCriteria" [value]="criteria">{{criteria | titlecase}}
-                </mat-option>
-              </mat-select>
-              <mat-error class="form-error">
-                {{formErrors.agentCriteria}}
-              </mat-error>
-            </mat-form-field>
-          </div>
-          <div class="form-group">
-            <mat-label>Service Level Type</mat-label>
-            <mat-form-field appearance="outline">
-              <mat-select formControlName="serviceLevelType">
-                <mat-option *ngFor="let type of serviceLevelType" [value]="type">{{type | titlecase}}
-                </mat-option>
-              </mat-select>
-              <mat-error class="form-error">
-                {{formErrors.serviceLevelType}}
-              </mat-error>
-            </mat-form-field>
-          </div>
-          <div class="form-group">
-            <mat-label>Service Level Threshold</mat-label>
-            <mat-form-field appearance="outline">
-              <input type="number" min="1" max="10" matInput formControlName="serviceLevelThreshold">
-              <mat-error class="form-error">
-                {{formErrors.serviceLevelThreshold}}
-              </mat-error>
-            </mat-form-field>
-          </div>
+          <!--  -->
 
           <div class="template-action row">
             <div class="col-md-12">
-              <div class="form-action-area">
+              <div class="user-form-action-area">
                 <button mat-raised-button (click)="onClose()" class="gray-btn">Cancel</button>
-                <button mat-raised-button [disabled]="!queueForm.valid" (click)="onSave()" [mat-dialog-close]="true"
+                <button mat-raised-button [disabled]="!userForm.valid" (click)="onSave()" [mat-dialog-close]="true"
                   class="blue-btn service-trigger">Save</button>
               </div>
             </div>
           </div>
         </form>
       </div>
-    </div> -->
+    </div>
   </ng-template>

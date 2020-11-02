@@ -369,6 +369,29 @@ export class CommonService {
     },
   };
 
+
+  userFormErrorMessages = {
+
+    'agentId': {
+      'required': "This field is required",
+      'minlength': "More characters required",
+      'maxlength': "Less characters required",
+      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+
+    },
+    'attributes': {
+      'required': "This field is required",
+      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+    },
+    'firstName': {
+      'required': "This field is required",
+      // 'pattern': this.service_url_pattern
+    },
+    'lastName': {
+      'required': "This field is required",
+      // 'pattern': this.service_url_pattern
+    }
+  };
   constructor(private snackbar: SnackbarService) { }
 
   logValidationErrors(group: FormGroup, formErrors, validations) {
