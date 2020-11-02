@@ -37,7 +37,7 @@ export class AmqComponent implements OnInit {
     this.amqSettingForm = this.fb.group({
       amqUser: ['', [Validators.required,Validators.maxLength(40)]],
       amqPwd: ['', [Validators.required,Validators.maxLength(256)]],
-      amqHost: ['', [Validators.required,Validators.maxLength(256)]],
+      amqHost: ['', [Validators.required,Validators.maxLength(256),Validators.pattern(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/)]],
       amqPort: ['', [Validators.required,Validators.min(10),Validators.max(10000)]],
       amqUrl: ['', [Validators.required,Validators.pattern(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/)]],
     });

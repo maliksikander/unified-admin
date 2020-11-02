@@ -29,7 +29,7 @@ export class CommonService {
     'amqHost': {
       'required': "This field is required",
       'maxlength': "Max 256 characters allowed",
-      // 'pattern': this.service_url_pattern
+      'pattern': "Pattern not valid"
     },
     'amqPort': {
       'required': "This field is required",

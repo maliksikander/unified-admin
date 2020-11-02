@@ -1,5 +1,5 @@
 // import {NgModule} from "@angular/core";
-import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from "@angular/core";
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from "@angular/core";
 
 import {
     MatAutocompleteModule,
@@ -22,14 +22,15 @@ import {
     MatToolbarModule,
     MatTooltipModule, MatTree, MatTreeModule
 } from "@angular/material";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatSelectSearchComponent } from './mat-select-search/mat-select-search.component';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { SearchFilterPipe } from './search-filter.pipe';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 @NgModule({
-    declarations: [MatSelectSearchComponent,SearchFilterPipe],
+    declarations: [MatSelectSearchComponent, SearchFilterPipe, ConfirmDialogComponent],
     imports: [
         MatIconModule, MatToolbarModule, MatSidenavModule, MatBadgeModule, MatDialogModule,
         BrowserAnimationsModule, MatCheckboxModule, MatButtonModule, MatMenuModule,
@@ -104,7 +105,10 @@ import { SearchFilterPipe } from './search-filter.pipe';
         SearchFilterPipe
 
     ],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    entryComponents: [
+        ConfirmDialogComponent
+    ]
 })
 
 

@@ -13,6 +13,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class EndpointService {
 
   endpointUrl;
+  MRE_MICRO_URL = "https://hcdev.expertflow.com/mre-microservice";
 
   constructor(private snackbar: SnackbarService,
     private httpClient: HttpClient,
@@ -30,7 +31,7 @@ export class EndpointService {
 
   //////////////////// General Group ////////////
 
-  createSetting(data,reqServiceType): Observable<any> {
+  createSetting(data, reqServiceType): Observable<any> {
     return this.httpClient.post<any>(`${this.endpointUrl}/${reqServiceType}`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -48,7 +49,7 @@ export class EndpointService {
     }).pipe(catchError(this.handleError));
   }
 
-  updateSetting(data,reqServiceType): Observable<void> {
+  updateSetting(data, reqServiceType): Observable<void> {
     return this.httpClient.put<void>(`${this.endpointUrl}/${reqServiceType}`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -57,4 +58,45 @@ export class EndpointService {
     }).pipe(catchError(this.handleError));
   }
 
+  ///////////////////// MRE Endpoints ////////////////////////
+
+
+  createMREAttribute(data): Observable<any> {
+    return this.httpClient.post<any>(this.MRE_MICRO_URL + "/mre/api/attribute", data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer '
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  getMREAttribute(): Observable<any> {
+    return this.httpClient.get(this.MRE_MICRO_URL + "/mre/api/attribute", {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer'
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+
+  updateMREAttribute(attribute, id): Observable<any> {
+    return this.httpClient.put<any>(`${this.MRE_MICRO_URL + "/mre/api/attribute"}/${id}`, attribute, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer '
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  deleteMREAttribute(id): Observable<any> {
+    return this.httpClient.delete<any>(`${this.MRE_MICRO_URL + "/mre/api/attribute"}/${id}`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer'
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
 }
+

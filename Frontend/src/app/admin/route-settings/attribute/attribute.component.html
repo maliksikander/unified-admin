@@ -31,47 +31,40 @@
                   <th scope="col">Description</th>
                   <th scope="col">Type</th>
                   <th scope="col">Default Value</th>
+                  <!-- <th scope="col"></th> -->
                 </tr>
               </thead>
-              <!-- <tbody>
-                <ng-container *ngIf="dataBool">
-                  <tr
-                    *ngFor="let data of wallBoardData  | filterBy : searchTerm | paginate: { itemsPerPage: 10, currentPage: p }">
-                    <td scope="row"><span style="cursor: default;">{{data.name ? data.name : 'N/A'}}</span>
+              <tbody>
+                <ng-container>
+                  <tr *ngFor="let data of attrData">
+                    <td scope="row"><span>{{data.name ? data.name : 'N/A'}}</span>
                     </td>
-                    <td class="table-trigger">
+                    <td>{{data.description ? data.description :'N/A'}}</td>
+                    <td>{{data.type ? data.type : 'N/A'}}</td>
+                    <td class="table-trigger">{{data.value ? data.value : 'N/A'}}
                       <span class="list-trigger-area">
-                        {{data.active ? 'Active' : 'Not Active'}}
-                                <mat-slide-toggle (change)="onChange($event,data)" [checked]="data.active">
-                                </mat-slide-toggle>
-
-                        <button matTooltip={{edit_text}} (click)="editDashBoard(data)" mat-mini-fab><i
+                        <button matTooltip="Edit" (click)="editAttribute(newAttribute,data)" mat-mini-fab><i
                             class="fa fa-pencil" aria-hidden="true"></i>
                         </button>
-
-                        <button matTooltip={{link_text}} (click)="randomString(data.id)" mat-mini-fab><i
-                            class="fa fa-link" aria-hidden="true"></i>
-                        </button>
-
-                        <button matTooltip={{embedded_code_text}}
-                          (click)="embeddedCodeDialog(embeddedCodeModal,data.id)" mat-mini-fab><i class="fa fa-code"
-                            aria-hidden="true"></i>
-                        </button>
-
-                        <button matTooltip={{delete_text}} (click)="deleteConfirm(data)" mat-mini-fab><i
-                            class="fa fa-trash-o" aria-hidden="true"></i>
-                        </button>
-
-                        <button matTooltip={{copy_text}} (click)="copy(data)" mat-mini-fab><i class="fa fa-files-o"
+                        <button matTooltip="Delete" (click)="deleteConfirm(data)" mat-mini-fab><i class="fa fa-trash-o"
                             aria-hidden="true"></i>
                         </button>
                       </span>
                     </td>
-                    <td style="cursor: default;">{{data.updatedOn | date }}</td>
-                    <td>{{data.updatedBy ? data.updatedBy : 'N/A'}}</td>
+                    <!-- <td class="table-trigger">
+                      <span class="list-trigger-area">
+                        <button matTooltip="Edit" (click)="editAttribute(data)" mat-mini-fab><i class="fa fa-pencil"
+                            aria-hidden="true"></i>
+                        </button>
+                        <button matTooltip="Delete" (click)="deleteConfirm(data)" mat-mini-fab><i class="fa fa-trash-o"
+                            aria-hidden="true"></i>
+                        </button>
+
+                      </span>
+                    </td> -->
                   </tr>
                 </ng-container>
-              </tbody> -->
+              </tbody>
             </table>
             <!-- <pagination-controls *ngIf="dataBool" (pageChange)="p = $event;pageChange($event)" previousLabel=""
               nextLabel="" maxSize='7'></pagination-controls>
@@ -109,8 +102,8 @@
             </mat-form-field>
           </div>
 
-          <div [ngClass]="{'attribute-type-value': attributeForm.value.type == 'boolean'}">
-            <div class="form-group" [ngClass]="{'col-md-8': attributeForm.value.type == 'boolean'}">
+          <div [ngClass]="{'attribute-type-value': attributeForm.value.type == 'Boolean'}">
+            <div class="form-group" [ngClass]="{'col-md-8': attributeForm.value.type == 'Boolean'}">
               <mat-label>Type</mat-label>
               <mat-form-field appearance="outline">
                 <mat-select formControlName="type">
@@ -123,11 +116,13 @@
               </mat-form-field>
             </div>
 
-            <div *ngIf="attributeForm.value.type" class="form-group" [ngClass]="{'col-md-4': attributeForm.value.type == 'boolean'}">
+            <div *ngIf="attributeForm.value.type" class="form-group"
+              [ngClass]="{'col-md-4': attributeForm.value.type == 'Boolean'}">
               <mat-label>Default Value</mat-label>
-              <mat-slider *ngIf="attributeForm.value.type == 'proficiency'" formControlName="profVal" thumbLabel [displayWith]="formatLabel" tickInterval="1" min="0"
-                max="10"></mat-slider>
-              <mat-slide-toggle *ngIf="attributeForm.value.type == 'boolean'" formControlName="boolVal">
+              <mat-slider *ngIf="attributeForm.value.type == 'Proficient'" formControlName="profVal" thumbLabel
+                [displayWith]="formatLabel" tickInterval="1" min="0" max="10"></mat-slider>
+              <mat-slide-toggle *ngIf="attributeForm.value.type == 'Boolean'"
+                formControlName="boolVal">
               </mat-slide-toggle>
             </div>
           </div>
@@ -136,7 +131,7 @@
               <div class="form-action-area">
                 <button mat-raised-button (click)="onClose()" class="gray-btn">Cancel</button>
                 <button mat-raised-button [disabled]="!attributeForm.valid" (click)="onSave()" [mat-dialog-close]="true"
-                  class="blue-btn service-trigger">Create Attribute</button>
+                  class="blue-btn service-trigger">{{saveBtnText}} Attribute</button>
               </div>
             </div>
           </div>
