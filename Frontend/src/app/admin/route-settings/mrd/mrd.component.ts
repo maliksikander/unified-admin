@@ -12,7 +12,10 @@ import { SnackbarService } from '../../services/snackbar.service';
   styleUrls: ['./mrd.component.scss']
 })
 export class MrdComponent implements OnInit {
-
+  p: any = 1;
+  itemsPerPageList = [5, 10, 15];
+  itemsPerPage = 5;
+  selectedItem = this.itemsPerPageList[0];
   spinner: any = true;
   searchTerm = '';
   formErrors = {
@@ -43,6 +46,11 @@ export class MrdComponent implements OnInit {
       description: [''],
       enabled: [],
     });
+
+    let pageNumber = localStorage.getItem('currentMRDPage');
+    if (pageNumber) {
+      this.p = pageNumber;
+    }
 
     this.mrdForm.valueChanges.subscribe((data) => {
       this.commonService.logValidationErrors(this.mrdForm, this.formErrors, this.validations);
@@ -88,7 +96,7 @@ export class MrdComponent implements OnInit {
     this.endPointService.get(this.reqServiceType).subscribe(
       (res: any) => {
         this.spinner = false;
-        console.log("mrd res-->", res);
+        // console.log("mrd res-->", res);
         this.mrdData = res;
       },
       error => {
@@ -196,4 +204,16 @@ export class MrdComponent implements OnInit {
     }
   }
   
+  pageChange(e) {
+    localStorage.setItem('currentMRDPage', e);
+  }
+
+  pageBoundChange(e) {
+    this.p = e;
+    localStorage.setItem('currentMRDPage', e); 
+  }
+
+  selectPage() {
+    this.itemsPerPage = this.selectedItem;
+  }
 }

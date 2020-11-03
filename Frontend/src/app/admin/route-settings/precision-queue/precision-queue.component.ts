@@ -14,6 +14,10 @@ import { SnackbarService } from '../../services/snackbar.service';
 export class PrecisionQueueComponent implements OnInit {
 
   spinner: any = true;
+  p: any = 1;
+  itemsPerPageList = [5, 10, 15];
+  itemsPerPage = 5;
+  selectedItem = this.itemsPerPageList[0];
   searchTerm = '';
   formErrors = {
     name: '',
@@ -208,4 +212,17 @@ export class PrecisionQueueComponent implements OnInit {
   editStep(data){}
 
   deleteStep(data){}
+
+  pageChange(e) {
+    localStorage.setItem('currentUsersPage', e);
+  }
+
+  pageBoundChange(e) {
+    this.p = e;
+    localStorage.setItem('currentUsersPage', e); 
+  }
+
+  selectPage() {
+    this.itemsPerPage = this.selectedItem;
+  }
 }

@@ -12,7 +12,8 @@
       <app-top-bar></app-top-bar>
     </div>
 
-    <mat-sidenav-container class="main-sidebar" hasBackdrop="false" [ngClass]="barStatus ? 'mat-drawer-container mat-sidenav-container mat-drawer-transition mat-drawer-opened expand' : 'mat-drawer-container mat-sidenav-container mat-drawer-transition mat-drawer-opened collapse'"
+    <mat-sidenav-container class="main-sidebar" hasBackdrop="false"
+      [ngClass]="barStatus ? 'mat-drawer-container mat-sidenav-container mat-drawer-transition mat-drawer-opened expand' : 'mat-drawer-container mat-sidenav-container mat-drawer-transition mat-drawer-opened collapse'"
       [class.right-sidebar]="sidebarPosition == 'right'">
       <mat-sidenav [position]="sidebarPosition == 'right' ? 'end': 'start'" #sidenav mode="over" [(opened)]="opened"
         (opened)="events.push('open!')" [style.background-color]="appColor">
@@ -81,8 +82,9 @@
 
             <mat-expansion-panel>
               <mat-expansion-panel-header class='header-image-icon'>
-                <!-- <i class="material-icons">domain</i> -->
-                <img src="/assets/images/route-setting.svg" alt="">
+                <i style="font-size: 21px;" class="material-icons">compare_arrows</i>
+
+                <!-- <img src="/assets/images/alt_route-black-48dp.svg" alt=""> -->
                 <span class="sidebar-text">Routing</span>
               </mat-expansion-panel-header>
               <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/routing/attributes']">

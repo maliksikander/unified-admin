@@ -31,7 +31,7 @@
                 <li>Associated MRD</li>
               </ul>
               <ng-container>
-                <mat-expansion-panel *ngFor="let data of queueData">
+                <mat-expansion-panel *ngFor="let data of queueData | searchFilter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
                   <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
                     [expandedHeight]="customExpandedHeight">
                     <mat-panel-title>
@@ -97,12 +97,20 @@
                     </div>
                     <!-- </div> -->
                   </div>
-
-
-
                 </mat-expansion-panel>
               </ng-container>
             </mat-accordion>
+            <div class="pagination-section">
+              <span class="page-span">
+                <span>Entries Per Page</span>
+                <select (change)="selectPage()" [(ngModel)]="selectedItem">
+                  <option *ngFor="let item of itemsPerPageList" [value]="item">{{ item }}
+                  </option>
+                </select>
+              </span>
+              <pagination-controls (pageBoundsCorrection)="pageBoundChange($event)" (pageChange)="p = $event;pageChange($event)" previousLabel="" nextLabel="">
+              </pagination-controls>
+            </div>
           </div>
         </div>
       </div>

@@ -12,7 +12,10 @@ import { SnackbarService } from '../../services/snackbar.service';
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
-
+  p: any = 1;
+  itemsPerPageList = [5, 10, 15];
+  itemsPerPage = 5;
+  selectedItem = this.itemsPerPageList[0];
   spinner: any = true;
   searchTerm = '';
   attributeFilter = { name: '' };
@@ -43,6 +46,10 @@ export class UsersComponent implements OnInit {
   ngOnInit() {
 
     this.validations = this.commonService.userFormErrorMessages;
+    let pageNumber = localStorage.getItem('currentUsersPage');
+    if (pageNumber) {
+      this.p = pageNumber;
+    }
 
     this.userForm = this.formBuilder.group({
       agentId: [''],
@@ -240,6 +247,20 @@ export class UsersComponent implements OnInit {
   syncUsers(){
     this.spinner = true;
     this.getUsers();
+  }
+
+
+  pageChange(e) {
+    localStorage.setItem('currentUsersPage', e);
+  }
+
+  pageBoundChange(e) {
+    this.p = e;
+    localStorage.setItem('currentUsersPage', e); 
+  }
+
+  selectPage() {
+    this.itemsPerPage = this.selectedItem;
   }
 
 }

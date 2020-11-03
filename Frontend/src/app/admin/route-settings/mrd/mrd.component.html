@@ -34,7 +34,7 @@
               </thead>
               <tbody>
                 <ng-container>
-                  <tr *ngFor="let data of mrdData">
+                  <tr *ngFor="let data of mrdData | searchFilter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
                     <td scope="row">{{data.Name ? data.Name : 'N/A'}}</td>
                     <td >{{data.Description ? data.Description : 'N/A'}}</td>
                     <td class="table-trigger">
@@ -53,6 +53,17 @@
                 </ng-container>
               </tbody>
             </table>
+            <div class="pagination-section">
+              <span class="page-span">
+                <span>Entries Per Page</span>
+                <select (change)="selectPage()" [(ngModel)]="selectedItem">
+                  <option *ngFor="let item of itemsPerPageList" [value]="item">{{ item }}
+                  </option>
+                </select>
+              </span>
+              <pagination-controls (pageBoundsCorrection)="pageBoundChange($event)" (pageChange)="p = $event;pageChange($event)" previousLabel="" nextLabel="">
+              </pagination-controls>
+            </div>
             <!-- <pagination-controls *ngIf="dataBool" (pageChange)="p = $event;pageChange($event)" previousLabel=""
               nextLabel="" maxSize='7'></pagination-controls>
             <h3 *ngIf="!dataBool" class="noData" translate>No_data</h3> -->

@@ -15,8 +15,8 @@ import { SnackbarService } from '../../services/snackbar.service';
 export class AttributeComponent implements OnInit {
   p: any = 1;
   itemsPerPageList = [5, 10, 15];
-  itemsPerPage = 10;
-  selectedItem = this.itemsPerPageList[1];
+  itemsPerPage = 5;
+  selectedItem = this.itemsPerPageList[0];
   spinner: any = true;
   searchTerm = '';
   formErrors = {
@@ -54,7 +54,7 @@ export class AttributeComponent implements OnInit {
     });
 
 
-    let pageNumber = localStorage.getItem('currentPage');
+    let pageNumber = localStorage.getItem('currentAttributePage');
     if (pageNumber) {
       this.p = pageNumber;
     }
@@ -227,12 +227,12 @@ export class AttributeComponent implements OnInit {
   }
 
   pageChange(e) {
-    localStorage.setItem('currentPage', e);
+    localStorage.setItem('currentAttributePage', e);
   }
 
   pageBoundChange(e) {
     this.p = e;
-    localStorage.setItem('currentPage', e); 
+    localStorage.setItem('currentAttributePage', e); 
   }
 
   selectPage() {
