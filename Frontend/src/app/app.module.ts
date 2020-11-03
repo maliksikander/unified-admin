@@ -21,6 +21,7 @@ import { HttpInterceptorService } from './admin/services/http-interceptor.servic
     SharedModule,
     AdminModule,
     HttpClientModule,
+    
     // FilterPipeModule
   ],
   providers: [ [

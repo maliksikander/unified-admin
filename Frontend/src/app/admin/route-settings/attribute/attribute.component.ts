@@ -13,7 +13,10 @@ import { SnackbarService } from '../../services/snackbar.service';
   styleUrls: ['./attribute.component.scss']
 })
 export class AttributeComponent implements OnInit {
-
+  p: any = 1;
+  itemsPerPageList = [5, 10, 15];
+  itemsPerPage = 10;
+  selectedItem = this.itemsPerPageList[1];
   spinner: any = true;
   searchTerm = '';
   formErrors = {
@@ -49,6 +52,12 @@ export class AttributeComponent implements OnInit {
       profVal: [1],
       boolVal: [true]
     });
+
+
+    let pageNumber = localStorage.getItem('currentPage');
+    if (pageNumber) {
+      this.p = pageNumber;
+    }
 
     this.attributeForm.valueChanges.subscribe((data) => {
       this.commonService.logValidationErrors(this.attributeForm, this.formErrors, this.validations);
@@ -216,6 +225,19 @@ export class AttributeComponent implements OnInit {
 
     return value;
   }
-  
+
+  pageChange(e) {
+    localStorage.setItem('currentPage', e);
+  }
+
+  pageBoundChange(e) {
+    this.p = e;
+    localStorage.setItem('currentPage', e); 
+  }
+
+  selectPage() {
+    this.itemsPerPage = this.selectedItem;
+  }
+
 }
 

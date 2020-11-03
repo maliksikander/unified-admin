@@ -55,6 +55,8 @@ export class UsersComponent implements OnInit {
     this.userForm.controls['firstName'].disable();
     this.userForm.controls['lastName'].disable();
 
+   
+
     this.userForm.valueChanges.subscribe((data) => {
       this.commonService.logValidationErrors(this.userForm, this.formErrors, this.validations);
     });
@@ -99,7 +101,7 @@ export class UsersComponent implements OnInit {
     this.endPointService.get('attribute').subscribe(
       (res: any) => {
         this.spinner = false;
-        console.log("attr res-->", res);
+        // console.log("attr res-->", res);
         this.attrData = res;
       },
       error => {
@@ -114,7 +116,7 @@ export class UsersComponent implements OnInit {
       (res: any) => {
         this.spinner = false;
         this.getAttribute();
-        console.log("user res-->", res);
+        // console.log("user res-->", res);
         this.userData = res;
       },
       error => {
@@ -175,9 +177,10 @@ export class UsersComponent implements OnInit {
 
   editUser(templateRef, data) {
     this.editData = data;
+    console.log("data-->",data)
     this.userForm.patchValue({
       agentId: data.agentId,
-      attributes: [],
+      attributes: data.attributes,
       firstName: data.firstName,
       lastName: data.lastName
     });
@@ -233,6 +236,10 @@ export class UsersComponent implements OnInit {
 
     return value;
   }
-  
+
+  syncUsers(){
+    this.spinner = true;
+    this.getUsers();
+  }
 
 }

@@ -17,13 +17,9 @@
               </mat-form-field>
             </div>
 
-            <button class="sync-btn" mat-flat-button>
+            <button mat-flat-button (click)='syncUsers()'>
               <mat-icon>sync</mat-icon>
-            </button>
-
-            <button mat-flat-button>
-              <mat-icon>add</mat-icon>
-              Add Users
+              Sync
             </button>
           </div>
 
@@ -51,6 +47,13 @@
                       </div>
                     </mat-panel-title>
                   </mat-expansion-panel-header>
+                  <mat-chip-list>
+                    <mat-chip *ngFor="let attr of data.attributes | slice :0:3">
+                      {{ attr.name }} ({{attr.value}})
+                    </mat-chip>
+                    <mat-chip *ngIf="data.attributes?.length > 3">+{{data.attributes?.length - 3}}</mat-chip>
+                  </mat-chip-list>
+
                 </mat-expansion-panel>
               </ng-container>
             </mat-accordion>
@@ -103,12 +106,6 @@
                       <input matInput formControlName="agentId">
                     </mat-form-field>
                   </div>
-                  <!-- <div class="form-group col-md-6">
-                    <mat-label>Last Name</mat-label>
-                    <mat-form-field appearance="outline">
-                      <input matInput formControlName="lastName">
-                    </mat-form-field>
-                  </div> -->
                 </div>
               </mat-expansion-panel>
 
@@ -120,22 +117,6 @@
                   </mat-panel-title>
                 </mat-expansion-panel-header>
 
-                <!-- <div class="user-profile-section">
-                  <div class="form-group col-md-6">
-                    <mat-label>First Name</mat-label>
-                    <mat-form-field appearance="outline">
-                      <input matInput formControlName="firstName">
-                    </mat-form-field>
-                  </div>
-                  <div class="form-group col-md-6">
-                    <mat-label>Last Name</mat-label>
-                    <mat-form-field appearance="outline">
-                      <input matInput formControlName="lastName">
-                    </mat-form-field>
-                  </div>
-                </div> -->
-
-                <!--  -->
                 <div class="user-profile-section attribute-section-label">
                   <div class="form-group col-md-5">
                     <mat-label>Available Attributes</mat-label>
@@ -166,33 +147,27 @@
 
                       <div class="selected-attribute-panel">
                         <mat-accordion>
-                          <!-- <ul class="top-heading routing-group-list"> -->
-                          <!-- <li>Name</li> -->
-                          <!-- <li>Role</li> -->
-                          <!-- </ul> -->
-                          <!-- <ng-container> -->
-                          <mat-expansion-panel *ngFor="let data of attrData">
+                          <mat-expansion-panel *ngFor="let data of userForm.value.attributes">
                             <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
                               [expandedHeight]="customExpandedHeight">
                               <mat-panel-title>
                                 <p class="group-name">
-                                  {{data.name? data.name : 'N/A'}}({{data.value? data.value : 'N/A'}})</p>
+                                  {{data.name? data.name : 'N/A'}} ({{data.value? data.value : 'N/A'}})</p>
                               </mat-panel-title>
                             </mat-expansion-panel-header>
                             <div *ngIf="data.type">
-                              <mat-slider *ngIf="data.type == 'Proficient'"  [value]="data.value"
-                                thumbLabel [displayWith]="formatLabel" tickInterval="1" min="0" max="10"></mat-slider>
+                              <mat-slider *ngIf="data.type == 'Proficient'" [value]="data.value" thumbLabel
+                                [displayWith]="formatLabel" tickInterval="1" min="0" max="10"></mat-slider>
                               <mat-slide-toggle *ngIf="data.type == 'Boolean'" [checked]="data.value">
                               </mat-slide-toggle>
                             </div>
                           </mat-expansion-panel>
-                          <!-- </ng-container> -->
+
                         </mat-accordion>
                       </div>
                     </div>
                   </div>
                 </div>
-                <!--  -->
               </mat-expansion-panel>
             </mat-accordion>
           </div>

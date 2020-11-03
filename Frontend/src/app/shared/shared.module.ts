@@ -25,10 +25,10 @@ import {
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatSelectSearchComponent } from './mat-select-search/mat-select-search.component';
-import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+
 import { SearchFilterPipe } from './search-filter.pipe';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
-
+import { NgxPaginationModule } from 'ngx-pagination';
 @NgModule({
     declarations: [MatSelectSearchComponent, SearchFilterPipe, ConfirmDialogComponent],
     imports: [
@@ -64,8 +64,6 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
         MatTooltipModule,
         MatTreeModule,
         MatBottomSheetModule,
-        NgxMatSelectSearchModule,
-
 
     ],
     exports: [
@@ -101,8 +99,9 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
         MatTreeModule,
         MatBottomSheetModule,
         MatSelectSearchComponent,
-        NgxMatSelectSearchModule,
-        SearchFilterPipe
+        // NgxMatSelectSearchModule,
+        SearchFilterPipe,
+        NgxPaginationModule,
 
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],

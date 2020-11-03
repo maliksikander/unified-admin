@@ -23,60 +23,86 @@
             </button>
           </div>
 
-          <div class="routing-table">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">Name</th>
-                  <th scope="col">Associated MRD</th>
-                  <th scope="col">Agent Criteria</th>
-                  <th scope="col">Service Level Type</th>
-                  <th scope="col">Service Level Threshold</th>
-                </tr>
-              </thead>
-              <!-- <tbody>
-                <ng-container *ngIf="dataBool">
-                  <tr
-                    *ngFor="let data of wallBoardData  | filterBy : searchTerm | paginate: { itemsPerPage: 10, currentPage: p }">
-                    <td scope="row"><span style="cursor: default;">{{data.name ? data.name : 'N/A'}}</span>
-                    </td>
-                    <td class="table-trigger">
-                      <span class="list-trigger-area">
-                        {{data.active ? 'Active' : 'Not Active'}}
-                                <mat-slide-toggle (change)="onChange($event,data)" [checked]="data.active">
-                                </mat-slide-toggle>
+          <div class="routing-accordion">
+            <mat-accordion>
+              <ul class="top-heading routing-group-list">
+                <li>Name</li>
+                <li>Agent Criteria</li>
+                <li>Associated MRD</li>
+              </ul>
+              <ng-container>
+                <mat-expansion-panel *ngFor="let data of queueData">
+                  <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                    [expandedHeight]="customExpandedHeight">
+                    <mat-panel-title>
+                      <p class="group-name">{{data.Name? data.Name : 'N/A'}}</p>
+                    </mat-panel-title>
+                    <mat-panel-title>
+                      <p class="group-name">{{data.AgentSelectionCriteria ? data.AgentSelectionCriteria : 'N/A'}}</p>
+                    </mat-panel-title>
+                    <mat-panel-title>
+                      <p class="group-name">{{data.mrd.Name? data.mrd.Name : 'N/A'}}</p>
+                      <div class="table-trigger">
+                        <span class="list-trigger-area">
+                          <button mat-mini-fab matTooltip="Edit" (click)="editQueue(newQueue,data)"><i
+                              class="fa fa-pencil" aria-hidden="true"></i>
+                          </button>
+                          <button matTooltip="Delete" (click)="deleteConfirm(data)" mat-mini-fab><i
+                              class="fa fa-trash-o" aria-hidden="true"></i>
+                          </button>
+                        </span>
+                      </div>
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  
+                  <div class="manage-step">
+                    <p>{{ data.Steps?.length > 0 ? 'Steps' : 'No Steps Added'}}</p>
+                    <!-- <div  > -->
+                    <div *ngIf="data.Steps?.length > 0" class="routing-table">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Criteria</th>
+                            <th scope="col">Timeout(sec)</th>
+                            <!-- <th scope="col">Default Value</th> -->
+                            <!-- <th scope="col"></th> -->
+                          </tr>
+                        </thead>
+                        <!-- <tbody>
+                          <ng-container>
+                            <tr *ngFor="let data of queueData">
+                              <td scope="row">{{data.Name ? data.name : 'N/A'}}</td>
+                              <td>{{data.Name ? data.Name :'N/A'}}</td>
+                              <td>{{data.Name ? data.Name : 'N/A'}}</td>
+                              <td class="table-trigger">{{data.value ? data.value : 'N/A'}}
+                                <span class="list-trigger-area">
+                                  <button matTooltip="Edit" (click)="editStep(data)" mat-mini-fab><i
+                                      class="fa fa-pencil" aria-hidden="true"></i>
+                                  </button>
+                                  <button matTooltip="Delete" (click)="deleteStep(data)" mat-mini-fab><i
+                                      class="fa fa-trash-o" aria-hidden="true"></i>
+                                  </button>
+                                </span>
+                              </td>
+                            </tr>
+                          </ng-container>
+                        </tbody> -->
+                      </table>
+                    </div>
+                    <div class="step-section">
+                      <button mat-flat-button (click)="openModal(newQueue)">
+                        Add Step
+                      </button>
+                    </div>
+                    <!-- </div> -->
+                  </div>
 
-                        <button matTooltip={{edit_text}} (click)="editDashBoard(data)" mat-mini-fab><i
-                            class="fa fa-pencil" aria-hidden="true"></i>
-                        </button>
 
-                        <button matTooltip={{link_text}} (click)="randomString(data.id)" mat-mini-fab><i
-                            class="fa fa-link" aria-hidden="true"></i>
-                        </button>
 
-                        <button matTooltip={{embedded_code_text}}
-                          (click)="embeddedCodeDialog(embeddedCodeModal,data.id)" mat-mini-fab><i class="fa fa-code"
-                            aria-hidden="true"></i>
-                        </button>
-
-                        <button matTooltip={{delete_text}} (click)="deleteConfirm(data)" mat-mini-fab><i
-                            class="fa fa-trash-o" aria-hidden="true"></i>
-                        </button>
-
-                        <button matTooltip={{copy_text}} (click)="copy(data)" mat-mini-fab><i class="fa fa-files-o"
-                            aria-hidden="true"></i>
-                        </button>
-                      </span>
-                    </td>
-                    <td style="cursor: default;">{{data.updatedOn | date }}</td>
-                    <td>{{data.updatedBy ? data.updatedBy : 'N/A'}}</td>
-                  </tr>
-                </ng-container>
-              </tbody> -->
-            </table>
-            <!-- <pagination-controls *ngIf="dataBool" (pageChange)="p = $event;pageChange($event)" previousLabel=""
-              nextLabel="" maxSize='7'></pagination-controls>
-            <h3 *ngIf="!dataBool" class="noData" translate>No_data</h3> -->
+                </mat-expansion-panel>
+              </ng-container>
+            </mat-accordion>
           </div>
         </div>
       </div>
@@ -90,7 +116,7 @@
         <h4 class="content-span full-width">{{formHeading}}</h4>
       </div>
       <div class="dialog-content">
-        <form class="form-horizontal form-bordered" [formGroup]="queueForm">
+        <form class="form-horizontal form-bordered queue-arrow" [formGroup]="queueForm">
           <div class="form-group">
             <mat-label>Name</mat-label>
             <mat-form-field appearance="outline">
@@ -100,31 +126,7 @@
               </mat-error>
             </mat-form-field>
           </div>
-          <div class="form-group">
-            <mat-label>Associated MRD</mat-label>
-            <mat-form-field appearance="outline">
-              <mat-select formControlName="associatedMrd">
-                <!-- <mat-option *ngFor="let criteria of agentCriteria" [value]="criteria">{{criteria | titlecase}} -->
-                <!-- </mat-option> -->
-                <mat-option>Item 1</mat-option>
-              </mat-select>
-              <mat-error class="form-error">
-                {{formErrors.associatedMrd}}
-              </mat-error>
-            </mat-form-field>
-          </div>
-          <div class="form-group">
-            <mat-label>Agent Selection Criteria</mat-label>
-            <mat-form-field appearance="outline">
-              <mat-select formControlName="agentCriteria">
-                <mat-option *ngFor="let criteria of agentCriteria" [value]="criteria">{{criteria | titlecase}}
-                </mat-option>
-              </mat-select>
-              <mat-error class="form-error">
-                {{formErrors.agentCriteria}}
-              </mat-error>
-            </mat-form-field>
-          </div>
+
           <div class="form-group">
             <mat-label>Service Level Type</mat-label>
             <mat-form-field appearance="outline">
@@ -146,13 +148,38 @@
               </mat-error>
             </mat-form-field>
           </div>
+          <div class="form-group">
+            <mat-label>Associated MRD</mat-label>
+            <mat-form-field appearance="outline">
+              <mat-select formControlName="associatedMrd">
+                <mat-option *ngFor="let mrd of mrdData" [value]="mrd">{{mrd.Name | titlecase}}
+                </mat-option>
+              </mat-select>
+              <mat-error class="form-error">
+                {{formErrors.associatedMrd}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-label>Agent Selection Criteria</mat-label>
+            <mat-form-field appearance="outline">
+              <mat-select formControlName="agentCriteria">
+                <mat-option *ngFor="let criteria of agentCriteria" [value]="criteria">{{criteria | titlecase}}
+                </mat-option>
+              </mat-select>
+              <mat-error class="form-error">
+                {{formErrors.agentCriteria}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+
 
           <div class="template-action row">
             <div class="col-md-12">
               <div class="form-action-area">
                 <button mat-raised-button (click)="onClose()" class="gray-btn">Cancel</button>
                 <button mat-raised-button [disabled]="!queueForm.valid" (click)="onSave()" [mat-dialog-close]="true"
-                  class="blue-btn service-trigger">Create MRD</button>
+                  class="blue-btn service-trigger">{{saveBtnText}} Queue</button>
               </div>
             </div>
           </div>

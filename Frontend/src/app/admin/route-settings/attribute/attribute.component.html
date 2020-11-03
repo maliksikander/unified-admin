@@ -36,7 +36,8 @@
               </thead>
               <tbody>
                 <ng-container>
-                  <tr *ngFor="let data of attrData">
+                  <tr
+                    *ngFor="let data of attrData | searchFilter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
                     <td scope="row">{{data.name ? data.name : 'N/A'}}</td>
                     <td>{{data.description ? data.description :'N/A'}}</td>
                     <td>{{data.type ? data.type : 'N/A'}}</td>
@@ -54,9 +55,21 @@
                 </ng-container>
               </tbody>
             </table>
-            <!-- <pagination-controls *ngIf="dataBool" (pageChange)="p = $event;pageChange($event)" previousLabel=""
-              nextLabel="" maxSize='7'></pagination-controls>
-            <h3 *ngIf="!dataBool" class="noData" translate>No_data</h3> -->
+            <div class="pagination-section">
+              <span class="page-span">
+                <span>Entries Per Page</span>
+                <select (change)="selectPage()" [(ngModel)]="selectedItem">
+                  <option *ngFor="let item of itemsPerPageList" [value]="item">{{ item }}
+                  </option>
+                </select>
+              </span>
+
+              <pagination-controls (pageBoundsCorrection)="pageBoundChange($event)" (pageChange)="p = $event;pageChange($event)" previousLabel="" nextLabel="">
+              </pagination-controls>
+            </div>
+            <!-- <h3 *ngIf="!dataBool" class="noData" translate>No_data</h3> -->
+            <!-- <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5,10,15]">
+            </mat-paginator> -->
           </div>
         </div>
       </div>
@@ -109,8 +122,7 @@
               <mat-label>Default Value</mat-label>
               <mat-slider *ngIf="attributeForm.value.type == 'Proficient'" formControlName="profVal" thumbLabel
                 [displayWith]="formatLabel" tickInterval="1" min="0" max="10"></mat-slider>
-              <mat-slide-toggle *ngIf="attributeForm.value.type == 'Boolean'"
-                formControlName="boolVal">
+              <mat-slide-toggle *ngIf="attributeForm.value.type == 'Boolean'" formControlName="boolVal">
               </mat-slide-toggle>
             </div>
           </div>
