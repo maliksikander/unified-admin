@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 import { CommonService } from '../../services/common.service';
 import { EndpointService } from '../../services/endpoint.service';
 import { SnackbarService } from '../../services/snackbar.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-mrd',
@@ -42,8 +43,8 @@ export class MrdComponent implements OnInit {
     this.validations = this.commonService.mrdFormErrorMessages;
 
     this.mrdForm = this.formBuilder.group({
-      name: ['', [Validators.required]],
-      description: [''],
+      name: ['', [Validators.required,Validators.maxLength(15), Validators.pattern("^[a-zA-Z0-9!@#$%^*_&()\\\"-]*$")], this.ValidateNameDuplication.bind(this)],
+      description: ['',[Validators.maxLength(50)]],
       enabled: [],
     });
 
@@ -60,9 +61,27 @@ export class MrdComponent implements OnInit {
 
   }
 
+  ValidateNameDuplication(control: AbstractControl) {
+    return this.endPointService.get(this.reqServiceType).pipe(map(
+      e => {
+        const attr = e;
+        if (!this.editData && (attr.find(e => e.Name.toLowerCase() == control.value.toLowerCase()))) return { validName: true };
+        if (this.editData && this.editData.length > 0) {
+          const attr2 = attr;
+          const index = attr2.findIndex(e => e.Name == this.editData.Name);
+          attr2.splice(index, 1);
+          if (attr2.find(e => e.Name.toLowerCase() == control.value.toLowerCase())) return { validName: true };
+        }
+      }
+    ));
+    // return null;
+  }
+
   openModal(templateRef) {
     this.mrdForm.reset();
     this.mrdForm.controls['enabled'].patchValue(true);
+    this.formHeading = 'Add New MRD';
+    this.saveBtnText = 'Create'
     let dialogRef = this.dialog.open(templateRef, {
       width: '500px',
       height: '350px',

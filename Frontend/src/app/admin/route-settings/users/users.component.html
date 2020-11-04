@@ -75,16 +75,16 @@
   </div>
 
   <ng-template #userProfileForm>
-    <div class="dialog-container">
+    <div class="user-dialog-container">
       <div class="mat-card-header">
         <mat-icon (click)="onClose()">close</mat-icon>
         <h4 class="content-span full-width">{{formHeading}}</h4>
       </div>
-      <div class="form-dialog-content">
+      <div class="dialog-content">
         <form class="form-horizontal form-bordered" [formGroup]="userForm">
           <div class="form-expansion-panel">
             <mat-accordion>
-              <mat-expansion-panel>
+              <mat-expansion-panel [expanded]="true">
                 <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
                   [expandedHeight]="customExpandedHeight">
                   <mat-panel-title>
@@ -120,7 +120,7 @@
                 </div>
               </mat-expansion-panel>
 
-              <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel class="attr-panel" >
                 <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
                   [expandedHeight]="customExpandedHeight">
                   <mat-panel-title>
@@ -128,7 +128,7 @@
                   </mat-panel-title>
                 </mat-expansion-panel-header>
 
-                <div class="user-profile-section attribute-section-label">
+                <div class="user-attribute-section attribute-section-label">
                   <div class="form-group col-md-5">
                     <mat-label>Available Attributes</mat-label>
                     <div class="available-attribute-section row m-0">
@@ -189,7 +189,7 @@
               <div class="user-form-action-area">
                 <button mat-raised-button (click)="onClose()" class="gray-btn">Cancel</button>
                 <button mat-raised-button [disabled]="!userForm.valid" (click)="onSave()" [mat-dialog-close]="true"
-                  class="blue-btn service-trigger">Save</button>
+                  class="dark-blue-btn service-trigger">Save</button>
               </div>
             </div>
           </div>

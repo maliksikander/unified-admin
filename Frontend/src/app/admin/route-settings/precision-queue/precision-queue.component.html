@@ -31,7 +31,8 @@
                 <li>Associated MRD</li>
               </ul>
               <ng-container>
-                <mat-expansion-panel *ngFor="let data of queueData | searchFilter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
+                <mat-expansion-panel
+                  *ngFor="let data of queueData | searchFilter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
                   <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
                     [expandedHeight]="customExpandedHeight">
                     <mat-panel-title>
@@ -54,10 +55,8 @@
                       </div>
                     </mat-panel-title>
                   </mat-expansion-panel-header>
-                  
                   <div class="manage-step">
                     <p>{{ data.Steps?.length > 0 ? 'Steps' : 'No Steps Added'}}</p>
-                    <!-- <div  > -->
                     <div *ngIf="data.Steps?.length > 0" class="routing-table">
                       <table class="table">
                         <thead>
@@ -65,8 +64,6 @@
                             <th scope="col">Name</th>
                             <th scope="col">Criteria</th>
                             <th scope="col">Timeout(sec)</th>
-                            <!-- <th scope="col">Default Value</th> -->
-                            <!-- <th scope="col"></th> -->
                           </tr>
                         </thead>
                         <!-- <tbody>
@@ -91,11 +88,10 @@
                       </table>
                     </div>
                     <div class="step-section">
-                      <button mat-flat-button (click)="openModal(newQueue)">
+                      <button mat-flat-button (click)="openStepModal(stepFormTemplate)">
                         Add Step
                       </button>
                     </div>
-                    <!-- </div> -->
                   </div>
                 </mat-expansion-panel>
               </ng-container>
@@ -108,7 +104,8 @@
                   </option>
                 </select>
               </span>
-              <pagination-controls (pageBoundsCorrection)="pageBoundChange($event)" (pageChange)="p = $event;pageChange($event)" previousLabel="" nextLabel="">
+              <pagination-controls (pageBoundsCorrection)="pageBoundChange($event)"
+                (pageChange)="p = $event;pageChange($event)" previousLabel="" nextLabel="">
               </pagination-controls>
             </div>
           </div>
@@ -188,6 +185,83 @@
                 <button mat-raised-button (click)="onClose()" class="gray-btn">Cancel</button>
                 <button mat-raised-button [disabled]="!queueForm.valid" (click)="onSave()" [mat-dialog-close]="true"
                   class="blue-btn service-trigger">{{saveBtnText}} Queue</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-template>
+
+
+  <ng-template #stepFormTemplate>
+    <div class="step-dialog-container">
+      <div class="mat-card-header">
+        <mat-icon (click)="onClose()">close</mat-icon>
+        <h4 class="content-span full-width">{{stepFormHeading}}</h4>
+      </div>
+      <div class="dialog-content">
+        <form class="form-horizontal form-bordered queue-arrow" [formGroup]="stepForm">
+
+          <div class="timeout-info">
+            <div class="form-group col-md-5">
+              <mat-label>Step Timeout</mat-label>
+              <mat-form-field appearance="outline">
+                <input type="number" min="0" matInput formControlName="timeout">
+                <!-- <mat-error class="form-error">
+                  {{formErrors.timeout}}
+                </mat-error> -->
+              </mat-form-field>
+            </div>
+            <div class="form-group col-md-4">
+              <span class="msg-span">(sec)</span>
+            </div>
+          </div>
+
+          <div class="expression-section">
+            <div class="heading-section">
+              <mat-label>Expression</mat-label>
+              <button mat-flat-button>
+                Add Expression
+              </button>
+            </div>
+           <div class="expression-content"> 
+            <div class="expression-content-body">
+              <div class="form-group col-md-5">
+                <mat-form-field appearance="outline">
+                  <mat-select>
+                    <mat-option *ngFor="let data of attrData" [value]="data">{{data.name | titlecase}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+
+              <div class="form-group col-md-2">
+                <mat-form-field appearance="outline">
+                  <mat-select>
+                    <mat-option *ngFor="let data of operatorList" [value]="data">{{data}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div class="form-group col-md-5">
+                <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1" min="0" max="10">
+                </mat-slider>
+                <!-- <mat-slide-toggle *ngIf="attributeForm.value.type == 'Boolean'" >
+                </mat-slide-toggle> -->
+              </div>
+            </div>
+          </div>
+          </div>
+
+          <div class="template-action row">
+            <div class="col-md-12">
+              <div class="form-action-area">
+                <button mat-raised-button (click)="onClose()" class="gray-btn">Cancel</button>
+                <button mat-raised-button [disabled]="!queueForm.valid" (click)="onSave()" [mat-dialog-close]="true"
+                  class="blue-btn service-trigger">Add</button>
               </div>
             </div>
           </div>

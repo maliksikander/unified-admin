@@ -28,7 +28,8 @@ export class PrecisionQueueComponent implements OnInit {
   };
   validations;
   queueForm: FormGroup;
- 
+  stepForm: FormGroup;
+
   agentCriteria = ['longest available', 'most skilled', 'least skilled'];
   serviceLevelType = ['ignore abandoned chats', 'abandoned chats have a negative impact', 'abandoned chats have a positive impact'];
 
@@ -37,9 +38,14 @@ export class PrecisionQueueComponent implements OnInit {
   saveBtnText = 'Create';
   mrdData = [];
   queueData = [];
-  editData:any;
+  attrData = [];
+  editData: any;
   customCollapsedHeight: string = '40px';
   customExpandedHeight: string = '200px';
+
+  stepFormHeading = 'Add Step';
+  operatorList = ["==", "!=", "<", "<=", ">", ">="];
+
 
   constructor(private commonService: CommonService,
     private dialog: MatDialog,
@@ -57,6 +63,14 @@ export class PrecisionQueueComponent implements OnInit {
       agentCriteria: [],
       serviceLevelType: [''],
       serviceLevelThreshold: ['', [Validators.required, Validators.min(1), Validators.max(10)]],
+    });
+
+    this.stepForm = this.formBuilder.group({
+      timeout: [''],
+      // associatedMrd: [''],
+      // agentCriteria: [],
+      // serviceLevelType: [''],
+      // serviceLevelThreshold: ['', [Validators.required, Validators.min(1), Validators.max(10)]],
     });
 
     this.queueForm.valueChanges.subscribe((data) => {
@@ -89,8 +103,21 @@ export class PrecisionQueueComponent implements OnInit {
     this.endPointService.get('mrd').subscribe(
       (res: any) => {
         this.spinner = false;
-        console.log("mrd res-->", res);
+        // console.log("mrd res-->", res);
         this.mrdData = res;
+      },
+      error => {
+        this.spinner = false;
+        console.log("Error fetching:", error);
+        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
+      });
+  }
+
+  getAttribute() {
+    this.endPointService.get('attribute').subscribe(
+      (res: any) => {
+        this.spinner = false;
+        this.attrData = res;
       },
       error => {
         this.spinner = false;
@@ -119,6 +146,7 @@ export class PrecisionQueueComponent implements OnInit {
         console.log("queue res-->", res);
         this.queueData = res;
         this.getMRD();
+        this.getAttribute();
       },
       error => {
         this.spinner = false;
@@ -162,13 +190,13 @@ export class PrecisionQueueComponent implements OnInit {
 
     // const typeIndex = this.attrType.indexOf(data.type);
     // this.editData = data;
-    console.log("edit Data-->",data);
+    console.log("edit Data-->", data);
     // this.queueForm.patchValue({
-      // name: data.name,
-      // description: data.description,
-      // type: this.attrType[typeIndex],
-      // profVal: JSON.parse(data.value),
-      // boolVal: JSON.parse(data.value),
+    // name: data.name,
+    // description: data.description,
+    // type: this.attrType[typeIndex],
+    // profVal: JSON.parse(data.value),
+    // boolVal: JSON.parse(data.value),
     // });
     // this.formHeading = 'Edit Attribute';
     // this.saveBtnText = 'Update'
@@ -187,7 +215,7 @@ export class PrecisionQueueComponent implements OnInit {
 
   deleteConfirm(data) {
 
-    console.log("delete Data-->",data);
+    console.log("delete Data-->", data);
     // let id = data._id;
     // let msg = "Are you sure you want to delete this Queue ?";
     // return this.dialog.open(ConfirmDialogComponent, {
@@ -209,9 +237,22 @@ export class PrecisionQueueComponent implements OnInit {
 
   onSave() { }
 
-  editStep(data){}
+  editStep(data) { }
 
-  deleteStep(data){}
+  deleteStep(data) { }
+
+  openStepModal(templateRef) {
+    this.stepForm.reset();
+    // this.stepForm.controls['profVal'].patchValue(1);
+    let dialogRef = this.dialog.open(templateRef, {
+      width: '800px',
+      height: '350px',
+      panelClass: 'add-attribute',
+      disableClose: true,
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    });
+  }
 
   pageChange(e) {
     localStorage.setItem('currentUsersPage', e);
@@ -219,10 +260,19 @@ export class PrecisionQueueComponent implements OnInit {
 
   pageBoundChange(e) {
     this.p = e;
-    localStorage.setItem('currentUsersPage', e); 
+    localStorage.setItem('currentUsersPage', e);
   }
 
   selectPage() {
     this.itemsPerPage = this.selectedItem;
   }
+
+  formatLabel(value: number) {
+    if (value >= 1000) {
+      return Math.round(value / 1000) + 'k';
+    }
+
+    return value;
+  }
+
 }

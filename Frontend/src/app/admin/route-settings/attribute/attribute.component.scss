@@ -70,12 +70,12 @@
         position: relative;
         border: 1px solid #e2e2e2;
 
-        &:hover {
-          td:nth-child(3),
-          td:nth-child(4) {
-            // opacity: 0;
-          }
-        }
+        // &:hover {
+        //   td:nth-child(3),
+        //   td:nth-child(4) {
+        //     // opacity: 0;
+        //   }
+        // }
       }
       thead {
         background: #f5f5f5;
@@ -93,6 +93,9 @@
       height: 40px;
       line-height: 40px;
       padding: 0 15px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 20%;
 
       // .dashboard-name {
       //   font-weight: normal;

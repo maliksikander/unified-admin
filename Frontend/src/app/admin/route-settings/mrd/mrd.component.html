@@ -88,6 +88,9 @@
               <mat-error class="form-error">
                 {{formErrors.name}}
               </mat-error>
+              <mat-error *ngIf="mrdForm.controls['name'].hasError('validName')">
+                This name already exists
+              </mat-error>
             </mat-form-field>
           </div>
           <div class="form-group">
@@ -111,7 +114,7 @@
               <div class="form-action-area">
                 <button mat-raised-button (click)="onClose()" class="gray-btn">Cancel</button>
                 <button mat-raised-button [disabled]="!mrdForm.valid" (click)="onSave()" [mat-dialog-close]="true"
-                  class="blue-btn service-trigger">{{saveBtnText}} MRD</button>
+                  class="dark-blue-btn service-trigger">{{saveBtnText}} MRD</button>
               </div>
             </div>
           </div>

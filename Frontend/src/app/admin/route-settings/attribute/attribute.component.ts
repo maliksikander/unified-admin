@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, ThemePalette } from '@angular/material';
 import { Router } from '@angular/router';
 import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 import { CommonService } from '../../services/common.service';
 import { EndpointService } from '../../services/endpoint.service';
 import { SnackbarService } from '../../services/snackbar.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-attribute',
@@ -46,8 +47,8 @@ export class AttributeComponent implements OnInit {
     this.validations = this.commonService.attributeFormErrorMessages;
 
     this.attributeForm = this.formBuilder.group({
-      name: ['', [Validators.required]],
-      description: [''],
+      name: ['', [Validators.required, Validators.maxLength(15), Validators.pattern("^[a-zA-Z0-9!@#$%^*_&()\\\"-]*$")], this.ValidateNameDuplication.bind(this)],
+      description: ['',[Validators.maxLength(50)]],
       type: ['', [Validators.required]],
       profVal: [1],
       boolVal: [true]
@@ -64,6 +65,23 @@ export class AttributeComponent implements OnInit {
     });
 
     this.getAttribute();
+  }
+
+
+  ValidateNameDuplication(control: AbstractControl) {
+    return this.endPointService.get(this.reqServiceType).pipe(map(
+      e => {
+        const attr = e;
+        if (!this.editData && (attr.find(e => e.name.toLowerCase() == control.value.toLowerCase()))) return { validName: true };
+        if (this.editData && this.editData.length > 0) {
+          const attr2 = attr;
+          const index = attr2.findIndex(e => e.name == this.editData.name);
+          attr2.splice(index, 1);
+          if (attr2.find(e => e.name.toLowerCase() == control.value.toLowerCase())) return { validName: true };
+        }
+      }
+    ));
+    // return null;
   }
 
   openModal(templateRef) {
@@ -232,7 +250,7 @@ export class AttributeComponent implements OnInit {
 
   pageBoundChange(e) {
     this.p = e;
-    localStorage.setItem('currentAttributePage', e); 
+    localStorage.setItem('currentAttributePage', e);
   }
 
   selectPage() {

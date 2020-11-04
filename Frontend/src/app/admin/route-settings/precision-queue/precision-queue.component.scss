@@ -387,20 +387,216 @@ input::-webkit-inner-spin-button {
     }
   }
 
-  // .step-section {
-  button {
-    height: 22px;
-    min-height: 22px;
-    font-size: 12px;
-    background: #4dafce;
-    color: #fff;
-    float: right;
-
-    .mat-button-wrapper {
-      position: relative;
-      top: -6px;
+  .step-section {
+    button {
+      height: 22px;
+      min-height: 22px;
       font-size: 12px;
+      background: #4dafce;
+      color: #fff;
+      float: right;
+
+      // .mat-button-wrapper {
+      //   position: relative;
+      //   top: -6px;
+      //   font-size: 12px;
+      // }
     }
   }
-  // }
+}
+
+.step-dialog-container {
+  width: 100%;
+  max-width: 850px !important;
+
+  mat-dialog-container {
+    padding: 0;
+  }
+
+  .mat-card-header {
+    background: #ececec;
+    padding: 0 10px;
+    position: relative;
+    height: 40px;
+
+    mat-icon {
+      position: absolute;
+      right: 10px;
+      width: 30px;
+      height: 30px;
+      text-align: center;
+      line-height: 30px;
+      top: 5px;
+      border: 1px solid #a4a4a4;
+      border-radius: 50%;
+      color: #a4a4a4;
+      cursor: pointer;
+    }
+
+    h4 {
+      color: #5b5b5b;
+      font-size: 14px;
+      margin: 0;
+      line-height: 14px;
+      padding: 13px 0;
+    }
+  }
+
+  .dialog-content {
+    padding: 15px 40px;
+    max-width: 850px;
+    margin: 0 auto;
+    // text-align: center;
+
+    button {
+      margin-left: 10px;
+      min-width: 82px;
+
+      &.gray-btn {
+        background: #919191;
+        color: #ffffff;
+
+        &:hover {
+          background: #7e7e7e;
+        }
+      }
+    }
+
+    .queue-arrow {
+      .form-group .mat-form-field-appearance-outline .mat-select-arrow-wrapper {
+        right: -9px !important;
+        top: -0.2px !important;
+        height: 38.5px !important;
+      }
+    }
+    .form-group .mat-form-field-appearance-outline .mat-select-arrow-wrapper {
+      right: -10px !important;
+      top: 0px !important;
+      height: 38px !important;
+    }
+
+    .form-group {
+      .def-padding {
+        .mat-slider-horizontal {
+          height: 48px;
+          width: 100%;
+        }
+
+        mat-slide-toggle {
+          float: right;
+        }
+      }
+    }
+  }
+
+  .expansion-dialog-content {
+    padding: 10px 30px;
+    max-width: 600px;
+    margin: 0 auto;
+    // text-align: center;
+
+    button {
+      margin-left: 10px;
+      min-width: 82px;
+
+      &.gray-btn {
+        background: #919191;
+        color: #ffffff;
+
+        &:hover {
+          background: #7e7e7e;
+        }
+      }
+    }
+    .form-group .mat-form-field-appearance-outline .mat-select-arrow-wrapper {
+      right: -10px !important;
+      top: 0px !important;
+      height: 38px !important;
+    }
+
+    .form-group {
+      .def-padding {
+        .mat-slider-horizontal {
+          height: 48px;
+          width: 100%;
+        }
+
+        mat-slide-toggle {
+          float: right;
+        }
+      }
+    }
+  }
+
+  p {
+    color: #919191;
+    font-size: 13px;
+    padding: 15px;
+    line-height: 20px;
+  }
+}
+
+.add-step {
+  mat-dialog-container {
+    padding: 0;
+  }
+  .mat-select-panel {
+    width: 100% !important;
+    min-width: 450px !important;
+    left: 14px;
+    position: relative;
+  }
+}
+
+.timeout-info {
+  display: flex;
+  flex-wrap: wrap;
+
+  .form-group.col-md-5 {
+    padding: 0px;
+  }
+
+  .form-group.col-md-4 {
+    padding: 0px 10px;
+  }
+  .msg-span {
+    position: absolute;
+    top: 45px;
+    color: #6b6b6b;
+    font-size: 12px;
+    width: 100%;
+  }
+}
+
+.expression-section {
+  border: 1px solid #ecf7fb;
+  border-radius: 3px;
+  .heading-section {
+    background: #ecf7fb;
+    height: 24px;
+    mat-label {
+      padding: 0px 0px 0px 6px;
+      position: relative;
+      top: 2px;
+      font-size: 13px;
+      color: #8b8b8b;
+    }
+
+    button {
+      height: 22px;
+      min-height: 22px;
+      font-size: 12px;
+      background: #4dafce;
+      color: #fff;
+      float: right;
+    }
+  }
+
+  .expression-content {
+    .expression-content-body {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 10px 5px;
+    }
+  }
 }

@@ -194,8 +194,8 @@ export class UsersComponent implements OnInit {
     // this.formHeading = 'Edit User';
     // this.saveBtnText = 'Update'
     let dialogRef = this.dialog.open(templateRef, {
-      width: '600px',
-      height: '500px',
+      width: '650px',
+      height: '600px',
       panelClass: 'add-attribute',
       disableClose: true,
       data: data

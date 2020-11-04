@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 import { SnackbarService } from './snackbar.service';
 
 @Injectable({
@@ -305,12 +305,14 @@ export class CommonService {
     'name': {
       'required': "This field is required",
       'minlength': "More characters required",
-      'maxlength': "Less characters required",
-      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+      'maxlength': "Max 15 characters allowed",
+      'pattern': 'Not a valid pattern',
+      'validName':'Already exists'
 
     },
     'description': {
       'required': "This field is required",
+      'maxlength': "Max 50 characters allowed",
       'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
     },
     'type': {
@@ -325,12 +327,14 @@ export class CommonService {
     'name': {
       'required': "This field is required",
       'minlength': "More characters required",
-      'maxlength': "Less characters required",
-      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+      'maxlength': "Max 15 characters allowed",
+      'pattern': 'Not a valid pattern',
+      'validName':'Already exists'
 
     },
     'description': {
       'required': "This field is required",
+      'maxlength': "Max 50 characters allowed",
       'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
     },
     'enabled': {
@@ -345,8 +349,9 @@ export class CommonService {
     'name': {
       'required': "This field is required",
       'minlength': "More characters required",
-      'maxlength': "Less characters required",
-      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+      'maxlength': "Max 15 characters allowed",
+      'pattern': 'Not a valid pattern',
+      'validName':'Already exists'
 
     },
     'associatedMrd': {
@@ -417,5 +422,7 @@ export class CommonService {
     result = [formErrors, validations];
     return result;
   }
+
+  
 
 }
