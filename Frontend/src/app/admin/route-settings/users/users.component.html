@@ -30,7 +30,8 @@
                 <li>Role</li>
               </ul>
               <ng-container>
-                <mat-expansion-panel *ngFor="let data of userData | searchFilter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
+                <mat-expansion-panel
+                  *ngFor="let data of userData | searchFilter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
                   <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
                     [expandedHeight]="customExpandedHeight">
                     <mat-panel-title>
@@ -65,7 +66,8 @@
                   </option>
                 </select>
               </span>
-              <pagination-controls (pageBoundsCorrection)="pageBoundChange($event)" (pageChange)="p = $event;pageChange($event)" previousLabel="" nextLabel="">
+              <pagination-controls (pageBoundsCorrection)="pageBoundChange($event)"
+                (pageChange)="p = $event;pageChange($event)" previousLabel="" nextLabel="">
               </pagination-controls>
             </div>
           </div>
@@ -120,7 +122,7 @@
                 </div>
               </mat-expansion-panel>
 
-              <mat-expansion-panel class="attr-panel" >
+              <mat-expansion-panel class="attr-panel">
                 <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
                   [expandedHeight]="customExpandedHeight">
                   <mat-panel-title>
@@ -133,14 +135,17 @@
                     <mat-label>Available Attributes</mat-label>
                     <div class="available-attribute-section row m-0">
                       <div class="search-filter-area">
-                        <input type="text" placeholder="Search" [(ngModel)]="attributeFilter.name"
+                        <input type="text" placeholder="Search" [(ngModel)]="attributeFilterTerm"
                           [ngModelOptions]="{standalone: true}">
                       </div>
                       <ul class="attributes-area">
-                        <li *ngFor="let item of attrData">
+                        <li *ngFor="let i=index;let item of attrData | searchFilter:attributeFilterTerm">
                           <p class="checbox-custom checkbox-team">
-                            <input class="mat-checkbox mat-accent" formControlName="attributes" type="checkbox"
+                            <!-- <input class="mat-checkbox mat-accent" formControlName="attributes" type="checkbox"
                               (change)="checkFilterState($event,item);filterValue(item)" [checked]="item.isChecked">
+                            <span class="checkmark"></span> -->
+                            <input class="mat-checkbox mat-accent" type="checkbox"
+                              (change)="availableToSelectedAttribute($event,item,i)" [checked]="item.isChecked">
                             <span class="checkmark"></span>
                             <label class="attribute-name attr-field">{{item?.name | titlecase}}</label>
                           </p>
@@ -152,13 +157,14 @@
                     <mat-label>Selected Attributes</mat-label>
                     <div class="available-attribute-section row m-0">
                       <div class="search-filter-area">
-                        <input type="text" placeholder="Search" [(ngModel)]="selectedAttributeFilter.name"
+                        <input type="text" placeholder="Search" [(ngModel)]="selectedAttributeFilterTerm"
                           [ngModelOptions]="{standalone: true}">
                       </div>
 
                       <div class="selected-attribute-panel">
                         <mat-accordion>
-                          <mat-expansion-panel *ngFor="let data of userForm.value.attributes">
+                          <mat-expansion-panel
+                            *ngFor="let i = index;let data of userForm.value.attributes | searchFilter:selectedAttributeFilterTerm">
                             <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
                               [expandedHeight]="customExpandedHeight">
                               <mat-panel-title>
@@ -167,9 +173,11 @@
                               </mat-panel-title>
                             </mat-expansion-panel-header>
                             <div *ngIf="data.type">
-                              <mat-slider *ngIf="data.type == 'Proficient'" [value]="data.value" thumbLabel
-                                [displayWith]="formatLabel" tickInterval="1" min="0" max="10"></mat-slider>
-                              <mat-slide-toggle *ngIf="data.type == 'Boolean'" [checked]="data.value">
+                              <mat-slider (input)="onSliderChange($event,data.type,i)" *ngIf="data.type == 'Proficient'"
+                                [value]="data.value" thumbLabel [displayWith]="formatLabel" tickInterval="1" min="0"
+                                max="10"></mat-slider>
+                              <mat-slide-toggle (change)="onToggleChange($event,data.type,i)" *ngIf="data.type == 'Boolean'"
+                                [checked]="data.value">
                               </mat-slide-toggle>
                             </div>
                           </mat-expansion-panel>
@@ -182,7 +190,6 @@
               </mat-expansion-panel>
             </mat-accordion>
           </div>
-          <!--  -->
 
           <div class="template-action row">
             <div class="col-md-12">

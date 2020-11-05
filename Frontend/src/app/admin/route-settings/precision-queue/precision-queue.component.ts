@@ -32,7 +32,7 @@ export class PrecisionQueueComponent implements OnInit {
 
   agentCriteria = ['longest available', 'most skilled', 'least skilled'];
   serviceLevelType = ['ignore abandoned chats', 'abandoned chats have a negative impact', 'abandoned chats have a positive impact'];
-
+  conditionList = ["AND","OR"]
   reqServiceType = 'pqueue';
   formHeading = 'Add New Queue';
   saveBtnText = 'Create';
@@ -56,6 +56,9 @@ export class PrecisionQueueComponent implements OnInit {
   ngOnInit() {
 
     this.validations = this.commonService.queueFormErrorMessages;
+
+    let pageNumber = localStorage.getItem('currentQueuePage');
+    if (pageNumber) this.p = pageNumber;
 
     this.queueForm = this.formBuilder.group({
       name: ['', [Validators.required]],
@@ -255,12 +258,12 @@ export class PrecisionQueueComponent implements OnInit {
   }
 
   pageChange(e) {
-    localStorage.setItem('currentUsersPage', e);
+    localStorage.setItem('currentQueuePage', e);
   }
 
   pageBoundChange(e) {
     this.p = e;
-    localStorage.setItem('currentUsersPage', e);
+    localStorage.setItem('currentQueuePage', e);
   }
 
   selectPage() {

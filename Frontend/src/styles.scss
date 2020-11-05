@@ -1591,7 +1591,7 @@ snack-bar-container {
     text-align: right;
     padding-top: 10px;
     position: relative;
-    right: 25px;
+    right: 36px;
     // padding-bottom: 36px;
 
     button {
@@ -1990,7 +1990,7 @@ snack-bar-container {
       }
 
       .form-group .mat-form-field-appearance-outline .mat-select-arrow-wrapper {
-        right: -9px !important;
+        right: -10px !important;
         top: 3px !important;
         width: 26px !important;
         height: 26px !important;
@@ -2062,6 +2062,7 @@ snack-bar-container {
 
   mat-dialog-container {
     padding: 0;
+    height: fit-content;
   }
 
   .mat-card-header {
@@ -2195,5 +2196,31 @@ snack-bar-container {
       min-height: 300px !important;
       height: 350px !important;
     }
+  }
+}
+
+.selected-attribute-panel {
+  .mat-expansion-panel-body {
+    padding: 0px 24px 16px 10px !important;
+  }
+  .mat-expansion-panel.mat-expanded {
+    border: 1px solid #e2e2e2;
+    border-radius: 5px !important;
+  }
+  span.mat-expansion-indicator {
+    padding: 0px 10px;
+  }
+}
+
+.add-user {
+  mat-dialog-container {
+    padding: 0;
+    height: fit-content;
+  }
+  .mat-select-panel {
+    width: 100% !important;
+    min-width: 450px !important;
+    left: 14px;
+    position: relative;
   }
 }

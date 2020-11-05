@@ -7,10 +7,12 @@ import { PipeTransform, Pipe } from '@angular/core';
 export class SearchFilterPipe implements PipeTransform {
   transform(list: any, searchTerm: string): any {
     if (!list || !searchTerm) {
+      // console.log("list-->",list)
       return list;
     }
 
     if (list.length > 0 && list[0].name) {
+      // console.log("list 2-->",list)
       return list.filter(list =>
         list.name.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1);
     }
@@ -20,16 +22,6 @@ export class SearchFilterPipe implements PipeTransform {
     }
 
     else if (list.length > 0 && list[0].firstName) {
-      // let usersList = JSON.parse(JSON.stringify(list));
-      // usersList.forEach((user) => {
-      //   user.name = user.firstName + user.lastName; 
-      // });
-
-      // let result =  usersList.filter(list =>
-      //   list.name.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1);
-      //   console.log("result -->",result);
-      //   result = result.forEach(item => delete item.name);
-      // return  result
       return list.filter(list =>
         list.firstName.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1);
     }

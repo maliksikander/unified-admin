@@ -61,7 +61,7 @@
                       <table class="table">
                         <thead>
                           <tr>
-                            <th scope="col">Name</th>
+                            <!-- <th scope="col">Name</th> -->
                             <th scope="col">Criteria</th>
                             <th scope="col">Timeout(sec)</th>
                           </tr>
@@ -225,35 +225,72 @@
                 Add Expression
               </button>
             </div>
-           <div class="expression-content"> 
-            <div class="expression-content-body">
-              <div class="form-group col-md-5">
-                <mat-form-field appearance="outline">
-                  <mat-select>
-                    <mat-option *ngFor="let data of attrData" [value]="data">{{data.name | titlecase}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
+            <div class="expression-content">
+              <div class="expression-content-body">
+                <div class="form-group col-md-4">
+                  <mat-form-field appearance="outline">
+                    <mat-select>
+                      <mat-option *ngFor="let data of attrData" [value]="data">{{data.name | titlecase}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
 
 
-              <div class="form-group col-md-2">
-                <mat-form-field appearance="outline">
-                  <mat-select>
-                    <mat-option *ngFor="let data of operatorList" [value]="data">{{data}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
+                <div class="form-group col-md-2">
+                  <mat-form-field appearance="outline">
+                    <mat-select>
+                      <mat-option *ngFor="let data of operatorList" [value]="data">{{data}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
 
-              <div class="form-group col-md-5">
-                <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1" min="0" max="10">
-                </mat-slider>
-                <!-- <mat-slide-toggle *ngIf="attributeForm.value.type == 'Boolean'" >
+                <div class="form-group col-md-4">
+                  <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1" min="0" max="10">
+                  </mat-slider>
+                  <!-- <mat-slide-toggle *ngIf="attributeForm.value.type == 'Boolean'" >
                 </mat-slide-toggle> -->
+                </div>
+              </div>
+              <div class="expression-content-body">
+
+                <div class="form-group col-md-2">
+                  <mat-form-field appearance="outline">
+                    <mat-select>
+                      <mat-option *ngFor="let data of attrData" [value]="data">{{data.name | titlecase}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+
+                <div class="form-group col-md-4">
+                  <mat-form-field appearance="outline">
+                    <mat-select>
+                      <mat-option *ngFor="let data of attrData" [value]="data">{{data.name | titlecase}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+
+
+                <div class="form-group col-md-2">
+                  <mat-form-field appearance="outline">
+                    <mat-select>
+                      <mat-option *ngFor="let data of conditionList" [value]="data">{{data}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+
+                <div class="form-group col-md-4">
+                  <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1" min="0" max="10">
+                  </mat-slider>
+                  <!-- <mat-slide-toggle *ngIf="attributeForm.value.type == 'Boolean'" >
+                </mat-slide-toggle> -->
+                </div>
               </div>
             </div>
-          </div>
           </div>
 
           <div class="template-action row">
@@ -261,7 +298,7 @@
               <div class="form-action-area">
                 <button mat-raised-button (click)="onClose()" class="gray-btn">Cancel</button>
                 <button mat-raised-button [disabled]="!queueForm.valid" (click)="onSave()" [mat-dialog-close]="true"
-                  class="blue-btn service-trigger">Add</button>
+                  class="dark-blue-btn service-trigger">Add</button>
               </div>
             </div>
           </div>

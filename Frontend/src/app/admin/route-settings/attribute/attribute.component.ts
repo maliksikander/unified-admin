@@ -54,11 +54,8 @@ export class AttributeComponent implements OnInit {
       boolVal: [true]
     });
 
-
     let pageNumber = localStorage.getItem('currentAttributePage');
-    if (pageNumber) {
-      this.p = pageNumber;
-    }
+    if (pageNumber)  this.p = pageNumber;
 
     this.attributeForm.valueChanges.subscribe((data) => {
       this.commonService.logValidationErrors(this.attributeForm, this.formErrors, this.validations);
@@ -66,7 +63,6 @@ export class AttributeComponent implements OnInit {
 
     this.getAttribute();
   }
-
 
   ValidateNameDuplication(control: AbstractControl) {
     return this.endPointService.get(this.reqServiceType).pipe(map(
@@ -81,7 +77,6 @@ export class AttributeComponent implements OnInit {
         }
       }
     ));
-    // return null;
   }
 
   openModal(templateRef) {
@@ -231,7 +226,7 @@ export class AttributeComponent implements OnInit {
     else {
       data.value = JSON.stringify(this.attributeForm.value.profVal);
     }
-    data.usageCount = null;
+    // data.usageCount = null;
 
     return data;
   }
@@ -258,4 +253,3 @@ export class AttributeComponent implements OnInit {
   }
 
 }
-

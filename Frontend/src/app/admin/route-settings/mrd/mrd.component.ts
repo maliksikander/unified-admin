@@ -49,9 +49,7 @@ export class MrdComponent implements OnInit {
     });
 
     let pageNumber = localStorage.getItem('currentMRDPage');
-    if (pageNumber) {
-      this.p = pageNumber;
-    }
+    if (pageNumber) this.p = pageNumber;
 
     this.mrdForm.valueChanges.subscribe((data) => {
       this.commonService.logValidationErrors(this.mrdForm, this.formErrors, this.validations);

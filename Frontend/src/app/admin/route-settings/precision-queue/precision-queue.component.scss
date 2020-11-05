@@ -586,7 +586,7 @@ input::-webkit-inner-spin-button {
       height: 22px;
       min-height: 22px;
       font-size: 12px;
-      background: #4dafce;
+      background: #1C99C0;
       color: #fff;
       float: right;
     }
@@ -596,7 +596,14 @@ input::-webkit-inner-spin-button {
     .expression-content-body {
       display: flex;
       flex-wrap: wrap;
-      padding: 10px 5px;
+      padding: 5px 5px;
+    
+      &:first-child{
+        padding: 10px 5px;
+        position: relative;
+        left: 113px;
+      }
+    
     }
   }
 }

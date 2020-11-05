@@ -9,6 +9,10 @@
   float: none;
 }
 
+button.mat-menu-item {
+  color: #686868 !important;
+}
+
 .topbar-right {
   p {
     color: #33ace8;
@@ -21,10 +25,17 @@
 }
 
 .notification-area {
+
+  
   padding: 0;
 
   li {
     display: inline-block;
+
+    &:first-child {
+      margin: 0px 7px !important;
+      color: #929292;
+    }
 
     button {
       margin: 0px;
@@ -58,6 +69,12 @@
         color: #929292;
       }
     }
+ 
+  }
+
+  &:first-child {
+    // padding: 0px 6px;
+    color: #929292;
   }
 }
 
@@ -99,6 +116,3 @@
     left: 4px;
   }
 }
-
-
-
