@@ -3,6 +3,7 @@ import {MatSidenav} from '@angular/material';
 import {CommonService} from '../services/common.service';
 import {Router} from '@angular/router';
 import {ConfigService} from '../services/config.service';
+import { EndpointService } from '../services/endpoint.service';
 
 @Component({
   selector: 'app-admin-main',
@@ -31,6 +32,7 @@ export class AdminMainComponent implements OnInit {
 
   constructor(
     private commonService: CommonService,
+    private endPointService:EndpointService,
     private router: Router,
     private changeDetector: ChangeDetectorRef,
     private configService: ConfigService) {
@@ -40,7 +42,12 @@ export class AdminMainComponent implements OnInit {
   ngOnInit() {
 
 
-    this.configService.onReadConfig.subscribe(() => {
+    this.configService.onReadConfig.subscribe((e) => {
+
+    
+      this.endPointService.endpointUrl = e.Admin_URL;
+      this.endPointService.MRE_MICRO_URL = e.MRE_URL;
+        console.log("comp data-->",this.endPointService.endpointUrl)
       this.defaultTheme = this.configService.Theme;
       this.defaultLanguage = this.configService.DefaultLanguage;
       this.sidebarPosition = this.configService.sidebarPosition;
