@@ -20,6 +20,7 @@ coverage
 /dist
 /tmp
 /out-tsc
+/backend/src/public/dist
 /frontend/dist
 # Only exists if Bazel was run
 /bazel-out
