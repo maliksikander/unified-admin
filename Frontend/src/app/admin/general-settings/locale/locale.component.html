@@ -35,7 +35,7 @@
                       <mat-chip *ngFor="let lang of selectedLanguages | slice :0:3" [removable]="true"
                         (removed)="onLanguageRemoved(lang)">
                         {{ lang.name }}
-                        <mat-icon matChipRemove>cancel</mat-icon>
+                        <mat-icon *ngIf="selectedLanguages.length > 1" matChipRemove>cancel</mat-icon>
                       </mat-chip>
                       <mat-chip *ngIf="selectedCount?.length > 3">+{{selectedCount .length - 3}}</mat-chip>
                     </mat-chip-list>

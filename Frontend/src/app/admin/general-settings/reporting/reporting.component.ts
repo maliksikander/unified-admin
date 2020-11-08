@@ -23,6 +23,7 @@ export class ReportingComponent implements OnInit {
   editData: any;
   hide = true;
 
+
   constructor(private snackbar: SnackbarService,
     private fb: FormBuilder,
     private commonService: CommonService,
@@ -31,19 +32,28 @@ export class ReportingComponent implements OnInit {
 
   ngOnInit() {
 
+
     this.validations = this.commonService.reportSettingErrorMessages;
 
     this.reportSettingForm = this.fb.group({
-      reportingEnabled: [true],
-      rcDBUrl: ['', [Validators.required,Validators.pattern(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/)]],
-      rcDBUser: ['', [Validators.required,Validators.maxLength(40)]],
-      rcDBPwd: ['', [Validators.required,Validators.maxLength(256)]],
-      rcDBName: ['', [Validators.required,Validators.maxLength(40)]],
+      reportingEnabled: [false],
+      rcDBUrl: ['', [Validators.required, Validators.pattern(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/)]],
+      rcDBUser: ['', [Validators.required, Validators.maxLength(40)]],
+      rcDBPwd: ['', [Validators.required, Validators.maxLength(256)]],
+      rcDBName: ['', [Validators.required, Validators.maxLength(40)]],
     });
+
+
+    // this.reportSettingForm.controls['rcDBUrl'].disable();
+    // this.reportSettingForm.controls['rcDBUser'].disable();
+    // this.reportSettingForm.controls['rcDBPwd'].disable();
+    // this.reportSettingForm.controls['rcDBName'].disable();
+
     this.reportSettingForm.valueChanges.subscribe((data) => {
       let result = this.commonService.logValidationErrors(this.reportSettingForm, this.formErrors, this.validations);
       this.formErrors = result[0];
       this.validations = result[1];
+
     });
 
     this.commonService._spinnerSubject.subscribe((res: any) => {
@@ -52,7 +62,7 @@ export class ReportingComponent implements OnInit {
     });
 
     this.endPointService.readConfigJson().subscribe((e) => {
-    this.getReportSetting();
+      this.getReportSetting();
     });
   }
 
@@ -122,4 +132,7 @@ export class ReportingComponent implements OnInit {
       this.createReportSetting(data);
     }
   }
+
+  toggleChange(e) { }
+
 }

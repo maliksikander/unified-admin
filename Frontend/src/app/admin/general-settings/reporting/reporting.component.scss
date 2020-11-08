@@ -1,5 +1,5 @@
 .service-trigger {
-  background: #25AFCB;
+  background: #25afcb;
   color: #ffffff;
   height: 30px;
   line-height: 30px;
@@ -8,8 +8,10 @@
   width: 90px;
 }
 
-mat-slide-toggle{
+mat-slide-toggle {
   float: right;
 }
 
-
+.report-padding-btn {
+  padding: 0px 15px 30px 15px;
+}

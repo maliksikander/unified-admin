@@ -2224,3 +2224,12 @@ snack-bar-container {
     position: relative;
   }
 }
+
+.panel-body {
+  .form-group mat-label {
+    color: #8b8b8b !important;
+    font-size: 12px !important;
+    font-weight: 400 !important;
+
+  }
+}
