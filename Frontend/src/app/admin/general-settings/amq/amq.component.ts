@@ -32,14 +32,15 @@ export class AmqComponent implements OnInit {
 
   ngOnInit() {
 
+
     this.validations = this.commonService.amqSettingErrorMessages;
 
     this.amqSettingForm = this.fb.group({
-      amqUser: ['', [Validators.required,Validators.maxLength(40)]],
-      amqPwd: ['', [Validators.required,Validators.maxLength(256)]],
-      amqHost: ['', [Validators.required,Validators.maxLength(256),Validators.pattern(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/)]],
-      amqPort: ['', [Validators.required,Validators.min(10),Validators.max(10000)]],
-      amqUrl: ['', [Validators.required,Validators.pattern(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/)]],
+      amqUser: ['', [Validators.required, Validators.maxLength(40)]],
+      amqPwd: ['', [Validators.required, Validators.maxLength(256)]],
+      amqHost: ['', [Validators.required, Validators.maxLength(256), Validators.pattern(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/)]],
+      amqPort: ['', [Validators.required, Validators.min(10), Validators.max(10000)]],
+      amqUrl: ['', [Validators.required, Validators.pattern(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/)]],
     });
 
     this.amqSettingForm.valueChanges.subscribe((data) => {
@@ -52,9 +53,9 @@ export class AmqComponent implements OnInit {
       this.spinner = res;
       this.changeDetector.markForCheck();
     });
-
-    this.getAmqSetting();
-
+    this.endPointService.readConfigJson().subscribe((e) => {
+      this.getAmqSetting();
+    });
   }
 
   getAmqSetting() {
@@ -75,7 +76,7 @@ export class AmqComponent implements OnInit {
       error => {
         this.spinner = false;
         console.log("Error fetching:", error);
-        if(error && error.status == 0)  this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
+        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
       });
   }
 
@@ -92,7 +93,7 @@ export class AmqComponent implements OnInit {
       (error: any) => {
         this.spinner = false;
         console.log("Error creating", error);
-        if(error && error.status == 0)  this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
+        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
       }
     );
   }
@@ -106,7 +107,7 @@ export class AmqComponent implements OnInit {
       (error: any) => {
         this.spinner = false;
         console.log("Error updating", error);
-        if(error && error.status == 0)  this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
+        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
       }
     );
   }

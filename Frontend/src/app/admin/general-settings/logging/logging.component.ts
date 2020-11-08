@@ -49,8 +49,9 @@ export class LoggingComponent implements OnInit {
       this.spinner = res;
       this.changeDetector.markForCheck();
     });
-
+    this.endPointService.readConfigJson().subscribe((e) => {
     this.getLogSetting();
+    });
   }
 
   getLogSetting() {

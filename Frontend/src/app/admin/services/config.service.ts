@@ -26,11 +26,11 @@ export class ConfigService {
 
   readConfig() {
     this.http.get('assets/config/config.json').subscribe((data: any) => {
-      console.log("config service-->", data);
+      // console.log("config service-->", data);
       this.endPointService.endpointUrl = data.Admin_URL;
       this.endPointService.MRE_MICRO_URL = data.MRE_URL;
 
-      console.log("service config-->", this.endPointService.endpointUrl, this.endPointService.MRE_MICRO_URL);
+      // console.log("service config-->", this.endPointService.endpointUrl, this.endPointService.MRE_MICRO_URL);
       this.setConfigurations(data);
     }, (error) => {
       alert('Unable to read configurations, Please contact administrator');

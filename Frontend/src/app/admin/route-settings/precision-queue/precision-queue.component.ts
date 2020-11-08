@@ -32,7 +32,7 @@ export class PrecisionQueueComponent implements OnInit {
 
   agentCriteria = ['longest available', 'most skilled', 'least skilled'];
   serviceLevelType = ['ignore abandoned chats', 'abandoned chats have a negative impact', 'abandoned chats have a positive impact'];
-  conditionList = ["AND","OR"]
+  conditionList = ["AND", "OR"]
   reqServiceType = 'pqueue';
   formHeading = 'Add New Queue';
   saveBtnText = 'Create';
@@ -45,6 +45,7 @@ export class PrecisionQueueComponent implements OnInit {
 
   stepFormHeading = 'Add Step';
   operatorList = ["==", "!=", "<", "<=", ">", ">="];
+  boolOperatorList = ["==", "!="];
 
 
   constructor(private commonService: CommonService,
@@ -65,11 +66,18 @@ export class PrecisionQueueComponent implements OnInit {
       associatedMrd: [''],
       agentCriteria: [],
       serviceLevelType: [''],
-      serviceLevelThreshold: ['', [Validators.required, Validators.min(1), Validators.max(10)]],
+      serviceLevelThreshold: ['', [Validators.required, Validators.min(1)]],
     });
 
     this.stepForm = this.formBuilder.group({
       timeout: [''],
+      attribute: [''],
+      operator: [''],
+      profVal: [''],
+      boolVal: ['true'],
+      conditionalVal:[],
+
+
       // associatedMrd: [''],
       // agentCriteria: [],
       // serviceLevelType: [''],
@@ -80,8 +88,9 @@ export class PrecisionQueueComponent implements OnInit {
       this.commonService.logValidationErrors(this.queueForm, this.formErrors, this.validations);
     });
 
-
-    this.getQueue();
+    this.endPointService.readConfigJson().subscribe((e) => {
+      this.getQueue();
+    });
   }
 
   openModal(templateRef) {
@@ -157,7 +166,6 @@ export class PrecisionQueueComponent implements OnInit {
         if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
       });
   }
-
 
   updateQueue(data, id) {
     // this.endPointService.update(data, id, this.reqServiceType).subscribe(
@@ -246,7 +254,12 @@ export class PrecisionQueueComponent implements OnInit {
 
   openStepModal(templateRef) {
     this.stepForm.reset();
-    // this.stepForm.controls['profVal'].patchValue(1);
+
+    this.stepForm.controls['attribute'].patchValue(this.attrData[0]);
+    this.stepForm.controls['operator'].patchValue(this.operatorList[0]);
+    this.stepForm.controls['profVal'].patchValue(1);
+    this.stepForm.controls['boolVal'].patchValue("true");
+    this.stepForm.controls['conditionalVal'].patchValue(this.conditionList[0]);
     let dialogRef = this.dialog.open(templateRef, {
       width: '800px',
       height: '350px',

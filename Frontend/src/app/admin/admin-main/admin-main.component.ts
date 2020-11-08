@@ -45,9 +45,9 @@ export class AdminMainComponent implements OnInit {
     this.configService.onReadConfig.subscribe((e) => {
 
     
-      this.endPointService.endpointUrl = e.Admin_URL;
-      this.endPointService.MRE_MICRO_URL = e.MRE_URL;
-        console.log("comp data-->",this.endPointService.endpointUrl)
+      // this.endPointService.endpointUrl = e.Admin_URL;
+      // this.endPointService.MRE_MICRO_URL = e.MRE_URL;
+      //   console.log("comp data-->",this.endPointService.endpointUrl)
       this.defaultTheme = this.configService.Theme;
       this.defaultLanguage = this.configService.DefaultLanguage;
       this.sidebarPosition = this.configService.sidebarPosition;

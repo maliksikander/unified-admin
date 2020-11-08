@@ -227,9 +227,19 @@
             </div>
             <div class="expression-content">
               <div class="expression-content-body">
+
+                <div class="form-group col-md-2">
+                  <mat-form-field appearance="outline">
+                    <mat-select formControlName="conditionalVal">
+                      <mat-option *ngFor="let data of conditionList" [value]="data">{{data}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+
                 <div class="form-group col-md-4">
                   <mat-form-field appearance="outline">
-                    <mat-select>
+                    <mat-select formControlName="attribute">
                       <mat-option *ngFor="let data of attrData" [value]="data">{{data.name | titlecase}}
                       </mat-option>
                     </mat-select>
@@ -239,21 +249,46 @@
 
                 <div class="form-group col-md-2">
                   <mat-form-field appearance="outline">
-                    <mat-select>
-                      <mat-option *ngFor="let data of operatorList" [value]="data">{{data}}
-                      </mat-option>
+                    <mat-select formControlName="operator">
+                      <ng-container *ngIf="stepForm.value.attribute.type == 'Proficient'">
+                        <mat-option *ngFor="let data of operatorList" [value]="data">{{data}}
+                        </mat-option>
+                      </ng-container>
+                      <ng-container *ngIf="stepForm.value.attribute.type == 'Boolean'">
+                        <mat-option *ngFor="let data of boolOperatorList" [value]="data">{{data}}
+                        </mat-option>
+                      </ng-container>
                     </mat-select>
                   </mat-form-field>
                 </div>
 
                 <div class="form-group col-md-4">
-                  <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1" min="0" max="10">
+                  <mat-slider *ngIf="stepForm.value.attribute.type == 'Proficient'" formControlName="profVal" thumbLabel
+                    [displayWith]="formatLabel" tickInterval="1" min="0" max="10">
                   </mat-slider>
-                  <!-- <mat-slide-toggle *ngIf="attributeForm.value.type == 'Boolean'" >
-                </mat-slide-toggle> -->
+                  <!-- <mat-slide-toggle *ngIf="stepForm.value.attribute.type == 'Boolean'" >
+                  </mat-slide-toggle> -->
+
+                  <mat-radio-group *ngIf="stepForm.value.attribute.type == 'Boolean'" formControlName="boolVal"
+                    aria-label="Select an option">
+                    <mat-radio-button value="true">True</mat-radio-button>
+                    <mat-radio-button value="false">False</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+
+                <div class="form-group add-term">
+                  <button class="remove-btn" mat-flat-button>
+                    <mat-icon>close</mat-icon>
+                  </button>
+  
+                  <button mat-flat-button>
+                    <mat-icon class="add-icon">add</mat-icon>
+                  </button>
                 </div>
               </div>
-              <div class="expression-content-body">
+
+              
+              <!-- <div class="expression-content-body">
 
                 <div class="form-group col-md-2">
                   <mat-form-field appearance="outline">
@@ -286,11 +321,13 @@
                 <div class="form-group col-md-4">
                   <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1" min="0" max="10">
                   </mat-slider>
-                  <!-- <mat-slide-toggle *ngIf="attributeForm.value.type == 'Boolean'" >
-                </mat-slide-toggle> -->
+                   <mat-slide-toggle *ngIf="attributeForm.value.type == 'Boolean'" >
+                </mat-slide-toggle>
                 </div>
-              </div>
+              </div> -->
             </div>
+
+
           </div>
 
           <div class="template-action row">

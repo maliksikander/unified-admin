@@ -48,7 +48,7 @@ export class UsersComponent implements OnInit {
 
     this.validations = this.commonService.userFormErrorMessages;
     let pageNumber = localStorage.getItem('currentUsersPage');
-    if (pageNumber) this.p = pageNumber; 
+    if (pageNumber) this.p = pageNumber;
 
     this.userForm = this.formBuilder.group({
       agentId: [''],
@@ -65,7 +65,9 @@ export class UsersComponent implements OnInit {
       this.commonService.logValidationErrors(this.userForm, this.formErrors, this.validations);
     });
 
-    this.getUsers();
+    this.endPointService.readConfigJson().subscribe((e) => {
+      this.getUsers();
+    });
 
   }
 

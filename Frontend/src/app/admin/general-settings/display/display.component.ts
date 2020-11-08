@@ -40,8 +40,8 @@ export class DisplayComponent implements OnInit {
     this.validations = this.commonService.displaySettingErrorMessages;
 
     this.displaySettingForm = this.fb.group({
-      agentAlias: ['', [Validators.required,Validators.maxLength(40)]],
-      companyDisplayName: ['', [Validators.required,Validators.maxLength(40)]],
+      agentAlias: ['', [Validators.required, Validators.maxLength(40)]],
+      companyDisplayName: ['', [Validators.required, Validators.maxLength(40)]],
       companyLogo: ['']
     });
 
@@ -56,8 +56,9 @@ export class DisplayComponent implements OnInit {
       this.spinner = res;
       this.changeDetector.markForCheck();
     });
-
-    this.getDisplaySetting();
+    this.endPointService.readConfigJson().subscribe((e) => {
+      this.getDisplaySetting();
+    });
   }
 
   preview(files, e) {

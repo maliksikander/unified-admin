@@ -312,13 +312,13 @@ input::-webkit-inner-spin-button {
       // }
     }
   }
-  .wallboard-list-items {
-    &:hover {
-      span {
-        display: inline-block;
-      }
-    }
-  }
+  // .wallboard-list-items {
+  //   &:hover {
+  //     span {
+  //       display: inline-block;
+  //     }
+  //   }
+  // }
 
   .group-list {
     max-width: 100%;
@@ -579,14 +579,15 @@ input::-webkit-inner-spin-button {
       position: relative;
       top: 2px;
       font-size: 13px;
-      color: #8b8b8b;
+      font-weight: 600;
+      color: #5b5b5b;
     }
 
     button {
       height: 22px;
       min-height: 22px;
       font-size: 12px;
-      background: #1C99C0;
+      background: #1c99c0;
       color: #fff;
       float: right;
     }
@@ -596,14 +597,41 @@ input::-webkit-inner-spin-button {
     .expression-content-body {
       display: flex;
       flex-wrap: wrap;
-      padding: 5px 5px;
-    
-      &:first-child{
+      padding: 0px 5px;
+
+      // &:first-child {
         padding: 10px 5px;
         position: relative;
-        left: 113px;
+        // left: 113px;
+      // }
+    }
+  }
+}
+
+.add-term {
+  button {
+    padding: 0px !important;
+    margin: 0 !important;
+    min-width: 0 !important;
+
+    &:first-child {
+      .mat-icon {
+        font-size: 15px;
+        padding: 6px 0px;
+        color: #b1b1b1;
       }
-    
+    }
+
+    &:nth-child(2) {
+      .mat-icon {
+        font-size: 14px;
+        border: 1px solid #1c99c0;
+        padding: 2px 0px;
+        border-radius: 50%;
+        width: 18px;
+        height: 18px;
+        color: #1c99c0;
+      }
     }
   }
 }

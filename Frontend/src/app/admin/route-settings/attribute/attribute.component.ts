@@ -60,8 +60,9 @@ export class AttributeComponent implements OnInit {
     this.attributeForm.valueChanges.subscribe((data) => {
       this.commonService.logValidationErrors(this.attributeForm, this.formErrors, this.validations);
     });
-
+    this.endPointService.readConfigJson().subscribe((e) => {
     this.getAttribute();
+    });
   }
 
   ValidateNameDuplication(control: AbstractControl) {

@@ -113,8 +113,9 @@ export class LocaleComponent implements OnInit {
         i++;
       });
     }
-
+    this.endPointService.readConfigJson().subscribe((e) => {
     this.getLocaleSetting();
+    });
   }
 
   defaultValues() {

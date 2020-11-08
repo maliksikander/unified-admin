@@ -52,21 +52,21 @@ export class SecurityComponent implements OnInit {
     this.validations = this.commonService.securitySettingErrorMessages;
 
     this.securitySettingForm = this.fb.group({
-      certificatePath: ['', [Validators.required,Validators.maxLength(256)]],
-      certificateKeypath: ['', [Validators.required,Validators.maxLength(256)]],
-      certificatePassphrase: ['', [Validators.required,Validators.maxLength(256)]],
-      certificateAuthorityPath: ['', [Validators.required,Validators.maxLength(256)]],
-      certificateAuthorityPassphrase: ['', [Validators.required,Validators.maxLength(256)]],
-      keystorePath: ['', [Validators.required,Validators.maxLength(256)]],
-      keystorePwd: ['', [Validators.required,Validators.maxLength(256)]],
-      truststorePath: ['', [Validators.required,Validators.maxLength(256)]],
-      truststorePwd: ['', [Validators.required,Validators.maxLength(256)]],
-      jksKeystorePath: ['', [Validators.required,Validators.maxLength(256)]],
-      jksKeystorePwd: ['', [Validators.required,Validators.maxLength(256)]],
-      jksKeymanagerPwd: ['', [Validators.required,Validators.maxLength(256)]],
-      amqCertificatePath: ['', [Validators.required,Validators.maxLength(256)]],
-      amqCertificatePassphrase: ['', [Validators.required,Validators.maxLength(256)]],
-      corsOrigin: ['', [Validators.required,Validators.maxLength(40)]],
+      certificatePath: ['', [Validators.required, Validators.maxLength(256)]],
+      certificateKeypath: ['', [Validators.required, Validators.maxLength(256)]],
+      certificatePassphrase: ['', [Validators.required, Validators.maxLength(256)]],
+      certificateAuthorityPath: ['', [Validators.required, Validators.maxLength(256)]],
+      certificateAuthorityPassphrase: ['', [Validators.required, Validators.maxLength(256)]],
+      keystorePath: ['', [Validators.required, Validators.maxLength(256)]],
+      keystorePwd: ['', [Validators.required, Validators.maxLength(256)]],
+      truststorePath: ['', [Validators.required, Validators.maxLength(256)]],
+      truststorePwd: ['', [Validators.required, Validators.maxLength(256)]],
+      jksKeystorePath: ['', [Validators.required, Validators.maxLength(256)]],
+      jksKeystorePwd: ['', [Validators.required, Validators.maxLength(256)]],
+      jksKeymanagerPwd: ['', [Validators.required, Validators.maxLength(256)]],
+      amqCertificatePath: ['', [Validators.required, Validators.maxLength(256)]],
+      amqCertificatePassphrase: ['', [Validators.required, Validators.maxLength(256)]],
+      corsOrigin: ['', [Validators.required, Validators.maxLength(40)]],
       commBypassSSL: [true],
       enableSSL: [true],
       minioSSL: [true],
@@ -85,7 +85,9 @@ export class SecurityComponent implements OnInit {
       this.changeDetector.markForCheck();
     });
 
-    this.getSecuritySetting();
+    this.endPointService.readConfigJson().subscribe((e) => {
+      this.getSecuritySetting();
+    });
   }
 
   getSecuritySetting() {

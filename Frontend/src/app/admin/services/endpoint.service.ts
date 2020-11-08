@@ -11,17 +11,19 @@ import { Router, ActivatedRoute } from '@angular/router';
   providedIn: 'root'
 })
 export class EndpointService {
-  configJSON: any = "assets/config/config.json"
-  endpointUrl="http://localhost:3000/api";
-  MRE_MICRO_URL = "https://hcdev.expertflow.com/mre-microservice/mre/api";
+  configJSON: any = "assets/config/config.json";
+  // endpointUrl="http://localhost:3000/api";
+  // MRE_MICRO_URL = "https://hcdev.expertflow.com/mre-microservice/mre/api";
+  endpointUrl;
+  MRE_MICRO_URL;
   // MRE_MICRO_URL = "";
 
   constructor(private snackbar: SnackbarService,
     private httpClient: HttpClient,
     private _router: Router) {
     this.readConfigJson().subscribe((e) => {
-      // this.endpointUrl = e.Admin_URL;
-      // this.MRE_MICRO_URL = e.MRE_URL;   
+      this.endpointUrl = e.Admin_URL;
+      this.MRE_MICRO_URL = e.MRE_URL;   
       // console.log("service end-->",this.endpointUrl,this.MRE_MICRO_URL);        
   });
 

@@ -24,10 +24,10 @@ export const adminRoutes: Routes = [
           { path: 'general/reporting-settings', component: ReportingComponent},
           { path: 'general/amq-settings', component: AmqComponent},
           { path: 'general/security-settings', component: SecurityComponent},
-          { path: 'routing/attributes', component: AttributeComponent},
-          { path: 'routing/media-routing-domain', component: MrdComponent},
-          { path: 'routing/precision-queue', component: PrecisionQueueComponent},
-          { path: 'routing/users', component: UsersComponent},
+          // { path: 'routing/attributes', component: AttributeComponent},
+          // { path: 'routing/media-routing-domain', component: MrdComponent},
+          // { path: 'routing/precision-queue', component: PrecisionQueueComponent},
+          // { path: 'routing/users', component: UsersComponent},
         ]
     }
 ];

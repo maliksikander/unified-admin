@@ -54,8 +54,9 @@ export class MrdComponent implements OnInit {
     this.mrdForm.valueChanges.subscribe((data) => {
       this.commonService.logValidationErrors(this.mrdForm, this.formErrors, this.validations);
     });
-
+    this.endPointService.readConfigJson().subscribe((e) => {
     this.getMRD();
+    });
 
   }
 

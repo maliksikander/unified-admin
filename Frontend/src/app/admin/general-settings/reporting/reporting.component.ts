@@ -51,7 +51,9 @@ export class ReportingComponent implements OnInit {
       this.changeDetector.markForCheck();
     });
 
+    this.endPointService.readConfigJson().subscribe((e) => {
     this.getReportSetting();
+    });
   }
 
   getReportSetting() {

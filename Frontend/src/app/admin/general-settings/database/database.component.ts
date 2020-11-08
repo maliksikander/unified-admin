@@ -31,7 +31,7 @@ export class DatabaseComponent implements OnInit {
   spinner: any = true;
   editData: any;
   hide1 = true;
-  hide2 =true;
+  hide2 = true;
 
   constructor(private snackbar: SnackbarService,
     private fb: FormBuilder,
@@ -44,18 +44,18 @@ export class DatabaseComponent implements OnInit {
     this.validations = this.commonService.databaseSettingErrorMessages;
 
     this.databaseSettingForm = this.fb.group({
-      mongoUrl: ['', [Validators.required,Validators.pattern(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/)]],
-      eabcDBUrl: ['', [Validators.required,Validators.pattern(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/)]],
-      eabcDBDriver: ['', [Validators.required,Validators.maxLength(256)]],
-      eabcDBDialect: ['', [Validators.required,Validators.maxLength(256)]],
-      eabcDBUser: ['', [Validators.required,Validators.maxLength(40)]],
-      eabcDBPwd: ['', [Validators.required,Validators.maxLength(256)]],
-      ecmDBDialect: ['', [Validators.required,Validators.maxLength(256)]],
-      ecmDBDriver: ['', [Validators.required,Validators.maxLength(256)]],
-      ecmDBPwd: ['', [Validators.required,Validators.maxLength(256)]],
-      ecmDBUrl: ['', [Validators.required,Validators.pattern(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/)]],
-      ecmDBUser: ['', [Validators.required,Validators.maxLength(40)]],
-      ecmDBEngine: ['', [Validators.required,Validators.maxLength(256)]],
+      mongoUrl: ['', [Validators.required, Validators.pattern(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/)]],
+      eabcDBUrl: ['', [Validators.required, Validators.pattern(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/)]],
+      eabcDBDriver: ['', [Validators.required, Validators.maxLength(256)]],
+      eabcDBDialect: ['', [Validators.required, Validators.maxLength(256)]],
+      eabcDBUser: ['', [Validators.required, Validators.maxLength(40)]],
+      eabcDBPwd: ['', [Validators.required, Validators.maxLength(256)]],
+      ecmDBDialect: ['', [Validators.required, Validators.maxLength(256)]],
+      ecmDBDriver: ['', [Validators.required, Validators.maxLength(256)]],
+      ecmDBPwd: ['', [Validators.required, Validators.maxLength(256)]],
+      ecmDBUrl: ['', [Validators.required, Validators.pattern(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/)]],
+      ecmDBUser: ['', [Validators.required, Validators.maxLength(40)]],
+      ecmDBEngine: ['', [Validators.required, Validators.maxLength(256)]],
     });
 
     this.databaseSettingForm.valueChanges.subscribe((data) => {
@@ -68,8 +68,9 @@ export class DatabaseComponent implements OnInit {
       this.spinner = res;
       this.changeDetector.markForCheck();
     });
-
-    this.getDatabaseSetting();
+    this.endPointService.readConfigJson().subscribe((e) => {
+      this.getDatabaseSetting();
+    });
   }
 
   getDatabaseSetting() {
