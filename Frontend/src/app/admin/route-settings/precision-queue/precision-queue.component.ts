@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 import { CommonService } from '../../services/common.service';
@@ -70,28 +70,70 @@ export class PrecisionQueueComponent implements OnInit {
     });
 
     this.stepForm = this.formBuilder.group({
-      timeout: [''],
-      attribute: [''],
-      operator: [''],
-      profVal: [''],
-      boolVal: ['true'],
-      conditionalVal:[],
-
-
-      // associatedMrd: [''],
-      // agentCriteria: [],
-      // serviceLevelType: [''],
-      // serviceLevelThreshold: ['', [Validators.required, Validators.min(1), Validators.max(10)]],
+      timeout: ['', [Validators.required]],
+      expression: this.formBuilder.array([
+        this.addExpressionGroup()
+      ])
     });
 
     this.queueForm.valueChanges.subscribe((data) => {
       this.commonService.logValidationErrors(this.queueForm, this.formErrors, this.validations);
     });
 
+    this.stepForm.valueChanges.subscribe((data) => {
+      // console.log("data-->",data);
+      // this.commonService.logValidationErrors(this.queueForm, this.formErrors, this.validations);
+    });
+
     this.endPointService.readConfigJson().subscribe((e) => {
       this.getQueue();
     });
   }
+
+  addExpressionGroup(): FormGroup {
+    return new FormGroup({
+      expressionConditonal: new FormControl(),
+      terms: new FormArray([
+        this.addExpressionTermGroup()
+      ])
+    });
+  }
+
+  addExpressionTermGroup(): FormGroup {
+
+    return this.formBuilder.group({
+      attribute: [''],
+      operator: [''],
+      profVal: [1],
+      boolVal: ["true"],
+      conditionalVal: [],
+    });
+  }
+
+  getExpressions(form) {
+    //console.log(form.get('sections').controls);
+    return form.controls.expression.controls;
+  }
+
+  getTerms(form) {
+    // console.log(form.controls.questions.controls);
+    //  console.log("IO-->",this.stepForm.value);
+    return form.controls['terms'].controls;
+  }
+
+  addExpressionButton() {
+    (<FormArray>this.stepForm.controls['expression']).push(this.addExpressionGroup());
+  }
+
+  addExpressionTermButton(j) {
+    // (<FormArray>this.stepForm.controls['expression']).controls[j].controls['terms'].push(this.addExpressionTermGroup);
+    // console.log("j-->", j);
+    // console.log(j, "<---iteration -->", this.stepForm.get('expression').controls[j]);
+    const control = <FormArray>this.stepForm.get('expression').controls[j].get('terms');
+    // console.log(control);
+    control.push(this.addExpressionTermGroup());
+  }
+
 
   openModal(templateRef) {
     this.queueForm.reset();
@@ -108,6 +150,7 @@ export class PrecisionQueueComponent implements OnInit {
   onClose() {
     this.dialog.closeAll();
     this.searchTerm = "";
+    this.stepForm.reset();
   }
 
 
@@ -201,7 +244,7 @@ export class PrecisionQueueComponent implements OnInit {
 
     // const typeIndex = this.attrType.indexOf(data.type);
     // this.editData = data;
-    console.log("edit Data-->", data);
+    // console.log("edit Data-->", data);
     // this.queueForm.patchValue({
     // name: data.name,
     // description: data.description,
@@ -255,11 +298,11 @@ export class PrecisionQueueComponent implements OnInit {
   openStepModal(templateRef) {
     this.stepForm.reset();
 
-    this.stepForm.controls['attribute'].patchValue(this.attrData[0]);
-    this.stepForm.controls['operator'].patchValue(this.operatorList[0]);
-    this.stepForm.controls['profVal'].patchValue(1);
-    this.stepForm.controls['boolVal'].patchValue("true");
-    this.stepForm.controls['conditionalVal'].patchValue(this.conditionList[0]);
+    // this.stepForm.controls['attribute'].patchValue(this.attrData[0]);
+    // this.stepForm.controls['operator'].patchValue(this.operatorList[0]);
+    // this.stepForm.controls['profVal'].patchValue(1);
+    // this.stepForm.controls['boolVal'].patchValue("true");
+    // this.stepForm.controls['conditionalVal'].patchValue(this.conditionList[0]);
     let dialogRef = this.dialog.open(templateRef, {
       width: '800px',
       height: '350px',
@@ -267,6 +310,20 @@ export class PrecisionQueueComponent implements OnInit {
       disableClose: true,
     });
     dialogRef.afterClosed().subscribe(result => {
+      //   const arr = new FormArray([
+      //     new FormControl(),
+      //     new FormControl()
+      //  ]);
+      //  console.log(arr.length);  //
+      // const arr:any = <FormArray>this.stepForm.controls['expression'];
+
+      // while (arr.length !== 0) {
+      // arr.removeAt(0)
+      // }
+      // arr.setValue( this.addExpressionGroup());
+      // this.stepForm.reset();
+      console.log("step from--->", this.stepForm.value);
+
     });
   }
 

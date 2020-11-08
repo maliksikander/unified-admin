@@ -2230,6 +2230,18 @@ snack-bar-container {
     color: #8b8b8b !important;
     font-size: 12px !important;
     font-weight: 400 !important;
+  }
+}
 
+.expression-section
+  .expression-section-body
+  .heading-section
+  .right-flank
+  .mat-select-value-text {
+  color: #5b5b5b !important;
+  padding: 0px 7px !important;
+  // background: #448aff !important;
+  span {
+    font-size: 13px !important;
   }
 }

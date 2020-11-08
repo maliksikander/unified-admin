@@ -218,123 +218,114 @@
             </div>
           </div>
 
-          <div class="expression-section">
-            <div class="heading-section">
-              <mat-label>Expression</mat-label>
-              <button mat-flat-button>
-                Add Expression
-              </button>
-            </div>
-            <div class="expression-content">
-              <div class="expression-content-body">
+          <div class="expression-section" formArrayName="expression">
+            <div class="expression-section-body" *ngFor="let expression of getExpressions(stepForm); let i = index">
+              <div class="expression-content" [formGroupName]="i">
+                <!-- <div > -->
+                <div class="heading-section">
+                  <mat-label>Expression {{i + 1}}</mat-label>
 
-                <div class="form-group col-md-2">
-                  <mat-form-field appearance="outline">
-                    <mat-select formControlName="conditionalVal">
+                  <div class="right-flank">
+
+
+                    <button *ngIf="i == getExpressions(stepForm).length -1 " mat-flat-button
+                      (click)="addExpressionButton()">
+                      Add Expression
+                    </button>
+
+                    <mat-select *ngIf="i > 0" formControlName="expressionConditonal">
                       <mat-option *ngFor="let data of conditionList" [value]="data">{{data}}
                       </mat-option>
                     </mat-select>
-                  </mat-form-field>
+                  </div>
+
                 </div>
+                <div formArrayName="terms">
+                  <div class="expression-content-body" *ngFor="let term of getTerms(expression); let j = index">
 
-                <div class="form-group col-md-4">
-                  <mat-form-field appearance="outline">
-                    <mat-select formControlName="attribute">
-                      <mat-option *ngFor="let data of attrData" [value]="data">{{data.name | titlecase}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
+                    <ng-container [formGroupName]="j">
+                      <div class="form-group col-md-2">
+                        <mat-form-field appearance="outline">
+                          <mat-select formControlName="conditionalVal">
+                            <mat-option *ngFor="let data of conditionList" [value]="data">{{data}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+
+                      <div class="form-group col-md-4">
+                        <mat-form-field appearance="outline">
+                          <mat-select formControlName="attribute">
+                            <mat-option *ngFor="let data of attrData" [value]="data">{{data.name | titlecase}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+
+                      <div class="form-group col-md-2">
+                        <mat-form-field appearance="outline">
+                          <mat-select formControlName="operator">
+                            <ng-container *ngIf="term?.value.attribute?.type == 'Proficient'">
+                              <mat-option *ngFor="let data of operatorList" [value]="data">{{data}}
+                              </mat-option>
+                            </ng-container>
+                            <ng-container *ngIf="term.value?.attribute?.type == 'Boolean'">
+                              <mat-option *ngFor="let data of boolOperatorList" [value]="data">{{data}}
+                              </mat-option>
+                            </ng-container>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+
+                      <div class="form-group col-md-4">
+                      <mat-slider *ngIf="term.value?.attribute?.type == 'Proficient'" formControlName="profVal"
+                        thumbLabel [displayWith]="formatLabel" tickInterval="1" min="0" max="10">
+                      </mat-slider>
+
+
+                      <mat-radio-group *ngIf="term.value?.attribute?.type == 'Boolean'" formControlName="boolVal" aria-label="Select an option">
+                        <mat-radio-button value="true">True</mat-radio-button>
+                        <mat-radio-button value="false">False</mat-radio-button>
+                      </mat-radio-group>
+                    </div>
+
+                      <div class="form-group add-term">
+                        <button class="remove-btn" mat-flat-button>
+                          <mat-icon>close</mat-icon>
+                        </button>
+                        <!-- <div  class="form-group add-term"> -->
+                        <!-- <button *ngIf="j == getTerms(expression).length - 1" mat-flat-button
+                          (click)="addExpressionTermButton(j)">
+                          <mat-icon class="add-icon">add</mat-icon>
+                        </button> -->
+                        <!-- </div> -->
+                      </div>
+
+                    </ng-container>
+                  </div>
                 </div>
-
-
-                <div class="form-group col-md-2">
-                  <mat-form-field appearance="outline">
-                    <mat-select formControlName="operator">
-                      <ng-container *ngIf="stepForm.value.attribute.type == 'Proficient'">
-                        <mat-option *ngFor="let data of operatorList" [value]="data">{{data}}
-                        </mat-option>
-                      </ng-container>
-                      <ng-container *ngIf="stepForm.value.attribute.type == 'Boolean'">
-                        <mat-option *ngFor="let data of boolOperatorList" [value]="data">{{data}}
-                        </mat-option>
-                      </ng-container>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-
-                <div class="form-group col-md-4">
-                  <mat-slider *ngIf="stepForm.value.attribute.type == 'Proficient'" formControlName="profVal" thumbLabel
-                    [displayWith]="formatLabel" tickInterval="1" min="0" max="10">
-                  </mat-slider>
-                  <!-- <mat-slide-toggle *ngIf="stepForm.value.attribute.type == 'Boolean'" >
-                  </mat-slide-toggle> -->
-
-                  <mat-radio-group *ngIf="stepForm.value.attribute.type == 'Boolean'" formControlName="boolVal"
-                    aria-label="Select an option">
-                    <mat-radio-button value="true">True</mat-radio-button>
-                    <mat-radio-button value="false">False</mat-radio-button>
-                  </mat-radio-group>
-                </div>
-
                 <div class="form-group add-term">
-                  <button class="remove-btn" mat-flat-button>
+                  <!-- <button class="remove-btn" mat-flat-button>
                     <mat-icon>close</mat-icon>
-                  </button>
-  
-                  <button mat-flat-button>
+                  </button> -->
+                  <!-- <div  class="form-group add-term"> -->
+                  <button  mat-flat-button
+                    (click)="addExpressionTermButton(i)">
                     <mat-icon class="add-icon">add</mat-icon>
                   </button>
+                  <!-- </div> -->
                 </div>
+
+                <!-- </div> -->
               </div>
-
-              
-              <!-- <div class="expression-content-body">
-
-                <div class="form-group col-md-2">
-                  <mat-form-field appearance="outline">
-                    <mat-select>
-                      <mat-option *ngFor="let data of attrData" [value]="data">{{data.name | titlecase}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-
-                <div class="form-group col-md-4">
-                  <mat-form-field appearance="outline">
-                    <mat-select>
-                      <mat-option *ngFor="let data of attrData" [value]="data">{{data.name | titlecase}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-
-
-                <div class="form-group col-md-2">
-                  <mat-form-field appearance="outline">
-                    <mat-select>
-                      <mat-option *ngFor="let data of conditionList" [value]="data">{{data}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-
-                <div class="form-group col-md-4">
-                  <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1" min="0" max="10">
-                  </mat-slider>
-                   <mat-slide-toggle *ngIf="attributeForm.value.type == 'Boolean'" >
-                </mat-slide-toggle>
-                </div>
-              </div> -->
             </div>
-
-
           </div>
 
           <div class="template-action row">
             <div class="col-md-12">
               <div class="form-action-area">
                 <button mat-raised-button (click)="onClose()" class="gray-btn">Cancel</button>
-                <button mat-raised-button [disabled]="!queueForm.valid" (click)="onSave()" [mat-dialog-close]="true"
+                <button mat-raised-button [disabled]="!stepForm.valid" (click)="onSave()" [mat-dialog-close]="true"
                   class="dark-blue-btn service-trigger">Add</button>
               </div>
             </div>
