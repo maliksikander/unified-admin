@@ -11,7 +11,7 @@
         <div class="sub-heading-content">
           <form class="form-horizontal form-bordered" [formGroup]="reportSettingForm">
 
-            <div class="form-group col-md-5" [ngStyle]="{'padding-bottom':reportSettingForm.value.reportingEnabled == true ? '40px' : '0px' }">
+            <div class="form-group col-md-5" [ngStyle]="{'padding-bottom':reportSettingForm.value.reportingEnabled == true ? '30px' : '0px' }">
               <mat-label>Enable Reporting</mat-label>
               <mat-slide-toggle (change)="toggleChange($event)" formControlName="reportingEnabled"></mat-slide-toggle>
             </div>
