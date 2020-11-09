@@ -25,7 +25,7 @@ if (config.env !== 'test') {
 
 //static html page
 // app.use(express.static(process.cwd()+"/my-app/dist/angular-nodejs-example/"));
-app.use(express.static(path.join(__dirname, '/public/dist')));
+app.use(express.static(path.join(__dirname, '/public')));
 // These files load fine (SimpleController.js, main.css)
 // app.use(express.static(path.join(__dirname, '/public/dist/index.html')));
 
@@ -52,7 +52,7 @@ app.use(compression());
 app.use(cors());
 
 app.get('/', (req, res) => {
-  let indexPath = __dirname + '/public/dist/index.html';
+  let indexPath = __dirname + '/public/index.html';
   res.sendFile(indexPath);
 });
 

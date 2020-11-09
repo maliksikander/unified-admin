@@ -1,4 +1,4 @@
 {
-  "Admin_URL":"http://localhost:3000/api",
+  "Admin_URL":"http://192.168.2.77:8543/api",
   "MRE_URL":"https://hcdev.expertflow.com/mre-microservice/mre/api"
 }

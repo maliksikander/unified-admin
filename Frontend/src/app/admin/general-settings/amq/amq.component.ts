@@ -39,7 +39,7 @@ export class AmqComponent implements OnInit {
       amqUser: ['', [Validators.required, Validators.maxLength(40)]],
       amqPwd: ['', [Validators.required, Validators.maxLength(256)]],
       amqHost: ['', [Validators.required, Validators.maxLength(256), Validators.pattern(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/)]],
-      amqPort: ['', [Validators.required, Validators.min(10), Validators.max(10000)]],
+      amqPort: ['', [Validators.required, Validators.min(10), Validators.max(100000)]],
       amqUrl: ['', [Validators.required, Validators.pattern(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/)]],
     });
 
@@ -99,6 +99,7 @@ export class AmqComponent implements OnInit {
   }
 
   updateAmqSetting(data) {
+
     this.endPointService.updateSetting(data, this.reqServiceType).subscribe(
       (res: any) => {
         this.spinner = false;
@@ -117,6 +118,7 @@ export class AmqComponent implements OnInit {
     data.amqPort = JSON.stringify(this.amqSettingForm.value.amqPort)
     if (this.editData) {
       data.id = this.editData.id;
+      this.spinner = true;
       this.updateAmqSetting(data);
     }
     else {

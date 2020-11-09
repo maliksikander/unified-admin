@@ -205,6 +205,7 @@ export class LocaleComponent implements OnInit {
     let data = JSON.parse(JSON.stringify(this.localeSettingForm.value));
     if (this.editData) {
       data.id = this.editData.id;
+      this.spinner = true;
       this.updateLocaleSetting(data);
     }
     else {

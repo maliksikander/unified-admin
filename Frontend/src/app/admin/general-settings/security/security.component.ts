@@ -164,6 +164,7 @@ export class SecurityComponent implements OnInit {
     let data = this.securitySettingForm.value;
     if (this.editData) {
       data.id = this.editData.id;
+      this.spinner = true;
       this.updateSecuritySetting(data);
     }
     else {

@@ -142,6 +142,7 @@ export class DisplayComponent implements OnInit {
 
     if (this.editData) {
       data.id = this.editData.id;
+      this.spinner = true;
       this.updateDisplaySetting(data);
     }
     else {

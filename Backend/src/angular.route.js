@@ -31,7 +31,7 @@ router.get('/security-settings', (req, res) => {
     res.sendFile(indexPath);
 });
 function pathResponse() {
-    return path.resolve('src', 'public', 'dist', 'index.html');
+    return path.resolve('src', 'public', 'index.html');
 }
 
 

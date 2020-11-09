@@ -34,7 +34,7 @@ export class LoggingComponent implements OnInit {
 
     this.logSettingForm = this.fb.group({
       logLevel: ['warn', [Validators.required]],
-      agentLogsMaxFiles: ['', [Validators.required,Validators.min(1),,Validators.max(1024)]],
+      agentLogsMaxFiles: ['', [Validators.required,Validators.min(1),,Validators.max(1000)]],
       agentLogsFileSize: ['', [Validators.required,Validators.min(1),,Validators.max(1024)]],
       logFilePath: ['', [Validators.required,Validators.maxLength(256)]],
     });
@@ -112,6 +112,7 @@ export class LoggingComponent implements OnInit {
     let data = this.logSettingForm.value;
     if (this.editData) {
       data.id = this.editData.id;
+      this.spinner = true;
       this.updateLogSetting(data);
     }
     else {

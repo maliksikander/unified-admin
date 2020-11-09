@@ -139,6 +139,7 @@ export class DatabaseComponent implements OnInit {
     let data = this.databaseSettingForm.value;
     if (this.editData) {
       data.id = this.editData.id;
+      this.spinner = true;
       this.updateDatabaseSetting(data);
     }
     else {

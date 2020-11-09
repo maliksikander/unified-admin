@@ -160,7 +160,7 @@ export class CommonService {
     'agentLogsMaxFiles': {
       'required': "This field is required",
       'min': "Min size should be 1 Mb",
-      'max': "Max size should be 1024 Mb",
+      'max': "Max file quantity should be 1000",
       'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
     },
     'agentLogsFileSize': {

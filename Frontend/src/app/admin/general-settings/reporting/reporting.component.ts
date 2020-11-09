@@ -126,6 +126,7 @@ export class ReportingComponent implements OnInit {
     let data = this.reportSettingForm.value;
     if (this.editData) {
       data.id = this.editData.id;
+      this.spinner = true;
       this.updateReportSetting(data);
     }
     else {
