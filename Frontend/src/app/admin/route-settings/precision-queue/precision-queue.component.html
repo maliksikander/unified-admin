@@ -244,7 +244,7 @@
                   <div class="expression-content-body" *ngFor="let term of getTerms(expression); let j = index">
 
                     <ng-container [formGroupName]="j">
-                      <div    class="form-group col-md-2">
+                      <div class="form-group col-md-2">
                         <mat-form-field *ngIf="j != 0" appearance="outline">
                           <mat-select formControlName="conditionalVal">
                             <mat-option *ngFor="let data of conditionList" [value]="data">{{data}}
@@ -277,39 +277,39 @@
                         </mat-form-field>
                       </div>
 
-                      <div class="form-group col-md-4">
-                      <mat-slider *ngIf="term.value?.attribute?.type == 'Proficient'" formControlName="profVal"
-                        thumbLabel [displayWith]="formatLabel" tickInterval="1" min="0" max="10">
-                      </mat-slider>
+                      <div class="form-group col-md-3">
+                        <mat-slider *ngIf="term.value?.attribute?.type == 'Proficient'" formControlName="profVal"
+                          thumbLabel [displayWith]="formatLabel" tickInterval="1" min="0" max="10">
+                        </mat-slider>
 
 
-                      <mat-radio-group *ngIf="term.value?.attribute?.type == 'Boolean'" formControlName="boolVal" aria-label="Select an option">
-                        <mat-radio-button value="true">True</mat-radio-button>
-                        <mat-radio-button value="false">False</mat-radio-button>
-                      </mat-radio-group>
-                    </div>
+                        <mat-radio-group *ngIf="term.value?.attribute?.type == 'Boolean'" formControlName="boolVal"
+                          aria-label="Select an option">
+                          <mat-radio-button value="true">True</mat-radio-button>
+                          <mat-radio-button value="false">False</mat-radio-button>
+                        </mat-radio-group>
+                      </div>
 
-                      <div class="form-group col-md-2 add-term">
+                      <div class="form-group term-btn">
                         <button class="remove-btn" mat-flat-button>
                           <mat-icon>close</mat-icon>
                         </button>
-                        <!-- <div  class="form-group add-term"> -->
-                        <!-- <button *ngIf="j == getTerms(expression).length - 1" mat-flat-button
-                          (click)="addExpressionTermButton(j)">
+                        <button *ngIf="j == getTerms(expression)?.length - 1" mat-flat-button
+                          (click)="addExpressionTermButton(i)">
+                          <mat-icon class="add-icon">add</mat-icon>
+                        </button>
+                      </div>
+                      <!-- <div class="form-group add-term-btn"> -->
+                      <!-- <button  mat-flat-button
+                          (click)="addExpressionTermButton(i)">
                           <mat-icon class="add-icon">add</mat-icon>
                         </button> -->
-                        <!-- </div> -->
-                      </div>
+                      <!-- </div> -->
 
                     </ng-container>
                   </div>
                 </div>
-                <div class="form-group remove-term-btn">
-                  <button  mat-flat-button
-                    (click)="addExpressionTermButton(i)">
-                    <mat-icon class="add-icon">add</mat-icon>
-                  </button>
-                </div>
+
               </div>
             </div>
           </div>
