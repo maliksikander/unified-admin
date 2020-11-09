@@ -125,14 +125,14 @@ export class PrecisionQueueComponent implements OnInit {
     (<FormArray>this.stepForm.controls['expression']).push(this.addExpressionGroup());
   }
 
-  addExpressionTermButton(j) {
-    // (<FormArray>this.stepForm.controls['expression']).controls[j].controls['terms'].push(this.addExpressionTermGroup);
-    // console.log("j-->", j);
-    // console.log(j, "<---iteration -->", this.stepForm.get('expression').controls[j]);
-    const control = <FormArray>this.stepForm.get('expression').controls[j].get('terms');
-    // console.log(control);
-    control.push(this.addExpressionTermGroup());
-  }
+  // addExpressionTermButton(j) {
+  //   // (<FormArray>this.stepForm.controls['expression']).controls[j].controls['terms'].push(this.addExpressionTermGroup);
+  //   // console.log("j-->", j);
+  //   // console.log(j, "<---iteration -->", this.stepForm.get('expression').controls[j]);
+  //   const control = <FormArray>this.stepForm.get('expression').controls[j].get('terms');
+  //   // console.log(control);
+  //   control.push(this.addExpressionTermGroup());
+  // }
 
 
   openModal(templateRef) {
