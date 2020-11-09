@@ -2245,3 +2245,35 @@ snack-bar-container {
     font-size: 13px !important;
   }
 }
+
+remove-term-btn {
+  button {
+    padding: 0px !important;
+    margin: 0 !important;
+    min-width: 0 !important;
+
+    // &:first-child {
+    //   .mat-icon {
+    //     font-size: 15px;
+    //     padding: 6px 0px;
+    //     color: #b1b1b1;
+    //   }
+    // }
+
+    // &:nth-child(2) {
+    //   .mat-icon {
+    //     font-size: 14px;
+    //     border: 1px solid #1c99c0;
+    //     padding: 2px 0px;
+    //     border-radius: 50%;
+    //     width: 18px;
+    //     height: 18px;
+    //     color: #1c99c0;
+    //   }
+  }
+  .mat-icon {
+    font-size: 15px !important;
+    padding: 6px 0px;
+    color: #b1b1b1 !important; 
+  }
+}
