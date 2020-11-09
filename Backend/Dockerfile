@@ -1,8 +1,8 @@
-FROM node:alpine
+FROM gitlab.expertflow.com:9242/general/node:12-alpine-3.12
 
-RUN mkdir -p /usr/src/node-app && chown -R node:node /usr/src/node-app
+RUN mkdir -p /usr/src/app && chown -R node:node /usr/src/app
 
-WORKDIR /usr/src/node-app
+WORKDIR /usr/src/app
 
 COPY package.json yarn.lock ./
 
@@ -12,4 +12,4 @@ RUN yarn install --pure-lockfile
 
 COPY --chown=node:node . .
 
-EXPOSE 3000
+

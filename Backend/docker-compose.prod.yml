@@ -1,6 +1,10 @@
 version: '3'
 
 services:
-  node-app:
-    container_name: node-app-prod
+  unified-admin:
+    image: gitlab.expertflow.com:9242/cim/unified-admin:CIM-46
+    container_name: unified-admin
     command: yarn start
+    environment:
+      - PORT=3000
+      - MONGODB_URL=mongodb://192.168.2.77/adminPanel
