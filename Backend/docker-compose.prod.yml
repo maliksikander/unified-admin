@@ -4,7 +4,11 @@ services:
   unified-admin:
     image: gitlab.expertflow.com:9242/cim/unified-admin:CIM-46
     container_name: unified-admin
-    command: yarn start
+    # command: yarn start
+    ports:
+      - 3000:3000
     environment:
       - PORT=3000
       - MONGODB_URL=mongodb://192.168.2.77/adminPanel
+      - ADMIN_API_URL=http://localhost:3000/api
+      - MRE_CONFIG_API_URL=https://hcdev.expertflow.com/mre-microservice/mre/api

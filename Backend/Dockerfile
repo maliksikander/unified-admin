@@ -1,5 +1,9 @@
 FROM gitlab.expertflow.com:9242/general/node:12-alpine-3.12
 
+RUN apk update && apk upgrade
+
+RUN apk add tzdata gettext
+
 RUN mkdir -p /usr/src/app && chown -R node:node /usr/src/app
 
 WORKDIR /usr/src/app
@@ -12,4 +16,4 @@ RUN yarn install --pure-lockfile
 
 COPY --chown=node:node . .
 
-
+ENTRYPOINT ["./docker-entrypoint.sh"]

@@ -1,0 +1,4 @@
+{
+  "Admin_URL":"${ADMIN_API_URL}",
+  "MRE_URL":"${MRE_CONFIG_API_URL}"
+}
