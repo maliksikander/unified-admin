@@ -244,8 +244,8 @@
                   <div class="expression-content-body" *ngFor="let term of getTerms(expression); let j = index">
 
                     <ng-container [formGroupName]="j">
-                      <div class="form-group col-md-2">
-                        <mat-form-field appearance="outline">
+                      <div    class="form-group col-md-2">
+                        <mat-form-field *ngIf="j != 0" appearance="outline">
                           <mat-select formControlName="conditionalVal">
                             <mat-option *ngFor="let data of conditionList" [value]="data">{{data}}
                             </mat-option>
@@ -289,7 +289,7 @@
                       </mat-radio-group>
                     </div>
 
-                      <div class="form-group add-term">
+                      <div class="form-group col-md-2 add-term">
                         <button class="remove-btn" mat-flat-button>
                           <mat-icon>close</mat-icon>
                         </button>
@@ -304,19 +304,12 @@
                     </ng-container>
                   </div>
                 </div>
-                <div class="form-group add-term">
-                  <!-- <button class="remove-btn" mat-flat-button>
-                    <mat-icon>close</mat-icon>
-                  </button> -->
-                  <!-- <div  class="form-group add-term"> -->
+                <div class="form-group remove-term-btn">
                   <button  mat-flat-button
                     (click)="addExpressionTermButton(i)">
                     <mat-icon class="add-icon">add</mat-icon>
                   </button>
-                  <!-- </div> -->
                 </div>
-
-                <!-- </div> -->
               </div>
             </div>
           </div>
