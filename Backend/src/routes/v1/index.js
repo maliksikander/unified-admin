@@ -9,7 +9,7 @@ const localeSettingRoute = require('./localeSetting.route');
 const logSettingRoute = require('./logSetting.route');
 const reportSettingRoute = require('./reportSetting.route');
 const securitySettingRoute = require('./securitySetting.route');
-// const angularRoute = require('../../angular.route');
+
 
 const router = express.Router();
 
@@ -23,9 +23,5 @@ router.use('/locale-setting', localeSettingRoute);
 router.use('/log-setting', logSettingRoute);
 router.use('/report-setting', reportSettingRoute);
 router.use('/security-setting', securitySettingRoute);
-
-// router.use('/amq-settings', angularRoute);
-////
-// angularRouter.use('/amq-settings', angularRoutes);
 
 module.exports = router;
