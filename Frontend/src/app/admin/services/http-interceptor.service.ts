@@ -8,7 +8,7 @@ import {
   HttpErrorResponse
 } from '@angular/common/http';
 import { Observable, throwError, Subject } from 'rxjs';
-import {  catchError, tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 
 
 @Injectable({
@@ -47,7 +47,8 @@ export class HttpInterceptorService {
       catchError((error: HttpErrorResponse) => {
         this.url = error.url;
         let code;
-        let msg = error.error.message;
+        let msg: string = error.error.message;
+        msg = msg.toUpperCase();
         if (error.error) {
           code = error.error.code;
           if (code) {

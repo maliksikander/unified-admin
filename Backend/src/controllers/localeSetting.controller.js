@@ -2,8 +2,8 @@
 const catchAsync = require('../utils/catchAsync');
 const { localeSettingService } = require('../services');
 
-const getLocaleSettings = catchAsync(async (req, res) => {
-  const result = await localeSettingService.getLocaleSettings();
+const getSettings = catchAsync(async (req, res) => {
+  const result = await localeSettingService.getSettings();
   const response = {
     status: res.statusCode,
     localeSetting: result,
@@ -11,8 +11,8 @@ const getLocaleSettings = catchAsync(async (req, res) => {
   res.send(response);
 });
 
-const createLocaleSettings = catchAsync(async (req, res) => {
-  const result = await localeSettingService.createLocaleSettings(req.body);
+const createSettings = catchAsync(async (req, res) => {
+  const result = await localeSettingService.createSettings(req.body);
   const response = {
     status: res.statusCode,
     localeSetting: result,
@@ -20,8 +20,8 @@ const createLocaleSettings = catchAsync(async (req, res) => {
   res.send(response);
 });
 
-const updateLocaleSettings = catchAsync(async (req, res) => {
-  const result = await localeSettingService.updateLocaleSettings(req.body);
+const updateSettings = catchAsync(async (req, res) => {
+  const result = await localeSettingService.updateSettings(req.body);
   const response = {
     status: res.statusCode,
     localeSetting: result,
@@ -30,7 +30,7 @@ const updateLocaleSettings = catchAsync(async (req, res) => {
 });
 
 module.exports = {
-  getLocaleSettings,
-  createLocaleSettings,
-  updateLocaleSettings,
+  getSettings,
+  createSettings,
+  updateSettings,
 };

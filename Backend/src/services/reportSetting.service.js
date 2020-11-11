@@ -2,17 +2,17 @@ const httpStatus = require('http-status');
 const { ReportSetting } = require('../models');
 const ApiError = require('../utils/ApiError');
 
-const getReportSettings = async () => {
+const getSettings = async () => {
   const result = await ReportSetting.find();
   return result;
 };
 
-const createReportSettings = async (reqBody) => {
+const createSettings = async (reqBody) => {
   const result = await ReportSetting.create(reqBody);
   return result;
 };
 
-const updateReportSettings = async (reqBody) => {
+const updateSettings = async (reqBody) => {
   const setting = await ReportSetting.findById(reqBody.id);
   if (!setting) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Settings not found');
@@ -23,7 +23,7 @@ const updateReportSettings = async (reqBody) => {
 };
 
 module.exports = {
-  getReportSettings,
-  createReportSettings,
-  updateReportSettings,
+  getSettings,
+  createSettings,
+  updateSettings,
 };

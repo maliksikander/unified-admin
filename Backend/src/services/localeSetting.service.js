@@ -2,17 +2,17 @@ const httpStatus = require('http-status');
 const { LocaleSetting } = require('../models');
 const ApiError = require('../utils/ApiError');
 
-const getLocaleSettings = async () => {
+const getSettings = async () => {
   const result = await LocaleSetting.find();
   return result;
 };
 
-const createLocaleSettings = async (reqBody) => {
+const createSettings = async (reqBody) => {
   const result = await LocaleSetting.create(reqBody);
   return result;
 };
 
-const updateLocaleSettings = async (reqBody) => {
+const updateSettings = async (reqBody) => {
   const setting = await LocaleSetting.findById(reqBody.id);
   if (!setting) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Settings not found');
@@ -23,7 +23,7 @@ const updateLocaleSettings = async (reqBody) => {
 };
 
 module.exports = {
-  getLocaleSettings,
-  createLocaleSettings,
-  updateLocaleSettings,
+  getSettings,
+  createSettings,
+  updateSettings,
 };

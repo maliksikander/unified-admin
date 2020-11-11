@@ -2,17 +2,17 @@ const httpStatus = require('http-status');
 const { LogSetting } = require('../models');
 const ApiError = require('../utils/ApiError');
 
-const getLogSettings = async () => {
+const getSettings = async () => {
   const result = await LogSetting.find();
   return result;
 };
 
-const createLogSettings = async (reqBody) => {
+const createSettings = async (reqBody) => {
   const result = await LogSetting.create(reqBody);
   return result;
 };
 
-const updateLogSettings = async (reqBody) => {
+const updateSettings = async (reqBody) => {
   const setting = await LogSetting.findById(reqBody.id);
   if (!setting) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Settings not found');
@@ -23,7 +23,7 @@ const updateLogSettings = async (reqBody) => {
 };
 
 module.exports = {
-  getLogSettings,
-  createLogSettings,
-  updateLogSettings,
+  getSettings,
+  createSettings,
+  updateSettings,
 };

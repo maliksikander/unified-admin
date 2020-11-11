@@ -1,23 +1,23 @@
 const Joi = require('@hapi/joi');
 
-const createDisplaySetting = {
+const createSetting = {
   body: Joi.object().keys({
-    companyDisplayName: Joi.string().required(),
-    agentAlias: Joi.string().required(),
+    companyDisplayName: Joi.string().max(40).required(),
+    agentAlias: Joi.string().max(40).required(),
     companyLogo: Joi.string().required(),
   }),
 };
 
-const updateDisplaySetting = {
+const updateSetting = {
   body: Joi.object().keys({
-    companyDisplayName: Joi.string().required(),
-    agentAlias: Joi.string().required(),
+    companyDisplayName: Joi.string().max(40).required(),
+    agentAlias: Joi.string().max(40).required(),
     companyLogo: Joi.string().required(),
     id: Joi.string().required(),
   }),
 };
 
 module.exports = {
-  createDisplaySetting,
-  updateDisplaySetting,
+  createSetting,
+  updateSetting,
 };

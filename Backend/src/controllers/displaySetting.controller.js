@@ -2,8 +2,8 @@
 const catchAsync = require('../utils/catchAsync');
 const { displaySettingService } = require('../services');
 
-const getDisplaySettings = catchAsync(async (req, res) => {
-  const result = await displaySettingService.getDisplaySettings();
+const getSettings = catchAsync(async (req, res) => {
+  const result = await displaySettingService.getSettings();
   const response = {
     status: res.statusCode,
     displaySetting: result,
@@ -11,8 +11,8 @@ const getDisplaySettings = catchAsync(async (req, res) => {
   res.send(response);
 });
 
-const createDisplaySettings = catchAsync(async (req, res) => {
-  const result = await displaySettingService.createDisplaySettings(req.body);
+const createSettings = catchAsync(async (req, res) => {
+  const result = await displaySettingService.createSettings(req.body);
   const response = {
     status: res.statusCode,
     displaySetting: result,
@@ -20,8 +20,8 @@ const createDisplaySettings = catchAsync(async (req, res) => {
   res.send(response);
 });
 
-const updateDisplaySettings = catchAsync(async (req, res) => {
-  const result = await displaySettingService.updateDisplaySettings(req.body);
+const updateSettings = catchAsync(async (req, res) => {
+  const result = await displaySettingService.updateSettings(req.body);
   const response = {
     status: res.statusCode,
     displaySetting: result,
@@ -30,7 +30,7 @@ const updateDisplaySettings = catchAsync(async (req, res) => {
 });
 
 module.exports = {
-  getDisplaySettings,
-  createDisplaySettings,
-  updateDisplaySettings,
+  getSettings,
+  createSettings,
+  updateSettings,
 };

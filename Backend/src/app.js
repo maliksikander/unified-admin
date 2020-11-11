@@ -103,7 +103,7 @@ if (config.env === 'production') {
 }
 
 // v1 api routes
-app.use('/api', routes);
+app.use('/unified-admin/api/v1', routes);
 app.use('/general', angularRoutes);
 
 // send back a 404 error for any unknown api request

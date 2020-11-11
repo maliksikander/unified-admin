@@ -5,8 +5,8 @@ const validate = require('../../middlewares/validate');
 const displayValidation = require('../../validations/displaySetting.validation');
 const displaySettingController = require('../../controllers/displaySetting.controller');
 
-router.get('/', displaySettingController.getDisplaySettings);
-router.put('/', validate(displayValidation.updateDisplaySetting), displaySettingController.updateDisplaySettings);
-router.post('/', validate(displayValidation.createDisplaySetting), displaySettingController.createDisplaySettings);
+router.get('/', displaySettingController.getSettings);
+router.put('/', validate(displayValidation.updateSetting), displaySettingController.updateSettings);
+router.post('/', validate(displayValidation.createSetting), displaySettingController.createSettings);
 
 module.exports = router;

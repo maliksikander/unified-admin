@@ -2,8 +2,8 @@
 const catchAsync = require('../utils/catchAsync');
 const { reportSettingService } = require('../services');
 
-const getReportSettings = catchAsync(async (req, res) => {
-  const result = await reportSettingService.getReportSettings();
+const getSettings = catchAsync(async (req, res) => {
+  const result = await reportSettingService.getSettings();
   const response = {
     status: res.statusCode,
     reportSetting: result,
@@ -11,8 +11,8 @@ const getReportSettings = catchAsync(async (req, res) => {
   res.send(response);
 });
 
-const createReportSettings = catchAsync(async (req, res) => {
-  const result = await reportSettingService.createReportSettings(req.body);
+const createSettings = catchAsync(async (req, res) => {
+  const result = await reportSettingService.createSettings(req.body);
   const response = {
     status: res.statusCode,
     reportSetting: result,
@@ -20,8 +20,8 @@ const createReportSettings = catchAsync(async (req, res) => {
   res.send(response);
 });
 
-const updateReportSettings = catchAsync(async (req, res) => {
-  const result = await reportSettingService.updateReportSettings(req.body);
+const updateSettings = catchAsync(async (req, res) => {
+  const result = await reportSettingService.updateSettings(req.body);
   const response = {
     status: res.statusCode,
     reportSetting: result,
@@ -30,7 +30,7 @@ const updateReportSettings = catchAsync(async (req, res) => {
 });
 
 module.exports = {
-  getReportSettings,
-  createReportSettings,
-  updateReportSettings,
+  getSettings,
+  createSettings,
+  updateSettings,
 };

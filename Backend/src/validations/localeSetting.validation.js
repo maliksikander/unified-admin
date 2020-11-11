@@ -1,6 +1,6 @@
 const Joi = require('@hapi/joi');
 
-const createLocaleSetting = {
+const createSetting = {
   body: Joi.object().keys({
     supportedLanguages: Joi.array()
       .items(Joi.object({ code: Joi.string().required(), name: Joi.string().required(), flagUrl: Joi.string().required() }))
@@ -16,7 +16,7 @@ const createLocaleSetting = {
     }).required(),
   }),
 };
-const updateLocaleSetting = {
+const updateSetting = {
   body: Joi.object().keys({
     supportedLanguages: Joi.array()
       .items(Joi.object({ code: Joi.string().required(), name: Joi.string().required(), flagUrl: Joi.string().required() }))
@@ -35,6 +35,6 @@ const updateLocaleSetting = {
 };
 
 module.exports = {
-  createLocaleSetting,
-  updateLocaleSetting,
+  createSetting,
+  updateSetting,
 };

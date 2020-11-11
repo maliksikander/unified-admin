@@ -5,8 +5,8 @@ const validate = require('../../middlewares/validate');
 const databaseValidation = require('../../validations/databaseSetting.validation');
 const databaseSettingController = require('../../controllers/databaseSetting.controller');
 
-router.get('/', databaseSettingController.getDatabaseSettings);
-router.put('/', validate(databaseValidation.updateDatabaseSetting), databaseSettingController.updateDatabaseSettings);
-router.post('/', validate(databaseValidation.createDatabaseSetting), databaseSettingController.createDatabaseSettings);
+router.get('/', databaseSettingController.getSettings);
+router.put('/', validate(databaseValidation.updateSetting), databaseSettingController.updateSettings);
+router.post('/', validate(databaseValidation.createSetting), databaseSettingController.createSettings);
 
 module.exports = router;

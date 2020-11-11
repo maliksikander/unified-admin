@@ -1416,6 +1416,12 @@ snack-bar-container {
   .mat-simple-snackbar {
     justify-content: center;
     margin-left: 15px;
+
+    span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 65%;
+    }
   }
 
   &:before {

@@ -2,8 +2,8 @@
 const catchAsync = require('../utils/catchAsync');
 const { databaseSettingService } = require('../services');
 
-const getDatabaseSettings = catchAsync(async (req, res) => {
-  const result = await databaseSettingService.getDatabaseSettings();
+const getSettings = catchAsync(async (req, res) => {
+  const result = await databaseSettingService.getSettings();
   const response = {
     status: res.statusCode,
     databaseSetting: result,
@@ -11,8 +11,8 @@ const getDatabaseSettings = catchAsync(async (req, res) => {
   res.send(response);
 });
 
-const createDatabaseSettings = catchAsync(async (req, res) => {
-  const result = await databaseSettingService.createDatabaseSettings(req.body);
+const createSettings = catchAsync(async (req, res) => {
+  const result = await databaseSettingService.createSettings(req.body);
   const response = {
     status: res.statusCode,
     databaseSetting: result,
@@ -20,8 +20,8 @@ const createDatabaseSettings = catchAsync(async (req, res) => {
   res.send(response);
 });
 
-const updateDatabaseSettings = catchAsync(async (req, res) => {
-  const result = await databaseSettingService.updateDatabaseSettings(req.body);
+const updateSettings = catchAsync(async (req, res) => {
+  const result = await databaseSettingService.updateSettings(req.body);
   const response = {
     status: res.statusCode,
     databaseSetting: result,
@@ -30,7 +30,7 @@ const updateDatabaseSettings = catchAsync(async (req, res) => {
 });
 
 module.exports = {
-  getDatabaseSettings,
-  createDatabaseSettings,
-  updateDatabaseSettings,
+  getSettings,
+  createSettings,
+  updateSettings,
 };

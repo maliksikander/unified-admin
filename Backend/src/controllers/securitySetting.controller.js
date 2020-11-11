@@ -2,8 +2,8 @@
 const catchAsync = require('../utils/catchAsync');
 const { securitySettingService } = require('../services');
 
-const getSecuritySettings = catchAsync(async (req, res) => {
-  const result = await securitySettingService.getSecuritySettings();
+const getSettings = catchAsync(async (req, res) => {
+  const result = await securitySettingService.getSettings();
   const response = {
     status: res.statusCode,
     securitySetting: result,
@@ -11,8 +11,8 @@ const getSecuritySettings = catchAsync(async (req, res) => {
   res.send(response);
 });
 
-const createSecuritySettings = catchAsync(async (req, res) => {
-  const result = await securitySettingService.createSecuritySettings(req.body);
+const createSettings = catchAsync(async (req, res) => {
+  const result = await securitySettingService.createSettings(req.body);
   const response = {
     status: res.statusCode,
     securitySetting: result,
@@ -20,8 +20,8 @@ const createSecuritySettings = catchAsync(async (req, res) => {
   res.send(response);
 });
 
-const updateSecuritySettings = catchAsync(async (req, res) => {
-  const result = await securitySettingService.updateSecuritySettings(req.body);
+const updateSettings = catchAsync(async (req, res) => {
+  const result = await securitySettingService.updateSettings(req.body);
   const response = {
     status: res.statusCode,
     securitySetting: result,
@@ -30,7 +30,7 @@ const updateSecuritySettings = catchAsync(async (req, res) => {
 });
 
 module.exports = {
-  getSecuritySettings,
-  createSecuritySettings,
-  updateSecuritySettings,
+  getSettings,
+  createSettings,
+  updateSettings,
 };

@@ -2,8 +2,8 @@
 const catchAsync = require('../utils/catchAsync');
 const { logSettingService } = require('../services');
 
-const getLogSettings = catchAsync(async (req, res) => {
-  const result = await logSettingService.getLogSettings();
+const getSettings = catchAsync(async (req, res) => {
+  const result = await logSettingService.getSettings();
   const response = {
     status: res.statusCode,
     logSetting: result,
@@ -11,8 +11,8 @@ const getLogSettings = catchAsync(async (req, res) => {
   res.send(response);
 });
 
-const createLogSettings = catchAsync(async (req, res) => {
-  const result = await logSettingService.createLogSettings(req.body);
+const createSettings = catchAsync(async (req, res) => {
+  const result = await logSettingService.createSettings(req.body);
   const response = {
     status: res.statusCode,
     logSetting: result,
@@ -20,8 +20,8 @@ const createLogSettings = catchAsync(async (req, res) => {
   res.send(response);
 });
 
-const updateLogSettings = catchAsync(async (req, res) => {
-  const result = await logSettingService.updateLogSettings(req.body);
+const updateSettings = catchAsync(async (req, res) => {
+  const result = await logSettingService.updateSettings(req.body);
   const response = {
     status: res.statusCode,
     logSetting: result,
@@ -30,7 +30,7 @@ const updateLogSettings = catchAsync(async (req, res) => {
 });
 
 module.exports = {
-  getLogSettings,
-  createLogSettings,
-  updateLogSettings,
+  getSettings,
+  createSettings,
+  updateSettings,
 };

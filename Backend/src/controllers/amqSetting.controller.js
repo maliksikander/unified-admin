@@ -2,8 +2,8 @@
 const catchAsync = require('../utils/catchAsync');
 const { amqSettingService } = require('../services');
 
-const getAmqSettings = catchAsync(async (req, res) => {
-  const result = await amqSettingService.getAmqSettings();
+const getSettings = catchAsync(async (req, res) => {
+  const result = await amqSettingService.getSettings();
   const response = {
     status: res.statusCode,
     amqSetting: result,
@@ -11,8 +11,8 @@ const getAmqSettings = catchAsync(async (req, res) => {
   res.send(response);
 });
 
-const createAmqSettings = catchAsync(async (req, res) => {
-  const setting = await amqSettingService.createAmqSettings(req.body);
+const createSettings = catchAsync(async (req, res) => {
+  const setting = await amqSettingService.createSettings(req.body);
   const response = {
     status: res.statusCode,
     amqSetting: setting,
@@ -20,8 +20,8 @@ const createAmqSettings = catchAsync(async (req, res) => {
   res.send(response);
 });
 
-const updateAmqSettings = catchAsync(async (req, res) => {
-  const setting = await amqSettingService.updateAmqSettings(req.body);
+const updateSettings = catchAsync(async (req, res) => {
+  const setting = await amqSettingService.updateSettings(req.body);
   const response = {
     status: res.statusCode,
     amqSetting: setting,
@@ -30,7 +30,7 @@ const updateAmqSettings = catchAsync(async (req, res) => {
 });
 
 module.exports = {
-  getAmqSettings,
-  createAmqSettings,
-  updateAmqSettings,
+  getSettings,
+  createSettings,
+  updateSettings,
 };
