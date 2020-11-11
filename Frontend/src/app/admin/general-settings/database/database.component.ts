@@ -95,6 +95,7 @@ export class DatabaseComponent implements OnInit {
             ecmDBEngine: this.editData.ecmDBEngine
           });
         }
+        else if(res.status == 200 && res.databaseSetting.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
       },
       error => {
         this.spinner = false;

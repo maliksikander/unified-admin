@@ -68,6 +68,7 @@ export class LoggingComponent implements OnInit {
             logFilePath: this.editData.logFilePath,
           });
         }
+        else if(res.status == 200 && res.logSetting.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
       },
       error => {
         this.spinner = false;

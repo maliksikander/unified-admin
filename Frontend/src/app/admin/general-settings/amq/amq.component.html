@@ -8,57 +8,59 @@
         <div class="sub-heading">
           <h2>AMQ Settings</h2>
         </div>
-        <div class="sub-heading-content">
+        <div class="panel-page-content">
           <form class="form-horizontal form-bordered" [formGroup]="amqSettingForm">
-            <div class="form-group  col-md-5">
-              <mat-label>AMQ User</mat-label>
-              <mat-form-field appearance="outline">
-                <input matInput formControlName="amqUser">
-                <mat-error class="form-error">
-                  {{formErrors.amqUser}}
-                </mat-error>
-              </mat-form-field>
+            <div class="col-md-5">
+              <div class="form-group">
+                <mat-label>AMQ User</mat-label>
+                <mat-form-field appearance="outline">
+                  <input matInput formControlName="amqUser">
+                  <mat-error class="form-error">
+                    {{formErrors.amqUser}}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-group">
+                <mat-label>AMQ Password</mat-label>
+                <mat-form-field appearance="outline">
+                  <input [type]="hide ? 'password' : 'text'" matInput formControlName="amqPwd">
+                  <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                  <mat-error class="form-error">
+                    {{formErrors.amqPwd}}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-group">
+                <mat-label>AMQ Host</mat-label>
+                <mat-form-field appearance="outline">
+                  <input matInput formControlName="amqHost">
+                  <mat-error class="form-error">
+                    {{formErrors.amqHost}}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-group">
+                <mat-label>AMQ Port</mat-label>
+                <mat-form-field appearance="outline">
+                  <input type="number" matInput formControlName="amqPort">
+                  <mat-error class="form-error">
+                    {{formErrors.amqPort}}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-group">
+                <mat-label>AMQ URL</mat-label>
+                <mat-form-field appearance="outline">
+                  <input matInput formControlName="amqUrl">
+                  <mat-error class="form-error">
+                    {{formErrors.amqUrl}}
+                  </mat-error>
+                </mat-form-field>
+              </div>
             </div>
-            <div class="form-group col-md-5">
-              <mat-label>AMQ Password</mat-label>
-              <mat-form-field appearance="outline">
-                <input [type]="hide ? 'password' : 'text'" matInput formControlName="amqPwd">
-                <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                <mat-error class="form-error">
-                  {{formErrors.amqPwd}}
-                </mat-error>
-              </mat-form-field>
-            </div>
-            <div class="form-group col-md-5">
-              <mat-label>AMQ Host</mat-label>
-              <mat-form-field appearance="outline">
-                <input matInput formControlName="amqHost">
-                <mat-error class="form-error">
-                  {{formErrors.amqHost}}
-                </mat-error>
-              </mat-form-field>
-            </div>
-            <div class="form-group col-md-5">
-              <mat-label>AMQ Port</mat-label>
-              <mat-form-field appearance="outline">
-                <input type="number" matInput formControlName="amqPort">
-                <mat-error class="form-error">
-                  {{formErrors.amqPort}}
-                </mat-error>
-              </mat-form-field>
-            </div>
-            <div class="form-group col-md-5">
-              <mat-label>AMQ URL</mat-label>
-              <mat-form-field appearance="outline">
-                <input matInput formControlName="amqUrl">
-                <mat-error class="form-error">
-                  {{formErrors.amqUrl}}
-                </mat-error>
-              </mat-form-field>
-            </div>
-
-            <div class="action-area padding-btn">
-              <button [disabled]="!amqSettingForm.valid" mat-raised-button class="blue-btn service-trigger" (click)="onSave()">Save</button>
+            <div class="action-area col-md-5">
+              <button [disabled]="!amqSettingForm.valid" mat-raised-button class="blue-btn service-trigger"
+                (click)="onSave()">Save</button>
             </div>
 
           </form>

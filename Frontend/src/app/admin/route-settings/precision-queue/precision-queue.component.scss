@@ -600,13 +600,31 @@ input::-webkit-inner-spin-button {
           background: #448aff !important;
         }
 
-        button {
+        .expression-btn {
           height: 22px;
           min-height: 22px;
           font-size: 12px;
           background: #1c99c0;
           color: #fff;
           float: right;
+        }
+
+        .exp-remove-btn {
+          background: transparent;
+          width: 16px;
+          height: 16px;
+          min-width: 10px;
+          position: absolute;
+          right: 20px;
+          padding-left: 1px;
+          margin: 0 !important;
+
+          .mat-icon {
+            font-size: 15px !important;
+            width: 16px !important;
+            height: 18px !important;
+            color: #b1b1b1 !important;
+          }
         }
       }
     }

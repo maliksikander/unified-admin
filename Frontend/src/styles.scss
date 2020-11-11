@@ -154,7 +154,7 @@ button:focus {
   }
 }
 
-.sub-heading-content {
+.panel-page-content {
   padding: 30px 0px 0px 60px;
 }
 .main-section-area {
@@ -915,10 +915,12 @@ ngx-charts-pie-chart span.legend-label-color {
   }
 }
 
-.action-area.padding-btn {
-  width: 42%;
+.action-area {
+  text-align: right;
+  .padding-btn {
+    width: 42%;
+  }
 }
-
 //Custom Modal
 .widget-selection {
   max-width: 1200px !important;
@@ -1241,7 +1243,7 @@ a.mat-list-item.active-link {
 }
 
 .service-trigger {
-  float: right;
+  // float: right;
   .mat-button-wrapper {
     font-weight: 400;
     font-size: 14px;
@@ -1421,6 +1423,7 @@ snack-bar-container {
       overflow: hidden;
       text-overflow: ellipsis;
       width: 65%;
+      text-align: center;
     }
   }
 
@@ -1490,13 +1493,6 @@ snack-bar-container {
   .mat-progress-spinner circle,
   .mat-spinner circle {
     stroke: #50bad0 !important;
-  }
-}
-
-.security-toggle {
-  margin-bottom: 3px;
-  .form-group.col-md-5.padding-btn {
-    margin-bottom: 24px;
   }
 }
 
@@ -2283,5 +2279,15 @@ snack-bar-container {
     width: 16px;
     height: 16px;
     color: #1c99c0;
+  }
+}
+
+.security-toggle {
+  margin-bottom: 15px;
+  .form-group {
+    padding-bottom: 30px;
+    &:last-child {
+      padding-bottom: 0px !important;
+    }
   }
 }

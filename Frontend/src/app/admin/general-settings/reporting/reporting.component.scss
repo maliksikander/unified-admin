@@ -3,8 +3,8 @@
   color: #ffffff;
   height: 30px;
   line-height: 30px;
-  position: relative;
-  top: 20px;
+  // position: relative;
+  // top: 20px;
   width: 90px;
 }
 
@@ -14,4 +14,8 @@ mat-slide-toggle {
 
 .report-padding-btn {
   padding: 0px 15px 30px 15px;
+}
+
+.bottom-padding{
+  padding-bottom: 30px !important;
 }

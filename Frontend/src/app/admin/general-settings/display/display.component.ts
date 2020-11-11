@@ -91,6 +91,8 @@ export class DisplayComponent implements OnInit {
           });
           this.imgURL = this.editData.companyLogo;
         }
+
+        else if(res.status == 200 && res.displaySetting.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
       },
       error => {
         this.spinner = false;

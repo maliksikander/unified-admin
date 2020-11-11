@@ -18,6 +18,7 @@
             </div>
 
             <button mat-flat-button (click)="openModal(newQueue)">
+              <!-- <button mat-flat-button (click)="openStepModal(stepFormTemplate)"> -->
               <mat-icon>add</mat-icon>
               Create Queue
             </button>
@@ -221,14 +222,11 @@
           <div class="expression-section" formArrayName="expression">
             <div class="expression-section-body" *ngFor="let expression of getExpressions(stepForm); let i = index">
               <div class="expression-content" [formGroupName]="i">
-                <!-- <div > -->
                 <div class="heading-section">
                   <mat-label>Expression {{i + 1}}</mat-label>
 
                   <div class="right-flank">
-
-
-                    <button *ngIf="i == getExpressions(stepForm).length -1 " mat-flat-button
+                    <button class="expression-btn" *ngIf="i == getExpressions(stepForm).length -1 " mat-flat-button
                       (click)="addExpressionButton()">
                       Add Expression
                     </button>
@@ -237,6 +235,10 @@
                       <mat-option *ngFor="let data of conditionList" [value]="data">{{data}}
                       </mat-option>
                     </mat-select>
+
+                    <button *ngIf="getExpressions(stepForm).length > 1 " class="exp-remove-btn" mat-flat-button>
+                      <mat-icon>close</mat-icon>
+                    </button>
                   </div>
 
                 </div>
@@ -299,18 +301,12 @@
                           <mat-icon class="add-icon">add</mat-icon>
                         </button>
                       </div>
-                      <!-- <div class="form-group add-term-btn"> -->
-                      <!-- <button  mat-flat-button
-                          (click)="addExpressionTermButton(i)">
-                          <mat-icon class="add-icon">add</mat-icon>
-                        </button> -->
-                      <!-- </div> -->
-
                     </ng-container>
                   </div>
                 </div>
 
               </div>
+
             </div>
           </div>
 

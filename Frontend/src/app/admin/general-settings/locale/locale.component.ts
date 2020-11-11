@@ -158,6 +158,7 @@ export class LocaleComponent implements OnInit {
           this.localeSettingForm.setValue(value);
         }
         else {
+          if(res.status == 200 && res.localeSetting.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
           this.defaultValues();
         }
       },

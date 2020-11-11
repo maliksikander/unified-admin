@@ -120,6 +120,7 @@ export class SecurityComponent implements OnInit {
             stompSSLEnabled: this.editData.stompSSLEnabled,
           });
         }
+        else if(res.status == 200 && res.securitySetting.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
       },
       error => {
         this.spinner = false;

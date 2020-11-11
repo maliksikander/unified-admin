@@ -81,6 +81,7 @@ export class ReportingComponent implements OnInit {
             reportingEnabled: this.editData.reportingEnabled,
           });
         }
+        else if(res.status == 200 && res.reportSetting.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
       },
       error => {
         this.spinner = false;

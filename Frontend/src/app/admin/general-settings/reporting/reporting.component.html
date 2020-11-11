@@ -8,53 +8,55 @@
         <div class="sub-heading">
           <h2>Report Settings</h2>
         </div>
-        <div class="sub-heading-content">
+        <div class="panel-page-content">
           <form class="form-horizontal form-bordered" [formGroup]="reportSettingForm">
-
-            <div class="form-group col-md-5" [ngStyle]="{'padding-bottom':reportSettingForm.value.reportingEnabled == true ? '30px' : '0px' }">
-              <mat-label>Enable Reporting</mat-label>
-              <mat-slide-toggle (change)="toggleChange($event)" formControlName="reportingEnabled"></mat-slide-toggle>
+            <div class="col-md-5" >
+              <div class="form-group" [ngClass]="{'bottom-padding': reportSettingForm.value.reportingEnabled == true}">
+                <mat-label>Enable Reporting</mat-label>
+                <mat-slide-toggle (change)="toggleChange($event)" formControlName="reportingEnabled"></mat-slide-toggle>
+              </div>
+              <ng-container *ngIf="reportSettingForm.value.reportingEnabled">
+                <div class="form-group">
+                  <mat-label>Database Name</mat-label>
+                  <mat-form-field appearance="outline">
+                    <input matInput formControlName="rcDBName">
+                    <mat-error class="form-error">
+                      {{formErrors.rcDBName}}
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="form-group">
+                  <mat-label>Database User</mat-label>
+                  <mat-form-field appearance="outline">
+                    <input matInput formControlName="rcDBUser">
+                    <mat-error class="form-error">
+                      {{formErrors.rcDBUser}}
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="form-group">
+                  <mat-label>Database Password</mat-label>
+                  <mat-form-field appearance="outline">
+                    <input [type]="hide ? 'password' : 'text'" matInput formControlName="rcDBPwd">
+                    <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    <mat-error class="form-error">
+                      {{formErrors.rcDBPwd}}
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="form-group">
+                  <mat-label>Database URL</mat-label>
+                  <mat-form-field appearance="outline">
+                    <input matInput formControlName="rcDBUrl">
+                    <mat-error class="form-error">
+                      {{formErrors.rcDBUrl}}
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </ng-container>
             </div>
-            <ng-container *ngIf="reportSettingForm.value.reportingEnabled" >
-            <div class="form-group col-md-5">
-              <mat-label>Database Name</mat-label>
-              <mat-form-field appearance="outline">
-                <input matInput formControlName="rcDBName">
-                <mat-error class="form-error">
-                  {{formErrors.rcDBName}}
-                </mat-error>
-              </mat-form-field>
-            </div>
-            <div class="form-group col-md-5">
-              <mat-label>Database User</mat-label>
-              <mat-form-field appearance="outline">
-                <input matInput formControlName="rcDBUser">
-                <mat-error class="form-error">
-                  {{formErrors.rcDBUser}}
-                </mat-error>
-              </mat-form-field>
-            </div>
-            <div class="form-group col-md-5">
-              <mat-label>Database Password</mat-label>
-              <mat-form-field appearance="outline">
-                <input [type]="hide ? 'password' : 'text'" matInput formControlName="rcDBPwd">
-                <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                <mat-error class="form-error">
-                  {{formErrors.rcDBPwd}}
-                </mat-error>
-              </mat-form-field>
-            </div>
-            <div class="form-group col-md-5">
-              <mat-label>Database URL</mat-label>
-              <mat-form-field appearance="outline">
-                <input matInput formControlName="rcDBUrl">
-                <mat-error class="form-error">
-                  {{formErrors.rcDBUrl}}
-                </mat-error>
-              </mat-form-field>
-            </div>
-          </ng-container>
-            <div class="action-area padding-btn toggle-save-btn">
+            <div class="action-area col-md-5"
+              [ngStyle]="{'margin-top':reportSettingForm.value.reportingEnabled == false ? '15px' : '0px' }">
               <button [disabled]="!reportSettingForm.valid" mat-raised-button class="blue-btn service-trigger"
                 (click)="onSave()">Save</button>
             </div>

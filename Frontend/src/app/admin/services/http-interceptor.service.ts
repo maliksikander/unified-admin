@@ -48,7 +48,7 @@ export class HttpInterceptorService {
         this.url = error.url;
         let code;
         let msg: string = error.error.message;
-        msg = msg.toUpperCase();
+        if(msg) msg = msg.toUpperCase();
         if (error.error) {
           code = error.error.code;
           if (code) {
