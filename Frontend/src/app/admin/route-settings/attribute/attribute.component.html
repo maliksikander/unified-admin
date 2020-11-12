@@ -55,7 +55,7 @@
                 </ng-container>
               </tbody>
             </table>
-            <div class="pagination-section">
+            <div *ngIf="attrData.length != 0" class="pagination-section">
               <span class="page-span">
                 <span>Entries Per Page</span>
                 <select (change)="selectPage()" [(ngModel)]="selectedItem">

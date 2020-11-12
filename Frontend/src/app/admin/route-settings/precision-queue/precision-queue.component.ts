@@ -37,7 +37,7 @@ export class PrecisionQueueComponent implements OnInit {
   formHeading = 'Add New Queue';
   saveBtnText = 'Create';
   mrdData = [];
-  queueData = [];
+  queueData:any = [];
   attrData = [];
   editData: any;
   customCollapsedHeight: string = '40px';
@@ -63,9 +63,9 @@ export class PrecisionQueueComponent implements OnInit {
 
     this.queueForm = this.formBuilder.group({
       name: ['', [Validators.required]],
-      associatedMrd: [''],
-      agentCriteria: [],
-      serviceLevelType: [''],
+      associatedMrd: ['', [Validators.required]],
+      agentCriteria: ['', [Validators.required]],
+      serviceLevelType: ['', [Validators.required]],
       serviceLevelThreshold: ['', [Validators.required, Validators.min(1)]],
     });
 
@@ -111,13 +111,10 @@ export class PrecisionQueueComponent implements OnInit {
   }
 
   getExpressions(form) {
-    //console.log(form.get('sections').controls);
     return form.controls.expression.controls;
   }
 
   getTerms(form) {
-    // console.log(form.controls.questions.controls);
-    //  console.log("IO-->",this.stepForm.value);
     return form.controls['terms'].controls;
   }
 
@@ -126,13 +123,25 @@ export class PrecisionQueueComponent implements OnInit {
   }
 
   addExpressionTermButton(i) {
-    // (<FormArray>this.stepForm.controls['expression']).controls[j].controls['terms'].push(this.addExpressionTermGroup);
-    // console.log("j-->", j);
-    // console.log(j, "<---iteration -->", this.stepForm.get('expression').controls[j]);.get('terms');
-    const exp:any = this.stepForm.get('expression')
+    const exp: any = this.stepForm.get('expression')
     const control = exp.controls[i].get('terms');
-    // console.log(control);
     control.push(this.addExpressionTermGroup());
+  }
+
+
+  removeExpression(i) {
+    const exp: any = this.stepForm.get('expression')
+    exp.removeAt(i);
+  }
+
+  removeTerm(i) {
+  
+    const exp: any = this.stepForm.get('expression')
+    const control: any = exp.controls[i].get('terms');
+    const terms: any = control.controls;
+    // if (terms.length > 1) {
+      control.removeAt(i);
+    // }
   }
 
 
@@ -154,13 +163,13 @@ export class PrecisionQueueComponent implements OnInit {
     this.stepForm.reset();
   }
 
-
   getMRD() {
     this.endPointService.get('mrd').subscribe(
       (res: any) => {
         this.spinner = false;
         // console.log("mrd res-->", res);
         this.mrdData = res;
+        // if (res.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO MRD FOUND", 2);
       },
       error => {
         this.spinner = false;
@@ -174,6 +183,7 @@ export class PrecisionQueueComponent implements OnInit {
       (res: any) => {
         this.spinner = false;
         this.attrData = res;
+        // if (res.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO ATTRIBUTE FOUND", 2);
       },
       error => {
         this.spinner = false;
@@ -201,8 +211,10 @@ export class PrecisionQueueComponent implements OnInit {
         this.spinner = false;
         console.log("queue res-->", res);
         this.queueData = res;
+        if (res.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
         this.getMRD();
         this.getAttribute();
+
       },
       error => {
         this.spinner = false;
@@ -306,7 +318,7 @@ export class PrecisionQueueComponent implements OnInit {
     // this.stepForm.controls['conditionalVal'].patchValue(this.conditionList[0]);
     let dialogRef = this.dialog.open(templateRef, {
       width: '800px',
-      height: '350px',
+      // height: '350px',
       panelClass: 'add-attribute',
       disableClose: true,
     });
@@ -323,7 +335,7 @@ export class PrecisionQueueComponent implements OnInit {
       // }
       // arr.setValue( this.addExpressionGroup());
       // this.stepForm.reset();
-      console.log("step from--->", this.stepForm.value);
+      // console.log("step from--->", this.stepForm.value);
 
     });
   }

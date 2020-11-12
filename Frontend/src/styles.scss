@@ -1030,6 +1030,7 @@ ngx-charts-pie-chart span.legend-label-color {
 
   .table-trigger {
     button {
+      box-shadow: none;
       .mat-button-wrapper {
         padding: 0;
       }
@@ -2261,25 +2262,44 @@ snack-bar-container {
   }
 }
 
-.add-term-btn {
-  float: right;
+.term-btn {
   position: relative;
-  button {
+  top: -3px;
+  right: -9px;
+
+  .remove-btn {
     padding: 0px !important;
     margin: 0 !important;
     min-width: 0 !important;
-    min-height: 10px !important;
-    height: 10px !important;
+    .mat-icon {
+      font-size: 15px;
+      padding: 6px 0px;
+      color: #b1b1b1;
+    }
   }
-  .mat-icon {
-    font-size: 13px;
-    border: 1px solid #1c99c0;
-    padding: 1px 0px;
-    border-radius: 50%;
-    width: 16px;
-    height: 16px;
-    color: #1c99c0;
+  .add-btn {
+    // float: right;
+    // position: relative;
+    padding: 0px !important;
+    margin: 0 !important;
+    min-width: 0 !important;
+    .mat-icon {
+      font-size: 13px;
+      border: 1px solid #1c99c0;
+      padding: 1px 1px 1px 0px;
+      border-radius: 50%;
+      width: 16px;
+      height: 16px;
+      color: #1c99c0;
+    }
   }
+  // button {
+  //   padding: 0px !important;
+  //   margin: 0 !important;
+  //   min-width: 0 !important;
+  //   min-height: 10px !important;
+  //   height: 10px !important;
+  // }
 }
 
 .security-toggle {

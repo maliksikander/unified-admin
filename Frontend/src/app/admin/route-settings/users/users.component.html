@@ -58,7 +58,7 @@
                 </mat-expansion-panel>
               </ng-container>
             </mat-accordion>
-            <div class="pagination-section">
+            <div *ngIf="userData.length != 0" class="pagination-section">
               <span class="page-span">
                 <span>Entries Per Page</span>
                 <select (change)="selectPage()" [(ngModel)]="selectedItem">

@@ -116,6 +116,7 @@ export class UsersComponent implements OnInit {
         // console.log("user res-->", res);
         this.userData = JSON.parse(JSON.stringify(res));
         this.usersCopy = JSON.parse(JSON.stringify(res));
+        if (res.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
       },
       error => {
         this.spinner = false;

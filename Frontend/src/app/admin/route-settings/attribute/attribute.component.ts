@@ -48,20 +48,20 @@ export class AttributeComponent implements OnInit {
 
     this.attributeForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.maxLength(15), Validators.pattern("^[a-zA-Z0-9!@#$%^*_&()\\\"-]*$")], this.ValidateNameDuplication.bind(this)],
-      description: ['',[Validators.maxLength(50)]],
+      description: ['', [Validators.maxLength(50)]],
       type: ['', [Validators.required]],
       profVal: [1],
       boolVal: [true]
     });
 
     let pageNumber = localStorage.getItem('currentAttributePage');
-    if (pageNumber)  this.p = pageNumber;
+    if (pageNumber) this.p = pageNumber;
 
     this.attributeForm.valueChanges.subscribe((data) => {
       this.commonService.logValidationErrors(this.attributeForm, this.formErrors, this.validations);
     });
     this.endPointService.readConfigJson().subscribe((e) => {
-    this.getAttribute();
+      this.getAttribute();
     });
   }
 
@@ -118,8 +118,9 @@ export class AttributeComponent implements OnInit {
     this.endPointService.get(this.reqServiceType).subscribe(
       (res: any) => {
         this.spinner = false;
-        // console.log("attr res-->", res);
         this.attrData = res;
+        if (res.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
+
       },
       error => {
         this.spinner = false;

@@ -67,25 +67,32 @@
                             <th scope="col">Timeout(sec)</th>
                           </tr>
                         </thead>
-                        <!-- <tbody>
-                          <ng-container>
-                            <tr *ngFor="let data of queueData">
-                              <td scope="row">{{data.Name ? data.name : 'N/A'}}</td>
-                              <td>{{data.Name ? data.Name :'N/A'}}</td>
-                              <td>{{data.Name ? data.Name : 'N/A'}}</td>
-                              <td class="table-trigger">{{data.value ? data.value : 'N/A'}}
-                                <span class="list-trigger-area">
-                                  <button matTooltip="Edit" (click)="editStep(data)" mat-mini-fab><i
-                                      class="fa fa-pencil" aria-hidden="true"></i>
-                                  </button>
-                                  <button matTooltip="Delete" (click)="deleteStep(data)" mat-mini-fab><i
-                                      class="fa fa-trash-o" aria-hidden="true"></i>
-                                  </button>
-                                </span>
+                        <tbody>
+                          <!-- <ng-container> -->
+
+                          <tr *ngFor="let stepData of data.Steps">
+                            <ng-container *ngFor="let exp of stepData?.step?.expressions;let i =index">
+                              <!-- <ng-container *ngFor="let data of exp;let i =index"> -->
+                              <h2> {{exp?.expression[i]?.AttributeName}}</h2>
+                              <td scope="row">
+                                {{exp[i]?.expression[i]?.AttributeName ? exp[i]?.expression[i]?.AttributeName : 'N/A'}}{{data?.ConditionOperator ? data?.ConditionOperator : 'N/A'}}{{data?.Value ? data?.Value : 'N/A'}}
                               </td>
-                            </tr>
-                          </ng-container>
-                        </tbody> -->
+                              <!-- </ng-container> -->
+                            </ng-container>
+
+                            <td class="step-table-trigger">{{stepData?.step?.timeout ? stepData?.step?.timeout : 'N/A'}}
+                              <span class="step-trigger-area">
+                                <button matTooltip="Edit" (click)="editStep(data)" mat-mini-fab><i class="fa fa-pencil"
+                                    aria-hidden="true"></i>
+                                </button>
+                                <button matTooltip="Delete" (click)="deleteStep(data)" mat-mini-fab><i
+                                    class="fa fa-trash-o" aria-hidden="true"></i>
+                                </button>
+                              </span>
+                            </td>
+                          </tr>
+                          <!-- </ng-container> -->
+                        </tbody>
                       </table>
                     </div>
                     <div class="step-section">
@@ -97,7 +104,7 @@
                 </mat-expansion-panel>
               </ng-container>
             </mat-accordion>
-            <div class="pagination-section">
+            <div *ngIf="queueData.length != 0" class="pagination-section">
               <span class="page-span">
                 <span>Entries Per Page</span>
                 <select (change)="selectPage()" [(ngModel)]="selectedItem">
@@ -236,13 +243,14 @@
                       </mat-option>
                     </mat-select>
 
-                    <button *ngIf="getExpressions(stepForm).length > 1 " class="exp-remove-btn" mat-flat-button>
+                    <button *ngIf="getExpressions(stepForm).length > 1 " (click)="removeExpression(i)"
+                      class="exp-remove-btn" mat-flat-button>
                       <mat-icon>close</mat-icon>
                     </button>
                   </div>
 
                 </div>
-                <div formArrayName="terms">
+                <div class="term-section" formArrayName="terms">
                   <div class="expression-content-body" *ngFor="let term of getTerms(expression); let j = index">
 
                     <ng-container [formGroupName]="j">
@@ -293,10 +301,11 @@
                       </div>
 
                       <div class="form-group term-btn">
-                        <button class="remove-btn" mat-flat-button>
+                        <button (click)="removeTerm(i)" *ngIf="getTerms(expression)?.length > 1" class="remove-btn"
+                          mat-flat-button>
                           <mat-icon>close</mat-icon>
                         </button>
-                        <button *ngIf="j == getTerms(expression)?.length - 1" mat-flat-button
+                        <button *ngIf="j == getTerms(expression)?.length - 1" mat-flat-button class="add-btn"
                           (click)="addExpressionTermButton(i)">
                           <mat-icon class="add-icon">add</mat-icon>
                         </button>
