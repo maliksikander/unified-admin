@@ -2291,3 +2291,34 @@ snack-bar-container {
     }
   }
 }
+
+.login-form {
+  .form-group {
+    mat-label {
+      color: white;
+    }
+    .mat-form-field-outline {
+      background: white;
+      border-radius: 5px;
+    }
+  }
+
+  .service-trigger {
+    background: #1c99c0;
+    color: #ffffff;
+    height: 40px;
+    line-height: 40px;
+    position: relative;
+    top: 20px;
+    width: 100%;
+
+    .mat-button-wrapper {
+      font-weight: 400;
+      font-size: 16px;
+    }
+
+    &:disabled {
+      background: #c1c1c1 !important;
+    }
+  }
+}

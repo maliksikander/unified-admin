@@ -1,0 +1,151 @@
+.auth-section {
+  position: absolute;
+  width: 100%;
+  background-color: #2c3044;
+  min-height: 100%;
+  background-image: url(/assets/images/login-bg.png);
+  background-size: cover;
+  background-position: center;
+
+}
+
+.auth-section {
+  .row {
+    height: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: absolute;
+    width: 100%;
+    left: 0;
+  }
+
+  .main-inner-section {
+    height: 100%;
+
+    &.logo-area {
+      background: rgba(29, 154, 192, 0.9);
+      flex-wrap: wrap;
+
+      .brand-logo {
+        position: absolute;
+        bottom: 10%;
+        padding-left: 50px;
+      }
+    }
+
+    &.login-area {
+      background: rgba(70, 70, 70, 0.9);
+
+      .login-inner {
+        max-width: 460px;
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        position: absolute;
+        top: 50%;
+        padding: 10px;
+        transform: translateY(-50%) translatex(-50%);
+        left: 50%;
+      }
+
+   
+    }
+
+    .input-field {
+      margin-bottom: 10px;
+
+      label {
+        display: block;
+        color: #fff;
+        margin-bottom: 5px;
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      input {
+        display: block;
+        width: 100%;
+        height: 40px;
+        border: 1px solid #e5e5e5;
+        padding: 0 5px;
+        border-radius: 4px;
+        background: #fff;
+      }
+    }
+
+    .login-heading {
+      h3 {
+        text-transform: uppercase;
+        color: #fff;
+        font-size: 24px;
+        font-weight: 600;
+        margin: 5px 0;
+      }
+
+      span {
+        font-size: 13px;
+        color: #fff;
+      }
+
+      margin-bottom: 30px;
+    }
+
+    .selection-field {
+      margin: 10px 0;
+
+      mat-radio-button {
+        margin-right: 15px;
+      }
+    }
+
+    .login-trigger {
+      margin-top: 2em;
+      margin-bottom: 0;
+
+      input {
+        background: #1d9ac0;
+        border-color: #1d9ac0;
+        color: #fff;
+        font-size: 15px;
+        cursor: pointer;
+
+        &:hover {
+          background: lighten(#1d9ac0, 10%);
+        }
+        &:disabled {
+          background: #c1c1c1;
+          color: #555555;
+          border-color: #c1c1c1;
+          cursor: default;
+        }
+      }
+    }
+  }
+
+  .main-area-right {
+    padding-left: 50px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    img {
+      height: 35px;
+      display: block;
+      // filter: brightness(15);
+    }
+    h2 {
+      font-size: 36px;
+      color: #fff;
+      font-weight: 500;
+      line-height: 40px;
+      max-width: 270px;
+      // text-transform: uppercase;
+      margin: 30px 0 20px;
+    }
+
+    p {
+      font-size: 15px;
+      color: #fff;
+      max-width: 325px;
+    }
+  }
+}

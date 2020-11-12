@@ -1,10 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { LoginComponent } from './authentication/login/login.component';
 
-const routes: Routes = [];
+export const loginRoute: Routes = [
+  // { path: '', redirectTo: '/login', pathMatch: 'full' },
 
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }
+  { path: 'login', component: LoginComponent },
+];
+
+// @NgModule({
+//   imports: [RouterModule.forRoot(routes)],
+//   exports: [RouterModule]
+// })
+// export class AppRoutingModule { }
