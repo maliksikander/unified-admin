@@ -354,7 +354,7 @@ export class CommonService {
       'validName':'Already exists'
 
     },
-    'associatedMrd': {
+    'mrd': {
       'required': "This field is required",
       'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
     },

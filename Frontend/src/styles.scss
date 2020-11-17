@@ -1518,9 +1518,9 @@ snack-bar-container {
 }
 
 .route-header-image-icon span.mat-content img {
-  margin: 0px 2px 0px 4px;
+  margin: 0px 2px 0px 3px;
   width: 20px !important;
-  height: 19px !important;
+  height: 20px !important;
 }
 
 .add-attribute {
@@ -2339,6 +2339,59 @@ snack-bar-container {
 
     &:disabled {
       background: #c1c1c1 !important;
+    }
+  }
+}
+
+.sms-panel {
+  padding: 0 6px;
+
+  // mat-expansion-panel-header {
+  //   padding: 0px 22px;
+  // }
+  img {
+    width: 15px !important;
+    height: 15px !important;
+  }
+
+  .sms-header-image-icon span.mat-content img {
+    margin: 3px 3px 0px 5px;
+    // width: 15px !important;
+    // height: 15px !important;
+  }
+
+  .main-sidebar .mat-sidenav a.mat-list-item .mat-list-item-content {
+    // width: 100%;
+    padding: 0px 35px !important;
+  }
+}
+
+.ccm-header-image-icon span.mat-content img {
+  margin: 0px 2px 0px 4px;
+  width: 18px !important;
+  height: 17px !important;
+}
+
+.pq-accordion {
+  .mat-content {
+    overflow: hidden;
+  }
+
+  span.mat-expansion-indicator {
+    position: absolute;
+    right: 10px;
+  }
+  .mat-expansion-panel-content {
+    overflow: auto;
+    height: 100%;
+    // To add scroll in step section
+    // max-height: 200px;
+    
+  }
+  mat-panel-title.mat-expansion-panel-header-title {
+  
+    &:first-child{
+      padding-left: 15px !important;
     }
   }
 }

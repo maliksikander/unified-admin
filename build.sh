@@ -25,6 +25,8 @@ echo "Going to build image: $image_tag"
 
 # build docker image
 docker build -t $image_tag .
+# push docker image
+docker push -t $image_tag .
 
 
 

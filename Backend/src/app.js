@@ -18,6 +18,22 @@ const ApiError = require('./utils/ApiError');
 const angularRoutes = require('./angular.route');
 const app = express();
 
+
+// let Keycloak = require("keycloak_adapter");
+  // let keycloak= Keycloak.NodeAdapter;
+// keycloak.userAuthentication('agent1', 'agent1').then((e) => {
+//   console.log(e;
+// }).catch((er) => {
+//   console.log(er);
+// });
+// keycloak.userAuthentication('saud01', 'admin').then((res) => {
+//   console.log("auth response-->", res.accesstoken);
+//   // res.send(res);
+// }).catch((err) => {
+//   logger.warn("Errpor:",err);
+//   // console.log("auth error-->", err);
+// });
+
 if (config.env !== 'test') {
   app.use(morgan.successHandler);
   app.use(morgan.errorHandler);

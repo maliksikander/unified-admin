@@ -1,0 +1,18 @@
+{
+  "HOST": "192.168.1.47",
+  "PORT": "8080",
+  "ssl-required": "external",
+  "resource": "Banks",
+  "verify-token-audience": true,
+  "confidential-port": 0,
+  "policy-enforcer": {},
+  "CLIENT_ID": "unified-admin-microservice",
+  "CLIENT_SECRET": "27080cdf-cdd8-4db1-b3ee-fdb0669b0222",
+  "CLIENT_DB_ID": "95536d4e-c5d5-4876-8cc3-99025e18fc60",
+  "GRANT_TYPE": "password",
+  "REALM": "Cim",
+  "GRANT_TYPE_PAT": "client_credentials",
+  "USERNAME_ADMIN": "_any user in realm with all roles_",
+  "PASSWORD_ADMIN": "_any user in realm with all roles_",
+  "SCOPE_NAME": "Any deafult scope"
+}

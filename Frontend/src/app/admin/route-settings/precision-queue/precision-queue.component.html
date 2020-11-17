@@ -24,7 +24,7 @@
             </button>
           </div>
 
-          <div class="routing-accordion">
+          <div class="routing-accordion pq-accordion">
             <mat-accordion>
               <ul class="top-heading routing-group-list">
                 <li>Name</li>
@@ -40,7 +40,7 @@
                       <p class="group-name">{{data.Name? data.Name : 'N/A'}}</p>
                     </mat-panel-title>
                     <mat-panel-title>
-                      <p class="group-name">{{data.AgentSelectionCriteria ? data.AgentSelectionCriteria : 'N/A'}}</p>
+                      <p class="group-name">{{data.AgentSelectionCriteria | titlecase}}</p>
                     </mat-panel-title>
                     <mat-panel-title>
                       <p class="group-name">{{data.mrd.Name? data.mrd.Name : 'N/A'}}</p>
@@ -62,24 +62,28 @@
                       <table class="table">
                         <thead>
                           <tr>
-                            <!-- <th scope="col">Name</th> -->
                             <th scope="col">Criteria</th>
                             <th scope="col">Timeout(sec)</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <!-- <ng-container> -->
 
-                          <tr *ngFor="let stepData of data.Steps">
-                            <ng-container *ngFor="let exp of stepData?.step?.expressions;let i =index">
-                              <!-- <ng-container *ngFor="let data of exp;let i =index"> -->
-                              <h2> {{exp?.expression[i]?.AttributeName}}</h2>
-                              <td scope="row">
-                                {{exp[i]?.expression[i]?.AttributeName ? exp[i]?.expression[i]?.AttributeName : 'N/A'}}{{data?.ConditionOperator ? data?.ConditionOperator : 'N/A'}}{{data?.Value ? data?.Value : 'N/A'}}
-                              </td>
-                              <!-- </ng-container> -->
-                            </ng-container>
-
+                          <tr *ngFor="let stepData of data.Steps;let i = index">
+                            <td scope="row" #tableData>
+                              <span class="test" [style.width]="tableData.offsetWidth + 'px'">
+                                <ng-container *ngFor="let j = index;let exp of stepData?.step?.expressions">
+                                  <span *ngIf="j % 2 !=0">[{{exp}}]</span>
+                                  <ng-container *ngFor="let k =index;let data of exp?.expression">
+                                    <span *ngIf="j % 2 == 0">
+                                      <span *ngIf="k % 2 == 0">({{data?.AttributeName}}
+                                        {{data?.ConditionOperator}}
+                                        {{data?.Value}})</span>
+                                      <span *ngIf="k % 2 != 0 ">{{data}}</span>
+                                    </span>
+                                  </ng-container>
+                                </ng-container>
+                              </span>
+                            </td>
                             <td class="step-table-trigger">{{stepData?.step?.timeout ? stepData?.step?.timeout : 'N/A'}}
                               <span class="step-trigger-area">
                                 <button matTooltip="Edit" (click)="editStep(data)" mat-mini-fab><i class="fa fa-pencil"
@@ -91,11 +95,10 @@
                               </span>
                             </td>
                           </tr>
-                          <!-- </ng-container> -->
                         </tbody>
                       </table>
                     </div>
-                    <div class="step-section">
+                    <div *ngIf="data?.Steps?.length != 10" class="step-section">
                       <button mat-flat-button (click)="openStepModal(stepFormTemplate)">
                         Add Step
                       </button>
@@ -125,7 +128,7 @@
   <ng-template #newQueue>
     <div class="dialog-container">
       <div class="mat-card-header">
-        <mat-icon (click)="onClose()">close</mat-icon>
+        <mat-icon (click)="onClose('queue')">close</mat-icon>
         <h4 class="content-span full-width">{{formHeading}}</h4>
       </div>
       <div class="dialog-content">
@@ -144,8 +147,9 @@
             <mat-label>Service Level Type</mat-label>
             <mat-form-field appearance="outline">
               <mat-select formControlName="serviceLevelType">
-                <mat-option *ngFor="let type of serviceLevelType" [value]="type">{{type | titlecase}}
-                </mat-option>
+                <mat-option [value]=1>Ignore abandoned chats</mat-option>
+                <mat-option [value]=2>Abandoned chats have a negative impact</mat-option>
+                <mat-option [value]=3>Abandoned chats have a positive impact</mat-option>
               </mat-select>
               <mat-error class="form-error">
                 {{formErrors.serviceLevelType}}
@@ -164,12 +168,12 @@
           <div class="form-group">
             <mat-label>Associated MRD</mat-label>
             <mat-form-field appearance="outline">
-              <mat-select formControlName="associatedMrd">
-                <mat-option *ngFor="let mrd of mrdData" [value]="mrd">{{mrd.Name | titlecase}}
+              <mat-select formControlName="mrd">
+                <mat-option *ngFor="let mrdVal of mrdData" [value]="mrdVal">{{mrdVal.Name | titlecase}}
                 </mat-option>
               </mat-select>
               <mat-error class="form-error">
-                {{formErrors.associatedMrd}}
+                {{formErrors.mrd}}
               </mat-error>
             </mat-form-field>
           </div>
@@ -190,8 +194,8 @@
           <div class="template-action row">
             <div class="col-md-12">
               <div class="form-action-area">
-                <button mat-raised-button (click)="onClose()" class="gray-btn">Cancel</button>
-                <button mat-raised-button [disabled]="!queueForm.valid" (click)="onSave()" [mat-dialog-close]="true"
+                <button mat-raised-button [mat-dialog-close]="true" class="gray-btn">Cancel</button>
+                <button mat-raised-button [disabled]="!queueForm.valid" (click)="onSave()" [mat-dialog-close]="save"
                   class="blue-btn service-trigger">{{saveBtnText}} Queue</button>
               </div>
             </div>
@@ -205,7 +209,7 @@
   <ng-template #stepFormTemplate>
     <div class="step-dialog-container">
       <div class="mat-card-header">
-        <mat-icon (click)="onClose()">close</mat-icon>
+        <mat-icon (click)="onClose('step')">close</mat-icon>
         <h4 class="content-span full-width">{{stepFormHeading}}</h4>
       </div>
       <div class="dialog-content">
@@ -216,9 +220,9 @@
               <mat-label>Step Timeout</mat-label>
               <mat-form-field appearance="outline">
                 <input type="number" min="0" matInput formControlName="timeout">
-                <!-- <mat-error class="form-error">
-                  {{formErrors.timeout}}
-                </mat-error> -->
+                <mat-error class="form-error">
+                  {{stepFormErrors.timeout}}
+                </mat-error>
               </mat-form-field>
             </div>
             <div class="form-group col-md-4">
@@ -306,7 +310,7 @@
                           <mat-icon>close</mat-icon>
                         </button>
                         <button *ngIf="j == getTerms(expression)?.length - 1" mat-flat-button class="add-btn"
-                          (click)="addExpressionTermButton(i)">
+                          (click)="addExpressionTermButton(i,j)">
                           <mat-icon class="add-icon">add</mat-icon>
                         </button>
                       </div>
@@ -322,8 +326,8 @@
           <div class="template-action row">
             <div class="col-md-12">
               <div class="form-action-area">
-                <button mat-raised-button (click)="onClose()" class="gray-btn">Cancel</button>
-                <button mat-raised-button [disabled]="!stepForm.valid" (click)="onSave()" [mat-dialog-close]="true"
+                <button mat-raised-button class="gray-btn" [mat-dialog-close]="false">Cancel</button>
+                <button mat-raised-button [disabled]="!stepForm.valid" (click)="onSave()" [mat-dialog-close]="save"
                   class="dark-blue-btn service-trigger">Add</button>
               </div>
             </div>
