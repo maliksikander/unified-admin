@@ -12,6 +12,7 @@ import { SnackbarService } from '../../services/snackbar.service';
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
+  
   p: any = 1;
   itemsPerPageList = [5, 10, 15];
   itemsPerPage = 5;
@@ -46,6 +47,7 @@ export class UsersComponent implements OnInit {
 
   ngOnInit() {
 
+    this.commonService.tokenVerification();
     this.validations = this.commonService.userFormErrorMessages;
     let pageNumber = localStorage.getItem('currentUsersPage');
     if (pageNumber) this.p = pageNumber;
@@ -109,11 +111,9 @@ export class UsersComponent implements OnInit {
   }
 
   getUsers() {
-
     this.endPointService.get(this.reqServiceType).subscribe(
       (res: any) => {
         this.spinner = false;
-        // console.log("user res-->", res);
         this.userData = JSON.parse(JSON.stringify(res));
         this.usersCopy = JSON.parse(JSON.stringify(res));
         if (res.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
@@ -252,18 +252,14 @@ export class UsersComponent implements OnInit {
     this.getUsers();
   }
 
-  pageChange(e) {
-    localStorage.setItem('currentUsersPage', e);
-  }
+  pageChange(e) { localStorage.setItem('currentUsersPage', e); }
 
   pageBoundChange(e) {
     this.p = e;
     localStorage.setItem('currentUsersPage', e);
   }
 
-  selectPage() {
-    this.itemsPerPage = this.selectedItem;
-  }
+  selectPage() { this.itemsPerPage = this.selectedItem; }
 
   onSliderChange(e, type, i) {
     if (e.value || e.value == 0) {

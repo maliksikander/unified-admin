@@ -13,7 +13,7 @@
             <div class="col-md-5" >
               <div class="form-group" [ngClass]="{'bottom-padding': reportSettingForm.value.reportingEnabled == true}">
                 <mat-label>Enable Reporting</mat-label>
-                <mat-slide-toggle (change)="toggleChange($event)" formControlName="reportingEnabled"></mat-slide-toggle>
+                <mat-slide-toggle  formControlName="reportingEnabled"></mat-slide-toggle>
               </div>
               <ng-container *ngIf="reportSettingForm.value.reportingEnabled">
                 <div class="form-group">

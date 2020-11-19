@@ -16,6 +16,7 @@ export class EndpointService {
   // MRE_MICRO_URL = "https://hcdev.expertflow.com/mre-microservice/mre/api";
   endpointUrl;
   MRE_MICRO_URL;
+  token;
   // MRE_MICRO_URL = "";
 
   constructor(private snackbar: SnackbarService,
@@ -23,8 +24,13 @@ export class EndpointService {
     private _router: Router) {
     this.readConfigJson().subscribe((e) => {
       this.endpointUrl = e.Admin_URL;
-      this.MRE_MICRO_URL = e.MRE_URL;   
-      // console.log("service end-->",this.endpointUrl,this.MRE_MICRO_URL);        
+      this.MRE_MICRO_URL = e.MRE_URL;
+      
+      if(localStorage.getItem('token')){
+        this.token = localStorage.getItem('token');
+          //  console.log("service end-->",this.token);
+      }
+           
   });
 
 
@@ -47,7 +53,7 @@ export class EndpointService {
     return this.httpClient.post<any>(`${this.endpointUrl}/${reqServiceType}`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer'
+        'Authorization': 'Bearer' + this.token
       })
     }).pipe(catchError(this.handleError));
   }
@@ -56,7 +62,7 @@ export class EndpointService {
     return this.httpClient.get<any>(`${this.endpointUrl}/${reqServiceType}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer '
+        'Authorization': 'Bearer ' + this.token
       })
     }).pipe(catchError(this.handleError));
   }
@@ -65,7 +71,7 @@ export class EndpointService {
     return this.httpClient.put<void>(`${this.endpointUrl}/${reqServiceType}`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer'
+        'Authorization': 'Bearer' + this.token
       })
     }).pipe(catchError(this.handleError));
   }
@@ -102,11 +108,22 @@ export class EndpointService {
   delete(id,reqServiceType): Observable<any> {
     return this.httpClient.delete<any>(`${this.MRE_MICRO_URL}/${reqServiceType}/${id}`, {
       headers: new HttpHeaders({
+        'Content-Type': 'application/json',
         'Authorization': 'Bearer '
       })
     }).pipe(catchError(this.handleError));
   }
 
+  /////////////// Keycloak Authentication /////////////////
+
+  login(data): Observable<any> {
+    return this.httpClient.post<any>(`${this.endpointUrl}/login`, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer'
+      })
+    }).pipe(catchError(this.handleError));
+  }
 
 }
 

@@ -7,4 +7,5 @@ module.exports.localeSettingController = require('./localeSetting.controller');
 module.exports.logSettingController = require('./logSetting.controller');
 module.exports.reportSettingController = require('./reportSetting.controller');
 module.exports.securitySettingController = require('./securitySetting.controller');
+module.exports.loginController = require('./login.controller');
 // module.exports.angularController = require('./angular.controller');

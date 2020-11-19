@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { SnackbarService } from './snackbar.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -307,7 +308,7 @@ export class CommonService {
       'minlength': "More characters required",
       'maxlength': "Max 15 characters allowed",
       'pattern': 'Not a valid pattern',
-      'validName':'Already exists'
+      'validName': 'Already exists'
 
     },
     'description': {
@@ -329,7 +330,7 @@ export class CommonService {
       'minlength': "More characters required",
       'maxlength': "Max 15 characters allowed",
       'pattern': 'Not a valid pattern',
-      'validName':'Already exists'
+      'validName': 'Already exists'
 
     },
     'description': {
@@ -351,7 +352,7 @@ export class CommonService {
       'minlength': "More characters required",
       'maxlength': "Max 15 characters allowed",
       'pattern': 'Not a valid pattern',
-      'validName':'Already exists'
+      'validName': 'Already exists'
 
     },
     'mrd': {
@@ -397,7 +398,8 @@ export class CommonService {
       // 'pattern': this.service_url_pattern
     }
   };
-  constructor(private snackbar: SnackbarService) { }
+  constructor(private snackbar: SnackbarService,
+    private router: Router,) { }
 
   logValidationErrors(group: FormGroup, formErrors, validations) {
 
@@ -423,6 +425,12 @@ export class CommonService {
     return result;
   }
 
-  
+  tokenVerification() {
+    if (!localStorage.getItem('token')) {
+      return this.router.navigate(['/login']);
+    }
+  }
+
+
 
 }

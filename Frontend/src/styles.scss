@@ -2341,6 +2341,16 @@ snack-bar-container {
       background: #c1c1c1 !important;
     }
   }
+
+  .remember-checkbox {
+    span.mat-checkbox-label {
+      color: white;
+    }
+
+    .mat-checkbox-frame {
+      border-color: white;
+    }
+  }
 }
 
 .sms-panel {
@@ -2386,12 +2396,12 @@ snack-bar-container {
     height: 100%;
     // To add scroll in step section
     // max-height: 200px;
-    
   }
   mat-panel-title.mat-expansion-panel-header-title {
-  
-    &:first-child{
+    &:first-child {
       padding-left: 15px !important;
     }
   }
 }
+
+

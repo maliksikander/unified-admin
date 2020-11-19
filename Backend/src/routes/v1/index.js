@@ -9,6 +9,7 @@ const localeSettingRoute = require('./localeSetting.route');
 const logSettingRoute = require('./logSetting.route');
 const reportSettingRoute = require('./reportSetting.route');
 const securitySettingRoute = require('./securitySetting.route');
+const loginRoute = require('./login.route');
 
 
 const router = express.Router();
@@ -23,5 +24,6 @@ router.use('/locale-setting', localeSettingRoute);
 router.use('/log-setting', logSettingRoute);
 router.use('/report-setting', reportSettingRoute);
 router.use('/security-setting', securitySettingRoute);
+router.use('/login', loginRoute);
 
 module.exports = router;

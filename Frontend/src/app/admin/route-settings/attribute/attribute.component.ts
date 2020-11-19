@@ -14,6 +14,7 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./attribute.component.scss']
 })
 export class AttributeComponent implements OnInit {
+
   p: any = 1;
   itemsPerPageList = [5, 10, 15];
   itemsPerPage = 5;
@@ -44,6 +45,7 @@ export class AttributeComponent implements OnInit {
 
   ngOnInit() {
 
+    this.commonService.tokenVerification();
     this.validations = this.commonService.attributeFormErrorMessages;
 
     this.attributeForm = this.formBuilder.group({
@@ -120,7 +122,6 @@ export class AttributeComponent implements OnInit {
         this.spinner = false;
         this.attrData = res;
         if (res.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
-
       },
       error => {
         this.spinner = false;
@@ -147,7 +148,6 @@ export class AttributeComponent implements OnInit {
     this.endPointService.delete(id, this.reqServiceType).subscribe(
       (res: any) => {
         this.spinner = false;
-        // console.log("delete res -->", res);
         this.attrData = this.attrData.filter(i => i !== data)
           .map((i, idx) => (i.position = (idx + 1), i));
         this.snackbar.snackbarMessage('success-snackbar', "Attribute Deleted Successfully", 1);
@@ -160,10 +160,8 @@ export class AttributeComponent implements OnInit {
   }
 
   editAttribute(templateRef, data) {
-
     const typeIndex = this.attrType.indexOf(data.type);
     this.editData = data;
-
     this.attributeForm.patchValue({
       name: data.name,
       description: data.description,
@@ -206,7 +204,6 @@ export class AttributeComponent implements OnInit {
   }
 
   onSave() {
-
     let data: any = this.onSaveObject()
     if (this.editData) {
       this.updateAttribute(data, this.editData._id);
@@ -228,8 +225,6 @@ export class AttributeComponent implements OnInit {
     else {
       data.value = JSON.stringify(this.attributeForm.value.profVal);
     }
-    // data.usageCount = null;
-
     return data;
   }
 
@@ -237,21 +232,16 @@ export class AttributeComponent implements OnInit {
     if (value >= 1000) {
       return Math.round(value / 1000) + 'k';
     }
-
     return value;
   }
 
-  pageChange(e) {
-    localStorage.setItem('currentAttributePage', e);
-  }
+  pageChange(e) { localStorage.setItem('currentAttributePage', e); }
 
   pageBoundChange(e) {
     this.p = e;
     localStorage.setItem('currentAttributePage', e);
   }
 
-  selectPage() {
-    this.itemsPerPage = this.selectedItem;
-  }
+  selectPage() { this.itemsPerPage = this.selectedItem; }
 
 }

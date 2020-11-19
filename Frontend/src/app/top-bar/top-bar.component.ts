@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-top-bar',
@@ -7,10 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TopBarComponent implements OnInit {
   today = new Date();
+  userName = "User Name"
 
-  constructor() { }
+  constructor(private router: Router,) { }
 
   ngOnInit() {
+    let user = localStorage.getItem('username');
+    this.userName = user;
     // this.clock();
   }
 
@@ -21,6 +25,14 @@ export class TopBarComponent implements OnInit {
     }, 1000);
   }
 
-  logout(){}
+  logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    localStorage.removeItem('currentAttributePage');
+    localStorage.removeItem('currentMRDPage');
+    localStorage.removeItem('currentQueuePage');
+    localStorage.removeItem('currentUsersPage');
+    this.router.navigate(['/login']);
+  }
 
 }

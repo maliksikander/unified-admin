@@ -29,7 +29,7 @@ export class LoggingComponent implements OnInit {
     private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit() {
-
+    this.commonService.tokenVerification();
     this.validations = this.commonService.logSettingErrorMessages;
 
     this.logSettingForm = this.fb.group({
@@ -58,7 +58,6 @@ export class LoggingComponent implements OnInit {
     this.endPointService.getSetting(this.reqServiceType).subscribe(
       (res: any) => {
         this.spinner = false;
-        // console.log("res->",res);
         if (res.status == 200 && res.logSetting.length > 0) {
           this.editData = res.logSetting[0];
           this.logSettingForm.patchValue({
@@ -91,8 +90,7 @@ export class LoggingComponent implements OnInit {
         this.spinner = false;
         console.log("Error creating", error);
         if(error && error.status == 0)  this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
-      }
-    );
+      });
   }
 
   updateLogSetting(data) {
@@ -105,8 +103,7 @@ export class LoggingComponent implements OnInit {
         this.spinner = false;
         console.log("Error updating", error);
         if(error && error.status == 0)  this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
-      }
-    );
+      });
   }
 
   onSave() {
@@ -120,4 +117,5 @@ export class LoggingComponent implements OnInit {
       this.createLogSetting(data);
     }
   }
+
 }

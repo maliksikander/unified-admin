@@ -19,21 +19,6 @@ const angularRoutes = require('./angular.route');
 const app = express();
 
 
-// let Keycloak = require("keycloak_adapter");
-  // let keycloak= Keycloak.NodeAdapter;
-// keycloak.userAuthentication('agent1', 'agent1').then((e) => {
-//   console.log(e;
-// }).catch((er) => {
-//   console.log(er);
-// });
-// keycloak.userAuthentication('saud01', 'admin').then((res) => {
-//   console.log("auth response-->", res.accesstoken);
-//   // res.send(res);
-// }).catch((err) => {
-//   logger.warn("Errpor:",err);
-//   // console.log("auth error-->", err);
-// });
-
 if (config.env !== 'test') {
   app.use(morgan.successHandler);
   app.use(morgan.errorHandler);
@@ -42,8 +27,7 @@ if (config.env !== 'test') {
 //static html page
 // app.use(express.static(process.cwd()+"/my-app/dist/angular-nodejs-example/"));
 app.use(express.static(path.join(__dirname, './public')));
-// These files load fine (SimpleController.js, main.css)
-// app.use(express.static(path.join(__dirname, '/public/dist/index.html')));
+
 
 
 
@@ -72,40 +56,6 @@ app.get('/', (req, res) => {
   res.sendFile(indexPath);
 });
 
-// app.get('/general/amq-settings', (req, res) => {
-//   let indexPath = __dirname + '/public/dist/index.html';
-//   res.sendFile(indexPath);
-// });
-
-// app.get('/general/database-settings', (req, res) => {
-//   let indexPath = __dirname + '/public/dist/index.html';
-//   res.sendFile(indexPath);
-// });
-
-// app.get('/general/display-settings', (req, res) => {
-//   let indexPath = __dirname + '/public/dist/index.html';
-//   res.sendFile(indexPath);
-// });
-
-// app.get('/general/locale-settings', (req, res) => {
-//   let indexPath = __dirname + '/public/dist/index.html';
-//   res.sendFile(indexPath);
-// });
-
-// app.get('/general/logging-settings', (req, res) => {
-//   let indexPath = __dirname + '/public/dist/index.html';
-//   res.sendFile(indexPath);
-// });
-
-// app.get('/general/reporting-settings', (req, res) => {
-//   let indexPath = __dirname + '/public/dist/index.html';
-//   res.sendFile(indexPath);
-// });
-
-// app.get('/general/security-settings', (req, res) => {
-//   let indexPath = __dirname + '/public/dist/index.html';
-//   res.sendFile(indexPath);
-// });
 
 app.options('*', cors());
 
@@ -121,6 +71,12 @@ if (config.env === 'production') {
 // v1 api routes
 app.use('/unified-admin/api/v1', routes);
 app.use('/general', angularRoutes);
+
+//login route
+app.get('/login', (req, res) => {
+  const indexPath = path.resolve('src', 'public', 'index.html');
+  res.sendFile(indexPath);
+});
 
 // send back a 404 error for any unknown api request
 app.use((req, res, next) => {

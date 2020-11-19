@@ -10,6 +10,7 @@ import { SnackbarService } from '../../services/snackbar.service';
   styleUrls: ['./amq.component.scss']
 })
 export class AmqComponent implements OnInit {
+  
   amqSettingForm: FormGroup;
   formErrors = {
     amqUser: '',
@@ -32,6 +33,7 @@ export class AmqComponent implements OnInit {
 
   ngOnInit() {
 
+    this.commonService.tokenVerification();
 
     this.validations = this.commonService.amqSettingErrorMessages;
 
@@ -72,13 +74,13 @@ export class AmqComponent implements OnInit {
             amqUrl: this.editData.amqUrl,
           });
         }
-
         else if(res.status == 200 && res.amqSetting.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
       },
       error => {
         this.spinner = false;
-        console.log("Error fetching:", error);
+        console.log("Error:", error);
         if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
+        if (error && error.status == 403) this.snackbar.snackbarMessage('error-snackbar', error.error, 1);
       });
   }
 
@@ -94,14 +96,13 @@ export class AmqComponent implements OnInit {
       },
       (error: any) => {
         this.spinner = false;
-        console.log("Error creating", error);
+        console.log("Error", error);
         if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
-      }
-    );
+        if (error && error.status == 403) this.snackbar.snackbarMessage('error-snackbar', error.error, 1);
+      });
   }
 
   updateAmqSetting(data) {
-
     this.endPointService.updateSetting(data, this.reqServiceType).subscribe(
       (res: any) => {
         this.spinner = false;
@@ -109,8 +110,9 @@ export class AmqComponent implements OnInit {
       },
       (error: any) => {
         this.spinner = false;
-        console.log("Error updating", error);
+        console.log("Error", error);
         if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
+        if (error && error.status == 403) this.snackbar.snackbarMessage('error-snackbar', error.error, 1);
       }
     );
   }
@@ -126,7 +128,6 @@ export class AmqComponent implements OnInit {
     else {
       this.createAmqSetting(data);
     }
-
   }
 
 }

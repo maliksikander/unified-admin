@@ -9,6 +9,7 @@ import { SnackbarService } from '../../services/snackbar.service';
   styleUrls: ['./security.component.scss']
 })
 export class SecurityComponent implements OnInit {
+  
   securitySettingForm: FormGroup;
   formErrors = {
     certificatePath: '',
@@ -48,7 +49,7 @@ export class SecurityComponent implements OnInit {
     private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit() {
-
+    this.commonService.tokenVerification();
     this.validations = this.commonService.securitySettingErrorMessages;
 
     this.securitySettingForm = this.fb.group({
@@ -94,7 +95,6 @@ export class SecurityComponent implements OnInit {
     this.endPointService.getSetting(this.reqServiceType).subscribe(
       (res: any) => {
         this.spinner = false;
-        // console.log("res->", res);
         if (res.status == 200 && res.securitySetting.length > 0) {
           this.editData = res.securitySetting[0];
           this.securitySettingForm.patchValue({
@@ -143,8 +143,7 @@ export class SecurityComponent implements OnInit {
         this.spinner = false;
         console.log("Error creating", error);
         if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
-      }
-    );
+      });
   }
 
   updateSecuritySetting(data) {
@@ -157,8 +156,7 @@ export class SecurityComponent implements OnInit {
         this.spinner = false;
         console.log("Error updating", error);
         if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
-      }
-    );
+      });
   }
 
   onSave() {
@@ -172,4 +170,5 @@ export class SecurityComponent implements OnInit {
       this.createSecuritySetting(data);
     }
   }
+  
 }

@@ -13,6 +13,7 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./mrd.component.scss']
 })
 export class MrdComponent implements OnInit {
+
   p: any = 1;
   itemsPerPageList = [5, 10, 15];
   itemsPerPage = 5;
@@ -40,11 +41,12 @@ export class MrdComponent implements OnInit {
 
   ngOnInit() {
 
+    this.commonService.tokenVerification();
     this.validations = this.commonService.mrdFormErrorMessages;
 
     this.mrdForm = this.formBuilder.group({
-      name: ['', [Validators.required,Validators.maxLength(15), Validators.pattern("^[a-zA-Z0-9!@#$%^*_&()\\\"-]*$")], this.ValidateNameDuplication.bind(this)],
-      description: ['',[Validators.maxLength(50)]],
+      name: ['', [Validators.required, Validators.maxLength(15), Validators.pattern("^[a-zA-Z0-9!@#$%^*_&()\\\"-]*$")], this.ValidateNameDuplication.bind(this)],
+      description: ['', [Validators.maxLength(50)]],
       enabled: [],
     });
 
@@ -55,7 +57,7 @@ export class MrdComponent implements OnInit {
       this.commonService.logValidationErrors(this.mrdForm, this.formErrors, this.validations);
     });
     this.endPointService.readConfigJson().subscribe((e) => {
-    this.getMRD();
+      this.getMRD();
     });
 
   }
@@ -114,7 +116,6 @@ export class MrdComponent implements OnInit {
     this.endPointService.get(this.reqServiceType).subscribe(
       (res: any) => {
         this.spinner = false;
-        // console.log("mrd res-->", res);
         this.mrdData = res;
         if (res.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
       },
@@ -143,7 +144,6 @@ export class MrdComponent implements OnInit {
     this.endPointService.delete(id, this.reqServiceType).subscribe(
       (res: any) => {
         this.spinner = false;
-        // console.log("delete res -->", res);
         this.mrdData = this.mrdData.filter(i => i !== data)
           .map((i, idx) => (i.position = (idx + 1), i));
         this.snackbar.snackbarMessage('success-snackbar', "MRD Deleted Successfully", 1);
@@ -222,17 +222,13 @@ export class MrdComponent implements OnInit {
       this.createMRD(data);
     }
   }
-  
-  pageChange(e) {
-    localStorage.setItem('currentMRDPage', e);
-  }
+
+  pageChange(e) { localStorage.setItem('currentMRDPage', e); }
 
   pageBoundChange(e) {
     this.p = e;
-    localStorage.setItem('currentMRDPage', e); 
+    localStorage.setItem('currentMRDPage', e);
   }
 
-  selectPage() {
-    this.itemsPerPage = this.selectedItem;
-  }
+  selectPage() { this.itemsPerPage = this.selectedItem; }
 }

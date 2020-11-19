@@ -32,7 +32,7 @@ export class ReportingComponent implements OnInit {
 
   ngOnInit() {
 
-
+    this.commonService.tokenVerification();
     this.validations = this.commonService.reportSettingErrorMessages;
 
     this.reportSettingForm = this.fb.group({
@@ -42,12 +42,6 @@ export class ReportingComponent implements OnInit {
       rcDBPwd: ['', [Validators.required, Validators.maxLength(256)]],
       rcDBName: ['', [Validators.required, Validators.maxLength(40)]],
     });
-
-
-    // this.reportSettingForm.controls['rcDBUrl'].disable();
-    // this.reportSettingForm.controls['rcDBUser'].disable();
-    // this.reportSettingForm.controls['rcDBPwd'].disable();
-    // this.reportSettingForm.controls['rcDBName'].disable();
 
     this.reportSettingForm.valueChanges.subscribe((data) => {
       let result = this.commonService.logValidationErrors(this.reportSettingForm, this.formErrors, this.validations);
@@ -70,7 +64,6 @@ export class ReportingComponent implements OnInit {
     this.endPointService.getSetting(this.reqServiceType).subscribe(
       (res: any) => {
         this.spinner = false;
-        // console.log("res->",res);
         if (res.status == 200 && res.reportSetting.length > 0) {
           this.editData = res.reportSetting[0];
           this.reportSettingForm.patchValue({
@@ -104,8 +97,7 @@ export class ReportingComponent implements OnInit {
         this.spinner = false;
         console.log("Error creating", error);
         if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
-      }
-    );
+      });
   }
 
   updateReportSetting(data) {
@@ -118,12 +110,10 @@ export class ReportingComponent implements OnInit {
         this.spinner = false;
         console.log("Error updating", error);
         if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
-      }
-    );
+      });
   }
 
   onSave() {
-
     let data = this.reportSettingForm.value;
     if (this.editData) {
       data.id = this.editData.id;
@@ -134,7 +124,5 @@ export class ReportingComponent implements OnInit {
       this.createReportSetting(data);
     }
   }
-
-  toggleChange(e) { }
 
 }

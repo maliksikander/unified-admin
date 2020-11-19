@@ -1,59 +1,71 @@
 <div class="loading-area" *ngIf="spinner">
-    <mat-spinner></mat-spinner>
+  <mat-spinner></mat-spinner>
 </div>
 <div class="container-fluid auth-section">
-    <div class="row">
-        <div class="main-inner-section login-area col-sm-12  col-md-6 valign-wrapper">
-            <div class="login-inner">
-                <div class="login-heading">
-                    <h3>Login</h3>
-                    <!-- <span>disclaimer_text</span> -->
-                </div>
+  <div class="row">
+    <div class="main-inner-section login-area col-sm-12  col-md-6 valign-wrapper">
+      <div class="login-inner">
+        <div class="login-heading">
+          <h3>Login</h3>
+          <!-- <span>disclaimer_text</span> -->
+        </div>
 
-                <form class="form-horizontal form-bordered login-form" [formGroup]="loginForm">
-                  
-                      <div class="form-group">
-                        <mat-label>Username</mat-label>
-                        <mat-form-field appearance="outline">
-                          <input matInput formControlName="username">
-                          <mat-error class="form-error">
-                            {{formErrors.username}}
-                          </mat-error>
-                        </mat-form-field>
-                      </div>
-                      <div class="form-group">
-                        <mat-label>Password</mat-label>
-                        <mat-form-field appearance="outline">
-                          <input [type]="hide ? 'password' : 'text'" matInput formControlName="password">
-                          <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                          <mat-error class="form-error">
-                            {{formErrors.password}}
-                          </mat-error>
-                        </mat-form-field>
-                      </div>
-            
-                    
-                    <div class="login-action-area">
-                      <button [disabled]="!loginForm.valid" mat-raised-button class="dark-blue-btn service-trigger"
-                        (click)="onClick()">Save</button>
-                    </div>
-        
-                  </form>
+        <form class="form-horizontal form-bordered login-form" [formGroup]="loginForm">
 
-                <div class="clearfix"></div>
+          <div class="form-group">
+            <mat-label>Username</mat-label>
+            <mat-form-field appearance="outline">
+              <input matInput formControlName="username">
+              <mat-error class="form-error">
+                {{formErrors.username}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-label>Password</mat-label>
+            <mat-form-field appearance="outline">
+              <input [type]="hide ? 'password' : 'text'" matInput formControlName="password">
+              <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              <mat-error class="form-error">
+                {{formErrors.password}}
+              </mat-error>
+            </mat-form-field>
+          </div>
 
-                <!-- <div class="row"> -->
-                <!-- <div class="radio-field selection-field"> -->
-
-                <!-- <mat-checkbox (change)="select($event)" value="cc" >Contact Center</mat-checkbox> -->
-                <!-- <mat-radio-button value="cc">Contact Center</mat-radio-button> -->
-                <!-- <mat-radio-button value="ad">Active Directory</mat-radio-button> -->
+          <div class="form-group remember-checkbox">
+            <!-- <mat-label>Password</mat-label> -->
+            <!-- <mat-form-field appearance="outline"> -->
+            <mat-checkbox class="example-margin" formControlName="rememberMe">Remember Me
+            </mat-checkbox>
+            <!-- <mat-error class="form-error">
+                {{formErrors.password}}
+              </mat-error> -->
+            <!-- </mat-form-field> -->
+          </div>
 
 
-                <!-- </div> -->
-                <!-- </div> -->
 
-                <!-- <div class="input-field radio-field">
+          <div class="login-action-area">
+            <button [disabled]="!loginForm.valid" mat-raised-button class="dark-blue-btn service-trigger"
+              (click)="login()">Save</button>
+          </div>
+
+        </form>
+
+        <div class="clearfix"></div>
+
+        <!-- <div class="row"> -->
+        <!-- <div class="radio-field selection-field"> -->
+
+        <!-- <mat-checkbox (change)="select($event)" value="cc" >Contact Center</mat-checkbox> -->
+        <!-- <mat-radio-button value="cc">Contact Center</mat-radio-button> -->
+        <!-- <mat-radio-button value="ad">Active Directory</mat-radio-button> -->
+
+
+        <!-- </div> -->
+        <!-- </div> -->
+
+        <!-- <div class="input-field radio-field">
 
                   <mat-checkbox *ngIf="!SSOEnabled" id="ch" style="margin-right:8%;" (change)="select($event)" value="cc">
                       {{contact_centre_text}}</mat-checkbox>
@@ -62,34 +74,34 @@
                   </mat-checkbox>
               </div> -->
 
-                <!-- <div class="input-field login-trigger">
+        <!-- <div class="input-field login-trigger">
                     <input id="save-button" (click)="onClick()" type="submit" class="button flip-in-ver-right"
                         value="Login">
                 </div> -->
 
-                <!-- <div *ngIf="SSOEnabled" class="input-field login-trigger">
+        <!-- <div *ngIf="SSOEnabled" class="input-field login-trigger">
                   <input (click)="finesseLogin()"  type="submit"
                       class="button flip-in-ver-right" value="{{login_with_cisco_text}}">
               </div> -->
 
 
-            </div>
+      </div>
 
 
-        </div>
-        <div class="main-inner-section logo-area col-sm-12  col-md-6 ">
-            <div class="main-area-right">
-                <img src="/assets/images/ef-logo.svg" alt="Wallboard">
-                <div class="heading-area">
-                    <h2>Admin Panel</h2>
-                    <!-- <p>visual_experts_text</p> -->
-                </div>
-
-            </div>
-            <div class="clearfix"></div>
-            <div class="brand-logo">
-                <img src="/assets/images/ef-logo.svg" alt="ExpertFlow">
-            </div>
-        </div>
     </div>
+    <div class="main-inner-section logo-area col-sm-12  col-md-6 ">
+      <div class="main-area-right">
+        <img src="/assets/images/ef-logo.svg" alt="Wallboard">
+        <div class="heading-area">
+          <h2>Unified Admin</h2>
+          <!-- <p>visual_experts_text</p> -->
+        </div>
+
+      </div>
+      <div class="clearfix"></div>
+      <div class="brand-logo">
+        <img src="/assets/images/ef-logo.svg" alt="ExpertFlow">
+      </div>
+    </div>
+  </div>
 </div>

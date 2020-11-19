@@ -3,27 +3,12 @@
     <a routerLink="/" class="logo">
       <img src="assets/images/expertflow-logo.png" height="35" alt="Wall Board Admin">
     </a>
-    <!-- <div class="topbar-right right float-right">
-      <p>{{today | date:'MMM d, y' }} &nbsp;| &nbsp;{{ today | date:'EEEE'}}&nbsp; | &nbsp;{{ today | date:'h: mm: ss a'}}</p>
-    </div> -->
+  
     <div class="topbar-right right float-right">
-      <p *ngIf="false">{{today | date:'MMM d, y' }} &nbsp;| &nbsp;{{ today | date:'EEEE'}}&nbsp; |
-        &nbsp;{{ today | date:'h: m a'}}</p>
+      <!-- <p>{{today | date:'MMM d, y' }} &nbsp;| &nbsp;{{ today | date:'EEEE'}}&nbsp; |
+        &nbsp;{{ today | date:'h: m a'}}</p> -->
       <ul class="notification-area">
-        <!-- <li>
-          <button mat-icon-button (click)="fullScreenView($event)" [matTooltip]="status == true?'Exit Full screen':'Full screen'">
-            <mat-icon>{{status == true?'fullscreen_exit':'fullscreen'}}</mat-icon>
-          </button>
-
-        </li> -->
-
-        <!-- time zone -->
-        <!-- <li class="drop-down-timezone">
-          <angular2-multiselect [data]="dropdownlist" [(ngModel)]="selectedItems" [settings]="dropdownSettings"
-            (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)">
-          </angular2-multiselect>
-        </li> -->
-        <!--  -->
+  
         <!-- <li class="multi-language">
           <button mat-button [matMenuTriggerFor]="languageSelection" class="language-trigger">
             <img src="{{languageFlag}}" width="20">{{language}} <i class="material-icons">
@@ -53,11 +38,8 @@
 
         <li>
           <button class="user-btn" mat-icon-button>
-            <!-- <button class="user-btn" mat-icon-button [matMenuTriggerFor]="profile"> -->
-            <!-- <mat-icon>person</mat-icon> -->
             <img class="agentPic" src="/assets/images/avatars/profile.jpg">
-            <span class="user-name">User Name</span>
-
+            <span class="user-name">{{userName}}</span>
             <!-- <i class="material-icons">
               keyboard_arrow_down
             </i> -->
@@ -66,32 +48,18 @@
             <button mat-menu-item (click)="logout()">Log Out</button>
           </mat-menu> -->
         </li>
-        <li>
+        <li >
           <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
             <mat-icon>more_vert</mat-icon>
           </button>
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item>
-              <!-- <mat-icon>dialpad</mat-icon> -->
+          <mat-menu class="logout-menu" #menu="matMenu">
+            <button (click)="logout()" mat-menu-item>
+              <img src="/assets/images/log-out.png" alt="Log_Out">
               <span>Log Out</span>
             </button>
-            <!-- <button mat-menu-item disabled>
-              <mat-icon>voicemail</mat-icon>
-              <span>Check voice mail</span>
-            </button> -->
-            <!-- <button mat-menu-item> -->
-              <!-- <mat-icon>notifications_off</mat-icon> -->
-              <!-- <span>Item 2</span> -->
-            <!-- </button> -->
           </mat-menu>
         </li>
       </ul>
     </div>
   </div>
-
-
-
-
-
-
 </header>

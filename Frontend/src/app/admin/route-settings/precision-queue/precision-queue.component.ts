@@ -72,6 +72,7 @@ export class PrecisionQueueComponent implements OnInit {
 
   ngOnInit() {
 
+    this.commonService.tokenVerification();
     this.validations = this.commonService.queueFormErrorMessages;
     let pageNumber = localStorage.getItem('currentQueuePage');
     if (pageNumber) this.p = pageNumber;

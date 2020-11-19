@@ -55,6 +55,7 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required]],
+      rememberMe: [true]
     });
 
     this.loginForm.valueChanges.subscribe((data) => {
@@ -65,8 +66,29 @@ export class LoginComponent implements OnInit {
 
   }
 
-  onClick() { }
+  login() {
+    this.spinner = true;
+    const data = this.loginForm.value
+    this.endPointService.login(data).subscribe(
+      (res: any) => {
+        this.spinner = false;
+        const result = res
+        console.log("login res-->", res);
+        if (data.rememberMe == true) {
+          localStorage.setItem('username', res.username);
+          localStorage.setItem('token', res.access_token);
+          this.endPointService.token = res.access_token;
 
-  test() { }
-
+          sessionStorage.setItem('username', res.username);
+          sessionStorage.setItem('token', res.access_token);
+        }
+        this.router.navigate(['/general/amq-settings']);
+      },
+      (error: any) => {
+        this.spinner = false;
+        console.log("Error fetching:", error);
+        if (error && error.status == 401) this.snackbar.snackbarMessage('error-snackbar', "Unauthorized User", 1);
+        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
+      });
+  }
 }

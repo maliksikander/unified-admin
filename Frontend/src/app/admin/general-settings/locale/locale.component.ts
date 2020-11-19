@@ -45,7 +45,7 @@ export class LocaleComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.commonService.tokenVerification();
     this.validations = this.commonService.localeSettingErrorMessages;
 
     this.localeSettingForm = this.fb.group({
@@ -142,7 +142,6 @@ export class LocaleComponent implements OnInit {
     this.endPointService.getSetting(this.reqServiceType).subscribe(
       (res: any) => {
         this.spinner = false;
-        // console.log("res-->", res);
         if (res.status == 200 && res.localeSetting.length > 0) {
           this.editData = res.localeSetting[0];
           this.selectedLanguages = this.editData.supportedLanguages;

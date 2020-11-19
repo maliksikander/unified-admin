@@ -41,6 +41,8 @@ export class DatabaseComponent implements OnInit {
 
   ngOnInit() {
 
+    this.commonService.tokenVerification();
+
     this.validations = this.commonService.databaseSettingErrorMessages;
 
     this.databaseSettingForm = this.fb.group({
@@ -77,7 +79,6 @@ export class DatabaseComponent implements OnInit {
     this.endPointService.getSetting(this.reqServiceType).subscribe(
       (res: any) => {
         this.spinner = false;
-        // console.log("res-->", res);
         if (res.status == 200 && res.databaseSetting.length > 0) {
           this.editData = res.databaseSetting[0];
           this.databaseSettingForm.patchValue({
@@ -118,8 +119,7 @@ export class DatabaseComponent implements OnInit {
         this.spinner = false;
         console.log("Error creating", error);
         if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
-      }
-    );
+      });
   }
 
   updateDatabaseSetting(data) {
@@ -132,8 +132,7 @@ export class DatabaseComponent implements OnInit {
         this.spinner = false;
         console.log("Error updating", error);
         if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
-      }
-    );
+      });
   }
 
   onSave() {
@@ -147,5 +146,5 @@ export class DatabaseComponent implements OnInit {
       this.createDatabaseSetting(data);
     }
   }
-
+  
 }

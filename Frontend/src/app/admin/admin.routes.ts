@@ -11,14 +11,13 @@ import { AttributeComponent } from './route-settings/attribute/attribute.compone
 import { MrdComponent } from './route-settings/mrd/mrd.component';
 import { PrecisionQueueComponent } from './route-settings/precision-queue/precision-queue.component';
 import { UsersComponent } from './route-settings/users/users.component';
-// import { LoginComponent } from './login/login.component';
+import { LoginComponent } from '../authentication/login/login.component';
 
 export const adminRoutes: Routes = [
     {
         path: '', component: AdminMainComponent,
         children: [
-          { path: '', redirectTo: 'general/amq-settings', pathMatch: 'full' },
-          // { path: 'login', component: LoginComponent},
+          { path: '', redirectTo: '/login', pathMatch: 'full' },
           { path: 'general/display-settings', component: DisplayComponent},
           { path: 'general/locale-settings', component: LocaleComponent},
           { path: 'general/database-settings', component: DatabaseComponent},

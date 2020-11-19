@@ -13,6 +13,17 @@ button.mat-menu-item {
   color: #686868 !important;
 }
 
+::ng-deep .logout-menu {
+  button.mat-menu-item {
+    line-height: 30px !important;
+    height: 30px !important;
+    padding: 0 15px !important;
+    span {
+      padding: 0 5px !important;
+    }
+  }
+}
+
 .topbar-right {
   p {
     color: #33ace8;
@@ -25,8 +36,6 @@ button.mat-menu-item {
 }
 
 .notification-area {
-
-  
   padding: 0;
 
   li {
@@ -69,7 +78,6 @@ button.mat-menu-item {
         color: #929292;
       }
     }
- 
   }
 
   &:first-child {
