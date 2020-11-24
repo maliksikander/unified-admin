@@ -1,8 +1,8 @@
-import {ChangeDetectorRef, Component, Input, OnInit, ViewChild} from '@angular/core';
-import {MatSidenav} from '@angular/material';
-import {CommonService} from '../services/common.service';
-import {Router} from '@angular/router';
-import {ConfigService} from '../services/config.service';
+import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { MatSidenav } from '@angular/material';
+import { CommonService } from '../services/common.service';
+import { Router } from '@angular/router';
+import { ConfigService } from '../services/config.service';
 import { EndpointService } from '../services/endpoint.service';
 
 @Component({
@@ -12,11 +12,10 @@ import { EndpointService } from '../services/endpoint.service';
 })
 
 export class AdminMainComponent implements OnInit {
+
   @ViewChild('sidenav') sidenav: MatSidenav;
   @Input() themeChange: string;
-
   elem;
-  // document;
   events: string[] = [];
   opened = true;
   rightBarOpened = false;
@@ -32,7 +31,7 @@ export class AdminMainComponent implements OnInit {
 
   constructor(
     private commonService: CommonService,
-    private endPointService:EndpointService,
+    private endPointService: EndpointService,
     private router: Router,
     private changeDetector: ChangeDetectorRef,
     private configService: ConfigService) {
@@ -41,13 +40,7 @@ export class AdminMainComponent implements OnInit {
 
   ngOnInit() {
 
-
     this.configService.onReadConfig.subscribe((e) => {
-
-    
-      // this.endPointService.endpointUrl = e.Admin_URL;
-      // this.endPointService.MRE_MICRO_URL = e.MRE_URL;
-      //   console.log("comp data-->",this.endPointService.endpointUrl)
       this.defaultTheme = this.configService.Theme;
       this.defaultLanguage = this.configService.DefaultLanguage;
       this.sidebarPosition = this.configService.sidebarPosition;
@@ -74,13 +67,11 @@ export class AdminMainComponent implements OnInit {
   clickEvent() {
     if (this.isBarIconView) {
       this.barStatus = true;
-    } else {
-      this.barStatus = !this.barStatus;
     }
+    else { this.barStatus = !this.barStatus; }
   }
 
   changeTheme() {
     this.otherTheme = !this.otherTheme;
   }
-
 }

@@ -75,7 +75,6 @@ export class MrdComponent implements OnInit {
         }
       }
     ));
-    // return null;
   }
 
   openModal(templateRef) {

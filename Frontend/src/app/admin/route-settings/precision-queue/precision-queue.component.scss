@@ -111,7 +111,7 @@
         }
       }
     }
-    
+
     mat-panel-title.mat-expansion-panel-header-title {
       width: 33.33% !important;
       padding-left: 5px;
@@ -144,7 +144,7 @@
         padding: 10px 0px;
         padding-left: 5px;
 
-        &:first-child{
+        &:first-child {
           padding-left: 15px !important;
         }
       }
@@ -313,7 +313,6 @@ input::-webkit-inner-spin-button {
         width: 50% !important;
       }
       &:nth-child(2) {
-        // width: 50% !important;
         width: 30% !important;
       }
     }
@@ -382,7 +381,7 @@ input::-webkit-inner-spin-button {
     padding: 15px 40px;
     max-width: 850px;
     margin: 0 auto;
-   
+
     button {
       margin-left: 10px;
       min-width: 82px;
@@ -573,12 +572,8 @@ input::-webkit-inner-spin-button {
         display: flex;
         flex-wrap: wrap;
         padding: 0px 5px;
-
-        // &:first-child {
         padding: 10px 5px;
         position: relative;
-        // left: 113px;
-        // }
       }
     }
   }

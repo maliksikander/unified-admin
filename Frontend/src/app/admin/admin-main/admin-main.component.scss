@@ -18,40 +18,17 @@
 
 
 mat-sidenav-container.main-sidebar {
-  //width: 100%;
-  //height: calc(100% - 55px);
-  //position: absolute;
-  //top: 55px;
-  //left: 0;
 
-  //for WallBoard only
 
   width: 100%;
   height: calc(100% - 50px);
   position: absolute;
   top: 50px;
   left: 0;
-  // padding: 15px 0;
-
   &.secondary-sidebar{
     top: 0;
   }
-  //./for WallBoard only
-
-  //&.expand{
-  //
-  //  mat-sidenav.mat-drawer {
-  //    width: 0;
-  //  }
-  //
-  //  .mat-drawer-content{
-  //    margin-left: 0 !important;
-  //    margin-right: 0 !important;
-  //    //transition: all .3s;
-  //  }
-  //
-  //}
-
+  
   mat-sidenav {
     box-shadow: none;
   }
@@ -64,64 +41,20 @@ mat-sidenav-container.main-sidebar {
   &.mat-drawer-opened{
     position: absolute;
     width: 100%;
-    //transition: all .3s;
     left: 0;
-
-
-    //&.collapse{
-    //
-    //  mat-sidenav.mat-drawer {
-    //    width: 230px;
-    //
-    //    .sidebar-text{
-    //      display: inline-block;
-    //    }
-    //  }
-    //  .mat-drawer-content{
-    //    margin-left: 230px !important;
-    //    margin-right: 0 !important;
-    //    //transition: all .3s;
-    //  }
-    //
-    //}
-    //&.expand{
-    //
-    //  mat-sidenav.mat-drawer {
-    //    width: 230px;
-    //
-    //    .sidebar-text{
-    //      display: none;
-    //    }
-    //  }
-    //  .mat-drawer-content{
-    //    margin-left: 65px !important;
-    //    margin-right: 0 !important;
-    //    //transition: all .3s;
-    //  }
-    //
-    //}
   }
 
   mat-sidenav.mat-drawer {
-    // width: 250px;
     width: 208px;
     overflow: hidden !important;
     background: #F3F6F8;
     color: #ffffff;
-
-    //.mat-list-item{
-    //  border-bottom: 1px solid #ffffff;
-    //}
   }
 
 
   .main-outlet {
     position: relative;
-    //height: 100%;
     padding: 15px 0;
-  }
-  .mat-drawer-content{
-    //margin-left: 65px;
   }
 
   .mat-expansion-panel-header-title {

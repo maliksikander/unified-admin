@@ -12,12 +12,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class EndpointService {
   configJSON: any = "assets/config/config.json";
-  // endpointUrl="http://localhost:3000/api";
-  // MRE_MICRO_URL = "https://hcdev.expertflow.com/mre-microservice/mre/api";
   endpointUrl;
   MRE_MICRO_URL;
   token;
-  // MRE_MICRO_URL = "";
 
   constructor(private snackbar: SnackbarService,
     private httpClient: HttpClient,
@@ -28,7 +25,6 @@ export class EndpointService {
       
       if(localStorage.getItem('token')){
         this.token = localStorage.getItem('token');
-          //  console.log("service end-->",this.token);
       }
            
   });

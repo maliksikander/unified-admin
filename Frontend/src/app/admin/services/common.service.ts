@@ -12,9 +12,7 @@ export class CommonService {
   themeVersion = new Subject();
   _spinnerSubject = new Subject();
 
-
   amqSettingErrorMessages = {
-
     'amqUser': {
       'required': "This field is required",
       'minlength': "More characters required",
@@ -37,17 +35,15 @@ export class CommonService {
       'min': "Enter valid port number",
       'max': "Enter valid port number",
       'pattern': 'Enter valid port number'
-      // 'pattern': this.service_url_pattern
     },
     'amqUrl': {
       'required': "This field is required",
       'pattern': 'Enter a valid url'
-      // 'pattern': this.service_url_pattern
     }
 
   };
-  databaseSettingErrorMessages = {
 
+  databaseSettingErrorMessages = {
     'mongoUrl': {
       'required': "This field is required",
       'minlength': "More characters required",
@@ -62,22 +58,18 @@ export class CommonService {
     'eabcDBDriver': {
       'required': "This field is required",
       'maxlength': "Max 256 characters allowed",
-      // 'pattern': this.service_url_pattern
     },
     'eabcDBDialect': {
       'required': "This field is required",
       'maxlength': "Max 256 characters allowed",
-      // 'pattern': this.service_url_pattern
     },
     'eabcDBUser': {
       'required': "This field is required",
       'maxlength': "Max 40 characters allowed",
-      // 'pattern': this.service_url_pattern
     },
     'eabcDBPwd': {
       'required': "This field is required",
       'maxlength': "Max 256 characters allowed",
-      // 'pattern': this.service_url_pattern
     },
     'ecmDBUrl': {
       'required': "This field is required",
@@ -87,32 +79,27 @@ export class CommonService {
     'ecmDBDriver': {
       'required': "This field is required",
       'maxlength': "Max 256 characters allowed",
-      // 'pattern': this.service_url_pattern
     },
     'ecmDBDialect': {
       'required': "This field is required",
       'maxlength': "Max 256 characters allowed",
-      // 'pattern': this.service_url_pattern
     },
     'ecmDBUser': {
       'required': "This field is required",
       'maxlength': "Max 40 characters allowed",
-      // 'pattern': this.service_url_pattern
     },
     'ecmDBPwd': {
       'required': "This field is required",
       'maxlength': "Max 256 characters allowed",
-      // 'pattern': this.service_url_pattern
     },
     'ecmDBEngine': {
       'required': "This field is required",
       'maxlength': "Max 256 characters allowed",
-      // 'pattern': this.service_url_pattern
     }
 
   };
-  displaySettingErrorMessages = {
 
+  displaySettingErrorMessages = {
     'agentAlias': {
       'required': "This field is required",
       'minlength': "More characters required",
@@ -127,12 +114,11 @@ export class CommonService {
     },
     'companyLogo': {
       'required': "This field is required",
-      // 'pattern': this.service_url_pattern
     },
 
   };
-  localeSettingErrorMessages = {
 
+  localeSettingErrorMessages = {
     'timezone': {
       'required': "This field is required",
       'minlength': "More characters required",
@@ -146,11 +132,10 @@ export class CommonService {
     },
     'supportedLanguages': {
       'required': "This field is required",
-      // 'pattern': this.service_url_pattern
     }
   };
-  logSettingErrorMessages = {
 
+  logSettingErrorMessages = {
     'logLevel': {
       'required': "This field is required",
       'minlength': "More characters required",
@@ -168,17 +153,15 @@ export class CommonService {
       'required': "This field is required",
       'min': "Min size should be 1 Mb",
       'max': "Max size should be 1024 Mb",
-      // 'pattern': this.service_url_pattern
     },
     'logFilePath': {
       'required': "This field is required",
       'maxlength': "Max 256 characters allowed",
-      // 'pattern': this.service_url_pattern
     }
 
   };
-  reportSettingErrorMessages = {
 
+  reportSettingErrorMessages = {
     'rcDBName': {
       'required': "This field is required",
       'minlength': "More characters required",
@@ -194,7 +177,6 @@ export class CommonService {
     'rcDBPwd': {
       'required': "This field is required",
       'maxlength': "Max 256 characters allowed",
-      // 'pattern': this.service_url_pattern
     },
     'rcDBUrl': {
       'required': "This field is required",
@@ -202,107 +184,86 @@ export class CommonService {
     }
 
   };
-  securitySettingErrorMessages = {
 
+  securitySettingErrorMessages = {
     'certificatePath': {
       'required': "This field is required",
       'maxlength': "Max 256 characters allowed",
-      // 'pattern': this.service_url_pattern
     },
     'certificateKeypath': {
       'required': "This field is required",
       'maxlength': "Max 256 characters allowed"
-      // 'pattern': this.service_url_pattern
     },
     'certificatePassphrase': {
       'required': "This field is required",
       'maxlength': "Max 256 characters allowed"
-      // 'pattern': this.service_url_pattern
     },
     'certificateAuthorityPath': {
       'required': "This field is required",
       'maxlength': "Max 256 characters allowed"
-      // 'pattern': this.service_url_pattern
     },
     'certificateAuthorityPassphrase': {
       'required': "This field is required",
       'maxlength': "Max 256 characters allowed"
-      // 'pattern': this.service_url_pattern
     },
     'keystorePath': {
       'required': "This field is required",
       'maxlength': "Max 256 characters allowed"
-      // 'pattern': this.service_url_pattern
     },
     'keystorePwd': {
       'required': "This field is required",
       'maxlength': "Max 256 characters allowed"
-      // 'pattern': this.service_url_pattern
     },
     'truststorePath': {
       'required': "This field is required",
       'maxlength': "Max 256 characters allowed"
-      // 'pattern': this.service_url_pattern
     },
     'truststorePwd': {
       'required': "This field is required",
       'maxlength': "Max 256 characters allowed"
-      // 'pattern': this.service_url_pattern
     },
     'jksKeystorePath': {
       'required': "This field is required",
       'maxlength': "Max 256 characters allowed"
-      // 'pattern': this.service_url_pattern
     },
     'jksKeystorePwd': {
       'required': "This field is required",
       'maxlength': "Max 256 characters allowed"
-      // 'pattern': this.service_url_pattern
     },
     'jksKeymanagerPwd': {
       'required': "This field is required",
       'maxlength': "Max 256 characters allowed"
-      // 'pattern': this.service_url_pattern
     },
     'amqCertificatePath': {
       'required': "This field is required",
       'maxlength': "Max 256 characters allowed"
-      // 'pattern': this.service_url_pattern
     },
     'amqCertificatePassphrase': {
       'required': "This field is required",
       'maxlength': "Max 256 characters allowed"
-      // 'pattern': this.service_url_pattern
     },
     'corsOrigin': {
       'required': "This field is required",
       'maxlength': "Max 40 characters allowed"
-      // 'pattern': this.service_url_pattern
     },
     'commBypassSSL': {
       'required': "This field is required",
-      // 'pattern': this.service_url_pattern
     },
     'enableSSL': {
       'required': "This field is required",
-      // 'pattern': this.service_url_pattern
     },
     'minioSSL': {
       'required': "This field is required",
-      // 'pattern': this.service_url_pattern
     },
     'mongoSSL': {
       'required': "This field is required",
-      // 'pattern': this.service_url_pattern
     },
     'stompSSLEnabled': {
       'required': "This field is required",
-      // 'pattern': this.service_url_pattern
     },
   };
 
   attributeFormErrorMessages = {
-
     'name': {
       'required': "This field is required",
       'minlength': "More characters required",
@@ -318,13 +279,10 @@ export class CommonService {
     },
     'type': {
       'required': "This field is required",
-      // 'pattern': this.service_url_pattern
     },
   };
 
-
   mrdFormErrorMessages = {
-
     'name': {
       'required': "This field is required",
       'minlength': "More characters required",
@@ -340,13 +298,10 @@ export class CommonService {
     },
     'enabled': {
       'required': "This field is required",
-      // 'pattern': this.service_url_pattern
     },
   };
 
-
   queueFormErrorMessages = {
-
     'name': {
       'required': "This field is required",
       'minlength': "More characters required",
@@ -361,23 +316,18 @@ export class CommonService {
     },
     'agentCriteria': {
       'required': "This field is required",
-      // 'pattern': this.service_url_pattern
     },
     'serviceLevelType': {
       'required': "This field is required",
-      // 'pattern': this.service_url_pattern
     },
     'serviceLevelThreshold': {
       'required': "This field is required",
       'min': "Min 1 second required",
       'max': "Max 10 seconds allowed",
-      // 'pattern': this.service_url_pattern
     },
   };
 
-
   userFormErrorMessages = {
-
     'agentId': {
       'required': "This field is required",
       'minlength': "More characters required",
@@ -391,18 +341,16 @@ export class CommonService {
     },
     'firstName': {
       'required': "This field is required",
-      // 'pattern': this.service_url_pattern
     },
     'lastName': {
       'required': "This field is required",
-      // 'pattern': this.service_url_pattern
     }
   };
+  
   constructor(private snackbar: SnackbarService,
     private router: Router,) { }
 
   logValidationErrors(group: FormGroup, formErrors, validations) {
-
     let result = [];
     Object.keys(group.controls).forEach((key: string) => {
       const abstractControl = group.get(key);
@@ -430,7 +378,4 @@ export class CommonService {
       return this.router.navigate(['/login']);
     }
   }
-
-
-
 }

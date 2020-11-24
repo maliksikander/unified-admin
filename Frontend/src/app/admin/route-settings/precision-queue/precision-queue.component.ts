@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
@@ -13,7 +13,7 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./precision-queue.component.scss']
 })
 export class PrecisionQueueComponent implements OnInit {
-
+  stepSaveBtnText = "Add";
   spinner: any = true;
   save = "save"
   p: any = 1;
@@ -64,10 +64,12 @@ export class PrecisionQueueComponent implements OnInit {
   };
   queueForm: FormGroup;
   stepForm: FormGroup;
+
+
   constructor(private commonService: CommonService,
     private dialog: MatDialog,
     private endPointService: EndpointService,
-    private formBuilder: FormBuilder,
+    private fb: FormBuilder,
     private snackbar: SnackbarService,) { }
 
   ngOnInit() {
@@ -77,7 +79,7 @@ export class PrecisionQueueComponent implements OnInit {
     let pageNumber = localStorage.getItem('currentQueuePage');
     if (pageNumber) this.p = pageNumber;
 
-    this.queueForm = this.formBuilder.group({
+    this.queueForm = this.fb.group({
       name: ['', [Validators.required, Validators.pattern("^[a-zA-Z0-9!@#$%^*_&()\\\"-]*$")], this.ValidateNameDuplication.bind(this)],
       mrd: ['', [Validators.required]],
       agentCriteria: ['', [Validators.required]],
@@ -85,9 +87,9 @@ export class PrecisionQueueComponent implements OnInit {
       serviceLevelThreshold: ['', [Validators.required, Validators.min(1)]],
     });
 
-    this.stepForm = this.formBuilder.group({
+    this.stepForm = this.fb.group({
       timeout: ['', [Validators.required]],
-      expression: this.formBuilder.array([
+      expression: this.fb.array([
         this.addExpressionGroup()
       ])
     });
@@ -122,8 +124,8 @@ export class PrecisionQueueComponent implements OnInit {
   }
 
   addExpressionGroup(): FormGroup {
-    return this.formBuilder.group({
-      expressionConditonal: ["AND"],
+    return this.fb.group({
+      expressionConditional: ["AND"],
       terms: new FormArray([
         this.addExpressionTermGroup()
       ])
@@ -144,11 +146,11 @@ export class PrecisionQueueComponent implements OnInit {
   }
 
   addExpressionTermGroup(): FormGroup {
-    return this.formBuilder.group({
-      attribute: [''],
-      operator: [''],
+    return this.fb.group({
+      attribute: ['',Validators.required],
+      operator: ['',Validators.required],
       profVal: [1],
-      boolVal: ["true"],
+      boolVal: ['true'],
       conditionalVal: ["AND"],
     });
   }
@@ -293,7 +295,7 @@ export class PrecisionQueueComponent implements OnInit {
     this.endPointService.delete(id, this.reqServiceType).subscribe(
       (res: any) => {
         this.spinner = false;
-        console.log("delete res -->", res);
+        // console.log("delete res -->", res);
         this.queueData = this.queueData.filter(i => i !== data)
           .map((i, idx) => (i.position = (idx + 1), i));
         this.snackbar.snackbarMessage('success-snackbar', "Deleted Successfully", 1);
@@ -345,52 +347,290 @@ export class PrecisionQueueComponent implements OnInit {
     else { this.createQueue(data); }
   }
 
-  openStepModal(templateRef) {
-
-    if (this.attrData && this.attrData.length > 0) {
-      const exp: any = this.stepForm.get('expression')
-      const control: any = exp.controls[0].get('terms');
-      // console.log('step form-->', control);
-      control.controls[0].get('attribute').setValue(this.attrData[0]);
-      if (this.attrData[0].type == 'Boolean') {
-        control.controls[0].get('operator').setValue(this.boolOperatorList[0]);
-      }
-      else {
-        control.controls[0].get('operator').setValue(this.operatorList[0]);
-      }
-    }
-
+  openStepModal(templateRef, i) {
+    // console.log("queue data-->", queueData);
+    // if (this.attrData && this.attrData.length > 0) {
+    //   const exp: any = this.stepForm.get('expression')
+    //   const control: any = exp.controls[0].get('terms');
+    //   // console.log('step form-->', control);
+    //   control.controls[0].get('attribute').setValue(this.attrData[0]);
+    //   if (this.attrData[0].type == 'Boolean') {
+    //     control.controls[0].get('operator').setValue(this.boolOperatorList[0]);
+    //   }
+    //   else {
+    //     control.controls[0].get('operator').setValue(this.operatorList[0]);
+    //   }
+    // }
+    this.stepFormHeading = 'Add Step';
+    this.stepSaveBtnText = 'Add';
     let dialogRef = this.dialog.open(templateRef, {
       width: '800px',
       // height: '350px',
       panelClass: 'add-attribute',
       disableClose: true,
     });
+    let mode = {
+      mode: "new",
+    }
     dialogRef.afterClosed().subscribe(res => {
 
-      this.resetStepForm();
-      //   const arr = new FormArray([
-      //     new FormControl(),
-      //     new FormControl()
-      //  ]);
-      // console.log("res-->", res);  //
-      // const arr:any = <FormArray>this.stepForm.controls['expression'];
-
-      // while (arr.length !== 0) {
-      // arr.removeAt(0)
-      // }
-      // arr.setValue( this.addExpressionGroup());
-      // this.stepForm.reset();
-      // console.log("step from--->", this.stepForm.value);
-
+      if (res == 'save') {
+        this.onStepSave(i, mode)
+      }
+      else {
+        this.resetStepForm();
+        this.stepForm.reset();
+      }
     });
   }
 
-  editStep(data) { }
+  expTermFormation(terms) {
+    let exp: any = [];
+    let k = 0;
+    for (let j = 0; j < terms.length; j++) {
+      let termObj: any = {
+        AttributeName: "",
+        ConditionOperator: "",
+        Value: ""
+      };
+      if (j == 0) {
+        let term = this.termObjectFormation(terms, j, termObj);
+        exp.splice(j, 0, term);
+      }
+      else {
+        const val = terms[j].conditionalVal;
+        k = k + 1;
+        exp.splice(k, 0, val);
+        let term = this.termObjectFormation(terms, j, termObj);
+        k = k + 1;
+        exp.splice(k, 0, term);
+      }
+    }
+    return exp;
+  }
 
-  deleteStep(data) { }
+  termObjectFormation(terms, j, termObject) {
+    let termObj = termObject;
+    termObj.AttributeName = terms[j].attribute.name;
+    termObj.ConditionOperator = terms[j].operator;
+    if (terms[j].attribute.type == 'Boolean') { termObj.Value = terms[j].boolVal; }
+    else { termObj.Value = terms[j].profVal; }
+    return termObj;
+  }
+
+  expressionFormation(expressions) {
+    let a = 0;
+    let expressionsArray: any = []
+    for (let i = 0; i < expressions.length; i++) {
+      let terms = expressions[i].terms;
+      let k = 0;
+      if (i == 0) {
+        let temp = { expression: this.expTermFormation(terms) };
+        expressionsArray.splice(k, 0, temp);
+      }
+      else {
+        const val = expressions[i].expressionConditional;
+        a = a + 1;
+        expressionsArray.splice(a, 0, val);
+        a = a + 1;
+        let temp = { expression: this.expTermFormation(terms) };
+        expressionsArray.splice(a, 0, temp);
+      }
+    }
+    return expressionsArray;
+
+  }
+
+  onStepSave(i, mode) {
+    this.spinner = true;
+    let newStep: any = {
+      step: {
+        expressions: [],
+        timeout: "",
+      }
+    };
+    newStep.step.timeout = this.stepForm.value.timeout;
+    const expressions = this.stepForm.value.expression;
+    let expArray = this.expressionFormation(expressions);
+    newStep.step.expressions = expArray;
+    let data = JSON.parse(JSON.stringify(this.queueData[i]));
+    // console.log("original -->", data);
+    if (mode.mode == 'update') {
+      newStep._id = mode._id;
+      // console.log('new Step-->', newStep);
+      // console.log("data-->", data);
+      let stepIndex = data.Steps.findIndex(x => x._id == mode._id);
+      if (stepIndex != -1) {
+        data.Steps[stepIndex] = newStep;
+      }
+      // console.log("data-->", data);
+    }
+    else {
+      data.Steps.push(newStep);
+      // console.log("new -->", data);
+    }
+    this.updateQueue(data, data._id);
+    console.log("form value--->", this.stepForm.value);
+    this.resetStepForm();
+
+  }
+
+
+
+  reconstructExpTermGroup(expTerm, termObj) {
+    const temp = this.attrData.filter(item => item.name == expTerm.AttributeName);
+    termObj.attribute = temp[0];
+    termObj.operator = expTerm.ConditionOperator;
+    if (expTerm.Value == "true" || expTerm.Value == "false") {
+      termObj.boolVal = expTerm.Value;
+    }
+    else {
+      termObj.profVal = expTerm.Value;
+    }
+    return termObj;
+  }
+
+
+  reconstructExpTerm(expTerm, formData) {
+    for (let j = 0; j < expTerm.length; j++) {
+      let k = 0;
+      let term = {
+        attribute: {},
+        operator: "",
+        profVal: 1,
+        boolVal: "true",
+        conditionalVal: "AND"
+      }
+      if (j == 0) {
+        let termResult = this.reconstructExpTermGroup(expTerm[j], term);
+        formData.terms.push(termResult);
+      }
+      else {
+        if (j % 2 != 0) {
+          k = j + 1;
+          term.conditionalVal = expTerm[j];
+          let termResult = this.reconstructExpTermGroup(expTerm[k], term)
+          formData.terms.push(termResult);
+        }
+      }
+    }
+    return formData;
+  }
+
+  reconstructFormExpression(temp) {
+    let formData: any = [];
+    for (let i = 0; i < temp.length; i++) {
+      let formDataExpression: any = {
+        expressionConditional: "AND",
+        terms: []
+      }
+      let a = 0;
+      if (i == 0) {
+        formDataExpression.expressionConditional = "AND";
+        let expTerm = temp[i].expression;
+        let result = this.reconstructExpTerm(expTerm, formDataExpression);
+        formData.push(result);
+      }
+      else {
+        if (i % 2 != 0) {
+          a = i + 1;
+          formDataExpression.expressionConditional = temp[i];
+          let expTerm = temp[a].expression;
+          let result = this.reconstructExpTerm(expTerm, formDataExpression);
+          formData.push(result);
+        }
+      }
+    }
+    return formData;
+  }
+
+
+  loadFormExpression(data) {
+    //create lines array first
+    for (let i = 0; i < data.expression.length; i++) {
+      const expFormArray = this.stepForm.get("expression") as FormArray;
+      expFormArray.push(this.expression);
+      for (let term = 0; term < data.expression[i].terms.length; term++) {
+        const termsFormsArray = expFormArray.at(i).get("terms") as FormArray;
+        termsFormsArray.push(this.term);
+      }
+    }
+    this.stepForm.setValue(data);
+  }
+
+
+  editStep(templateRef, stepData, i) {
+    console.log("step data-->", stepData);
+    this.stepFormHeading = 'Edit Step';
+    this.stepSaveBtnText = 'Update';
+    let mreData: any = {};
+    mreData.timeout = JSON.parse(JSON.stringify(stepData.step.timeout));
+    let temp = JSON.parse(JSON.stringify(stepData.step.expressions));
+    const control = <FormArray>this.stepForm.controls['expression'];
+    for (let i = control.length - 1; i >= 0; i--) {
+      control.removeAt(i);
+    }
+    mreData.expression = this.reconstructFormExpression(temp);
+    this.loadFormExpression(mreData);
+    let dialogRef = this.dialog.open(templateRef, {
+      width: '800px',
+      // height: '350px',
+      panelClass: 'add-attribute',
+      disableClose: true,
+
+    });
+    let mode = {
+      mode: "update",
+      _id: stepData._id
+    }
+    dialogRef.afterClosed().subscribe(res => {
+      if (res == 'save') {
+        this.onStepSave(i, mode)
+      }
+      else {
+        this.resetStepForm();
+        this.stepForm.reset();
+      }
+    });
+
+  }
+
+
+  deleteStepConfirm(stepData, i) {
+    let msg = "Are you sure you want to delete this Step ?";
+    return this.dialog.open(ConfirmDialogComponent, {
+      panelClass: 'confirm-dialog-container',
+      disableClose: true,
+      data: {
+        heading: "Delete Step",
+        message: msg,
+        text: 'confirm',
+        stepData: stepData,
+        i: i
+      }
+    }).afterClosed().subscribe((res: any) => {
+      if (res === 'delete') this.deleteStep(stepData, i);
+    });
+  }
+
+  deleteStep(stepData, i) {
+    let Steps = this.queueData[i].Steps;
+    let queue = this.queueData[i]
+
+    if (Steps && Steps.length > 0) {
+      this.queueData[i].Steps = this.queueData[i].Steps.filter(i => i !== stepData)
+        .map((i, idx) => (i.position = (idx + 1), i));
+
+      this.updateQueueStep(queue);
+
+    }
+
+
+
+  }
 
   resetStepForm() {
+    this.stepForm.reset();
     const control = <FormArray>this.stepForm.controls['expression'];
     for (let i = control.length - 1; i >= 0; i--) {
       control.removeAt(i)
@@ -418,4 +658,35 @@ export class PrecisionQueueComponent implements OnInit {
 
     return value;
   }
+
+  updateQueueStep(queue) {
+    this.endPointService.update(queue, queue._id, this.reqServiceType).subscribe(
+      (res: any) => {
+        this.snackbar.snackbarMessage('success-snackbar', "Updated Successfully", 1);
+      },
+      (error: any) => {
+        this.spinner = false;
+        console.log("Error fetching:", error);
+        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
+      });
+  }
+
+  get term(): FormGroup {
+    return this.fb.group({
+      attribute: [''],
+      operator: [''],
+      profVal: [1],
+      boolVal: ['true'],
+      conditionalVal: ["AND"],
+    });
+  }
+
+  get expression(): FormGroup {
+    return this.fb.group({
+      expressionConditional: ["AND"],
+      terms: new FormArray([
+      ])
+    });
+  }
+
 }

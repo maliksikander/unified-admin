@@ -33,7 +33,7 @@
               </ul>
               <ng-container>
                 <mat-expansion-panel
-                  *ngFor="let data of queueData | searchFilter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
+                  *ngFor="let j = index;let data of queueData | searchFilter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
                   <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
                     [expandedHeight]="customExpandedHeight">
                     <mat-panel-title>
@@ -86,10 +86,10 @@
                             </td>
                             <td class="step-table-trigger">{{stepData?.step?.timeout ? stepData?.step?.timeout : 'N/A'}}
                               <span class="step-trigger-area">
-                                <button matTooltip="Edit" (click)="editStep(data)" mat-mini-fab><i class="fa fa-pencil"
+                                <button matTooltip="Edit" (click)="editStep(stepFormTemplate,stepData,j)" mat-mini-fab><i class="fa fa-pencil"
                                     aria-hidden="true"></i>
                                 </button>
-                                <button matTooltip="Delete" (click)="deleteStep(data)" mat-mini-fab><i
+                                <button matTooltip="Delete" (click)="deleteStepConfirm(stepData,j)" mat-mini-fab><i
                                     class="fa fa-trash-o" aria-hidden="true"></i>
                                 </button>
                               </span>
@@ -99,7 +99,7 @@
                       </table>
                     </div>
                     <div *ngIf="data?.Steps?.length != 10" class="step-section">
-                      <button mat-flat-button (click)="openStepModal(stepFormTemplate)">
+                      <button mat-flat-button (click)="openStepModal(stepFormTemplate,j)">
                         Add Step
                       </button>
                     </div>
@@ -242,7 +242,7 @@
                       Add Expression
                     </button>
 
-                    <mat-select *ngIf="i > 0" formControlName="expressionConditonal">
+                    <mat-select *ngIf="i > 0" formControlName="expressionConditional">
                       <mat-option *ngFor="let data of conditionList" [value]="data">{{data}}
                       </mat-option>
                     </mat-select>
@@ -327,8 +327,8 @@
             <div class="col-md-12">
               <div class="form-action-area">
                 <button mat-raised-button class="gray-btn" [mat-dialog-close]="false">Cancel</button>
-                <button mat-raised-button [disabled]="!stepForm.valid" (click)="onSave()" [mat-dialog-close]="save"
-                  class="dark-blue-btn service-trigger">Add</button>
+                <button mat-raised-button [disabled]="!stepForm.valid" [mat-dialog-close]="save"
+                  class="dark-blue-btn service-trigger">{{stepSaveBtnText}}</button>
               </div>
             </div>
           </div>

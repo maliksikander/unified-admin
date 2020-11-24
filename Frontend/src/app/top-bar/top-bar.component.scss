@@ -1,8 +1,3 @@
-//.header {
-////  width: calc(100% - 60px);
-////  float: right;
-////}
-
 //for WallBoard
 .header {
   width: 100%;
@@ -30,9 +25,6 @@ button.mat-menu-item {
     margin: 9px 0;
     word-spacing: 2px;
   }
-}
-.logo-container {
-  // margin-left: 65px;
 }
 
 .notification-area {
@@ -81,7 +73,6 @@ button.mat-menu-item {
   }
 
   &:first-child {
-    // padding: 0px 6px;
     color: #929292;
   }
 }
@@ -98,12 +89,6 @@ button.mat-menu-item {
 
 .user-btn {
   width: auto;
-  // border: 1px solid #e8e8e8;
-  // border-radius: 4px;
-  // padding: 0 10px !important;
-  // height: 32px;
-  // line-height: 31px;
-
   .user-name {
     font-size: 13px;
     text-transform: capitalize;

@@ -1,6 +1,4 @@
 .routing-content {
-  // padding-right: 25px;
-
   .filter-section {
     text-align: right;
     width: 100%;
@@ -59,8 +57,6 @@
   }
 
   .routing-table {
-    // text-align: center;
-    // width: calc(100% - 50px);
     padding: 0px 25px;
 
     .table {
@@ -69,13 +65,6 @@
       tr {
         position: relative;
         border: 1px solid #e2e2e2;
-
-        // &:hover {
-        //   td:nth-child(3),
-        //   td:nth-child(4) {
-        //     // opacity: 0;
-        //   }
-        // }
       }
       thead {
         background: #f5f5f5;
@@ -96,22 +85,6 @@
       overflow: hidden;
       text-overflow: ellipsis;
       width: 20%;
-
-      // .dashboard-name {
-      //   font-weight: normal;
-      //   font-size: 13px;
-      //   cursor: pointer;
-      //   position: relative;
-      //   z-index: 2;
-      // }
-      // &:first-child {
-      //   width: 40% !important;
-      // }
-      // &:nth-child(2) {
-      //   width: 40% !important;
-      // }
-
-      // &:nth-child(3),
       &:nth-child(4) {
         width: 30% !important;
       }
@@ -132,9 +105,6 @@
 }
 
 .table-trigger {
-  // position: relative;
-  // top: 10px;
-
   button {
     box-shadow: none;
     span {

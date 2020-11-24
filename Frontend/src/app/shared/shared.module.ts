@@ -1,6 +1,4 @@
-// import {NgModule} from "@angular/core";
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from "@angular/core";
-
 import {
     MatAutocompleteModule,
     MatBadgeModule, MatBottomSheet, MatBottomSheetModule,
@@ -46,7 +44,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
         MatChipsModule,
         MatDatepickerModule,
         MatExpansionModule,
-        // MatGridListModule,
         MatIconModule,
         MatInputModule,
         MatListModule,
@@ -99,7 +96,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
         MatTreeModule,
         MatBottomSheetModule,
         MatSelectSearchComponent,
-        // NgxMatSelectSearchModule,
         SearchFilterPipe,
         NgxPaginationModule,
 
@@ -110,7 +106,4 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ]
 })
 
-
-export class SharedModule {
-
-}
+export class SharedModule { }

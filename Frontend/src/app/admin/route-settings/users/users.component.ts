@@ -30,7 +30,6 @@ export class UsersComponent implements OnInit {
   validations;
   userForm: FormGroup;
   formHeading = 'User Profile';
-  // saveBtnText = 'Create';
   reqServiceType = 'agent';
   editData: any;
   userData = [];
@@ -99,7 +98,6 @@ export class UsersComponent implements OnInit {
                 }
               });
             });
-          // console.log("attr res 2 -->", this.attrData);
         }
         this.spinner = false;
       },
@@ -143,7 +141,6 @@ export class UsersComponent implements OnInit {
     this.endPointService.delete(id, this.reqServiceType).subscribe(
       (res: any) => {
         this.spinner = false;
-        // console.log("delete res -->", res);
         this.userData = this.userData.filter(i => i !== data)
           .map((i, idx) => (i.position = (idx + 1), i));
         this.snackbar.snackbarMessage('success-snackbar', "User Deleted Successfully", 1);

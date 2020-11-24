@@ -117,8 +117,6 @@ button:focus {
 
 //panel-body
 .panel-body {
-  // margin-left: 145px;
-  // width: calc(100% - 88px);
   width: 100%;
 }
 
@@ -139,7 +137,6 @@ button:focus {
       content: "\f0da";
       font-family: FontAwesome;
       position: relative;
-      // left: -15px;
       left: -9px;
       color: #e3e3e3;
     }
@@ -328,7 +325,6 @@ button:focus {
       transition: all 0.3s;
 
       &:hover {
-        // width: 230px !important;
         width: 208px !important;
         transition: all 0.3s;
 
@@ -350,8 +346,6 @@ button:focus {
       background: transparent;
       color: $dark-gray-color;
       box-shadow: none;
-      //border-bottom: 1px solid $dark-gray-color;
-
       .mat-expansion-panel-header-description,
       .mat-expansion-indicator::after {
         color: $dark-gray-color;
@@ -1131,7 +1125,6 @@ ngx-charts-pie-chart span.legend-label-color {
   .main-outer-card {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    //padding-top: 0;
 
     .mat-card {
       margin-top: 15px;
@@ -1200,7 +1193,6 @@ ngx-charts-pie-chart span.legend-label-color {
 
 .container.main-custom-container {
   max-width: calc(100% - 0px);
-  // padding: 0px;
 }
 
 .main-tab-area .mat-tab-group {
@@ -1244,7 +1236,6 @@ a.mat-list-item.active-link {
 }
 
 .service-trigger {
-  // float: right;
   .mat-button-wrapper {
     font-weight: 400;
     font-size: 14px;
@@ -1252,9 +1243,6 @@ a.mat-list-item.active-link {
 }
 
 .custom-theme {
-  //.mat-sidenav.mat-drawer{
-  //  background: rgba(0,0,0,0.50) !important;
-  //}
 
   .topbar-right {
     color: rgb(0, 255, 255);
@@ -1433,7 +1421,6 @@ snack-bar-container {
     padding: 15px 25px;
     position: absolute;
     left: 0;
-    // background-color: #25afcb;
     top: 0;
     bottom: 0;
     z-index: 1;
@@ -1447,7 +1434,6 @@ snack-bar-container {
     background-color: #ff585e !important;
 
     &:before {
-      // background-color: #FF585E;
       background-image: url(assets/images/wrong.png);
     }
   }
@@ -1471,10 +1457,7 @@ snack-bar-container {
 }
 
 .toggle-save-btn {
-  // .action-area.padding-btn {
-  // width: 42%;
   margin-top: 3px !important;
-  // }
 }
 
 .loading-area {
@@ -1566,8 +1549,6 @@ snack-bar-container {
   .form-action-area {
     text-align: right;
     padding-top: 10px;
-    // padding-bottom: 36px;
-
     button {
       color: #ffffff;
       margin-left: 10px;
@@ -1595,8 +1576,6 @@ snack-bar-container {
     padding-top: 10px;
     position: relative;
     right: 36px;
-    // padding-bottom: 36px;
-
     button {
       color: #ffffff;
       margin-left: 10px;
@@ -1620,23 +1599,14 @@ snack-bar-container {
   }
 }
 
-// .confirm-dialog-container.mat-dialog-content {
-//   display: block;
-//   overflow: auto;
-//   padding: none !important;
-//   margin: none !important;
-// }
 
 .dialog-container {
   width: 100%;
   max-width: 600px !important;
-
   mat-dialog-container {
     padding: 0;
   }
-
   .mat-card-header {
-    // background: #ececec;
     background: #efefef;
     padding: 0 10px;
     position: relative;
@@ -1670,7 +1640,6 @@ snack-bar-container {
     padding: 15px 40px;
     max-width: 550px;
     margin: 0 auto;
-    // text-align: center;
 
     button {
       margin-left: 10px;
@@ -1717,7 +1686,6 @@ snack-bar-container {
     padding: 10px 30px;
     max-width: 600px;
     margin: 0 auto;
-    // text-align: center;
 
     button {
       margin-left: 10px;
@@ -1861,13 +1829,6 @@ snack-bar-container {
 }
 
 .mat-expansion-indicator::after {
-  // border-style: solid;
-  // border-width: 0 2px 2px 0;
-  // content: '';
-  // display: inline-block;
-  // padding: 3px;
-  // transform: rotate(45deg);
-  // vertical-align: middle;
   color: #acacac !important;
 }
 
@@ -1895,7 +1856,6 @@ snack-bar-container {
   .form-group {
     height: 350px;
   }
-  // padding: 0px 5px;
   .form-group.col-md-5 {
     padding: 0px 5px 0px 15px;
   }
@@ -2006,21 +1966,11 @@ snack-bar-container {
 
       .mat-form-field-appearance-outline .mat-form-field-infix {
         padding: 0 !important;
-        // border-top-width: 0.5em;
       }
 
       .form-group .mat-select-value-text {
-        // color: #8b8b8b !important;
         line-height: 17px !important;
       }
-
-      // .mat-slider-horizontal .mat-slider-thumb-label {
-      //   right: -10px !important;
-      //   top: -26px !important;
-      //   width: 20px;
-      //   height: 20px;
-      //   // transform: translateY(26px) scale(.01) rotate(45deg);
-      // }
       .mat-accent .mat-slider-track-fill,
       .mat-accent .mat-slider-thumb,
       .mat-accent .mat-slider-thumb-label {
@@ -2029,19 +1979,6 @@ snack-bar-container {
     }
   }
 }
-
-// .mat-slider-thumb-label {
-//   transform: rotate(45deg) !important;
-//   border-radius: 50% 50% 0 !important;
-// }
-
-// .mat-slider-thumb {
-//   transform: scale(0) !important;
-// }
-
-// .mat-slider-thumb-label-text {
-//   opacity: 1 !important;
-// }
 
 .mat-slide-toggle-bar.mat-slide-toggle-bar-no-side-margin {
   height: 23px;
@@ -2069,7 +2006,6 @@ snack-bar-container {
   }
 
   .mat-card-header {
-    // background: #ececec;
     background: #efefef;
     padding: 0 10px;
     position: relative;
@@ -2103,8 +2039,6 @@ snack-bar-container {
     padding: 15px;
     max-width: 700px;
     margin: 0 auto;
-    // text-align: center;
-
     button {
       margin-left: 10px;
       min-width: 82px;
@@ -2150,7 +2084,6 @@ snack-bar-container {
     padding: 10px 30px;
     max-width: 600px;
     margin: 0 auto;
-    // text-align: center;
 
     button {
       margin-left: 10px;
@@ -2243,7 +2176,6 @@ snack-bar-container {
   .mat-select-value-text {
   color: #5b5b5b !important;
   padding: 0px 7px !important;
-  // background: #448aff !important;
   span {
     font-size: 13px !important;
   }
@@ -2278,8 +2210,6 @@ snack-bar-container {
     }
   }
   .add-btn {
-    // float: right;
-    // position: relative;
     padding: 0px !important;
     margin: 0 !important;
     min-width: 0 !important;
@@ -2293,13 +2223,6 @@ snack-bar-container {
       color: #1c99c0;
     }
   }
-  // button {
-  //   padding: 0px !important;
-  //   margin: 0 !important;
-  //   min-width: 0 !important;
-  //   min-height: 10px !important;
-  //   height: 10px !important;
-  // }
 }
 
 .security-toggle {
@@ -2355,10 +2278,6 @@ snack-bar-container {
 
 .sms-panel {
   padding: 0 6px;
-
-  // mat-expansion-panel-header {
-  //   padding: 0px 22px;
-  // }
   img {
     width: 15px !important;
     height: 15px !important;
@@ -2366,12 +2285,9 @@ snack-bar-container {
 
   .sms-header-image-icon span.mat-content img {
     margin: 3px 3px 0px 5px;
-    // width: 15px !important;
-    // height: 15px !important;
   }
 
   .main-sidebar .mat-sidenav a.mat-list-item .mat-list-item-content {
-    // width: 100%;
     padding: 0px 35px !important;
   }
 }
@@ -2394,8 +2310,6 @@ snack-bar-container {
   .mat-expansion-panel-content {
     overflow: auto;
     height: 100%;
-    // To add scroll in step section
-    // max-height: 200px;
   }
   mat-panel-title.mat-expansion-panel-header-title {
     &:first-child {
@@ -2403,5 +2317,3 @@ snack-bar-container {
     }
   }
 }
-
-
