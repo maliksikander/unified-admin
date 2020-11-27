@@ -120,7 +120,6 @@ export class PrecisionQueueComponent implements OnInit {
         }
       }
     ));
-    // return null;
   }
 
   addExpressionGroup(): FormGroup {
@@ -147,8 +146,8 @@ export class PrecisionQueueComponent implements OnInit {
 
   addExpressionTermGroup(): FormGroup {
     return this.fb.group({
-      attribute: ['',Validators.required],
-      operator: ['',Validators.required],
+      attribute: ['', Validators.required],
+      operator: ['', Validators.required],
       profVal: [1],
       boolVal: ['true'],
       conditionalVal: ["AND"],
@@ -160,15 +159,9 @@ export class PrecisionQueueComponent implements OnInit {
   }
 
   addExpressionTermButton(i, j) {
-    // console.log("exp-->", i, "<--term-->", j);
     const exp: any = this.stepForm.get('expression')
     const control = exp.controls[i].get('terms');
     control.push(this.addExpressionTermGroup());
-    // if (this.attrData && this.attrData.length > 0) {
-    //   control.controls[j].get('attribute').setValue(this.attrData[0]);
-    //   if (this.attrData[0].type == 'Boolean') { control.controls[j + 1].get('operator').setValue(this.boolOperatorList[0]); }
-    //   else { control.controls[i].get('operator').setValue(this.operatorList[0]); }
-    // }
   }
 
   removeTerm(i) {
@@ -267,7 +260,7 @@ export class PrecisionQueueComponent implements OnInit {
   }
 
   editQueue(templateRef, data) {
-    // console.log("edit Data-->", data);
+    console.log("queue-->", data);
     const mrdIndex = this.mrdData.findIndex(item => item._id == data.mrd._id);
     this.editData = data;
     this.queueForm.patchValue({
@@ -295,7 +288,6 @@ export class PrecisionQueueComponent implements OnInit {
     this.endPointService.delete(id, this.reqServiceType).subscribe(
       (res: any) => {
         this.spinner = false;
-        // console.log("delete res -->", res);
         this.queueData = this.queueData.filter(i => i !== data)
           .map((i, idx) => (i.position = (idx + 1), i));
         this.snackbar.snackbarMessage('success-snackbar', "Deleted Successfully", 1);
@@ -342,25 +334,13 @@ export class PrecisionQueueComponent implements OnInit {
     let data = this.saveObjFormation();
     if (this.editData) {
       data._id = this.editData._id;
+      data.Steps = this.editData.Steps;
       this.updateQueue(data, data._id);
     }
     else { this.createQueue(data); }
   }
 
   openStepModal(templateRef, i) {
-    // console.log("queue data-->", queueData);
-    // if (this.attrData && this.attrData.length > 0) {
-    //   const exp: any = this.stepForm.get('expression')
-    //   const control: any = exp.controls[0].get('terms');
-    //   // console.log('step form-->', control);
-    //   control.controls[0].get('attribute').setValue(this.attrData[0]);
-    //   if (this.attrData[0].type == 'Boolean') {
-    //     control.controls[0].get('operator').setValue(this.boolOperatorList[0]);
-    //   }
-    //   else {
-    //     control.controls[0].get('operator').setValue(this.operatorList[0]);
-    //   }
-    // }
     this.stepFormHeading = 'Add Step';
     this.stepSaveBtnText = 'Add';
     let dialogRef = this.dialog.open(templateRef, {
@@ -454,28 +434,20 @@ export class PrecisionQueueComponent implements OnInit {
     let expArray = this.expressionFormation(expressions);
     newStep.step.expressions = expArray;
     let data = JSON.parse(JSON.stringify(this.queueData[i]));
-    // console.log("original -->", data);
     if (mode.mode == 'update') {
       newStep._id = mode._id;
-      // console.log('new Step-->', newStep);
-      // console.log("data-->", data);
       let stepIndex = data.Steps.findIndex(x => x._id == mode._id);
       if (stepIndex != -1) {
         data.Steps[stepIndex] = newStep;
       }
-      // console.log("data-->", data);
     }
     else {
       data.Steps.push(newStep);
-      // console.log("new -->", data);
     }
     this.updateQueue(data, data._id);
-    console.log("form value--->", this.stepForm.value);
     this.resetStepForm();
 
   }
-
-
 
   reconstructExpTermGroup(expTerm, termObj) {
     const temp = this.attrData.filter(item => item.name == expTerm.AttributeName);
@@ -560,7 +532,6 @@ export class PrecisionQueueComponent implements OnInit {
 
 
   editStep(templateRef, stepData, i) {
-    console.log("step data-->", stepData);
     this.stepFormHeading = 'Edit Step';
     this.stepSaveBtnText = 'Update';
     let mreData: any = {};

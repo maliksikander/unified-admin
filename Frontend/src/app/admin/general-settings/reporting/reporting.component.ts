@@ -22,7 +22,7 @@ export class ReportingComponent implements OnInit {
   spinner: any = true;
   editData: any;
   hide = true;
-
+  valid = true;
 
   constructor(private snackbar: SnackbarService,
     private fb: FormBuilder,
@@ -37,16 +37,22 @@ export class ReportingComponent implements OnInit {
 
     this.reportSettingForm = this.fb.group({
       reportingEnabled: [false],
-      rcDBUrl: ['', [Validators.required, Validators.pattern(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/)]],
-      rcDBUser: ['', [Validators.required, Validators.maxLength(40)]],
-      rcDBPwd: ['', [Validators.required, Validators.maxLength(256)]],
-      rcDBName: ['', [Validators.required, Validators.maxLength(40)]],
+      rcDBUrl: [''],
+      rcDBUser: [''],
+      rcDBPwd: [''],
+      rcDBName: [''],
     });
 
     this.reportSettingForm.valueChanges.subscribe((data) => {
       let result = this.commonService.logValidationErrors(this.reportSettingForm, this.formErrors, this.validations);
       this.formErrors = result[0];
       this.validations = result[1];
+      if (this.reportSettingForm.status == "INVALID") {
+        this.valid = false;
+      }
+      else {
+        this.valid = true;
+      }
 
     });
 
@@ -66,6 +72,7 @@ export class ReportingComponent implements OnInit {
         this.spinner = false;
         if (res.status == 200 && res.reportSetting.length > 0) {
           this.editData = res.reportSetting[0];
+          this.setValidation(this.editData.reportingEnabled);
           this.reportSettingForm.patchValue({
             rcDBName: this.editData.rcDBName,
             rcDBUser: this.editData.rcDBUser,
@@ -74,7 +81,7 @@ export class ReportingComponent implements OnInit {
             reportingEnabled: this.editData.reportingEnabled,
           });
         }
-        else if(res.status == 200 && res.reportSetting.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
+        else if (res.status == 200 && res.reportSetting.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
       },
       error => {
         this.spinner = false;
@@ -85,12 +92,18 @@ export class ReportingComponent implements OnInit {
 
   createReportSetting(data) {
     this.spinner = true;
+    if (data.reportingEnabled == false) {
+      data.rcDBUrl = '';
+      data.rcDBUser = '';
+      data.rcDBPwd = '';
+      data.rcDBName = '';
+    }
     this.endPointService.createSetting(data, this.reqServiceType).subscribe(
       (res: any) => {
-        this.spinner = false;
+        this.resetForm();
         if (res.status == 200) {
           this.snackbar.snackbarMessage('success-snackbar', "Settings Created", 1);
-          this.editData = res.reportSetting;
+          this.getReportSetting();
         }
       },
       (error: any) => {
@@ -101,10 +114,17 @@ export class ReportingComponent implements OnInit {
   }
 
   updateReportSetting(data) {
+    if (data.reportingEnabled == false) {
+      data.rcDBUrl = '';
+      data.rcDBUser = '';
+      data.rcDBPwd = '';
+      data.rcDBName = '';
+    }
     this.endPointService.updateSetting(data, this.reqServiceType).subscribe(
       (res: any) => {
-        this.spinner = false;
+        this.resetForm();
         if (res.status == 200) this.snackbar.snackbarMessage('success-snackbar', "Settings Updated", 1);
+        this.getReportSetting();
       },
       (error: any) => {
         this.spinner = false;
@@ -125,4 +145,34 @@ export class ReportingComponent implements OnInit {
     }
   }
 
+  onChange(e) {
+    this.setValidation(e.checked);
+  }
+
+  setValidation(val) {
+    if (val == true) {
+      this.valid = false;
+      this.reportSettingForm.controls['rcDBUrl'].setValidators([Validators.required, Validators.pattern(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/)]);
+      this.reportSettingForm.controls['rcDBUser'].setValidators([Validators.required, Validators.maxLength(40)]);
+      this.reportSettingForm.controls['rcDBPwd'].setValidators([Validators.required, Validators.maxLength(256)]);
+      this.reportSettingForm.controls['rcDBName'].setValidators([Validators.required, Validators.maxLength(40)]);
+    }
+    else {
+      this.valid = true;
+      this.reportSettingForm.controls['rcDBUrl'].setValidators(null);
+      this.reportSettingForm.controls['rcDBUser'].setValidators(null);
+      this.reportSettingForm.controls['rcDBPwd'].setValidators(null);
+      this.reportSettingForm.controls['rcDBName'].setValidators(null);
+    }
+  }
+
+  resetForm() {
+    this.reportSettingForm.setValue({
+      rcDBName: " ",
+      rcDBUser: " ",
+      rcDBPwd: " ",
+      rcDBUrl: " ",
+      reportingEnabled: false,
+    });
+  }
 }

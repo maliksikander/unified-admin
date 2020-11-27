@@ -25,11 +25,7 @@ if (config.env !== 'test') {
 }
 
 //static html page
-// app.use(express.static(process.cwd()+"/my-app/dist/angular-nodejs-example/"));
 app.use(express.static(path.join(__dirname, './public')));
-
-
-
 
 
 // set security HTTP headers

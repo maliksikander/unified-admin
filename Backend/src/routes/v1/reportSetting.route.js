@@ -6,7 +6,7 @@ const reportValidation = require('../../validations/reportSetting.validation');
 const reportSettingController = require('../../controllers/reportSetting.controller');
 
 router.get('/', reportSettingController.getSettings);
-router.put('/', validate(reportValidation.updateSetting), reportSettingController.updateSettings);
-router.post('/', validate(reportValidation.createSetting), reportSettingController.createSettings);
+router.put('/', reportSettingController.updateSettings);
+router.post('/', reportSettingController.createSettings);
 
 module.exports = router;
