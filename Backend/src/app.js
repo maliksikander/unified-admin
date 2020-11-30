@@ -52,6 +52,11 @@ app.get('/', (req, res) => {
   res.sendFile(indexPath);
 });
 
+app.get('/login', (req, res) => {
+  let indexPath = __dirname + '/public/index.html';
+  res.sendFile(indexPath);
+});
+
 
 app.options('*', cors());
 
