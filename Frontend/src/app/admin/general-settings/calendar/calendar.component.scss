@@ -1,0 +1,64 @@
+.service-trigger {
+  background: #25afcb;
+  color: #ffffff;
+  height: 30px;
+  line-height: 30px;
+  width: 90px;
+}
+
+.page-content {
+  padding: 10px 5px;
+
+  .top-section {
+    position: relative;
+    .month-info {
+      color: #929292;
+      width: 20%;
+      position: absolute;
+      left: 200px;
+      padding-top: 4px;
+      button {
+        min-width: 0px;
+        width: 10px;
+        line-height: 10px;
+        padding: 0 5px;
+
+        i {
+          font-size: 18px;
+        }
+
+        &:nth-child(2) {
+          padding-left: 12px;
+        }
+      }
+    }
+
+    .layout-dropdown {
+      border-radius: 5px;
+      border: 1px solid #f2f2f2;
+      width: 7%;
+      padding: 4px 5px;
+      position: absolute;
+      right: 10px;
+    }
+  }
+
+  .calendar-section {
+    position: relative;
+    top: 40px;
+    width: 100%;
+    border-top: 1px solid #f2f2f2;
+    .side-section {
+      color: #929292;
+      background: #f2f2f2;
+      position: absolute;
+      width: 30%;
+      border-right: 1px solid black;
+    }
+    .calendar-layout {
+      width: 70%;
+      position: absolute;
+      left: 190px;
+    }
+  }
+}

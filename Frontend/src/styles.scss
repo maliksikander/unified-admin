@@ -1243,7 +1243,6 @@ a.mat-list-item.active-link {
 }
 
 .custom-theme {
-
   .topbar-right {
     color: rgb(0, 255, 255);
     mix-blend-mode: difference;
@@ -1598,7 +1597,6 @@ snack-bar-container {
     }
   }
 }
-
 
 .dialog-container {
   width: 100%;
@@ -2315,5 +2313,15 @@ snack-bar-container {
     &:first-child {
       padding-left: 15px !important;
     }
+  }
+}
+
+.page-content .layout-dropdown {
+  .mat-select-value {
+    color: #929292 !important;
+  }
+
+  .mat-select-arrow {
+    color: #929292 !important;
   }
 }

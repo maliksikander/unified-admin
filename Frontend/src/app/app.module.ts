@@ -1,7 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from "@angular/router";
-import { loginRoute } from './app-routing.module'
+// import { loginRoute } from './app-routing.module'
+import { routes } from './app-routing.module'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MainComponent} from './main/main.component';
 import {HttpClientModule,HTTP_INTERCEPTORS} from '@angular/common/http';
@@ -17,7 +18,7 @@ import { LoginComponent } from './authentication/login/login.component';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot(loginRoute),
+    RouterModule.forRoot(routes),
     SharedModule,
     AdminModule,
     HttpClientModule,

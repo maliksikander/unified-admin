@@ -1,0 +1,53 @@
+<div class="loading-area" *ngIf="spinner">
+  <mat-spinner></mat-spinner>
+</div>
+<div class="container main-custom-container">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel-body">
+        <div class="sub-heading">
+          <h2>Business Calendar</h2>
+        </div>
+        <div class="page-content">
+
+          <div class="top-section">
+
+            <div class="month-info">
+              {{currentDay}}
+              <button mat-button>
+                <i class="material-icons">
+                  chevron_left
+                </i></button>
+              <button mat-button>
+                <i class="material-icons">
+                  chevron_right
+                </i></button>
+            </div>
+
+            <div class="layout-dropdown">
+              <mat-select (selectionChange)="layoutChange($event)" [formControl]="layout">
+                <mat-option *ngFor="let layout of layoutOptions" [value]="layout">{{layout | titlecase}}
+                </mat-option>
+              </mat-select>
+            </div>
+
+          </div>
+          <div class="calendar-section">
+            <div class="side-section col-md-2">
+              <button mat-flat-button>
+                <mat-icon>add</mat-icon>
+              </button>
+              
+              <h6>My Calendars</h6>
+            </div>
+
+            <div class="calendar-layout col-md-10">
+              fgggdg
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

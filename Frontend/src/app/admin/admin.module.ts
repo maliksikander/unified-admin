@@ -23,6 +23,7 @@ import { AttributeComponent } from './route-settings/attribute/attribute.compone
 import { MrdComponent } from './route-settings/mrd/mrd.component';
 import { PrecisionQueueComponent } from './route-settings/precision-queue/precision-queue.component';
 import { UsersComponent } from './route-settings/users/users.component';
+import { CalendarComponent } from './general-settings/calendar/calendar.component';
 
 
 
@@ -50,6 +51,7 @@ import { UsersComponent } from './route-settings/users/users.component';
         MrdComponent,
         PrecisionQueueComponent,
         UsersComponent,
+        CalendarComponent,
     ],
     providers: [
         HttpClientModule,

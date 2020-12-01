@@ -14,7 +14,7 @@ export class TopBarComponent implements OnInit {
 
   ngOnInit() {
     let user = localStorage.getItem('username');
-    this.userName = user;
+    if (user) this.userName = user;
     // this.clock();
   }
 
@@ -26,13 +26,13 @@ export class TopBarComponent implements OnInit {
   }
 
   logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('username');
-    localStorage.removeItem('currentAttributePage');
-    localStorage.removeItem('currentMRDPage');
-    localStorage.removeItem('currentQueuePage');
-    localStorage.removeItem('currentUsersPage');
-    this.router.navigate(['/login']);
+    // localStorage.removeItem('token');
+    // localStorage.removeItem('username');
+    // localStorage.removeItem('currentAttributePage');
+    // localStorage.removeItem('currentMRDPage');
+    // localStorage.removeItem('currentQueuePage');
+    // localStorage.removeItem('currentUsersPage');
+    // this.router.navigate(['/login']);
   }
 
 }
