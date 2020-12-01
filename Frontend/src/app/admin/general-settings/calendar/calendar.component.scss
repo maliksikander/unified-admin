@@ -54,11 +54,28 @@
       position: absolute;
       width: 30%;
       border-right: 1px solid black;
+
+      button {
+        border-radius: 50%;
+        height: 30px;
+        width: 31px;
+        min-width: 10px;
+        background: #25afcb;
+        color: white;
+        padding: 0px 4px;
+        position: absolute;
+        margin: 0px 0px 0px 130px;
+        top: -16px;
+
+        mat-icon {
+          font-size: 18px;
+        }
+      }
     }
     .calendar-layout {
       width: 70%;
-      position: absolute;
-      left: 190px;
+      // position: absolute;
+      // left: 190px;
     }
   }
 }

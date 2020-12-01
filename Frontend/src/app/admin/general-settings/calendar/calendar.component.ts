@@ -24,6 +24,7 @@ export class CalendarComponent implements OnInit {
 
   ngOnInit() {
 
+    this.commonService.tokenVerification();
     this.currentDay = this.dateFormation("month")
   }
 
