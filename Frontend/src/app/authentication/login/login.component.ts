@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit {
       (res: any) => {
         this.spinner = false;
         const result = res
-        console.log("login res-->", res);
+        // console.log("login res-->", res);
         if (data.rememberMe == true) {
           localStorage.setItem('username', res.username);
           localStorage.setItem('token', res.access_token);

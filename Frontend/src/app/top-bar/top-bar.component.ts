@@ -26,13 +26,13 @@ export class TopBarComponent implements OnInit {
   }
 
   logout() {
-    // localStorage.removeItem('token');
-    // localStorage.removeItem('username');
-    // localStorage.removeItem('currentAttributePage');
-    // localStorage.removeItem('currentMRDPage');
-    // localStorage.removeItem('currentQueuePage');
-    // localStorage.removeItem('currentUsersPage');
-    // this.router.navigate(['/login']);
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    localStorage.removeItem('currentAttributePage');
+    localStorage.removeItem('currentMRDPage');
+    localStorage.removeItem('currentQueuePage');
+    localStorage.removeItem('currentUsersPage');
+    this.router.navigate(['/login']);
   }
 
 }
