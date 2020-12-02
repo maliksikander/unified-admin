@@ -48,12 +48,7 @@ app.use(compression());
 app.use(cors());
 
 app.get('/', (req, res) => {
-  let indexPath = __dirname + '/public/index.html';
-  res.sendFile(indexPath);
-});
-
-app.get('/login', (req, res) => {
-  let indexPath = __dirname + '/public/index.html';
+  let indexPath = path.resolve('src', 'public', 'index.html');
   res.sendFile(indexPath);
 });
 
