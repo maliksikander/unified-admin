@@ -1,0 +1,105 @@
+<div class="loading-area" *ngIf="spinner">
+  <mat-spinner></mat-spinner>
+</div>
+<div class="container main-custom-container">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel-body">
+        <div class="sub-heading">
+          <h2>License Info</h2>
+        </div>
+        <div class="panel-page-content">
+          <form class="form-horizontal form-bordered" [formGroup]="licenseForm">
+            <div class="key-section">
+              <div class="form-group col-md-5">
+                <mat-label>Master API Key</mat-label>
+                <mat-form-field appearance="outline">
+                  <input matInput formControlName="licenseKey">
+                  <!-- <mat-error class="form-error">
+                    {{formErrors.amqUser}}
+                  </mat-error> -->
+                </mat-form-field>
+              </div>
+              <div class="key-btn">
+                <button [disabled]="!licenseForm.valid" mat-flat-button class="blue-btn service-trigger"
+                  (click)="onSave()">Save</button>
+              </div>
+            </div>
+          </form>
+
+          <div class="form-group license-table">
+            <mat-label>Purchased Products </mat-label>
+            <span class="refresh-span">Refresh</span>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Product</th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- <ng-container> -->
+                <tr class="product-info">
+                  <td scope="row">
+                    <h6>Status</h6>
+                    Data
+                  </td>
+                  <td scope="row">
+                    <h6>Status</h6>
+                    Data
+                  </td>
+                  <td scope="row">
+                    <h6>Status</h6>
+                    Data
+                  </td>
+                  <td scope="row">
+                    <h6>Status</h6>
+                    Data
+                  </td>
+                  <td scope="row">
+                    <h6>Status</h6>
+                    Data
+                  </td>
+                  <!-- <td class="table-trigger">{{data.value ? data.value : 'N/A'}}
+                      <span class="list-trigger-area">
+                        <button matTooltip="Edit" (click)="editAttribute(newAttribute,data)" mat-mini-fab><i
+                            class="fa fa-pencil" aria-hidden="true"></i>
+                        </button>
+                        <button matTooltip="Delete" (click)="deleteConfirm(data)" mat-mini-fab><i class="fa fa-trash-o"
+                            aria-hidden="true"></i>
+                        </button>
+                      </span>
+                    </td> -->
+                </tr>
+                <!-- </ng-container> -->
+              </tbody>
+            </table>
+            <!-- <mat-error class="form-error">
+              formErrors
+            </mat-error> -->
+
+
+            
+            <!-- <div *ngIf="attrData.length != 0" class="pagination-section">
+              <span class="page-span">
+                <span>Entries Per Page</span>
+                <select (change)="selectPage()" [(ngModel)]="selectedItem">
+                  <option *ngFor="let item of itemsPerPageList" [value]="item">{{ item }}
+                  </option>
+                </select>
+              </span>
+              <pagination-controls (pageBoundsCorrection)="pageBoundChange($event)"
+                (pageChange)="p = $event;pageChange($event)" previousLabel="" nextLabel="">
+              </pagination-controls>
+            </div> -->
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

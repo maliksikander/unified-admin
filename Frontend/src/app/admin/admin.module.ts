@@ -24,6 +24,9 @@ import { MrdComponent } from './route-settings/mrd/mrd.component';
 import { PrecisionQueueComponent } from './route-settings/precision-queue/precision-queue.component';
 import { UsersComponent } from './route-settings/users/users.component';
 import { CalendarComponent } from './general-settings/calendar/calendar.component';
+import { LicenseManagerComponent } from './general-settings/license-manager/license-manager.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 
 
@@ -35,7 +38,11 @@ import { CalendarComponent } from './general-settings/calendar/calendar.componen
         FormsModule,
         ReactiveFormsModule,
         BrowserModule,
-        FilterPipeModule
+        FilterPipeModule,
+        CalendarModule.forRoot({
+            provide: DateAdapter,
+            useFactory: adapterFactory,
+          }),
     ],
     declarations: [
         AdminMainComponent,
@@ -52,6 +59,7 @@ import { CalendarComponent } from './general-settings/calendar/calendar.componen
         PrecisionQueueComponent,
         UsersComponent,
         CalendarComponent,
+        LicenseManagerComponent,
     ],
     providers: [
         HttpClientModule,

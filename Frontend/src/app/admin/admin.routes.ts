@@ -13,6 +13,7 @@ import { PrecisionQueueComponent } from './route-settings/precision-queue/precis
 import { UsersComponent } from './route-settings/users/users.component';
 import { LoginComponent } from '../authentication/login/login.component';
 import { CalendarComponent } from './general-settings/calendar/calendar.component';
+import { LicenseManagerComponent } from './general-settings/license-manager/license-manager.component';
 
 
 export const adminRoutes: Routes = [
@@ -25,6 +26,7 @@ export const adminRoutes: Routes = [
           { path: 'general/display-settings', component: DisplayComponent},
           { path: 'general/locale-settings', component: LocaleComponent},
           { path: 'general/database-settings', component: DatabaseComponent},
+          { path: 'general/license-manager', component: LicenseManagerComponent},
           { path: 'general/logging-settings', component: LoggingComponent},
           { path: 'general/reporting-settings', component: ReportingComponent},
           { path: 'general/amq-settings', component: AmqComponent},

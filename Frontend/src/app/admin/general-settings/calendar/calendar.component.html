@@ -14,14 +14,20 @@
 
             <div class="month-info">
               {{currentDay}}
-              <button mat-button>
+              <!-- <button mat-button>
                 <i class="material-icons">
                   chevron_left
-                </i></button>
-              <button mat-button>
+                </i></button> -->
+                <button mat-icon-button>
+                  <mat-icon>chevron_left</mat-icon>
+                </button>
+                <button mat-icon-button>
+                  <mat-icon>chevron_right</mat-icon>
+                </button>
+              <!-- <button mat-button>
                 <i class="material-icons">
                   chevron_right
-                </i></button>
+                </i></button> -->
             </div>
 
             <div class="layout-dropdown">
@@ -34,7 +40,7 @@
           </div>
           <div class="calendar-section">
             <div class="side-section col-md-2">
-              <button mat-flat-button>
+              <button mat-flat-button (click)="openModal(newCalendar)">
                 <mat-icon>add</mat-icon>
               </button>
               
@@ -51,3 +57,48 @@
     </div>
   </div>
 </div>
+
+<ng-template #newCalendar>
+  <div class="dialog-container">
+    <div class="mat-card-header">
+      <mat-icon (click)="onClose()">close</mat-icon>
+      <h4 class="content-span full-width">{{formHeading}}</h4>
+    </div>
+    <div class="dialog-content">
+      <form class="form-horizontal form-bordered" [formGroup]="calendarForm">
+        <div class="form-group">
+          <mat-label>Name</mat-label>
+          <mat-form-field appearance="outline">
+            <input matInput formControlName="name">
+            <!-- <mat-error class="form-error">
+              {{formErrors.name}}
+            </mat-error> -->
+            <!-- <mat-error *ngIf="attributeForm.controls['name'].hasError('validName')">
+              This name already exists
+            </mat-error> -->
+          </mat-form-field>
+        </div>
+        <div class="form-group text-area">
+          <mat-label>Description</mat-label>
+          <mat-form-field appearance="outline">
+            <textarea matInput formControlName="description"></textarea>
+            <!-- <mat-error class="form-error">
+              {{formErrors.description}}
+            </mat-error> -->
+          </mat-form-field>
+        </div>
+
+   
+        <div class="template-action row">
+          <div class="col-md-12">
+            <div class="form-action-area">
+              <button mat-raised-button (click)="onClose()" class="gray-btn">Cancel</button>
+              <button mat-raised-button [disabled]="!calendarForm.valid" (click)="onSave()" [mat-dialog-close]="true"
+                class="dark-blue-btn service-trigger">{{saveBtnText}}</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-template>
