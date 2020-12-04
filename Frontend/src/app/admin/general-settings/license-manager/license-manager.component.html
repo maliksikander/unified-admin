@@ -80,22 +80,50 @@
             <!-- <mat-error class="form-error">
               formErrors
             </mat-error> -->
-
-
-            
-            <!-- <div *ngIf="attrData.length != 0" class="pagination-section">
-              <span class="page-span">
-                <span>Entries Per Page</span>
-                <select (change)="selectPage()" [(ngModel)]="selectedItem">
-                  <option *ngFor="let item of itemsPerPageList" [value]="item">{{ item }}
-                  </option>
-                </select>
-              </span>
-              <pagination-controls (pageBoundsCorrection)="pageBoundChange($event)"
-                (pageChange)="p = $event;pageChange($event)" previousLabel="" nextLabel="">
-              </pagination-controls>
-            </div> -->
-
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Product 2</th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- <ng-container> -->
+                <tr class="product-info dummy-class">
+                  <td scope="row">
+                    <h6>Status</h6>
+                    Data
+                  </td>
+                  <td scope="row">
+                    <ng-container *ngIf="spinner">
+                      <h6>Status</h6>
+                      Data
+                    </ng-container>
+                  </td>
+                  <td scope="row">
+                    <ng-container *ngIf="spinner">
+                      <h6>Status</h6>
+                      Data
+                    </ng-container>
+                  </td>
+                  <td scope="row">
+                    <ng-container *ngIf="spinner">
+                      <h6>Status</h6>
+                      Data
+                    </ng-container>
+                  </td>
+                  <td scope="row">
+                    <ng-container *ngIf="spinner">
+                      <h6>Status</h6>
+                      Data
+                    </ng-container>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
 
         </div>

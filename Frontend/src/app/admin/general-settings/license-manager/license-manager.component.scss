@@ -44,14 +44,14 @@
     font-size: 15px;
     color: #575757;
     border-right: 1px solid #efefef;
-    height: 40px;
-    line-height: 40px;
+    height: 30px;
+    line-height: 30px;
     padding: 0 15px;
     overflow: hidden;
     text-overflow: ellipsis;
     width: 20%;
   }
- 
+
   .product-info {
     h6 {
       font-size: 12px;
@@ -61,12 +61,18 @@
     }
   }
 
-  .refresh-span{
+  .refresh-span {
     font-size: 11px;
-    color: #25AFCB;
+    color: #25afcb;
     position: absolute;
     right: 18px;
     /* top: 0px; */
     padding: 5px 0px;
+  }
+}
+
+.dummy-class {
+  td {
+    border: none !important;
   }
 }
