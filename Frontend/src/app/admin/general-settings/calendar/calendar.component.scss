@@ -7,7 +7,7 @@
 }
 
 .page-content {
-  padding: 10px 5px;
+  padding: 10px 0px;
 
   .top-section {
     position: relative;
@@ -38,15 +38,15 @@
   .calendar-section {
     position: absolute;
     top: 90px;
-    width: 99%;
+    width: calc(100% - 3px);
     border-top: 1px solid #e2e2e2;
     .side-section {
       color: #7b7b7b;
       background: #fdfdfd;
       position: absolute;
-      width: 30%;
+      // width: 30%;
       height: 100%;
-      border-right: 1px solid #e2e2e2;
+      // border-right: 1px solid #e2e2e2;
 
       button {
         border-radius: 50%;
