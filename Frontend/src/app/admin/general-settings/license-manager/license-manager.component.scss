@@ -68,6 +68,10 @@
     right: 18px;
     /* top: 0px; */
     padding: 5px 0px;
+    cursor: pointer;
+    &:hover{
+      color: #11a1c2;
+    }
   }
 }
 

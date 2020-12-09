@@ -13,17 +13,19 @@
           <div class="top-section">
 
             <div class="month-info">
-              {{currentDay}}
-                <button mat-icon-button>
-                  <mat-icon>chevron_left</mat-icon>
-                </button>
-                <button mat-icon-button>
-                  <mat-icon>chevron_right</mat-icon>
-                </button>
+              {{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}
+              <button (click)="monthChange()" mat-icon-button mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
+                (viewDateChange)="closeOpenMonthViewDay()">
+                <mat-icon>chevron_left</mat-icon>
+              </button>
+              <button (click)="monthChange()" mat-icon-button mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
+                (viewDateChange)="closeOpenMonthViewDay()">
+                <mat-icon>chevron_right</mat-icon>
+              </button>
             </div>
 
             <div class="layout-dropdown">
-              <mat-select (selectionChange)="layoutChange($event)" [formControl]="layout">
+              <mat-select (selectionChange)="setView($event)" [formControl]="layout">
                 <mat-option *ngFor="let layout of layoutOptions" [value]="layout">{{layout | titlecase}}
                 </mat-option>
               </mat-select>
@@ -35,12 +37,25 @@
               <button mat-flat-button (click)="openModal(newCalendar)">
                 <mat-icon>add</mat-icon>
               </button>
-              
+
               <h6>My Calendars</h6>
             </div>
 
-            <div class="calendar-layout col-md-10 offset-md-2">
-              fgggdg
+            <div class="calendar-layout col-md-9 offset-md-2">
+              <div [ngSwitch]="view">
+                <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="events"
+                  [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)"
+                  (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+                </mwl-calendar-month-view>
+                <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events"
+                  [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
+                  (eventTimesChanged)="eventTimesChanged($event)">
+                </mwl-calendar-week-view>
+                <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events"
+                  [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
+                  (eventTimesChanged)="eventTimesChanged($event)">
+                </mwl-calendar-day-view>
+              </div>
             </div>
 
           </div>
@@ -80,7 +95,7 @@
           </mat-form-field>
         </div>
 
-   
+
         <div class="template-action row">
           <div class="col-md-12">
             <div class="form-action-area">
