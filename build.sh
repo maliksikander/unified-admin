@@ -1,4 +1,4 @@
-#!/usr/bin/env bash -x
+#!/usr/bin/env bash
 version=$1
 if [ -z "$1" ]
   then

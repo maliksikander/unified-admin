@@ -8,104 +8,105 @@
         <div class="sub-heading">
           <h2>Business Calendar</h2>
         </div>
-        <div class="page-content">
-
-          <div class="top-section">
-
-            <div class="month-info">
-              {{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}
-              <button (click)="monthChange()" mat-icon-button mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
-                (viewDateChange)="closeOpenMonthViewDay()">
-                <mat-icon>chevron_left</mat-icon>
-              </button>
-              <button (click)="monthChange()" mat-icon-button mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
-                (viewDateChange)="closeOpenMonthViewDay()">
-                <mat-icon>chevron_right</mat-icon>
-              </button>
-            </div>
-
-            <div class="layout-dropdown">
-              <mat-select (selectionChange)="setView($event)" [formControl]="layout">
-                <mat-option *ngFor="let layout of layoutOptions" [value]="layout">{{layout | titlecase}}
-                </mat-option>
-              </mat-select>
-            </div>
-
+        <!-- <div class="page-content"> -->
+        <div class="top-section">
+          <div class="month-info col-md-3 offset-md-2">
+            {{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}
+            <button (click)="monthChange()" mat-icon-button mwlCalendarPreviousView [view]="view"
+              [(viewDate)]="viewDate" (viewDateChange)="closeOpenMonthViewDay()">
+              <mat-icon>chevron_left</mat-icon>
+            </button>
+            <button (click)="monthChange()" mat-icon-button mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
+              (viewDateChange)="closeOpenMonthViewDay()">
+              <mat-icon>chevron_right</mat-icon>
+            </button>
           </div>
-          <div class="calendar-section">
-            <div class="side-section col-md-2">
-              <button mat-flat-button (click)="openModal(newCalendar)">
+
+          <div class="layout-dropdown col-md-2">
+            <mat-select (selectionChange)="setView($event)" [formControl]="layout">
+              <mat-option *ngFor="let layout of layoutOptions" [value]="layout">{{layout | titlecase}}
+              </mat-option>
+            </mat-select>
+          </div>
+
+        </div>
+        <div class="calendar-section">
+          <div class="side-section col-md-2">
+            <button mat-raised-button (click)="openModal(newCalendar)">
+              <mat-icon>add</mat-icon>Create
+            </button>
+
+            <div class="my-calendar-section">
+              <div class="heading">
+                All Calendars
                 <mat-icon>add</mat-icon>
-              </button>
 
-              <h6>My Calendars</h6>
-            </div>
-
-            <div class="calendar-layout col-md-9 offset-md-2">
-              <div [ngSwitch]="view">
-                <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="events"
-                  [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)"
-                  (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
-                </mwl-calendar-month-view>
-                <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events"
-                  [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
-                  (eventTimesChanged)="eventTimesChanged($event)">
-                </mwl-calendar-week-view>
-                <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events"
-                  [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
-                  (eventTimesChanged)="eventTimesChanged($event)">
-                </mwl-calendar-day-view>
               </div>
             </div>
-
+          </div>
+          <div class="calendar-layout col-md-9 offset-md-2">
+            <div [ngSwitch]="view">
+              <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="events"
+                [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)"
+                (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+              </mwl-calendar-month-view>
+              <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events"
+                [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
+                (eventTimesChanged)="eventTimesChanged($event)">
+              </mwl-calendar-week-view>
+              <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events"
+                [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
+                (eventTimesChanged)="eventTimesChanged($event)">
+              </mwl-calendar-day-view>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+  <!-- </div> -->
 
-<ng-template #newCalendar>
-  <div class="dialog-container">
-    <div class="mat-card-header">
-      <mat-icon (click)="onClose()">close</mat-icon>
-      <h4 class="content-span full-width">{{formHeading}}</h4>
-    </div>
-    <div class="dialog-content">
-      <form class="form-horizontal form-bordered" [formGroup]="calendarForm">
-        <div class="form-group">
-          <mat-label>Name</mat-label>
-          <mat-form-field appearance="outline">
-            <input matInput formControlName="name">
-            <!-- <mat-error class="form-error">
+  <ng-template #newCalendar>
+    <div class="dialog-container">
+      <div class="mat-card-header">
+        <mat-icon (click)="onClose()">close</mat-icon>
+        <h4 class="content-span full-width">{{formHeading}}</h4>
+      </div>
+      <div class="dialog-content">
+        <form class="form-horizontal form-bordered" [formGroup]="calendarForm">
+          <div class="form-group">
+            <mat-label>Name</mat-label>
+            <mat-form-field appearance="outline">
+              <input matInput formControlName="name">
+              <!-- <mat-error class="form-error">
               {{formErrors.name}}
             </mat-error> -->
-            <!-- <mat-error *ngIf="attributeForm.controls['name'].hasError('validName')">
+              <!-- <mat-error *ngIf="attributeForm.controls['name'].hasError('validName')">
               This name already exists
             </mat-error> -->
-          </mat-form-field>
-        </div>
-        <div class="form-group text-area">
-          <mat-label>Description</mat-label>
-          <mat-form-field appearance="outline">
-            <textarea matInput formControlName="description"></textarea>
-            <!-- <mat-error class="form-error">
+            </mat-form-field>
+          </div>
+          <div class="form-group text-area">
+            <mat-label>Description</mat-label>
+            <mat-form-field appearance="outline">
+              <textarea matInput formControlName="description"></textarea>
+              <!-- <mat-error class="form-error">
               {{formErrors.description}}
             </mat-error> -->
-          </mat-form-field>
-        </div>
+            </mat-form-field>
+          </div>
 
 
-        <div class="template-action row">
-          <div class="col-md-12">
-            <div class="form-action-area">
-              <button mat-raised-button (click)="onClose()" class="gray-btn">Cancel</button>
-              <button mat-raised-button [disabled]="!calendarForm.valid" (click)="onSave()" [mat-dialog-close]="true"
-                class="dark-blue-btn service-trigger">{{saveBtnText}}</button>
+          <div class="template-action row">
+            <div class="col-md-12">
+              <div class="form-action-area">
+                <button mat-raised-button (click)="onClose()" class="gray-btn">Cancel</button>
+                <button mat-raised-button [disabled]="!calendarForm.valid" (click)="onSave()" [mat-dialog-close]="true"
+                  class="dark-blue-btn service-trigger">{{saveBtnText}}</button>
+              </div>
             </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
-  </div>
-</ng-template>
+  </ng-template>

@@ -6,70 +6,94 @@
   width: 90px;
 }
 
-.page-content {
+// .page-content {
+// padding: 10px 0px;
+
+.top-section {
+  position: absolute;
   padding: 10px 0px;
+  width: 100%;
 
-  .top-section {
-    position: relative;
-    .month-info {
-      color: #929292;
-      width: 25%;
-      position: absolute;
-      left: 200px;
-      padding-top: 4px;
+  .month-info {
+    color: #929292;
+    // width: 25%;
+    // position: absolute;
+    // left: 200px;
+    // padding-top: 4px;
 
-      .mat-icon-button {
-        width: 30px !important;
-        height: 30px !important;
-        line-height: 30px !important;
-      }
-    }
-
-    .layout-dropdown {
-      border-radius: 5px;
-      border: 1px solid #f2f2f2;
-      width: 7%;
-      padding: 4px 5px;
-      position: absolute;
-      right: 10px;
+    .mat-icon-button {
+      width: 30px !important;
+      height: 30px !important;
+      line-height: 30px !important;
     }
   }
 
-  .calendar-section {
+  .layout-dropdown {
+    border-radius: 5px;
+    border: 1px solid #f2f2f2;
+    padding: 5px;
+    width: 7%;
     position: absolute;
-    top: 90px;
-    width: calc(100% - 3px);
-    border-top: 1px solid #e2e2e2;
-    .side-section {
+    right: 10px;
+    top: 15%;
+  }
+}
+
+.calendar-section {
+  position: absolute;
+  top: 90px;
+  width: calc(100% - 1px);
+  border-top: 1px solid #e2e2e2;
+  height: 100%;
+  // width: 100%;
+
+  .side-section {
+    color: #7b7b7b;
+    background: #fdfdfd;
+    position: absolute;
+    // position: fixed;
+    // width: 30%;
+    height: 100%;
+
+    button {
+      height: 35px;
+      border-radius: 20px;
+      width: calc(100% - 120px);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      background: #fff;
       color: #7b7b7b;
-      background: #fdfdfd;
+      /* padding: 0px 4px; */
+      /* font-size: 27px; */
       position: absolute;
-      // width: 30%;
-      height: 100%;
-      // border-right: 1px solid #e2e2e2;
+      top: 1.25rem;
 
-      button {
-        border-radius: 50%;
-        height: 30px;
-        width: 31px;
-        min-width: 10px;
-        background: #25afcb;
-        color: white;
-        padding: 0px 4px;
-        position: absolute;
-        right: 10px;
-        top: -16px;
-
+      mat-icon {
+        font-size: 20px;
+        text-align: left;
+      }
+    }
+    .my-calendar-section {
+      position: absolute;
+      top: 70px;
+      // width: 100%;
+      width: calc(100% - 40px);
+      .heading {
         mat-icon {
-          font-size: 18px;
+          width: 25px;
+          height: 25px;
+          position: absolute;
+          right: 20px;
+          cursor: pointer;
         }
       }
     }
-    .calendar-layout {
-      padding: 0;
-    }
+  }
+  .calendar-layout {
+    padding: 0;
   }
 }
+// }
 
 .text-area {
   textarea {

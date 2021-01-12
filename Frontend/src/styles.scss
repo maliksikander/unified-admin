@@ -1915,6 +1915,13 @@ snack-bar-container {
       background: #ecf7fb !important;
     }
   }
+  .ngx-pagination a,
+  .ngx-pagination button {
+    // color: #0a0a0a;
+    // display: block;
+    padding: 0.1875rem 0.125rem;
+    // border-radius: 0;
+  }
 }
 
 .step-section {
@@ -2361,7 +2368,7 @@ snack-bar-container {
   }
 
   // .cal-month-view .cal-header .cal-cell {
-    
+
   // }
 
   .cal-month-view .cal-day-number {
