@@ -16,7 +16,6 @@ var keycloakConfig = {
     policyEnforcer: {},
     verifyTokenAudience: true,
     serverUrl: 'http://192.168.1.204:8080/auth',
-
     realm: 'cim',
     realmPublicKey: 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlOPr9cwFSa5RLHhdnpZc1+PVRU0l+roAHfY0GvbARRY2n3c7OZU36kx0mYO8Z9p64DeDbBioGlMzbBxufc2WeqTqAljmJMyck34iThEC0qWZhlRqhBoj5VaOopViUVcsrDTcHDEzsF700QqIgqUYv73x+uCGHGvkCB/o5xtn5n6BzQ0BTCE01p0gf9tPEQA9t5pxJ5bpowFnU0FSTRzp88dV8mmtEt4Nk6yCdro+zYvcQ39rrkAF5gwR2EQsx/ZaorDIwVp1QelJSIidGdZOFELKdbUjdwy5i7ieLH4sFemtRsq8JFQMzLKCOy293ACS7u9mP/Fx0aRBSdinPqH1ZQIDAQAB'
 };
