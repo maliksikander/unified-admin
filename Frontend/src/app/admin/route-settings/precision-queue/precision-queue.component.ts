@@ -232,7 +232,7 @@ export class PrecisionQueueComponent implements OnInit {
     this.endPointService.get(this.reqServiceType).subscribe(
       (res: any) => {
         this.spinner = false;
-        console.log("queue res-->", res);
+        // console.log("queue res-->", res);
         this.queueData = res;
         if (res.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
         this.getMRD();
@@ -260,7 +260,7 @@ export class PrecisionQueueComponent implements OnInit {
   }
 
   editQueue(templateRef, data) {
-    console.log("queue-->", data);
+    // console.log("queue-->", data);
     const mrdIndex = this.mrdData.findIndex(item => item._id == data.mrd._id);
     this.editData = data;
     this.queueForm.patchValue({

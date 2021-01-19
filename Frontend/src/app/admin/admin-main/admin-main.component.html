@@ -61,6 +61,10 @@
                 <img src="/assets/images/display.svg" alt="">
                 <span class="sidebar-text">Display</span>
               </a>
+              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/general/license-manager']">
+                <img src="/assets/images/license.svg" alt="">
+                <span class="sidebar-text">License Info</span>
+              </a>
               <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/general/locale-settings']">
                 <img src="/assets/images/globe.svg" alt="">
                 <span class="sidebar-text">Locale</span>
@@ -77,14 +81,11 @@
                 <img src="/assets/images/security.svg" alt="">
                 <span class="sidebar-text">Security</span>
               </a>
-              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/general/license-manager']">
-                <img src="/assets/images/license.svg" alt="">
-                <span class="sidebar-text">License Info</span>
-              </a>
-              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/general/business-calendar']">
+           
+              <!-- <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/general/business-calendar']">
                 <img src="/assets/images/calendar.svg" alt="">
                 <span class="sidebar-text">Business Calendar</span>
-              </a>
+              </a> -->
 
             </mat-expansion-panel>
 

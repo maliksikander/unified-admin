@@ -37,11 +37,12 @@
         border: none;
         padding-left: 15px;
         font-weight: 600;
+        font-size: 15px;
       }
     }
   }
   td {
-    font-size: 15px;
+    font-size: 18px;
     color: #575757;
     border-right: 1px solid #efefef;
     height: 30px;
@@ -54,7 +55,7 @@
 
   .product-info {
     h6 {
-      font-size: 12px;
+      font-size: 11px;
       color: #7b7b7b;
       position: relative;
       top: 8px;
@@ -75,7 +76,7 @@
   }
 }
 
-.dummy-class {
+.not-active {
   td {
     border: none !important;
   }
@@ -83,4 +84,5 @@
 
 .form-error {
   font-size: 11px;
+  padding-left: 15px;
 }

@@ -1,11 +1,14 @@
 .mrd-toggle {
   mat-slide-toggle {
-    float: right;
+    // float: right;
+    position: relative;
+    top: 5px;
+    padding-left: 10px;
   }
 }
 
 .form-group.mrd-toggle.mrd-padding-btn {
-  padding: 15px 0px !important;
+  padding: 5px 0px !important;
 }
 
 .routing-content {

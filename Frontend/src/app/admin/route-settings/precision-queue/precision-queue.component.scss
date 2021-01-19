@@ -554,9 +554,11 @@ input::-webkit-inner-spin-button {
 
           .mat-icon {
             font-size: 15px !important;
-            width: 16px !important;
-            height: 18px !important;
+            width: 17px !important;
+            height: 17px !important;
             color: #b1b1b1 !important;
+            border: 1px solid #b1b1b1;
+            border-radius: 50%;
           }
         }
       }

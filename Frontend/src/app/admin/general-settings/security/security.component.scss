@@ -7,5 +7,8 @@
 }
 
 mat-slide-toggle{
-  float: right;
+  // float: right;
+  position: relative;
+  top: 8px;
+  padding-left: 10px;
 }

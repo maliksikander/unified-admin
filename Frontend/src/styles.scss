@@ -152,6 +152,24 @@ button:focus {
   }
 }
 
+.locale-checkbox {
+  // mat-select {
+    .mat-pseudo-checkbox {
+      // border: none;
+      // border-radius: none;
+      width: 15px !important;
+      height: 15px !important;
+      border: 1px solid #a2a2a2 !important;
+    }
+
+    .mat-pseudo-checkbox-checked::after {
+      top: 3px !important;
+      left: 2px !important;
+      width: 7px !important;
+    }
+  // }
+}
+
 .panel-page-content {
   padding: 30px 0px 0px 60px;
 }
@@ -912,6 +930,7 @@ ngx-charts-pie-chart span.legend-label-color {
 
 .action-area {
   text-align: right;
+  padding-top: 15px;
   .padding-btn {
     width: 42%;
   }
@@ -1323,9 +1342,18 @@ mat-sidenav-container.secondary-sidebar {
 
 // mat-select
 .mat-pseudo-checkbox {
-  border: none !important;
-  border-radius: none !important;
+  border: none;
+  border-radius: none;
+  // width: 15px !important;
+  // height: 15px !important;
+  // border: 1px solid #a2a2a2 !important;
 }
+
+// .mat-pseudo-checkbox-checked::after {
+// top: 3px !important;
+// left: 2px !important;
+// width: 7px !important;
+// }
 
 .mat-primary .mat-pseudo-checkbox-checked,
 .mat-primary .mat-pseudo-checkbox-indeterminate {

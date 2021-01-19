@@ -17,8 +17,8 @@
               </mat-form-field>
             </div>
 
-            <button mat-flat-button (click)="openModal(newQueue)">
-              <!-- <button mat-flat-button (click)="openStepModal(stepFormTemplate)"> -->
+            <!-- <button mat-flat-button (click)="openModal(newQueue)"> -->
+              <button mat-flat-button (click)="openStepModal(stepFormTemplate)">
               <mat-icon>add</mat-icon>
               Create Queue
             </button>
@@ -237,16 +237,15 @@
                   <mat-label>Expression {{i + 1}}</mat-label>
 
                   <div class="right-flank">
-                    <button class="expression-btn" *ngIf="i == getExpressions(stepForm).length -1 " mat-flat-button
-                      (click)="addExpressionButton()">
-                      Add Expression
-                    </button>
 
                     <mat-select *ngIf="i > 0" formControlName="expressionConditional">
                       <mat-option *ngFor="let data of conditionList" [value]="data">{{data}}
                       </mat-option>
                     </mat-select>
-
+                    <button class="expression-btn" *ngIf="i == getExpressions(stepForm).length -1 " mat-flat-button
+                      (click)="addExpressionButton()">
+                      Add Expression
+                    </button>
                     <button *ngIf="getExpressions(stepForm).length > 1 " (click)="removeExpression(i)"
                       class="exp-remove-btn" mat-flat-button>
                       <mat-icon>close</mat-icon>

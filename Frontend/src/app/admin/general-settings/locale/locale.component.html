@@ -45,7 +45,7 @@
                     </mat-select-trigger>
                     <!-- <input class="search-filter" type="text" [(ngModel)]="searchTerm"
                     [ngModelOptions]="{standalone: true}" placeholder="Search"> -->
-                    <mat-option *ngFor="let lang of languages" [value]="lang">{{lang.name}}
+                    <mat-option class="locale-checkbox" *ngFor="let lang of languages" [value]="lang">{{lang.name}}
                     </mat-option>
 
                   </mat-select>

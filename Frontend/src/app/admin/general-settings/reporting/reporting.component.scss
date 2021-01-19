@@ -7,17 +7,20 @@
 }
 
 mat-slide-toggle {
-  float: right;
+  // float: right;
+  position: relative;
+  top: 5px;
+  padding-left: 10px;
 }
 
 .report-padding-btn {
   padding: 0px 15px 30px 15px;
 }
 
-.bottom-padding{
+.bottom-padding {
   padding-bottom: 30px !important;
 }
 
-.btn-margin{
+.btn-margin {
   margin-top: 10px !important;
 }
