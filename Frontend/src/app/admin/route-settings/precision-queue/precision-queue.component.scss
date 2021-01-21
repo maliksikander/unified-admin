@@ -504,7 +504,7 @@ input::-webkit-inner-spin-button {
 .expression-section {
   .expression-section-body {
     border: 1px solid #ecf7fb;
-    border-radius: 3px;
+    border-radius: 3px 0px 0px 0px;
     margin-bottom: 10px;
     .heading-section {
       background: #ecf7fb;
@@ -519,12 +519,16 @@ input::-webkit-inner-spin-button {
         color: #5b5b5b;
       }
       .right-flank {
-        width: 27%;
-        float: right;
+        width: 30%;
+        position: relative;
+        left: 70%;
+        top: -22px;
         mat-select {
           min-width: 0;
           width: 60px;
           background: #fff;
+          position: relative;
+          top: 2px;
         }
         .mat-select-value-text {
           font-size: 12px;
@@ -535,11 +539,13 @@ input::-webkit-inner-spin-button {
 
         .expression-btn {
           height: 22px;
+          border-radius: 0;
           min-height: 22px;
           font-size: 12px;
           background: #1c99c0;
           color: #fff;
-          float: right;
+          position: absolute;
+          top: 1.8px;
         }
 
         .exp-remove-btn {
@@ -547,10 +553,12 @@ input::-webkit-inner-spin-button {
           width: 16px;
           height: 16px;
           min-width: 10px;
+          // position: absolute;
+          // right: 20px;
+          // padding-left: 1px;
+          // margin: 0 !important;
           position: absolute;
-          right: 20px;
-          padding-left: 1px;
-          margin: 0 !important;
+          right: 5px;
 
           .mat-icon {
             font-size: 15px !important;
@@ -574,7 +582,7 @@ input::-webkit-inner-spin-button {
         display: flex;
         flex-wrap: wrap;
         padding: 0px 5px;
-        padding: 10px 5px;
+        // padding: 10px 5px;
         position: relative;
       }
     }
@@ -587,4 +595,12 @@ input::-webkit-inner-spin-button {
   text-overflow: ellipsis;
   white-space: pre;
   max-width: 500px;
+}
+
+.top-exp{
+  right: 0;
+}
+
+.top-term{
+  padding-top: 16px !important;
 }

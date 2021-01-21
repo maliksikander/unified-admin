@@ -17,6 +17,11 @@
     position: relative;
     top: 25px;
   }
+
+  .form-error {
+    font-size: 11px;
+    // padding: 0 !important;
+  }
 }
 
 .license-table {
@@ -82,7 +87,9 @@
   }
 }
 
-.form-error {
+
+
+.form-error-table {
   font-size: 11px;
   padding-left: 15px;
 }

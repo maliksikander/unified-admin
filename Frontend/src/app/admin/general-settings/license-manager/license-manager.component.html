@@ -15,13 +15,14 @@
                 <mat-label>Master API Key</mat-label>
                 <mat-form-field appearance="outline">
                   <input matInput formControlName="licenseKey">
-                  <!-- <mat-error class="form-error">
-                    {{formErrors.amqUser}}
-                  </mat-error> -->
+                  <mat-error class="form-error">
+                    <!-- {{formErrors.amqUser}} -->
+                    *Enter Master Key
+                  </mat-error>
                 </mat-form-field>
               </div>
               <div class="key-btn">
-                <button [disabled]="!licenseForm.valid" mat-flat-button class="blue-btn service-trigger"
+                <button *ngIf="licenseForm.valid" mat-flat-button class="blue-btn service-trigger"
                   (click)="onSave()">Save</button>
               </div>
             </div>
@@ -120,7 +121,7 @@
                   </td>
                 </tr>
               </tbody>
-              <mat-error class="form-error">
+              <mat-error class="form-error-table">
                 *Error Text
               </mat-error>
             </table>

@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonService } from '../../services/common.service';
 import { EndpointService } from '../../services/endpoint.service';
 import { SnackbarService } from '../../services/snackbar.service';
@@ -28,7 +28,7 @@ export class LicenseManagerComponent implements OnInit {
 
 
     this.licenseForm = this.fb.group({
-      licenseKey: [''],
+      licenseKey: ['',Validators.required],
     });
 
     // this.licenseForm.valueChanges.subscribe((data) => {
