@@ -80,7 +80,7 @@ export class PrecisionQueueComponent implements OnInit {
     if (pageNumber) this.p = pageNumber;
 
     this.queueForm = this.fb.group({
-      name: ['', [Validators.required, Validators.pattern("^[a-zA-Z0-9!@#$%^*_&()\\\"-]*$")], this.ValidateNameDuplication.bind(this)],
+      name: ['', [Validators.required, Validators.pattern("^[a-zA-Z0-9!@#$%^*_&()\\\"-]*$")]],
       mrd: ['', [Validators.required]],
       agentCriteria: ['', [Validators.required]],
       serviceLevelType: ['', [Validators.required]],

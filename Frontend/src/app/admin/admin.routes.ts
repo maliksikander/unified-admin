@@ -14,6 +14,7 @@ import { UsersComponent } from './route-settings/users/users.component';
 import { LoginComponent } from '../authentication/login/login.component';
 import { CalendarComponent } from './general-settings/calendar/calendar.component';
 import { LicenseManagerComponent } from './general-settings/license-manager/license-manager.component';
+import { ChannelManagerSettingsComponent } from './channel-manager-settings/channel-manager-settings.component';
 
 
 export const adminRoutes: Routes = [
@@ -34,7 +35,8 @@ export const adminRoutes: Routes = [
           { path: 'routing/attributes', component: AttributeComponent},
           { path: 'routing/media-routing-domain', component: MrdComponent},
           { path: 'routing/precision-queue', component: PrecisionQueueComponent},
-          { path: 'routing/users', component: UsersComponent},
+          { path: 'routing/agents', component: UsersComponent},
+          { path: 'channel-manager', component: ChannelManagerSettingsComponent},
         ]
     }
 ];

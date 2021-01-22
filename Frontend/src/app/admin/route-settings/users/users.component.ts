@@ -5,14 +5,23 @@ import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-di
 import { CommonService } from '../../services/common.service';
 import { EndpointService } from '../../services/endpoint.service';
 import { SnackbarService } from '../../services/snackbar.service';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss']
+  styleUrls: ['./users.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ]
 })
 export class UsersComponent implements OnInit {
-  
+
   p: any = 1;
   itemsPerPageList = [5, 10, 15];
   itemsPerPage = 5;
@@ -22,22 +31,30 @@ export class UsersComponent implements OnInit {
   attributeFilterTerm = '';
   selectedAttributeFilterTerm = '';
   formErrors = {
-    agentId: '',
+    // agentId: '',
     attributes: '',
-    firstName: '',
-    lastName: '',
+    // firstName: '',
+    // lastName: '',
   };
   validations;
   userForm: FormGroup;
+  userAttributeForm: FormGroup;
   formHeading = 'User Profile';
   reqServiceType = 'agent';
   editData: any;
   userData = [];
   attrData = [];
   usersCopy = [];
+  attrSpinner = false;
 
   customCollapsedHeight: string = '48px';
   customExpandedHeight: string = '48px';
+
+  dataSource = [];
+  columnsToDisplay = ['name', 'weight', 'symbol', 'position'];
+  expandedElement: 'collapsed';
+
+
   constructor(private commonService: CommonService,
     private dialog: MatDialog,
     private endPointService: EndpointService,
@@ -53,17 +70,24 @@ export class UsersComponent implements OnInit {
 
     this.userForm = this.formBuilder.group({
       agentId: [''],
-      attributes: [],
+      // attributes: [],
       firstName: [''],
       lastName: [''],
+    });
+
+    this.userAttributeForm = this.formBuilder.group({
+      // agentId: [''],
+      attributes: [],
+      // firstName: [''],
+      // lastName: [''],
     });
 
     this.userForm.controls['agentId'].disable();
     this.userForm.controls['firstName'].disable();
     this.userForm.controls['lastName'].disable();
 
-    this.userForm.valueChanges.subscribe((data) => {
-      this.commonService.logValidationErrors(this.userForm, this.formErrors, this.validations);
+    this.userAttributeForm.valueChanges.subscribe((data) => {
+      this.commonService.logValidationErrors(this.userAttributeForm, this.formErrors, this.validations);
     });
 
     this.endPointService.readConfigJson().subscribe((e) => {
@@ -81,18 +105,14 @@ export class UsersComponent implements OnInit {
   getAttribute() {
     this.endPointService.get('attribute').subscribe(
       (res: any) => {
-
-
         this.attrData = JSON.parse(JSON.stringify(res));
-
         if (this.attrData && this.attrData.length > 0) {
           this.attrData.map(item => {
             item.isChecked = false;
           });
-
-          if (this.userForm.value.attributes && this.userForm.value.attributes.length > 0)
+          if (this.userAttributeForm.value.attributes && this.userAttributeForm.value.attributes.length > 0)
             this.attrData.forEach(attr => {
-              this.userForm.value.attributes.forEach(selected => {
+              this.userAttributeForm.value.attributes.forEach(selected => {
                 if (attr._id == selected._id) {
                   attr.isChecked = true;
                 }
@@ -100,9 +120,11 @@ export class UsersComponent implements OnInit {
             });
         }
         this.spinner = false;
+        this.attrSpinner = false;
       },
       error => {
         this.spinner = false;
+        this.attrSpinner = false;
         console.log("Error fetching:", error);
         if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
       });
@@ -171,26 +193,21 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  editUser(templateRef, item) {
-
-    this.spinner = true;
+  editUserAttributes(templateRef, item) {
+    this.attrSpinner = true;
     let data = JSON.parse(JSON.stringify(item));
     this.editData = JSON.parse(JSON.stringify(item));
-
-    this.userForm.patchValue({
-      agentId: data.agentId,
+    this.userAttributeForm.patchValue({
       attributes: data.attributes,
-      firstName: data.firstName,
-      lastName: data.lastName
     });
     let dialogRef = this.dialog.open(templateRef, {
       width: '650px',
-      height: '600px',
+      height: '500px',
       panelClass: 'add-user',
       disableClose: true,
       data: data
     });
-
+    // this.spinner = true;
     this.getAttribute();
 
     dialogRef.afterClosed().subscribe(res => {
@@ -212,7 +229,7 @@ export class UsersComponent implements OnInit {
   onSave() {
     this.spinner = true;
     let data = JSON.parse(JSON.stringify(this.editData));
-    data.attributes = this.userForm.value.attributes;
+    data.attributes = this.userAttributeForm.value.attributes;
     this.updateUser(data, this.editData._id);
   }
 
@@ -220,20 +237,20 @@ export class UsersComponent implements OnInit {
     let checked = e.target.checked;
     this.attrData[i].isChecked = checked;
     let selectedList = [];
-    selectedList = JSON.parse(JSON.stringify(this.userForm.value.attributes));
+    selectedList = JSON.parse(JSON.stringify(this.userAttributeForm.value.attributes));
     if (selectedList.length > 0) {
       let selectedIndex = selectedList.findIndex(x => x._id == item._id);
       if (selectedIndex != -1) {
         if (checked == false) {
-          this.userForm.value.attributes.splice(selectedIndex, 1);
+          this.userAttributeForm.value.attributes.splice(selectedIndex, 1);
           this.selectedAttributeFilterTerm = '';
         };
       }
       else {
-        if (checked == true) this.userForm.value.attributes.push(item);
+        if (checked == true) this.userAttributeForm.value.attributes.push(item);
       }
     }
-    else { this.userForm.value.attributes.push(item); }
+    else { this.userAttributeForm.value.attributes.push(item); }
   }
 
   formatLabel(value: number) {
@@ -249,6 +266,37 @@ export class UsersComponent implements OnInit {
     this.getUsers();
   }
 
+
+  viewUserProfile(templateRef, item) {
+
+    // this.spinner = true;
+    let data = JSON.parse(JSON.stringify(item));
+    // this.editData = JSON.parse(JSON.stringify(item));
+
+    this.userForm.patchValue({
+      agentId: data.agentId,
+      firstName: data.firstName,
+      lastName: data.lastName
+    });
+    let dialogRef = this.dialog.open(templateRef, {
+      width: '650px',
+      height: '300px',
+      panelClass: 'add-user',
+      disableClose: true,
+      data: data
+    });
+
+    // this.getAttribute();
+
+    // dialogRef.afterClosed().subscribe(res => {
+    //   this.editData = undefined;
+    //   this.attrData = undefined;
+    //   this.attributeFilterTerm = '';
+    //   this.selectedAttributeFilterTerm = '';
+    // });
+  }
+
+
   pageChange(e) { localStorage.setItem('currentUsersPage', e); }
 
   pageBoundChange(e) {
@@ -260,13 +308,13 @@ export class UsersComponent implements OnInit {
 
   onSliderChange(e, type, i) {
     if (e.value || e.value == 0) {
-      this.userForm.value.attributes[i].value = JSON.stringify(e.value);
+      this.userAttributeForm.value.attributes[i].value = JSON.stringify(e.value);
     }
   }
 
   onToggleChange(e, type, i) {
     if (e.checked || e.checked == false) {
-      this.userForm.value.attributes[i].value = JSON.stringify(e.checked);
+      this.userAttributeForm.value.attributes[i].value = JSON.stringify(e.checked);
     }
   }
 

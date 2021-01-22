@@ -1,0 +1,93 @@
+<div class="loading-area" *ngIf="spinner">
+  <mat-spinner></mat-spinner>
+</div>
+<div class="container main-custom-container">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel-body">
+        <div class="sub-heading">
+          <h2>{{pageTitle}}</h2>
+        </div>
+        <div *ngIf="!addChannelBool" class="panel-page-content">
+          <div class="channel-accordion">
+            <mat-accordion>
+              <p>Channel</p>
+              <!-- <ng-container> -->
+              <mat-expansion-panel hideToggle="true" #arrow1>
+                <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                  [expandedHeight]="customExpandedHeight">
+                  <mat-panel-title>
+                    <img src="/assets/images/whatsapp.svg" alt="whats_app">
+                    <span>Whatsapp</span>
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    <mat-icon *ngIf="arrow1.expanded">arrow_drop_up</mat-icon>
+                    <mat-icon *ngIf="!arrow1.expanded">arrow_drop_down</mat-icon>
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                <table class="channel-table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Name</th>
+                      <th scope="col">Mode</th>
+                      <th scope="col">Reponse SLA(sec)</th>
+                      <th scope="col">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td scope="row">Voice</td>
+                      <td>Hybrid</td>
+                      <td>60</td>
+                      <td class="list-action-area">
+                        <mat-slide-toggle (change)="onStatusChange($event)" [checked]="true"> </mat-slide-toggle>
+                        <span class="list-actions">
+                          <button matTooltip="Edit" (click)="editChannel($event)" mat-mini-fab><i class="fa fa-pencil"
+                              aria-hidden="true"></i>
+                          </button>
+                          <button matTooltip="Delete" (click)="deleteConfirm($event)" mat-mini-fab><i
+                              class="fa fa-trash-o" aria-hidden="true"></i>
+                          </button>
+                        </span>
+                      </td>
+
+                    </tr>
+                    <tr>
+                      <td scope="row">Voice</td>
+                      <td>Hybrid</td>
+                      <td>60</td>
+                      <td class="list-action-area">
+                        <mat-slide-toggle (change)="onStatusChange($event)" [checked]="true"> </mat-slide-toggle>
+                        <span class="list-actions">
+                          <button matTooltip="Edit" (click)="editChannel($event)" mat-mini-fab><i class="fa fa-pencil"
+                              aria-hidden="true"></i>
+                          </button>
+                          <button matTooltip="Delete" (click)="deleteConfirm($event)" mat-mini-fab><i
+                              class="fa fa-trash-o" aria-hidden="true"></i>
+                          </button>
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <button class="add-channel-btn" mat-flat-button (click)="addChannel('whatsapp')">
+                  Add New Channel
+                </button>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+          <ng-container *ngIf="addChannelBool">
+            <app-channel-type-settings [parentChannelBool]="addChannelBool" (childChannelBool)='test($event)'>
+            </app-channel-type-settings>
+          </ng-container>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-container *ngIf="addChannelBool">
+  <app-channel-type-settings [parentChannelBool]="addChannelBool" (childChannelBool)='test($event)'>
+  </app-channel-type-settings>
+</ng-container>

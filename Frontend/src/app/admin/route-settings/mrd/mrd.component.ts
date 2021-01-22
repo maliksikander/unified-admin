@@ -45,7 +45,7 @@ export class MrdComponent implements OnInit {
     this.validations = this.commonService.mrdFormErrorMessages;
 
     this.mrdForm = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.maxLength(15), Validators.pattern("^[a-zA-Z0-9!@#$%^*_&()\\\"-]*$")], this.ValidateNameDuplication.bind(this)],
+      name: ['', [Validators.required, Validators.maxLength(15), Validators.pattern("^[a-zA-Z0-9!@#$%^*_&()\\\"-]*$")]],
       description: ['', [Validators.maxLength(50)]],
       enabled: [],
     });

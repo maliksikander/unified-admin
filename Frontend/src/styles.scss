@@ -154,19 +154,19 @@ button:focus {
 
 .locale-checkbox {
   // mat-select {
-    .mat-pseudo-checkbox {
-      // border: none;
-      // border-radius: none;
-      width: 15px !important;
-      height: 15px !important;
-      border: 1px solid #a2a2a2 !important;
-    }
+  .mat-pseudo-checkbox {
+    // border: none;
+    // border-radius: none;
+    width: 15px !important;
+    height: 15px !important;
+    border: 1px solid #a2a2a2 !important;
+  }
 
-    .mat-pseudo-checkbox-checked::after {
-      top: 3px !important;
-      left: 2px !important;
-      width: 7px !important;
-    }
+  .mat-pseudo-checkbox-checked::after {
+    top: 3px !important;
+    left: 2px !important;
+    width: 7px !important;
+  }
   // }
 }
 
@@ -394,7 +394,7 @@ button:focus {
       align-items: center;
 
       span {
-        font-size: $p-font-size - 1px !important;
+        font-size: $p-font-size - 1px;
         color: $dark-gray-color;
         padding: 0px 5px;
       }
@@ -2447,5 +2447,43 @@ snack-bar-container {
   }
   .cal-month-view .cal-day-cell.cal-out-month .cal-day-number {
     opacity: 0.5;
+  }
+}
+
+.password-privacy-icon {
+  mat-icon {
+    position: relative;
+    top: 3px;
+  }
+}
+
+.channel-manager-link {
+  .mat-list-item-content {
+    padding: 0px 20px !important;
+  }
+  span.sidebar-text {
+    font-size: 14px !important;
+    margin-left: 4px !important;
+  }
+}
+
+.panel-page-content .channel-accordion {
+  mat-expansion-panel {
+    .mat-expansion-panel-body {
+      padding: 0 !important;
+    }
+    .mat-expansion-panel-header-description {
+      mat-icon {
+        position: absolute;
+        right: 45px;
+        font-size: 25px;
+      }
+    }
+  }
+
+  .add-channel-btn {
+    span.mat-button-wrapper {
+      font-size: 11px !important;
+    }
   }
 }

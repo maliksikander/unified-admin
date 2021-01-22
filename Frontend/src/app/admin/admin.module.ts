@@ -27,6 +27,8 @@ import { CalendarComponent } from './general-settings/calendar/calendar.componen
 import { LicenseManagerComponent } from './general-settings/license-manager/license-manager.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { ChannelManagerSettingsComponent } from './channel-manager-settings/channel-manager-settings.component';
+import { ChannelTypeSettingsComponent } from './channel-manager-settings/channel-type-settings/channel-type-settings.component';
 
 
 
@@ -60,6 +62,8 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
         UsersComponent,
         CalendarComponent,
         LicenseManagerComponent,
+        ChannelManagerSettingsComponent,
+        ChannelTypeSettingsComponent,
     ],
     providers: [
         HttpClientModule,
