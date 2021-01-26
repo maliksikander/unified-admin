@@ -39,6 +39,7 @@ export class UsersComponent implements OnInit {
   validations;
   userForm: FormGroup;
   userAttributeForm: FormGroup;
+  attributeUpdateForm: FormGroup;
   formHeading = 'User Profile';
   reqServiceType = 'agent';
   editData: any;
@@ -46,7 +47,7 @@ export class UsersComponent implements OnInit {
   attrData = [];
   usersCopy = [];
   attrSpinner = false;
-
+  attrValueList = [];
   customCollapsedHeight: string = '48px';
   customExpandedHeight: string = '48px';
 
@@ -81,6 +82,14 @@ export class UsersComponent implements OnInit {
       // firstName: [''],
       // lastName: [''],
     });
+
+    this.attributeUpdateForm = this.formBuilder.group({
+      attributeName: [],
+      // attributeType: [],
+      attributeValue: [],
+    });
+
+
 
     this.userForm.controls['agentId'].disable();
     this.userForm.controls['firstName'].disable();
@@ -296,7 +305,6 @@ export class UsersComponent implements OnInit {
     // });
   }
 
-
   pageChange(e) { localStorage.setItem('currentUsersPage', e); }
 
   pageBoundChange(e) {
@@ -316,6 +324,50 @@ export class UsersComponent implements OnInit {
     if (e.checked || e.checked == false) {
       this.userAttributeForm.value.attributes[i].value = JSON.stringify(e.checked);
     }
+  }
+
+  attrName='';
+  attrValue='';
+  attrType:any;
+  updateAttributeValue(templateRef, attr, data) {
+
+    this.onClose();
+    let width='';
+    this.attrName = attr.name;
+    this.attrValue = attr.value;
+    this.attrType = attr.type;
+    if (attr.type == 'Boolean') {
+      this.attrValueList = ["true", "false"];
+      width = '200px';
+    }
+    else {
+      this.attrValueList = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+      width = '300px';
+    }
+
+
+    // this.attributeUpdateForm.patchValue({
+    //   attributeName: attr.name,
+    //   attributeValue: attr.value,
+    // });
+
+    let dialogRef = this.dialog.open(templateRef, {
+      width: width,
+      height: '100px',
+      panelClass: 'add-user',
+      disableClose: false,
+      hasBackdrop: false,
+      // data: data
+    });
+    // this.spinner = true;
+    // this.getAttribute();
+
+    dialogRef.afterClosed().subscribe(res => {
+      // this.editData = undefined;
+      // this.attrData = undefined;
+      // this.attributeFilterTerm = '';
+      // this.selectedAttributeFilterTerm = '';
+    });
   }
 
 }

@@ -54,7 +54,7 @@ export class ChannelManagerSettingsComponent implements OnInit {
         // data: data
       }
     }).afterClosed().subscribe((res: any) => {
-      this.spinner = true;
+      // this.spinner = true;
       if (res === 'delete') {
         // Enter Code Here
       }
@@ -65,14 +65,17 @@ export class ChannelManagerSettingsComponent implements OnInit {
 
   addChannel(type) {
     this.addChannelBool = true;
-    this.pageTitle = "Edit Whatsapp Channel";
+    // console.log("type-->",type);
+    if(type === 'whatsapp') this.pageTitle = "Set up Whatsapp Channel";
+    else if(type === 'facebook') this.pageTitle = "Set up Facebook Channel";
+    else if(type === 'web') this.pageTitle = "Set up Web Chat Channel";
+    else if(type === 'viber') this.pageTitle = "Set up Viber Channel";
+    else if(type === 'forwardProxy') this.pageTitle = "Set up Forward Proxy Channel";
+    else if(type === 'smpp') this.pageTitle = "Set up SMPP Channel";
   }
 
-  test(e){
-
-    // console.log("parent test-->",e);
+  childToParentUIChange(e){
     this.addChannelBool = e;
-    // console.log("channelBool-->",this.addChannelBool);
     if(this.addChannelBool == false){
       this.pageTitle = "Customer Channels";
     }

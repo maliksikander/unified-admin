@@ -9,8 +9,11 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
+
 .panel-page-content {
   padding-top: 50px !important;
+  padding-left: 46px !important;
+  
   .channel-accordion {
     padding: 0px 30px 10px 0px;
     .add-channel-btn {
@@ -26,6 +29,7 @@ input::-webkit-inner-spin-button {
     mat-expansion-panel {
       box-shadow: none;
       border: 1px solid #e2e2e2;
+      margin-bottom: 10px;
       .mat-expansion-panel-header {
         padding: 0px 18px !important;
         background: #fafafa;

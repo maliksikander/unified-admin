@@ -80,20 +80,32 @@
             <ul class="routing-user-list">
               <li
                 *ngFor="let data of userData | searchFilter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
-                <div class="list-view">
-                  <span>{{data.firstName? data.firstName : 'N/A'}}</span>
-                  <mat-chip-list>
-                    <mat-chip *ngFor="let attr of data.attributes">
-                      <!-- <mat-chip *ngFor="let attr of data.attributes | slice :0:3"> -->
-                      {{ attr.name}}({{attr.value}})
-                    </mat-chip>
-                    <!-- <mat-chip *ngIf="data.attributes?.length > 3">+{{data.attributes?.length - 3}}</mat-chip> -->
-                  </mat-chip-list>
+                <div class="row">
+                  <div class="col-sm-3 col-md-3">
+                    <span>{{data.firstName? data.firstName : 'N/A'}}</span>
+                  </div>
+                  <div class="list-view col-sm-9 col-md-9">
+                    <mat-chip-list>
+                      <mat-chip *ngFor="let attr of data.attributes"
+                        (click)="updateAttributeValue(updateAttributeForm,attr,data)">
+                        <!-- <mat-chip *ngFor="let attr of data.attributes | slice :0:3"> -->
+                        <!-- {{ attr.name}}({{attr.value}}) -->
+                        <ng-container *ngIf="attr.type == 'Boolean'">
+                          {{ attr.name}}
+                        </ng-container>
+                        <ng-container *ngIf="attr.type == 'Proficient'">
+                          {{ attr.name}}({{attr.value}})
+                        </ng-container>
+                      </mat-chip>
+                      <!-- <mat-chip *ngIf="data.attributes?.length > 3">+{{data.attributes?.length - 3}}</mat-chip> -->
+                    </mat-chip-list>
+                  </div>
                 </div>
                 <div class="list-action-area">
                   <span class="list-actions">
-                    <button mat-mini-fab matTooltip="Edit" (click)="editUserAttributes(assignAttributeForm,data)"><i
-                        class="fa fa-pencil" aria-hidden="true"></i>
+                    <button mat-mini-fab matTooltip="Edit" (click)="editUserAttributes(assignAttributeForm,data)">
+                      <!-- <i class="fa fa-plus" aria-hidden="true"></i> -->
+                      <i class="material-icons">add</i>
                     </button>
                     <button mat-mini-fab matTooltip="Profile" (click)="viewUserProfile(userProfileForm,data)">
                       <!-- <i class="fa fa-user" aria-hidden="true"></i> -->
@@ -122,6 +134,43 @@
   </div>
 </div>
 
+<ng-template #updateAttributeForm>
+  <!-- <div class="attribute-update-content"> -->
+  <!-- <form [formGroup]="attributeUpdateForm"> -->
+  <!-- <div class="row"> -->
+  <div class="form-group attribute-dialog" [ngClass]="(attrType =='Boolean')?'bool-attribute':'prof-attribute'">
+    <!-- <div class="form-group"> -->
+    <!-- <mat-form-field> -->
+    <!-- <input matInput formControlName="attributeName"> -->
+    <input [disabled]="true" [ngModel]="attrName" matInput>
+
+    <!-- </mat-form-field> -->
+    <!-- </div> -->
+    <!-- <div class="form-group"> -->
+    <!-- <mat-form-field> -->
+    <!-- <mat-select formControlName="attributeValue">
+                <mat-option *ngFor="let data of attrValueList" [value]="data">{{data}}</mat-option>
+              </mat-select> -->
+    <select [(ngModel)]="attrValue">
+      <option *ngFor="let data of attrValueList" [value]="data">{{data}}</option>
+    </select>
+    <!-- </mat-form-field> -->
+    <!-- </div> -->
+    <!-- <div> -->
+    <button *ngIf="attrType !== 'Boolean'" mat-raised-button [mat-dialog-close]="true"
+      class="dark-blue-btn service-trigger">Remove</button>
+    <div class="close-attr-btn">
+      <mat-icon (click)="onClose()">close</mat-icon>
+    </div>
+    <!-- <mat-icon (click)="onClose()">close</mat-icon> -->
+    <!-- </div> -->
+    <!-- </div> -->
+  </div>
+  <!-- </form> -->
+  <!-- </div> -->
+</ng-template>
+
+
 <ng-template #userProfileForm>
   <div class="user-dialog-container">
     <div class="mat-card-header">
@@ -131,33 +180,33 @@
     <div class="dialog-content">
       <form class="form-horizontal form-bordered" [formGroup]="userForm">
         <div class="form-expansion-panel">
-              <div class="user-disclaimer">
-                <img src="/assets/images/warning.svg" alt="warning">
-                <span>This information is only editable from Keycloak.</span>
-              </div>
-              <div class="user-profile-section">
-                <div class="form-group col-md-6">
-                  <mat-label>First Name</mat-label>
-                  <mat-form-field appearance="outline">
-                    <input matInput formControlName="firstName">
-                  </mat-form-field>
-                </div>
-                <div class="form-group col-md-6">
-                  <mat-label>Last Name</mat-label>
-                  <mat-form-field appearance="outline">
-                    <input matInput formControlName="lastName">
-                  </mat-form-field>
-                </div>
-              </div>
+          <div class="user-disclaimer">
+            <img src="/assets/images/warning.svg" alt="warning">
+            <span>This information is only editable from Keycloak.</span>
+          </div>
+          <div class="user-profile-section">
+            <div class="form-group col-md-6">
+              <mat-label>First Name</mat-label>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="firstName">
+              </mat-form-field>
+            </div>
+            <div class="form-group col-md-6">
+              <mat-label>Last Name</mat-label>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="lastName">
+              </mat-form-field>
+            </div>
+          </div>
 
-              <div class="user-profile-section">
-                <div class="form-group col-md-6">
-                  <mat-label>Agent ID</mat-label>
-                  <mat-form-field appearance="outline">
-                    <input matInput formControlName="agentId">
-                  </mat-form-field>
-                </div>
-              </div>
+          <div class="user-profile-section">
+            <div class="form-group col-md-6">
+              <mat-label>Agent ID</mat-label>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="agentId">
+              </mat-form-field>
+            </div>
+          </div>
         </div>
       </form>
     </div>
@@ -174,67 +223,67 @@
     <div class="dialog-content">
       <form class="form-horizontal form-bordered" [formGroup]="userAttributeForm">
         <div class="form-expansion-panel">
-              <div class="user-attribute-section attribute-section-label">
-                <div class="form-group col-md-5">
-                  <mat-label>Available Attributes</mat-label>
-                  <div class="available-attribute-section row m-0">
-                    <div class="loading-area" *ngIf="attrSpinner">
-                      <mat-spinner></mat-spinner>
-                    </div>
-                    <div class="search-filter-area">
-                      <input type="text" placeholder="Search" [(ngModel)]="attributeFilterTerm"
-                        [ngModelOptions]="{standalone: true}">
-                    </div>
-                    <ul class="attributes-area">
-                      <li *ngFor="let i=index;let item of attrData | searchFilter:attributeFilterTerm">
-                        <p class="checbox-custom checkbox-team">
-                          <!-- <input class="mat-checkbox mat-accent" formControlName="attributes" type="checkbox"
+          <div class="user-attribute-section attribute-section-label">
+            <div class="form-group col-md-5">
+              <mat-label>Available Attributes</mat-label>
+              <div class="available-attribute-section row m-0">
+                <div class="loading-area" *ngIf="attrSpinner">
+                  <mat-spinner></mat-spinner>
+                </div>
+                <div class="search-filter-area">
+                  <input type="text" placeholder="Search" [(ngModel)]="attributeFilterTerm"
+                    [ngModelOptions]="{standalone: true}">
+                </div>
+                <ul class="attributes-area">
+                  <li *ngFor="let i=index;let item of attrData | searchFilter:attributeFilterTerm">
+                    <p class="checbox-custom checkbox-team">
+                      <!-- <input class="mat-checkbox mat-accent" formControlName="attributes" type="checkbox"
                               (change)="checkFilterState($event,item);filterValue(item)" [checked]="item.isChecked">
                             <span class="checkmark"></span> -->
-                          <input class="mat-checkbox mat-accent" type="checkbox"
-                            (change)="availableToSelectedAttribute($event,item,i)" [checked]="item.isChecked">
-                          <span class="checkmark"></span>
-                          <label class="attribute-name attr-field">{{item?.name | titlecase}}</label>
-                        </p>
-                      </li>
-                    </ul>
-                  </div>
+                      <input class="mat-checkbox mat-accent" type="checkbox"
+                        (change)="availableToSelectedAttribute($event,item,i)" [checked]="item.isChecked">
+                      <span class="checkmark"></span>
+                      <label class="attribute-name attr-field">{{item?.name | titlecase}}</label>
+                    </p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="form-group col-md-7">
+              <mat-label>Selected Attributes</mat-label>
+              <div class="available-attribute-section row m-0">
+                <div class="search-filter-area">
+                  <input type="text" placeholder="Search" [(ngModel)]="selectedAttributeFilterTerm"
+                    [ngModelOptions]="{standalone: true}">
                 </div>
-                <div class="form-group col-md-7">
-                  <mat-label>Selected Attributes</mat-label>
-                  <div class="available-attribute-section row m-0">
-                    <div class="search-filter-area">
-                      <input type="text" placeholder="Search" [(ngModel)]="selectedAttributeFilterTerm"
-                        [ngModelOptions]="{standalone: true}">
-                    </div>
 
-                    <div class="selected-attribute-panel">
-                      <mat-accordion>
-                        <mat-expansion-panel
-                          *ngFor="let i = index;let data of userAttributeForm.value.attributes | searchFilter:selectedAttributeFilterTerm">
-                          <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
-                            [expandedHeight]="customExpandedHeight">
-                            <mat-panel-title>
-                              <p class="group-name">
-                                {{data.name? data.name : 'N/A'}} ({{data.value? data.value : 'N/A'}})</p>
-                            </mat-panel-title>
-                          </mat-expansion-panel-header>
-                          <div *ngIf="data.type">
-                            <mat-slider (input)="onSliderChange($event,data.type,i)" *ngIf="data.type == 'Proficient'"
-                              [value]="data.value" thumbLabel [displayWith]="formatLabel" tickInterval="1" min="0"
-                              max="10"></mat-slider>
-                            <mat-slide-toggle (change)="onToggleChange($event,data.type,i)"
-                              *ngIf="data.type == 'Boolean'" [checked]="data.value">
-                            </mat-slide-toggle>
-                          </div>
-                        </mat-expansion-panel>
+                <div class="selected-attribute-panel">
+                  <mat-accordion>
+                    <mat-expansion-panel
+                      *ngFor="let i = index;let data of userAttributeForm.value.attributes | searchFilter:selectedAttributeFilterTerm">
+                      <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                        [expandedHeight]="customExpandedHeight">
+                        <mat-panel-title>
+                          <p class="group-name">
+                            {{data.name? data.name : 'N/A'}} ({{data.value? data.value : 'N/A'}})</p>
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+                      <div *ngIf="data.type">
+                        <mat-slider (input)="onSliderChange($event,data.type,i)" *ngIf="data.type == 'Proficient'"
+                          [value]="data.value" thumbLabel [displayWith]="formatLabel" tickInterval="1" min="0" max="10">
+                        </mat-slider>
+                        <mat-slide-toggle (change)="onToggleChange($event,data.type,i)" *ngIf="data.type == 'Boolean'"
+                          [checked]="data.value">
+                        </mat-slide-toggle>
+                      </div>
+                    </mat-expansion-panel>
 
-                      </mat-accordion>
-                    </div>
-                  </div>
+                  </mat-accordion>
                 </div>
               </div>
-            <!-- </mat-expansion-panel> -->
+            </div>
+          </div>
+          <!-- </mat-expansion-panel> -->
           <!-- </mat-accordion> -->
         </div>
 
@@ -242,8 +291,8 @@
           <div class="col-md-12">
             <div class="user-form-action-area">
               <button mat-raised-button (click)="onClose()" class="gray-btn">Cancel</button>
-              <button mat-raised-button [disabled]="!userAttributeForm.valid" (click)="onSave()" [mat-dialog-close]="true"
-                class="dark-blue-btn service-trigger">Save</button>
+              <button mat-raised-button [disabled]="!userAttributeForm.valid" (click)="onSave()"
+                [mat-dialog-close]="true" class="dark-blue-btn service-trigger">Save</button>
             </div>
           </div>
         </div>
