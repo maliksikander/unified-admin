@@ -23,55 +23,6 @@
             </button>
           </div>
 
-          <!-- <div class="routing-accordion">
-            <mat-accordion>
-              <ul class="top-heading routing-group-list">
-                <li>Name</li>
-                <li>Role</li>
-              </ul>
-              <ng-container>
-                <mat-expansion-panel
-                  *ngFor="let data of userData | searchFilter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
-                  <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
-                    [expandedHeight]="customExpandedHeight">
-                    <mat-panel-title>
-                      <p class="group-name">{{data.firstName? data.firstName : 'N/A'}}</p>
-                    </mat-panel-title>
-                    <mat-panel-title>
-                      <p class="group-name">{{data.Role? data.Role : 'N/A'}}</p>
-                      <div class="table-trigger">
-                        <span class="list-trigger-area">
-                          <button mat-mini-fab matTooltip="Edit" (click)="editUser(userProfileForm,data)"><i
-                              class="fa fa-pencil" aria-hidden="true"></i>
-                          </button>
-                        </span>
-                      </div>
-                    </mat-panel-title>
-                  </mat-expansion-panel-header>
-                  <mat-chip-list>
-                    <mat-chip *ngFor="let attr of data.attributes | slice :0:3">
-                      {{ attr.name }} ({{attr.value}})
-                    </mat-chip>
-                    <mat-chip *ngIf="data.attributes?.length > 3">+{{data.attributes?.length - 3}}</mat-chip>
-                  </mat-chip-list>
-
-                </mat-expansion-panel>
-              </ng-container>
-            </mat-accordion>
-            <div *ngIf="userData.length != 0" class="pagination-section">
-              <span class="page-span">
-                <span>Entries Per Page</span>
-                <select (change)="selectPage()" [(ngModel)]="selectedItem">
-                  <option *ngFor="let item of itemsPerPageList" [value]="item">{{ item }}
-                  </option>
-                </select>
-              </span>
-              <pagination-controls (pageBoundsCorrection)="pageBoundChange($event)"
-                (pageChange)="p = $event;pageChange($event)" previousLabel="" nextLabel="">
-              </pagination-controls>
-            </div>
-          </div> -->
-
           <div class="users-list">
             <ul class="top-heading">
               <li>Name</li>
@@ -86,7 +37,8 @@
                   </div>
                   <div class="list-view col-sm-9 col-md-9">
                     <mat-chip-list>
-                      <mat-chip *ngFor="let attr of data.attributes"
+                      <mat-chip [matMenuTriggerFor]="belowMenu" *ngFor="let attr of data.attributes;let i=index"
+                        [ngStyle]="{'border-color':attr?.type === 'Boolean' ? '#7ECCFF' : '#A2F565' }"
                         (click)="updateAttributeValue(updateAttributeForm,attr,data)">
                         <!-- <mat-chip *ngFor="let attr of data.attributes | slice :0:3"> -->
                         <!-- {{ attr.name}}({{attr.value}}) -->
@@ -104,11 +56,9 @@
                 <div class="list-action-area">
                   <span class="list-actions">
                     <button mat-mini-fab matTooltip="Edit" (click)="editUserAttributes(assignAttributeForm,data)">
-                      <!-- <i class="fa fa-plus" aria-hidden="true"></i> -->
                       <i class="material-icons">add</i>
                     </button>
                     <button mat-mini-fab matTooltip="Profile" (click)="viewUserProfile(userProfileForm,data)">
-                      <!-- <i class="fa fa-user" aria-hidden="true"></i> -->
                       <i class="material-icons">person</i>
                     </button>
                   </span>
@@ -157,8 +107,8 @@
     <!-- </mat-form-field> -->
     <!-- </div> -->
     <!-- <div> -->
-    <button *ngIf="attrType !== 'Boolean'" mat-raised-button [mat-dialog-close]="true"
-      class="dark-blue-btn service-trigger">Remove</button>
+    <button *ngIf="attrType !== 'Boolean'" mat-flat-button [mat-dialog-close]="true" class="dark-blue-btn">Remove
+      Attribute</button>
     <div class="close-attr-btn">
       <mat-icon (click)="onClose()">close</mat-icon>
     </div>
@@ -169,6 +119,23 @@
   <!-- </form> -->
   <!-- </div> -->
 </ng-template>
+
+<!-- <ng-template class="test"> -->
+<mat-menu [class]="attrType === 'Boolean' ? 'chip-width' : 'chip-menu'" #belowMenu="matMenu" yPosition="below">
+  <div class="attribute-dialog" [ngClass]="{'bool-attribute':attrType =='Boolean'}">
+    <input (click)="$event.stopPropagation()" [disabled]="true" [ngModel]="attrName" matInput>
+    <select [(ngModel)]="attrValue" (click)="$event.stopPropagation()">
+      <option *ngFor="let data of attrValueList" [value]="data">{{data}}</option>
+    </select>
+    <button *ngIf="attrType !== 'Boolean'" mat-flat-button class="dark-blue-btn">Remove
+      Attribute</button>
+    <div class="close-attr-btn">
+      <mat-icon (click)="onClose()">close</mat-icon>
+    </div>
+  </div>
+</mat-menu>
+<!-- </ng-template> -->
+
 
 
 <ng-template #userProfileForm>

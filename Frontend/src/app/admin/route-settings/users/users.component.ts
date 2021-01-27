@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, QueryList, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
@@ -6,6 +6,8 @@ import { CommonService } from '../../services/common.service';
 import { EndpointService } from '../../services/endpoint.service';
 import { SnackbarService } from '../../services/snackbar.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { TemplatePortal } from '@angular/cdk/portal';
 
 
 @Component({
@@ -56,11 +58,19 @@ export class UsersComponent implements OnInit {
   expandedElement: 'collapsed';
 
 
+
+  // public _overlayRef: OverlayRef;
+  // @ViewChild('chip') chip: ElementRef<any>;
+  // @ViewChild('chip')private chip:QueryList<ElementRef>;
+
   constructor(private commonService: CommonService,
     private dialog: MatDialog,
     private endPointService: EndpointService,
     private formBuilder: FormBuilder,
-    private snackbar: SnackbarService,) { }
+    private snackbar: SnackbarService,
+    private overlay: Overlay,
+    private viewContainerRef: ViewContainerRef
+  ) { }
 
   ngOnInit() {
 
@@ -109,6 +119,7 @@ export class UsersComponent implements OnInit {
     this.dialog.closeAll();
     this.searchTerm = "";
     this.editData = undefined;
+    // this._overlayRef && (this._overlayRef.dispose(), this._overlayRef = null);
   }
 
   getAttribute() {
@@ -326,23 +337,26 @@ export class UsersComponent implements OnInit {
     }
   }
 
-  attrName='';
-  attrValue='';
-  attrType:any;
+  attrName = '';
+  attrValue = '';
+  attrType: any;
   updateAttributeValue(templateRef, attr, data) {
 
-    this.onClose();
-    let width='';
+    // this.onClose();
+
+
+
+    // let width = '';
     this.attrName = attr.name;
     this.attrValue = attr.value;
     this.attrType = attr.type;
     if (attr.type == 'Boolean') {
       this.attrValueList = ["true", "false"];
-      width = '200px';
+      // width = '200px';
     }
     else {
       this.attrValueList = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
-      width = '300px';
+      // width = '300px';
     }
 
 
@@ -350,24 +364,31 @@ export class UsersComponent implements OnInit {
     //   attributeName: attr.name,
     //   attributeValue: attr.value,
     // });
+    // const filterData = {
+    //   top : this.chip.nativeElement.getBoundingClientRect().top,
+    //   left : this.chip.nativeElement.getBoundingClientRect().left
+    // };
 
-    let dialogRef = this.dialog.open(templateRef, {
-      width: width,
-      height: '100px',
-      panelClass: 'add-user',
-      disableClose: false,
-      hasBackdrop: false,
-      // data: data
-    });
+
+    // let dialogRef = this.dialog.open(templateRef, {
+    //   width: width,
+    //   height: '100px',
+    //   panelClass: 'update-attribute',
+    //   disableClose: false,
+    //   hasBackdrop: false,
+    //   // data: filterData
+    // });
     // this.spinner = true;
     // this.getAttribute();
 
-    dialogRef.afterClosed().subscribe(res => {
+    // dialogRef.afterClosed().subscribe(res => {
+
+      // this._overlayRef && (this._overlayRef.dispose(), this._overlayRef = null);
       // this.editData = undefined;
       // this.attrData = undefined;
       // this.attributeFilterTerm = '';
       // this.selectedAttributeFilterTerm = '';
-    });
+    // });
   }
 
 }
