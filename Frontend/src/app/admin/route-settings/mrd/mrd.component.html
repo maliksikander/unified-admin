@@ -35,10 +35,10 @@
               <tbody>
                 <ng-container>
                   <tr *ngFor="let data of mrdData | searchFilter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
-                    <td scope="row">{{data.Name ? data.Name : 'N/A'}}</td>
-                    <td >{{data.Description ? data.Description : 'N/A'}}</td>
+                    <td scope="row">{{data.name ? data.name : 'N/A'}}</td>
+                    <td >{{data.description ? data.description : 'N/A'}}</td>
                     <td class="table-trigger">
-                      <mat-slide-toggle (change)="onStatusChange($event,data)" [checked]="data.Interruptible"> </mat-slide-toggle>
+                      <mat-slide-toggle (change)="onStatusChange($event,data)" [checked]="data.interruptible"> </mat-slide-toggle>
 
                       <span class="list-trigger-area">
                         <button matTooltip="Edit" (click)="editMrd(newMrd,data)" mat-mini-fab><i class="fa fa-pencil"

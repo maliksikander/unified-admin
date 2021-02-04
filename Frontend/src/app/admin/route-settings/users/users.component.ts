@@ -1,14 +1,11 @@
-import { Component, ElementRef, OnInit, QueryList, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatMenuTrigger } from '@angular/material';
 import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 import { CommonService } from '../../services/common.service';
 import { EndpointService } from '../../services/endpoint.service';
 import { SnackbarService } from '../../services/snackbar.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Overlay, OverlayRef } from '@angular/cdk/overlay';
-import { TemplatePortal } from '@angular/cdk/portal';
-
 
 @Component({
   selector: 'app-users',
@@ -41,9 +38,8 @@ export class UsersComponent implements OnInit {
   validations;
   userForm: FormGroup;
   userAttributeForm: FormGroup;
-  attributeUpdateForm: FormGroup;
   formHeading = 'User Profile';
-  reqServiceType = 'agent';
+  reqServiceType = 'agents';
   editData: any;
   userData = [];
   attrData = [];
@@ -52,24 +48,21 @@ export class UsersComponent implements OnInit {
   attrValueList = [];
   customCollapsedHeight: string = '48px';
   customExpandedHeight: string = '48px';
-
   dataSource = [];
   columnsToDisplay = ['name', 'weight', 'symbol', 'position'];
   expandedElement: 'collapsed';
-
-
-
-  // public _overlayRef: OverlayRef;
-  // @ViewChild('chip') chip: ElementRef<any>;
-  // @ViewChild('chip')private chip:QueryList<ElementRef>;
+  @ViewChild('attributeMenuTrigger') attributeMenuTrigger: MatMenuTrigger;
+  attrName = '';
+  attrValue = '';
+  attrType: any;
+  attrId;
+  userObj;
 
   constructor(private commonService: CommonService,
     private dialog: MatDialog,
     private endPointService: EndpointService,
     private formBuilder: FormBuilder,
     private snackbar: SnackbarService,
-    private overlay: Overlay,
-    private viewContainerRef: ViewContainerRef
   ) { }
 
   ngOnInit() {
@@ -81,25 +74,13 @@ export class UsersComponent implements OnInit {
 
     this.userForm = this.formBuilder.group({
       agentId: [''],
-      // attributes: [],
       firstName: [''],
       lastName: [''],
     });
 
     this.userAttributeForm = this.formBuilder.group({
-      // agentId: [''],
       attributes: [],
-      // firstName: [''],
-      // lastName: [''],
     });
-
-    this.attributeUpdateForm = this.formBuilder.group({
-      attributeName: [],
-      // attributeType: [],
-      attributeValue: [],
-    });
-
-
 
     this.userForm.controls['agentId'].disable();
     this.userForm.controls['firstName'].disable();
@@ -119,11 +100,10 @@ export class UsersComponent implements OnInit {
     this.dialog.closeAll();
     this.searchTerm = "";
     this.editData = undefined;
-    // this._overlayRef && (this._overlayRef.dispose(), this._overlayRef = null);
   }
 
   getAttribute() {
-    this.endPointService.get('attribute').subscribe(
+    this.endPointService.get('routing-attributes').subscribe(
       (res: any) => {
         this.attrData = JSON.parse(JSON.stringify(res));
         if (this.attrData && this.attrData.length > 0) {
@@ -156,6 +136,7 @@ export class UsersComponent implements OnInit {
         this.spinner = false;
         this.userData = JSON.parse(JSON.stringify(res));
         this.usersCopy = JSON.parse(JSON.stringify(res));
+        // console.log("users-->",this.userData);
         if (res.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
       },
       error => {
@@ -337,58 +318,55 @@ export class UsersComponent implements OnInit {
     }
   }
 
-  attrName = '';
-  attrValue = '';
-  attrType: any;
-  updateAttributeValue(templateRef, attr, data) {
-
-    // this.onClose();
-
-
-
-    // let width = '';
-    this.attrName = attr.name;
+  updateAttributeValue(attr, data) {
+    // console.log("attr-->",attr)
+    // console.log("data-->",data)
+    this.attrName = attr.routingAttribute.name;
     this.attrValue = attr.value;
-    this.attrType = attr.type;
-    if (attr.type == 'Boolean') {
+    this.attrType = attr.routingAttribute.type;
+    this.attrId = attr.routingAttribute._id;
+    this.userObj = data;
+    if (attr.routingAttribute.type == 'Boolean') {
       this.attrValueList = ["true", "false"];
-      // width = '200px';
     }
     else {
       this.attrValueList = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
-      // width = '300px';
+    }
+  }
+
+  onAttrChange(e) {
+  
+    if (this.userObj.attributes && this.userObj.attributes.length > 0) {
+      let attr = this.userObj.attributes.find(item => item._id == this.attrId);
+      let index = this.userObj.attributes.indexOf(attr)
+      if (e == 'false') {
+        this.userObj.attributes.splice(index, 1);
+      }
+      else {
+        this.userObj.attributes[index].value = e;
+        this.closeMenu();
+      }
+
+      // Enter put request here
     }
 
 
-    // this.attributeUpdateForm.patchValue({
-    //   attributeName: attr.name,
-    //   attributeValue: attr.value,
-    // });
-    // const filterData = {
-    //   top : this.chip.nativeElement.getBoundingClientRect().top,
-    //   left : this.chip.nativeElement.getBoundingClientRect().left
-    // };
-
-
-    // let dialogRef = this.dialog.open(templateRef, {
-    //   width: width,
-    //   height: '100px',
-    //   panelClass: 'update-attribute',
-    //   disableClose: false,
-    //   hasBackdrop: false,
-    //   // data: filterData
-    // });
-    // this.spinner = true;
-    // this.getAttribute();
-
-    // dialogRef.afterClosed().subscribe(res => {
-
-      // this._overlayRef && (this._overlayRef.dispose(), this._overlayRef = null);
-      // this.editData = undefined;
-      // this.attrData = undefined;
-      // this.attributeFilterTerm = '';
-      // this.selectedAttributeFilterTerm = '';
-    // });
   }
+
+  removeAttribute() {
+    if (this.userObj.attributes && this.userObj.attributes.length > 0) {
+      let attr = this.userObj.attributes.find(item => item._id == this.attrId);
+      let index = this.userObj.attributes.indexOf(attr)
+      this.userObj.attributes.splice(index, 1);
+
+      // Enter put request here
+    }
+  }
+
+
+  closeMenu() {
+    this.attributeMenuTrigger.closeMenu();
+  }
+
 
 }

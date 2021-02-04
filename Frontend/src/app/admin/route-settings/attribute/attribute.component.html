@@ -41,7 +41,7 @@
                     <td scope="row">{{data.name ? data.name : 'N/A'}}</td>
                     <td>{{data.description ? data.description :'N/A'}}</td>
                     <td>{{data.type ? data.type : 'N/A'}}</td>
-                    <td class="table-trigger">{{data.value ? data.value : 'N/A'}}
+                    <td class="table-trigger">{{data.defaultValue ? data.defaultValue : 'N/A'}}
                       <span class="list-trigger-area">
                         <button matTooltip="Edit" (click)="editAttribute(newAttribute,data)" mat-mini-fab><i
                             class="fa fa-pencil" aria-hidden="true"></i>

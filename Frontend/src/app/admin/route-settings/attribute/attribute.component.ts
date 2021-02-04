@@ -33,7 +33,7 @@ export class AttributeComponent implements OnInit {
   saveBtnText = 'Create';
   attrData = [];
   editData;
-  reqServiceType = 'attribute';
+  reqServiceType = 'routing-attributes';
 
   constructor(
     private commonService: CommonService,
@@ -90,7 +90,7 @@ export class AttributeComponent implements OnInit {
     this.saveBtnText = 'Create'
     let dialogRef = this.dialog.open(templateRef, {
       width: '550px',
-      height: '400px',
+      height: '440px',
       panelClass: 'add-attribute',
       disableClose: true,
     });
@@ -166,14 +166,14 @@ export class AttributeComponent implements OnInit {
       name: data.name,
       description: data.description,
       type: this.attrType[typeIndex],
-      profVal: JSON.parse(data.value),
-      boolVal: JSON.parse(data.value),
+      profVal: JSON.parse(data.defaultValue),
+      boolVal: JSON.parse(data.defaultValue),
     });
     this.formHeading = 'Edit Attribute';
     this.saveBtnText = 'Update'
     let dialogRef = this.dialog.open(templateRef, {
       width: '550px',
-      height: '400px',
+      height: '440px',
       panelClass: 'add-attribute',
       disableClose: true,
       data: data
@@ -220,10 +220,10 @@ export class AttributeComponent implements OnInit {
     data.description = this.attributeForm.value.description;
     data.type = this.attributeForm.value.type;
     if (this.attributeForm.value.type == 'Boolean') {
-      data.value = JSON.stringify(this.attributeForm.value.boolVal);
+      data.defaultValue = JSON.stringify(this.attributeForm.value.boolVal);
     }
     else {
-      data.value = JSON.stringify(this.attributeForm.value.profVal);
+      data.defaultValue = JSON.stringify(this.attributeForm.value.profVal);
     }
     return data;
   }

@@ -1,4 +1,4 @@
 {
   "Admin_URL":"http://localhost:3000/unified-admin/api/v1",
-  "MRE_URL":"https://192.168.2.83/mre-microservice/mre/api"
+  "MRE_URL":"https://8ee6bde0-81fb-4423-994a-378c751bba37.mock.pstmn.io"
 }

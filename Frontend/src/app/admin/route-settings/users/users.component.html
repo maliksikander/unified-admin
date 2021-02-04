@@ -33,20 +33,20 @@
                 *ngFor="let data of userData | searchFilter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
                 <div class="row">
                   <div class="col-sm-3 col-md-3">
-                    <span>{{data.firstName? data.firstName : 'N/A'}}</span>
+                    <span>{{data?.keycloakUser?.firstName ? data?.keycloakUser?.firstName : 'N/A'}}</span>
                   </div>
                   <div class="list-view col-sm-9 col-md-9">
                     <mat-chip-list>
-                      <mat-chip [matMenuTriggerFor]="belowMenu" *ngFor="let attr of data.attributes;let i=index"
-                        [ngStyle]="{'border-color':attr?.type === 'Boolean' ? '#7ECCFF' : '#A2F565' }"
-                        (click)="updateAttributeValue(updateAttributeForm,attr,data)">
+                      <mat-chip #attributeMenuTrigger="matMenuTrigger" [matMenuTriggerFor]="updateAttrMenu" *ngFor="let attr of data?.routingAttributes;let i=index"
+                        [ngStyle]="{'border-color':attr?.routingAttribute?.type === 'Boolean' ? '#7ECCFF' : '#A2F565' }"
+                        (click)="updateAttributeValue(attr,data)">
                         <!-- <mat-chip *ngFor="let attr of data.attributes | slice :0:3"> -->
                         <!-- {{ attr.name}}({{attr.value}}) -->
-                        <ng-container *ngIf="attr.type == 'Boolean'">
-                          {{ attr.name}}
+                        <ng-container *ngIf="attr?.routingAttribute?.type == 'Boolean'">
+                          {{ attr?.routingAttribute?.name}}
                         </ng-container>
-                        <ng-container *ngIf="attr.type == 'Proficient'">
-                          {{ attr.name}}({{attr.value}})
+                        <ng-container *ngIf="attr?.routingAttribute?.type == 'Proficient'">
+                          {{ attr?.routingAttribute?.name}}({{attr?.value}})
                         </ng-container>
                       </mat-chip>
                       <!-- <mat-chip *ngIf="data.attributes?.length > 3">+{{data.attributes?.length - 3}}</mat-chip> -->
@@ -84,59 +84,21 @@
   </div>
 </div>
 
-<ng-template #updateAttributeForm>
-  <!-- <div class="attribute-update-content"> -->
-  <!-- <form [formGroup]="attributeUpdateForm"> -->
-  <!-- <div class="row"> -->
-  <div class="form-group attribute-dialog" [ngClass]="(attrType =='Boolean')?'bool-attribute':'prof-attribute'">
-    <!-- <div class="form-group"> -->
-    <!-- <mat-form-field> -->
-    <!-- <input matInput formControlName="attributeName"> -->
-    <input [disabled]="true" [ngModel]="attrName" matInput>
 
-    <!-- </mat-form-field> -->
-    <!-- </div> -->
-    <!-- <div class="form-group"> -->
-    <!-- <mat-form-field> -->
-    <!-- <mat-select formControlName="attributeValue">
-                <mat-option *ngFor="let data of attrValueList" [value]="data">{{data}}</mat-option>
-              </mat-select> -->
-    <select [(ngModel)]="attrValue">
-      <option *ngFor="let data of attrValueList" [value]="data">{{data}}</option>
-    </select>
-    <!-- </mat-form-field> -->
-    <!-- </div> -->
-    <!-- <div> -->
-    <button *ngIf="attrType !== 'Boolean'" mat-flat-button [mat-dialog-close]="true" class="dark-blue-btn">Remove
-      Attribute</button>
-    <div class="close-attr-btn">
-      <mat-icon (click)="onClose()">close</mat-icon>
-    </div>
-    <!-- <mat-icon (click)="onClose()">close</mat-icon> -->
-    <!-- </div> -->
-    <!-- </div> -->
-  </div>
-  <!-- </form> -->
-  <!-- </div> -->
-</ng-template>
 
-<!-- <ng-template class="test"> -->
-<mat-menu [class]="attrType === 'Boolean' ? 'chip-width' : 'chip-menu'" #belowMenu="matMenu" yPosition="below">
+<mat-menu [class]="attrType === 'Boolean' ? 'chip-width' : 'chip-menu'" #updateAttrMenu="matMenu" yPosition="below">
   <div class="attribute-dialog" [ngClass]="{'bool-attribute':attrType =='Boolean'}">
     <input (click)="$event.stopPropagation()" [disabled]="true" [ngModel]="attrName" matInput>
-    <select [(ngModel)]="attrValue" (click)="$event.stopPropagation()">
+    <select [(ngModel)]="attrValue" (click)="$event.stopPropagation()" (change)="onAttrChange($event.target.value)">
       <option *ngFor="let data of attrValueList" [value]="data">{{data}}</option>
     </select>
-    <button *ngIf="attrType !== 'Boolean'" mat-flat-button class="dark-blue-btn">Remove
+    <button (click)="removeAttribute()" *ngIf="attrType !== 'Boolean'" mat-flat-button class="dark-blue-btn">Remove
       Attribute</button>
     <div class="close-attr-btn">
-      <mat-icon (click)="onClose()">close</mat-icon>
+      <mat-icon>close</mat-icon>
     </div>
   </div>
 </mat-menu>
-<!-- </ng-template> -->
-
-
 
 <ng-template #userProfileForm>
   <div class="user-dialog-container">
@@ -244,14 +206,11 @@
                         </mat-slide-toggle>
                       </div>
                     </mat-expansion-panel>
-
                   </mat-accordion>
                 </div>
               </div>
             </div>
           </div>
-          <!-- </mat-expansion-panel> -->
-          <!-- </mat-accordion> -->
         </div>
 
         <div class="template-action row">

@@ -31,7 +31,7 @@ export class PrecisionQueueComponent implements OnInit {
   validations;
   agentCriteria = ['longest available', 'most skilled', 'least skilled'];
   conditionList = ["AND", "OR"]
-  reqServiceType = 'pqueue';
+  reqServiceType = 'precision-queues';
   formHeading = 'Add New Queue';
   saveBtnText = 'Create';
   mrdData = [];
@@ -111,12 +111,12 @@ export class PrecisionQueueComponent implements OnInit {
     return this.endPointService.get(this.reqServiceType).pipe(map(
       e => {
         const attr = e;
-        if (!this.editData && (attr.find(e => e.Name.toLowerCase() == control.value.toLowerCase()))) return { validName: true };
+        if (!this.editData && (attr.find(e => e.name.toLowerCase() == control.value.toLowerCase()))) return { validName: true };
         if (this.editData && this.editData.length > 0) {
           const attr2 = attr;
-          const index = attr2.findIndex(e => e.Name == this.editData.Name);
+          const index = attr2.findIndex(e => e.name == this.editData.name);
           attr2.splice(index, 1);
-          if (attr2.find(e => e.Name.toLowerCase() == control.value.toLowerCase())) return { validName: true };
+          if (attr2.find(e => e.name.toLowerCase() == control.value.toLowerCase())) return { validName: true };
         }
       }
     ));
@@ -190,7 +190,7 @@ export class PrecisionQueueComponent implements OnInit {
   }
 
   getMRD() {
-    this.endPointService.get('mrd').subscribe(
+    this.endPointService.get('media-routing-domains').subscribe(
       (res: any) => {
         this.spinner = false;
         this.mrdData = res;
@@ -203,7 +203,7 @@ export class PrecisionQueueComponent implements OnInit {
   }
 
   getAttribute() {
-    this.endPointService.get('attribute').subscribe(
+    this.endPointService.get('routing-attributes').subscribe(
       (res: any) => {
         this.spinner = false;
         this.attrData = res;
@@ -264,8 +264,8 @@ export class PrecisionQueueComponent implements OnInit {
     const mrdIndex = this.mrdData.findIndex(item => item._id == data.mrd._id);
     this.editData = data;
     this.queueForm.patchValue({
-      name: data.Name,
-      agentCriteria: data.AgentSelectionCriteria,
+      name: data.name,
+      agentCriteria: data.agentSelectionCriteria,
       mrd: this.mrdData[mrdIndex],
       serviceLevelThreshold: data.serviceLevelThreshold,
       serviceLevelType: data.serviceLevelType,
@@ -321,9 +321,9 @@ export class PrecisionQueueComponent implements OnInit {
   saveObjFormation() {
     const temp = this.queueForm.value;
     let data: any = {};
-    data.Name = temp.name;
+    data.name = temp.name;
     data.mrd = temp.mrd;
-    data.AgentSelectionCriteria = temp.agentCriteria;
+    data.agentSelectionCriteria = temp.agentCriteria;
     data.serviceLevelThreshold = temp.serviceLevelThreshold;
     data.serviceLevelType = temp.serviceLevelType;
     return data;
@@ -334,7 +334,7 @@ export class PrecisionQueueComponent implements OnInit {
     let data = this.saveObjFormation();
     if (this.editData) {
       data._id = this.editData._id;
-      data.Steps = this.editData.Steps;
+      data.steps = this.editData.steps;
       this.updateQueue(data, data._id);
     }
     else { this.createQueue(data); }
@@ -370,6 +370,7 @@ export class PrecisionQueueComponent implements OnInit {
     for (let j = 0; j < terms.length; j++) {
       let termObj: any = {
         AttributeName: "",
+        AttributeId:"",
         ConditionOperator: "",
         Value: ""
       };
@@ -393,6 +394,7 @@ export class PrecisionQueueComponent implements OnInit {
     let termObj = termObject;
     termObj.AttributeName = terms[j].attribute.name;
     termObj.ConditionOperator = terms[j].operator;
+    termObj.AttributeId = terms[j].attribute._id;
     if (terms[j].attribute.type == 'Boolean') { termObj.Value = terms[j].boolVal; }
     else { termObj.Value = terms[j].profVal; }
     return termObj;
@@ -436,21 +438,22 @@ export class PrecisionQueueComponent implements OnInit {
     let data = JSON.parse(JSON.stringify(this.queueData[i]));
     if (mode.mode == 'update') {
       newStep._id = mode._id;
-      let stepIndex = data.Steps.findIndex(x => x._id == mode._id);
+      let stepIndex = data.steps.findIndex(x => x._id == mode._id);
       if (stepIndex != -1) {
-        data.Steps[stepIndex] = newStep;
+        data.steps[stepIndex] = newStep;
       }
     }
     else {
-      data.Steps.push(newStep);
+      data.steps.push(newStep);
     }
-    this.updateQueue(data, data._id);
-    this.resetStepForm();
+    console.log("step data-->",data)
+    // this.updateQueue(data, data._id);
+    // this.resetStepForm();
 
   }
 
   reconstructExpTermGroup(expTerm, termObj) {
-    const temp = this.attrData.filter(item => item.name == expTerm.AttributeName);
+    const temp = this.attrData.filter(item => item._id == expTerm.AttributeId);
     termObj.attribute = temp[0];
     termObj.operator = expTerm.ConditionOperator;
     if (expTerm.Value == "true" || expTerm.Value == "false") {
@@ -585,11 +588,11 @@ export class PrecisionQueueComponent implements OnInit {
   }
 
   deleteStep(stepData, i) {
-    let Steps = this.queueData[i].Steps;
+    let steps = this.queueData[i].steps;
     let queue = this.queueData[i]
 
-    if (Steps && Steps.length > 0) {
-      this.queueData[i].Steps = this.queueData[i].Steps.filter(i => i !== stepData)
+    if (steps && steps.length > 0) {
+      this.queueData[i].steps = this.queueData[i].steps.filter(i => i !== stepData)
         .map((i, idx) => (i.position = (idx + 1), i));
 
       this.updateQueueStep(queue);

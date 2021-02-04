@@ -31,7 +31,7 @@ export class MrdComponent implements OnInit {
   saveBtnText = 'Create';
   mrdData = [];
   editData: any;
-  reqServiceType = 'mrd';
+  reqServiceType = 'media-routing-domains';
 
   constructor(private commonService: CommonService,
     private dialog: MatDialog,
@@ -66,12 +66,12 @@ export class MrdComponent implements OnInit {
     return this.endPointService.get(this.reqServiceType).pipe(map(
       e => {
         const attr = e;
-        if (!this.editData && (attr.find(e => e.Name.toLowerCase() == control.value.toLowerCase()))) return { validName: true };
+        if (!this.editData && (attr.find(e => e.name.toLowerCase() == control.value.toLowerCase()))) return { validName: true };
         if (this.editData && this.editData.length > 0) {
           const attr2 = attr;
-          const index = attr2.findIndex(e => e.Name == this.editData.Name);
+          const index = attr2.findIndex(e => e.name == this.editData.name);
           attr2.splice(index, 1);
-          if (attr2.find(e => e.Name.toLowerCase() == control.value.toLowerCase())) return { validName: true };
+          if (attr2.find(e => e.name.toLowerCase() == control.value.toLowerCase())) return { validname: true };
         }
       }
     ));
@@ -176,9 +176,9 @@ export class MrdComponent implements OnInit {
   editMrd(templateRef, data) {
     this.editData = data;
     this.mrdForm.patchValue({
-      name: data.Name,
-      description: data.Description,
-      enabled: data.Interruptible,
+      name: data.name,
+      description: data.description,
+      enabled: data.interruptible,
     });
     this.formHeading = 'Edit MRD';
     this.saveBtnText = 'Update'
@@ -199,15 +199,15 @@ export class MrdComponent implements OnInit {
     let payload = JSON.parse(JSON.stringify(data));
     this.spinner = true;
     if (payload._id) delete payload._id;
-    payload.Interruptible = e.checked;
+    payload.interruptible = e.checked;
     this.updateMRD(payload, data._id);
   }
 
   onSaveObject() {
     let data: any = {};
-    data.Name = this.mrdForm.value.name;
-    data.Description = this.mrdForm.value.description;
-    data.Interruptible = this.mrdForm.value.enabled;
+    data.name = this.mrdForm.value.name;
+    data.description = this.mrdForm.value.description;
+    data.interruptible = this.mrdForm.value.enabled;
     return data;
   }
 
