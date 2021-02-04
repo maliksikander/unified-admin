@@ -75,7 +75,7 @@ export class EndpointService {
   ///////////////////// MRE Endpoints ////////////////////////
 
   create(data,reqServiceType): Observable<any> {
-    return this.httpClient.post<any>(`http://dc333bf6620d.ngrok.io/${reqServiceType}`, data, {
+    return this.httpClient.post<any>(`${this.MRE_MICRO_URL}/${reqServiceType}`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer'
