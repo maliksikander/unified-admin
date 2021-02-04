@@ -17,8 +17,8 @@ const fs = require('fs');
 const ApiError = require('./utils/ApiError');
 const angularRoutes = require('./angular.route');
 const app = express();
-const keycloak_init = require('./config/keycloak.config').initKeycloak();
-const keycloak = require('./config/keycloak.config').getKeycloak();
+// const keycloak_init = require('./config/keycloak.config').initKeycloak();
+// const keycloak = require('./config/keycloak.config').getKeycloak();
 // app.use(keycloak_init.middleware());
 
 
