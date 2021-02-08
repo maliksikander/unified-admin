@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatMenuTrigger } from '@angular/material';
 import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
@@ -6,6 +6,7 @@ import { CommonService } from '../../services/common.service';
 import { EndpointService } from '../../services/endpoint.service';
 import { SnackbarService } from '../../services/snackbar.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+
 
 @Component({
   selector: 'app-users',
@@ -57,6 +58,10 @@ export class UsersComponent implements OnInit {
   attrType: any;
   attrId;
   userObj;
+  keycloakUsers = [];
+  routingEngineUsers = [];
+
+
 
   constructor(private commonService: CommonService,
     private dialog: MatDialog,
@@ -130,13 +135,14 @@ export class UsersComponent implements OnInit {
       });
   }
 
-  getUsers() {
+  getRoutingEngineUsers() {
     this.endPointService.get(this.reqServiceType).subscribe(
       (res: any) => {
         this.spinner = false;
-        this.userData = JSON.parse(JSON.stringify(res));
-        this.usersCopy = JSON.parse(JSON.stringify(res));
-        // console.log("users-->",this.userData);
+
+        this.routingEngineUsers = JSON.parse(JSON.stringify(res));
+        // this.usersCopy = JSON.parse(JSON.stringify(res));
+        console.log("routing users res-->", this.routingEngineUsers);
         if (res.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
       },
       error => {
@@ -150,7 +156,7 @@ export class UsersComponent implements OnInit {
     this.endPointService.update(data, id, this.reqServiceType).subscribe(
       (res: any) => {
         this.snackbar.snackbarMessage('success-snackbar', "User Updated Successfully", 1);
-        this.getUsers();
+        // this.getUsers();
         this.dialog.closeAll();
       },
       (error: any) => {
@@ -263,8 +269,8 @@ export class UsersComponent implements OnInit {
   }
 
   syncUsers() {
-    this.spinner = true;
-    this.getUsers();
+    // this.spinner = true;
+    // this.getUsers();
   }
 
 
@@ -272,6 +278,7 @@ export class UsersComponent implements OnInit {
 
     // this.spinner = true;
     let data = JSON.parse(JSON.stringify(item));
+    console.log("data-->", data);
     // this.editData = JSON.parse(JSON.stringify(item));
 
     this.userForm.patchValue({
@@ -326,7 +333,7 @@ export class UsersComponent implements OnInit {
     this.attrType = attr.routingAttribute.type;
     this.attrId = attr.routingAttribute._id;
     this.userObj = data;
-    if (attr.routingAttribute.type == 'Boolean') {
+    if (attr.routingAttribute.type == 'BOOLEAN') {
       this.attrValueList = ["true", "false"];
     }
     else {
@@ -335,7 +342,7 @@ export class UsersComponent implements OnInit {
   }
 
   onAttrChange(e) {
-  
+
     if (this.userObj.attributes && this.userObj.attributes.length > 0) {
       let attr = this.userObj.attributes.find(item => item._id == this.attrId);
       let index = this.userObj.attributes.indexOf(attr)
@@ -366,6 +373,42 @@ export class UsersComponent implements OnInit {
 
   closeMenu() {
     this.attributeMenuTrigger.closeMenu();
+  }
+
+  getKeycloakUsers() {
+    // const data = ['agent','supervisor'];
+    this.spinner = true;
+    this.endPointService.getKeycloakUser().subscribe(
+      (res: any) => {
+        this.keycloakUsers = JSON.parse(JSON.stringify(res));
+        console.log("keycloak users res-->", this.keycloakUsers);
+        if (this.keycloakUsers && this.keycloakUsers.length > 0) {
+          for (let i = 0; i < this.keycloakUsers.length; i++) {
+            // this.userData[i].keycloakUser = this.keycloakUsers[i];
+            let temp = { "keycloakUser": this.keycloakUsers[i] };
+            this.userData.push(temp);
+          }
+        }
+
+        console.log("user data-->", this.userData);
+        this.getRoutingEngineUsers();
+        this.spinner = false;
+
+      },
+      error => {
+        console.log("Error fetching:", error);
+        this.spinner = false;
+        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
+      });
+  }
+
+
+  getUsers() {
+    this.getKeycloakUsers();
+    // this.getRoutingEngineUsers();
+
+
+
   }
 
 

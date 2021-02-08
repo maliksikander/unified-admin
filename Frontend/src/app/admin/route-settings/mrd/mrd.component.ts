@@ -155,7 +155,7 @@ export class MrdComponent implements OnInit {
   }
 
   deleteConfirm(data) {
-    let id = data._id;
+    let id = data.id;
     let msg = "Are you sure you want to delete this MRD ?";
     return this.dialog.open(ConfirmDialogComponent, {
       panelClass: 'confirm-dialog-container',
@@ -198,9 +198,9 @@ export class MrdComponent implements OnInit {
   onStatusChange(e, data) {
     let payload = JSON.parse(JSON.stringify(data));
     this.spinner = true;
-    if (payload._id) delete payload._id;
+    if (payload.id) delete payload.id;
     payload.interruptible = e.checked;
-    this.updateMRD(payload, data._id);
+    this.updateMRD(payload, data.id);
   }
 
   onSaveObject() {
@@ -215,7 +215,7 @@ export class MrdComponent implements OnInit {
     this.spinner = true;
     let data: any = this.onSaveObject()
     if (this.editData) {
-      this.updateMRD(data, this.editData._id);
+      this.updateMRD(data, this.editData.id);
     }
     else {
       this.createMRD(data);

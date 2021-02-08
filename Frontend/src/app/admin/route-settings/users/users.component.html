@@ -17,7 +17,7 @@
               </mat-form-field>
             </div>
 
-            <button mat-flat-button (click)='syncUsers()'>
+            <button mat-flat-button (click)='getKeycloakUsers()'>
               <mat-icon>sync</mat-icon>
               Sync
             </button>
@@ -37,15 +37,15 @@
                   </div>
                   <div class="list-view col-sm-9 col-md-9">
                     <mat-chip-list>
-                      <mat-chip #attributeMenuTrigger="matMenuTrigger" [matMenuTriggerFor]="updateAttrMenu" *ngFor="let attr of data?.routingAttributes;let i=index"
-                        [ngStyle]="{'border-color':attr?.routingAttribute?.type === 'Boolean' ? '#7ECCFF' : '#A2F565' }"
+                      <mat-chip #attributeMenuTrigger="matMenuTrigger" [matMenuTriggerFor]="updateAttrMenu" *ngFor="let attr of data?.associatedRoutingAttributes;let i=index"
+                        [ngStyle]="{'border-color':attr?.routingAttribute?.type === 'BOOLEAN' ? '#7ECCFF' : '#A2F565' }"
                         (click)="updateAttributeValue(attr,data)">
                         <!-- <mat-chip *ngFor="let attr of data.attributes | slice :0:3"> -->
                         <!-- {{ attr.name}}({{attr.value}}) -->
-                        <ng-container *ngIf="attr?.routingAttribute?.type == 'Boolean'">
+                        <ng-container *ngIf="attr?.routingAttribute?.type == 'BOOLEAN'">
                           {{ attr?.routingAttribute?.name}}
                         </ng-container>
-                        <ng-container *ngIf="attr?.routingAttribute?.type == 'Proficient'">
+                        <ng-container *ngIf="attr?.routingAttribute?.type == 'PROFICIENCY_LEVEL'">
                           {{ attr?.routingAttribute?.name}}({{attr?.value}})
                         </ng-container>
                       </mat-chip>
@@ -86,13 +86,13 @@
 
 
 
-<mat-menu [class]="attrType === 'Boolean' ? 'chip-width' : 'chip-menu'" #updateAttrMenu="matMenu" yPosition="below">
-  <div class="attribute-dialog" [ngClass]="{'bool-attribute':attrType =='Boolean'}">
+<mat-menu [class]="attrType === 'BOOLEAN' ? 'chip-width' : 'chip-menu'" #updateAttrMenu="matMenu" yPosition="below">
+  <div class="attribute-dialog" [ngClass]="{'bool-attribute':attrType =='BOOLEAN'}">
     <input (click)="$event.stopPropagation()" [disabled]="true" [ngModel]="attrName" matInput>
     <select [(ngModel)]="attrValue" (click)="$event.stopPropagation()" (change)="onAttrChange($event.target.value)">
       <option *ngFor="let data of attrValueList" [value]="data">{{data}}</option>
     </select>
-    <button (click)="removeAttribute()" *ngIf="attrType !== 'Boolean'" mat-flat-button class="dark-blue-btn">Remove
+    <button (click)="removeAttribute()" *ngIf="attrType !== 'BOOLEAN'" mat-flat-button class="dark-blue-btn">Remove
       Attribute</button>
     <div class="close-attr-btn">
       <mat-icon>close</mat-icon>
@@ -198,10 +198,10 @@
                         </mat-panel-title>
                       </mat-expansion-panel-header>
                       <div *ngIf="data.type">
-                        <mat-slider (input)="onSliderChange($event,data.type,i)" *ngIf="data.type == 'Proficient'"
+                        <mat-slider (input)="onSliderChange($event,data.type,i)" *ngIf="data.type == 'PROFICIENCY_LEVEL'"
                           [value]="data.value" thumbLabel [displayWith]="formatLabel" tickInterval="1" min="0" max="10">
                         </mat-slider>
-                        <mat-slide-toggle (change)="onToggleChange($event,data.type,i)" *ngIf="data.type == 'Boolean'"
+                        <mat-slide-toggle (change)="onToggleChange($event,data.type,i)" *ngIf="data.type == 'BOOLEAN'"
                           [checked]="data.value">
                         </mat-slide-toggle>
                       </div>

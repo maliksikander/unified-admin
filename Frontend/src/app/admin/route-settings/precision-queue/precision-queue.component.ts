@@ -89,7 +89,7 @@ export class PrecisionQueueComponent implements OnInit {
 
     this.stepForm = this.fb.group({
       timeout: ['', [Validators.required]],
-      expression: this.fb.array([
+      expressions: this.fb.array([
         this.addExpressionGroup()
       ])
     });
@@ -124,7 +124,7 @@ export class PrecisionQueueComponent implements OnInit {
 
   addExpressionGroup(): FormGroup {
     return this.fb.group({
-      expressionConditional: ["AND"],
+      preExpressionCondition: ["AND"],
       terms: new FormArray([
         this.addExpressionTermGroup()
       ])
@@ -132,25 +132,25 @@ export class PrecisionQueueComponent implements OnInit {
   }
 
   getExpressions(form) {
-    return form.controls.expression.controls;
+    return form.controls.expressions.controls;
   }
 
   addExpressionButton() {
-    (<FormArray>this.stepForm.controls['expression']).push(this.addExpressionGroup());
+    (<FormArray>this.stepForm.controls['expressions']).push(this.addExpressionGroup());
   }
 
   removeExpression(i) {
-    const exp: any = this.stepForm.get('expression')
+    const exp: any = this.stepForm.get('expressions')
     exp.removeAt(i);
   }
 
   addExpressionTermGroup(): FormGroup {
     return this.fb.group({
-      attribute: ['', Validators.required],
-      operator: ['', Validators.required],
+      routingAttribute: ['', Validators.required],
+      conditionOperator: ['', Validators.required],
       profVal: [1],
       boolVal: ['true'],
-      conditionalVal: ["AND"],
+      preTermCondition: ["AND"],
     });
   }
 
@@ -159,13 +159,13 @@ export class PrecisionQueueComponent implements OnInit {
   }
 
   addExpressionTermButton(i, j) {
-    const exp: any = this.stepForm.get('expression')
+    const exp: any = this.stepForm.get('expressions')
     const control = exp.controls[i].get('terms');
     control.push(this.addExpressionTermGroup());
   }
 
   removeTerm(i) {
-    const exp: any = this.stepForm.get('expression')
+    const exp: any = this.stepForm.get('expressions')
     const control: any = exp.controls[i].get('terms');
     const terms: any = control.controls;
     control.removeAt(i);
@@ -232,7 +232,7 @@ export class PrecisionQueueComponent implements OnInit {
     this.endPointService.get(this.reqServiceType).subscribe(
       (res: any) => {
         this.spinner = false;
-        // console.log("queue res-->", res);
+        console.log("queue res-->", res);
         this.queueData = res;
         if (res.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
         this.getMRD();
@@ -261,7 +261,7 @@ export class PrecisionQueueComponent implements OnInit {
 
   editQueue(templateRef, data) {
     // console.log("queue-->", data);
-    const mrdIndex = this.mrdData.findIndex(item => item._id == data.mrd._id);
+    const mrdIndex = this.mrdData.findIndex(item => item.id == data.mrd.id);
     this.editData = data;
     this.queueForm.patchValue({
       name: data.name,
@@ -300,7 +300,7 @@ export class PrecisionQueueComponent implements OnInit {
   }
 
   deleteConfirm(data) {
-    let id = data._id;
+    let id = data.id;
     let msg = "Are you sure you want to delete this Queue ?";
     return this.dialog.open(ConfirmDialogComponent, {
       panelClass: 'confirm-dialog-container',
@@ -333,12 +333,14 @@ export class PrecisionQueueComponent implements OnInit {
     this.spinner = true;
     let data = this.saveObjFormation();
     if (this.editData) {
-      data._id = this.editData._id;
+      data.id = this.editData.id;
       data.steps = this.editData.steps;
-      this.updateQueue(data, data._id);
+      this.updateQueue(data, data.id);
     }
     else { this.createQueue(data); }
   }
+
+  // Queue Step //
 
   openStepModal(templateRef, i) {
     this.stepFormHeading = 'Add Step';
@@ -364,81 +366,84 @@ export class PrecisionQueueComponent implements OnInit {
     });
   }
 
-  expTermFormation(terms) {
-    let exp: any = [];
-    let k = 0;
-    for (let j = 0; j < terms.length; j++) {
-      let termObj: any = {
-        AttributeName: "",
-        AttributeId:"",
-        ConditionOperator: "",
-        Value: ""
-      };
-      if (j == 0) {
-        let term = this.termObjectFormation(terms, j, termObj);
-        exp.splice(j, 0, term);
-      }
-      else {
-        const val = terms[j].conditionalVal;
-        k = k + 1;
-        exp.splice(k, 0, val);
-        let term = this.termObjectFormation(terms, j, termObj);
-        k = k + 1;
-        exp.splice(k, 0, term);
-      }
-    }
-    return exp;
-  }
+  // expTermFormation(terms) {
+  //   let exp: any = [];
+  //   let k = 0;
+  //   for (let j = 0; j < terms.length; j++) {
+  //     let termObj: any = {
+  //       AttributeName: "",
+  //       AttributeId: "",
+  //       conditionOperator: "",
+  //       Value: ""
+  //     };
+  //     if (j == 0) {
+  //       let term = this.termObjectFormation(terms, j, termObj);
+  //       exp.splice(j, 0, term);
+  //     }
+  //     else {
+  //       const val = terms[j].preTermCondition;
+  //       k = k + 1;
+  //       exp.splice(k, 0, val);
+  //       let term = this.termObjectFormation(terms, j, termObj);
+  //       k = k + 1;
+  //       exp.splice(k, 0, term);
+  //     }
+  //   }
+  //   return exp;
+  // }
 
-  termObjectFormation(terms, j, termObject) {
-    let termObj = termObject;
-    termObj.AttributeName = terms[j].attribute.name;
-    termObj.ConditionOperator = terms[j].operator;
-    termObj.AttributeId = terms[j].attribute._id;
-    if (terms[j].attribute.type == 'Boolean') { termObj.Value = terms[j].boolVal; }
-    else { termObj.Value = terms[j].profVal; }
-    return termObj;
-  }
+  // termObjectFormation(terms, j, termObject) {
+  //   let termObj = termObject;
+  //   termObj.AttributeName = terms[j].routingAttribute.name;
+  //   termObj.conditionOperator = terms[j].conditionOperator;
+  //   termObj.AttributeId = terms[j].routingAttribute.id;
+  //   if (terms[j].routingAttribute.type == 'BOOLEAN') { termObj.Value = terms[j].boolVal; }
+  //   else { termObj.Value = terms[j].profVal; }
+  //   return termObj;
+  // }
 
-  expressionFormation(expressions) {
-    let a = 0;
-    let expressionsArray: any = []
+  manipulateExpTerm(data) {
+
+    let expressions = JSON.parse(JSON.stringify(data.expressions));
     for (let i = 0; i < expressions.length; i++) {
-      let terms = expressions[i].terms;
-      let k = 0;
-      if (i == 0) {
-        let temp = { expression: this.expTermFormation(terms) };
-        expressionsArray.splice(k, 0, temp);
+      let termsCopy = JSON.parse(JSON.stringify(expressions[i].terms));
+      expressions[0].preExpressionCondition = 'null';
+      for (let j = 0; j < termsCopy.length; j++) {
+        let termObj: any = {
+          routingAttribute: "",
+          conditionOperator: "",
+          value: "",
+          preTermCondition: ""
+        };
+        termsCopy[0].preTermCondition = 'null';
+        termObj.routingAttribute = termsCopy[j].routingAttribute.id;
+        termObj.conditionOperator = termsCopy[j].conditionOperator;
+        termObj.preTermCondition = termsCopy[j].preTermCondition;
+        if (termsCopy[j].routingAttribute.type == 'BOOLEAN') {
+          termObj.value = termsCopy[j].boolVal;
+        }
+        else {
+          termObj.value = termsCopy[j].profVal;
+        }
+        termsCopy[j] = termObj;
       }
-      else {
-        const val = expressions[i].expressionConditional;
-        a = a + 1;
-        expressionsArray.splice(a, 0, val);
-        a = a + 1;
-        let temp = { expression: this.expTermFormation(terms) };
-        expressionsArray.splice(a, 0, temp);
-      }
-    }
-    return expressionsArray;
+      expressions[i].terms = termsCopy;
 
+    }
+    data.expressions = expressions;
+    return data;
+    
   }
 
   onStepSave(i, mode) {
     this.spinner = true;
-    let newStep: any = {
-      step: {
-        expressions: [],
-        timeout: "",
-      }
-    };
-    newStep.step.timeout = this.stepForm.value.timeout;
-    const expressions = this.stepForm.value.expression;
-    let expArray = this.expressionFormation(expressions);
-    newStep.step.expressions = expArray;
+    const formData = JSON.parse(JSON.stringify(this.stepForm.value));
+    let newStep = this.manipulateExpTerm(formData);
+ 
     let data = JSON.parse(JSON.stringify(this.queueData[i]));
     if (mode.mode == 'update') {
-      newStep._id = mode._id;
-      let stepIndex = data.steps.findIndex(x => x._id == mode._id);
+      newStep.id = mode.id;
+      let stepIndex = data.steps.findIndex(x => x.id == mode.id);
       if (stepIndex != -1) {
         data.steps[stepIndex] = newStep;
       }
@@ -446,16 +451,17 @@ export class PrecisionQueueComponent implements OnInit {
     else {
       data.steps.push(newStep);
     }
-    console.log("step data-->",data)
-    // this.updateQueue(data, data._id);
-    // this.resetStepForm();
+
+    // console.log("queue data-->",data);
+    this.updateQueue(data, data.id);
+    this.resetStepForm();
 
   }
 
   reconstructExpTermGroup(expTerm, termObj) {
-    const temp = this.attrData.filter(item => item._id == expTerm.AttributeId);
+    const temp = this.attrData.filter(item => item.id == expTerm.AttributeId);
     termObj.attribute = temp[0];
-    termObj.operator = expTerm.ConditionOperator;
+    termObj.conditionOperator = expTerm.conditionOperator;
     if (expTerm.Value == "true" || expTerm.Value == "false") {
       termObj.boolVal = expTerm.Value;
     }
@@ -470,11 +476,11 @@ export class PrecisionQueueComponent implements OnInit {
     for (let j = 0; j < expTerm.length; j++) {
       let k = 0;
       let term = {
-        attribute: {},
-        operator: "",
+        routingAttribute: {},
+        conditionOperator: "",
         profVal: 1,
         boolVal: "true",
-        conditionalVal: "AND"
+        preTermCondition: "AND"
       }
       if (j == 0) {
         let termResult = this.reconstructExpTermGroup(expTerm[j], term);
@@ -483,7 +489,7 @@ export class PrecisionQueueComponent implements OnInit {
       else {
         if (j % 2 != 0) {
           k = j + 1;
-          term.conditionalVal = expTerm[j];
+          term.preTermCondition = expTerm[j];
           let termResult = this.reconstructExpTermGroup(expTerm[k], term)
           formData.terms.push(termResult);
         }
@@ -496,12 +502,12 @@ export class PrecisionQueueComponent implements OnInit {
     let formData: any = [];
     for (let i = 0; i < temp.length; i++) {
       let formDataExpression: any = {
-        expressionConditional: "AND",
+        preExpressionCondition: "AND",
         terms: []
       }
       let a = 0;
       if (i == 0) {
-        formDataExpression.expressionConditional = "AND";
+        formDataExpression.preExpressionCondition = "AND";
         let expTerm = temp[i].expression;
         let result = this.reconstructExpTerm(expTerm, formDataExpression);
         formData.push(result);
@@ -509,7 +515,7 @@ export class PrecisionQueueComponent implements OnInit {
       else {
         if (i % 2 != 0) {
           a = i + 1;
-          formDataExpression.expressionConditional = temp[i];
+          formDataExpression.preExpressionCondition = temp[i];
           let expTerm = temp[a].expression;
           let result = this.reconstructExpTerm(expTerm, formDataExpression);
           formData.push(result);
@@ -522,10 +528,10 @@ export class PrecisionQueueComponent implements OnInit {
 
   loadFormExpression(data) {
     //create lines array first
-    for (let i = 0; i < data.expression.length; i++) {
-      const expFormArray = this.stepForm.get("expression") as FormArray;
+    for (let i = 0; i < data.expressions.length; i++) {
+      const expFormArray = this.stepForm.get("expressions") as FormArray;
       expFormArray.push(this.expression);
-      for (let term = 0; term < data.expression[i].terms.length; term++) {
+      for (let term = 0; term < data.expressions[i].terms.length; term++) {
         const termsFormsArray = expFormArray.at(i).get("terms") as FormArray;
         termsFormsArray.push(this.term);
       }
@@ -534,18 +540,20 @@ export class PrecisionQueueComponent implements OnInit {
   }
 
 
-  editStep(templateRef, stepData, i) {
+  editStep(templateRef, data, i) {
     this.stepFormHeading = 'Edit Step';
     this.stepSaveBtnText = 'Update';
-    let mreData: any = {};
-    mreData.timeout = JSON.parse(JSON.stringify(stepData.step.timeout));
-    let temp = JSON.parse(JSON.stringify(stepData.step.expressions));
-    const control = <FormArray>this.stepForm.controls['expression'];
+    let stepData: any = {};
+    console.log("data to be edited-->", data);
+    stepData.timeout = JSON.parse(JSON.stringify(data.timeout));
+    let temp = JSON.parse(JSON.stringify(data.expressions));
+    const control = <FormArray>this.stepForm.controls['expressions'];
     for (let i = control.length - 1; i >= 0; i--) {
       control.removeAt(i);
     }
-    mreData.expression = this.reconstructFormExpression(temp);
-    this.loadFormExpression(mreData);
+    stepData.expressions = this.reconstructFormExpression(temp);
+    console.log("step data-->", stepData)
+    // this.loadFormExpression(stepData);
     let dialogRef = this.dialog.open(templateRef, {
       width: '800px',
       // height: '350px',
@@ -555,11 +563,11 @@ export class PrecisionQueueComponent implements OnInit {
     });
     let mode = {
       mode: "update",
-      _id: stepData._id
+      id: data.id
     }
     dialogRef.afterClosed().subscribe(res => {
       if (res == 'save') {
-        this.onStepSave(i, mode)
+        // this.onStepSave(i, mode)
       }
       else {
         this.resetStepForm();
@@ -569,6 +577,36 @@ export class PrecisionQueueComponent implements OnInit {
 
   }
 
+
+  updateQueueStep(queue) {
+    this.endPointService.update(queue, queue.id, this.reqServiceType).subscribe(
+      (res: any) => {
+        this.snackbar.snackbarMessage('success-snackbar', "Updated Successfully", 1);
+      },
+      (error: any) => {
+        this.spinner = false;
+        console.log("Error fetching:", error);
+        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
+      });
+  }
+
+  get term(): FormGroup {
+    return this.fb.group({
+      routingAttribute: [''],
+      conditionOperator: [''],
+      profVal: [1],
+      boolVal: ['true'],
+      preTermCondition: ["AND"],
+    });
+  }
+
+  get expression(): FormGroup {
+    return this.fb.group({
+      preExpressionCondition: ["AND"],
+      terms: new FormArray([
+      ])
+    });
+  }
 
   deleteStepConfirm(stepData, i) {
     let msg = "Are you sure you want to delete this Step ?";
@@ -594,18 +632,14 @@ export class PrecisionQueueComponent implements OnInit {
     if (steps && steps.length > 0) {
       this.queueData[i].steps = this.queueData[i].steps.filter(i => i !== stepData)
         .map((i, idx) => (i.position = (idx + 1), i));
-
       this.updateQueueStep(queue);
 
     }
-
-
-
   }
 
   resetStepForm() {
     this.stepForm.reset();
-    const control = <FormArray>this.stepForm.controls['expression'];
+    const control = <FormArray>this.stepForm.controls['expressions'];
     for (let i = control.length - 1; i >= 0; i--) {
       control.removeAt(i)
     }
@@ -633,34 +667,6 @@ export class PrecisionQueueComponent implements OnInit {
     return value;
   }
 
-  updateQueueStep(queue) {
-    this.endPointService.update(queue, queue._id, this.reqServiceType).subscribe(
-      (res: any) => {
-        this.snackbar.snackbarMessage('success-snackbar', "Updated Successfully", 1);
-      },
-      (error: any) => {
-        this.spinner = false;
-        console.log("Error fetching:", error);
-        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
-      });
-  }
 
-  get term(): FormGroup {
-    return this.fb.group({
-      attribute: [''],
-      operator: [''],
-      profVal: [1],
-      boolVal: ['true'],
-      conditionalVal: ["AND"],
-    });
-  }
-
-  get expression(): FormGroup {
-    return this.fb.group({
-      expressionConditional: ["AND"],
-      terms: new FormArray([
-      ])
-    });
-  }
 
 }

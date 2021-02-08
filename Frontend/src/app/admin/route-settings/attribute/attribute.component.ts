@@ -28,7 +28,7 @@ export class AttributeComponent implements OnInit {
   };
   validations;
   attributeForm: FormGroup;
-  attrType = ['Boolean', 'Proficient'];
+  // attrType = ['BOOLEAN', 'PROFICIENCY_LEVEL'];
   formHeading = 'Add New Attribute';
   saveBtnText = 'Create';
   attrData = [];
@@ -160,12 +160,12 @@ export class AttributeComponent implements OnInit {
   }
 
   editAttribute(templateRef, data) {
-    const typeIndex = this.attrType.indexOf(data.type);
+    // const typeIndex = this.attrType.indexOf(data.type);
     this.editData = data;
     this.attributeForm.patchValue({
       name: data.name,
       description: data.description,
-      type: this.attrType[typeIndex],
+      type: data.type,
       profVal: JSON.parse(data.defaultValue),
       boolVal: JSON.parse(data.defaultValue),
     });
@@ -185,7 +185,7 @@ export class AttributeComponent implements OnInit {
   }
 
   deleteConfirm(data) {
-    let id = data._id;
+    let id = data.id;
     let msg = "Are you sure you want to delete this attribute ?";
     return this.dialog.open(ConfirmDialogComponent, {
       panelClass: 'confirm-dialog-container',
@@ -204,9 +204,9 @@ export class AttributeComponent implements OnInit {
   }
 
   onSave() {
-    let data: any = this.onSaveObject()
+    let data: any = this.onSaveObject();
     if (this.editData) {
-      this.updateAttribute(data, this.editData._id);
+      this.updateAttribute(data, this.editData.id);
     }
     else {
       this.createAttribute(data);
@@ -219,7 +219,7 @@ export class AttributeComponent implements OnInit {
     data.name = this.attributeForm.value.name;
     data.description = this.attributeForm.value.description;
     data.type = this.attributeForm.value.type;
-    if (this.attributeForm.value.type == 'Boolean') {
+    if (this.attributeForm.value.type == 'BOOLEAN') {
       data.defaultValue = JSON.stringify(this.attributeForm.value.boolVal);
     }
     else {

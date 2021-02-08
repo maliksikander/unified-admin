@@ -40,7 +40,12 @@
                     *ngFor="let data of attrData | searchFilter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
                     <td scope="row">{{data.name ? data.name : 'N/A'}}</td>
                     <td>{{data.description ? data.description :'N/A'}}</td>
-                    <td>{{data.type ? data.type : 'N/A'}}</td>
+                    <td>
+                      <ng-container *ngIf="data?.type == 'BOOLEAN'">{{data.type ? 'Boolean' : 'N/A'}}</ng-container>
+                      <ng-container *ngIf="data?.type == 'PROFICIENCY_LEVEL'">{{data.type ? 'Proficiency' : 'N/A'}}
+                      </ng-container>
+
+                    </td>
                     <td class="table-trigger">{{data.defaultValue ? data.defaultValue : 'N/A'}}
                       <span class="list-trigger-area">
                         <button matTooltip="Edit" (click)="editAttribute(newAttribute,data)" mat-mini-fab><i
@@ -104,13 +109,13 @@
             </mat-form-field>
           </div>
 
-          <div [ngClass]="{'attribute-type-value': attributeForm.value.type == 'Boolean'}">
-            <div class="form-group" [ngClass]="{'col-md-8': attributeForm.value.type == 'Boolean'}">
+          <div [ngClass]="{'attribute-type-value': attributeForm.value.type == 'BOOLEAN'}">
+            <div class="form-group" [ngClass]="{'col-md-8': attributeForm.value.type == 'BOOLEAN'}">
               <mat-label>Type</mat-label>
               <mat-form-field appearance="outline">
                 <mat-select formControlName="type">
-                  <mat-option *ngFor="let type of attrType" [value]="type">{{type | titlecase}}
-                  </mat-option>
+                  <mat-option  [value]="'BOOLEAN'">Boolean</mat-option>
+                  <mat-option  [value]="'PROFICIENCY_LEVEL'">Proficiency</mat-option>
                 </mat-select>
                 <mat-error class="form-error">
                   {{formErrors.type}}
@@ -119,11 +124,11 @@
             </div>
 
             <div *ngIf="attributeForm.value.type" class="form-group"
-              [ngClass]="{'col-md-4': attributeForm.value.type == 'Boolean'}">
+              [ngClass]="{'col-md-4': attributeForm.value.type == 'BOOLEAN'}">
               <mat-label>Default Value</mat-label>
-              <mat-slider *ngIf="attributeForm.value.type == 'Proficient'" formControlName="profVal" thumbLabel
+              <mat-slider *ngIf="attributeForm.value.type == 'PROFICIENCY_LEVEL'" formControlName="profVal" thumbLabel
                 [displayWith]="formatLabel" tickInterval="1" min="0" max="10"></mat-slider>
-              <mat-slide-toggle *ngIf="attributeForm.value.type == 'Boolean'" formControlName="boolVal">
+              <mat-slide-toggle *ngIf="attributeForm.value.type == 'BOOLEAN'" formControlName="boolVal">
               </mat-slide-toggle>
             </div>
           </div>

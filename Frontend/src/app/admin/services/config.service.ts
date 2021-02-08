@@ -26,8 +26,9 @@ export class ConfigService {
 
   readConfig() {
     this.http.get('assets/config/config.json').subscribe((data: any) => {
-      this.endPointService.endpointUrl = data.Admin_URL;
-      this.endPointService.MRE_MICRO_URL = data.MRE_URL;
+      this.endPointService.ADMIN_URL = data.Admin_URL;
+      this.endPointService.MRE_URL = data.MRE_URL;
+      this.endPointService.userRoles = data.BUSINESS_USER_ROLES;
 
       this.setConfigurations(data);
     }, (error) => {
