@@ -15,7 +15,7 @@ import { map } from 'rxjs/operators';
 export class PrecisionQueueComponent implements OnInit {
   stepSaveBtnText = "Add";
   spinner: any = true;
-  save = "save"
+  save = "save";
   p: any = 1;
   itemsPerPageList = [5, 10, 15];
   itemsPerPage = 5;
@@ -64,8 +64,7 @@ export class PrecisionQueueComponent implements OnInit {
   };
   queueForm: FormGroup;
   stepForm: FormGroup;
-
-
+  
   constructor(private commonService: CommonService,
     private dialog: MatDialog,
     private endPointService: EndpointService,
@@ -232,7 +231,6 @@ export class PrecisionQueueComponent implements OnInit {
     this.endPointService.get(this.reqServiceType).subscribe(
       (res: any) => {
         this.spinner = false;
-        console.log("queue res-->", res);
         this.queueData = res;
         if (res.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
         this.getMRD();
@@ -320,24 +318,15 @@ export class PrecisionQueueComponent implements OnInit {
 
   saveObjFormation() {
     const temp = this.queueForm.value;
-    let data: any = {};
+    let data: any = {
+      mrd:{}
+    };
     data.name = temp.name;
-    data.mrd = temp.mrd;
+    data.mrd.id = temp.mrd.id;
     data.agentSelectionCriteria = temp.agentCriteria;
     data.serviceLevelThreshold = temp.serviceLevelThreshold;
     data.serviceLevelType = temp.serviceLevelType;
     return data;
-  }
-
-  onSave() {
-    this.spinner = true;
-    let data = this.saveObjFormation();
-    if (this.editData) {
-      data.id = this.editData.id;
-      data.steps = this.editData.steps;
-      this.updateQueue(data, data.id);
-    }
-    else { this.createQueue(data); }
   }
 
   // Queue Step //
@@ -366,64 +355,27 @@ export class PrecisionQueueComponent implements OnInit {
     });
   }
 
-  // expTermFormation(terms) {
-  //   let exp: any = [];
-  //   let k = 0;
-  //   for (let j = 0; j < terms.length; j++) {
-  //     let termObj: any = {
-  //       AttributeName: "",
-  //       AttributeId: "",
-  //       conditionOperator: "",
-  //       Value: ""
-  //     };
-  //     if (j == 0) {
-  //       let term = this.termObjectFormation(terms, j, termObj);
-  //       exp.splice(j, 0, term);
-  //     }
-  //     else {
-  //       const val = terms[j].preTermCondition;
-  //       k = k + 1;
-  //       exp.splice(k, 0, val);
-  //       let term = this.termObjectFormation(terms, j, termObj);
-  //       k = k + 1;
-  //       exp.splice(k, 0, term);
-  //     }
-  //   }
-  //   return exp;
-  // }
-
-  // termObjectFormation(terms, j, termObject) {
-  //   let termObj = termObject;
-  //   termObj.AttributeName = terms[j].routingAttribute.name;
-  //   termObj.conditionOperator = terms[j].conditionOperator;
-  //   termObj.AttributeId = terms[j].routingAttribute.id;
-  //   if (terms[j].routingAttribute.type == 'BOOLEAN') { termObj.Value = terms[j].boolVal; }
-  //   else { termObj.Value = terms[j].profVal; }
-  //   return termObj;
-  // }
-
   manipulateExpTerm(data) {
-
     let expressions = JSON.parse(JSON.stringify(data.expressions));
     for (let i = 0; i < expressions.length; i++) {
       let termsCopy = JSON.parse(JSON.stringify(expressions[i].terms));
       expressions[0].preExpressionCondition = 'null';
       for (let j = 0; j < termsCopy.length; j++) {
         let termObj: any = {
-          routingAttribute: "",
+          routingAttribute: {},
           conditionOperator: "",
           value: "",
           preTermCondition: ""
         };
         termsCopy[0].preTermCondition = 'null';
-        termObj.routingAttribute = termsCopy[j].routingAttribute.id;
+        termObj.routingAttribute = termsCopy[j].routingAttribute;
         termObj.conditionOperator = termsCopy[j].conditionOperator;
         termObj.preTermCondition = termsCopy[j].preTermCondition;
         if (termsCopy[j].routingAttribute.type == 'BOOLEAN') {
           termObj.value = termsCopy[j].boolVal;
         }
         else {
-          termObj.value = termsCopy[j].profVal;
+          termObj.value = JSON.stringify(termsCopy[j].profVal);
         }
         termsCopy[j] = termObj;
       }
@@ -432,17 +384,26 @@ export class PrecisionQueueComponent implements OnInit {
     }
     data.expressions = expressions;
     return data;
-    
+
   }
 
   onStepSave(i, mode) {
     this.spinner = true;
     const formData = JSON.parse(JSON.stringify(this.stepForm.value));
     let newStep = this.manipulateExpTerm(formData);
- 
-    let data = JSON.parse(JSON.stringify(this.queueData[i]));
+    let data:any={
+      mrd:{}
+    };
+    let temp = JSON.parse(JSON.stringify(this.queueData[i]));
+    data.agentSelectionCriteria = temp.agentSelectionCriteria;
+    data.id = temp.id;
+    data.mrd.id = temp.mrd.id;
+    data.name = temp.name;
+    data.serviceLevelThreshold = temp.serviceLevelThreshold;
+    data.serviceLevelType = temp.serviceLevelType;
+    data.steps = temp.steps;
+
     if (mode.mode == 'update') {
-      newStep.id = mode.id;
       let stepIndex = data.steps.findIndex(x => x.id == mode.id);
       if (stepIndex != -1) {
         data.steps[stepIndex] = newStep;
@@ -451,80 +412,45 @@ export class PrecisionQueueComponent implements OnInit {
     else {
       data.steps.push(newStep);
     }
-
-    // console.log("queue data-->",data);
     this.updateQueue(data, data.id);
     this.resetStepForm();
 
   }
 
-  reconstructExpTermGroup(expTerm, termObj) {
-    const temp = this.attrData.filter(item => item.id == expTerm.AttributeId);
-    termObj.attribute = temp[0];
-    termObj.conditionOperator = expTerm.conditionOperator;
-    if (expTerm.Value == "true" || expTerm.Value == "false") {
-      termObj.boolVal = expTerm.Value;
-    }
-    else {
-      termObj.profVal = expTerm.Value;
-    }
-    return termObj;
-  }
+  reconstructFormData(data) {
 
-
-  reconstructExpTerm(expTerm, formData) {
-    for (let j = 0; j < expTerm.length; j++) {
-      let k = 0;
-      let term = {
-        routingAttribute: {},
-        conditionOperator: "",
-        profVal: 1,
-        boolVal: "true",
-        preTermCondition: "AND"
-      }
-      if (j == 0) {
-        let termResult = this.reconstructExpTermGroup(expTerm[j], term);
-        formData.terms.push(termResult);
-      }
-      else {
-        if (j % 2 != 0) {
-          k = j + 1;
-          term.preTermCondition = expTerm[j];
-          let termResult = this.reconstructExpTermGroup(expTerm[k], term)
-          formData.terms.push(termResult);
+    let expressions = JSON.parse(JSON.stringify(data.expressions));
+    for (let i = 0; i < expressions.length; i++) {
+      let termsCopy = JSON.parse(JSON.stringify(expressions[i].terms));
+      for (let j = 0; j < termsCopy.length; j++) {
+        let termObj = {
+          routingAttribute: {},
+          conditionOperator: "",
+          profVal: 1,
+          boolVal: "true",
+          preTermCondition: "AND"
         }
-      }
-    }
-    return formData;
-  }
+        const temp = this.attrData.filter(item => item.id == termsCopy[j].routingAttribute.id);
+        termObj.conditionOperator = termsCopy[j].conditionOperator;
+        termObj.routingAttribute = temp[0];
+        termObj.preTermCondition = termsCopy[j].preTermCondition;
 
-  reconstructFormExpression(temp) {
-    let formData: any = [];
-    for (let i = 0; i < temp.length; i++) {
-      let formDataExpression: any = {
-        preExpressionCondition: "AND",
-        terms: []
-      }
-      let a = 0;
-      if (i == 0) {
-        formDataExpression.preExpressionCondition = "AND";
-        let expTerm = temp[i].expression;
-        let result = this.reconstructExpTerm(expTerm, formDataExpression);
-        formData.push(result);
-      }
-      else {
-        if (i % 2 != 0) {
-          a = i + 1;
-          formDataExpression.preExpressionCondition = temp[i];
-          let expTerm = temp[a].expression;
-          let result = this.reconstructExpTerm(expTerm, formDataExpression);
-          formData.push(result);
+        if (termsCopy[j].routingAttribute.type == 'BOOLEAN') {
+          termObj.boolVal = termsCopy[j].value;
         }
+        else {
+          termObj.profVal = termsCopy[j].value;
+        }
+        termsCopy[j] = termObj;
       }
-    }
-    return formData;
-  }
+      expressions[i].terms = termsCopy;
 
+    }
+
+    data.expressions = expressions;
+    return data;
+
+  }
 
   loadFormExpression(data) {
     //create lines array first
@@ -539,21 +465,19 @@ export class PrecisionQueueComponent implements OnInit {
     this.stepForm.setValue(data);
   }
 
-
   editStep(templateRef, data, i) {
     this.stepFormHeading = 'Edit Step';
     this.stepSaveBtnText = 'Update';
-    let stepData: any = {};
-    console.log("data to be edited-->", data);
-    stepData.timeout = JSON.parse(JSON.stringify(data.timeout));
-    let temp = JSON.parse(JSON.stringify(data.expressions));
+    let temp = JSON.parse(JSON.stringify(data));
     const control = <FormArray>this.stepForm.controls['expressions'];
     for (let i = control.length - 1; i >= 0; i--) {
       control.removeAt(i);
     }
-    stepData.expressions = this.reconstructFormExpression(temp);
-    console.log("step data-->", stepData)
-    // this.loadFormExpression(stepData);
+    let stepData = this.reconstructFormData(temp);
+    let tempStep: any = {};
+    tempStep.expressions = stepData.expressions;
+    tempStep.timeout = stepData.timeout;
+    this.loadFormExpression(tempStep);
     let dialogRef = this.dialog.open(templateRef, {
       width: '800px',
       // height: '350px',
@@ -563,20 +487,17 @@ export class PrecisionQueueComponent implements OnInit {
     });
     let mode = {
       mode: "update",
-      id: data.id
     }
     dialogRef.afterClosed().subscribe(res => {
       if (res == 'save') {
-        // this.onStepSave(i, mode)
+        this.onStepSave(i, mode)
       }
       else {
         this.resetStepForm();
-        this.stepForm.reset();
       }
     });
 
   }
-
 
   updateQueueStep(queue) {
     this.endPointService.update(queue, queue.id, this.reqServiceType).subscribe(
@@ -646,6 +567,17 @@ export class PrecisionQueueComponent implements OnInit {
     this.addExpressionButton();
   }
 
+  onSave() {
+    this.spinner = true;
+    let data = this.saveObjFormation();
+    if (this.editData) {
+      data.id = this.editData.id;
+      data.steps = this.editData.steps;
+      this.updateQueue(data, data.id);
+    }
+    else { this.createQueue(data); }
+  }
+
   pageChange(e) {
     localStorage.setItem('currentQueuePage', e);
   }
@@ -666,7 +598,5 @@ export class PrecisionQueueComponent implements OnInit {
 
     return value;
   }
-
-
 
 }

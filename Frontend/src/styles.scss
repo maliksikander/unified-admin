@@ -397,6 +397,8 @@ button:focus {
         font-size: $p-font-size - 1px;
         color: $dark-gray-color;
         padding: 0px 5px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
 
       .mat-list-item-content {
@@ -1873,6 +1875,18 @@ snack-bar-container {
     position: relative;
     top: 8px;
   }
+  .mat-chip.mat-standard-chip {
+    background-color: #b2b2b2 !important;
+    color: #fff !important;
+    font-size: 14px;
+    // padding-top: 5px;
+    // padding-bottom: 5px;
+    min-height: 25px;
+    line-height: 25px;
+    // margin: 3px !important;
+    // position: relative;
+    // border: 1px solid;
+  }
 }
 
 .user-attribute-section {
@@ -2532,3 +2546,7 @@ snack-bar-container {
   }
 }
 
+.tool-tip {
+  white-space: pre-line !important;
+  height: auto !important;
+}

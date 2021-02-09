@@ -37,7 +37,8 @@
                   </div>
                   <div class="list-view col-sm-9 col-md-9">
                     <mat-chip-list>
-                      <mat-chip #attributeMenuTrigger="matMenuTrigger" [matMenuTriggerFor]="updateAttrMenu" *ngFor="let attr of data?.associatedRoutingAttributes;let i=index"
+                      <mat-chip #attributeMenuTrigger="matMenuTrigger" [matMenuTriggerFor]="updateAttrMenu"
+                        *ngFor="let attr of data?.associatedRoutingAttributes;let i=index"
                         [ngStyle]="{'border-color':attr?.routingAttribute?.type === 'BOOLEAN' ? '#7ECCFF' : '#A2F565' }"
                         (click)="updateAttributeValue(attr,data)">
                         <!-- <mat-chip *ngFor="let attr of data.attributes | slice :0:3"> -->
@@ -129,13 +130,21 @@
           </div>
 
           <div class="user-profile-section">
-            <div class="form-group col-md-6">
-              <mat-label>Agent ID</mat-label>
-              <mat-form-field appearance="outline">
-                <input matInput formControlName="agentId">
-              </mat-form-field>
+            <div class="form-group col-md-12">
+              <mat-label>Agent Roles</mat-label>
+              <div class="chip-div">
+                <mat-chip-list #chipList formControlName="roles">
+                  <ng-container *ngFor="let role of userForm.get('roles').value | slice :0:5">
+                    <mat-chip *ngIf="role && role != null">{{role}}</mat-chip>
+                  </ng-container>
+                  <mat-chip matTooltip="{{rolesTooltip.join('\n')}}" matTooltipClass="tool-tip"
+                    *ngIf="userForm.get('roles').value?.length > 5">+{{userForm.get('roles').value?.length - 5}}
+                  </mat-chip>
+                </mat-chip-list>
+              </div>
             </div>
           </div>
+
         </div>
       </form>
     </div>
@@ -189,20 +198,22 @@
                 <div class="selected-attribute-panel">
                   <mat-accordion>
                     <mat-expansion-panel
-                      *ngFor="let i = index;let data of userAttributeForm.value.attributes | searchFilter:selectedAttributeFilterTerm">
+                      *ngFor="let i = index;let data of userAttributeForm.value.associatedRoutingAttributes | searchFilter:selectedAttributeFilterTerm">
                       <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
                         [expandedHeight]="customExpandedHeight">
                         <mat-panel-title>
                           <p class="group-name">
-                            {{data.name? data.name : 'N/A'}} ({{data.value? data.value : 'N/A'}})</p>
+                            {{data?.routingAttribute?.name? data?.routingAttribute?.name : 'N/A'}} ({{data.value?
+                            data.value : 'N/A'}})</p>
                         </mat-panel-title>
                       </mat-expansion-panel-header>
-                      <div *ngIf="data.type">
-                        <mat-slider (input)="onSliderChange($event,data.type,i)" *ngIf="data.type == 'PROFICIENCY_LEVEL'"
-                          [value]="data.value" thumbLabel [displayWith]="formatLabel" tickInterval="1" min="0" max="10">
+                      <div *ngIf="data?.routingAttribute?.type">
+                        <mat-slider (input)="onSliderChange($event,i)"
+                          *ngIf="data?.routingAttribute.type == 'PROFICIENCY_LEVEL'" [value]="data.value" thumbLabel
+                          [displayWith]="formatLabel" tickInterval="1" min="0" max="10">
                         </mat-slider>
-                        <mat-slide-toggle (change)="onToggleChange($event,data.type,i)" *ngIf="data.type == 'BOOLEAN'"
-                          [checked]="data.value">
+                        <mat-slide-toggle (change)="onToggleChange($event,i)"
+                          *ngIf="data?.routingAttribute.type == 'BOOLEAN'" [checked]="data.value">
                         </mat-slide-toggle>
                       </div>
                     </mat-expansion-panel>
@@ -217,8 +228,8 @@
           <div class="col-md-12">
             <div class="user-form-action-area">
               <button mat-raised-button (click)="onClose()" class="gray-btn">Cancel</button>
-              <button mat-raised-button [disabled]="!userAttributeForm.valid" (click)="onSave()"
-                [mat-dialog-close]="true" class="dark-blue-btn service-trigger">Save</button>
+              <button mat-raised-button [disabled]="!userAttributeForm.valid" [mat-dialog-close]="save"
+                class="dark-blue-btn service-trigger">Save</button>
             </div>
           </div>
         </div>

@@ -41,7 +41,6 @@ export class UsersComponent implements OnInit {
   userAttributeForm: FormGroup;
   formHeading = 'User Profile';
   reqServiceType = 'agents';
-  editData: any;
   userData = [];
   attrData = [];
   usersCopy = [];
@@ -60,8 +59,11 @@ export class UsersComponent implements OnInit {
   userObj;
   keycloakUsers = [];
   routingEngineUsers = [];
-
-
+  // roles = [];
+  rolesTooltip = [];
+  save = "save";
+  editREUserData: any;
+  newREUserData: any;
 
   constructor(private commonService: CommonService,
     private dialog: MatDialog,
@@ -78,16 +80,17 @@ export class UsersComponent implements OnInit {
     if (pageNumber) this.p = pageNumber;
 
     this.userForm = this.formBuilder.group({
-      agentId: [''],
+      // agentId: [''],
       firstName: [''],
       lastName: [''],
+      roles: ['']
     });
 
     this.userAttributeForm = this.formBuilder.group({
-      attributes: [],
+      associatedRoutingAttributes: [[]],
     });
 
-    this.userForm.controls['agentId'].disable();
+    // this.userForm.controls['roles'].disable();
     this.userForm.controls['firstName'].disable();
     this.userForm.controls['lastName'].disable();
 
@@ -104,7 +107,7 @@ export class UsersComponent implements OnInit {
   onClose() {
     this.dialog.closeAll();
     this.searchTerm = "";
-    this.editData = undefined;
+    // this.editData = undefined;
   }
 
   getAttribute() {
@@ -115,10 +118,10 @@ export class UsersComponent implements OnInit {
           this.attrData.map(item => {
             item.isChecked = false;
           });
-          if (this.userAttributeForm.value.attributes && this.userAttributeForm.value.attributes.length > 0)
+          if (this.userAttributeForm.value.associatedRoutingAttributes && this.userAttributeForm.value.associatedRoutingAttributes.length > 0)
             this.attrData.forEach(attr => {
-              this.userAttributeForm.value.attributes.forEach(selected => {
-                if (attr._id == selected._id) {
+              this.userAttributeForm.value.associatedRoutingAttributes.forEach(selected => {
+                if (attr.id == selected.id) {
                   attr.isChecked = true;
                 }
               });
@@ -135,24 +138,7 @@ export class UsersComponent implements OnInit {
       });
   }
 
-  getRoutingEngineUsers() {
-    this.endPointService.get(this.reqServiceType).subscribe(
-      (res: any) => {
-        this.spinner = false;
-
-        this.routingEngineUsers = JSON.parse(JSON.stringify(res));
-        // this.usersCopy = JSON.parse(JSON.stringify(res));
-        console.log("routing users res-->", this.routingEngineUsers);
-        if (res.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
-      },
-      error => {
-        this.spinner = false;
-        console.log("Error fetching:", error);
-        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
-      });
-  }
-
-  updateUser(data, id) {
+  updateREUserAttribute(data, id) {
     this.endPointService.update(data, id, this.reqServiceType).subscribe(
       (res: any) => {
         this.snackbar.snackbarMessage('success-snackbar', "User Updated Successfully", 1);
@@ -166,13 +152,14 @@ export class UsersComponent implements OnInit {
       });
   }
 
-  deleteUser(data, id) {
+  deleteREUser(id) {
     this.endPointService.delete(id, this.reqServiceType).subscribe(
       (res: any) => {
         this.spinner = false;
-        this.userData = this.userData.filter(i => i !== data)
-          .map((i, idx) => (i.position = (idx + 1), i));
-        this.snackbar.snackbarMessage('success-snackbar', "User Deleted Successfully", 1);
+        this.getUsers();
+        // this.userData = this.userData.filter(i => i !== data)
+        //   .map((i, idx) => (i.position = (idx + 1), i));
+        // this.snackbar.snackbarMessage('success-snackbar', "User Deleted Successfully", 1);
       },
       (error) => {
         this.spinner = false;
@@ -182,7 +169,7 @@ export class UsersComponent implements OnInit {
   }
 
   deleteConfirm(data) {
-    let id = data._id;
+    let id = data.id;
     let msg = "Are you sure you want to delete this User ?";
     return this.dialog.open(ConfirmDialogComponent, {
       panelClass: 'confirm-dialog-container',
@@ -194,19 +181,26 @@ export class UsersComponent implements OnInit {
         data: data
       }
     }).afterClosed().subscribe((res: any) => {
-      this.spinner = true;
-      if (res === 'delete') { this.deleteUser(data, id); }
-      else { this.spinner = false; }
+      // this.spinner = true;
+      // if (res === 'delete') { this.deleteUser(data, id); }
+      // else { this.spinner = false; }
     });
   }
 
   editUserAttributes(templateRef, item) {
+
     this.attrSpinner = true;
     let data = JSON.parse(JSON.stringify(item));
-    this.editData = JSON.parse(JSON.stringify(item));
-    this.userAttributeForm.patchValue({
-      attributes: data.attributes,
-    });
+    this.editREUserData = JSON.parse(JSON.stringify(item));
+    // console.log("edit data-->", data);
+
+    if (data.associatedRoutingAttributes) {
+      this.userAttributeForm.patchValue({
+        associatedRoutingAttributes: data.associatedRoutingAttributes,
+      });
+
+    }
+
     let dialogRef = this.dialog.open(templateRef, {
       width: '650px',
       height: '500px',
@@ -214,50 +208,76 @@ export class UsersComponent implements OnInit {
       disableClose: true,
       data: data
     });
-    // this.spinner = true;
+    this.spinner = true;
     this.getAttribute();
 
     dialogRef.afterClosed().subscribe(res => {
-      this.editData = undefined;
-      this.attrData = undefined;
-      this.attributeFilterTerm = '';
-      this.selectedAttributeFilterTerm = '';
+      // this.editData = undefined;
+      // this.attrData = undefined;
+      // this.attributeFilterTerm = '';
+      // this.selectedAttributeFilterTerm = '';
+      // this.userAttributeForm.patchValue({
+      // associatedRoutingAttributes: [],
+      // questioning: this.question.questioning
+      // });
+      if (res == "save") {
+        this.onSave();
+      }
+      // console.log("close res-->",res);
     });
   }
 
   onStatusChange(e, data) {
     let payload = JSON.parse(JSON.stringify(data));
     this.spinner = true;
-    if (payload._id) delete payload._id;
+    if (payload.id) delete payload.id;
     payload.Interruptible = e.checked;
-    this.updateUser(payload, data._id);
+    // this.updateUser(payload, data.id);
   }
 
   onSave() {
-    this.spinner = true;
-    let data = JSON.parse(JSON.stringify(this.editData));
-    data.attributes = this.userAttributeForm.value.attributes;
-    this.updateUser(data, this.editData._id);
+    // this.spinner = true;
+    // console.log("save data-->", this.editREUserData);
+    let data = JSON.parse(JSON.stringify(this.editREUserData));
+    data.associatedRoutingAttributes = this.userAttributeForm.value.associatedRoutingAttributes;
+    console.log("save data-->", data);
+    if (data && data.id) {
+      // this.updateUser(data, this.editData.id);
+    }
+    else {
+      this.createREUser(data);
+    }
+
   }
 
-  availableToSelectedAttribute(e, item, i) {
+  availableToSelectedAttribute(e, data, i) {
+    // console.log(i, "triggered===>", data);
+    let attrObj: any = {};
+    attrObj.routingAttribute = data;
+    attrObj.value = data.defaultValue;
     let checked = e.target.checked;
     this.attrData[i].isChecked = checked;
+    let formAttributes = JSON.parse(JSON.stringify(this.userAttributeForm.value.associatedRoutingAttributes));
     let selectedList = [];
-    selectedList = JSON.parse(JSON.stringify(this.userAttributeForm.value.attributes));
+    if (formAttributes && formAttributes != null) selectedList = formAttributes;
+    // console.log("test-->", selectedList);
     if (selectedList.length > 0) {
-      let selectedIndex = selectedList.findIndex(x => x._id == item._id);
+      let selectedIndex = selectedList.findIndex(x => x.routingAttribute.id == data.id);
+      // console.log("index-->",selectedIndex);
       if (selectedIndex != -1) {
         if (checked == false) {
-          this.userAttributeForm.value.attributes.splice(selectedIndex, 1);
+          this.userAttributeForm.value.associatedRoutingAttributes.splice(selectedIndex, 1);
           this.selectedAttributeFilterTerm = '';
         };
       }
       else {
-        if (checked == true) this.userAttributeForm.value.attributes.push(item);
+        if (checked == true) this.userAttributeForm.value.associatedRoutingAttributes.push(attrObj);
       }
     }
-    else { this.userAttributeForm.value.attributes.push(item); }
+    else {
+      this.userAttributeForm.value.associatedRoutingAttributes.push(attrObj);
+      // console.log("form data-->", this.userAttributeForm.value);
+    }
   }
 
   formatLabel(value: number) {
@@ -269,22 +289,24 @@ export class UsersComponent implements OnInit {
   }
 
   syncUsers() {
-    // this.spinner = true;
-    // this.getUsers();
+    this.spinner = true;
+    this.getUsers();
   }
 
 
   viewUserProfile(templateRef, item) {
 
-    // this.spinner = true;
     let data = JSON.parse(JSON.stringify(item));
-    console.log("data-->", data);
+    // console.log("data-->", data);
     // this.editData = JSON.parse(JSON.stringify(item));
-
+    let roleTip = data.keycloakUser.roles;
+    if (roleTip && roleTip.length > 5) this.rolesTooltip = roleTip.slice(5, roleTip.length);
+    // console.log("roeltip-->", this.rolesTooltip)
     this.userForm.patchValue({
-      agentId: data.agentId,
-      firstName: data.firstName,
-      lastName: data.lastName
+      // agentId: data.agentId,
+      firstName: data.keycloakUser.firstName,
+      lastName: data.keycloakUser.lastName,
+      roles: data.keycloakUser.roles
     });
     let dialogRef = this.dialog.open(templateRef, {
       width: '650px',
@@ -296,32 +318,26 @@ export class UsersComponent implements OnInit {
 
     // this.getAttribute();
 
-    // dialogRef.afterClosed().subscribe(res => {
-    //   this.editData = undefined;
-    //   this.attrData = undefined;
-    //   this.attributeFilterTerm = '';
-    //   this.selectedAttributeFilterTerm = '';
-    // });
+    dialogRef.afterClosed().subscribe(res => {
+      // this.editData = undefined;
+      // this.attrData = undefined;
+      // this.attributeFilterTerm = '';
+      // this.selectedAttributeFilterTerm = '';
+    });
   }
 
-  pageChange(e) { localStorage.setItem('currentUsersPage', e); }
 
-  pageBoundChange(e) {
-    this.p = e;
-    localStorage.setItem('currentUsersPage', e);
-  }
 
-  selectPage() { this.itemsPerPage = this.selectedItem; }
-
-  onSliderChange(e, type, i) {
+  onSliderChange(e, i) {
+    // console.log("e-->", e, "==i==", i);
     if (e.value || e.value == 0) {
-      this.userAttributeForm.value.attributes[i].value = JSON.stringify(e.value);
+      this.userAttributeForm.value.associatedRoutingAttributes[i].value = JSON.stringify(e.value);
     }
   }
 
-  onToggleChange(e, type, i) {
+  onToggleChange(e, i) {
     if (e.checked || e.checked == false) {
-      this.userAttributeForm.value.attributes[i].value = JSON.stringify(e.checked);
+      this.userAttributeForm.value.associatedRoutingAttributes[i].value = JSON.stringify(e.checked);
     }
   }
 
@@ -331,7 +347,7 @@ export class UsersComponent implements OnInit {
     this.attrName = attr.routingAttribute.name;
     this.attrValue = attr.value;
     this.attrType = attr.routingAttribute.type;
-    this.attrId = attr.routingAttribute._id;
+    this.attrId = attr.routingAttribute.id;
     this.userObj = data;
     if (attr.routingAttribute.type == 'BOOLEAN') {
       this.attrValueList = ["true", "false"];
@@ -343,56 +359,82 @@ export class UsersComponent implements OnInit {
 
   onAttrChange(e) {
 
-    if (this.userObj.attributes && this.userObj.attributes.length > 0) {
-      let attr = this.userObj.attributes.find(item => item._id == this.attrId);
-      let index = this.userObj.attributes.indexOf(attr)
+    if (this.userObj.associatedRoutingAttributes && this.userObj.associatedRoutingAttributes.length > 0) {
+      let attr = this.userObj.associatedRoutingAttributes.find(item => item.routingAttribute.id == this.attrId);
+      let index = this.userObj.associatedRoutingAttributes.indexOf(attr);
       if (e == 'false') {
-        this.userObj.attributes.splice(index, 1);
+        this.userObj.associatedRoutingAttributes.splice(index, 1);
+        console.log("user-->",this.userObj);
+        if(this.userObj.associatedRoutingAttributes.length == 0){
+          return this.deleteREUser(this.userObj.id);
+        }
       }
       else {
-        this.userObj.attributes[index].value = e;
+        this.userObj.associatedRoutingAttributes[index].value = e;
         this.closeMenu();
       }
-
-      // Enter put request here
+      this.updateREUserAttribute(this.userObj, this.userObj.id);
     }
 
 
   }
 
   removeAttribute() {
-    if (this.userObj.attributes && this.userObj.attributes.length > 0) {
-      let attr = this.userObj.attributes.find(item => item._id == this.attrId);
-      let index = this.userObj.attributes.indexOf(attr)
-      this.userObj.attributes.splice(index, 1);
+    if (this.userObj.associatedRoutingAttributes && this.userObj.associatedRoutingAttributes.length > 0) {
+      let attr = this.userObj.associatedRoutingAttributes.find(item => item.routingAttribute.id == this.attrId);
+      let index = this.userObj.associatedRoutingAttributes.indexOf(attr)
+      this.userObj.associatedRoutingAttributes.splice(index, 1);
 
-      // Enter put request here
+      if(this.userObj.associatedRoutingAttributes.length == 0){
+        return this.deleteREUser(this.userObj.id);
+      }
+      this.updateREUserAttribute(this.userObj, this.userObj.id);
     }
   }
-
 
   closeMenu() {
     this.attributeMenuTrigger.closeMenu();
   }
 
+  createREUser(data) {
+    this.endPointService.create(data, this.reqServiceType).subscribe(
+      (res: any) => {
+        // this.snackbar.snackbarMessage('success-snackbar', "Created Successfully", 1);
+        // console.log("res-->",res);
+        this.resetAttributeForm();
+        this.getUsers();
+      },
+      (error: any) => {
+        this.spinner = false;
+        console.log("Error fetching:", error);
+        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
+      });
+  }
+
+  resetAttributeForm() {
+    this.editREUserData = undefined;
+    this.attrData = undefined;
+    this.attributeFilterTerm = '';
+    this.selectedAttributeFilterTerm = '';
+    this.userAttributeForm.patchValue({
+      associatedRoutingAttributes: []
+    });
+  }
+
+
   getKeycloakUsers() {
-    // const data = ['agent','supervisor'];
     this.spinner = true;
     this.endPointService.getKeycloakUser().subscribe(
       (res: any) => {
         this.keycloakUsers = JSON.parse(JSON.stringify(res));
-        console.log("keycloak users res-->", this.keycloakUsers);
         if (this.keycloakUsers && this.keycloakUsers.length > 0) {
           for (let i = 0; i < this.keycloakUsers.length; i++) {
-            // this.userData[i].keycloakUser = this.keycloakUsers[i];
             let temp = { "keycloakUser": this.keycloakUsers[i] };
             this.userData.push(temp);
           }
         }
-
-        console.log("user data-->", this.userData);
         this.getRoutingEngineUsers();
-        this.spinner = false;
+        // this.spinner = false;
 
       },
       error => {
@@ -403,7 +445,40 @@ export class UsersComponent implements OnInit {
   }
 
 
+  getRoutingEngineUsers() {
+    this.endPointService.get(this.reqServiceType).subscribe(
+      (res: any) => {
+        this.routingEngineUsers = JSON.parse(JSON.stringify(res));
+        // console.log("routing users res-->", this.routingEngineUsers);
+        const usersListLength = this.userData.length;
+        const routingEngineUsersLength = this.routingEngineUsers.length;
+        if (usersListLength > 0 && routingEngineUsersLength > 0) {
+          for (let i = 0; i < this.userData.length; i++) {
+            for (let j = 0; j < this.routingEngineUsers.length; j++) {
+              if (this.userData[i].keycloakUser.id == this.routingEngineUsers[j].keycloakUser.id) {
+                this.userData[i].id = this.routingEngineUsers[j].id;
+                this.userData[i].associatedRoutingAttributes = this.routingEngineUsers[j].associatedRoutingAttributes;
+              }
+            }
+          }
+        }
+
+        // this.usersCopy = JSON.parse(JSON.stringify(res));
+        console.log("users data 2-->", this.userData);
+        if (res.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
+        this.spinner = false;
+      },
+      error => {
+        this.spinner = false;
+        console.log("Error fetching:", error);
+        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
+      });
+  }
+
+
+
   getUsers() {
+    this.spinner = true;
     this.getKeycloakUsers();
     // this.getRoutingEngineUsers();
 
@@ -411,5 +486,12 @@ export class UsersComponent implements OnInit {
 
   }
 
+  pageChange(e) { localStorage.setItem('currentUsersPage', e); }
 
+  pageBoundChange(e) {
+    this.p = e;
+    localStorage.setItem('currentUsersPage', e);
+  }
+
+  selectPage() { this.itemsPerPage = this.selectedItem; }
 }

@@ -375,7 +375,7 @@ export class CommonService {
 
   tokenVerification() {
     if (!localStorage.getItem('token')) {
-      return this.router.navigate(['/login']);
+      // return this.router.navigate(['/login']);
     }
   }
 }

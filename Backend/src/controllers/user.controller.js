@@ -39,7 +39,7 @@ const keycloak = Keycloak.NodeAdapter;
 const getUsers = catchAsync(async (req, res) => {
   const temp = req.query;
   let role = [];
-  if(temp.roles) { role = temp.roles };
+  if (temp.roles) { role = temp.roles };
   keycloak.getUsersByRole(role).then((result) => {
     res.send(result);
   }).catch((err) => {

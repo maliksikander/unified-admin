@@ -39,7 +39,7 @@
                           {{ lang.name }}
                           <mat-icon *ngIf="selectedLanguages.length > 1" matChipRemove>cancel</mat-icon>
                         </mat-chip>
-                        <mat-chip *ngIf="selectedCount?.length > 3">+{{selectedCount .length - 3}}</mat-chip>
+                        <mat-chip *ngIf="selectedCount?.length > 3">+{{selectedCount?.length - 3}}</mat-chip>
                       </mat-chip-list>
 
                     </mat-select-trigger>
