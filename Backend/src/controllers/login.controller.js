@@ -11,18 +11,20 @@ const login = catchAsync(async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
     // console.log(username,"////",password)
-    // keycloak.authenticateUserViaKeycloak(username, password).then((result) => {
+    keycloak.authenticateUserViaKeycloak(username, password).then((result) => {
+        // console.log("result==>",result)
+        res.send(result);
+    }).catch((err) => {
+        if (err.message == "Request failed with status code 401") return res.status(401).send(err);
+        console.log("Authentication Error ==>",err)
+        res.status(500).send(err);
+    });
+    // keycloak.userAuthentication(username, password).then((result) => {
     //     res.send(result.data);
     // }).catch((err) => {
     //     if (err.message == "Request failed with status code 401") return res.status(401).send(err);
     //     res.status(500).send(err);
     // });
-    keycloak.userAuthentication(username, password).then((result) => {
-        res.send(result.data);
-    }).catch((err) => {
-        if (err.message == "Request failed with status code 401") return res.status(401).send(err);
-        res.status(500).send(err);
-    });
 });
 
 module.exports = {

@@ -17,9 +17,9 @@ export class SearchFilterPipe implements PipeTransform {
         list.Name.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1);
     }
 
-    else if (list.length > 0 && list[0].firstName) {
+    else if (list.length > 0 && list[0].keycloakUser) {
       return list.filter(list =>
-        list.firstName.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1);
+        list.keycloakUser.firstName.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1);
     }
   }
 }

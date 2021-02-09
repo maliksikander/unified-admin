@@ -12,7 +12,7 @@
   "GRANT_TYPE": "password",
   "REALM": "cim",
   "GRANT_TYPE_PAT": "client_credentials",
-  "USERNAME_ADMIN": "_any user in realm with all roles_",
-  "PASSWORD_ADMIN": "_any user in realm with all roles_",
+  "USERNAME_ADMIN": "uadmin",
+  "PASSWORD_ADMIN": "uadmin",
   "SCOPE_NAME": "Any deafult scope"
 }

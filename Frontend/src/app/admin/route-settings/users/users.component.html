@@ -17,10 +17,10 @@
               </mat-form-field>
             </div>
 
-            <button mat-flat-button (click)='getKeycloakUsers()'>
+            <!-- <button mat-flat-button (click)='getKeycloakUsers()'>
               <mat-icon>sync</mat-icon>
               Sync
-            </button>
+            </button> -->
           </div>
 
           <div class="users-list">
@@ -212,7 +212,7 @@
                           *ngIf="data?.routingAttribute.type == 'PROFICIENCY_LEVEL'" [value]="data.value" thumbLabel
                           [displayWith]="formatLabel" tickInterval="1" min="0" max="10">
                         </mat-slider>
-                        <mat-slide-toggle (change)="onToggleChange($event,i)"
+                        <mat-slide-toggle (change)="onToggleChange($event,data,i)"
                           *ngIf="data?.routingAttribute.type == 'BOOLEAN'" [checked]="data.value">
                         </mat-slide-toggle>
                       </div>

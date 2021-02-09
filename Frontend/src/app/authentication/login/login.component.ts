@@ -75,12 +75,12 @@ export class LoginComponent implements OnInit {
         const result = res
         // console.log("login res-->", res);
         if (data.rememberMe == true) {
-          localStorage.setItem('username', res.username);
-          localStorage.setItem('token', res.access_token);
-          this.endPointService.token = res.access_token;
+          localStorage.setItem('username', res.keycloak_User.username);
+          localStorage.setItem('token', res.token);
+          this.endPointService.token = res.token;
 
-          sessionStorage.setItem('username', res.username);
-          sessionStorage.setItem('token', res.access_token);
+          sessionStorage.setItem('username', res.keycloak_User.username);
+          sessionStorage.setItem('token', res.token);
         }
         this.router.navigate(['/general/amq-settings']);
       },
