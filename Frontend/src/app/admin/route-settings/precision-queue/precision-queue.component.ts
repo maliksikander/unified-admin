@@ -101,9 +101,9 @@ export class PrecisionQueueComponent implements OnInit {
       this.commonService.logValidationErrors(this.stepForm, this.stepFormErrors, this.stepValidationMessages);
     });
 
-    this.endPointService.readConfigJson().subscribe((e) => {
+    // this.endPointService.readConfigJson().subscribe((e) => {
       this.getQueue();
-    });
+    // });
   }
 
   ValidateNameDuplication(control: AbstractControl) {

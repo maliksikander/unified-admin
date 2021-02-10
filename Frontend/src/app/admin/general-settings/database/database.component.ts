@@ -70,9 +70,9 @@ export class DatabaseComponent implements OnInit {
       this.spinner = res;
       this.changeDetector.markForCheck();
     });
-    this.endPointService.readConfigJson().subscribe((e) => {
+    // this.endPointService.readConfigJson().subscribe((e) => {
       this.getDatabaseSetting();
-    });
+    // });
   }
 
   getDatabaseSetting() {

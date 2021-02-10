@@ -91,9 +91,9 @@ export class UsersComponent implements OnInit {
       this.commonService.logValidationErrors(this.userAttributeForm, this.formErrors, this.validations);
     });
 
-    this.endPointService.readConfigJson().subscribe((e) => {
+    // this.endPointService.readConfigJson().subscribe((e) => {
       this.getUsers();
-    });
+    // });
 
   }
 
@@ -136,6 +136,7 @@ export class UsersComponent implements OnInit {
       (res: any) => {
         this.snackbar.snackbarMessage('success-snackbar', "User Updated Successfully", 1);
         this.getUsers();
+
         this.dialog.closeAll();
         this.spinner = false;
       },
@@ -435,7 +436,7 @@ export class UsersComponent implements OnInit {
 
   getUsers() {
     this.spinner = true;
-    this.userData = [];
+    // this.userData = [];
     this.getKeycloakUsers();
     // this.getRoutingEngineUsers();
   }

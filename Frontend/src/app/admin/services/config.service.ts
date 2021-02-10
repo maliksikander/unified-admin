@@ -1,9 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
-import { CommonService } from './common.service';
-import { EndpointService } from './endpoint.service';
-
+// import { EndpointService } from './endpoint.service';
+import { map } from 'rxjs/operators'
 @Injectable({
   providedIn: 'root',
 })
@@ -17,23 +16,39 @@ export class ConfigService {
   isCustomTheme;
   isRightBarActive;
   isBarIconMode;
+  configData;
 
-  constructor(private http: HttpClient,
-    private commonService: CommonService,
-    private endPointService: EndpointService,) {
-    this.readConfig();
+  private get http() { return this._injector.get(HttpClient) };
+  // private get endPointService() { return this._injector.get(EndpointService) };
+
+  constructor(
+    // private http: HttpClient,
+    // private endPointService: EndpointService,
+    private _injector: Injector
+  ) {
+    // this.readConfig();
   }
 
-  readConfig() {
-    this.http.get('assets/config/config.json').subscribe((data: any) => {
-      this.endPointService.ADMIN_URL = data.Admin_URL;
-      this.endPointService.MRE_URL = data.MRE_URL;
-      this.endPointService.userRoles = data.BUSINESS_USER_ROLES;
 
-      this.setConfigurations(data);
-    }, (error) => {
-      alert('Unable to read configurations, Please contact administrator');
-      console.error(error);
+  readConfig() {
+    // return this.http.get('assets/config/config.json').subscribe((data: any) => {
+    //   // this.endPointService.ADMIN_URL = data.Admin_URL;
+    //   // this.endPointService.MRE_URL = data.MRE_URL;
+    //   // this.endPointService.userRoles = data.BUSINESS_USER_ROLES;
+    //   this.configData = data;
+    //   this.setConfigurations(data);
+    // }, (error) => {
+    //   alert('Unable to read configurations, Please contact administrator');
+    //   console.error(error);
+    // });
+
+    return new Promise((resolve) => {
+      this.http.get('assets/config/config.json')
+        .subscribe(config => {
+          this.configData = config;
+          this.setConfigurations(config);
+          resolve(config);
+        });
     });
 
   }
@@ -55,4 +70,6 @@ export class ConfigService {
     this.isBarIconMode = false;
     this.onReadConfig.next(data);
   }
+
+
 }

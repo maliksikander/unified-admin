@@ -5,6 +5,7 @@ import { throwError } from "rxjs";
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { catchError, timeout } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ConfigService } from './config.service';
 
 
 @Injectable({
@@ -19,25 +20,28 @@ export class EndpointService {
 
   constructor(private snackbar: SnackbarService,
     private httpClient: HttpClient,
+    private configService: ConfigService,
     private _router: Router) {
-    this.readConfigJson().subscribe((e) => {
-      this.ADMIN_URL = e.Admin_URL;
-      this.MRE_URL = e.MRE_URL;
-      this.userRoles = e.BUSINESS_USER_ROLES;
 
-      if (localStorage.getItem('token')) {
-        this.token = localStorage.getItem('token');
-      }
+    let e = this.configService.configData;
+    // this.readConfigJson().subscribe((e) => {
+    this.ADMIN_URL = e.Admin_URL;
+    this.MRE_URL = e.MRE_URL;
+    this.userRoles = e.BUSINESS_USER_ROLES;
 
-    });
+    if (localStorage.getItem('token')) {
+      this.token = localStorage.getItem('token');
+    }
+
+    // });
 
 
   }
 
 
-  readConfigJson(): Observable<any> {
-    return this.httpClient.get(this.configJSON);
-  }
+  // readConfigJson(): Observable<any> {
+  //   return this.httpClient.get(this.configJSON);
+  // }
 
 
   private handleError(errorResponse: HttpErrorResponse) {

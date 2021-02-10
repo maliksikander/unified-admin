@@ -86,9 +86,9 @@ export class SecurityComponent implements OnInit {
       this.changeDetector.markForCheck();
     });
 
-    this.endPointService.readConfigJson().subscribe((e) => {
+    // this.endPointService.readConfigJson().subscribe((e) => {
       this.getSecuritySetting();
-    });
+    // });
   }
 
   getSecuritySetting() {

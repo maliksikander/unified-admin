@@ -54,9 +54,9 @@ export class DisplayComponent implements OnInit {
       this.spinner = res;
       this.changeDetector.markForCheck();
     });
-    this.endPointService.readConfigJson().subscribe((e) => {
+    // this.endPointService.readConfigJson().subscribe((e) => {
       this.getDisplaySetting();
-    });
+    // });
   }
 
   preview(files, e) {

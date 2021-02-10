@@ -56,9 +56,9 @@ export class MrdComponent implements OnInit {
     this.mrdForm.valueChanges.subscribe((data) => {
       this.commonService.logValidationErrors(this.mrdForm, this.formErrors, this.validations);
     });
-    this.endPointService.readConfigJson().subscribe((e) => {
+    // this.endPointService.readConfigJson().subscribe((e) => {
       this.getMRD();
-    });
+    // });
 
   }
 
@@ -151,6 +151,7 @@ export class MrdComponent implements OnInit {
         this.spinner = false;
         console.log("Error fetching:", error);
         if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
+        if (error && error.status == 409) this.snackbar.snackbarMessage('error-snackbar', "MRD in use,cannot be deleted", 1);
       });
   }
 
