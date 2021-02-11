@@ -128,9 +128,18 @@ export class MrdComponent implements OnInit {
   updateMRD(data, id) {
     this.endPointService.update(data, id, this.reqServiceType).subscribe(
       (res: any) => {
-        this.snackbar.snackbarMessage('success-snackbar', "MRD Updated Successfully", 1);
-        this.getMRD();
+        // console.log("update-->",res);
+        // this.snackbar.snackbarMessage('success-snackbar', "MRD Updated Successfully", 1);
+        // this.getMRD();
+        if (res.id) {
+          let attr = this.mrdData.find(item => item.id == res.id);
+          let index = this.mrdData.indexOf(attr);
+          // console.log("index==>", index);
+          this.mrdData[index] = res;
+          this.snackbar.snackbarMessage('success-snackbar', "MRD Updated Successfully", 1);
+        }
         this.dialog.closeAll();
+        this.spinner = false
       },
       (error: any) => {
         this.spinner = false;

@@ -64,7 +64,7 @@ export class PrecisionQueueComponent implements OnInit {
   };
   queueForm: FormGroup;
   stepForm: FormGroup;
-  
+
   constructor(private commonService: CommonService,
     private dialog: MatDialog,
     private endPointService: EndpointService,
@@ -102,7 +102,7 @@ export class PrecisionQueueComponent implements OnInit {
     });
 
     // this.endPointService.readConfigJson().subscribe((e) => {
-      this.getQueue();
+    this.getQueue();
     // });
   }
 
@@ -246,9 +246,18 @@ export class PrecisionQueueComponent implements OnInit {
   updateQueue(data, id) {
     this.endPointService.update(data, id, this.reqServiceType).subscribe(
       (res: any) => {
-        this.snackbar.snackbarMessage('success-snackbar', "Updated Successfully", 1);
-        this.getQueue();
+        // this.snackbar.snackbarMessage('success-snackbar', "Updated Successfully", 1);
+        // this.getQueue();
+        // console.log("res==>", res);
+        if (res.id) {
+          let queue = this.queueData.find(item => item.id == res.id);
+          let index = this.queueData.indexOf(queue);
+          // console.log("index==>", index);
+          this.queueData[index] = res;
+          this.snackbar.snackbarMessage('success-snackbar', "Queue Updated Successfully", 1);
+        }
         this.dialog.closeAll();
+        this.spinner = false;
       },
       (error: any) => {
         this.spinner = false;
@@ -319,7 +328,7 @@ export class PrecisionQueueComponent implements OnInit {
   saveObjFormation() {
     const temp = this.queueForm.value;
     let data: any = {
-      mrd:{}
+      mrd: {}
     };
     data.name = temp.name;
     data.mrd.id = temp.mrd.id;
@@ -391,8 +400,8 @@ export class PrecisionQueueComponent implements OnInit {
     this.spinner = true;
     const formData = JSON.parse(JSON.stringify(this.stepForm.value));
     let newStep = this.manipulateExpTerm(formData);
-    let data:any={
-      mrd:{}
+    let data: any = {
+      mrd: {}
     };
     let temp = JSON.parse(JSON.stringify(this.queueData[i]));
     data.agentSelectionCriteria = temp.agentSelectionCriteria;
@@ -439,7 +448,7 @@ export class PrecisionQueueComponent implements OnInit {
           termObj.boolVal = termsCopy[j].value;
         }
         else {
-          termObj.profVal = termsCopy[j].value;
+          termObj.profVal = JSON.parse(termsCopy[j].value);
         }
         termsCopy[j] = termObj;
       }
@@ -503,6 +512,7 @@ export class PrecisionQueueComponent implements OnInit {
     this.endPointService.update(queue, queue.id, this.reqServiceType).subscribe(
       (res: any) => {
         this.snackbar.snackbarMessage('success-snackbar', "Updated Successfully", 1);
+        this.spinner = false;
       },
       (error: any) => {
         this.spinner = false;
@@ -547,10 +557,12 @@ export class PrecisionQueueComponent implements OnInit {
   }
 
   deleteStep(stepData, i) {
+    
     let steps = this.queueData[i].steps;
     let queue = this.queueData[i]
 
     if (steps && steps.length > 0) {
+      this.spinner = true;
       this.queueData[i].steps = this.queueData[i].steps.filter(i => i !== stepData)
         .map((i, idx) => (i.position = (idx + 1), i));
       this.updateQueueStep(queue);

@@ -63,7 +63,7 @@ export class AttributeComponent implements OnInit {
       this.commonService.logValidationErrors(this.attributeForm, this.formErrors, this.validations);
     });
     // this.endPointService.readConfigJson().subscribe((e) => {
-      this.getAttribute();
+    this.getAttribute();
     // });
   }
 
@@ -133,9 +133,19 @@ export class AttributeComponent implements OnInit {
   updateAttribute(data, id) {
     this.endPointService.update(data, id, this.reqServiceType).subscribe(
       (res: any) => {
-        this.snackbar.snackbarMessage('success-snackbar', "Attribute Updated Successfully", 1);
-        this.getAttribute();
+
+        // this.getAttribute();
+        // console.log("pudate res==>", res);
+        if (res.id) {
+          let attr = this.attrData.find(item => item.id == res.id);
+          let index = this.attrData.indexOf(attr);
+          // console.log("index==>", index);
+          this.attrData[index] = res;
+          this.snackbar.snackbarMessage('success-snackbar', "Attribute Updated Successfully", 1);
+        }
+
         this.dialog.closeAll();
+        this.spinner = false;
       },
       (error: any) => {
         this.spinner = false;

@@ -92,7 +92,7 @@ export class UsersComponent implements OnInit {
     });
 
     // this.endPointService.readConfigJson().subscribe((e) => {
-      this.getUsers();
+    this.getUsers();
     // });
 
   }
@@ -135,8 +135,14 @@ export class UsersComponent implements OnInit {
     this.endPointService.update(data, id, this.reqServiceType).subscribe(
       (res: any) => {
         this.snackbar.snackbarMessage('success-snackbar', "User Updated Successfully", 1);
-        this.getUsers();
-
+        // this.getUsers();
+        // console.log("update res==>", res);
+        if (res.id) {
+          let user = this.userData.find(item => item.keycloakUser.id == res.keycloakUser.id);
+          let index = this.userData.indexOf(user);
+          // console.log("index==>",index);
+          this.userData[index] = res; 
+        }
         this.dialog.closeAll();
         this.spinner = false;
       },
@@ -266,11 +272,11 @@ export class UsersComponent implements OnInit {
     return value;
   }
 
-  syncUsers() {
-    this.userData = undefined;
-    this.spinner = true;
-    this.getUsers();
-  }
+  // syncUsers() {
+  //   this.userData = undefined;
+  //   this.spinner = true;
+  //   this.getUsers();
+  // }
 
 
   viewUserProfile(templateRef, item) {
@@ -365,8 +371,16 @@ export class UsersComponent implements OnInit {
       (res: any) => {
         // this.snackbar.snackbarMessage('success-snackbar', "Created Successfully", 1);
         // console.log("res-->",res);
+        // console.log("create res==>", res);
+        if (res.id) {
+          let user = this.userData.find(item => item.keycloakUser.id == res.keycloakUser.id);
+          let index = this.userData.indexOf(user);
+          // console.log("index==>",index);
+          this.userData[index] = res; 
+        }
         this.resetAttributeForm();
-        this.getUsers();
+        // this.getUsers();
+        this.spinner = false;
       },
       (error: any) => {
         this.spinner = false;
@@ -424,7 +438,7 @@ export class UsersComponent implements OnInit {
           }
         }
         // console.log("users data 2-->", this.userData);
-        if (res.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
+        // if (res.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
         this.spinner = false;
       },
       error => {
