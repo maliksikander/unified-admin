@@ -53,28 +53,12 @@ export class MrdComponent implements OnInit {
     let pageNumber = localStorage.getItem('currentMRDPage');
     if (pageNumber) this.p = pageNumber;
 
+    //checking for MRD form validation failures
     this.mrdForm.valueChanges.subscribe((data) => {
       this.commonService.logValidationErrors(this.mrdForm, this.formErrors, this.validations);
     });
-    // this.endPointService.readConfigJson().subscribe((e) => {
-      this.getMRD();
-    // });
 
-  }
-
-  ValidateNameDuplication(control: AbstractControl) {
-    return this.endPointService.get(this.reqServiceType).pipe(map(
-      e => {
-        const attr = e;
-        if (!this.editData && (attr.find(e => e.name.toLowerCase() == control.value.toLowerCase()))) return { validName: true };
-        if (this.editData && this.editData.length > 0) {
-          const attr2 = attr;
-          const index = attr2.findIndex(e => e.name == this.editData.name);
-          attr2.splice(index, 1);
-          if (attr2.find(e => e.name.toLowerCase() == control.value.toLowerCase())) return { validname: true };
-        }
-      }
-    ));
+    this.getMRD();
   }
 
   openModal(templateRef) {
@@ -92,6 +76,7 @@ export class MrdComponent implements OnInit {
     });
   }
 
+  //resetting dialog
   onClose() {
     this.dialog.closeAll();
     this.searchTerm = "";
@@ -128,13 +113,9 @@ export class MrdComponent implements OnInit {
   updateMRD(data, id) {
     this.endPointService.update(data, id, this.reqServiceType).subscribe(
       (res: any) => {
-        // console.log("update-->",res);
-        // this.snackbar.snackbarMessage('success-snackbar', "MRD Updated Successfully", 1);
-        // this.getMRD();
         if (res.id) {
           let attr = this.mrdData.find(item => item.id == res.id);
           let index = this.mrdData.indexOf(attr);
-          // console.log("index==>", index);
           this.mrdData[index] = res;
           this.snackbar.snackbarMessage('success-snackbar', "MRD Updated Successfully", 1);
         }
@@ -151,10 +132,13 @@ export class MrdComponent implements OnInit {
   deleteMRD(data, id) {
     this.endPointService.delete(id, this.reqServiceType).subscribe(
       (res: any) => {
-        this.spinner = false;
-        this.mrdData = this.mrdData.filter(i => i !== data)
-          .map((i, idx) => (i.position = (idx + 1), i));
-        this.snackbar.snackbarMessage('success-snackbar', "MRD Deleted Successfully", 1);
+
+        if (res) {
+          this.spinner = false;
+          this.mrdData = this.mrdData.filter(i => i !== data)
+            .map((i, idx) => (i.position = (idx + 1), i));
+          this.snackbar.snackbarMessage('success-snackbar', "MRD Deleted Successfully", 1);
+        }
       },
       (error) => {
         this.spinner = false;
@@ -183,6 +167,7 @@ export class MrdComponent implements OnInit {
     });
   }
 
+  // To edit existing values and loading form
   editMrd(templateRef, data) {
     this.editData = data;
     this.mrdForm.patchValue({
@@ -190,6 +175,7 @@ export class MrdComponent implements OnInit {
       description: data.description,
       enabled: data.interruptible,
     });
+
     this.formHeading = 'Edit MRD';
     this.saveBtnText = 'Update'
     let dialogRef = this.dialog.open(templateRef, {
@@ -205,6 +191,7 @@ export class MrdComponent implements OnInit {
     });
   }
 
+  // To change toggle value and updating MRD
   onStatusChange(e, data) {
     let payload = JSON.parse(JSON.stringify(data));
     this.spinner = true;
@@ -213,6 +200,7 @@ export class MrdComponent implements OnInit {
     this.updateMRD(payload, data.id);
   }
 
+  // Object manipulation for request body
   onSaveObject() {
     let data: any = {};
     data.name = this.mrdForm.value.name;

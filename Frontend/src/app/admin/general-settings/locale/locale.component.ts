@@ -113,9 +113,9 @@ export class LocaleComponent implements OnInit {
         i++;
       });
     }
-    // this.endPointService.readConfigJson().subscribe((e) => {
+
     this.getLocaleSetting();
-    // });
+
   }
 
   defaultValues() {
@@ -157,7 +157,7 @@ export class LocaleComponent implements OnInit {
           this.localeSettingForm.setValue(value);
         }
         else {
-          if(res.status == 200 && res.localeSetting.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
+          if (res.status == 200 && res.localeSetting.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
           this.defaultValues();
         }
       },

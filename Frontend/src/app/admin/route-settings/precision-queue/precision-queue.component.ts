@@ -93,34 +93,20 @@ export class PrecisionQueueComponent implements OnInit {
       ])
     });
 
+    //checking for PQ form validation failures
     this.queueForm.valueChanges.subscribe((data) => {
       this.commonService.logValidationErrors(this.queueForm, this.formErrors, this.validations);
     });
 
+    //checking for Step form validation failures
     this.stepForm.valueChanges.subscribe((data) => {
       this.commonService.logValidationErrors(this.stepForm, this.stepFormErrors, this.stepValidationMessages);
     });
 
-    // this.endPointService.readConfigJson().subscribe((e) => {
     this.getQueue();
-    // });
   }
 
-  ValidateNameDuplication(control: AbstractControl) {
-    return this.endPointService.get(this.reqServiceType).pipe(map(
-      e => {
-        const attr = e;
-        if (!this.editData && (attr.find(e => e.name.toLowerCase() == control.value.toLowerCase()))) return { validName: true };
-        if (this.editData && this.editData.length > 0) {
-          const attr2 = attr;
-          const index = attr2.findIndex(e => e.name == this.editData.name);
-          attr2.splice(index, 1);
-          if (attr2.find(e => e.name.toLowerCase() == control.value.toLowerCase())) return { validName: true };
-        }
-      }
-    ));
-  }
-
+  //creating expression form array object
   addExpressionGroup(): FormGroup {
     return this.fb.group({
       preExpressionCondition: ["AND"],
@@ -130,19 +116,23 @@ export class PrecisionQueueComponent implements OnInit {
     });
   }
 
+  //to get 'expression' form control 
   getExpressions(form) {
     return form.controls.expressions.controls;
   }
 
+  // to add 'expression' group
   addExpressionButton() {
     (<FormArray>this.stepForm.controls['expressions']).push(this.addExpressionGroup());
   }
 
+  // to remove 'expression' group 
   removeExpression(i) {
     const exp: any = this.stepForm.get('expressions')
     exp.removeAt(i);
   }
 
+  // to add 'expression term' group 
   addExpressionTermGroup(): FormGroup {
     return this.fb.group({
       routingAttribute: ['', Validators.required],
@@ -153,16 +143,19 @@ export class PrecisionQueueComponent implements OnInit {
     });
   }
 
+  //to get 'expression' form control
   getTerms(form) {
     return form.controls['terms'].controls;
   }
 
+  //to add 'expression term' form group
   addExpressionTermButton(i, j) {
     const exp: any = this.stepForm.get('expressions')
     const control = exp.controls[i].get('terms');
     control.push(this.addExpressionTermGroup());
   }
 
+  // to remove 'expression' group 
   removeTerm(i) {
     const exp: any = this.stepForm.get('expressions')
     const control: any = exp.controls[i].get('terms');
@@ -182,6 +175,7 @@ export class PrecisionQueueComponent implements OnInit {
     });
   }
 
+  //resetting  dialog
   onClose(form) {
     this.dialog.closeAll();
     this.searchTerm = "";
@@ -244,15 +238,12 @@ export class PrecisionQueueComponent implements OnInit {
   }
 
   updateQueue(data, id) {
+
     this.endPointService.update(data, id, this.reqServiceType).subscribe(
       (res: any) => {
-        // this.snackbar.snackbarMessage('success-snackbar', "Updated Successfully", 1);
-        // this.getQueue();
-        // console.log("res==>", res);
         if (res.id) {
           let queue = this.queueData.find(item => item.id == res.id);
           let index = this.queueData.indexOf(queue);
-          // console.log("index==>", index);
           this.queueData[index] = res;
           this.snackbar.snackbarMessage('success-snackbar', "Queue Updated Successfully", 1);
         }
@@ -267,7 +258,6 @@ export class PrecisionQueueComponent implements OnInit {
   }
 
   editQueue(templateRef, data) {
-    // console.log("queue-->", data);
     const mrdIndex = this.mrdData.findIndex(item => item.id == data.mrd.id);
     this.editData = data;
     this.queueForm.patchValue({
@@ -325,6 +315,7 @@ export class PrecisionQueueComponent implements OnInit {
     });
   }
 
+  //Object formation for request body 
   saveObjFormation() {
     const temp = this.queueForm.value;
     let data: any = {
@@ -338,7 +329,7 @@ export class PrecisionQueueComponent implements OnInit {
     return data;
   }
 
-  // Queue Step //
+  //  Step Functions //
 
   openStepModal(templateRef, i) {
     this.stepFormHeading = 'Add Step';
@@ -364,6 +355,7 @@ export class PrecisionQueueComponent implements OnInit {
     });
   }
 
+  //Updating form object to match required structure
   manipulateExpTerm(data) {
     let expressions = JSON.parse(JSON.stringify(data.expressions));
     for (let i = 0; i < expressions.length; i++) {
@@ -396,6 +388,7 @@ export class PrecisionQueueComponent implements OnInit {
 
   }
 
+  //saving queue step
   onStepSave(i, mode) {
     this.spinner = true;
     const formData = JSON.parse(JSON.stringify(this.stepForm.value));
@@ -426,6 +419,7 @@ export class PrecisionQueueComponent implements OnInit {
 
   }
 
+  //Updating reponse object to match required form object structure
   reconstructFormData(data) {
 
     let expressions = JSON.parse(JSON.stringify(data.expressions));
@@ -461,6 +455,7 @@ export class PrecisionQueueComponent implements OnInit {
 
   }
 
+  // loading updated response object to form
   loadFormExpression(data) {
     //create lines array first
     for (let i = 0; i < data.expressions.length; i++) {
@@ -508,19 +503,6 @@ export class PrecisionQueueComponent implements OnInit {
 
   }
 
-  updateQueueStep(queue) {
-    this.endPointService.update(queue, queue.id, this.reqServiceType).subscribe(
-      (res: any) => {
-        this.snackbar.snackbarMessage('success-snackbar', "Updated Successfully", 1);
-        this.spinner = false;
-      },
-      (error: any) => {
-        this.spinner = false;
-        console.log("Error fetching:", error);
-        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
-      });
-  }
-
   get term(): FormGroup {
     return this.fb.group({
       routingAttribute: [''],
@@ -539,6 +521,7 @@ export class PrecisionQueueComponent implements OnInit {
     });
   }
 
+  // delete step confirmation dialog
   deleteStepConfirm(stepData, i) {
     let msg = "Are you sure you want to delete this Step ?";
     return this.dialog.open(ConfirmDialogComponent, {
@@ -557,15 +540,14 @@ export class PrecisionQueueComponent implements OnInit {
   }
 
   deleteStep(stepData, i) {
-    
-    let steps = this.queueData[i].steps;
-    let queue = this.queueData[i]
 
+    let steps = this.queueData[i].steps;
+    let queue = this.queueData[i];
     if (steps && steps.length > 0) {
       this.spinner = true;
       this.queueData[i].steps = this.queueData[i].steps.filter(i => i !== stepData)
         .map((i, idx) => (i.position = (idx + 1), i));
-      this.updateQueueStep(queue);
+      this.updateQueue(queue, queue.id);
 
     }
   }
@@ -590,19 +572,16 @@ export class PrecisionQueueComponent implements OnInit {
     else { this.createQueue(data); }
   }
 
-  pageChange(e) {
-    localStorage.setItem('currentQueuePage', e);
-  }
+  pageChange(e) { localStorage.setItem('currentQueuePage', e); }
 
   pageBoundChange(e) {
     this.p = e;
     localStorage.setItem('currentQueuePage', e);
   }
 
-  selectPage() {
-    this.itemsPerPage = this.selectedItem;
-  }
+  selectPage() { this.itemsPerPage = this.selectedItem; }
 
+  // progress bar setting
   formatLabel(value: number) {
     if (value >= 1000) {
       return Math.round(value / 1000) + 'k';

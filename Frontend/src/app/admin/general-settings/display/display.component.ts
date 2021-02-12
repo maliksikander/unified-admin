@@ -54,9 +54,9 @@ export class DisplayComponent implements OnInit {
       this.spinner = res;
       this.changeDetector.markForCheck();
     });
-    // this.endPointService.readConfigJson().subscribe((e) => {
-      this.getDisplaySetting();
-    // });
+
+    this.getDisplaySetting();
+
   }
 
   preview(files, e) {
@@ -84,7 +84,7 @@ export class DisplayComponent implements OnInit {
           });
           this.imgURL = this.editData.companyLogo;
         }
-        else if(res.status == 200 && res.displaySetting.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
+        else if (res.status == 200 && res.displaySetting.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
       },
       error => {
         this.spinner = false;

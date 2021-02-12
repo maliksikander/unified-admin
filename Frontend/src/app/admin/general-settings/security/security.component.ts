@@ -9,7 +9,7 @@ import { SnackbarService } from '../../services/snackbar.service';
   styleUrls: ['./security.component.scss']
 })
 export class SecurityComponent implements OnInit {
-  
+
   securitySettingForm: FormGroup;
   formErrors = {
     certificatePath: '',
@@ -86,9 +86,8 @@ export class SecurityComponent implements OnInit {
       this.changeDetector.markForCheck();
     });
 
-    // this.endPointService.readConfigJson().subscribe((e) => {
-      this.getSecuritySetting();
-    // });
+
+    this.getSecuritySetting();
   }
 
   getSecuritySetting() {
@@ -120,7 +119,7 @@ export class SecurityComponent implements OnInit {
             stompSSLEnabled: this.editData.stompSSLEnabled,
           });
         }
-        else if(res.status == 200 && res.securitySetting.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
+        else if (res.status == 200 && res.securitySetting.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
       },
       error => {
         this.spinner = false;
@@ -170,5 +169,5 @@ export class SecurityComponent implements OnInit {
       this.createSecuritySetting(data);
     }
   }
-  
+
 }

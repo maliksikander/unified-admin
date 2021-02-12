@@ -84,24 +84,25 @@ export class UsersComponent implements OnInit {
       associatedRoutingAttributes: [[]],
     });
 
+    // to disable user form controls 
     this.userForm.controls['firstName'].disable();
     this.userForm.controls['lastName'].disable();
 
-    this.userAttributeForm.valueChanges.subscribe((data) => {
-      this.commonService.logValidationErrors(this.userAttributeForm, this.formErrors, this.validations);
-    });
-
-    // this.endPointService.readConfigJson().subscribe((e) => {
-    this.getUsers();
+    //checking for attribute form validation failure
+    // this.userAttributeForm.valueChanges.subscribe((data) => {
+    //   this.commonService.logValidationErrors(this.userAttributeForm, this.formErrors, this.validations);
     // });
 
+    this.getUsers();
   }
 
+  //resetting dialog 
   onClose() {
     this.dialog.closeAll();
     this.searchTerm = "";
   }
 
+  //to get RE attributes and upadte if already assigned to any agent
   getAttribute() {
 
     this.endPointService.get('routing-attributes').subscribe(
@@ -131,17 +132,15 @@ export class UsersComponent implements OnInit {
       });
   }
 
+  //update routing engine user/agent
   updateREUserAttribute(data, id) {
     this.endPointService.update(data, id, this.reqServiceType).subscribe(
       (res: any) => {
         this.snackbar.snackbarMessage('success-snackbar', "User Updated Successfully", 1);
-        // this.getUsers();
-        // console.log("update res==>", res);
         if (res.id) {
           let user = this.userData.find(item => item.keycloakUser.id == res.keycloakUser.id);
           let index = this.userData.indexOf(user);
-          // console.log("index==>",index);
-          this.userData[index] = res; 
+          this.userData[index] = res;
         }
         this.dialog.closeAll();
         this.spinner = false;
@@ -153,6 +152,7 @@ export class UsersComponent implements OnInit {
       });
   }
 
+  //removing user from RE 
   deleteREUser(id) {
     this.endPointService.delete(id, this.reqServiceType).subscribe(
       (res: any) => {
@@ -165,25 +165,6 @@ export class UsersComponent implements OnInit {
         if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
       });
   }
-
-  // deleteConfirm(data) {
-  //   let id = data.id;
-  //   let msg = "Are you sure you want to delete this User ?";
-  //   return this.dialog.open(ConfirmDialogComponent, {
-  //     panelClass: 'confirm-dialog-container',
-  //     disableClose: true,
-  //     data: {
-  //       heading: "Delete User",
-  //       message: msg,
-  //       text: 'confirm',
-  //       data: data
-  //     }
-  //   }).afterClosed().subscribe((res: any) => {
-  //     // this.spinner = true;
-  //     // if (res === 'delete') { this.deleteUser(data, id); }
-  //     // else { this.spinner = false; }
-  //   });
-  // }
 
   editUserAttributes(templateRef, item) {
 
@@ -213,14 +194,6 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  // onStatusChange(e, data) {
-  //   let payload = JSON.parse(JSON.stringify(data));
-  //   this.spinner = true;
-  //   if (payload.id) delete payload.id;
-  //   payload.Interruptible = e.checked;
-  //   // this.updateUser(payload, data.id);
-  // }
-
   onSave() {
 
     this.spinner = true;
@@ -237,6 +210,7 @@ export class UsersComponent implements OnInit {
     }
   }
 
+  //updating state once any attribute is selected
   availableToSelectedAttribute(e, data, i) {
 
     let attrObj: any = {};
@@ -272,13 +246,7 @@ export class UsersComponent implements OnInit {
     return value;
   }
 
-  // syncUsers() {
-  //   this.userData = undefined;
-  //   this.spinner = true;
-  //   this.getUsers();
-  // }
-
-
+  //open user form dialog
   viewUserProfile(templateRef, item) {
 
     let data = JSON.parse(JSON.stringify(item));
@@ -302,13 +270,14 @@ export class UsersComponent implements OnInit {
     });
   }
 
+  //update slider value
   onSliderChange(e, i) {
-
     if (e.value || e.value == 0) {
       this.userAttributeForm.value.associatedRoutingAttributes[i].value = JSON.stringify(e.value);
     }
   }
 
+  //update toggle value
   onToggleChange(e, data, i) {
 
     if (e.checked || e.checked == false) {
@@ -321,8 +290,8 @@ export class UsersComponent implements OnInit {
     }
   }
 
+  //update attribute value in menu
   updateAttributeValue(attr, data) {
-
     this.attrName = attr.routingAttribute.name;
     this.attrValue = attr.value;
     this.attrType = attr.routingAttribute.type;
@@ -353,6 +322,7 @@ export class UsersComponent implements OnInit {
     }
   }
 
+  //remove attribute 
   removeAttribute() {
 
     if (this.userObj.associatedRoutingAttributes && this.userObj.associatedRoutingAttributes.length > 0) {
@@ -369,14 +339,11 @@ export class UsersComponent implements OnInit {
   createREUser(data) {
     this.endPointService.create(data, this.reqServiceType).subscribe(
       (res: any) => {
-        // this.snackbar.snackbarMessage('success-snackbar', "Created Successfully", 1);
-        // console.log("res-->",res);
-        // console.log("create res==>", res);
         if (res.id) {
           let user = this.userData.find(item => item.keycloakUser.id == res.keycloakUser.id);
           let index = this.userData.indexOf(user);
           // console.log("index==>",index);
-          this.userData[index] = res; 
+          this.userData[index] = res;
         }
         this.resetAttributeForm();
         // this.getUsers();
@@ -389,6 +356,7 @@ export class UsersComponent implements OnInit {
       });
   }
 
+  //reset attribute form
   resetAttributeForm() {
     this.editREUserData = undefined;
     this.attrData = undefined;
@@ -399,6 +367,7 @@ export class UsersComponent implements OnInit {
     });
   }
 
+  //get keycloak users
   getKeycloakUsers() {
     this.spinner = true;
     this.endPointService.getKeycloakUser().subscribe(
@@ -411,7 +380,6 @@ export class UsersComponent implements OnInit {
           }
         }
         this.getRoutingEngineUsers();
-        // this.spinner = false;
       },
       error => {
         console.log("Error fetching:", error);
@@ -421,7 +389,6 @@ export class UsersComponent implements OnInit {
   }
 
   getRoutingEngineUsers() {
-
     this.endPointService.get(this.reqServiceType).subscribe(
       (res: any) => {
         this.routingEngineUsers = JSON.parse(JSON.stringify(res));
@@ -437,8 +404,6 @@ export class UsersComponent implements OnInit {
             }
           }
         }
-        // console.log("users data 2-->", this.userData);
-        // if (res.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
         this.spinner = false;
       },
       error => {
@@ -448,11 +413,10 @@ export class UsersComponent implements OnInit {
       });
   }
 
+  //get users
   getUsers() {
     this.spinner = true;
-    // this.userData = [];
     this.getKeycloakUsers();
-    // this.getRoutingEngineUsers();
   }
 
   pageChange(e) { localStorage.setItem('currentUsersPage', e); }

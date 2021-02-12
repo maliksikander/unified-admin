@@ -70,9 +70,9 @@ export class DatabaseComponent implements OnInit {
       this.spinner = res;
       this.changeDetector.markForCheck();
     });
-    // this.endPointService.readConfigJson().subscribe((e) => {
-      this.getDatabaseSetting();
-    // });
+
+    this.getDatabaseSetting();
+
   }
 
   getDatabaseSetting() {
@@ -96,7 +96,7 @@ export class DatabaseComponent implements OnInit {
             ecmDBEngine: this.editData.ecmDBEngine
           });
         }
-        else if(res.status == 200 && res.databaseSetting.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
+        else if (res.status == 200 && res.databaseSetting.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
       },
       error => {
         this.spinner = false;
@@ -146,5 +146,5 @@ export class DatabaseComponent implements OnInit {
       this.createDatabaseSetting(data);
     }
   }
-  
+
 }

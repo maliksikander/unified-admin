@@ -24,7 +24,6 @@ export class EndpointService {
     private _router: Router) {
 
     let e = this.configService.configData;
-    // this.readConfigJson().subscribe((e) => {
     this.ADMIN_URL = e.Admin_URL;
     this.MRE_URL = e.MRE_URL;
     this.userRoles = e.BUSINESS_USER_ROLES;
@@ -32,24 +31,14 @@ export class EndpointService {
     if (localStorage.getItem('token')) {
       this.token = localStorage.getItem('token');
     }
-
-    // });
-
-
   }
-
-
-  // readConfigJson(): Observable<any> {
-  //   return this.httpClient.get(this.configJSON);
-  // }
-
 
   private handleError(errorResponse: HttpErrorResponse) {
     return throwError(errorResponse);
   }
 
 
-  //////////////////// General Group ////////////
+  //////////////////// General Group CRUD ////////////
 
   createSetting(data, reqServiceType): Observable<any> {
     return this.httpClient.post<any>(`${this.ADMIN_URL}/${reqServiceType}`, data, {
@@ -78,7 +67,7 @@ export class EndpointService {
     }).pipe(catchError(this.handleError));
   }
 
-  ///////////////////// MRE Endpoints ////////////////////////
+  ///////////////////// RE CRUD ////////////////////////
 
   create(data, reqServiceType): Observable<any> {
     return this.httpClient.post<any>(`${this.MRE_URL}/${reqServiceType}`, data, {
@@ -146,7 +135,4 @@ export class EndpointService {
     }).pipe(catchError(this.handleError));
   }
 
-
-
 }
-

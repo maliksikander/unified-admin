@@ -18,12 +18,12 @@ export class TopBarComponent implements OnInit {
     // this.clock();
   }
 
-  clock() {
-    this.today = new Date();
-    let timeoutId = setInterval(() => {
-      this.today = new Date();
-    }, 1000);
-  }
+  // clock() {
+  //   this.today = new Date();
+  //   let timeoutId = setInterval(() => {
+  //     this.today = new Date();
+  //   }, 1000);
+  // }
 
   logout() {
     localStorage.removeItem('token');

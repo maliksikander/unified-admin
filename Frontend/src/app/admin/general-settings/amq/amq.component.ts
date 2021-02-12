@@ -10,7 +10,7 @@ import { SnackbarService } from '../../services/snackbar.service';
   styleUrls: ['./amq.component.scss']
 })
 export class AmqComponent implements OnInit {
-  
+
   amqSettingForm: FormGroup;
   formErrors = {
     amqUser: '',
@@ -55,9 +55,9 @@ export class AmqComponent implements OnInit {
       this.spinner = res;
       this.changeDetector.markForCheck();
     });
-    // this.endPointService.readConfigJson().subscribe((e) => {
-      this.getAmqSetting();
-    // });
+
+    this.getAmqSetting();
+
   }
 
   getAmqSetting() {
@@ -74,7 +74,7 @@ export class AmqComponent implements OnInit {
             amqUrl: this.editData.amqUrl,
           });
         }
-        else if(res.status == 200 && res.amqSetting.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
+        else if (res.status == 200 && res.amqSetting.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
       },
       error => {
         this.spinner = false;

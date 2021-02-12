@@ -28,7 +28,6 @@ export class AttributeComponent implements OnInit {
   };
   validations;
   attributeForm: FormGroup;
-  // attrType = ['BOOLEAN', 'PROFICIENCY_LEVEL'];
   formHeading = 'Add New Attribute';
   saveBtnText = 'Create';
   attrData = [];
@@ -59,28 +58,14 @@ export class AttributeComponent implements OnInit {
     let pageNumber = localStorage.getItem('currentAttributePage');
     if (pageNumber) this.p = pageNumber;
 
+    //checking for Attribute form validation failures
     this.attributeForm.valueChanges.subscribe((data) => {
       this.commonService.logValidationErrors(this.attributeForm, this.formErrors, this.validations);
     });
-    // this.endPointService.readConfigJson().subscribe((e) => {
+
     this.getAttribute();
-    // });
   }
 
-  ValidateNameDuplication(control: AbstractControl) {
-    return this.endPointService.get(this.reqServiceType).pipe(map(
-      e => {
-        const attr = e;
-        if (!this.editData && (attr.find(e => e.name.toLowerCase() == control.value.toLowerCase()))) return { validName: true };
-        if (this.editData && this.editData.length > 0) {
-          const attr2 = attr;
-          const index = attr2.findIndex(e => e.name == this.editData.name);
-          attr2.splice(index, 1);
-          if (attr2.find(e => e.name.toLowerCase() == control.value.toLowerCase())) return { validName: true };
-        }
-      }
-    ));
-  }
 
   openModal(templateRef) {
     this.attributeForm.reset();
@@ -98,6 +83,7 @@ export class AttributeComponent implements OnInit {
     });
   }
 
+  //resetting dialog 
   onClose() {
     this.dialog.closeAll();
     this.searchTerm = "";
@@ -133,17 +119,12 @@ export class AttributeComponent implements OnInit {
   updateAttribute(data, id) {
     this.endPointService.update(data, id, this.reqServiceType).subscribe(
       (res: any) => {
-
-        // this.getAttribute();
-        // console.log("pudate res==>", res);
         if (res.id) {
           let attr = this.attrData.find(item => item.id == res.id);
           let index = this.attrData.indexOf(attr);
-          // console.log("index==>", index);
           this.attrData[index] = res;
           this.snackbar.snackbarMessage('success-snackbar', "Attribute Updated Successfully", 1);
         }
-
         this.dialog.closeAll();
         this.spinner = false;
       },
@@ -158,9 +139,11 @@ export class AttributeComponent implements OnInit {
     this.endPointService.delete(id, this.reqServiceType).subscribe(
       (res: any) => {
         this.spinner = false;
-        this.attrData = this.attrData.filter(i => i !== data)
-          .map((i, idx) => (i.position = (idx + 1), i));
-        this.snackbar.snackbarMessage('success-snackbar', "Attribute Deleted Successfully", 1);
+        if (res) {
+          this.attrData = this.attrData.filter(i => i !== data)
+            .map((i, idx) => (i.position = (idx + 1), i));
+          this.snackbar.snackbarMessage('success-snackbar', "Attribute Deleted Successfully", 1);
+        }
       },
       (error) => {
         this.spinner = false;
@@ -171,7 +154,6 @@ export class AttributeComponent implements OnInit {
   }
 
   editAttribute(templateRef, data) {
-    // const typeIndex = this.attrType.indexOf(data.type);
     this.editData = data;
     this.attributeForm.patchValue({
       name: data.name,
@@ -195,6 +177,7 @@ export class AttributeComponent implements OnInit {
     });
   }
 
+  // Confirmation dialog for delete operation 
   deleteConfirm(data) {
     let id = data.id;
     let msg = "Are you sure you want to delete this attribute ?";
@@ -224,7 +207,7 @@ export class AttributeComponent implements OnInit {
       this.createAttribute(data);
     }
   }
-
+// Object manipulation for request body
   onSaveObject() {
 
     let data: any = {};
@@ -240,6 +223,7 @@ export class AttributeComponent implements OnInit {
     return data;
   }
 
+  //progress bar setting
   formatLabel(value: number) {
     if (value >= 1000) {
       return Math.round(value / 1000) + 'k';
@@ -247,6 +231,7 @@ export class AttributeComponent implements OnInit {
     return value;
   }
 
+  // Page number storage for reload
   pageChange(e) { localStorage.setItem('currentAttributePage', e); }
 
   pageBoundChange(e) {

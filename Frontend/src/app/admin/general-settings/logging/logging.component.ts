@@ -21,7 +21,7 @@ export class LoggingComponent implements OnInit {
   reqServiceType = 'log-setting';
   spinner: any = true;
   editData: any;
-  logLevel=['all','debug','error','fatal','info','off','trace','warn'];
+  logLevel = ['all', 'debug', 'error', 'fatal', 'info', 'off', 'trace', 'warn'];
   constructor(private snackbar: SnackbarService,
     private fb: FormBuilder,
     private commonService: CommonService,
@@ -34,9 +34,9 @@ export class LoggingComponent implements OnInit {
 
     this.logSettingForm = this.fb.group({
       logLevel: ['warn', [Validators.required]],
-      agentLogsMaxFiles: ['', [Validators.required,Validators.min(1),,Validators.max(1000)]],
-      agentLogsFileSize: ['', [Validators.required,Validators.min(1),,Validators.max(1024)]],
-      logFilePath: ['', [Validators.required,Validators.maxLength(256)]],
+      agentLogsMaxFiles: ['', [Validators.required, Validators.min(1), , Validators.max(1000)]],
+      agentLogsFileSize: ['', [Validators.required, Validators.min(1), , Validators.max(1024)]],
+      logFilePath: ['', [Validators.required, Validators.maxLength(256)]],
     });
 
     this.logSettingForm.valueChanges.subscribe((data) => {
@@ -49,9 +49,9 @@ export class LoggingComponent implements OnInit {
       this.spinner = res;
       this.changeDetector.markForCheck();
     });
-    // this.endPointService.readConfigJson().subscribe((e) => {
+
     this.getLogSetting();
-    // });
+
   }
 
   getLogSetting() {
@@ -67,12 +67,12 @@ export class LoggingComponent implements OnInit {
             logFilePath: this.editData.logFilePath,
           });
         }
-        else if(res.status == 200 && res.logSetting.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
+        else if (res.status == 200 && res.logSetting.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
       },
       error => {
         this.spinner = false;
         console.log("Error fetching:", error);
-        if(error && error.status == 0)  this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
+        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
       });
   }
 
@@ -89,7 +89,7 @@ export class LoggingComponent implements OnInit {
       (error: any) => {
         this.spinner = false;
         console.log("Error creating", error);
-        if(error && error.status == 0)  this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
+        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
       });
   }
 
@@ -102,7 +102,7 @@ export class LoggingComponent implements OnInit {
       (error: any) => {
         this.spinner = false;
         console.log("Error updating", error);
-        if(error && error.status == 0)  this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
+        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
       });
   }
 

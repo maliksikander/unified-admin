@@ -348,8 +348,9 @@ export class CommonService {
   };
   
   constructor(private snackbar: SnackbarService,
-    private router: Router,) { }
+    private router: Router) { }
 
+  //assign form validation errors dynamically
   logValidationErrors(group: FormGroup, formErrors, validations) {
     let result = [];
     Object.keys(group.controls).forEach((key: string) => {
@@ -373,6 +374,7 @@ export class CommonService {
     return result;
   }
 
+  // verifying token existence form local storage
   tokenVerification() {
     if (!localStorage.getItem('token')) {
       return this.router.navigate(['/login']);

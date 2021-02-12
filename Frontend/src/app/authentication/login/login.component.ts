@@ -72,8 +72,6 @@ export class LoginComponent implements OnInit {
     this.endPointService.login(data).subscribe(
       (res: any) => {
         this.spinner = false;
-        const result = res
-        // console.log("login res-->", res);
         if (data.rememberMe == true) {
           localStorage.setItem('username', res.keycloak_User.username);
           localStorage.setItem('token', res.token);
