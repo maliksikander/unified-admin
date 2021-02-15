@@ -33,6 +33,8 @@ export class ReportingComponent implements OnInit {
   ngOnInit() {
 
     this.commonService.tokenVerification();
+
+    //setting local form validation messages 
     this.validations = this.commonService.reportSettingErrorMessages;
 
     this.reportSettingForm = this.fb.group({
@@ -65,6 +67,7 @@ export class ReportingComponent implements OnInit {
 
   }
 
+  //to get log setting list and set the local variable with the response
   getReportSetting() {
     this.endPointService.getSetting(this.reqServiceType).subscribe(
       (res: any) => {
@@ -89,6 +92,7 @@ export class ReportingComponent implements OnInit {
       });
   }
 
+  //to create log setting object and it accepts log setting object as `data`
   createReportSetting(data) {
     this.spinner = true;
     if (data.reportingEnabled == false) {
@@ -112,6 +116,7 @@ export class ReportingComponent implements OnInit {
       });
   }
 
+  //to update log setting object and it accepts amq setting object as `data`
   updateReportSetting(data) {
     if (data.reportingEnabled == false) {
       data.rcDBUrl = '';
@@ -148,6 +153,7 @@ export class ReportingComponent implements OnInit {
     this.setValidation(e.checked);
   }
 
+  //set dynamic validations on form controls on the status of enabled option 
   setValidation(val) {
     if (val == true) {
       this.valid = false;

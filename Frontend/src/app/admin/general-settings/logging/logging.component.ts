@@ -30,6 +30,8 @@ export class LoggingComponent implements OnInit {
 
   ngOnInit() {
     this.commonService.tokenVerification();
+
+    //setting local form validation messages 
     this.validations = this.commonService.logSettingErrorMessages;
 
     this.logSettingForm = this.fb.group({
@@ -54,6 +56,7 @@ export class LoggingComponent implements OnInit {
 
   }
 
+  //to get log setting list and set the local variable with the response
   getLogSetting() {
     this.endPointService.getSetting(this.reqServiceType).subscribe(
       (res: any) => {
@@ -76,6 +79,7 @@ export class LoggingComponent implements OnInit {
       });
   }
 
+  //to create log setting object and it accepts log setting object as `data`
   createLogSetting(data) {
     this.spinner = true;
     this.endPointService.createSetting(data, this.reqServiceType).subscribe(
@@ -93,6 +97,7 @@ export class LoggingComponent implements OnInit {
       });
   }
 
+  //to update log setting object and it accepts amq setting object as `data`
   updateLogSetting(data) {
     this.endPointService.updateSetting(data, this.reqServiceType).subscribe(
       (res: any) => {

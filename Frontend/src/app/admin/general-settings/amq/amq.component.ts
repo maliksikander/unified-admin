@@ -35,6 +35,7 @@ export class AmqComponent implements OnInit {
 
     this.commonService.tokenVerification();
 
+    //setting local form validation messages 
     this.validations = this.commonService.amqSettingErrorMessages;
 
     this.amqSettingForm = this.fb.group({
@@ -45,6 +46,7 @@ export class AmqComponent implements OnInit {
       amqUrl: ['', [Validators.required, Validators.pattern(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/)]],
     });
 
+    //checking for AMQ Setting form validation failures
     this.amqSettingForm.valueChanges.subscribe((data) => {
       let result = this.commonService.logValidationErrors(this.amqSettingForm, this.formErrors, this.validations);
       this.formErrors = result[0];
@@ -55,11 +57,12 @@ export class AmqComponent implements OnInit {
       this.spinner = res;
       this.changeDetector.markForCheck();
     });
-
+    
     this.getAmqSetting();
 
   }
 
+  //to get amq setting list and set the local variable with the response 
   getAmqSetting() {
     this.endPointService.getSetting(this.reqServiceType).subscribe(
       (res: any) => {
@@ -84,6 +87,7 @@ export class AmqComponent implements OnInit {
       });
   }
 
+  //to create amq setting object and it accepts amq setting object as `data` 
   createAmqSetting(data) {
     this.spinner = true;
     this.endPointService.createSetting(data, this.reqServiceType).subscribe(
@@ -102,6 +106,7 @@ export class AmqComponent implements OnInit {
       });
   }
 
+  //to update amq setting object and it accepts amq setting object as `data` 
   updateAmqSetting(data) {
     this.endPointService.updateSetting(data, this.reqServiceType).subscribe(
       (res: any) => {

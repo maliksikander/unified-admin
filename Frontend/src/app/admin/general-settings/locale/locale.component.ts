@@ -46,6 +46,8 @@ export class LocaleComponent implements OnInit {
 
   ngOnInit() {
     this.commonService.tokenVerification();
+
+    //setting local form validation messages 
     this.validations = this.commonService.localeSettingErrorMessages;
 
     this.localeSettingForm = this.fb.group({
@@ -56,6 +58,7 @@ export class LocaleComponent implements OnInit {
 
     this.timezoneList();
 
+    //checking for laocle setting form validation failures
     this.localeSettingForm.valueChanges.subscribe((data) => {
       let result = this.commonService.logValidationErrors(this.localeSettingForm, this.formErrors, this.validations);
       this.formErrors = result[0];
@@ -71,6 +74,7 @@ export class LocaleComponent implements OnInit {
 
   }
 
+  //callback for language removed event 
   onLanguageRemoved(lang) {
 
     const languages = this.localeSettingForm.controls['supportedLanguages'].value;
@@ -102,6 +106,7 @@ export class LocaleComponent implements OnInit {
     }
   }
 
+  //get timezone list using moment library
   timezoneList() {
     var moment = require('moment-timezone');
     let timeZoneList = moment.tz.names();
@@ -118,6 +123,7 @@ export class LocaleComponent implements OnInit {
 
   }
 
+  //setting default values for locale setting form
   defaultValues() {
     const index = this.timeZones.findIndex(item => item.name === 'UTC');
     this.localeSettingForm.patchValue({
@@ -128,6 +134,7 @@ export class LocaleComponent implements OnInit {
     this.selectedLanguages = this.localeSettingForm.value.supportedLanguages;
   }
 
+  // manupilating list timezone list
   supportedLangVal(data) {
     let temp = [];
     this.languages.forEach((lang) => {
@@ -138,6 +145,7 @@ export class LocaleComponent implements OnInit {
     return temp;
   }
 
+  //to get locale setting list and set the local variable with the response 
   getLocaleSetting() {
     this.endPointService.getSetting(this.reqServiceType).subscribe(
       (res: any) => {
@@ -169,6 +177,7 @@ export class LocaleComponent implements OnInit {
       });
   }
 
+  //to create locale setting object and it accepts locale setting object as `data`
   createLocaleSetting(data) {
     this.spinner = true;
     this.endPointService.createSetting(data, this.reqServiceType).subscribe(
@@ -187,6 +196,7 @@ export class LocaleComponent implements OnInit {
     );
   }
 
+  //to update locale setting object and it accepts locale setting object as `data`
   updateLocaleSetting(data) {
     this.endPointService.updateSetting(data, this.reqServiceType).subscribe(
       (res: any) => {
@@ -213,6 +223,7 @@ export class LocaleComponent implements OnInit {
     }
   }
 
+  //deselecting any language option and it accepts change event as 'e'
   manualDeselect(e) { if (e.value.length == 0) this.localeSettingForm.controls['supportedLanguages'].setValue([this.languages[0]]); }
 
   panelClose(e) { if (e == false) this.searchTerm = ''; }

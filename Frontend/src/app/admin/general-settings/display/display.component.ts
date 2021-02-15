@@ -35,6 +35,8 @@ export class DisplayComponent implements OnInit {
   ngOnInit() {
 
     this.commonService.tokenVerification();
+
+    //setting local form validation messages 
     this.validations = this.commonService.displaySettingErrorMessages;
 
     this.displaySettingForm = this.fb.group({
@@ -44,6 +46,8 @@ export class DisplayComponent implements OnInit {
     });
 
     this.displaySettingForm.controls['companyLogo'].disable();
+
+    //checking for Database Setting form validation failures
     this.displaySettingForm.valueChanges.subscribe((data) => {
       let result = this.commonService.logValidationErrors(this.displaySettingForm, this.formErrors, this.validations);
       this.formErrors = result[0];
@@ -54,11 +58,12 @@ export class DisplayComponent implements OnInit {
       this.spinner = res;
       this.changeDetector.markForCheck();
     });
-
+    
     this.getDisplaySetting();
 
   }
 
+  //to view selected image and save in base64 format and it accepts file properties as 'files' and change event as 'e'
   preview(files, e) {
     var reader = new FileReader();
     this.imagePath = files;
@@ -72,6 +77,7 @@ export class DisplayComponent implements OnInit {
     }
   }
 
+  //to get display setting list and set the local variable with the response 
   getDisplaySetting() {
     this.endPointService.getSetting(this.reqServiceType).subscribe(
       (res: any) => {
@@ -93,6 +99,7 @@ export class DisplayComponent implements OnInit {
       });
   }
 
+  //to create display setting object and it accepts amq setting object as `data`
   createDisplaySetting(data) {
     this.spinner = true;
     this.endPointService.createSetting(data, this.reqServiceType).subscribe(
@@ -110,6 +117,7 @@ export class DisplayComponent implements OnInit {
       });
   }
 
+  //to update display setting object and it accepts amq setting object as `data`
   updateDisplaySetting(data) {
     this.endPointService.updateSetting(data, this.reqServiceType).subscribe(
       (res: any) => {

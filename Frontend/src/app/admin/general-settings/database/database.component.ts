@@ -43,6 +43,7 @@ export class DatabaseComponent implements OnInit {
 
     this.commonService.tokenVerification();
 
+    //setting local form validation messages 
     this.validations = this.commonService.databaseSettingErrorMessages;
 
     this.databaseSettingForm = this.fb.group({
@@ -60,6 +61,7 @@ export class DatabaseComponent implements OnInit {
       ecmDBEngine: ['', [Validators.required, Validators.maxLength(256)]],
     });
 
+    //checking for Database Setting form validation failures
     this.databaseSettingForm.valueChanges.subscribe((data) => {
       let result = this.commonService.logValidationErrors(this.databaseSettingForm, this.formErrors, this.validations);
       this.formErrors = result[0];
@@ -75,6 +77,7 @@ export class DatabaseComponent implements OnInit {
 
   }
 
+  //to get database setting list and set the local variable with the response 
   getDatabaseSetting() {
     this.endPointService.getSetting(this.reqServiceType).subscribe(
       (res: any) => {
@@ -105,6 +108,7 @@ export class DatabaseComponent implements OnInit {
       });
   }
 
+  //to create database setting object and it accepts amq setting object as `data`
   createDatabaseSetting(data) {
     this.spinner = true;
     this.endPointService.createSetting(data, this.reqServiceType).subscribe(
@@ -122,6 +126,7 @@ export class DatabaseComponent implements OnInit {
       });
   }
 
+  //to update database setting object and it accepts amq setting object as `data`
   updateDatabaseSetting(data) {
     this.endPointService.updateSetting(data, this.reqServiceType).subscribe(
       (res: any) => {

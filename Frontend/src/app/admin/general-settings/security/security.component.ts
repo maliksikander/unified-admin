@@ -50,6 +50,8 @@ export class SecurityComponent implements OnInit {
 
   ngOnInit() {
     this.commonService.tokenVerification();
+
+    //setting local form validation messages 
     this.validations = this.commonService.securitySettingErrorMessages;
 
     this.securitySettingForm = this.fb.group({
@@ -90,6 +92,7 @@ export class SecurityComponent implements OnInit {
     this.getSecuritySetting();
   }
 
+   //to get security setting list and set the local variable with the response
   getSecuritySetting() {
     this.endPointService.getSetting(this.reqServiceType).subscribe(
       (res: any) => {
@@ -128,6 +131,7 @@ export class SecurityComponent implements OnInit {
       });
   }
 
+  //to create security setting object and it accepts security setting object as `data`
   createSecuritySetting(data) {
     this.spinner = true;
     this.endPointService.createSetting(data, this.reqServiceType).subscribe(
@@ -145,6 +149,7 @@ export class SecurityComponent implements OnInit {
       });
   }
 
+  //to update security setting object and it accepts security setting object as `data`
   updateSecuritySetting(data) {
     this.endPointService.updateSetting(data, this.reqServiceType).subscribe(
       (res: any) => {
