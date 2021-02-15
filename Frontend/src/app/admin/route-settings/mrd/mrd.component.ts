@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 import { CommonService } from '../../services/common.service';
 import { EndpointService } from '../../services/endpoint.service';
 import { SnackbarService } from '../../services/snackbar.service';
-import { map } from 'rxjs/operators';
-
 @Component({
   selector: 'app-mrd',
   templateUrl: './mrd.component.html',
@@ -44,6 +42,7 @@ export class MrdComponent implements OnInit {
     this.commonService.tokenVerification();
     this.validations = this.commonService.mrdFormErrorMessages;
 
+    //setting local form validation messages 
     this.mrdForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.maxLength(15), Validators.pattern("^[a-zA-Z0-9!@#$%^*_&()\\\"-]*$")]],
       description: ['', [Validators.maxLength(50)]],
@@ -61,6 +60,7 @@ export class MrdComponent implements OnInit {
     this.getMRD();
   }
 
+  //to open form dialog,this method accepts the `templateRef` as a parameter assigned to the form in html.
   openModal(templateRef) {
     this.mrdForm.reset();
     this.mrdForm.controls['enabled'].patchValue(true);
@@ -83,6 +83,8 @@ export class MrdComponent implements OnInit {
     this.editData = undefined;
   }
 
+  //to create MRD and it accepts `data` object as parameter with following properties (name:string, description:string, interruptible:string)
+  //and update the local list 
   createMRD(data) {
     this.endPointService.create(data, this.reqServiceType).subscribe(
       (res: any) => {
@@ -96,6 +98,7 @@ export class MrdComponent implements OnInit {
       });
   }
 
+  //to get MRD list and set the local variable with the response 
   getMRD() {
     this.endPointService.get(this.reqServiceType).subscribe(
       (res: any) => {
@@ -110,6 +113,8 @@ export class MrdComponent implements OnInit {
       });
   }
 
+  //to update MRD and it accepts `data` object & `id` as parameter,`data` object (name:string, description:string, interruptible:string)
+  //and updating the local list with the success response object
   updateMRD(data, id) {
     this.endPointService.update(data, id, this.reqServiceType).subscribe(
       (res: any) => {
@@ -129,6 +134,8 @@ export class MrdComponent implements OnInit {
       });
   }
 
+  //to delete MRD and it accepts `data` object & `id` as parameter,`data` object (name:string, description:string, interruptible:string)
+  //and to update the local list when the operation is successful
   deleteMRD(data, id) {
     this.endPointService.delete(id, this.reqServiceType).subscribe(
       (res: any) => {
@@ -148,6 +155,7 @@ export class MrdComponent implements OnInit {
       });
   }
 
+  //delete confirmation dialog with mrd object as `data` parameter
   deleteConfirm(data) {
     let id = data.id;
     let msg = "Are you sure you want to delete this MRD ?";
@@ -167,7 +175,8 @@ export class MrdComponent implements OnInit {
     });
   }
 
-  // To edit existing values and loading form
+  //to edit MRD,it accepts `templateRef' & `data` object as parameter,`data` object (name:string, description:string, interruptible:string)
+  //and patches the existing values with form controls and opens the form dialog
   editMrd(templateRef, data) {
     this.editData = data;
     this.mrdForm.patchValue({
@@ -191,7 +200,7 @@ export class MrdComponent implements OnInit {
     });
   }
 
-  // To change toggle value and updating MRD
+  // To change toggle value and updating MRD ,it accepts toggle value paramter as 'e' and mrd object parameter as data.
   onStatusChange(e, data) {
     let payload = JSON.parse(JSON.stringify(data));
     this.spinner = true;
@@ -220,8 +229,10 @@ export class MrdComponent implements OnInit {
     }
   }
 
+  //save page number storage for reload
   pageChange(e) { localStorage.setItem('currentMRDPage', e); }
 
+  //page bound change and saving for reload
   pageBoundChange(e) {
     this.p = e;
     localStorage.setItem('currentMRDPage', e);

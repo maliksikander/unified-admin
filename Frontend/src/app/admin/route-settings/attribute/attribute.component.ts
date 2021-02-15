@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog, ThemePalette } from '@angular/material';
-import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 import { CommonService } from '../../services/common.service';
 import { EndpointService } from '../../services/endpoint.service';
 import { SnackbarService } from '../../services/snackbar.service';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-attribute',
@@ -45,6 +43,8 @@ export class AttributeComponent implements OnInit {
   ngOnInit() {
 
     this.commonService.tokenVerification();
+
+    //setting local form validation messages 
     this.validations = this.commonService.attributeFormErrorMessages;
 
     this.attributeForm = this.formBuilder.group({
@@ -67,6 +67,7 @@ export class AttributeComponent implements OnInit {
   }
 
 
+  //to open form dialog,this method accepts the `template variable` as a parameter assigned to the form in html.
   openModal(templateRef) {
     this.attributeForm.reset();
     this.attributeForm.controls['profVal'].patchValue(1);
@@ -89,6 +90,8 @@ export class AttributeComponent implements OnInit {
     this.searchTerm = "";
   }
 
+  //to create attribute and it accepts `data` object as parameter with following properties
+  //name:string, description:string, type:string, defaultValue:string
   createAttribute(data) {
     this.endPointService.create(data, this.reqServiceType).subscribe(
       (res: any) => {
@@ -102,6 +105,7 @@ export class AttributeComponent implements OnInit {
       });
   }
 
+  //to get attribute list and set the local variable with the response 
   getAttribute() {
     this.endPointService.get(this.reqServiceType).subscribe(
       (res: any) => {
@@ -116,6 +120,8 @@ export class AttributeComponent implements OnInit {
       });
   }
 
+  //to update attribute and it accepts `data` object & `id` as parameter,`data` object (name:string, description:string, type:string, defaultValue:string)
+  //and updating the local list with the success response object
   updateAttribute(data, id) {
     this.endPointService.update(data, id, this.reqServiceType).subscribe(
       (res: any) => {
@@ -135,6 +141,8 @@ export class AttributeComponent implements OnInit {
       });
   }
 
+  //to delete attribute and it accepts `data` object & `id` as parameter,`data` object (name:string, description:string, type:string, defaultValue:string)
+  //and to update the local list when the operation is successful
   deleteAttribute(data, id) {
     this.endPointService.delete(id, this.reqServiceType).subscribe(
       (res: any) => {
@@ -153,6 +161,8 @@ export class AttributeComponent implements OnInit {
       });
   }
 
+  //to edit attribute,it accepts `templateRef' & `data` object as parameter,`data` object (name:string, description:string, type:string, defaultValue:string)
+  //and patches the existing values with form controls and opens the form dialog
   editAttribute(templateRef, data) {
     this.editData = data;
     this.attributeForm.patchValue({
@@ -177,7 +187,7 @@ export class AttributeComponent implements OnInit {
     });
   }
 
-  // Confirmation dialog for delete operation 
+  //Confirmation dialog for delete operation , it accepts the attribute object as `data` parameter 
   deleteConfirm(data) {
     let id = data.id;
     let msg = "Are you sure you want to delete this attribute ?";
@@ -207,7 +217,8 @@ export class AttributeComponent implements OnInit {
       this.createAttribute(data);
     }
   }
-// Object manipulation for request body
+
+  // Object manipulation for request body
   onSaveObject() {
 
     let data: any = {};
@@ -231,9 +242,10 @@ export class AttributeComponent implements OnInit {
     return value;
   }
 
-  // Page number storage for reload
+  //save page number storage for reload
   pageChange(e) { localStorage.setItem('currentAttributePage', e); }
 
+  //page bound change and saving for reload
   pageBoundChange(e) {
     this.p = e;
     localStorage.setItem('currentAttributePage', e);

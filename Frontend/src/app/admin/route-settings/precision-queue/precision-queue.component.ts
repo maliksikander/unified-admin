@@ -74,7 +74,10 @@ export class PrecisionQueueComponent implements OnInit {
   ngOnInit() {
 
     this.commonService.tokenVerification();
+
+    //setting local form validation messages 
     this.validations = this.commonService.queueFormErrorMessages;
+
     let pageNumber = localStorage.getItem('currentQueuePage');
     if (pageNumber) this.p = pageNumber;
 
@@ -163,6 +166,7 @@ export class PrecisionQueueComponent implements OnInit {
     control.removeAt(i);
   }
 
+  //to open form dialog,this method accepts the `template variable` as a parameter assigned to the form in html.
   openModal(templateRef) {
     this.queueForm.reset();
     let dialogRef = this.dialog.open(templateRef, {
@@ -182,6 +186,7 @@ export class PrecisionQueueComponent implements OnInit {
     if (form == 'step') this.resetStepForm();
   }
 
+  //to get MRD list and set the local variable with the response
   getMRD() {
     this.endPointService.get('media-routing-domains').subscribe(
       (res: any) => {
@@ -195,6 +200,7 @@ export class PrecisionQueueComponent implements OnInit {
       });
   }
 
+  //to get attribute list and set the local variable with the response 
   getAttribute() {
     this.endPointService.get('routing-attributes').subscribe(
       (res: any) => {
@@ -208,6 +214,8 @@ export class PrecisionQueueComponent implements OnInit {
       });
   }
 
+  //to create PQ and it accepts `data` object as parameter with following properties (name:string, mrd:object, agentSelectcriteria:string, serviceLevelType:string ,serviceLevelThreshold:number)
+  //and update the local list
   createQueue(data) {
     this.endPointService.create(data, this.reqServiceType).subscribe(
       (res: any) => {
@@ -221,6 +229,7 @@ export class PrecisionQueueComponent implements OnInit {
       });
   }
 
+  //to get PQ list and set the local variable with the response 
   getQueue() {
     this.endPointService.get(this.reqServiceType).subscribe(
       (res: any) => {
@@ -237,6 +246,8 @@ export class PrecisionQueueComponent implements OnInit {
       });
   }
 
+  //to update PQ and it accepts `data` object & `id` as parameter,`data` object (name:string, mrd:object, agentSelectcriteria:string, serviceLevelType:string ,serviceLevelThreshold:number)
+  //and updating the local list with the success response object
   updateQueue(data, id) {
 
     this.endPointService.update(data, id, this.reqServiceType).subscribe(
@@ -257,6 +268,8 @@ export class PrecisionQueueComponent implements OnInit {
       });
   }
 
+  //to edit PQ,it accepts `templateRef' & `data` object as parameter,`data` object (name:string, mrd:object, agentSelectcriteria:string, serviceLevelType:string ,serviceLevelThreshold:number)
+  //and patches the existing values with form controls and opens the form dialog
   editQueue(templateRef, data) {
     const mrdIndex = this.mrdData.findIndex(item => item.id == data.mrd.id);
     this.editData = data;
@@ -281,6 +294,8 @@ export class PrecisionQueueComponent implements OnInit {
     });
   }
 
+  //to delete PQ and it accepts `data` object & `id` as parameter,`data` object (name:string, mrd:object, agentSelectcriteria:string, serviceLevelType:string ,serviceLevelThreshold:number)
+  //and to update the local list when the operation is successful
   deleteQueue(data, id) {
     this.endPointService.delete(id, this.reqServiceType).subscribe(
       (res: any) => {
@@ -296,6 +311,7 @@ export class PrecisionQueueComponent implements OnInit {
       });
   }
 
+  //delete confirmation dialog with PQ object as `data` parameter
   deleteConfirm(data) {
     let id = data.id;
     let msg = "Are you sure you want to delete this Queue ?";
@@ -331,6 +347,7 @@ export class PrecisionQueueComponent implements OnInit {
 
   //  Step Functions //
 
+  //to open step form dialog,this method accepts the `templateRef` as a parameter assigned to the form in html and index of the PQ in the list as 'i'.
   openStepModal(templateRef, i) {
     this.stepFormHeading = 'Add Step';
     this.stepSaveBtnText = 'Add';
@@ -388,7 +405,7 @@ export class PrecisionQueueComponent implements OnInit {
 
   }
 
-  //saving queue step
+  //saving queue step, it accepts index of PQ object as 'i' and saving mode i.e either create or update as 'mode' 
   onStepSave(i, mode) {
     this.spinner = true;
     const formData = JSON.parse(JSON.stringify(this.stepForm.value));
@@ -469,6 +486,8 @@ export class PrecisionQueueComponent implements OnInit {
     this.stepForm.setValue(data);
   }
 
+  //to edit PQ,it accepts `templateRef' & Step object as `data` and PQ object index as 'i' as parameter
+  //and patches the existing values with form controls and opens the form dialog
   editStep(templateRef, data, i) {
     this.stepFormHeading = 'Edit Step';
     this.stepSaveBtnText = 'Update';
@@ -521,7 +540,7 @@ export class PrecisionQueueComponent implements OnInit {
     });
   }
 
-  // delete step confirmation dialog
+  //delete confirmation dialog with mrd object as `data` parameter
   deleteStepConfirm(stepData, i) {
     let msg = "Are you sure you want to delete this Step ?";
     return this.dialog.open(ConfirmDialogComponent, {
@@ -539,6 +558,8 @@ export class PrecisionQueueComponent implements OnInit {
     });
   }
 
+  //to remove step and it accepts step object as 'stepData' & PQ object index as `i` parameter
+  //and to update the local list when the operation is successful
   deleteStep(stepData, i) {
 
     let steps = this.queueData[i].steps;
@@ -552,6 +573,7 @@ export class PrecisionQueueComponent implements OnInit {
     }
   }
 
+  // to reset step form after dialog close
   resetStepForm() {
     this.stepForm.reset();
     const control = <FormArray>this.stepForm.controls['expressions'];

@@ -70,7 +70,10 @@ export class UsersComponent implements OnInit {
   ngOnInit() {
 
     this.commonService.tokenVerification();
+
+    //setting local form validation messages
     this.validations = this.commonService.userFormErrorMessages;
+
     let pageNumber = localStorage.getItem('currentUsersPage');
     if (pageNumber) this.p = pageNumber;
 
@@ -132,7 +135,7 @@ export class UsersComponent implements OnInit {
       });
   }
 
-  //update routing engine user/agent
+  //update routing engine user with RE user object as 'data' parameter and object id as 'id'
   updateREUserAttribute(data, id) {
     this.endPointService.update(data, id, this.reqServiceType).subscribe(
       (res: any) => {
@@ -166,6 +169,8 @@ export class UsersComponent implements OnInit {
       });
   }
 
+  //to edit User attributes ,it accepts `templateRef' & user object as `item` (keycloakUser:object, associatedRoutingAttributes:[]) parameter
+  //and patches the existing values with form controls and opens the form dialog
   editUserAttributes(templateRef, item) {
 
     this.attrSpinner = true;
@@ -210,7 +215,8 @@ export class UsersComponent implements OnInit {
     }
   }
 
-  //updating state once any attribute is selected
+  //updating state once any attribute is selected and patched along the form control and it accepts folowing paramters
+  //checked event as 'e' and user object as 'data' and user object index as 'i'
   availableToSelectedAttribute(e, data, i) {
 
     let attrObj: any = {};
@@ -239,6 +245,7 @@ export class UsersComponent implements OnInit {
     }
   }
 
+  //progress bar setting
   formatLabel(value: number) {
     if (value >= 1000) {
       return Math.round(value / 1000) + 'k';
@@ -246,7 +253,7 @@ export class UsersComponent implements OnInit {
     return value;
   }
 
-  //open user form dialog
+  //to open user form dialog and it accepts template reference variable assigned in html as 'templateRef' and user object as 'item'
   viewUserProfile(templateRef, item) {
 
     let data = JSON.parse(JSON.stringify(item));
@@ -270,14 +277,15 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  //update slider value
+  //update slider value and it accepts slider value event as 'e' and attribute object index in attribute form control as 'i'
   onSliderChange(e, i) {
     if (e.value || e.value == 0) {
       this.userAttributeForm.value.associatedRoutingAttributes[i].value = JSON.stringify(e.value);
     }
   }
 
-  //update toggle value
+  //update toggle value and it accepts slider value event as 'e',attribute object index in attribute form control as 'i'
+  //and attribute object as  `data`  
   onToggleChange(e, data, i) {
 
     if (e.checked || e.checked == false) {
@@ -290,7 +298,7 @@ export class UsersComponent implements OnInit {
     }
   }
 
-  //update attribute value in menu
+  //update attribute value in menu and it accepts attribute object as 'attr' and RE user object as 'data'
   updateAttributeValue(attr, data) {
     this.attrName = attr.routingAttribute.name;
     this.attrValue = attr.value;
@@ -305,6 +313,7 @@ export class UsersComponent implements OnInit {
     }
   }
 
+  //cllback for attribute value changes in `menu` and it accepts event change as `e` 
   onAttrChange(e) {
 
     if (this.userObj.associatedRoutingAttributes && this.userObj.associatedRoutingAttributes.length > 0) {
@@ -322,7 +331,7 @@ export class UsersComponent implements OnInit {
     }
   }
 
-  //remove attribute 
+  //to remove attributes from the selected from control list 
   removeAttribute() {
 
     if (this.userObj.associatedRoutingAttributes && this.userObj.associatedRoutingAttributes.length > 0) {
@@ -336,17 +345,16 @@ export class UsersComponent implements OnInit {
     }
   }
 
+  //create RE user and accepts user object(keycloakUser:object, associatedRoutingAttributes:[]) as 'data'
   createREUser(data) {
     this.endPointService.create(data, this.reqServiceType).subscribe(
       (res: any) => {
         if (res.id) {
           let user = this.userData.find(item => item.keycloakUser.id == res.keycloakUser.id);
           let index = this.userData.indexOf(user);
-          // console.log("index==>",index);
           this.userData[index] = res;
         }
         this.resetAttributeForm();
-        // this.getUsers();
         this.spinner = false;
       },
       (error: any) => {
@@ -367,7 +375,7 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  //get keycloak users
+  //get keycloak users and set the local user list 
   getKeycloakUsers() {
     this.spinner = true;
     this.endPointService.getKeycloakUser().subscribe(
@@ -388,6 +396,7 @@ export class UsersComponent implements OnInit {
       });
   }
 
+  // get RE users list and update the local user list if any agent exists in RE list and keycloak user list
   getRoutingEngineUsers() {
     this.endPointService.get(this.reqServiceType).subscribe(
       (res: any) => {
@@ -413,7 +422,7 @@ export class UsersComponent implements OnInit {
       });
   }
 
-  //get users
+  //get keycloak users
   getUsers() {
     this.spinner = true;
     this.getKeycloakUsers();
