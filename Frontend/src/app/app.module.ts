@@ -13,6 +13,7 @@ import { LoginComponent } from './authentication/login/login.component';
 import { APP_INITIALIZER } from '@angular/core';
 import { ConfigService } from './admin/services/config.service';
 
+
 @NgModule({
   declarations: [
     MainComponent,
@@ -46,6 +47,9 @@ import { ConfigService } from './admin/services/config.service';
       multi: true
     }
     // ],
+  ],
+  exports: [
+    AdminModule
   ],
   bootstrap: [MainComponent],
 })

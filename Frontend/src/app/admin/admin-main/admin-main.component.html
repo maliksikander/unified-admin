@@ -113,55 +113,29 @@
               </a>
             </mat-expansion-panel>
 
-            <a class="channel-manager-link" mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/channel-manager']">
-              <!-- <i class="material-icons">developer_board</i> -->
+            <!-- <a class="channel-manager-link" mat-list-item [routerLinkActive]="['active-link']"
+              [routerLink]="['/channel-manager']">
               <img src="/assets/images/connections.svg" alt="ccm">
               <span class="sidebar-text">Channel Manager</span>
-            </a>
-            <!-- <mat-expansion-panel> -->
-            <!-- <mat-expansion-panel-header class='ccm-header-image-icon'> -->
-            <!-- <i class="material-icons">developer_board</i> -->
-            <!-- <img src="/assets/images/connections.svg" alt="ccm"> -->
-            <!-- <span class="sidebar-text">Channel Manager</span> -->
-            <!-- </mat-expansion-panel-header> -->
-
-            <!-- <mat-expansion-panel class="sms-panel">
-                <mat-expansion-panel-header class='sms-header-image-icon'>
-                  <img src="/assets/images/sms.svg" alt="sms">
-                  <span class="sidebar-text">SMS</span>
-                </mat-expansion-panel-header>
-                <a mat-list-item [routerLinkActive]="['active-link']">
-                  <img src="/assets/images/smpp.svg" alt="smpp">
-                  <span class="sidebar-text">SMPP</span>
-                </a>
-                <a mat-list-item [routerLinkActive]="['active-link']">
-                  <img src="/assets/images/twilio.svg" alt="twilio">
-                  <span class="sidebar-text">Twilio</span>
-                </a>
-              </mat-expansion-panel> -->
-
-            <!-- <a mat-list-item [routerLinkActive]="['active-link']">
-                <img src="/assets/images/webchat.svg" alt="web">
-                <span class="sidebar-text">Web Chat</span>
-              </a> -->
-
-            <!-- <a mat-list-item [routerLinkActive]="['active-link']">
-                <img src="/assets/images/viber.svg" alt="viber">
-                <span class="sidebar-text">Viber</span>
-              </a> -->
-            <!-- <a mat-list-item [routerLinkActive]="['active-link']">
-                <img src="/assets/images/fb.svg" alt="fb">
-                <span class="sidebar-text">Facebook</span>
-              </a> -->
-            <!-- <a mat-list-item [routerLinkActive]="['active-link']">
-                <img src="/assets/images/whatsapp.svg" alt="app">
-                <span class="sidebar-text">Whatsapp</span>
-              </a> -->
-            <!-- <a mat-list-item [routerLinkActive]="['active-link']">
-              <img src="/assets/images/proxy.svg" alt="proxy">
-              <span class="sidebar-text">Forward Proxy</span>
             </a> -->
-            <!-- </mat-expansion-panel> -->
+
+            <mat-expansion-panel>
+              <mat-expansion-panel-header class='ccm-header-image-icon'>
+                <img src="/assets/images/customer-channels.svg" alt="ccm">
+                <span class="sidebar-text">Customer Channels</span>
+              </mat-expansion-panel-header>
+
+
+              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/channel/channel-manager']">
+                <img src="/assets/images/channel-manager.svg" alt="channel">
+                <span class="sidebar-text">Channel Manager</span>
+              </a>
+              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/channel/channel-connector']">
+                <img src="/assets/images/channel-connector.svg" alt="channel_connector">
+                <span class="sidebar-text">Channel Connector</span>
+              </a>
+        
+            </mat-expansion-panel>
 
           </mat-accordion>
 

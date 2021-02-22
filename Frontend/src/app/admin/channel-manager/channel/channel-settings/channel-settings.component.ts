@@ -1,22 +1,24 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material';
-import { CommonService } from '../../services/common.service';
-import { EndpointService } from '../../services/endpoint.service';
-import { SnackbarService } from '../../services/snackbar.service';
+import { CommonService } from '../../../services/common.service';
+import { EndpointService } from '../../../services/endpoint.service';
+import { SnackbarService } from '../../../services/snackbar.service';
+
 
 @Component({
-  selector: 'app-channel-type-settings',
-  templateUrl: './channel-type-settings.component.html',
-  styleUrls: ['./channel-type-settings.component.scss']
+  selector: 'app-channel-settings',
+  templateUrl: './channel-settings.component.html',
+  styleUrls: ['./channel-settings.component.scss']
 })
-export class ChannelTypeSettingsComponent implements OnInit, OnChanges {
+export class ChannelSettingsComponent implements OnInit, OnChanges {
 
 
   @Input() parentChannelBool;
   @Output() childChannelBool = new EventEmitter<any>();
   spinner = false;
   channelSettingForm: FormGroup;
+  modeVal = ['BOT', 'AGENT', 'HYBRID'];
 
 
   constructor(private commonService: CommonService,
@@ -28,12 +30,14 @@ export class ChannelTypeSettingsComponent implements OnInit, OnChanges {
   ngOnInit() {
 
     this.channelSettingForm = this.formBuilder.group({
-      name: [''],
-      mode: [''],
+      channelName: [''],
+      serviceIdentifier: [''],
+      channelConnector: [],
+      channelMode: [''],
       responseSLA: [''],
-      inactivityTimeout: [''],
+      customerActivityTimeout: [''],
       routingPolicy: [''],
-      active: ['']
+      botId: ['']
     });
   }
 
@@ -43,7 +47,9 @@ export class ChannelTypeSettingsComponent implements OnInit, OnChanges {
 
   onChange(e) { }
 
-  onSave() {
+  onSave() { }
+
+  onClose() {
     this.childChannelBool.emit(!this.parentChannelBool);
   }
 

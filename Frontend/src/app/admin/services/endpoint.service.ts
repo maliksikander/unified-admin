@@ -1,10 +1,9 @@
 import { SnackbarService } from './snackbar.service';
-import { EventEmitter, Injectable } from '@angular/core';
-import { Subject, Observable } from "rxjs";
+import { Injectable } from '@angular/core';
+import { Observable } from "rxjs";
 import { throwError } from "rxjs";
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { catchError, timeout } from 'rxjs/operators';
-import { Router, ActivatedRoute } from '@angular/router';
+import { catchError } from 'rxjs/operators';
 import { ConfigService } from './config.service';
 
 
@@ -20,8 +19,7 @@ export class EndpointService {
 
   constructor(private snackbar: SnackbarService,
     private httpClient: HttpClient,
-    private configService: ConfigService,
-    private _router: Router) {
+    private configService: ConfigService,) {
 
     let e = this.configService.configData;
     this.ADMIN_URL = e.Admin_URL;

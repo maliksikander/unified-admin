@@ -27,10 +27,10 @@ import { CalendarComponent } from './general-settings/calendar/calendar.componen
 import { LicenseManagerComponent } from './general-settings/license-manager/license-manager.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { ChannelManagerSettingsComponent } from './channel-manager-settings/channel-manager-settings.component';
-import { ChannelTypeSettingsComponent } from './channel-manager-settings/channel-type-settings/channel-type-settings.component';
-
-
+import { ChannelListComponent } from './channel-manager/channel/channel-list.component';
+import { ChannelSettingsComponent } from './channel-manager/channel/channel-settings/channel-settings.component';
+import { ChannelConnectorComponent } from './channel-manager/channel-connector/channel-connector.component';
+import { ChannelConnectorSettingsComponent } from './channel-manager/channel-connector/channel-connector-settings/channel-connector-settings.component';
 
 @NgModule({
     imports: [
@@ -62,8 +62,10 @@ import { ChannelTypeSettingsComponent } from './channel-manager-settings/channel
         UsersComponent,
         CalendarComponent,
         LicenseManagerComponent,
-        ChannelManagerSettingsComponent,
-        ChannelTypeSettingsComponent,
+        ChannelSettingsComponent,
+        ChannelListComponent,
+        ChannelConnectorComponent,
+        ChannelConnectorSettingsComponent,
     ],
     providers: [
         HttpClientModule,

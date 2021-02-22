@@ -1,0 +1,37 @@
+<div class="loading-area" *ngIf="spinner">
+  <mat-spinner></mat-spinner>
+</div>
+<div class="panel-page-content">
+  <form class="form-horizontal form-bordered" [formGroup]="channelConnectorForm">
+    <div class="col-md-5">
+      <div class="form-group">
+        <mat-label>Channel Connector Name</mat-label>
+        <mat-form-field appearance="outline">
+          <input matInput formControlName="channelConnectorName">
+          <mat-error class="form-error">
+            <!-- {{formErrors.amqUser}} -->
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="form-group password-privacy-icon">
+        <mat-label>Channel Webhook URL</mat-label>
+        <mat-form-field appearance="outline">
+          <input matInput formControlName="channelWebhook">
+          <mat-error class="form-error">
+            <!-- {{formErrors.amqPwd}} -->
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="action-area col-md-5">
+      <button mat-raised-button (click)="onClose()" class="gray-btn">Cancel</button>
+      <button [disabled]="!channelConnectorForm.valid" mat-raised-button class="blue-btn service-trigger"
+        (click)="onSave()">Save</button>
+    </div>
+
+  </form>
+</div>
+
+
+
+<!-- <button mat-flat-button (click)="childToParentEvent()">Test<button> -->
