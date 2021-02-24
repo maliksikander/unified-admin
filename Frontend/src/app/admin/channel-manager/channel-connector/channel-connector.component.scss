@@ -59,10 +59,6 @@ input[type="number"] {
             font-weight: 400;
             padding-left: 43px;
             font-size: 13px;
-  
-            &:nth-child(3) {
-              padding: 0 !important;
-            }
           }
         }
         tbody {
@@ -87,8 +83,11 @@ input[type="number"] {
               padding: 0 15px 0 44px;
               overflow: hidden;
               text-overflow: ellipsis;
-              width: 20%;
-              &:nth-child(4) {
+              width: 30%;
+              &:nth-child(2) {
+                width: 40% !important;
+              }
+              &:nth-child(3) {
                 width: 30% !important;
               }
   
@@ -139,6 +138,12 @@ input[type="number"] {
             i.material-icons {
               font-size: 18px;
             }
+          }
+
+          .icon-position{
+            position: relative;
+            top: 20%;
+            left: 5px;
           }
         }
       }

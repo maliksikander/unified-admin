@@ -24,7 +24,7 @@ router.use('/locale-setting', localeSettingRoute);
 router.use('/log-setting', logSettingRoute);
 router.use('/report-setting', reportSettingRoute);
 router.use('/security-setting', securitySettingRoute);
-router.use('/login', loginRoute);
+router.use('/keycloakLogin', loginRoute);
 router.use('/users', userRoute);
 
 module.exports = router;

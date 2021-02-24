@@ -106,7 +106,7 @@ export class EndpointService {
   /////////////// Keycloak /////////////////
 
   login(data): Observable<any> {
-    return this.httpClient.post<any>(`${this.ADMIN_URL}/login`, data, {
+    return this.httpClient.post<any>(`${this.ADMIN_URL}/keycloakLogin`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer'

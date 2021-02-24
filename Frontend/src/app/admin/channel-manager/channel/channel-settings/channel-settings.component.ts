@@ -43,8 +43,6 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) { }
 
-  // childToParentEvent() { this.childChannelBool.emit(!this.parentChannelBool); }
-
   onChange(e) { }
 
   onSave() { }

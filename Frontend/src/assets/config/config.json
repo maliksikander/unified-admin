@@ -1,5 +1,5 @@
 {
-  "Admin_URL":"http://localhost:3000/unified-admin/api/v1",
+  "Admin_URL":"http://localhost:3000",
   "MRE_URL":"http://192.168.2.50:8084",
   "BUSINESS_USER_ROLES":["agent","supervisor"]
 }

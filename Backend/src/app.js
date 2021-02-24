@@ -68,7 +68,7 @@ if (config.env === 'production') {
 }
 
 // v1 api routes
-app.use('/unified-admin/api/v1', routes);
+app.use('/', routes);
 app.use('/general', angularRoutes);
 
 //login route
