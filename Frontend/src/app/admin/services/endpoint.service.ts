@@ -15,6 +15,7 @@ export class EndpointService {
   ADMIN_URL;
   MRE_URL;
   userRoles = [];
+  CCM_URL;
   token;
 
   constructor(private snackbar: SnackbarService,
@@ -24,6 +25,7 @@ export class EndpointService {
     let e = this.configService.configData;
     this.ADMIN_URL = e.Admin_URL;
     this.MRE_URL = e.MRE_URL;
+    this.CCM_URL = e.CCM_URL;
     this.userRoles = e.BUSINESS_USER_ROLES;
 
     if (localStorage.getItem('token')) {
@@ -99,6 +101,62 @@ export class EndpointService {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer '
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  ///////////////////// CCM CRUD ////////////////////////
+
+  createChannel(data, reqServiceType): Observable<any> {
+    return this.httpClient.post<any>(`${this.CCM_URL}/${reqServiceType}`, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer'
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  getChannel(reqServiceType): Observable<any> {
+    return this.httpClient.get(`${this.CCM_URL}/${reqServiceType}`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer'
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  getByChannelType(reqServiceType,typeid): Observable<any> {
+    return this.httpClient.get(`${this.CCM_URL}/${reqServiceType}?channelTypeId=${typeid}`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer'
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  updateChannel(data,reqServiceType): Observable<any> {
+    return this.httpClient.put<any>(`${this.CCM_URL}/${reqServiceType}`, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer '
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  deleteChannel(id, reqServiceType): Observable<any> {
+    return this.httpClient.delete<any>(`${this.CCM_URL}/${reqServiceType}/${id}`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer '
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  getConnectorHealth(url): Observable<any> {
+    return this.httpClient.get(`${url}/channel-connectors/health`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer'
       })
     }).pipe(catchError(this.handleError));
   }

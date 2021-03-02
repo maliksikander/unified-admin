@@ -11,17 +11,17 @@
         <div *ngIf="!addChannelBool" class="panel-page-content">
           <div class="channel-accordion">
             <mat-accordion>
-              <p>Channel</p>
-              <mat-expansion-panel hideToggle="true" #arrow1>
+              <mat-expansion-panel *ngFor="let type of channelTypes" (opened)="panelOpenCallback(type)"
+                hideToggle="true" #arrow>
                 <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
                   [expandedHeight]="customExpandedHeight">
                   <mat-panel-title>
-                    <img src="/assets/images/whatsapp.svg" alt="whats_app">
-                    <span>Whatsapp</span>
+                    <img src="{{type?.channelLogo}}">
+                    <span>{{type?.typeName ? type?.typeName : 'N/A'}}</span>
                   </mat-panel-title>
                   <mat-panel-description>
-                    <mat-icon *ngIf="arrow1.expanded">arrow_drop_up</mat-icon>
-                    <mat-icon *ngIf="!arrow1.expanded">arrow_drop_down</mat-icon>
+                    <mat-icon *ngIf="arrow.expanded">arrow_drop_up</mat-icon>
+                    <mat-icon *ngIf="!arrow.expanded">arrow_drop_down</mat-icon>
                   </mat-panel-description>
                 </mat-expansion-panel-header>
                 <table class="channel-table">
@@ -33,31 +33,17 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td scope="row">Voice</td>
-                      <td>http://www.expertflow.com</td>
+                    <tr *ngFor="let connector of channelConnectors">
+                      <td scope="row">{{connector?.channelConnectorName ? connector?.channelConnectorName : 'N/A'}}</td>
+                      <td>{{connector?.channelWebhook ? connector?.channelWebhook : 'N/A'}}</td>
                       <td class="list-action-area">
-                        <i style="color:#CE0000" class="icon-position material-icons">clear</i>
+                        <i (click)="getConnectorHealth(connector.channelWebhook)" style="color:#CE0000" class="icon-position material-icons">clear</i>
+                        <!-- <i style="color:#CE0000" class="icon-position material-icons">done</i> -->
                         <span class="list-actions">
-                          <button matTooltip="Edit" (click)="editChannel($event)" mat-mini-fab><i class="fa fa-pencil"
-                              aria-hidden="true"></i>
+                          <button matTooltip="Edit" (click)="editChannelConnector(connector)" mat-mini-fab><i
+                              class="fa fa-pencil" aria-hidden="true"></i>
                           </button>
-                          <button matTooltip="Delete" (click)="deleteConfirm($event)" mat-mini-fab><i
-                              class="fa fa-trash-o" aria-hidden="true"></i>
-                          </button>
-                        </span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td scope="row">Voice</td>
-                      <td>http://www.expertflow.com</td>
-                      <td class="list-action-area">
-                        <i style="color:#2DD393;" class="icon-position material-icons">done</i>
-                        <span class="list-actions">
-                          <button matTooltip="Edit" (click)="editChannel($event)" mat-mini-fab><i class="fa fa-pencil"
-                              aria-hidden="true"></i>
-                          </button>
-                          <button matTooltip="Delete" (click)="deleteConfirm($event)" mat-mini-fab><i
+                          <button matTooltip="Delete" (click)="deleteConfirm(connector)" mat-mini-fab><i
                               class="fa fa-trash-o" aria-hidden="true"></i>
                           </button>
                         </span>
@@ -65,8 +51,8 @@
                     </tr>
                   </tbody>
                 </table>
-                <button class="add-channel-btn" mat-flat-button (click)="addChannel('whatsapp')">
-                  Add New Channel
+                <button class="add-channel-btn" mat-flat-button (click)="addChannelConnector(type)">
+                  Add New Connector
                 </button>
               </mat-expansion-panel>
             </mat-accordion>
@@ -77,7 +63,8 @@
   </div>
 
   <ng-container *ngIf="addChannelBool">
-    <app-channel-connector-settings [parentChannelBool]="addChannelBool"
-      (childChannelBool)='childToParentUIChange($event)'>
+    <app-channel-connector-settings [parentChannelBool]="addChannelBool" [channelTypeData]="channelType"
+      [connectorData]="editConnectorData" (childChannelBool)='childToParentUIChange($event)'
+      (formSaveData)='onSave($event)'>
     </app-channel-connector-settings>
   </ng-container>

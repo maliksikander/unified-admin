@@ -18,7 +18,8 @@
         <mat-label>Channel Connector</mat-label>
         <mat-form-field appearance="outline">
           <mat-select formControlName="channelConnector">
-            <mat-option>Connector1</mat-option>
+            <mat-option *ngFor="let connector of channelConnectorList" [value]="connector">
+              {{connector?.channelConnectorName}}</mat-option>
           </mat-select>
           <mat-error class="form-error">
             <!-- {{formErrors.amqHost}} -->

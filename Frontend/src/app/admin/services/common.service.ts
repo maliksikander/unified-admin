@@ -17,13 +17,13 @@ export class CommonService {
       'required': "This field is required",
       'minlength': "More characters required",
       'maxlength': "Max 40 characters allowed",
-      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+      'pattern': "Pattern not valid"
 
     },
     'amqPwd': {
       'required': "This field is required",
       'maxlength': "Max 256 characters allowed",
-      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+      'pattern': "Pattern not valid"
     },
     'amqHost': {
       'required': "This field is required",
@@ -346,7 +346,35 @@ export class CommonService {
       'required': "This field is required",
     }
   };
-  
+
+  connectorFormErrorMessages = {
+    'channelConnectorName': {
+      'required': "This field is required",
+      'minlength': "More characters required",
+      'maxlength': "Less characters required",
+      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+
+    },
+    'channelWebhook': {
+      'required': "This field is required",
+      'pattern': "Enter valid url"
+    },
+  };
+
+  channelFormErrorMessages = {
+    'channelConnectorName': {
+      'required': "This field is required",
+      'minlength': "More characters required",
+      'maxlength': "Less characters required",
+      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+
+    },
+    'channelWebhook': {
+      'required': "This field is required",
+      'pattern': "Enter valid url"
+    },
+  };
+
   constructor(private snackbar: SnackbarService,
     private router: Router) { }
 

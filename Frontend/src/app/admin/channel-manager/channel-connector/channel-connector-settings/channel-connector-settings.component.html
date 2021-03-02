@@ -9,7 +9,7 @@
         <mat-form-field appearance="outline">
           <input matInput formControlName="channelConnectorName">
           <mat-error class="form-error">
-            <!-- {{formErrors.amqUser}} -->
+            {{formErrors.channelConnectorName}}
           </mat-error>
         </mat-form-field>
       </div>
@@ -18,7 +18,7 @@
         <mat-form-field appearance="outline">
           <input matInput formControlName="channelWebhook">
           <mat-error class="form-error">
-            <!-- {{formErrors.amqPwd}} -->
+            {{formErrors.channelWebhook}}
           </mat-error>
         </mat-form-field>
       </div>
@@ -31,7 +31,3 @@
 
   </form>
 </div>
-
-
-
-<!-- <button mat-flat-button (click)="childToParentEvent()">Test<button> -->
