@@ -24,7 +24,7 @@
                     <mat-icon *ngIf="!arrow.expanded">arrow_drop_down</mat-icon>
                   </mat-panel-description>
                 </mat-expansion-panel-header>
-                <table class="channel-table">
+                <table class="channel-table" *ngIf="channels && channels.length > 0">
                   <thead>
                     <tr>
                       <th scope="col">Name</th>
@@ -54,7 +54,7 @@
                     </tr>
                   </tbody>
                 </table>
-                <button class="add-channel-btn" mat-flat-button (click)="addChannel('whatsapp')">
+                <button class="add-channel-btn" mat-flat-button (click)="addChannel(type)">
                   Add New Channel
                 </button>
               </mat-expansion-panel>

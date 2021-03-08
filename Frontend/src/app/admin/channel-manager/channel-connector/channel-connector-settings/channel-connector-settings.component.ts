@@ -47,6 +47,8 @@ export class ChannelConnectorSettingsComponent implements OnInit {
       this.channelConnectorForm.patchValue({
         channelConnectorName: this.connectorData.channelConnectorName,
         channelWebhook: this.connectorData.channelWebhook,
+        webhookUrl: `${this.connectorData.channelWebhook}/channel-connectors/webhook`,
+        healthUrl: `${this.connectorData.channelWebhook}/channel-connectors/health`
       });
     }
 

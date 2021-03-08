@@ -1,0 +1,36 @@
+<div class="loading-area" *ngIf="spinner">
+  <mat-spinner></mat-spinner>
+</div>
+<div class="panel-page-content">
+  <form class="form-horizontal form-bordered" [formGroup]="botSettingForm">
+    <div class="col-md-5">
+
+      <div class="form-group">
+        <mat-label>Bot Name</mat-label>
+        <mat-form-field appearance="outline">
+          <input matInput formControlName="botName">
+          <mat-error class="form-error">
+            {{formErrors.botName}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <mat-label>Bot API URL</mat-label>
+        <mat-form-field appearance="outline">
+          <input type="number" matInput formControlName="botURL">
+          <mat-error class="form-error">
+            {{formErrors.botURL}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+    </div>
+    <div class="action-area btn-margin col-md-5">
+      <button mat-raised-button (click)="onClose()" class="gray-btn">Cancel</button>
+      <button [disabled]="!botSettingForm.valid" mat-raised-button class="blue-btn service-trigger"
+        (click)="onSave()">Save</button>
+    </div>
+
+  </form>
+</div>

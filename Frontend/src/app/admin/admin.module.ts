@@ -31,6 +31,8 @@ import { ChannelListComponent } from './channel-manager/channel/channel-list.com
 import { ChannelSettingsComponent } from './channel-manager/channel/channel-settings/channel-settings.component';
 import { ChannelConnectorComponent } from './channel-manager/channel-connector/channel-connector.component';
 import { ChannelConnectorSettingsComponent } from './channel-manager/channel-connector/channel-connector-settings/channel-connector-settings.component';
+import { BotListComponent } from './bot/bot-list/bot-list.component';
+import { BotSettingsComponent } from './bot/bot-list/bot-settings/bot-settings.component';
 
 @NgModule({
     imports: [
@@ -66,6 +68,8 @@ import { ChannelConnectorSettingsComponent } from './channel-manager/channel-con
         ChannelListComponent,
         ChannelConnectorComponent,
         ChannelConnectorSettingsComponent,
+        BotListComponent,
+        BotSettingsComponent,
     ],
     providers: [
         HttpClientModule,

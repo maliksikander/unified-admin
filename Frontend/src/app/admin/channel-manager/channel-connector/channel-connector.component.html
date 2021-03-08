@@ -24,7 +24,7 @@
                     <mat-icon *ngIf="!arrow.expanded">arrow_drop_down</mat-icon>
                   </mat-panel-description>
                 </mat-expansion-panel-header>
-                <table class="channel-table">
+                <table class="channel-table" *ngIf="channelConnectors && channelConnectors.length > 0">
                   <thead>
                     <tr>
                       <th scope="col">Name</th>
@@ -34,11 +34,15 @@
                   </thead>
                   <tbody>
                     <tr *ngFor="let connector of channelConnectors">
-                      <td scope="row">{{connector?.channelConnectorName ? connector?.channelConnectorName : 'N/A'}}</td>
+                      <td scope="row">{{connector?.channelConnectorName ? connector?.channelConnectorName : 'N/A'}}
+                      </td>
                       <td>{{connector?.channelWebhook ? connector?.channelWebhook : 'N/A'}}</td>
                       <td class="list-action-area">
-                        <i (click)="getConnectorHealth(connector.channelWebhook)" style="color:#CE0000" class="icon-position material-icons">clear</i>
-                        <!-- <i style="color:#CE0000" class="icon-position material-icons">done</i> -->
+                        <!-- [ngStyle]="{'color':connector?.status == 'healthy' ? '#2DD393' : '#CE0000' }" -->
+                        <i [ngStyle]="connector?.status == 'healthy' && { 'color':'#2DD393' } || connector?.status == 'unhealthy' && { 'color':'#CE0000' }"
+                          class="icon-position material-icons">{{connector?.status ?
+                          (connector.status == 'healthy' ? 'done' : 'clear' ) : 'hourglass_empty'}}</i>
+
                         <span class="list-actions">
                           <button matTooltip="Edit" (click)="editChannelConnector(connector)" mat-mini-fab><i
                               class="fa fa-pencil" aria-hidden="true"></i>
@@ -49,6 +53,7 @@
                         </span>
                       </td>
                     </tr>
+
                   </tbody>
                 </table>
                 <button class="add-channel-btn" mat-flat-button (click)="addChannelConnector(type)">

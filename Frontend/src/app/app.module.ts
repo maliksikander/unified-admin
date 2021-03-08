@@ -13,11 +13,10 @@ import { LoginComponent } from './authentication/login/login.component';
 import { APP_INITIALIZER } from '@angular/core';
 import { ConfigService } from './admin/services/config.service';
 
-
 @NgModule({
   declarations: [
     MainComponent,
-    LoginComponent
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

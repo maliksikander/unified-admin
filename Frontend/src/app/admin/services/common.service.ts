@@ -362,14 +362,56 @@ export class CommonService {
   };
 
   channelFormErrorMessages = {
-    'channelConnectorName': {
+    'channelName': {
       'required': "This field is required",
       'minlength': "More characters required",
       'maxlength': "Less characters required",
       'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
-
     },
-    'channelWebhook': {
+    'serviceIdentifier': {
+      'required': "This field is required",
+      'pattern': "Enter valid url"
+    },
+    'channelConnector': {
+      'required': "This field is required",
+      'minlength': "More characters required",
+      'maxlength': "Less characters required",
+      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+    },
+    'channelMode': {
+      'required': "This field is required",
+      'minlength': "More characters required",
+      'maxlength': "Less characters required",
+      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+    },
+    'responseSLA': {
+      'required': "This field is required",
+      'minlength': "More characters required",
+      'maxlength': "Less characters required",
+      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+    },
+    'customerActivityTimeout': {
+      'required': "This field is required",
+      'minlength': "More characters required",
+      'maxlength': "Less characters required",
+      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+    },
+    'botId': {
+      'required': "This field is required",
+      'minlength': "More characters required",
+      'maxlength': "Less characters required",
+      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+    },
+  };
+
+  botFormErrorMessages = {
+    'botName': {
+      'required': "This field is required",
+      'minlength': "More characters required",
+      'maxlength': "Less characters required",
+      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+    },
+    'botURL': {
       'required': "This field is required",
       'pattern': "Enter valid url"
     },

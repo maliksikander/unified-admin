@@ -1,0 +1,70 @@
+<div class="loading-area" *ngIf="spinner">
+  <mat-spinner></mat-spinner>
+</div>
+<div class="container main-custom-container">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel-body">
+        <div class="sub-heading">
+          <h2>{{pageTitle}}</h2>
+        </div>
+        <div *ngIf="!addBot" class="panel-page-content">
+          <div class="bot-accordion">
+            <mat-accordion>
+              <mat-expansion-panel (opened)="panelOpenCallback()" hideToggle="true" #arrow>
+                <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                  [expandedHeight]="customExpandedHeight">
+                  <mat-panel-title>
+                    <img src="/assets/images/whatsapp.svg">
+                    <span>N/A</span>
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    <mat-icon *ngIf="arrow.expanded">arrow_drop_up</mat-icon>
+                    <mat-icon *ngIf="!arrow.expanded">arrow_drop_down</mat-icon>
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                <table class="bot-table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Name</th>
+                      <th scope="col">URL</th>
+                      <!-- <th scope="col">Reponse SLA(sec)</th> -->
+                      <!-- <th scope="col">Channel Connector</th> -->
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td scope="row">Test</td>
+                      <!-- <td>Test</td> -->
+                      <!-- <td>Test</td> -->
+                      <td class="list-action-area">
+                        Test
+                        <span class="list-actions">
+                          <button matTooltip="Edit" (click)="editBotSettings('RASA')" mat-mini-fab><i
+                              class="fa fa-pencil" aria-hidden="true"></i>
+                          </button>
+                          <button matTooltip="Delete" (click)="deleteConfirm()" mat-mini-fab><i
+                              class="fa fa-trash-o" aria-hidden="true"></i>
+                          </button>
+                        </span>
+                      </td>
+
+                    </tr>
+                  </tbody>
+                </table>
+                <button class="add-bot-btn" mat-flat-button (click)="addBotSettings('RASA')">
+                  Add New Bot
+                </button>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngIf="addBot">
+    <app-bot-settings [parentBotBool]="addBot" [botData]="editBotData" (childBotBool)='childToParentUIChange($event)'
+      (formSaveData)='onSave($event)'>
+    </app-bot-settings>
+  </ng-container>

@@ -9,7 +9,7 @@
         <mat-form-field appearance="outline">
           <input matInput formControlName="botId">
           <mat-error class="form-error">
-            <!-- {{formErrors.amqUrl}} -->
+            {{formErrors.botId}}
           </mat-error>
         </mat-form-field>
       </div>
@@ -22,7 +22,7 @@
               {{connector?.channelConnectorName}}</mat-option>
           </mat-select>
           <mat-error class="form-error">
-            <!-- {{formErrors.amqHost}} -->
+            {{formErrors.channelConnector}}
           </mat-error>
         </mat-form-field>
       </div>
@@ -33,7 +33,7 @@
         <mat-form-field appearance="outline">
           <input matInput formControlName="channelName">
           <mat-error class="form-error">
-            <!-- {{formErrors.amqUser}} -->
+            {{formErrors.channelName}}
           </mat-error>
         </mat-form-field>
       </div>
@@ -46,7 +46,7 @@
             </mat-option>
           </mat-select>
           <mat-error class="form-error">
-            <!-- {{formErrors.amqHost}} -->
+            {{formErrors.channelMode}}
           </mat-error>
         </mat-form-field>
       </div>
@@ -56,7 +56,7 @@
         <mat-form-field appearance="outline">
           <input type="number" matInput formControlName="customerActivityTimeout">
           <mat-error class="form-error">
-            <!-- {{formErrors.amqPort}} -->
+            {{formErrors.customerActivityTimeout}}
           </mat-error>
         </mat-form-field>
       </div>
@@ -66,7 +66,7 @@
         <mat-form-field appearance="outline">
           <input type="number" matInput formControlName="responseSLA">
           <mat-error class="form-error">
-            <!-- {{formErrors.amqHost}} -->
+            {{formErrors.responseSLA}}
           </mat-error>
         </mat-form-field>
       </div>
@@ -86,7 +86,7 @@
         <mat-form-field appearance="outline">
           <input matInput formControlName="serviceIdentifier">
           <mat-error class="form-error">
-            <!-- {{formErrors.amqPwd}} -->
+            {{formErrors.serviceIdentifier}}
           </mat-error>
         </mat-form-field>
       </div>

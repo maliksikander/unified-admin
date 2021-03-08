@@ -55,66 +55,7 @@ export class ChannelListComponent implements OnInit {
       });
   }
 
-  editChannel(data) {
-
-    // console.log("edit data-->",data.channelConnector.type);
-    this.addChannelBool = true;
-    this.pageTitle = "Edit" + " " + data.channelConnector.type.typeName + " " + "Type Channel";
-    this.editChannelData = data;
-    this.channelType = data.channelConnector.type;
-  }
-
-
-  deleteConfirm(data) {
-    // let id = data._id;
-    let msg = "Are you sure you want to delete this Channel ?";
-    return this.dialog.open(ConfirmDialogComponent, {
-      panelClass: 'confirm-dialog-container',
-      disableClose: true,
-      data: {
-        heading: "Delete Channel",
-        message: msg,
-        text: 'confirm',
-        // data: data
-      }
-    }).afterClosed().subscribe((res: any) => {
-      this.spinner = true;
-      if (res === 'delete') {
-        this.deleteChannel(data);
-      }
-      else { this.spinner = false; }
-    });
-  }
-
-
-  addChannel(type) {
-    this.addChannelBool = true;
-    // console.log("type-->",type);
-    // if (type === 'whatsapp') this.pageTitle = "Set up Whatsapp Channel";
-    // else if (type === 'facebook') this.pageTitle = "Set up Facebook Channel";
-    // else if (type === 'web') this.pageTitle = "Set up Web Chat Channel";
-    // else if (type === 'viber') this.pageTitle = "Set up Viber Channel";
-    // else if (type === 'forwardProxy') this.pageTitle = "Set up Forward Proxy Channel";
-    // else if (type === 'smpp') this.pageTitle = "Set up SMPP Channel";
-    this.addChannelBool = true;
-    this.channelType = type;
-    this.pageTitle = "Set up" + " " + type.typeName + " " + "Type Channel";
-  }
-
-  childToParentUIChange(e) {
-    this.addChannelBool = e;
-    if (this.addChannelBool == false) {
-      this.pageTitle = "Customer Channels";
-    }
-
-  }
-
-  panelOpenCallback(data) {
-
-    this.spinner = true;
-    this.getChannels(data.id);
-  }
-
+  //to get channels list, it accepts channel-type-id as `typeId` parameter for fetching type particular channels
   getChannels(typeId) {
 
     //calling endpoint service method to get channel list which accepts resource name as 'channelServiceReq' and channnel type id as `typeId` object as parameter
@@ -129,22 +70,6 @@ export class ChannelListComponent implements OnInit {
         if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
       });
   }
-
-  onSave(data) {
-    this.spinner = true;
-    this.addChannelBool = false;
-    this.pageTitle = "Customer Channels";
-    this.editChannelData = undefined;
-    // console.log("save data-->", data)
-    if (data.id) {
-      this.updateChannel(data);
-    }
-    else {
-      this.createChannel(data);
-    }
-  }
-
-
 
   //to create channel, it accepts `data` object as parameter containing channel properties
   createChannel(data) {
@@ -178,7 +103,8 @@ export class ChannelListComponent implements OnInit {
       });
   }
 
-  //to update channel, it accepts `data` object as parameter containing channel  properties
+  //to delete channel, it accepts `data` object as parameter containing channel  properties and
+  //splices the particular object from local list variable if there is a success response.
   deleteChannel(data) {
 
     //calling endpoint service method which accepts resource name as 'channelServiceReq' and channel id as `id` object as parameter
@@ -198,4 +124,73 @@ export class ChannelListComponent implements OnInit {
         if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
       });
   }
+
+  //to edit channel and change the view to form page and load input fields and pass channel object as 'data' parameter
+  editChannel(data) {
+
+    this.addChannelBool = true;
+    this.pageTitle = "Edit" + " " + data.channelConnector.type.typeName + " " + "Type Channel";
+    this.editChannelData = data;
+    this.channelType = data.channelConnector.type;
+  }
+
+  // to open delete confirmation dialog
+  deleteConfirm(data) {
+
+    let msg = "Are you sure you want to delete this Channel ?";
+    return this.dialog.open(ConfirmDialogComponent, {
+      panelClass: 'confirm-dialog-container',
+      disableClose: true,
+      data: {
+        heading: "Delete Channel",
+        message: msg,
+        text: 'confirm',
+      }
+    }).afterClosed().subscribe((res: any) => {
+      this.spinner = true;
+      if (res === 'delete') {
+        this.deleteChannel(data);
+      }
+      else { this.spinner = false; }
+    });
+  }
+
+  //to add channel and change the view to form page and load input fields and pass channel type object as 'type' parameter
+  addChannel(type) {
+    this.addChannelBool = true;
+    this.addChannelBool = true;
+    this.channelType = type;
+    this.pageTitle = "Set up" + " " + type.typeName + " " + "Type Channel";
+  }
+
+  //to change the view from `form` to `list` page and load channel type list and it accepts boolean value as 'e' parameter from child component
+  childToParentUIChange(e) {
+    this.addChannelBool = e;
+    if (this.addChannelBool == false) {
+      this.pageTitle = "Customer Channels";
+    }
+
+  }
+
+  //to get channel list by channel type id on expansion panel event, it accepts channel type object as 'data' paramter
+  panelOpenCallback(data) {
+
+    this.spinner = true;
+    this.getChannels(data.id);
+  }
+
+  //to create/update a channel, it accepts channel object as 'data' paramter
+  onSave(data) {
+    this.spinner = true;
+    this.addChannelBool = false;
+    this.pageTitle = "Customer Channels";
+    this.editChannelData = undefined;
+    if (data.id) {
+      this.updateChannel(data);
+    }
+    else {
+      this.createChannel(data);
+    }
+  }
+
 }

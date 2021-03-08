@@ -27,8 +27,9 @@ import { MatSelectSearchComponent } from './mat-select-search/mat-select-search.
 import { SearchFilterPipe } from './search-filter.pipe';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import {HealthStatusFilterPipe} from './healthStatus.pipe'
 @NgModule({
-    declarations: [MatSelectSearchComponent, SearchFilterPipe, ConfirmDialogComponent],
+    declarations: [MatSelectSearchComponent, SearchFilterPipe, ConfirmDialogComponent,HealthStatusFilterPipe],
     imports: [
         MatIconModule, MatToolbarModule, MatSidenavModule, MatBadgeModule, MatDialogModule,
         BrowserAnimationsModule, MatCheckboxModule, MatButtonModule, MatMenuModule,
@@ -97,6 +98,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
         MatBottomSheetModule,
         MatSelectSearchComponent,
         SearchFilterPipe,
+        HealthStatusFilterPipe,
         NgxPaginationModule,
 
     ],

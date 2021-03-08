@@ -1,0 +1,43 @@
+input[type="number"] {
+    -moz-appearance: textfield;
+  }
+  /* Chrome, Safari, Edge, Opera */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  .service-trigger {
+    background: #25afcb;
+    color: #ffffff;
+    height: 30px;
+    line-height: 30px;
+    width: 90px;
+  }
+  
+  .panel-page-content {
+    padding-left: 18px !important;
+  }
+  
+  mat-slide-toggle {
+    padding: 0px 20px;
+    position: relative;
+    top: 6px;
+  }
+  
+  button {
+    color: #ffffff;
+    margin-left: 10px;
+    height: 30px;
+    line-height: 30px;
+    width: 90px;
+  
+    &.gray-btn {
+      background: #919191;
+    }
+  }
+  
+  .btn-margin{
+    margin: 15px 0px;
+  }

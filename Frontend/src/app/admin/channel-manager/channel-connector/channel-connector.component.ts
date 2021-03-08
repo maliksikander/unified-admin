@@ -1,3 +1,4 @@
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
@@ -29,7 +30,8 @@ export class ChannelConnectorComponent implements OnInit {
     private commonService: CommonService,
     private dialog: MatDialog,
     private endPointService: EndpointService,
-    private snackbar: SnackbarService,) { }
+    private snackbar: SnackbarService,
+    private httpClient: HttpClient) { }
 
   ngOnInit() {
 
@@ -61,6 +63,7 @@ export class ChannelConnectorComponent implements OnInit {
       (res: any) => {
         this.spinner = false;
         this.channelConnectors = res;
+        this.getConnectorStatus(this.channelConnectors);
       },
       error => {
         this.spinner = false;
@@ -184,26 +187,25 @@ export class ChannelConnectorComponent implements OnInit {
       });
   }
 
-  getConnectorHealth(url) {
-    let test = "https://6b250c26-4270-4838-9987-df3383a76f23.mock.pstmn.io";
-    console.log("argu-->", url)
 
-    this.endPointService.getConnectorHealth(test).subscribe(
-      (res: any) => {
-        this.spinner = false;
-        // if (res.code && res.code == "Success") {
-        // this.channelConnectors = this.channelConnectors.filter(i => i !== data)
-        // .map((i, idx) => (i.position = (idx + 1), i));
 
-        // this.snackbar.snackbarMessage('success-snackbar', "Deleted", 1);
-        // }
-        console.log("res--->", res);
-      },
-      (error: any) => {
-        this.spinner = false;
-        console.log("Error fetching:", error);
-        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
-      });
+  getConnectorStatus(list) {
+    list.forEach((item) => {
+      let url = item.channelWebhook;
+      this.httpClient.get(`${url}/channel-connectors/health`)
+        .subscribe((res: any) => {
+          item['status'] = res.status.toLowerCase();
+        },
+          (error: any) => {
+            this.spinner = false;
+            item['status'] = "unhealthy"
+            console.log("Error fetching:", error);
+            if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
+          });
+
+
+
+
+    })
   }
-
 }
