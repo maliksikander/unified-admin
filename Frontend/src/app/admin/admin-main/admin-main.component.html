@@ -113,12 +113,6 @@
               </a>
             </mat-expansion-panel>
 
-            <a class="channel-manager-link" mat-list-item [routerLinkActive]="['active-link']"
-              [routerLink]="['/bot/bot-settings']">
-              <img src="/assets/images/connections.svg" alt="bot">
-              <span class="sidebar-text">Bot Settings</span>
-            </a>
-
             <mat-expansion-panel>
               <mat-expansion-panel-header class='ccm-header-image-icon'>
                 <img src="/assets/images/customer-channels.svg" alt="ccm">
@@ -136,6 +130,12 @@
               </a>
 
             </mat-expansion-panel>
+
+            <a class="channel-manager-link" mat-list-item [routerLinkActive]="['active-link']"
+              [routerLink]="['/bot-settings']">
+              <img src="/assets/images/bot.svg" alt="bot">
+              <span class="sidebar-text">Bot Settings</span>
+            </a>
 
           </mat-accordion>
 

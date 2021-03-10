@@ -18,7 +18,17 @@
       <div class="form-group">
         <mat-label>Bot API URL</mat-label>
         <mat-form-field appearance="outline">
-          <input type="number" matInput formControlName="botURL">
+          <input matInput formControlName="botURL">
+          <mat-error class="form-error">
+            {{formErrors.botURL}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <mat-label>Bot Type</mat-label>
+        <mat-form-field appearance="outline">
+          <input matInput formControlName="botType">
           <mat-error class="form-error">
             {{formErrors.botURL}}
           </mat-error>

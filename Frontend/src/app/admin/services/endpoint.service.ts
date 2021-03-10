@@ -16,6 +16,7 @@ export class EndpointService {
   MRE_URL;
   userRoles = [];
   CCM_URL;
+  BOT_URL
   token;
 
   constructor(private snackbar: SnackbarService,
@@ -26,6 +27,7 @@ export class EndpointService {
     this.ADMIN_URL = e.Admin_URL;
     this.MRE_URL = e.MRE_URL;
     this.CCM_URL = e.CCM_URL;
+    this.BOT_URL = e.BOT_URL;
     this.userRoles = e.BUSINESS_USER_ROLES;
 
     if (localStorage.getItem('token')) {
@@ -160,6 +162,44 @@ export class EndpointService {
       })
     }).pipe(catchError(this.handleError));
   }
+
+///////////////// BOT CRUD ////////////
+
+createBot(data, reqServiceType): Observable<any> {
+  return this.httpClient.post<any>(`${this.BOT_URL}/${reqServiceType}`, data, {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer'
+    })
+  }).pipe(catchError(this.handleError));
+}
+
+getBot(reqServiceType): Observable<any> {
+  return this.httpClient.get(`${this.BOT_URL}/${reqServiceType}`, {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer'
+    })
+  }).pipe(catchError(this.handleError));
+}
+
+updateBot(data, id, reqServiceType): Observable<any> {
+  return this.httpClient.put<any>(`${this.BOT_URL}/${reqServiceType}/${id}`, data, {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer '
+    })
+  }).pipe(catchError(this.handleError));
+}
+
+deleteBot(id, reqServiceType): Observable<any> {
+  return this.httpClient.delete<any>(`${this.BOT_URL}/${reqServiceType}/${id}`, {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer '
+    })
+  }).pipe(catchError(this.handleError));
+}
 
   /////////////// Keycloak /////////////////
 

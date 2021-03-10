@@ -33,16 +33,27 @@ input::-webkit-inner-spin-button {
       border: 1px solid #e2e2e2;
       margin-bottom: 10px;
       .mat-expansion-panel-header {
-        padding: 0px 18px !important;
+        padding: 0px 20px !important;
         background: #fafafa;
         border-radius: 0;
 
         .mat-expansion-panel-header-title {
           img {
-            padding: 1px 8px 0px 0px;
+            padding: 1px 12px 0px 0px;
           }
           span {
             color: #797979;
+          }
+        }
+      }
+
+      &:first-child {
+        .mat-expansion-panel-header {
+          padding: 0px 16px !important;
+          .mat-expansion-panel-header-title {
+            img {
+              padding-right: 8px !important;
+            }
           }
         }
       }
@@ -59,7 +70,7 @@ input::-webkit-inner-spin-button {
         th {
           color: #777777;
           font-weight: 400;
-          padding-left: 43px;
+          padding-left: 46px;
           font-size: 13px;
 
           &:nth-child(3) {
@@ -86,12 +97,12 @@ input::-webkit-inner-spin-button {
             color: #3e3e3e;
             height: 40px;
             line-height: 40px;
-            padding: 0 15px 0 44px;
+            padding: 0 15px 0 46px;
             overflow: hidden;
             text-overflow: ellipsis;
-            width: 20%;
-            &:nth-child(4) {
-              width: 30% !important;
+            width: 60%;
+            &:first-child {
+              width: 40% !important;
             }
 
             mat-slide-toggle {
@@ -144,5 +155,25 @@ input::-webkit-inner-spin-button {
         }
       }
     }
+  }
+}
+
+.no-data-warning {
+  position: relative;
+  left: 45%;
+  width: 100%;
+  top: 10px;
+  i {
+    font-size: 40px;
+    color: #777777;
+  }
+  span {
+    display: block;
+    padding: 0;
+    font-size: 12px;
+    color: #777777;
+    top: -5px;
+    left: -15px;
+    position: relative;
   }
 }

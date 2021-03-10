@@ -11,40 +11,42 @@
         <div *ngIf="!addBot" class="panel-page-content">
           <div class="bot-accordion">
             <mat-accordion>
-              <mat-expansion-panel (opened)="panelOpenCallback()" hideToggle="true" #arrow>
+              <mat-expansion-panel (opened)="panelOpenCallback('RASA')" hideToggle="true" #arrow>
                 <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
                   [expandedHeight]="customExpandedHeight">
                   <mat-panel-title>
-                    <img src="/assets/images/whatsapp.svg">
-                    <span>N/A</span>
+                    <img src="/assets/images/rasa.svg">
+                    <span>Rasa</span>
                   </mat-panel-title>
                   <mat-panel-description>
                     <mat-icon *ngIf="arrow.expanded">arrow_drop_up</mat-icon>
                     <mat-icon *ngIf="!arrow.expanded">arrow_drop_down</mat-icon>
                   </mat-panel-description>
                 </mat-expansion-panel-header>
-                <table class="bot-table">
+
+                <div *ngIf="panelBotList && panelBotList.length == 0" class="no-data-warning">
+                  <i  class="material-icons">warning_amber</i>
+                  <span>No Data Found</span>
+                </div>
+
+                <table *ngIf="panelBotList && panelBotList.length > 0" class="bot-table">
                   <thead>
                     <tr>
                       <th scope="col">Name</th>
                       <th scope="col">URL</th>
-                      <!-- <th scope="col">Reponse SLA(sec)</th> -->
-                      <!-- <th scope="col">Channel Connector</th> -->
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td scope="row">Test</td>
-                      <!-- <td>Test</td> -->
-                      <!-- <td>Test</td> -->
+                    <tr *ngFor="let bot of panelBotList">
+                      <td scope="row">{{bot?.botName ? bot?.botName : 'N/A'}}</td>
                       <td class="list-action-area">
-                        Test
+                        {{bot?.botUri ? bot?.botUri : 'N/A'}}
                         <span class="list-actions">
-                          <button matTooltip="Edit" (click)="editBotSettings('RASA')" mat-mini-fab><i
+                          <button matTooltip="Edit" (click)="editBotSettings(bot,'RASA')" mat-mini-fab><i
                               class="fa fa-pencil" aria-hidden="true"></i>
                           </button>
-                          <button matTooltip="Delete" (click)="deleteConfirm()" mat-mini-fab><i
-                              class="fa fa-trash-o" aria-hidden="true"></i>
+                          <button matTooltip="Delete" (click)="deleteConfirm(bot)" mat-mini-fab><i class="fa fa-trash-o"
+                              aria-hidden="true"></i>
                           </button>
                         </span>
                       </td>
@@ -53,7 +55,103 @@
                   </tbody>
                 </table>
                 <button class="add-bot-btn" mat-flat-button (click)="addBotSettings('RASA')">
-                  Add New Bot
+                  Add Bot
+                </button>
+              </mat-expansion-panel>
+
+              <mat-expansion-panel (opened)="panelOpenCallback('DIALOGFLOW')" hideToggle="true" #arrow>
+                <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                  [expandedHeight]="customExpandedHeight">
+                  <mat-panel-title>
+                    <img src="/assets/images/dialogflow.svg">
+                    <span>DialogFlow</span>
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    <mat-icon *ngIf="arrow.expanded">arrow_drop_up</mat-icon>
+                    <mat-icon *ngIf="!arrow.expanded">arrow_drop_down</mat-icon>
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+
+                <div *ngIf="panelBotList && panelBotList.length == 0" class="no-data-warning">
+                  <i class="material-icons">warning_amber</i>
+                  <span>No Data Found</span>
+                </div>
+
+                <table *ngIf="panelBotList && panelBotList.length > 0" class="bot-table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Name</th>
+                      <th scope="col">URL</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let bot of panelBotList">
+                      <td scope="row">{{bot?.botName ? bot?.botName : 'N/A'}}</td>
+                      <td class="list-action-area">
+                        {{bot?.botUri ? bot?.botUri : 'N/A'}}
+                        <span class="list-actions">
+                          <button matTooltip="Edit" (click)="editBotSettings(bot,'DIALOGFLOW')" mat-mini-fab><i
+                              class="fa fa-pencil" aria-hidden="true"></i>
+                          </button>
+                          <button matTooltip="Delete" (click)="deleteConfirm(bot)" mat-mini-fab><i class="fa fa-trash-o"
+                              aria-hidden="true"></i>
+                          </button>
+                        </span>
+                      </td>
+
+                    </tr>
+                  </tbody>
+                </table>
+                <button class="add-bot-btn" mat-flat-button (click)="addBotSettings('DIALOGFLOW')">
+                  Add Bot
+                </button>
+              </mat-expansion-panel>
+
+              <mat-expansion-panel (opened)="panelOpenCallback('CUSTOM')" hideToggle="true" #arrow>
+                <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                  [expandedHeight]="customExpandedHeight">
+                  <mat-panel-title>
+                    <img src="/assets/images/custom.svg">
+                    <span>Custom</span>
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    <mat-icon *ngIf="arrow.expanded">arrow_drop_up</mat-icon>
+                    <mat-icon *ngIf="!arrow.expanded">arrow_drop_down</mat-icon>
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+
+                <div *ngIf="panelBotList && panelBotList.length == 0" class="no-data-warning">
+                  <i class="material-icons">warning_amber</i>
+                  <span>No Data Found</span>
+                </div>
+
+                <table *ngIf="panelBotList && panelBotList.length > 0" class="bot-table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Name</th>
+                      <th scope="col">URL</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let bot of panelBotList">
+                      <td scope="row">{{bot?.botName ? bot?.botName : 'N/A'}}</td>
+                      <td class="list-action-area">
+                        {{bot?.botUri ? bot?.botUri : 'N/A'}}
+                        <span class="list-actions">
+                          <button matTooltip="Edit" (click)="editBotSettings(bot,'CUSTOM')" mat-mini-fab><i
+                              class="fa fa-pencil" aria-hidden="true"></i>
+                          </button>
+                          <button matTooltip="Delete" (click)="deleteConfirm(bot)" mat-mini-fab><i class="fa fa-trash-o"
+                              aria-hidden="true"></i>
+                          </button>
+                        </span>
+                      </td>
+
+                    </tr>
+                  </tbody>
+                </table>
+                <button class="add-bot-btn" mat-flat-button (click)="addBotSettings('CUSTOM')">
+                  Add Bot
                 </button>
               </mat-expansion-panel>
             </mat-accordion>
@@ -64,7 +162,7 @@
   </div>
 
   <ng-container *ngIf="addBot">
-    <app-bot-settings [parentBotBool]="addBot" [botData]="editBotData" (childBotBool)='childToParentUIChange($event)'
-      (formSaveData)='onSave($event)'>
+    <app-bot-settings [parentBotBool]="addBot" [botData]="editBotData" [botTypeData]="botType"
+      (childBotBool)='childToParentUIChange($event)' (formSaveData)='onSave($event)'>
     </app-bot-settings>
   </ng-container>
