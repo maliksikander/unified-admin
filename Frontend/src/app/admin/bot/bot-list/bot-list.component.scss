@@ -100,9 +100,12 @@ input::-webkit-inner-spin-button {
             padding: 0 15px 0 46px;
             overflow: hidden;
             text-overflow: ellipsis;
-            width: 60%;
-            &:first-child {
+            white-space: nowrap;
+            max-width: 0;
+            width: 30%;
+            &:nth-child(3) {
               width: 40% !important;
+              padding-left: 0 !important;
             }
 
             mat-slide-toggle {
@@ -116,6 +119,14 @@ input::-webkit-inner-spin-button {
 
       .list-action-area {
         position: relative;
+
+        .data-overflow {
+          max-width: calc(100% - 100px);
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
         button {
           box-shadow: none;
           span {

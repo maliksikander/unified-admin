@@ -25,22 +25,24 @@
                 </mat-expansion-panel-header>
 
                 <div *ngIf="panelBotList && panelBotList.length == 0" class="no-data-warning">
-                  <i  class="material-icons">warning_amber</i>
+                  <i class="material-icons">warning_amber</i>
                   <span>No Data Found</span>
                 </div>
 
                 <table *ngIf="panelBotList && panelBotList.length > 0" class="bot-table">
                   <thead>
                     <tr>
+                      <th scope="col">Bot ID</th>
                       <th scope="col">Name</th>
                       <th scope="col">URL</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr *ngFor="let bot of panelBotList">
-                      <td scope="row">{{bot?.botName ? bot?.botName : 'N/A'}}</td>
+                      <td scope="row">{{bot?.botId ? bot?.botId : 'N/A'}}</td>
+                      <td>{{bot?.botName ? bot?.botName : 'N/A'}}</td>
                       <td class="list-action-area">
-                        {{bot?.botUri ? bot?.botUri : 'N/A'}}
+                        <div class="data-overflow">{{bot?.botUri ? bot?.botUri : 'N/A'}}</div>
                         <span class="list-actions">
                           <button matTooltip="Edit" (click)="editBotSettings(bot,'RASA')" mat-mini-fab><i
                               class="fa fa-pencil" aria-hidden="true"></i>
@@ -80,15 +82,17 @@
                 <table *ngIf="panelBotList && panelBotList.length > 0" class="bot-table">
                   <thead>
                     <tr>
+                      <th scope="col">ID</th>
                       <th scope="col">Name</th>
                       <th scope="col">URL</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr *ngFor="let bot of panelBotList">
-                      <td scope="row">{{bot?.botName ? bot?.botName : 'N/A'}}</td>
+                      <td scope="row">{{bot?.botId ? bot?.botId : 'N/A'}}</td>
+                      <td>{{bot?.botName ? bot?.botName : 'N/A'}}</td>
                       <td class="list-action-area">
-                        {{bot?.botUri ? bot?.botUri : 'N/A'}}
+                        <div class="data-overflow">{{bot?.botUri ? bot?.botUri : 'N/A'}}</div>
                         <span class="list-actions">
                           <button matTooltip="Edit" (click)="editBotSettings(bot,'DIALOGFLOW')" mat-mini-fab><i
                               class="fa fa-pencil" aria-hidden="true"></i>
@@ -128,15 +132,17 @@
                 <table *ngIf="panelBotList && panelBotList.length > 0" class="bot-table">
                   <thead>
                     <tr>
+                      <th scope="col">ID</th>
                       <th scope="col">Name</th>
                       <th scope="col">URL</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr *ngFor="let bot of panelBotList">
-                      <td scope="row">{{bot?.botName ? bot?.botName : 'N/A'}}</td>
+                      <td scope="row">{{bot?.botId ? bot?.botId : 'N/A'}}</td>
+                      <td>{{bot?.botName ? bot?.botName : 'N/A'}}</td>
                       <td class="list-action-area">
-                        {{bot?.botUri ? bot?.botUri : 'N/A'}}
+                        <div class="data-overflow">{{bot?.botUri ? bot?.botUri : 'N/A'}}</div>
                         <span class="list-actions">
                           <button matTooltip="Edit" (click)="editBotSettings(bot,'CUSTOM')" mat-mini-fab><i
                               class="fa fa-pencil" aria-hidden="true"></i>

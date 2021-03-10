@@ -44,8 +44,8 @@ export class MrdComponent implements OnInit {
 
     //setting local form validation messages 
     this.mrdForm = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.maxLength(15), Validators.pattern("^[a-zA-Z0-9!@#$%^*_&()\\\"-]*$")]],
-      description: ['', [Validators.maxLength(50)]],
+      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(110), Validators.pattern("^[a-zA-Z0-9!@#$%^*_&()\\\"-]*$")]],
+      description: ['', [Validators.maxLength(500)]],
       enabled: [],
     });
 

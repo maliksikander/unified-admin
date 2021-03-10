@@ -154,6 +154,10 @@
       margin: 0;
       font-size: 13px;
       color: #686868;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: calc(100% - 90px);
     }
 
     .table-trigger {
@@ -597,10 +601,10 @@ input::-webkit-inner-spin-button {
   max-width: 500px;
 }
 
-.top-exp{
+.top-exp {
   right: 0;
 }
 
-.top-term{
+.top-term {
   padding-top: 16px !important;
 }

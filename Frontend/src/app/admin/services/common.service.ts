@@ -266,15 +266,15 @@ export class CommonService {
   attributeFormErrorMessages = {
     'name': {
       'required': "This field is required",
-      'minlength': "More characters required",
-      'maxlength': "Max 15 characters allowed",
+      'minlength': "Min 3 characters required",
+      'maxlength': "Max 500 characters allowed",
       'pattern': 'Not a valid pattern',
       'validName': 'Already exists'
 
     },
     'description': {
       'required': "This field is required",
-      'maxlength': "Max 50 characters allowed",
+      'maxlength': "Max 500 characters allowed",
       'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
     },
     'type': {
@@ -285,16 +285,16 @@ export class CommonService {
   mrdFormErrorMessages = {
     'name': {
       'required': "This field is required",
-      'minlength': "More characters required",
-      'maxlength': "Max 15 characters allowed",
+      'minlength': "Min 3 characters required",
+      'maxlength': "Max 110 characters allowed",
       'pattern': 'Not a valid pattern',
       'validName': 'Already exists'
 
     },
     'description': {
       'required': "This field is required",
-      'maxlength': "Max 50 characters allowed",
-      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+      'maxlength': "Max 500 characters allowed",
+      'pattern': "Not a valid pattern"
     },
     'enabled': {
       'required': "This field is required",
@@ -304,8 +304,8 @@ export class CommonService {
   queueFormErrorMessages = {
     'name': {
       'required': "This field is required",
-      'minlength': "More characters required",
-      'maxlength': "Max 15 characters allowed",
+      'minlength': "Min 3 characters required",
+      'maxlength': "Max 50 characters allowed",
       'pattern': 'Not a valid pattern',
       'validName': 'Already exists'
 

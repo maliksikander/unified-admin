@@ -22,14 +22,13 @@ import {
 } from "@angular/material";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { MatSelectSearchComponent } from './mat-select-search/mat-select-search.component';
-
 import { SearchFilterPipe } from './search-filter.pipe';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { NgxPaginationModule } from 'ngx-pagination';
-import {HealthStatusFilterPipe} from './healthStatus.pipe'
 @NgModule({
-    declarations: [MatSelectSearchComponent, SearchFilterPipe, ConfirmDialogComponent,HealthStatusFilterPipe],
+    declarations: [
+        SearchFilterPipe,
+        ConfirmDialogComponent],
     imports: [
         MatIconModule, MatToolbarModule, MatSidenavModule, MatBadgeModule, MatDialogModule,
         BrowserAnimationsModule, MatCheckboxModule, MatButtonModule, MatMenuModule,
@@ -96,9 +95,7 @@ import {HealthStatusFilterPipe} from './healthStatus.pipe'
         MatTooltipModule,
         MatTreeModule,
         MatBottomSheetModule,
-        MatSelectSearchComponent,
         SearchFilterPipe,
-        HealthStatusFilterPipe,
         NgxPaginationModule,
 
     ],

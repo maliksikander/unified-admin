@@ -84,6 +84,7 @@ input[type="number"] {
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
+              max-width: 0;
               width: 30%;
               &:nth-child(2) {
                 width: 40% !important;
