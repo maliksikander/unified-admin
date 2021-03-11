@@ -48,7 +48,7 @@ export class AttributeComponent implements OnInit {
     this.validations = this.commonService.attributeFormErrorMessages;
 
     this.attributeForm = this.formBuilder.group({
-      name: ['', [Validators.required,Validators.minLength(3),Validators.maxLength(110), Validators.pattern("^[a-zA-Z0-9!@#$%^*_&()\\\"-]*$")]],
+      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(110), Validators.pattern("^[a-zA-Z0-9!@#$%^*_&()\\\"-]*$")]],
       description: ['', [Validators.maxLength(500)]],
       type: ['', [Validators.required]],
       profVal: [1],
@@ -165,12 +165,21 @@ export class AttributeComponent implements OnInit {
   //and patches the existing values with form controls and opens the form dialog
   editAttribute(templateRef, data) {
     this.editData = data;
+    let boolVal;
+    if (data.type == 'BOOLEAN') {
+      if (data.defaultValue == 0) {
+        boolVal = false
+      }
+      else {
+        boolVal = true;
+      }
+    }
     this.attributeForm.patchValue({
       name: data.name,
       description: data.description,
       type: data.type,
-      profVal: JSON.parse(data.defaultValue),
-      boolVal: JSON.parse(data.defaultValue),
+      profVal: data.defaultValue,
+      boolVal: boolVal,
     });
     this.formHeading = 'Edit Attribute';
     this.saveBtnText = 'Update'
@@ -226,10 +235,15 @@ export class AttributeComponent implements OnInit {
     data.description = this.attributeForm.value.description;
     data.type = this.attributeForm.value.type;
     if (this.attributeForm.value.type == 'BOOLEAN') {
-      data.defaultValue = JSON.stringify(this.attributeForm.value.boolVal);
+      if (this.attributeForm.value.boolVal == false) {
+        data.defaultValue = 0;
+      }
+      else {
+        data.defaultValue = 1;
+      }
     }
     else {
-      data.defaultValue = JSON.stringify(this.attributeForm.value.profVal);
+      data.defaultValue = this.attributeForm.value.profVal;
     }
     return data;
   }

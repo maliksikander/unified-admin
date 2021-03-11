@@ -319,10 +319,12 @@ export class CommonService {
     },
     'serviceLevelType': {
       'required': "This field is required",
+      'min': "Min 1 required",
+      'max': "Max 10 seconds allowed",
     },
     'serviceLevelThreshold': {
       'required': "This field is required",
-      'min': "Min 1 second required",
+      'min': "Min 1 required",
       'max': "Max 10 seconds allowed",
     },
   };
@@ -412,6 +414,10 @@ export class CommonService {
       'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
     },
     'botURL': {
+      'required': "This field is required",
+      'pattern': "Enter valid url"
+    },
+    'botFile': {
       'required': "This field is required",
       'pattern': "Enter valid url"
     },

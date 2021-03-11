@@ -82,11 +82,11 @@ export class PrecisionQueueComponent implements OnInit {
     if (pageNumber) this.p = pageNumber;
 
     this.queueForm = this.fb.group({
-      name: ['', [Validators.required,Validators.minLength(3),Validators.maxLength(50), Validators.pattern("^[a-zA-Z0-9!@#$%^*_&()\\\"-]*$")]],
+      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50), Validators.pattern("^[a-zA-Z0-9!@#$%^*_&()\\\"-]*$")]],
       mrd: ['', [Validators.required]],
       agentCriteria: ['', [Validators.required]],
-      serviceLevelType: ['', [Validators.required]],
-      serviceLevelThreshold: ['', [Validators.required, Validators.min(1)]],
+      serviceLevelType: [1, [Validators.required, Validators.min(1)]],
+      serviceLevelThreshold: [1, [Validators.required, Validators.min(1)]],
     });
 
     this.stepForm = this.fb.group({
@@ -290,6 +290,7 @@ export class PrecisionQueueComponent implements OnInit {
       data: data
     });
     dialogRef.afterClosed().subscribe(result => {
+      this.saveBtnText = 'Create'
       this.editData = undefined;
     });
   }
@@ -335,7 +336,8 @@ export class PrecisionQueueComponent implements OnInit {
   saveObjFormation() {
     const temp = this.queueForm.value;
     let data: any = {
-      mrd: {}
+      mrd: {},
+      steps: []
     };
     data.name = temp.name;
     data.mrd.id = temp.mrd.id;
@@ -390,10 +392,10 @@ export class PrecisionQueueComponent implements OnInit {
         termObj.conditionOperator = termsCopy[j].conditionOperator;
         termObj.preTermCondition = termsCopy[j].preTermCondition;
         if (termsCopy[j].routingAttribute.type == 'BOOLEAN') {
-          termObj.value = termsCopy[j].boolVal;
+          termObj.value = JSON.parse(termsCopy[j].boolVal);
         }
         else {
-          termObj.value = JSON.stringify(termsCopy[j].profVal);
+          termObj.value = termsCopy[j].profVal;
         }
         termsCopy[j] = termObj;
       }
@@ -433,12 +435,12 @@ export class PrecisionQueueComponent implements OnInit {
     }
     this.updateQueue(data, data.id);
     this.resetStepForm();
-
   }
 
   //Updating reponse object to match required form object structure
-  reconstructFormData(data) {
+  reconstructFormData(stepData) {
 
+    let data = JSON.parse(JSON.stringify(stepData));
     let expressions = JSON.parse(JSON.stringify(data.expressions));
     for (let i = 0; i < expressions.length; i++) {
       let termsCopy = JSON.parse(JSON.stringify(expressions[i].terms));
@@ -447,21 +449,20 @@ export class PrecisionQueueComponent implements OnInit {
           routingAttribute: {},
           conditionOperator: "",
           profVal: 1,
-          boolVal: "true",
+          boolVal: "1",
           preTermCondition: "AND"
         }
         const temp = this.attrData.filter(item => item.id == termsCopy[j].routingAttribute.id);
-        termObj.conditionOperator = termsCopy[j].conditionOperator;
-        termObj.routingAttribute = temp[0];
-        termObj.preTermCondition = termsCopy[j].preTermCondition;
-
-        if (termsCopy[j].routingAttribute.type == 'BOOLEAN') {
-          termObj.boolVal = termsCopy[j].value;
-        }
-        else {
-          termObj.profVal = JSON.parse(termsCopy[j].value);
-        }
-        termsCopy[j] = termObj;
+          termObj.conditionOperator = termsCopy[j].conditionOperator;
+          termObj.routingAttribute = temp[0];
+          termObj.preTermCondition = termsCopy[j].preTermCondition;
+          if (termsCopy[j].routingAttribute.type == 'BOOLEAN') {
+            termObj.boolVal = JSON.stringify(termsCopy[j].value);
+          }
+          else {
+            termObj.profVal = termsCopy[j].value;
+          }
+          termsCopy[j] = termObj;
       }
       expressions[i].terms = termsCopy;
 
@@ -500,6 +501,7 @@ export class PrecisionQueueComponent implements OnInit {
     let tempStep: any = {};
     tempStep.expressions = stepData.expressions;
     tempStep.timeout = stepData.timeout;
+  
     this.loadFormExpression(tempStep);
     let dialogRef = this.dialog.open(templateRef, {
       width: '800px',
@@ -586,12 +588,16 @@ export class PrecisionQueueComponent implements OnInit {
   onSave() {
     this.spinner = true;
     let data = this.saveObjFormation();
+
     if (this.editData) {
       data.id = this.editData.id;
       data.steps = this.editData.steps;
       this.updateQueue(data, data.id);
     }
-    else { this.createQueue(data); }
+    else {
+      this.createQueue(data);
+    }
+    // console.log("save data-->", data);
   }
 
   pageChange(e) { localStorage.setItem('currentQueuePage', e); }

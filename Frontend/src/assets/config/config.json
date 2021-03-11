@@ -1,6 +1,6 @@
 {
   "Admin_URL": "http://localhost:3000",
-  "MRE_URL": "https://8ee6bde0-81fb-4423-994a-378c751bba37.mock.pstmn.io",
+  "MRE_URL": "https://f21122db-c99d-4bb8-aa79-0a2140b5ef65.mock.pstmn.io",
   "BUSINESS_USER_ROLES": [
     "agent",
     "supervisor"

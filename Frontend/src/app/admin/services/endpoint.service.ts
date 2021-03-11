@@ -18,6 +18,7 @@ export class EndpointService {
   CCM_URL;
   BOT_URL
   token;
+  tenant;
 
   constructor(private snackbar: SnackbarService,
     private httpClient: HttpClient,
@@ -30,9 +31,9 @@ export class EndpointService {
     this.BOT_URL = e.BOT_URL;
     this.userRoles = e.BUSINESS_USER_ROLES;
 
-    if (localStorage.getItem('token')) {
-      this.token = localStorage.getItem('token');
-    }
+    if (localStorage.getItem('token')) this.token = localStorage.getItem('token');
+    if (localStorage.getItem('tenant')) this.tenant = localStorage.getItem('tenant');
+
   }
 
   private handleError(errorResponse: HttpErrorResponse) {
@@ -75,7 +76,7 @@ export class EndpointService {
     return this.httpClient.post<any>(`${this.MRE_URL}/${reqServiceType}`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer'
+        'Authorization': 'Bearer' + this.token
       })
     }).pipe(catchError(this.handleError));
   }
@@ -84,7 +85,7 @@ export class EndpointService {
     return this.httpClient.get(`${this.MRE_URL}/${reqServiceType}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer'
+        'Authorization': 'Bearer' + this.token
       })
     }).pipe(catchError(this.handleError));
   }
@@ -93,7 +94,7 @@ export class EndpointService {
     return this.httpClient.put<any>(`${this.MRE_URL}/${reqServiceType}/${id}`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer '
+        'Authorization': 'Bearer ' + this.token
       })
     }).pipe(catchError(this.handleError));
   }
@@ -102,7 +103,7 @@ export class EndpointService {
     return this.httpClient.delete<any>(`${this.MRE_URL}/${reqServiceType}/${id}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer '
+        'Authorization': 'Bearer ' + this.token
       })
     }).pipe(catchError(this.handleError));
   }
@@ -113,7 +114,7 @@ export class EndpointService {
     return this.httpClient.post<any>(`${this.CCM_URL}/${reqServiceType}`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer'
+        'Authorization': 'Bearer' + this.token
       })
     }).pipe(catchError(this.handleError));
   }
@@ -122,25 +123,25 @@ export class EndpointService {
     return this.httpClient.get(`${this.CCM_URL}/${reqServiceType}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer'
+        'Authorization': 'Bearer' + this.token
       })
     }).pipe(catchError(this.handleError));
   }
 
-  getByChannelType(reqServiceType,typeid): Observable<any> {
+  getByChannelType(reqServiceType, typeid): Observable<any> {
     return this.httpClient.get(`${this.CCM_URL}/${reqServiceType}?channelTypeId=${typeid}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer'
+        'Authorization': 'Bearer' + this.token
       })
     }).pipe(catchError(this.handleError));
   }
 
-  updateChannel(data,reqServiceType): Observable<any> {
+  updateChannel(data, reqServiceType): Observable<any> {
     return this.httpClient.put<any>(`${this.CCM_URL}/${reqServiceType}`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer '
+        'Authorization': 'Bearer ' + this.token
       })
     }).pipe(catchError(this.handleError));
   }
@@ -149,7 +150,7 @@ export class EndpointService {
     return this.httpClient.delete<any>(`${this.CCM_URL}/${reqServiceType}/${id}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer '
+        'Authorization': 'Bearer ' + this.token
       })
     }).pipe(catchError(this.handleError));
   }
@@ -158,48 +159,54 @@ export class EndpointService {
     return this.httpClient.get(`${url}/channel-connectors/health`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer'
+        'Authorization': 'Bearer' + this.token
       })
     }).pipe(catchError(this.handleError));
   }
 
-///////////////// BOT CRUD ////////////
+  ///////////////// BOT CRUD ////////////
 
-createBot(data, reqServiceType): Observable<any> {
-  return this.httpClient.post<any>(`${this.BOT_URL}/${reqServiceType}`, data, {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer'
-    })
-  }).pipe(catchError(this.handleError));
-}
+  createBot(data, reqServiceType): Observable<any> {
 
-getBot(reqServiceType): Observable<any> {
-  return this.httpClient.get(`${this.BOT_URL}/${reqServiceType}`, {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer'
-    })
-  }).pipe(catchError(this.handleError));
-}
+    return this.httpClient.post<any>(`${this.BOT_URL}/${reqServiceType}`, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer' + this.token,
+        'Tenant': this.tenant
+      })
+    }).pipe(catchError(this.handleError));
+  }
 
-updateBot(data, id, reqServiceType): Observable<any> {
-  return this.httpClient.put<any>(`${this.BOT_URL}/${reqServiceType}/${id}`, data, {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer '
-    })
-  }).pipe(catchError(this.handleError));
-}
+  getBot(reqServiceType): Observable<any> {
 
-deleteBot(id, reqServiceType): Observable<any> {
-  return this.httpClient.delete<any>(`${this.BOT_URL}/${reqServiceType}/${id}`, {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer '
-    })
-  }).pipe(catchError(this.handleError));
-}
+    return this.httpClient.get(`${this.BOT_URL}/${reqServiceType}`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer' + this.token,
+        'Tenant': this.tenant
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  updateBot(data, id, reqServiceType): Observable<any> {
+    return this.httpClient.put<any>(`${this.BOT_URL}/${reqServiceType}/${id}`, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token,
+        'Tenant': this.tenant
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  deleteBot(id, reqServiceType): Observable<any> {
+    return this.httpClient.delete<any>(`${this.BOT_URL}/${reqServiceType}/${id}`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token,
+        'Tenant': this.tenant
+      })
+    }).pipe(catchError(this.handleError));
+  }
 
   /////////////// Keycloak /////////////////
 
@@ -226,7 +233,7 @@ deleteBot(id, reqServiceType): Observable<any> {
     return this.httpClient.get<any>(url, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer'
+        'Authorization': 'Bearer' + this.token
       })
     }).pipe(catchError(this.handleError));
   }

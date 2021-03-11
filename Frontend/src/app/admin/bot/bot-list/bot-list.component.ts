@@ -170,6 +170,7 @@ export class BotListComponent implements OnInit {
 
   //to create/update a bot, it accepts bot object as 'data' paramter
   onSave(data) {
+    // console.log("data-->",data)
     this.spinner = true;
     this.addBot = false;
     this.pageTitle = "Bot Settings";
