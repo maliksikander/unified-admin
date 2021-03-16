@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { CommonService } from 'src/app/admin/services/common.service';
 import { EndpointService } from 'src/app/admin/services/endpoint.service';
@@ -18,7 +18,6 @@ export class BotSettingsComponent implements OnInit {
   @Output() childBotBool = new EventEmitter<any>();
   @Output() formSaveData = new EventEmitter<any>();
   botSettingForm: FormGroup;
-  modeVal = ['BOT', 'AGENT', 'HYBRID'];
   formErrors = {
     botName: '',
     botURL: '',
@@ -49,13 +48,23 @@ export class BotSettingsComponent implements OnInit {
       botFile: [{ value: null, disabled: true }]
     });
 
+    //binding bot type value from parent component
     this.botSettingForm.controls['botType'].patchValue(this.botTypeData);
+
     this.setValidation(this.botTypeData);
 
     if (this.botData) {
+
+      //binding `botUri` value from parent component depending on bot type
+      if (this.botTypeData == 'DIALOGFLOW') {
+        this.botSettingForm.controls['botFile'].patchValue(this.botData.botUri.metaData.name);
+        this.serializedFile = JSON.stringify(this.botData.botUri);
+      }
+      else {
+        this.botSettingForm.controls['botURL'].patchValue(this.botData.botUri);
+      }
       this.botSettingForm.patchValue({
         botName: this.botData.botName,
-        botURL: this.botData.botUri,
         botType: this.botTypeData,
       });
 
@@ -79,6 +88,7 @@ export class BotSettingsComponent implements OnInit {
     this.botSettingForm.valueChanges.subscribe((data) => {
       this.commonService.logValidationErrors(this.botSettingForm, this.formErrors, this.validations);
 
+      //checking the validations on form fields 
       if (this.botSettingForm.status == "INVALID") {
 
         this.valid = false;
@@ -99,7 +109,6 @@ export class BotSettingsComponent implements OnInit {
   //lifecycle hook to reflect parent component changes in child component
   ngOnChanges(changes: SimpleChanges) { }
 
-
   //to create 'data' object and pass it to the parent component
   onSave() {
 
@@ -108,8 +117,11 @@ export class BotSettingsComponent implements OnInit {
       botUri: this.botSettingForm.value.botURL,
       botType: this.botTypeData,
     }
+
     if (this.botTypeData == 'DIALOGFLOW') data.botUri = this.serializedFile;
+
     if (this.botData) data.botId = this.botData.botId;
+
     this.formSaveData.emit(data);
     this.botSettingForm.reset();
   }
@@ -120,30 +132,51 @@ export class BotSettingsComponent implements OnInit {
     this.botSettingForm.reset();
   }
 
-
-  //to view selected image and save in base64 format and it accepts file properties as 'files' and change event as 'e'
+  //to set selected file name and set file name on UI and it accepts file properties as 'files' and change event as 'e'
   fileUpload(files, event) {
 
     if (files.length != 0) {
       var reader = new FileReader();
       var t = this;
       reader.onload = ((e: any) => {
-        let obj = JSON.parse(e.target.result);
-        t.fileData = obj;
-        t.setFileValue(t.fileData);
+        try {
+          if (e.target.result && e.target.result.length != 0) {
+            let obj = JSON.parse(e.target.result);
+            t.fileData = obj;
+            t.setFileValue(files, t.fileData);
+            t.botSettingForm.controls['botFile'].setValue(files[0].name);
+          }
+          else {
+            t.botSettingForm.controls['botFile'].setValue(null);
+            this.snackbar.snackbarMessage('error-snackbar', "Selected File is Emtpy", 1);
+          }
+        }
+        catch (e) {
+          t.botSettingForm.controls['botFile'].setValue(null);
+          this.snackbar.snackbarMessage('error-snackbar', "Invalid file format", 1);
+          console.error("Error :", e)
+        }
       });
       reader.readAsText(event.target.files[0]);
-      this.botSettingForm.controls['botFile'].setValue(files[0].name);
+
     }
   }
 
+  //forming file object to set as `botUri`, it accepts selected file properties as `files` and file data as `data` parameter
+  setFileValue(meta, data) {
 
-  setFileValue(val) {
-
-    let file = JSON.stringify(val);
-    this.serializedFile = file;
+    let temp = {
+      name: meta[0].name,
+      size: meta[0].size,
+      type: meta[0].type,
+    };
+    let file: any = {};
+    file.metaData = temp;
+    file.data = data;
+    this.serializedFile = JSON.stringify(file);
   }
 
+  //setting validation on `botURL` form control depending on bot type
   setValidation(val) {
 
     if (val == 'DIALOGFLOW') {

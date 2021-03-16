@@ -177,9 +177,9 @@ export class EndpointService {
     }).pipe(catchError(this.handleError));
   }
 
-  getBot(reqServiceType): Observable<any> {
+  getBot(reqServiceType, type): Observable<any> {
 
-    return this.httpClient.get(`${this.BOT_URL}/${reqServiceType}`, {
+    return this.httpClient.get(`${this.BOT_URL}/${reqServiceType}?type=${type}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer' + this.token,
