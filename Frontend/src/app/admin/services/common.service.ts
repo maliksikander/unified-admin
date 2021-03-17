@@ -17,13 +17,13 @@ export class CommonService {
       'required': "This field is required",
       'minlength': "More characters required",
       'maxlength': "Max 40 characters allowed",
-      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+      'pattern': "Pattern not valid"
 
     },
     'amqPwd': {
       'required': "This field is required",
       'maxlength': "Max 256 characters allowed",
-      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+      'pattern': "Pattern not valid"
     },
     'amqHost': {
       'required': "This field is required",
@@ -266,15 +266,15 @@ export class CommonService {
   attributeFormErrorMessages = {
     'name': {
       'required': "This field is required",
-      'minlength': "More characters required",
-      'maxlength': "Max 15 characters allowed",
+      'minlength': "Min 3 characters required",
+      'maxlength': "Max 500 characters allowed",
       'pattern': 'Not a valid pattern',
       'validName': 'Already exists'
 
     },
     'description': {
       'required': "This field is required",
-      'maxlength': "Max 50 characters allowed",
+      'maxlength': "Max 500 characters allowed",
       'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
     },
     'type': {
@@ -285,16 +285,16 @@ export class CommonService {
   mrdFormErrorMessages = {
     'name': {
       'required': "This field is required",
-      'minlength': "More characters required",
-      'maxlength': "Max 15 characters allowed",
+      'minlength': "Min 3 characters required",
+      'maxlength': "Max 110 characters allowed",
       'pattern': 'Not a valid pattern',
       'validName': 'Already exists'
 
     },
     'description': {
       'required': "This field is required",
-      'maxlength': "Max 50 characters allowed",
-      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+      'maxlength': "Max 500 characters allowed",
+      'pattern': "Not a valid pattern"
     },
     'enabled': {
       'required': "This field is required",
@@ -304,8 +304,8 @@ export class CommonService {
   queueFormErrorMessages = {
     'name': {
       'required': "This field is required",
-      'minlength': "More characters required",
-      'maxlength': "Max 15 characters allowed",
+      'minlength': "Min 3 characters required",
+      'maxlength': "Max 50 characters allowed",
       'pattern': 'Not a valid pattern',
       'validName': 'Already exists'
 
@@ -319,10 +319,12 @@ export class CommonService {
     },
     'serviceLevelType': {
       'required': "This field is required",
+      'min': "Min 1 required",
+      'max': "Max 10 seconds allowed",
     },
     'serviceLevelThreshold': {
       'required': "This field is required",
-      'min': "Min 1 second required",
+      'min': "Min 1 required",
       'max': "Max 10 seconds allowed",
     },
   };
@@ -346,7 +348,81 @@ export class CommonService {
       'required': "This field is required",
     }
   };
-  
+
+  connectorFormErrorMessages = {
+    'channelConnectorName': {
+      'required': "This field is required",
+      'minlength': "More characters required",
+      'maxlength': "Less characters required",
+      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+
+    },
+    'channelWebhook': {
+      'required': "This field is required",
+      'pattern': "Enter valid url"
+    },
+  };
+
+  channelFormErrorMessages = {
+    'channelName': {
+      'required': "This field is required",
+      'minlength': "More characters required",
+      'maxlength': "Less characters required",
+      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+    },
+    'serviceIdentifier': {
+      'required': "This field is required",
+      'pattern': "Enter valid url"
+    },
+    'channelConnector': {
+      'required': "This field is required",
+      'minlength': "More characters required",
+      'maxlength': "Less characters required",
+      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+    },
+    'channelMode': {
+      'required': "This field is required",
+      'minlength': "More characters required",
+      'maxlength': "Less characters required",
+      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+    },
+    'responseSLA': {
+      'required': "This field is required",
+      'minlength': "More characters required",
+      'maxlength': "Less characters required",
+      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+    },
+    'customerActivityTimeout': {
+      'required': "This field is required",
+      'minlength': "More characters required",
+      'maxlength': "Less characters required",
+      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+    },
+    'botId': {
+      'required': "This field is required",
+      'minlength': "More characters required",
+      'maxlength': "Less characters required",
+      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+    },
+  };
+
+  botFormErrorMessages = {
+    'botName': {
+      'required': "This field is required",
+      'minlength': "More characters required",
+      'maxlength': "Less characters required",
+      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+    },
+    'botURL': {
+      'required': "This field is required",
+      'pattern': "Enter valid url"
+    },
+    'botFile': {
+      'required': "This field is required",
+      'pattern': "Enter valid url"
+    },
+  };
+
   constructor(private snackbar: SnackbarService,
     private router: Router) { }
 

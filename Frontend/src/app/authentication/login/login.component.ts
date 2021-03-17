@@ -72,13 +72,16 @@ export class LoginComponent implements OnInit {
     this.endPointService.login(data).subscribe(
       (res: any) => {
         this.spinner = false;
+        // console.log("res-->", res);
         if (data.rememberMe == true) {
           localStorage.setItem('username', res.keycloak_User.username);
+          localStorage.setItem('tenant', res.keycloak_User.realm);
           localStorage.setItem('token', res.token);
           this.endPointService.token = res.token;
 
           sessionStorage.setItem('username', res.keycloak_User.username);
           sessionStorage.setItem('token', res.token);
+          localStorage.setItem('tenant', res.keycloak_User.realm);
         }
         this.router.navigate(['/general/amq-settings']);
       },

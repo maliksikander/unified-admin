@@ -16,6 +16,7 @@ import { CalendarComponent } from './general-settings/calendar/calendar.componen
 import { LicenseManagerComponent } from './general-settings/license-manager/license-manager.component';
 import { ChannelListComponent } from './channel-manager/channel/channel-list.component';
 import { ChannelConnectorComponent } from './channel-manager/channel-connector/channel-connector.component';
+import { BotListComponent } from './bot/bot-list/bot-list.component';
 
 
 export const adminRoutes: Routes = [
@@ -39,6 +40,7 @@ export const adminRoutes: Routes = [
       { path: 'routing/agents', component: UsersComponent },
       { path: 'channel/channel-manager', component: ChannelListComponent },
       { path: 'channel/channel-connector', component: ChannelConnectorComponent },
+      { path: 'bot-settings', component: BotListComponent },
     ]
   }
 ];

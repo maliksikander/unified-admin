@@ -32,6 +32,8 @@ export class TopBarComponent implements OnInit {
     localStorage.removeItem('currentMRDPage');
     localStorage.removeItem('currentQueuePage');
     localStorage.removeItem('currentUsersPage');
+    localStorage.removeItem('tenant');
+    
     this.router.navigate(['/login']);
   }
 

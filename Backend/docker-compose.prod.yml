@@ -12,3 +12,7 @@ services:
       - MONGODB_URL=mongodb://192.168.2.77/adminPanel
       - ADMIN_API_URL=http://localhost:3000/api
       - MRE_CONFIG_API_URL=https://hcdev.expertflow.com/mre-microservice/mre/api
+      - BUSINESS_USER_ROLES=["agent","supervisor"]
+      - CCM_URL=https://6b250c26-4270-4838-9987-df3383a76f23.mock.pstmn.io
+      - BOT_URL=https://9881be0c-b5cb-4b01-a4cd-61751c5c81f5.mock.pstmn.io
+      

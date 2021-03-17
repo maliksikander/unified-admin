@@ -1,23 +1,15 @@
 <div class="loading-area" *ngIf="spinner">
   <mat-spinner></mat-spinner>
 </div>
-<!-- <div class="container main-custom-container"> -->
-<!-- <div class="row"> -->
-<!-- <div class="col-sm-12"> -->
-<!-- <div class="panel-body"> -->
-<!-- <div class="sub-heading">
-            <h2>AMQ Settings</h2>
-          </div> -->
 <div class="panel-page-content">
   <form class="form-horizontal form-bordered" [formGroup]="channelSettingForm">
     <div class="col-md-5">
-
       <div class="form-group">
         <mat-label>Bot ID</mat-label>
         <mat-form-field appearance="outline">
           <input matInput formControlName="botId">
           <mat-error class="form-error">
-            <!-- {{formErrors.amqUrl}} -->
+            {{formErrors.botId}}
           </mat-error>
         </mat-form-field>
       </div>
@@ -26,11 +18,11 @@
         <mat-label>Channel Connector</mat-label>
         <mat-form-field appearance="outline">
           <mat-select formControlName="channelConnector">
-            <mat-option>Connector1
-            </mat-option>
+            <mat-option *ngFor="let connector of channelConnectorList" [value]="connector">
+              {{connector?.channelConnectorName}}</mat-option>
           </mat-select>
           <mat-error class="form-error">
-            <!-- {{formErrors.amqHost}} -->
+            {{formErrors.channelConnector}}
           </mat-error>
         </mat-form-field>
       </div>
@@ -41,7 +33,7 @@
         <mat-form-field appearance="outline">
           <input matInput formControlName="channelName">
           <mat-error class="form-error">
-            <!-- {{formErrors.amqUser}} -->
+            {{formErrors.channelName}}
           </mat-error>
         </mat-form-field>
       </div>
@@ -54,7 +46,7 @@
             </mat-option>
           </mat-select>
           <mat-error class="form-error">
-            <!-- {{formErrors.amqHost}} -->
+            {{formErrors.channelMode}}
           </mat-error>
         </mat-form-field>
       </div>
@@ -64,7 +56,7 @@
         <mat-form-field appearance="outline">
           <input type="number" matInput formControlName="customerActivityTimeout">
           <mat-error class="form-error">
-            <!-- {{formErrors.amqPort}} -->
+            {{formErrors.customerActivityTimeout}}
           </mat-error>
         </mat-form-field>
       </div>
@@ -74,27 +66,27 @@
         <mat-form-field appearance="outline">
           <input type="number" matInput formControlName="responseSLA">
           <mat-error class="form-error">
-            <!-- {{formErrors.amqHost}} -->
+            {{formErrors.responseSLA}}
           </mat-error>
         </mat-form-field>
       </div>
 
-      <div class="form-group">
+      <!-- <div class="form-group">
         <mat-label>Routing Policy</mat-label>
         <mat-form-field appearance="outline">
           <input matInput formControlName="routingPolicy">
           <mat-error class="form-error">
-            <!-- {{formErrors.amqUrl}} -->
+            {{formErrors.amqUrl}}
           </mat-error>
         </mat-form-field>
-      </div>
+      </div> -->
 
       <div class="form-group password-privacy-icon">
         <mat-label>Service Identifier</mat-label>
         <mat-form-field appearance="outline">
           <input matInput formControlName="serviceIdentifier">
           <mat-error class="form-error">
-            <!-- {{formErrors.amqPwd}} -->
+            {{formErrors.serviceIdentifier}}
           </mat-error>
         </mat-form-field>
       </div>
@@ -108,11 +100,3 @@
 
   </form>
 </div>
-<!-- </div> -->
-<!-- </div> -->
-<!-- </div> -->
-<!-- </div> -->
-
-
-
-<!-- <button mat-flat-button (click)="childToParentEvent()">Test<button> -->

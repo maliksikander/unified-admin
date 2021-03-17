@@ -29,6 +29,8 @@ button.mat-menu-item {
 
 .notification-area {
   padding: 0;
+  position: relative;
+  top: -3px;
 
   li {
     display: inline-block;

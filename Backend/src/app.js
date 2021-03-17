@@ -68,10 +68,10 @@ if (config.env === 'production') {
 }
 
 // v1 api routes
-app.use('/unified-admin/api/v1', routes);
+app.use('/', routes);
 app.use('/general', angularRoutes);
 
-//login route
+// login route
 app.get('/login', (req, res) => {
   const indexPath = path.resolve('src', 'public', 'index.html');
   res.sendFile(indexPath);

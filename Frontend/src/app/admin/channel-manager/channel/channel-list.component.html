@@ -11,348 +11,63 @@
         <div *ngIf="!addChannelBool" class="panel-page-content">
           <div class="channel-accordion">
             <mat-accordion>
-              <p>Channel</p>
-              <mat-expansion-panel hideToggle="true" #arrow1>
+              <mat-expansion-panel *ngFor="let type of channelTypes" (opened)="panelOpenCallback(type)"
+                hideToggle="true" #arrow>
                 <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
                   [expandedHeight]="customExpandedHeight">
                   <mat-panel-title>
-                    <img src="/assets/images/whatsapp.svg" alt="whats_app">
-                    <span>Whatsapp</span>
+                    <img src={{type?.channelLogo}}>
+                    <span>{{type?.typeName ? type?.typeName : 'N/A'}}</span>
                   </mat-panel-title>
                   <mat-panel-description>
-                    <mat-icon *ngIf="arrow1.expanded">arrow_drop_up</mat-icon>
-                    <mat-icon *ngIf="!arrow1.expanded">arrow_drop_down</mat-icon>
+                    <mat-icon *ngIf="arrow.expanded">arrow_drop_up</mat-icon>
+                    <mat-icon *ngIf="!arrow.expanded">arrow_drop_down</mat-icon>
                   </mat-panel-description>
                 </mat-expansion-panel-header>
-                <table class="channel-table">
+                <table class="channel-table" *ngIf="channels && channels.length > 0">
                   <thead>
                     <tr>
                       <th scope="col">Name</th>
                       <th scope="col">Mode</th>
                       <th scope="col">Reponse SLA(sec)</th>
-                      <th scope="col">Status</th>
+                      <th scope="col">Channel Connector</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td scope="row">Voice</td>
-                      <td>Hybrid</td>
-                      <td>60</td>
+                    <tr *ngFor="let channel of channels">
+                      <td scope="row">{{channel?.channelName ? channel?.channelName : 'N/A'}}</td>
+                      <td>{{channel?.channelConfig?.channelMode ? channel?.channelConfig?.channelMode : 'N/A'}}</td>
+                      <td>{{channel?.channelConfig?.responseSLA ? channel?.channelConfig?.responseSLA : 'N/A'}}</td>
                       <td class="list-action-area">
-                        <mat-slide-toggle (change)="onStatusChange($event)" [checked]="true"> </mat-slide-toggle>
+                        <div class="data-overflow">{{channel?.channelConnector?.channelConnectorName ?
+                          channel?.channelConnector?.channelConnectorName : 'N/A'}}</div>
                         <span class="list-actions">
-                          <button matTooltip="Edit" (click)="editChannel($event)" mat-mini-fab><i class="fa fa-pencil"
+                          <button matTooltip="Edit" (click)="editChannel(channel)" mat-mini-fab><i class="fa fa-pencil"
                               aria-hidden="true"></i>
                           </button>
-                          <button matTooltip="Delete" (click)="deleteConfirm($event)" mat-mini-fab><i
+                          <button matTooltip="Delete" (click)="deleteConfirm(channel)" mat-mini-fab><i
                               class="fa fa-trash-o" aria-hidden="true"></i>
                           </button>
                         </span>
                       </td>
 
-                    </tr>
-                    <tr>
-                      <td scope="row">Voice</td>
-                      <td>Hybrid</td>
-                      <td>60</td>
-                      <td class="list-action-area">
-                        <mat-slide-toggle (change)="onStatusChange($event)" [checked]="true"> </mat-slide-toggle>
-                        <span class="list-actions">
-                          <button matTooltip="Edit" (click)="editChannel($event)" mat-mini-fab><i class="fa fa-pencil"
-                              aria-hidden="true"></i>
-                          </button>
-                          <button matTooltip="Delete" (click)="deleteConfirm($event)" mat-mini-fab><i
-                              class="fa fa-trash-o" aria-hidden="true"></i>
-                          </button>
-                        </span>
-                      </td>
                     </tr>
                   </tbody>
                 </table>
-                <button class="add-channel-btn" mat-flat-button (click)="addChannel('whatsapp')">
-                  Add New Channel
-                </button>
-              </mat-expansion-panel>
-
-              <mat-expansion-panel hideToggle="true" #arrow2>
-                <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
-                  [expandedHeight]="customExpandedHeight">
-                  <mat-panel-title>
-                    <img src="/assets/images/fb.svg" alt="facebook">
-                    <span>Facebook</span>
-                  </mat-panel-title>
-                  <mat-panel-description>
-                    <mat-icon *ngIf="arrow2.expanded">arrow_drop_up</mat-icon>
-                    <mat-icon *ngIf="!arrow2.expanded">arrow_drop_down</mat-icon>
-                  </mat-panel-description>
-                </mat-expansion-panel-header>
-                <!-- <table class="channel-table">
-                  <thead>
-                    <tr>
-                      <th scope="col">Name</th>
-                      <th scope="col">Mode</th>
-                      <th scope="col">Reponse SLA(sec)</th>
-                      <th scope="col">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td scope="row">Voice</td>
-                      <td>Hybrid</td>
-                      <td>60</td>
-                      <td class="list-action-area">
-                        <mat-slide-toggle (change)="onStatusChange($event)" [checked]="true"> </mat-slide-toggle>
-                        <span class="list-actions">
-                          <button matTooltip="Edit" (click)="editChannel($event)" mat-mini-fab><i class="fa fa-pencil"
-                              aria-hidden="true"></i>
-                          </button>
-                          <button matTooltip="Delete" (click)="deleteConfirm($event)" mat-mini-fab><i
-                              class="fa fa-trash-o" aria-hidden="true"></i>
-                          </button>
-                        </span>
-                      </td>
-
-                    </tr>
-                    <tr>
-                      <td scope="row">Voice</td>
-                      <td>Hybrid</td>
-                      <td>60</td>
-                      <td class="list-action-area">
-                        <mat-slide-toggle (change)="onStatusChange($event)" [checked]="true"> </mat-slide-toggle>
-                        <span class="list-actions">
-                          <button matTooltip="Edit" (click)="editChannel($event)" mat-mini-fab><i class="fa fa-pencil"
-                              aria-hidden="true"></i>
-                          </button>
-                          <button matTooltip="Delete" (click)="deleteConfirm($event)" mat-mini-fab><i
-                              class="fa fa-trash-o" aria-hidden="true"></i>
-                          </button>
-                        </span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table> -->
-                <button class="add-channel-btn" mat-flat-button (click)="addChannel('facebook')">
-                  Add New Channel
-                </button>
-              </mat-expansion-panel>
-
-              <mat-expansion-panel hideToggle="true" #arrow3>
-                <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
-                  [expandedHeight]="customExpandedHeight">
-                  <mat-panel-title>
-                    <img src="/assets/images/webchat.svg" alt="web_chat">
-                    <span>Web Chat</span>
-                  </mat-panel-title>
-                  <mat-panel-description>
-                    <mat-icon *ngIf="arrow3.expanded">arrow_drop_up</mat-icon>
-                    <mat-icon *ngIf="!arrow3.expanded">arrow_drop_down</mat-icon>
-                  </mat-panel-description>
-                </mat-expansion-panel-header>
-                <!-- <table class="channel-table">
-                  <thead>
-                    <tr>
-                      <th scope="col">Name</th>
-                      <th scope="col">Mode</th>
-                      <th scope="col">Reponse SLA(sec)</th>
-                      <th scope="col">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td scope="row">Voice</td>
-                      <td>Hybrid</td>
-                      <td>60</td>
-                      <td class="list-action-area">
-                        <mat-slide-toggle (change)="onStatusChange($event)" [checked]="true"> </mat-slide-toggle>
-                        <span class="list-actions">
-                          <button matTooltip="Edit" (click)="editChannel($event)" mat-mini-fab><i class="fa fa-pencil"
-                              aria-hidden="true"></i>
-                          </button>
-                          <button matTooltip="Delete" (click)="deleteConfirm($event)" mat-mini-fab><i
-                              class="fa fa-trash-o" aria-hidden="true"></i>
-                          </button>
-                        </span>
-                      </td>
-
-                    </tr>
-                    <tr>
-                      <td scope="row">Voice</td>
-                      <td>Hybrid</td>
-                      <td>60</td>
-                      <td class="list-action-area">
-                        <mat-slide-toggle (change)="onStatusChange($event)" [checked]="true"> </mat-slide-toggle>
-                        <span class="list-actions">
-                          <button matTooltip="Edit" (click)="editChannel($event)" mat-mini-fab><i class="fa fa-pencil"
-                              aria-hidden="true"></i>
-                          </button>
-                          <button matTooltip="Delete" (click)="deleteConfirm($event)" mat-mini-fab><i
-                              class="fa fa-trash-o" aria-hidden="true"></i>
-                          </button>
-                        </span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table> -->
-                <button class="add-channel-btn" mat-flat-button (click)="addChannel('web')">
-                  Add New Channel
-                </button>
-              </mat-expansion-panel>
-
-              <mat-expansion-panel hideToggle="true" #arrow4>
-                <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
-                  [expandedHeight]="customExpandedHeight">
-                  <mat-panel-title>
-                    <img src="/assets/images/viber.svg" alt="viber">
-                    <span>Viber</span>
-                  </mat-panel-title>
-                  <mat-panel-description>
-                    <mat-icon *ngIf="arrow4.expanded">arrow_drop_up</mat-icon>
-                    <mat-icon *ngIf="!arrow4.expanded">arrow_drop_down</mat-icon>
-                  </mat-panel-description>
-                </mat-expansion-panel-header>
-                <!-- <table class="channel-table">
-                  <thead>
-                    <tr>
-                      <th scope="col">Name</th>
-                      <th scope="col">Mode</th>
-                      <th scope="col">Reponse SLA(sec)</th>
-                      <th scope="col">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td scope="row">Voice</td>
-                      <td>Hybrid</td>
-                      <td>60</td>
-                      <td class="list-action-area">
-                        <mat-slide-toggle (change)="onStatusChange($event)" [checked]="true"> </mat-slide-toggle>
-                        <span class="list-actions">
-                          <button matTooltip="Edit" (click)="editChannel($event)" mat-mini-fab><i class="fa fa-pencil"
-                              aria-hidden="true"></i>
-                          </button>
-                          <button matTooltip="Delete" (click)="deleteConfirm($event)" mat-mini-fab><i
-                              class="fa fa-trash-o" aria-hidden="true"></i>
-                          </button>
-                        </span>
-                      </td>
-
-                    </tr>
-                    <tr>
-                      <td scope="row">Voice</td>
-                      <td>Hybrid</td>
-                      <td>60</td>
-                      <td class="list-action-area">
-                        <mat-slide-toggle (change)="onStatusChange($event)" [checked]="true"> </mat-slide-toggle>
-                        <span class="list-actions">
-                          <button matTooltip="Edit" (click)="editChannel($event)" mat-mini-fab><i class="fa fa-pencil"
-                              aria-hidden="true"></i>
-                          </button>
-                          <button matTooltip="Delete" (click)="deleteConfirm($event)" mat-mini-fab><i
-                              class="fa fa-trash-o" aria-hidden="true"></i>
-                          </button>
-                        </span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table> -->
-                <button class="add-channel-btn" mat-flat-button (click)="addChannel('viber')">
-                  Add New Channel
-                </button>
-              </mat-expansion-panel>
-
-              
-              <mat-expansion-panel hideToggle="true" #arrow5>
-                <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
-                  [expandedHeight]="customExpandedHeight">
-                  <mat-panel-title>
-                    <img src="/assets/images/proxy.svg" alt="proxy">
-                    <span>Forward Proxy</span>
-                  </mat-panel-title>
-                  <mat-panel-description>
-                    <mat-icon *ngIf="arrow5.expanded">arrow_drop_up</mat-icon>
-                    <mat-icon *ngIf="!arrow5.expanded">arrow_drop_down</mat-icon>
-                  </mat-panel-description>
-                </mat-expansion-panel-header>
-                <!-- <table class="channel-table">
-                  <thead>
-                    <tr>
-                      <th scope="col">Name</th>
-                      <th scope="col">Mode</th>
-                      <th scope="col">Reponse SLA(sec)</th>
-                      <th scope="col">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td scope="row">Voice</td>
-                      <td>Hybrid</td>
-                      <td>60</td>
-                      <td class="list-action-area">
-                        <mat-slide-toggle (change)="onStatusChange($event)" [checked]="true"> </mat-slide-toggle>
-                        <span class="list-actions">
-                          <button matTooltip="Edit" (click)="editChannel($event)" mat-mini-fab><i class="fa fa-pencil"
-                              aria-hidden="true"></i>
-                          </button>
-                          <button matTooltip="Delete" (click)="deleteConfirm($event)" mat-mini-fab><i
-                              class="fa fa-trash-o" aria-hidden="true"></i>
-                          </button>
-                        </span>
-                      </td>
-
-                    </tr>
-                    <tr>
-                      <td scope="row">Voice</td>
-                      <td>Hybrid</td>
-                      <td>60</td>
-                      <td class="list-action-area">
-                        <mat-slide-toggle (change)="onStatusChange($event)" [checked]="true"> </mat-slide-toggle>
-                        <span class="list-actions">
-                          <button matTooltip="Edit" (click)="editChannel($event)" mat-mini-fab><i class="fa fa-pencil"
-                              aria-hidden="true"></i>
-                          </button>
-                          <button matTooltip="Delete" (click)="deleteConfirm($event)" mat-mini-fab><i
-                              class="fa fa-trash-o" aria-hidden="true"></i>
-                          </button>
-                        </span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table> -->
-                <button class="add-channel-btn" mat-flat-button (click)="addChannel('forwardProxy')">
-                  Add New Channel
-                </button>
-              </mat-expansion-panel>
-
-              <mat-expansion-panel hideToggle="true" #arrow6>
-                <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
-                  [expandedHeight]="customExpandedHeight">
-                  <mat-panel-title>
-                    <img src="/assets/images/smpp.svg" alt="smpp">
-                    <span>SMPP</span>
-                  </mat-panel-title>
-                  <mat-panel-description>
-                    <mat-icon *ngIf="arrow6.expanded">arrow_drop_up</mat-icon>
-                    <mat-icon *ngIf="!arrow6.expanded">arrow_drop_down</mat-icon>
-                  </mat-panel-description>
-                </mat-expansion-panel-header>
-                <button class="add-channel-btn" mat-flat-button (click)="addChannel('smpp')">
+                <button class="add-channel-btn" mat-flat-button (click)="addChannel(type)">
                   Add New Channel
                 </button>
               </mat-expansion-panel>
             </mat-accordion>
-          <!-- </div>
-          <ng-container *ngIf="addChannelBool">
-            <app-channel-type-settings [parentChannelBool]="addChannelBool" (childChannelBool)='test($event)'>
-            </app-channel-type-settings>
-          </ng-container> -->
-
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<ng-container *ngIf="addChannelBool">
-  <app-channel-settings [parentChannelBool]="addChannelBool" (childChannelBool)='childToParentUIChange($event)'>
-  </app-channel-settings>
-</ng-container>
+  <ng-container *ngIf="addChannelBool">
+    <app-channel-settings [parentChannelBool]="addChannelBool" [channelTypeData]="channelType"
+      [channelData]="editChannelData" (childChannelBool)='childToParentUIChange($event)'
+      (formSaveData)='onSave($event)'>
+    </app-channel-settings>
+  </ng-container>

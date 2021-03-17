@@ -91,6 +91,9 @@ mat-sidenav-container.main-sidebar {
   }
   span.sidebar-text {
     margin-left: 6px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 a.bottom-trigger{

@@ -1348,7 +1348,6 @@ mat-sidenav-container.secondary-sidebar {
   border-radius: none;
 }
 
-
 .mat-primary .mat-pseudo-checkbox-checked,
 .mat-primary .mat-pseudo-checkbox-indeterminate {
   background: none;
@@ -1945,7 +1944,6 @@ snack-bar-container {
   .ngx-pagination a,
   .ngx-pagination button {
     padding: 0.1875rem 0.125rem;
-    
   }
 }
 
@@ -2392,8 +2390,6 @@ snack-bar-container {
     background-color: #fdfdfd;
   }
 
-
-
   .cal-month-view .cal-day-number {
     font-size: 13px;
     font-weight: 600;
@@ -2462,7 +2458,8 @@ snack-bar-container {
   }
 }
 
-.panel-page-content .channel-accordion {
+.panel-page-content .channel-accordion,
+.bot-accordion {
   mat-expansion-panel {
     .mat-expansion-panel-body {
       padding: 0 !important;
@@ -2472,6 +2469,7 @@ snack-bar-container {
         position: absolute;
         right: 45px;
         font-size: 25px;
+        color: #afafaf;
       }
     }
   }
@@ -2479,6 +2477,12 @@ snack-bar-container {
   .add-channel-btn {
     span.mat-button-wrapper {
       font-size: 11px !important;
+    }
+  }
+
+  .add-bot-btn {
+    span.mat-button-wrapper {
+      font-size: 12px !important;
     }
   }
 }

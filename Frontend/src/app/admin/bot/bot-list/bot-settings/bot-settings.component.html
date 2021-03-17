@@ -1,0 +1,61 @@
+<div class="panel-page-content">
+  <form class="form-horizontal form-bordered" [formGroup]="botSettingForm">
+    <div class="col-md-5">
+
+      <div class="form-group">
+        <mat-label>Bot Name</mat-label>
+        <mat-form-field appearance="outline">
+          <input matInput formControlName="botName">
+          <mat-error class="form-error">
+            {{formErrors.botName}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div *ngIf="botTypeData != 'DIALOGFLOW'" class="form-group">
+        <mat-label>Bot API URL</mat-label>
+        <mat-form-field appearance="outline">
+          <input matInput formControlName="botURL">
+          <mat-error class="form-error">
+            {{formErrors.botURL}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div *ngIf="botTypeData == 'DIALOGFLOW'" class="component-logo">
+        <div class="form-group">
+          <mat-label>BOT CONFIG JSON</mat-label>
+          <mat-form-field appearance="outline">
+            <input style="display: none;" #file type="file" accept='application/json'
+              (change)="fileUpload(file.files,$event)" />
+            <input matInput formControlName="botFile">
+            <button class="select-file-button" mat-raised-button matSuffix (click)="file.click()">
+              <img src="/assets/images/upload.svg" alt="upload">
+            </button>
+            <!-- <mat-error class="form-error">
+              This field is required
+            </mat-error> -->
+            <!-- <span *ngIf="valid == false"> This field is required</span> -->
+          </mat-form-field>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <mat-label>Bot Type</mat-label>
+        <mat-form-field appearance="outline">
+          <input matInput formControlName="botType">
+        </mat-form-field>
+      </div>
+
+
+
+    </div>
+    <div class="action-area btn-margin col-md-5">
+      <button mat-raised-button (click)="onClose()" class="gray-btn">Cancel</button>
+      <button [disabled]="!valid" mat-raised-button class="blue-btn service-trigger"
+        (click)="onSave()">Save</button>
+    </div>
+
+  </form>
+</div>

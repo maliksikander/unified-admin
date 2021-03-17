@@ -31,17 +31,6 @@ export class ConfigService {
 
 
   readConfig() {
-    // return this.http.get('assets/config/config.json').subscribe((data: any) => {
-    //   // this.endPointService.ADMIN_URL = data.Admin_URL;
-    //   // this.endPointService.MRE_URL = data.MRE_URL;
-    //   // this.endPointService.userRoles = data.BUSINESS_USER_ROLES;
-    //   this.configData = data;
-    //   this.setConfigurations(data);
-    // }, (error) => {
-    //   alert('Unable to read configurations, Please contact administrator');
-    //   console.error(error);
-    // });
-
     return new Promise((resolve) => {
       this.http.get('assets/config/config.json')
         .subscribe(config => {

@@ -1,5 +1,10 @@
 {
-  "Admin_URL":"http://localhost:3000/unified-admin/api/v1",
-  "MRE_URL":"http://192.168.2.50:8084",
-  "BUSINESS_USER_ROLES":["agent","supervisor"]
+  "Admin_URL": "http://localhost:3000",
+  "MRE_URL": "https://f21122db-c99d-4bb8-aa79-0a2140b5ef65.mock.pstmn.io",
+  "BUSINESS_USER_ROLES": [
+    "agent",
+    "supervisor"
+  ],
+  "CCM_URL": "https://6b250c26-4270-4838-9987-df3383a76f23.mock.pstmn.io",
+  "BOT_URL":"https://9881be0c-b5cb-4b01-a4cd-61751c5c81f5.mock.pstmn.io"
 }

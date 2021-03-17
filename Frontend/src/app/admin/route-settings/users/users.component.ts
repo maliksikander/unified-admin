@@ -176,13 +176,21 @@ export class UsersComponent implements OnInit {
     this.attrSpinner = true;
     let data = JSON.parse(JSON.stringify(item));
     this.editREUserData = JSON.parse(JSON.stringify(item));
-
     if (data.associatedRoutingAttributes) {
+      data.associatedRoutingAttributes.forEach(item => {
+        if (item.routingAttribute.type == 'BOOLEAN') {
+          if (item.value == 0) {
+            item.value = 'false';
+          }
+          else {
+            item.value = 'true';
+          }
+        }
+      })
       this.userAttributeForm.patchValue({
         associatedRoutingAttributes: data.associatedRoutingAttributes,
       });
     }
-
     let dialogRef = this.dialog.open(templateRef, {
       width: '650px',
       height: '500px',
@@ -204,6 +212,18 @@ export class UsersComponent implements OnInit {
     this.spinner = true;
     let data = JSON.parse(JSON.stringify(this.editREUserData));
     data.associatedRoutingAttributes = this.userAttributeForm.value.associatedRoutingAttributes;
+    if (data.associatedRoutingAttributes) {
+      data.associatedRoutingAttributes.forEach(item => {
+        if (item.routingAttribute.type == 'BOOLEAN') {
+          if (item.value == 'false') {
+            item.value = 0;
+          }
+          else {
+            item.value = 1;
+          }
+        }
+      });
+    }
     if (data && data.id) {
       if (data.associatedRoutingAttributes.length == 0) {
         return this.deleteREUser(data.id);
@@ -280,7 +300,7 @@ export class UsersComponent implements OnInit {
   //update slider value and it accepts slider value event as 'e' and attribute object index in attribute form control as 'i'
   onSliderChange(e, i) {
     if (e.value || e.value == 0) {
-      this.userAttributeForm.value.associatedRoutingAttributes[i].value = JSON.stringify(e.value);
+      this.userAttributeForm.value.associatedRoutingAttributes[i].value = e.value;
     }
   }
 
@@ -291,21 +311,24 @@ export class UsersComponent implements OnInit {
     if (e.checked || e.checked == false) {
       if (e.checked == false) {
         this.attrData.forEach(attr => { if (attr.id == data.routingAttribute.id) attr.isChecked = false; });
-        this.userAttributeForm.value.associatedRoutingAttributes[i].value = JSON.stringify(e.checked);
+        this.userAttributeForm.value.associatedRoutingAttributes[i].value = 0;
         return this.userAttributeForm.value.associatedRoutingAttributes.splice(i, 1);
       }
-      this.userAttributeForm.value.associatedRoutingAttributes[i].value = JSON.stringify(e.checked);
+      this.userAttributeForm.value.associatedRoutingAttributes[i].value = 1;
     }
   }
 
   //update attribute value in menu and it accepts attribute object as 'attr' and RE user object as 'data'
   updateAttributeValue(attr, data) {
+
     this.attrName = attr.routingAttribute.name;
-    this.attrValue = attr.value;
     this.attrType = attr.routingAttribute.type;
+    this.attrValue = attr.value;
     this.attrId = attr.routingAttribute.id;
     this.userObj = data;
     if (attr.routingAttribute.type == 'BOOLEAN') {
+      if (attr.value == 0) { this.attrValue = "false"; }
+      else { this.attrValue = "true"; }
       this.attrValueList = ["true", "false"];
     }
     else {
@@ -313,7 +336,7 @@ export class UsersComponent implements OnInit {
     }
   }
 
-  //cllback for attribute value changes in `menu` and it accepts event change as `e` 
+  //callback for attribute value changes in `menu` and it accepts event change as `e` 
   onAttrChange(e) {
 
     if (this.userObj.associatedRoutingAttributes && this.userObj.associatedRoutingAttributes.length > 0) {
@@ -324,7 +347,7 @@ export class UsersComponent implements OnInit {
         if (this.userObj.associatedRoutingAttributes.length == 0) return this.deleteREUser(this.userObj.id);
       }
       else {
-        this.userObj.associatedRoutingAttributes[index].value = e;
+        this.userObj.associatedRoutingAttributes[index].value = JSON.parse(e);
         this.closeMenu();
       }
       this.updateREUserAttribute(this.userObj, this.userObj.id);
