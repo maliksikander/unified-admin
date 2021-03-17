@@ -1,27 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { APP_BASE_HREF } from '@angular/common'
+
 import { AmqComponent } from './amq.component';
-import { AppModule } from '../../../app.module';
-import { EndpointService } from '../../services/endpoint.service';
-import { ConfigService } from '../../services/config.service';
 
-
-
-fdescribe('AmqComponent', () => {
+describe('AmqComponent', () => {
   let component: AmqComponent;
   let fixture: ComponentFixture<AmqComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [],
-      imports: [AppModule],
-      providers: [
-        EndpointService,
-        ConfigService
-      ]
-
+      declarations: [ AmqComponent ]
     })
-      .compileComponents();
+    .compileComponents();
   }));
 
   beforeEach(() => {
@@ -31,6 +20,6 @@ fdescribe('AmqComponent', () => {
   });
 
   it('should create', () => {
-    expect(component).toBeFalsy();
+    expect(component).toBeTruthy();
   });
 });
