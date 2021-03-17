@@ -18,9 +18,7 @@ export class BotListComponent implements OnInit {
   addBot = false;
   pageTitle = "Bot Settings";
   editBotData;
-  serviceReq = 'bot-connectors';
   botList = [];
-  panelBotList = [];
   botType;
 
   constructor(private commonService: CommonService,
@@ -33,24 +31,13 @@ export class BotListComponent implements OnInit {
     this.commonService.tokenVerification();
   }
 
-  //to get bot list and save in local variable, it accepts bot type as `type` parameter
+  //to get bot list, it accepts bot type as `type` parameter
   getBotList(type) {
 
-    //calling endpoint service method to get bot list which accepts resource name as 'serviceReq' as parameter
-    this.endPointService.getBot(this.serviceReq, type).subscribe(
+    this.endPointService.getBot(type).subscribe(
       (res: any) => {
-        try {
-          this.botList = res;
-          this.botList.forEach(item => {
-            if (item.botType == 'DIALOGFLOW') {
-              item.botUri = JSON.parse(item.botUri);
-            }
-          });
-        }
-        catch (error) {
-          console.error("Error :", error);
-          this.spinner = false;
-        }
+        let list = res;
+        this.setLocalList(list);
         this.spinner = false;
       },
       error => {
@@ -64,8 +51,7 @@ export class BotListComponent implements OnInit {
   //to create bot, it accepts `data` object as parameter containing bot properties
   createBot(data) {
 
-    //calling endpoint service method which accepts resource name as 'serviceReq' and `data` object as parameter
-    this.endPointService.createBot(data, this.serviceReq).subscribe(
+    this.endPointService.createBot(data).subscribe(
       (res: any) => {
         this.snackbar.snackbarMessage('success-snackbar', "Bot Created", 1);
         this.spinner = false;
@@ -82,8 +68,7 @@ export class BotListComponent implements OnInit {
   //to update bot, it accepts `data` object as parameter containing bot properties
   updateBot(data) {
 
-    //calling endpoint service method which accepts resource name as 'serviceReq' and `data` object as parameter
-    this.endPointService.updateBot(data, data.botId, this.serviceReq).subscribe(
+    this.endPointService.updateBot(data, data.botId).subscribe(
       (res: any) => {
         this.snackbar.snackbarMessage('success-snackbar', "Updated", 1);
         this.spinner = false;
@@ -100,14 +85,10 @@ export class BotListComponent implements OnInit {
   //removes the particular object from local list variable if there is a success response
   deleteBot(data) {
 
-    //calling endpoint service method which accepts resource name as 'serviceReq' and `bot id` as parameter
-    this.endPointService.deleteBot(data.botId, this.serviceReq).subscribe(
+    this.endPointService.deleteBot(data.botId).subscribe(
       (res: any) => {
 
         this.botList = this.botList.filter(i => i !== data)
-          .map((i, idx) => (i.position = (idx + 1), i));
-
-        this.panelBotList = this.panelBotList.filter(i => i !== data)
           .map((i, idx) => (i.position = (idx + 1), i));
 
         this.spinner = false;
@@ -173,6 +154,22 @@ export class BotListComponent implements OnInit {
     this.spinner = true;
     this.botList = [];
     this.getBotList(type);
+  }
+
+  // to set local list variable
+  setLocalList(list) {
+    try {
+      list.forEach(item => {
+        if (item.botType == 'DIALOGFLOW') {
+          item.botUri = JSON.parse(item.botUri);
+        }
+      });
+      this.botList = list;
+    }
+    catch (error) {
+      console.error("Error :", error);
+      this.spinner = false;
+    }
   }
 
   //to create/update a bot, it accepts bot object as 'data' paramter

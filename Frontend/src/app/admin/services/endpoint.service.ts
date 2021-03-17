@@ -166,9 +166,9 @@ export class EndpointService {
 
   ///////////////// BOT CRUD ////////////
 
-  createBot(data, reqServiceType): Observable<any> {
+  createBot(data): Observable<any> {
 
-    return this.httpClient.post<any>(`${this.BOT_URL}/${reqServiceType}`, data, {
+    return this.httpClient.post<any>(`${this.BOT_URL}/bot-connectors`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer' + this.token,
@@ -177,9 +177,9 @@ export class EndpointService {
     }).pipe(catchError(this.handleError));
   }
 
-  getBot(reqServiceType, type): Observable<any> {
+  getBot(type): Observable<any> {
 
-    return this.httpClient.get(`${this.BOT_URL}/${reqServiceType}?type=${type}`, {
+    return this.httpClient.get(`${this.BOT_URL}/bot-connectors?type=${type}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer' + this.token,
@@ -188,8 +188,8 @@ export class EndpointService {
     }).pipe(catchError(this.handleError));
   }
 
-  updateBot(data, id, reqServiceType): Observable<any> {
-    return this.httpClient.put<any>(`${this.BOT_URL}/${reqServiceType}/${id}`, data, {
+  updateBot(data, id): Observable<any> {
+    return this.httpClient.put<any>(`${this.BOT_URL}/bot-connectors/${id}`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.token,
@@ -198,8 +198,8 @@ export class EndpointService {
     }).pipe(catchError(this.handleError));
   }
 
-  deleteBot(id, reqServiceType): Observable<any> {
-    return this.httpClient.delete<any>(`${this.BOT_URL}/${reqServiceType}/${id}`, {
+  deleteBot(id): Observable<any> {
+    return this.httpClient.delete<any>(`${this.BOT_URL}/bot-connectors/${id}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.token,
