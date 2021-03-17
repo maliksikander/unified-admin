@@ -10,7 +10,7 @@ input::-webkit-inner-spin-button {
 }
 
 .panel-page-content {
-  padding-top: 50px !important;
+  padding-top: 20px !important;
   padding-left: 46px !important;
 
   .bot-accordion {
@@ -32,6 +32,7 @@ input::-webkit-inner-spin-button {
       box-shadow: none;
       border: 1px solid #e2e2e2;
       margin-bottom: 10px;
+      border-radius: 0;
       .mat-expansion-panel-header {
         padding: 0px 20px !important;
         background: #fafafa;
