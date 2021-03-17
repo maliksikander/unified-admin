@@ -15,7 +15,7 @@ const { errorConverter, errorHandler } = require('./middlewares/error');
 const path = require('path');
 const fs = require('fs');
 const ApiError = require('./utils/ApiError');
-// const angularRoutes = require('./angular.route');
+const angularRoutes = require('./angular.route');
 const app = express();
 // const keycloak_init = require('./config/keycloak.config').initKeycloak();
 // const keycloak = require('./config/keycloak.config').getKeycloak();
@@ -69,13 +69,13 @@ if (config.env === 'production') {
 
 // v1 api routes
 app.use('/', routes);
-// app.use('/general', angularRoutes);
+app.use('/general', angularRoutes);
 
-//login route
-// app.get('/login', (req, res) => {
-//   const indexPath = path.resolve('src', 'public', 'index.html');
-//   res.sendFile(indexPath);
-// });
+// login route
+app.get('/login', (req, res) => {
+  const indexPath = path.resolve('src', 'public', 'index.html');
+  res.sendFile(indexPath);
+});
 
 // send back a 404 error for any unknown api request
 app.use((req, res, next) => {

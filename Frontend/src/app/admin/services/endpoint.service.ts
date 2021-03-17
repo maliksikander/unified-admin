@@ -166,7 +166,7 @@ export class EndpointService {
 
   ///////////////// BOT CRUD ////////////
 
-  createBot(data): Observable<any> {
+  createBotSetting(data): Observable<any> {
 
     return this.httpClient.post<any>(`${this.BOT_URL}/bot-connectors`, data, {
       headers: new HttpHeaders({
@@ -177,7 +177,7 @@ export class EndpointService {
     }).pipe(catchError(this.handleError));
   }
 
-  getBot(type): Observable<any> {
+  getBotSetting(type): Observable<any> {
 
     return this.httpClient.get(`${this.BOT_URL}/bot-connectors?type=${type}`, {
       headers: new HttpHeaders({
@@ -188,8 +188,8 @@ export class EndpointService {
     }).pipe(catchError(this.handleError));
   }
 
-  updateBot(data, id): Observable<any> {
-    return this.httpClient.put<any>(`${this.BOT_URL}/bot-connectors/${id}`, data, {
+  updateBotSetting(data): Observable<any> {
+    return this.httpClient.put<any>(`${this.BOT_URL}/bot-connectors/${data.botId}`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.token,
@@ -198,7 +198,7 @@ export class EndpointService {
     }).pipe(catchError(this.handleError));
   }
 
-  deleteBot(id): Observable<any> {
+  deleteBotSetting(id): Observable<any> {
     return this.httpClient.delete<any>(`${this.BOT_URL}/bot-connectors/${id}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

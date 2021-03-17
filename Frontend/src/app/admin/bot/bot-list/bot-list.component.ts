@@ -31,13 +31,15 @@ export class BotListComponent implements OnInit {
     this.commonService.tokenVerification();
   }
 
-  //to get bot list, it accepts bot type as `type` parameter
-  getBotList(type) {
+  //to get bot settings list, it accepts bot type as `type` parameter
+  getBotList(type):void {
 
-    this.endPointService.getBot(type).subscribe(
+    //calling bot setting endpoint, it accepts bot type as `type` parameter
+    this.endPointService.getBotSetting(type).subscribe(
       (res: any) => {
-        let list = res;
-        this.setLocalList(list);
+
+        //passing bot list response to the setter method
+        this.setLocalListVariable(res);
         this.spinner = false;
       },
       error => {
@@ -48,10 +50,11 @@ export class BotListComponent implements OnInit {
       });
   }
 
-  //to create bot, it accepts `data` object as parameter containing bot properties
-  createBot(data) {
+  //to create bot, it accepts `data` object containing ('botName','botType'.'botUri') as parameter 
+  createBotSetting(data):void {
 
-    this.endPointService.createBot(data).subscribe(
+     //calling bot setting endpoint, it accepts bot setting object as `data` parameter
+    this.endPointService.createBotSetting(data).subscribe(
       (res: any) => {
         this.snackbar.snackbarMessage('success-snackbar', "Bot Created", 1);
         this.spinner = false;
@@ -65,10 +68,11 @@ export class BotListComponent implements OnInit {
       });
   }
 
-  //to update bot, it accepts `data` object as parameter containing bot properties
-  updateBot(data) {
+  //to update bot, it accepts `data` object containing ('botId,'botName','botType'.'botUri') as parameter
+  updateBotSetting(data):void {
 
-    this.endPointService.updateBot(data, data.botId).subscribe(
+    //calling bot setting endpoint, it accepts bot setting object as `data` parameter
+    this.endPointService.updateBotSetting(data).subscribe(
       (res: any) => {
         this.snackbar.snackbarMessage('success-snackbar', "Updated", 1);
         this.spinner = false;
@@ -81,11 +85,12 @@ export class BotListComponent implements OnInit {
       });
   }
 
-  //to delete bot, it accepts `data` object as parameter containing bot object properties and
-  //removes the particular object from local list variable if there is a success response
-  deleteBot(data) {
+  //to delete bot, it accepts `data` containing ('botName','botType'.'botUri') object as parameter  and
+  //removes that particular object from local list variable if there is a success response
+  deleteBotSetting(data):void {
 
-    this.endPointService.deleteBot(data.botId).subscribe(
+    //calling bot setting endpoint, it accepts bot setting object id as `data.botId` parameter
+    this.endPointService.deleteBotSetting(data.botId).subscribe(
       (res: any) => {
 
         this.botList = this.botList.filter(i => i !== data)
@@ -102,8 +107,8 @@ export class BotListComponent implements OnInit {
       });
   }
 
-  //to edit bot settings and change the view to form page  and pass bot object as 'data' parameter
-  editBotSettings(data, type) {
+  //to edit bot settings and change the view to form page,it accepts  bot setting object as 'data' ('botName','botType'.'botUri') and bot type as 'type' parameter
+  editBotSettings(data, type):void {
 
     this.addBot = true;
     this.pageTitle = "Edit Bot Settings";
@@ -111,8 +116,8 @@ export class BotListComponent implements OnInit {
     this.botType = type;
   }
 
-  // to open delete confirmation dialog
-  deleteConfirm(data) {
+  // to open delete confirmation dialog and it returns the dialog component
+  openConfirmDialog(data) {
 
     let msg = "Are you sure you want to delete this Bot ?";
     return this.dialog.open(ConfirmDialogComponent, {
@@ -126,13 +131,13 @@ export class BotListComponent implements OnInit {
     }).afterClosed().subscribe((res: any) => {
       this.spinner = true;
       if (res === 'delete') {
-        this.deleteBot(data);
+        this.deleteBotSetting(data);
       }
       else { this.spinner = false; }
     });
   }
 
-  //to add bot and change the view to form page  and pass bot type object as 'type' parameter
+  //to add bot and change the view to form page  and pass bot type as 'type' parameter
   addBotSettings(type) {
     this.addBot = true;
     this.botType = type;
@@ -140,7 +145,7 @@ export class BotListComponent implements OnInit {
   }
 
   //to change the view from `form` to `list` page and load bot type list and it accepts boolean value as 'e' parameter from child component
-  childToParentUIChange(e) {
+  childToParentUIChange(e): void {
     this.addBot = e;
     if (this.addBot == false) {
       this.pageTitle = "Bot Settings";
@@ -149,15 +154,15 @@ export class BotListComponent implements OnInit {
   }
 
   //to set bot list by bot type on expansion event, it accepts bot type as 'type' paramter
-  panelOpenCallback(type) {
+  panelOpenCallback(type): void {
 
     this.spinner = true;
     this.botList = [];
     this.getBotList(type);
   }
 
-  // to set local list variable
-  setLocalList(list) {
+  // to set local list variable, it accepts bot setting list as `list` parameter
+  setLocalListVariable(list) {
     try {
       list.forEach(item => {
         if (item.botType == 'DIALOGFLOW') {
@@ -172,7 +177,7 @@ export class BotListComponent implements OnInit {
     }
   }
 
-  //to create/update a bot, it accepts bot object as 'data' paramter
+  //to create/update a bot setting object, it accepts bot object as 'data' parameter
   onSave(data) {
 
     this.spinner = true;
@@ -180,10 +185,10 @@ export class BotListComponent implements OnInit {
     this.pageTitle = "Bot Settings";
     this.editBotData = undefined;
     if (data.botId) {
-      this.updateBot(data);
+      this.updateBotSetting(data);
     }
     else {
-      this.createBot(data);
+      this.createBotSetting(data);
     }
   }
 
