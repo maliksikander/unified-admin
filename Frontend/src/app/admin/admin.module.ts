@@ -27,12 +27,14 @@ import { CalendarComponent } from './general-settings/calendar/calendar.componen
 import { LicenseManagerComponent } from './general-settings/license-manager/license-manager.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { CalendarHeaderComponent } from './general-settings/calendar/calendar-header/calendar-header.component';
 import { ChannelListComponent } from './channel-manager/channel/channel-list.component';
 import { ChannelSettingsComponent } from './channel-manager/channel/channel-settings/channel-settings.component';
 import { ChannelConnectorComponent } from './channel-manager/channel-connector/channel-connector.component';
 import { ChannelConnectorSettingsComponent } from './channel-manager/channel-connector/channel-connector-settings/channel-connector-settings.component';
 import { BotListComponent } from './bot/bot-list/bot-list.component';
 import { BotSettingsComponent } from './bot/bot-list/bot-settings/bot-settings.component';
+// import { DemoUtilsModule } from '../demo-utils/module';
 
 @NgModule({
     imports: [
@@ -70,6 +72,7 @@ import { BotSettingsComponent } from './bot/bot-list/bot-settings/bot-settings.c
         ChannelConnectorSettingsComponent,
         BotListComponent,
         BotSettingsComponent,
+        CalendarHeaderComponent
     ],
     providers: [
         HttpClientModule,
@@ -77,7 +80,7 @@ import { BotSettingsComponent } from './bot/bot-list/bot-settings/bot-settings.c
         EndpointService,
         HttpInterceptorService,
     ],
-    exports: [],
+    exports: [CalendarHeaderComponent],
 
     entryComponents: [
 

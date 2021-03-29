@@ -30,25 +30,44 @@
           </div>
 
         </div>
-        <div class="calendar-section">
+        <div class="content-section">
           <div class="side-section col-md-2">
-            <button mat-raised-button (click)="openModal(newCalendar)">
+
+            <button mat-raised-button>
               <mat-icon>add</mat-icon>Create
             </button>
 
             <div class="my-calendar-section">
               <div class="heading">
                 All Calendars
-                <mat-icon>add</mat-icon>
-
+                <mat-icon (click)="openModal(newCalendar)">add</mat-icon>
               </div>
             </div>
           </div>
-          <div class="calendar-layout col-md-9 offset-md-2">
+
+          <ng-template #customCellTemplate let-day="day" let-locale="locale">
+            <div class="cal-cell-top">
+              <!-- <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span> -->
+              <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
+            </div>
+            <ng-container *ngFor="let event of day?.events">
+              <small class="month-event-title" [ngStyle]="{'background':event?.color?.primary}">
+                {{event?.title}}</small>
+            </ng-container>
+          </ng-template>
+
+
+
+          <div class="calendar-layout col-md-10 offset-md-2">
             <div [ngSwitch]="view">
+
+              <!-- <mwl-demo-utils-calendar-header [(view)]="view" [(viewDate)]="viewDate">
+              </mwl-demo-utils-calendar-header> -->
+
               <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="events"
-                [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)"
-                (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+                [cellTemplate]="customCellTemplate" [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen"
+                (dayClicked)="dayClicked($event.day)" (eventClicked)="handleEvent('Clicked', $event.event)"
+                (eventTimesChanged)="eventTimesChanged($event)">
               </mwl-calendar-month-view>
               <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events"
                 [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"

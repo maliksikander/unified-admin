@@ -13,13 +13,16 @@ import {
   isSameDay,
   isSameMonth,
   addHours,
+  endOfDecade,
 } from 'date-fns';
 import {
   CalendarEvent,
   CalendarEventAction,
   CalendarEventTimesChangedEvent,
+  CalendarDateFormatter,
   CalendarView,
 } from 'angular-calendar';
+import { CustomDateFormatter } from './custom-date-formatter.provider';
 import { Subject } from 'rxjs';
 // import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -27,7 +30,13 @@ import { Subject } from 'rxjs';
   selector: 'app-calendar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.scss']
+  styleUrls: ['./calendar.component.scss'],
+  providers: [
+    {
+      provide: CalendarDateFormatter,
+      useClass: CustomDateFormatter,
+    },
+  ],
 })
 export class CalendarComponent implements OnInit {
 
@@ -40,20 +49,20 @@ export class CalendarComponent implements OnInit {
   formHeading = 'Create New Attribute';
   saveBtnText = 'Save';
 
-  colors: any = {
-    red: {
-      primary: '#ad2121',
-      secondary: '#FAE3E3',
-    },
-    blue: {
-      primary: '#1e90ff',
-      secondary: '#D1E8FF',
-    },
-    yellow: {
-      primary: '#e3bc08',
-      secondary: '#FDF1BA',
-    },
-  };
+  // colors: any = {
+  //   red: {
+  //     primary: '#ad2121',
+  //     secondary: '#FAE3E3',
+  //   },
+  //   blue: {
+  //     primary: '#25AFCB',
+  //     secondary: '#D1E8FF',
+  //   },
+  //   yellow: {
+  //     primary: '#e3bc08',
+  //     secondary: '#FDF1BA',
+  //   },
+  // };
   // static: boolean;
   // @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
 
@@ -88,42 +97,46 @@ export class CalendarComponent implements OnInit {
 
   events: CalendarEvent[] = [
     {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
+      start: subDays(startOfDay(new Date()),0),
+      end: addDays(new Date(), 3),
       title: 'A 3 day event',
-      color: this.colors.red,
-      actions: this.actions,
+      color: { primary: "#25AFCB", secondary: "#25AFCB" },
+      // actions: this.actions,
       allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
+      meta: {
+        eventType: "",
+        shift: {}
+      }
+      // resizable: {
+      //   beforeStart: true,
+      //   afterEnd: true,
+      // },
+      // draggable: true,
     },
     {
       start: startOfDay(new Date()),
       title: 'An event with no end date',
-      color: this.colors.yellow,
-      actions: this.actions,
+      color: { primary: "#b22222", secondary: "#b22222" },
+      // actions: this.actions,
     },
     {
       start: subDays(endOfMonth(new Date()), 3),
       end: addDays(endOfMonth(new Date()), 3),
       title: 'A long event that spans 2 months',
-      color: this.colors.blue,
-      allDay: true,
+      color: { primary: "#485234", secondary: "#485234" },
+      // allDay: true,
     },
     {
       start: addHours(startOfDay(new Date()), 2),
-      end: addHours(new Date(), 2),
+      // end: addHours(new Date(), 2),
       title: 'A draggable and resizable event',
-      color: this.colors.yellow,
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
+      color: { primary: "#a7a7a7", secondary: "#a7a7a7" },
+      // actions: this.actions,
+      // resizable: {
+      //   beforeStart: true,
+      //   afterEnd: true,
+      // },
+      // draggable: false,
     },
   ];
 
@@ -149,6 +162,7 @@ export class CalendarComponent implements OnInit {
       description: [''],
     });
 
+    console.log("date-->", new Date());
 
     // this.licenseForm.valueChanges.subscribe((data) => {
     //   let result = this.commonService.logValidationErrors(this.amqSettingForm, this.formErrors, this.validations);
@@ -168,9 +182,9 @@ export class CalendarComponent implements OnInit {
 
   }
 
-  monthChange(){
+  monthChange() {
     // console.log("vall-->",this.layout.value);
-    
+
   }
 
   dateFormation(val) {

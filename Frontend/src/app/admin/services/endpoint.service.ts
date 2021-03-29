@@ -189,7 +189,7 @@ export class EndpointService {
   }
 
   updateBotSetting(data): Observable<any> {
-    return this.httpClient.put<any>(`${this.BOT_URL}/bot-connectors/${data.botId}`, data, {
+    return this.httpClient.put<any>(`${this.BOT_URL}/bot-connectors/${data.botIvd}`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.token,
