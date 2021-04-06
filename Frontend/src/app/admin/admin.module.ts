@@ -1,14 +1,14 @@
-import {NgModule} from '@angular/core';
-import {RouterModule} from '@angular/router';
-import {adminRoutes} from './admin.routes';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {BrowserModule} from '@angular/platform-browser';
-import {AdminMainComponent} from './admin-main/admin-main.component';
-import {TopBarComponent} from '../top-bar/top-bar.component';
-import {HttpClientModule} from '@angular/common/http';
-import {SnackbarService} from './services/snackbar.service';
-import {SharedModule} from '../shared/shared.module';
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { adminRoutes } from './admin.routes';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { AdminMainComponent } from './admin-main/admin-main.component';
+import { TopBarComponent } from '../top-bar/top-bar.component';
+import { HttpClientModule } from '@angular/common/http';
+import { SnackbarService } from './services/snackbar.service';
+import { SharedModule } from '../shared/shared.module';
 import { DisplayComponent } from './general-settings/display/display.component';
 import { LocaleComponent } from './general-settings/locale/locale.component';
 import { DatabaseComponent } from './general-settings/database/database.component';
@@ -34,7 +34,8 @@ import { ChannelConnectorComponent } from './channel-manager/channel-connector/c
 import { ChannelConnectorSettingsComponent } from './channel-manager/channel-connector/channel-connector-settings/channel-connector-settings.component';
 import { BotListComponent } from './bot/bot-list/bot-list.component';
 import { BotSettingsComponent } from './bot/bot-list/bot-settings/bot-settings.component';
-// import { DemoUtilsModule } from '../demo-utils/module';
+import { ColorSketchModule } from 'ngx-color/sketch';
+import { ColorCircleModule } from 'ngx-color/circle';
 
 @NgModule({
     imports: [
@@ -48,7 +49,9 @@ import { BotSettingsComponent } from './bot/bot-list/bot-settings/bot-settings.c
         CalendarModule.forRoot({
             provide: DateAdapter,
             useFactory: adapterFactory,
-          }),
+        }),
+        ColorSketchModule,
+        ColorCircleModule,
     ],
     declarations: [
         AdminMainComponent,

@@ -6,9 +6,6 @@
   width: 90px;
 }
 
-// .page-content {
-// padding: 10px 0px;
-
 .top-section {
   position: absolute;
   padding: 10px 0px;
@@ -16,11 +13,6 @@
 
   .month-info {
     color: #929292;
-    // width: 25%;
-    // position: absolute;
-    // left: 200px;
-    // padding-top: 4px;
-
     .mat-icon-button {
       width: 30px !important;
       height: 30px !important;
@@ -43,20 +35,16 @@
   width: calc(100% - 1px);
   border-top: 1px solid #e2e2e2;
   height: 100%;
-  // background: red;
   min-height: calc(100vh - 145px);
-  height: 100%;
   position: relative;
   top: 50px;
 
   .side-section {
     color: #7b7b7b;
-    // background: #fdfdfd;
-    background: gray;
+    background: #fdfdfd;
+    overflow: auto;
     position: absolute;
     height: 100%;
-    // max-width: 210px;
-    background: #fdfdfd;
 
     button {
       height: 30px;
@@ -80,7 +68,6 @@
       width: 100%;
       padding: 0 17px;
       font-weight: 600;
-      // background: #a183be;
       .heading {
         mat-icon {
           width: 25px;
@@ -94,7 +81,7 @@
   }
   .calendar-layout {
     padding: 0;
-    // background: green;
+    overflow: auto;
     position: absolute;
     width: 100%;
     height: 100%;
@@ -102,7 +89,6 @@
     min-height: calc(100vh - 146px);
   }
 }
-// }
 
 .text-area {
   textarea {
@@ -111,20 +97,126 @@
   }
 }
 .month-event-title {
-  // color: #fff;
-
-  // background: rgb(72, 82, 52);
   width: calc(100% - 8px);
   border-radius: 3px;
-  margin: .5px 0.3rem;
+  margin: 0.5px 0.3rem;
   padding: 0 5px;
   overflow: hidden;
   text-overflow: clip;
   max-height: 12%;
   min-height: 15px;
-  /* white-space: break-spaces; */
   align-items: center;
-  /* text-align: center; */
   color: white;
-  font-size: 10px;
+  font-size: 11px;
+}
+.event-dialog {
+  padding: 10px 20px !important;
+}
+
+.event-header {
+  .mat-tab-label.mat-tab-label-active {
+    background: #f3f6f8;
+    border-radius: 3px;
+  }
+
+  .mat-card-header {
+    padding: 0 20px !important;
+  }
+
+  .title-section {
+    padding: 0 0 0 24px;
+  }
+
+  .shift-section {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+
+    i {
+      color: #818181;
+      font-size: 17px;
+      padding: 0px 15px 0 0;
+      position: relative;
+      top: 5px;
+      width: 17px;
+      height: 17px;
+    }
+
+    .datepicker-section
+    {
+      position: relative;
+      top: -13px;
+      padding: 0 0 0 4px;
+    }
+
+    .shift-info {
+      position: relative;
+      top: -13px;
+      padding: 0 26px;
+      /* margin-left: -6px; */
+      overflow: auto;
+
+      .remove-btn {
+        padding: 0px !important;
+        margin: 0 !important;
+        min-width: 0 !important;
+        .mat-icon {
+          font-size: 15px;
+          padding: 6px 0px;
+          color: #b1b1b1;
+        }
+      }
+    }
+    .add-shift {
+      position: relative;
+      right: -20px;
+      top: -54px;
+
+      button {
+        border: 1px solid #25afcb;
+        color: #25afcb;
+        height: 1.563rem;
+        width: 2.825rem;
+        box-shadow: none;
+
+        span {
+          font-size: 12px;
+          position: relative;
+          top: -7px;
+        }
+      }
+    }
+  }
+}
+
+.select-calendar-section {
+  // position: relative;
+  width: calc(100% - 20px);
+  margin-left: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  height: 3.125rem;
+  position: relative;
+  top: -2.5rem;
+
+  img {
+    position: relative;
+    top: -2px;
+  }
+}
+
+.color-div {
+  width: 100%;
+  padding: 5px 3px 0px 10px;
+  // height: 100%;
+}
+
+.recurrence-section {
+  img {
+    position: relative;
+    top: -2px;
+    width: 12px;
+    height: 15px
+  }
 }

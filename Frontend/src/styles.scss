@@ -2363,6 +2363,7 @@ snack-bar-container {
   }
 }
 
+///// calendar styles /////
 .calendar-section {
   .col-md-9 {
     max-width: calc(100% - 188px);
@@ -2399,8 +2400,6 @@ snack-bar-container {
   }
 
   .cal-month-view .cal-day-badge {
-    // background-color: #b94a48;
-    // color: #fff;
     display: none;
   }
 
@@ -2444,7 +2443,7 @@ snack-bar-container {
       background-color: transparent;
     }
   }
-  // .cal-day-cell.cal-weekend
+
   .cal-month-view .cal-day-cell.cal-out-month .cal-day-number {
     opacity: 0.7;
   }
@@ -2455,18 +2454,11 @@ snack-bar-container {
 }
 
 .cal-month-view .cal-events {
-  // flex: 1;
-  // align-items: flex-end;
   margin: 3px 0;
-  // line-height: 10px;
-  // -js-display: flex;
-  // display: flex;
-  // flex-wrap: wrap;
   width: 100%;
 }
 
 .cal-month-view .cal-event {
-  // background-color: #66d26f;
   border-color: #d1e8ff;
   color: #fff;
   width: 100%;
@@ -2475,8 +2467,6 @@ snack-bar-container {
 }
 
 .cal-week-view .cal-event {
-  // background-color: #d1e8ff;
-  // border-color: #1e90ff;
   color: #fff;
 }
 
@@ -2485,13 +2475,12 @@ snack-bar-container {
 }
 
 .cal-week-view .cal-time-events .cal-event {
-  // width: calc(100% - 2px);
-  // height: calc(100% - 2px);
-  // margin: 1px;
-  // padding: 0 5px;
-  // line-height: 25px;
   border-radius: 5px;
 }
+.cal-week-view .cal-header.cal-today {
+  background-color: #f3f6f8 !important;
+}
+////////
 
 .password-privacy-icon {
   mat-icon {
@@ -2577,4 +2566,162 @@ snack-bar-container {
 .content-section .side-section button span.mat-button-wrapper {
   position: relative !important;
   top: -2px !important;
+}
+
+.event-header {
+  .mat-tab-header {
+    border: none;
+  }
+
+  .mat-tab-labels {
+    margin: 0 15px;
+  }
+
+  .mat-tab-group.mat-primary .mat-ink-bar,
+  .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background: transparent;
+    // height: 10px;
+  }
+
+  .mat-tab-label {
+    height: 30px;
+    padding: 0 10px;
+    // cursor: pointer;
+    // box-sizing: border-box;
+    // opacity: 0.6;
+    min-width: 0px;
+    // text-align: center;
+    // display: inline-flex;
+    // justify-content: center;
+    // align-items: center;
+    // white-space: nowrap;
+    // position: relative;
+    color: #808080;
+  }
+
+  .mat-form-field-underline {
+    display: none;
+  }
+
+  .mat-form-field.mat-focused {
+    .mat-form-field-underline {
+      display: block;
+      opacity: 0.3;
+    }
+  }
+
+  .mat-form-field-flex {
+    background: transparent;
+  }
+
+  .mat-select-value-text {
+    color: #5b5b5b;
+    font-weight: 400;
+  }
+
+  input {
+    color: #5b5b5b;
+    font-weight: 400;
+  }
+
+  .end-date-section {
+    mat-form-field {
+      max-width: calc(100% - 340px);
+      padding-left: 4px;
+    }
+
+    .mat-form-field.mat-focused .mat-form-field-underline {
+      display: none;
+    }
+
+    .mat-form-field-appearance-fill .mat-select-arrow-wrapper {
+      transform: translate(20%, 10%);
+    }
+  }
+
+  .recurrence-section {
+    mat-form-field {
+      max-width: calc(100% - 150px);
+      padding-left: 4px;
+    }
+
+    .mat-form-field.mat-focused .mat-form-field-underline {
+      display: none;
+    }
+
+    .mat-form-field-appearance-fill .mat-select-arrow-wrapper {
+      transform: translateY(3%);
+    }
+  }
+
+  .select-calendar-section {
+    .mat-form-field.mat-focused .mat-form-field-underline {
+      display: none;
+    }
+
+    .mat-form-field-appearance-fill .mat-select-arrow-wrapper {
+      transform: translateY(3%);
+    }
+
+    mat-form-field {
+      max-width: calc(100% - 300px);
+    }
+  }
+
+  .datepicker-section {
+    // .mat-form-field.mat-focused .mat-form-field-underline {
+    //   display: none;
+    // }
+
+    // .mat-form-field-appearance-fill .mat-select-arrow-wrapper {
+    //   transform: translateY(3%);
+    // }
+
+    mat-form-field {
+      max-width: calc(100% - 120px);
+      // background: aliceblue;
+      // min-height: 0;
+      // position: relative;
+      // top: -20px;
+      padding: 0 5px;
+      height: 1.875rem;
+    }
+
+    .mat-form-field-flex {
+      padding-left: 0;
+    }
+
+    input {
+      // padding-left: 2px;
+    }
+    
+  }
+
+
+
+  .select-color-div {
+    mat-form-field {
+      max-width: 0;
+    }
+  }
+
+  .color-select {
+    width: 16px;
+    border-radius: 50%;
+    height: 16px;
+
+    .mat-select-trigger {
+      margin-left: 1.635rem;
+    }
+  }
+
+}
+.circle-picker {
+  margin: 0 !important;
+  width: 80%;
+}
+
+.mat-calendar-body-selected {
+  background-color: #25afcb;
+  // color: white;
 }

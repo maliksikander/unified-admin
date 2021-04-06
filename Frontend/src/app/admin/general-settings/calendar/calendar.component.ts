@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material';
+import { MatDialog, ThemePalette, MatMenuTrigger } from '@angular/material';
 import { CommonService } from '../../services/common.service';
 import { EndpointService } from '../../services/endpoint.service';
 import { SnackbarService } from '../../services/snackbar.service';
@@ -24,7 +24,7 @@ import {
 } from 'angular-calendar';
 import { CustomDateFormatter } from './custom-date-formatter.provider';
 import { Subject } from 'rxjs';
-// import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-calendar',
@@ -37,18 +37,25 @@ import { Subject } from 'rxjs';
       useClass: CustomDateFormatter,
     },
   ],
+  encapsulation: ViewEncapsulation.None
 })
 export class CalendarComponent implements OnInit {
 
+  underLineColor: ThemePalette = 'accent';
+  defColor = '#25afcb';
+  color = ['#CB2572', '#CB2525', '#7E25CB', '#3225CB', '#25CBC5', '#25AFCB', '#25CB85', '#5ECB25', '#C5CB25', '#FDC251', '#FF8307', '#FF2700'];
+  defaultEndCriteria = "never";
   spinner = false;
   layoutOptions = ["day", "week", "month",];
   layout = new FormControl("month");
   monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   currentDay;
   calendarForm: FormGroup;
+  eventForm: FormGroup;
   formHeading = 'Create New Attribute';
   saveBtnText = 'Save';
-
+  @ViewChild('colorMenuTrigger') colorMenuTrigger: MatMenuTrigger;
+  recurrenceOptions = ['daily']
   // colors: any = {
   //   red: {
   //     primary: '#ad2121',
@@ -71,6 +78,18 @@ export class CalendarComponent implements OnInit {
   CalendarView = CalendarView;
 
   viewDate: Date = new Date();
+  calendarList = [
+    {
+      id: "1",
+      name: "Calendar 1",
+      description: "description"
+    },
+    {
+      id: "2",
+      name: "Calendar 2",
+      description: "description"
+    }
+  ];
 
   // modalData: {
   //   action: string;
@@ -97,7 +116,7 @@ export class CalendarComponent implements OnInit {
 
   events: CalendarEvent[] = [
     {
-      start: subDays(startOfDay(new Date()),0),
+      start: subDays(new Date(), 0),
       end: addDays(new Date(), 3),
       title: 'A 3 day event',
       color: { primary: "#25AFCB", secondary: "#25AFCB" },
@@ -120,12 +139,18 @@ export class CalendarComponent implements OnInit {
       // actions: this.actions,
     },
     {
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
+      start: new Date,
+      title: 'An extra',
       color: { primary: "#485234", secondary: "#485234" },
-      // allDay: true,
+      // actions: this.actions,
     },
+    // {
+    //   start: subDays(endOfMonth(new Date()), 3),
+    //   end: addDays(endOfMonth(new Date()), 3),
+    //   title: 'A long event that spans 2 months',
+    //   color: { primary: "#485234", secondary: "#485234" },
+    //   // allDay: true,
+    // },
     {
       start: addHours(startOfDay(new Date()), 2),
       // end: addHours(new Date(), 2),
@@ -149,7 +174,6 @@ export class CalendarComponent implements OnInit {
     private endPointService: EndpointService,
     private dialog: MatDialog,
     private changeDetector: ChangeDetectorRef,
-    // private modal: NgbModal
   ) { }
 
   ngOnInit() {
@@ -162,7 +186,19 @@ export class CalendarComponent implements OnInit {
       description: [''],
     });
 
-    console.log("date-->", new Date());
+    this.eventForm = this.fb.group({
+      title: ['Title'],
+      datePicker: [''],
+      shift: ['Shift'],
+      calendars: [''],
+      color: [''],
+      endDateCriteria: ['never'],
+      recurrenceCriteria: ['never']
+    });
+
+    this.eventForm.controls['datePicker'].setValue(new Date());
+
+    // console.log("date-->", new Date());
 
     // this.licenseForm.valueChanges.subscribe((data) => {
     //   let result = this.commonService.logValidationErrors(this.amqSettingForm, this.formErrors, this.validations);
@@ -202,7 +238,7 @@ export class CalendarComponent implements OnInit {
     return result;
   }
 
-  openModal(templateRef) {
+  openCalendarModal(templateRef) {
     this.calendarForm.reset();
     this.formHeading = 'Create New Calendar';
     this.saveBtnText = 'Save'
@@ -215,6 +251,21 @@ export class CalendarComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
     });
   }
+
+  openEventModal(templateRef) {
+    // this.eventForm.reset();
+    this.formHeading = 'Create Event';
+    this.saveBtnText = 'Save'
+    let dialogRef = this.dialog.open(templateRef, {
+      width: '550px',
+      height: '400px',
+      panelClass: 'add-attribute',
+      disableClose: true,
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    });
+  }
+
   onClose() {
     this.dialog.closeAll();
     // this.searchTerm = "";
@@ -223,18 +274,18 @@ export class CalendarComponent implements OnInit {
   onSave() { }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-    // console.log("events-->",events);
-    if (isSameMonth(date, this.viewDate)) {
-      if (
-        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
-        events.length === 0
-      ) {
-        this.activeDayIsOpen = false;
-      } else {
-        this.activeDayIsOpen = true;
-      }
-      this.viewDate = date;
-    }
+    console.log("day click");
+    // if (isSameMonth(date, this.viewDate)) {
+    //   if (
+    //     (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
+    //     events.length === 0
+    //   ) {
+    //     this.activeDayIsOpen = false;
+    //   } else {
+    //     this.activeDayIsOpen = true;
+    //   }
+    //   this.viewDate = date;
+    // }
   }
 
   eventTimesChanged({
@@ -258,6 +309,7 @@ export class CalendarComponent implements OnInit {
   handleEvent(action: string, event: CalendarEvent): void {
     // this.modalData = { event, action };
     // this.modal.open(this.modalContent, { size: 'lg' });
+    console.log("event", event);
   }
 
   addEvent(): void {
@@ -291,6 +343,17 @@ export class CalendarComponent implements OnInit {
     this.activeDayIsOpen = false;
   }
 
+  onEventSave() {
+
+  }
+
+  onTimeChange(e) { }
+
+  selectedColor = "#25abcf";
+  onColorChange(e) {
+    // console.log("color event-->", e);
+    this.selectedColor = e.color.hex;
+  }
 }
 
 
