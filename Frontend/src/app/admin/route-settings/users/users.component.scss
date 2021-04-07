@@ -355,7 +355,7 @@ input::-webkit-inner-spin-button {
         .list-action-area {
           span {
             display: inline-block;
-            transition: all.3s;
+            transition: all 0.3s;
           }
         }
       }
@@ -403,7 +403,7 @@ input::-webkit-inner-spin-button {
     }
     .list-actions {
       display: none;
-      transition: all.3s;
+      transition: all 0.3s;
       position: absolute;
       right: 25px;
       top: 30%;

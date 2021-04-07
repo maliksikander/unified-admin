@@ -106,7 +106,7 @@
         .table-trigger {
           span {
             display: inline-block;
-            transition: all.3s;
+            transition: all 0.3s;
           }
         }
       }
@@ -184,7 +184,7 @@
       }
       .list-trigger-area {
         display: none;
-        transition: all.3s;
+        transition: all 0.3s;
         z-index: 2;
 
         b {
@@ -218,7 +218,7 @@
       }
       .list-trigger-area {
         display: none;
-        transition: all.3s;
+        transition: all 0.3s;
         position: absolute;
         right: 100px;
         z-index: 2;
@@ -234,7 +234,7 @@
 
       .step-trigger-area {
         display: none;
-        transition: all.3s;
+        transition: all 0.3s;
         position: absolute;
         right: 100px;
         z-index: 2;
@@ -294,7 +294,7 @@ input::-webkit-inner-spin-button {
           .step-table-trigger {
             span {
               display: inline-block;
-              transition: all.3s;
+              transition: all 0.3s;
             }
           }
         }

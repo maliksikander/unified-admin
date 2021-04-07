@@ -70,7 +70,7 @@ input[type="number"] {
               .list-action-area {
                 span {
                   display: inline-block;
-                  transition: all.3s;
+                  transition: all 0.3s;
                 }
               }
             }
@@ -124,7 +124,7 @@ input[type="number"] {
           }
           .list-actions {
             display: none;
-            transition: all.3s;
+            transition: all 0.3s;
             position: absolute;
             right: 5px;
             top: 27%;
