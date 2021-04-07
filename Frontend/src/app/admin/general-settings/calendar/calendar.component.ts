@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialog, ThemePalette, MatMenuTrigger } from '@angular/material';
+import { ThemePalette } from '@angular/material/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatMenuTrigger } from '@angular/material/menu';
 import { CommonService } from '../../services/common.service';
 import { EndpointService } from '../../services/endpoint.service';
 import { SnackbarService } from '../../services/snackbar.service';

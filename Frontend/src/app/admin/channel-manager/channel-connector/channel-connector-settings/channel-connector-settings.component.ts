@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { CommonService } from 'src/app/admin/services/common.service';
 import { EndpointService } from 'src/app/admin/services/endpoint.service';
 import { SnackbarService } from 'src/app/admin/services/snackbar.service';

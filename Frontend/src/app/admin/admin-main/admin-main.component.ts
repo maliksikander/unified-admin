@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
-import { MatSidenav } from '@angular/material';
+import { MatSidenav } from '@angular/material/sidenav';
 import { CommonService } from '../services/common.service';
 import { Router } from '@angular/router';
 import { ConfigService } from '../services/config.service';

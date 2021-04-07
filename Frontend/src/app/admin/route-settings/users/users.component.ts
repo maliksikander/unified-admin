@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog, MatMenuTrigger } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatMenuTrigger } from '@angular/material/menu';
 import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 import { CommonService } from '../../services/common.service';
 import { EndpointService } from '../../services/endpoint.service';

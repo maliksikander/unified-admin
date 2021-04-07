@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 
 @Component({
   selector: 'app-confirm-dialog',
