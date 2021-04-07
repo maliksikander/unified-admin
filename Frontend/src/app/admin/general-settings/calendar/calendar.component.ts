@@ -56,7 +56,7 @@ export class CalendarComponent implements OnInit {
   endDateForm: FormGroup;
   formHeading = 'Create New Attribute';
   saveBtnText = 'Save';
-  @ViewChild('colorMenuTrigger') colorMenuTrigger: MatMenuTrigger;
+  @ViewChild('colorMenuTrigger', { static: false }) colorMenuTrigger: MatMenuTrigger;
   recurrenceOptions = ['does not repeat', 'daily', 'custom']
   // colors: any = {
   //   red: {

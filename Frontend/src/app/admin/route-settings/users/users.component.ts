@@ -47,7 +47,7 @@ export class UsersComponent implements OnInit {
   dataSource = [];
   columnsToDisplay = ['name', 'weight', 'symbol', 'position'];
   expandedElement: 'collapsed';
-  @ViewChild('attributeMenuTrigger') attributeMenuTrigger: MatMenuTrigger;
+  @ViewChild('attributeMenuTrigger', { static: false }) attributeMenuTrigger: MatMenuTrigger;
   attrName = '';
   attrValue = '';
   attrType: any;

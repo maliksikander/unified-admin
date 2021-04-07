@@ -13,7 +13,7 @@ import { EndpointService } from '../services/endpoint.service';
 
 export class AdminMainComponent implements OnInit {
 
-  @ViewChild('sidenav') sidenav: MatSidenav;
+  @ViewChild('sidenav', { static: true }) sidenav: MatSidenav;
   @Input() themeChange: string;
   elem;
   events: string[] = [];
