@@ -52,10 +52,12 @@ export class CalendarComponent implements OnInit {
   currentDay;
   calendarForm: FormGroup;
   eventForm: FormGroup;
+  recurrenceForm: FormGroup;
+  endDateForm: FormGroup;
   formHeading = 'Create New Attribute';
   saveBtnText = 'Save';
   @ViewChild('colorMenuTrigger') colorMenuTrigger: MatMenuTrigger;
-  recurrenceOptions = ['daily']
+  recurrenceOptions = ['does not repeat', 'daily', 'custom']
   // colors: any = {
   //   red: {
   //     primary: '#ad2121',
@@ -167,6 +169,13 @@ export class CalendarComponent implements OnInit {
 
   activeDayIsOpen: boolean = true;
   refresh: Subject<any> = new Subject();
+  monday = false;
+  tuesday = false;
+  wednesday = false;
+  thursday = false;
+  friday = false;
+  saturday = false;
+  sunday = false;
 
   constructor(private snackbar: SnackbarService,
     private fb: FormBuilder,
@@ -193,24 +202,38 @@ export class CalendarComponent implements OnInit {
       calendars: [''],
       color: [''],
       endDateCriteria: ['never'],
-      recurrenceCriteria: ['never']
+      recurrenceCriteria: ['does not repeat'],
+      timeMessage: [''],
+    });
+    this.recurrenceForm = this.fb.group({
+      viewType: ['day'],
+    });
+    this.endDateForm = this.fb.group({
+      endDate: [''],
     });
 
     this.eventForm.controls['datePicker'].setValue(new Date());
+    this.endDateForm.controls['endDate'].setValue(new Date());
 
-    // console.log("date-->", new Date());
 
-    // this.licenseForm.valueChanges.subscribe((data) => {
-    //   let result = this.commonService.logValidationErrors(this.amqSettingForm, this.formErrors, this.validations);
-    //   this.formErrors = result[0];
-    //   this.validations = result[1];
-    // });
+
+    let d = new Date();
+    this.setCurrentDay(d.getDay());
+    // console.log("date-->", d.getDay());
+
+    this.recurrenceForm.valueChanges.subscribe((data) => {
+      // let result = this.commonService.logValidationErrors(this.amqSettingForm, this.formErrors, this.validations);
+      // this.formErrors = result[0];
+      // this.validations = result[1];
+      console.log("change");
+    });
 
     this.commonService._spinnerSubject.subscribe((res: any) => {
       this.spinner = res;
       this.changeDetector.markForCheck();
     });
 
+    this.recurrenceListFormation();
   }
 
   layoutChange(e) {
@@ -258,7 +281,35 @@ export class CalendarComponent implements OnInit {
     this.saveBtnText = 'Save'
     let dialogRef = this.dialog.open(templateRef, {
       width: '550px',
-      height: '400px',
+      // height: '400px',
+      panelClass: 'add-attribute',
+      disableClose: true,
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    });
+  }
+
+  openRecurrenceModal(templateRef) {
+
+    // this.formHeading = 'Create Event';
+    // this.saveBtnText = 'Save'
+    let dialogRef = this.dialog.open(templateRef, {
+      width: '450px',
+      // height: '350px',
+      panelClass: 'add-attribute',
+      disableClose: true,
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    });
+  }
+
+  openEndDateModal(templateRef) {
+
+    // this.formHeading = 'Create Event';
+    // this.saveBtnText = 'Save'
+    let dialogRef = this.dialog.open(templateRef, {
+      width: '450px',
+      // height: '350px',
       panelClass: 'add-attribute',
       disableClose: true,
     });
@@ -272,9 +323,9 @@ export class CalendarComponent implements OnInit {
   }
 
   onSave() { }
-
-  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-    console.log("day click");
+  // dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+  dayClicked(event) {
+    console.log("day click",event);
     // if (isSameMonth(date, this.viewDate)) {
     //   if (
     //     (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
@@ -306,8 +357,9 @@ export class CalendarComponent implements OnInit {
     this.handleEvent('Dropped or resized', event);
   }
 
-  handleEvent(action: string, event: CalendarEvent): void {
+  handleEvent(action: string, event): void {
     // this.modalData = { event, action };
+    // event.stopPropagation();
     // this.modal.open(this.modalContent, { size: 'lg' });
     console.log("event", event);
   }
@@ -354,15 +406,38 @@ export class CalendarComponent implements OnInit {
     // console.log("color event-->", e);
     this.selectedColor = e.color.hex;
   }
+
+  recurrenceListFormation() {
+
+    // console.log("test-->", new Date.getDate())
+  }
+
+
+
+  daySelection(val) {
+
+    if (val == 'mon') this.monday = !this.monday;
+    else if (val == 'tue') this.tuesday = !this.tuesday;
+    else if (val == 'wed') this.wednesday = !this.wednesday;
+    else if (val == 'thur') this.thursday = !this.thursday;
+    else if (val == 'fri') this.friday = !this.friday;
+    else if (val == 'sat') this.saturday = !this.saturday;
+    else if (val == 'sun') this.sunday = !this.sunday;
+
+    if (this.monday == false && this.tuesday == false && this.wednesday == false && this.thursday == false && this.friday == false && this.saturday == false && this.sunday == false) {
+      let d = new Date();
+      this.setCurrentDay(d.getDay());
+    }
+  }
+
+  setCurrentDay(val) {
+    if (val == 1) this.monday = !this.monday;
+    else if (val == 2) this.tuesday = !this.tuesday;
+    else if (val == 3) this.wednesday = !this.wednesday;
+    else if (val == 4) this.thursday = !this.thursday;
+    else if (val == 5) this.friday = !this.friday;
+    else if (val == 6) this.saturday = !this.saturday;
+    else if (val == 7) this.sunday = !this.sunday;
+  }
+
 }
-
-
-
-
-
-
-
-
-
-
-

@@ -40,13 +40,14 @@
             <div class="my-calendar-section">
               <div class="heading">
                 All Calendars
-                <mat-icon (click)="openCalendarModal(newCalendar)">add</mat-icon>
+                <!-- <mat-icon (click)="openCalendarModal(newCalendar)">add</mat-icon> -->
+                <mat-icon (click)="openEndDateModal(endDateReference)">add</mat-icon>
               </div>
             </div>
           </div>
 
           <ng-template #customCellTemplate let-day="day" let-locale="locale">
-            <div class="cal-cell-top">
+            <div (click)="dayClicked(day)" class="cal-cell-top">
               <!-- <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span> -->
               <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
             </div>
@@ -65,7 +66,7 @@
 
               <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="events"
                 [cellTemplate]="customCellTemplate" [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen"
-                (dayClicked)="dayClicked($event.day)" (eventTimesChanged)="eventTimesChanged($event)">
+                (eventTimesChanged)="eventTimesChanged($event)">
               </mwl-calendar-month-view>
               <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events"
                 [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
@@ -182,7 +183,6 @@
                   </mat-form-field>
                 </div>
 
-
                 <div class="end-date-section">
                   <img src="/assets/images/check_outline.svg" alt="done">
                   <mat-form-field appearance="fill">
@@ -194,22 +194,134 @@
                 </div>
               </div>
 
-
-
             </mat-tab>
 
             <mat-tab label="Out of Office">
 
-              <mat-form-field [color]="underLineColor">
-                <input matInput formControlName="title">
-              </mat-form-field>
+              <div class="col-md-12">
+
+                <div class="title-section">
+                  <mat-form-field [color]="underLineColor">
+                    <input matInput formControlName="title">
+                  </mat-form-field>
+                </div>
+
+                <div class="time-section">
+                  <i class="material-icons">access_time</i>
+
+                  <!-- <div class="datepicker-section">
+                    <mat-form-field [color]="underLineColor">
+                      <input formControlName="datePicker" matInput [matDatepicker]="picker" (click)="picker.open()">
+                      <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                  </div> -->
+
+                  <div class="form-group">
+                    <mat-label>Message</mat-label>
+                    <mat-form-field [color]="underLineColor" appearance="fill">
+                      <input matInput formControlName="timeMessage" placeholder="Enter Message">
+                    </mat-form-field>
+                  </div>
+
+                  <!-- <div class="add-shift col-md-2 offset-md-9">
+                    <button mat-raised-button class="shift-btn">Add Shift</button>
+                  </div> -->
+                </div>
+
+                <div class="recurrence-section">
+                  <img src="/assets/images/reload.svg" alt="done">
+                  <mat-form-field appearance="fill">
+                    <mat-select formControlName="recurrenceCriteria">
+                      <mat-option *ngFor="let option of recurrenceOptions" [value]="option">
+                        {{option | titlecase}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+
+                <div class="end-date-section">
+                  <img src="/assets/images/check_outline.svg" alt="done">
+                  <!-- <mat-form-field appearance="fill"> -->
+                  <!-- <mat-label>Enter a date range</mat-label> -->
+                  <!-- <mat-date-range-input [formGroup]="range" [rangePicker]="picker"> -->
+                  <!-- <input matStartDate formControlName="start" placeholder="Start date"> -->
+                  <!-- <input matEndDate formControlName="end" placeholder="End date"> -->
+                  <!-- </mat-date-range-input> -->
+                  <!-- <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle> -->
+                  <!-- <mat-date-range-picker #picker></mat-date-range-picker> -->
+
+                  <!-- <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error> -->
+                  <!-- <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error> -->
+                  <!-- </mat-form-field> -->
+                </div>
+              </div>
 
             </mat-tab>
             <mat-tab label="Holiday">
 
-              <mat-form-field>
-                <input matInput formControlName="title">
-              </mat-form-field>
+              <div class="col-md-12">
+
+                <div class="title-section">
+                  <mat-form-field [color]="underLineColor">
+                    <input matInput formControlName="title">
+                  </mat-form-field>
+                </div>
+
+                <div class="message-section">
+                  <div class="form-group">
+                    <mat-label>Message</mat-label>
+                    <mat-form-field [color]="underLineColor" appearance="fill">
+                      <input matInput formControlName="timeMessage" placeholder="Enter Message">
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="time-section">
+                  <i class="material-icons">access_time</i>
+
+                  <!-- <div class="datepicker-section">
+                    <mat-form-field [color]="underLineColor">
+                      <input formControlName="datePicker" matInput [matDatepicker]="picker" (click)="picker.open()">
+                      <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                  </div> -->
+
+                  <!-- <div class="form-group">
+                    <mat-label>Message</mat-label>
+                    <mat-form-field [color]="underLineColor" appearance="fill">
+                      <input matInput formControlName="timeMessage" placeholder="Enter Message">
+                    </mat-form-field>
+                  </div> -->
+
+                  <!-- <div class="add-shift col-md-2 offset-md-9">
+                    <button mat-raised-button class="shift-btn">Add Shift</button>
+                  </div> -->
+                </div>
+
+                <!-- <div class="recurrence-section">
+                  <img src="/assets/images/reload.svg" alt="done">
+                  <mat-form-field appearance="fill">
+                    <mat-select formControlName="recurrenceCriteria">
+                      <mat-option *ngFor="let option of recurrenceOptions" [value]="option">
+                        {{option | titlecase}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div> -->
+
+                <!-- <div class="end-date-section"> -->
+                <!-- <img src="/assets/images/check_outline.svg" alt="done"> -->
+                <!-- <mat-form-field appearance="fill"> -->
+                <!-- <mat-label>Enter a date range</mat-label> -->
+                <!-- <mat-date-range-input [formGroup]="range" [rangePicker]="picker"> -->
+                <!-- <input matStartDate formControlName="start" placeholder="Start date"> -->
+                <!-- <input matEndDate formControlName="end" placeholder="End date"> -->
+                <!-- </mat-date-range-input> -->
+                <!-- <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle> -->
+                <!-- <mat-date-range-picker #picker></mat-date-range-picker> -->
+
+                <!-- <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error> -->
+                <!-- <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error> -->
+                <!-- </mat-form-field> -->
+                <!-- </div> -->
+              </div>
 
             </mat-tab>
           </mat-tab-group>
@@ -259,3 +371,92 @@
       </color-sketch> -->
     <!-- </div> -->
   </mat-menu>
+
+
+  <ng-template #customRecurrence>
+    <div class="dialog-container">
+      <div class="mat-card-header">
+        <!-- <mat-icon (click)="onClose()">close</mat-icon> -->
+        <h4 class="content-span full-width">Custom Recurrence</h4>
+      </div>
+      <div class="dialog-content recurrence-form">
+        <form class="form-horizontal form-bordered" [formGroup]="recurrenceForm">
+
+          <div class="repeat-type-section form-group">
+            <img src="/assets/images/reload.svg" alt="reload">
+            <mat-label>Repeat every</mat-label>
+            <mat-form-field appearance="fill" [color]="underLineColor">
+              <mat-select formControlName="viewType">
+                <mat-option value="day">Day</mat-option>
+                <mat-option value="week">Week</mat-option>
+                <mat-option value="month">Month</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+
+          <div *ngIf="this.recurrenceForm.value.viewType =='week'" class="repeat-day form-group">
+            <mat-label>Repeat On</mat-label>
+            <div class="day-selection">
+              <div [ngClass]="{'selected-day': monday == true}" (click)="daySelection('mon')">M</div>
+              <div [ngClass]="{'selected-day': tuesday == true}" (click)="daySelection('tue')">T</div>
+              <div [ngClass]="{'selected-day': wednesday == true}" (click)="daySelection('wed')">W</div>
+              <div [ngClass]="{'selected-day': thursday == true}" (click)="daySelection('thur')">T</div>
+              <div [ngClass]="{'selected-day': friday == true}" (click)="daySelection('fri')">F</div>
+              <div [ngClass]="{'selected-day': saturday == true}" (click)="daySelection('sat')">S</div>
+              <div [ngClass]="{'selected-day': sunday == true}" (click)="daySelection('sun')">S</div>
+            </div>
+          </div>
+
+          <div *ngIf="this.recurrenceForm.value.viewType =='month'" class="note-section form-group">
+            <small>Note: This event will repeat</small>
+          </div>
+
+          <div class="template-action row">
+            <div class="col-md-12">
+              <div class="form-action-area">
+                <button mat-raised-button (click)="onClose()" class="gray-btn">Cancel</button>
+                <button mat-raised-button [disabled]="!recurrenceForm.valid" [mat-dialog-close]="true"
+                  class="dark-blue-btn service-trigger">Done</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-template>
+
+
+  <ng-template #endDateReference>
+    <div class="dialog-container">
+      <div class="mat-card-header">
+        <mat-icon (click)="onClose()">close</mat-icon>
+        <h4 class="content-span full-width">Custom Validation</h4>
+      </div>
+      <div class="dialog-content">
+        <form class="form-horizontal form-bordered" [formGroup]="endDateForm">
+
+          <div class="custom-validation-section">
+            <mat-label>Ends On</mat-label>
+            <mat-form-field [color]="underLineColor">
+              <!-- <mat-label>Choose a date</mat-label> -->
+              <input formControlName="endDate" matInput [matDatepicker]="picker" (click)="picker.open()">
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+
+
+          <div class="template-action row">
+            <div class="col-md-12">
+              <div class="form-action-area">
+                <button mat-raised-button (click)="onClose()" class="gray-btn">Cancel</button>
+                <button mat-raised-button [disabled]="!endDateForm.valid" [mat-dialog-close]="true"
+                  class="dark-blue-btn service-trigger">Done</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-template>

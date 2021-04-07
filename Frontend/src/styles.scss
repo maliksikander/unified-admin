@@ -294,7 +294,7 @@ button:focus {
   }
 
   .mat-select-value-text {
-    color: #8b8b8b !important;
+    color: #8b8b8b;
   }
   .mat-select-arrow {
     width: 0;
@@ -2625,6 +2625,8 @@ snack-bar-container {
   }
 
   .end-date-section {
+    position: relative;
+    top: -15px;
     mat-form-field {
       max-width: calc(100% - 340px);
       padding-left: 4px;
@@ -2643,6 +2645,7 @@ snack-bar-container {
     mat-form-field {
       max-width: calc(100% - 150px);
       padding-left: 4px;
+      height: 0;
     }
 
     .mat-form-field.mat-focused .mat-form-field-underline {
@@ -2691,13 +2694,88 @@ snack-bar-container {
       padding-left: 0;
     }
 
-    input {
-      // padding-left: 2px;
-    }
-    
+    // input {
+    // padding-left: 2px;
+    // }
   }
 
+  .time-section {
+    .mat-form-field.mat-focused {
+      .mat-form-field-underline {
+        display: block;
+        opacity: 0.3;
+        color: #25afcb;
+      }
+    }
 
+    mat-form-field {
+      height: 0;
+      padding: 0 10px;
+      position: relative;
+      top: -10px;
+    }
+
+    .mat-form-field-flex {
+      padding: 0;
+    }
+
+    .form-group {
+      // background: aqua;
+      width: 100%;
+      /* margin: 0 4px; */
+      padding: 0 15px;
+      /* top: -10px; */
+      position: relative;
+
+      mat-label {
+        color: #848484;
+        font-size: 10px;
+        font-weight: 600;
+        padding: 0 10px;
+        // position: relative;
+        // top: 0;
+      }
+    }
+  }
+
+  .message-section {
+    .mat-form-field.mat-focused {
+      .mat-form-field-underline {
+        display: block;
+        opacity: 0.3;
+        color: #25afcb;
+      }
+    }
+
+    mat-form-field {
+      height: 0;
+      padding: 0 10px;
+      position: relative;
+      top: -10px;
+    }
+
+    .mat-form-field-flex {
+      padding: 0;
+    }
+
+    .form-group {
+      // background: aqua;
+      width: 100%;
+      /* margin: 0 4px; */
+      padding: 0 15px;
+      /* top: -10px; */
+      position: relative;
+
+      mat-label {
+        color: #848484;
+        font-size: 10px;
+        font-weight: 600;
+        padding: 0 10px;
+        // position: relative;
+        // top: 0;
+      }
+    }
+  }
 
   .select-color-div {
     mat-form-field {
@@ -2714,8 +2792,8 @@ snack-bar-container {
       margin-left: 1.635rem;
     }
   }
-
 }
+
 .circle-picker {
   margin: 0 !important;
   width: 80%;
@@ -2724,4 +2802,103 @@ snack-bar-container {
 .mat-calendar-body-selected {
   background-color: #25afcb;
   // color: white;
+}
+
+.recurrence-form {
+  padding: 5px 15px !important;
+
+  .mat-form-field-underline {
+    display: none;
+  }
+
+  .mat-form-field.mat-focused .mat-form-field-underline {
+    display: none;
+  }
+
+  .mat-form-field-appearance-fill .mat-select-arrow-wrapper {
+    transform: translateY(-105%);
+  }
+
+  .form-group {
+    .mat-select-arrow {
+      // width: 0;
+      // border-left: 5px solid transparent;
+      // border-right: 5px solid transparent;
+      // border-top: 5px solid;
+      // margin: 0 auto;
+      // position: relative;
+      // top: 18px;
+      color: #838383;
+    }
+    mat-label {
+      color: #818181;
+      font-size: 13px;
+      font-weight: 400;
+      padding: 0 5px 0 10px;
+    }
+  }
+
+  .repeat-type-section {
+    mat-form-field {
+      max-width: calc(100% - 340px);
+      // background: aliceblue;
+      // min-height: 0;
+      // position: relative;
+      // top: -20px;
+      // padding: 0 5px;
+      // height: 1.875rem;
+    }
+  }
+
+  .mat-form-field.mat-focused {
+    .mat-form-field-underline {
+      display: block;
+      opacity: 0.3;
+      color: #25afcb;
+    }
+  }
+
+  .mat-form-field-flex {
+    background: transparent;
+  }
+}
+
+.mat-select-value-text {
+  color: #5b5b5b !important;
+  // font-weight: 400;
+  // font-size: 13px !important;
+
+  span {
+    font-weight: 400;
+    font-size: 13px !important;
+  }
+}
+
+.custom-validation-section {
+  mat-label {
+    font-size: 13px;
+    color: #898989;
+    margin-right: 25px;
+  }
+
+  mat-form-field {
+    max-width: calc(100% - 300px);
+    padding: 0 5px;
+  }
+
+  // .mat-form-field.mat-focused {
+  .mat-form-field-underline {
+    display: none;
+    // opacity: 0.3;
+    // color: #25afcb;
+  }
+  // }
+
+  .mat-form-field.mat-focused {
+    .mat-form-field-underline {
+      display: block;
+      opacity: 0.3;
+      color: #25afcb;
+    }
+  }
 }
