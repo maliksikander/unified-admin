@@ -40,7 +40,7 @@ import { ColorCircleModule } from 'ngx-color/circle';
 @NgModule({
     imports: [
         SharedModule,
-        RouterModule.forRoot(adminRoutes),
+        RouterModule.forRoot(adminRoutes, { relativeLinkResolution: 'legacy' }),
         BrowserAnimationsModule,
         FormsModule,
         ReactiveFormsModule,

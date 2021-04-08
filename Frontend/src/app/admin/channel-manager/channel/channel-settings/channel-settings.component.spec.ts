@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ChannelTypeSettingsComponent } from './channel-type-settings.component';
 
@@ -6,7 +6,7 @@ describe('ChannelTypeSettingsComponent', () => {
   let component: ChannelTypeSettingsComponent;
   let fixture: ComponentFixture<ChannelTypeSettingsComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ChannelTypeSettingsComponent ]
     })

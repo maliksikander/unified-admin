@@ -21,7 +21,7 @@ import { ConfigService } from './admin/services/config.service';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot(loginRoute),
+    RouterModule.forRoot(loginRoute, { relativeLinkResolution: 'legacy' }),
     SharedModule,
     AdminModule,
     HttpClientModule,

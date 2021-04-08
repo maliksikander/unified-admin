@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { PrecisionQueueComponent } from './precision-queue.component';
 
@@ -6,7 +6,7 @@ describe('PrecisionQueueComponent', () => {
   let component: PrecisionQueueComponent;
   let fixture: ComponentFixture<PrecisionQueueComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ PrecisionQueueComponent ]
     })
