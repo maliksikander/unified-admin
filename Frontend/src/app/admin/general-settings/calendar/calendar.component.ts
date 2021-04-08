@@ -56,6 +56,7 @@ export class CalendarComponent implements OnInit {
   eventForm: FormGroup;
   recurrenceForm: FormGroup;
   endDateForm: FormGroup;
+  // dateRange: FormGroup;
   formHeading = 'Create New Attribute';
   saveBtnText = 'Save';
   @ViewChild('colorMenuTrigger') colorMenuTrigger: MatMenuTrigger;
@@ -206,6 +207,11 @@ export class CalendarComponent implements OnInit {
       endDateCriteria: ['never'],
       recurrenceCriteria: ['does not repeat'],
       timeMessage: [''],
+      // dateRange: this.fb.group({
+      //   dateRangeStart: [''],
+      //   dateRangeEnd: [''],
+      // }),
+
     });
     this.recurrenceForm = this.fb.group({
       viewType: ['day'],
@@ -327,7 +333,7 @@ export class CalendarComponent implements OnInit {
   onSave() { }
   // dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
   dayClicked(event) {
-    console.log("day click",event);
+    console.log("day click", event);
     // if (isSameMonth(date, this.viewDate)) {
     //   if (
     //     (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
