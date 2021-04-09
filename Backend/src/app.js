@@ -20,6 +20,18 @@ const app = express();
 // const keycloak_init = require('./config/keycloak.config').initKeycloak();
 // const keycloak = require('./config/keycloak.config').getKeycloak();
 // app.use(keycloak_init.middleware());
+var session = require('express-session');
+var memoryStore = new session.MemoryStore();
+
+app.use(session({
+  secret: 'secret1',
+  resave: false,
+  saveUninitialized: true,
+  store: memoryStore
+}));
+
+// process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0
+
 
 
 if (config.env !== 'test') {

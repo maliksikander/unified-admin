@@ -238,19 +238,15 @@
                   </mat-form-field>
                 </div>
 
-                <div>
+                <div class="date-range-section">
                   <img src="/assets/images/check_outline.svg" alt="done">
                   <mat-form-field appearance="fill">
-                    <mat-date-range-input [rangePicker]="picker">
-                      <input matStartDate matInput placeholder="Start date">
-                      <input matEndDate matInput placeholder="End date">
+                    <mat-date-range-input [rangePicker]="picker1">
+                      <input matStartDate formControlName="dateRangeStart" matInput placeholder="Start date">
+                      <input matEndDate formControlName="dateRangeEnd" matInput placeholder="End date">
                     </mat-date-range-input>
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-date-range-picker #picker></mat-date-range-picker>
-
-                    <!-- <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date
-                    </mat-error>
-                    <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error> -->
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker1></mat-date-range-picker>
                   </mat-form-field>
                 </div>
               </div>
@@ -274,26 +270,18 @@
                     </mat-form-field>
                   </div>
                 </div>
-                <div class="time-section">
+
+                <div>
                   <i class="material-icons">access_time</i>
-
-                  <!-- <div class="datepicker-section">
-                    <mat-form-field [color]="underLineColor">
-                      <input formControlName="datePicker" matInput [matDatepicker]="picker" (click)="picker.open()">
-                      <mat-datepicker #picker></mat-datepicker>
-                    </mat-form-field>
-                  </div> -->
-
-                  <!-- <div class="form-group">
-                    <mat-label>Message</mat-label>
-                    <mat-form-field [color]="underLineColor" appearance="fill">
-                      <input matInput formControlName="timeMessage" placeholder="Enter Message">
-                    </mat-form-field>
-                  </div> -->
-
-                  <!-- <div class="add-shift col-md-2 offset-md-9">
-                    <button mat-raised-button class="shift-btn">Add Shift</button>
-                  </div> -->
+                  <!-- <img src="/assets/images/check_outline.svg" alt="done"> -->
+                  <mat-form-field appearance="fill">
+                    <mat-date-range-input [rangePicker]="picker2">
+                      <input matStartDate formControlName="dateRangeStart" matInput placeholder="Start date">
+                      <input matEndDate formControlName="dateRangeEnd" matInput placeholder="End date">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker2></mat-date-range-picker>
+                  </mat-form-field>
                 </div>
 
                 <!-- <div class="recurrence-section">

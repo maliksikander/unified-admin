@@ -208,8 +208,8 @@ export class CalendarComponent implements OnInit {
       recurrenceCriteria: ['does not repeat'],
       timeMessage: [''],
       // dateRange: this.fb.group({
-      //   dateRangeStart: [''],
-      //   dateRangeEnd: [''],
+      dateRangeStart: [''],
+      dateRangeEnd: [''],
       // }),
 
     });
@@ -222,12 +222,15 @@ export class CalendarComponent implements OnInit {
 
     this.eventForm.controls['datePicker'].setValue(new Date());
     this.endDateForm.controls['endDate'].setValue(new Date());
+    this.eventForm.controls['dateRangeStart'].setValue(new Date());
+    this.eventForm.controls['dateRangeEnd'].setValue(new Date(Date.now() + (3600 * 1000 * 24)));
 
 
 
     let d = new Date();
     this.setCurrentDay(d.getDay());
-    // console.log("date-->", d.getDay());
+    // console.log("date -->", new Date());
+    // console.log("date + 1-->", new Date(Date.now() + (3600 * 1000 * 24)));
 
     this.recurrenceForm.valueChanges.subscribe((data) => {
       // let result = this.commonService.logValidationErrors(this.amqSettingForm, this.formErrors, this.validations);

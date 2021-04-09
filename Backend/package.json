@@ -61,6 +61,7 @@
     "http-status": "^1.4.0",
     "jsonwebtoken": "^8.5.1",
     "keycloak-connect": "^11.0.3",
+    "keycloak-nodejs-connect": "^1.0.3",
     "keycloak_adapter": "^1.0.8",
     "moment": "^2.24.0",
     "mongoose": "^5.7.7",
