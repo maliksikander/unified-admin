@@ -87,12 +87,16 @@ export class CalendarComponent implements OnInit {
     {
       id: "1",
       name: "Calendar 1",
-      description: "description"
+      description: "description",
+      color: 'accent',
+      isChecked: true
     },
     {
       id: "2",
       name: "Calendar 2",
-      description: "description"
+      description: "description",
+      color: 'warn',
+      isChecked: false
     }
   ];
 
@@ -190,7 +194,7 @@ export class CalendarComponent implements OnInit {
 
   ngOnInit() {
 
-    this.commonService.tokenVerification();
+    // this.commonService.tokenVerification();
     this.currentDay = this.dateFormation("month");
 
     this.calendarForm = this.fb.group({

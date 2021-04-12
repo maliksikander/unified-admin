@@ -17,9 +17,6 @@ const fs = require('fs');
 const ApiError = require('./utils/ApiError');
 const angularRoutes = require('./angular.route');
 const app = express();
-// const keycloak_init = require('./config/keycloak.config').initKeycloak();
-// const keycloak = require('./config/keycloak.config').getKeycloak();
-// app.use(keycloak_init.middleware());
 var session = require('express-session');
 var memoryStore = new session.MemoryStore();
 
@@ -31,7 +28,6 @@ app.use(session({
 }));
 
 // process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0
-
 
 
 if (config.env !== 'test') {
@@ -81,13 +77,13 @@ if (config.env === 'production') {
 
 // v1 api routes
 app.use('/', routes);
-app.use('/general', angularRoutes);
+// app.use('/general', angularRoutes);
 
 // login route
-app.get('/login', (req, res) => {
-  const indexPath = path.resolve('src', 'public', 'index.html');
-  res.sendFile(indexPath);
-});
+// app.get('/login', (req, res) => {
+//   const indexPath = path.resolve('src', 'public', 'index.html');
+//   res.sendFile(indexPath);
+// });
 
 // send back a 404 error for any unknown api request
 app.use((req, res, next) => {

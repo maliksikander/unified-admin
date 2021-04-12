@@ -47,7 +47,7 @@ export class EndpointService {
     return this.httpClient.post<any>(`${this.ADMIN_URL}/${reqServiceType}`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer' + this.token
+        'Authorization': 'Bearer ' + this.token
       })
     }).pipe(catchError(this.handleError));
   }
@@ -65,12 +65,12 @@ export class EndpointService {
     return this.httpClient.put<void>(`${this.ADMIN_URL}/${reqServiceType}`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer' + this.token
+        'Authorization': 'Bearer ' + this.token
       })
     }).pipe(catchError(this.handleError));
   }
 
-  ///////////////////// RE CRUD ////////////////////////
+  ///////////////////// Routing Engine CRUD ////////////////////////
 
   create(data, reqServiceType): Observable<any> {
     return this.httpClient.post<any>(`${this.MRE_URL}/${reqServiceType}`, data, {
@@ -214,7 +214,7 @@ export class EndpointService {
     return this.httpClient.post<any>(`${this.ADMIN_URL}/keycloakLogin`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer'
+        // 'Authorization': 'Bearer'
       })
     }).pipe(catchError(this.handleError));
   }

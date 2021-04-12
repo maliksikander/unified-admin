@@ -1235,6 +1235,11 @@ a.mat-list-item.active-link {
   }
 }
 
+//logout-menu
+.logout-menu {
+  min-height: 0px !important;
+}
+
 //style for right sidebar mode
 .right-sidebar {
   .menu-trigger {
@@ -1432,6 +1437,7 @@ snack-bar-container {
       text-overflow: ellipsis;
       width: 65%;
       text-align: center;
+      padding: 10px 0px;
     }
   }
 
@@ -2674,7 +2680,6 @@ snack-bar-container {
   // .date-range-section{
 
   // }
-
 
   .datepicker-section {
     // .mat-form-field.mat-focused .mat-form-field-underline {
