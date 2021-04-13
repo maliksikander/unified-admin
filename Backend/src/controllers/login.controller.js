@@ -7,15 +7,12 @@ const login = catchAsync(async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
     const realm = configObj.realm
-  
 
-  const result  = await keycloak.authenticateUserViaKeycloak(username, password, realm).then((res) => {
-        // res.send(result);
-        return res
+
+    const result = await keycloak.authenticateUserViaKeycloak(username, password, realm).then((res) => {
+        return res;
     });
-    // console.log("login result-->",result);
-     res.send(result);
-
+    res.send(result);
 });
 
 module.exports = {
