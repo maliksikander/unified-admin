@@ -409,6 +409,16 @@ button:focus {
   }
 }
 
+.bottom-trigger {
+  // position: absolute;
+  // bottom: 0;
+
+  .mat-list-item-content {
+    // width: 100%;
+    padding: 0px 16px !important;
+  }
+}
+
 // Globally Radio Button Space
 
 .mat-radio-button {

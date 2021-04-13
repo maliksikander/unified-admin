@@ -157,7 +157,7 @@ export class AttributeComponent implements OnInit {
         this.spinner = false;
         console.log("Error fetching:", error);
         if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
-        if (error && error.status == 409) this.snackbar.snackbarMessage('error-snackbar', "Attribute in use,cannot be deleted", 1);
+        // if (error && error.status == 409) this.snackbar.snackbarMessage('error-snackbar', "Attribute in use,cannot be deleted", 1);
       });
   }
 

@@ -45,15 +45,23 @@ export class HttpInterceptorService {
         }
       }),
       catchError((error: HttpErrorResponse) => {
+
         this.url = error.url;
         let code;
-        let msg: string = error.error.message;
-        if(msg) msg = msg.toUpperCase();
-        if (error.error) {
+        let msg: string
+
+        if (error.error.message) {
+          msg = error.error.message;
+          if (msg) msg = msg.toUpperCase();
           code = error.error.code;
           if (code) {
             this.snackbar.snackbarMessage('error-snackbar', msg, 2);
           }
+        }
+        else {
+          msg = error.error;
+          if (msg) msg = msg.toUpperCase();
+          this.snackbar.snackbarMessage('error-snackbar', msg, 2);
         }
         this.commonService._spinnerSubject.next(false);
         return throwError(error);

@@ -453,16 +453,16 @@ export class PrecisionQueueComponent implements OnInit {
           preTermCondition: "AND"
         }
         const temp = this.attrData.filter(item => item.id == termsCopy[j].routingAttribute.id);
-          termObj.conditionOperator = termsCopy[j].conditionOperator;
-          termObj.routingAttribute = temp[0];
-          termObj.preTermCondition = termsCopy[j].preTermCondition;
-          if (termsCopy[j].routingAttribute.type == 'BOOLEAN') {
-            termObj.boolVal = JSON.stringify(termsCopy[j].value);
-          }
-          else {
-            termObj.profVal = termsCopy[j].value;
-          }
-          termsCopy[j] = termObj;
+        termObj.conditionOperator = termsCopy[j].conditionOperator;
+        termObj.routingAttribute = temp[0];
+        termObj.preTermCondition = termsCopy[j].preTermCondition;
+        if (termsCopy[j].routingAttribute.type == 'BOOLEAN') {
+          termObj.boolVal = JSON.stringify(termsCopy[j].value);
+        }
+        else {
+          termObj.profVal = termsCopy[j].value;
+        }
+        termsCopy[j] = termObj;
       }
       expressions[i].terms = termsCopy;
 
@@ -501,7 +501,7 @@ export class PrecisionQueueComponent implements OnInit {
     let tempStep: any = {};
     tempStep.expressions = stepData.expressions;
     tempStep.timeout = stepData.timeout;
-  
+
     this.loadFormExpression(tempStep);
     let dialogRef = this.dialog.open(templateRef, {
       width: '800px',

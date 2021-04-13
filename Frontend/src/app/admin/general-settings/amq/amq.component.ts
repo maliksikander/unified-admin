@@ -57,7 +57,7 @@ export class AmqComponent implements OnInit {
       this.spinner = res;
       this.changeDetector.markForCheck();
     });
-    
+
     this.getAmqSetting();
 
   }
@@ -83,7 +83,7 @@ export class AmqComponent implements OnInit {
         this.spinner = false;
         console.log("Error:", error);
         if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
-        if (error && error.status == 403) this.snackbar.snackbarMessage('error-snackbar', error.error, 1);
+
       });
   }
 
@@ -102,7 +102,7 @@ export class AmqComponent implements OnInit {
         this.spinner = false;
         console.log("Error", error);
         if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
-        if (error && error.status == 403) this.snackbar.snackbarMessage('error-snackbar', error.error, 1);
+
       });
   }
 
@@ -117,7 +117,6 @@ export class AmqComponent implements OnInit {
         this.spinner = false;
         console.log("Error", error);
         if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
-        if (error && error.status == 403) this.snackbar.snackbarMessage('error-snackbar', error.error, 1);
       }
     );
   }
