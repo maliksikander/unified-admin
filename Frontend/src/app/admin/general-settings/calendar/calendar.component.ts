@@ -88,14 +88,14 @@ export class CalendarComponent implements OnInit {
       id: "1",
       name: "Calendar 1",
       description: "description",
-      color: 'accent',
+      color: '#77eb34',
       isChecked: true
     },
     {
       id: "2",
       name: "Calendar 2",
       description: "description",
-      color: 'warn',
+      color: '#ffe70a',
       isChecked: false
     }
   ];

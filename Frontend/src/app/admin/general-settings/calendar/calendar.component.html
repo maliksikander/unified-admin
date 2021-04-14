@@ -45,10 +45,24 @@
               </div>
 
               <div class="calendar-content">
-                <span *ngFor="let calendar of calendarList" class="content-span">
+                <!-- <span *ngFor="let calendar of calendarList" class="content-span">
                   <mat-checkbox class="example-margin" [checked]="calendar?.isChecked" [color]="calendar?.color">
                     {{calendar?.name}}
                   </mat-checkbox>
+                  <div class="menu-btn">
+                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="menu">
+                      <mat-icon>more_vert</mat-icon>
+                    </button>
+                  </div>
+                </span> -->
+
+                <span *ngFor="let calendar of calendarList" class="content-span">
+                  <span [ngStyle]="{'background':calendar?.color,'border-color':calendar?.color}" class="input-span">
+                    <mat-checkbox class="example-margin" [checked]="calendar?.isChecked">
+                    </mat-checkbox>
+                    <!-- <input type="checkbox" [checked]="calendar?.isChecked"> -->
+                  </span>
+                  {{calendar?.name}}
                   <div class="menu-btn">
                     <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="menu">
                       <mat-icon>more_vert</mat-icon>

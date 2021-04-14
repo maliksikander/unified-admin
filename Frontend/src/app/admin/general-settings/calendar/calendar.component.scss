@@ -77,7 +77,7 @@
           width: 25px;
           height: 25px;
           position: absolute;
-          right: 5px;
+          right: 7px;
           cursor: pointer;
         }
       }
@@ -89,14 +89,36 @@
           // background-color: rgba(248, 248, 0, 0.596);
           display: inline-block;
           width: 100%;
-          padding: 0 17px;
+          padding: 2px 17px 3px 17px;
           // height: 40px;
-          // background: #818181;
+          // background: #ec1d1d;
 
-          mat-checkbox {
+          .input-span {
+            transition: border-color 90ms cubic-bezier(0, 0, 0.2, 0.1);
+            border-width: 1px;
+            border-style: solid;
+            display: inline-block;
+            max-height: 15px;
+            max-width: 16px;
+            border-radius: 3px;
             position: relative;
             top: 4px;
+            margin: 0 3px 0 0;
+
+            mat-checkbox {
+              position: relative;
+              top: -2px;
+              left: -1px;
+
+              .mat-checkbox-frame {
+                border: none;
+              }
+              .mat-checkbox-background {
+                background: transparent;
+              }
+            }
           }
+
           .menu-btn {
             max-width: 17px;
             max-height: 20px;
@@ -115,22 +137,24 @@
               // height: 30px;
               // max-height: 30px;
               // padding: 0;
+
+              mat-icon {
+                line-height: 21px;
+              }
             }
             &:focus,
-            &:active {
+            &:active,
+            &:focus-within {
               display: inline-block;
             }
           }
           &:hover {
             background: #f4f4f4;
 
-            // .table-trigger {
             button {
               display: inline-block;
               transition: all 0.3s;
-              // background: red;
             }
-            // }
           }
         }
       }
