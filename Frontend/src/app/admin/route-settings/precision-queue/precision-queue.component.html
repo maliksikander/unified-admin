@@ -84,7 +84,7 @@
                                     *ngIf="exp?.preExpressionCondition != 'null'">[{{exp?.preExpressionCondition}}]</span>
                                   <ng-container *ngFor="let k =index;let data of exp?.terms">
                                     <span *ngIf="data?.preTermCondition != 'null'">{{data?.preTermCondition}}</span>
-                                    <span>({{data?.routingAttribute?.name}}{{data?.conditionOperator}}
+                                    <span>({{data?.routingAttribute?.name}}{{data?.relationalOperator}}
                                       <ng-container *ngIf="data?.routingAttribute?.type == 'BOOLEAN'">{{data?.value ==
                                         '1' ? 'true' :'false'}})</ng-container>
                                       <ng-container *ngIf="data?.routingAttribute?.type != 'BOOLEAN'">{{data?.value}})
@@ -294,7 +294,7 @@
 
                       <div class="form-group col-md-2">
                         <mat-form-field appearance="outline">
-                          <mat-select formControlName="conditionOperator">
+                          <mat-select formControlName="relationalOperator">
                             <ng-container *ngIf="term?.value.routingAttribute?.type == 'PROFICIENCY_LEVEL'">
                               <mat-option *ngFor="let data of operatorList" [value]="data">{{data}}
                               </mat-option>

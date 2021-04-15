@@ -139,7 +139,7 @@ export class PrecisionQueueComponent implements OnInit {
   addExpressionTermGroup(): FormGroup {
     return this.fb.group({
       routingAttribute: ['', Validators.required],
-      conditionOperator: ['', Validators.required],
+      relationalOperator: ['', Validators.required],
       profVal: [1],
       boolVal: ['true'],
       preTermCondition: ["AND"],
@@ -383,13 +383,13 @@ export class PrecisionQueueComponent implements OnInit {
       for (let j = 0; j < termsCopy.length; j++) {
         let termObj: any = {
           routingAttribute: {},
-          conditionOperator: "",
+          relationalOperator: "",
           value: "",
           preTermCondition: ""
         };
         termsCopy[0].preTermCondition = 'null';
         termObj.routingAttribute = termsCopy[j].routingAttribute;
-        termObj.conditionOperator = termsCopy[j].conditionOperator;
+        termObj.relationalOperator = termsCopy[j].relationalOperator;
         termObj.preTermCondition = termsCopy[j].preTermCondition;
         if (termsCopy[j].routingAttribute.type == 'BOOLEAN') {
           termObj.value = JSON.parse(termsCopy[j].boolVal);
@@ -447,13 +447,13 @@ export class PrecisionQueueComponent implements OnInit {
       for (let j = 0; j < termsCopy.length; j++) {
         let termObj = {
           routingAttribute: {},
-          conditionOperator: "",
+          relationalOperator: "",
           profVal: 1,
           boolVal: "1",
           preTermCondition: "AND"
         }
         const temp = this.attrData.filter(item => item.id == termsCopy[j].routingAttribute.id);
-        termObj.conditionOperator = termsCopy[j].conditionOperator;
+        termObj.relationalOperator = termsCopy[j].relationalOperator;
         termObj.routingAttribute = temp[0];
         termObj.preTermCondition = termsCopy[j].preTermCondition;
         if (termsCopy[j].routingAttribute.type == 'BOOLEAN') {
@@ -527,7 +527,7 @@ export class PrecisionQueueComponent implements OnInit {
   get term(): FormGroup {
     return this.fb.group({
       routingAttribute: [''],
-      conditionOperator: [''],
+      relationalOperator: [''],
       profVal: [1],
       boolVal: ['true'],
       preTermCondition: ["AND"],
