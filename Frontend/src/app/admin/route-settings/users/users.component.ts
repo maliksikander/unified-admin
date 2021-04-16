@@ -213,6 +213,7 @@ export class UsersComponent implements OnInit {
     this.spinner = true;
     let data = JSON.parse(JSON.stringify(this.editREUserData));
     data.associatedRoutingAttributes = this.userAttributeForm.value.associatedRoutingAttributes;
+    data.participantType = "CCUser"
     if (data.associatedRoutingAttributes) {
       data.associatedRoutingAttributes.forEach(item => {
         if (item.routingAttribute.type == 'BOOLEAN') {

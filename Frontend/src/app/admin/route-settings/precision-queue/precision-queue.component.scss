@@ -101,6 +101,7 @@
     .mat-expansion-panel-header {
       height: 40px !important;
       padding: 0 !important;
+      overflow: hidden;
       &:hover {
         background: #f3f6f8 !important;
         .table-trigger {
