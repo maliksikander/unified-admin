@@ -106,14 +106,14 @@
               </mat-error>
             </mat-form-field>
           </div>
-
+      
           <div [ngClass]="{'attribute-type-value': attributeForm.value.type == 'BOOLEAN'}">
             <div class="form-group" [ngClass]="{'col-md-8': attributeForm.value.type == 'BOOLEAN'}">
               <mat-label>Type</mat-label>
               <mat-form-field appearance="outline">
-                <mat-select formControlName="type">
-                  <mat-option  [value]="'BOOLEAN'">Boolean</mat-option>
-                  <mat-option  [value]="'PROFICIENCY_LEVEL'">Proficiency</mat-option>
+                <mat-select formControlName="type" [disabled]="editFlag">
+                  <mat-option [value]="'BOOLEAN'">Boolean</mat-option>
+                  <mat-option [value]="'PROFICIENCY_LEVEL'">Proficiency</mat-option>
                 </mat-select>
                 <mat-error class="form-error">
                   {{formErrors.type}}

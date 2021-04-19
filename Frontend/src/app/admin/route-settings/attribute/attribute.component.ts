@@ -31,6 +31,7 @@ export class AttributeComponent implements OnInit {
   attrData = [];
   editData;
   reqServiceType = 'routing-attributes';
+  editFlag: boolean = false;
 
   constructor(
     private commonService: CommonService,
@@ -181,6 +182,8 @@ export class AttributeComponent implements OnInit {
       profVal: data.defaultValue,
       boolVal: boolVal,
     });
+
+    this.editFlag = true;
     this.formHeading = 'Edit Attribute';
     this.saveBtnText = 'Update'
     let dialogRef = this.dialog.open(templateRef, {
@@ -193,6 +196,7 @@ export class AttributeComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       this.editData = undefined;
+      this.editFlag = false;
     });
   }
 

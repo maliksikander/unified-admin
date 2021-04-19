@@ -58,10 +58,7 @@ app.use(compression());
 // enable cors
 app.use(cors());
 
-app.get('/', (req, res) => {
-  let indexPath = path.resolve('src', 'public', 'index.html');
-  res.sendFile(indexPath);
-});
+
 
 
 app.options('*', cors());
@@ -77,6 +74,11 @@ if (config.env === 'production') {
 
 // v1 api routes
 app.use('/', routes);
+
+app.get('*', (req, res) => {
+  let indexPath = path.resolve('src', 'public', 'index.html');
+  res.sendFile(indexPath);
+});
 // app.use('/general', angularRoutes);
 
 // login route

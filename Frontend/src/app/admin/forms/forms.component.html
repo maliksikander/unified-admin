@@ -1,0 +1,78 @@
+<div class="container main-custom-container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel-body">
+                <div class="sub-heading">
+                    <h2>{{pageTitle}}</h2>
+                </div>
+                <div *ngIf="!addForm" class="panel-page-content">
+                    <div class="filter-section">
+                        <!-- <div class="form-group">
+                            <mat-form-field appearance="outline">
+                                <input matInput [(ngModel)]="searchTerm" placeholder="Search">
+                                <mat-icon>search</mat-icon>
+                            </mat-form-field>
+                        </div> -->
+
+                        <button (click)="addNewForm()" mat-flat-button>
+                            <mat-icon>add</mat-icon>
+                            New Form
+                        </button>
+                    </div>
+                    <div class="forms-list">
+                        <ul class="top-heading">
+                            <li class="col-md-6">Name</li>
+                            <li class="offset-md-3">Created On</li>
+                        </ul>
+                        <ul class="form-list-data">
+                            <li>
+                                <div class="row">
+                                    <div class="col-sm-6 col-md-6">
+                                        <!-- <span> -->
+                                        Form 1
+                                        <!-- </span> -->
+                                    </div>
+                                    <div class="offset-sm-3 offset-md-3 second-data-div">
+                                        <!-- <span> -->
+                                        Form 1
+                                        <!-- </span> -->
+                                    </div>
+                                </div>
+                                <div class="list-action-area">
+                                    <span class="list-actions">
+                                        <button mat-mini-fab matTooltip="Edit">
+                                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                                        </button>
+                                        <button mat-mini-fab matTooltip="Delete">
+                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </li>
+                        </ul>
+                        <!-- <div *ngIf="userData.length != 0" class="pagination-section">
+                          <span class="page-span">
+                            <span>Entries Per Page</span>
+                            <select (change)="selectPage()" [(ngModel)]="selectedItem">
+                              <option *ngFor="let item of itemsPerPageList" [value]="item">{{ item }}
+                              </option>
+                            </select>
+                          </span>
+                          <pagination-controls (pageBoundsCorrection)="pageBoundChange($event)"
+                            (pageChange)="p = $event;pageChange($event)" previousLabel="" nextLabel="">
+                          </pagination-controls>
+                        </div> -->
+                    </div>
+                </div>
+
+                <ng-container *ngIf="addForm">
+                    <app-new-form [uiBool]="addForm" [formData]="editFormData"
+                        (uiBoolChange)='childToParentUIChange($event)' (formSaveData)='onSave($event)'>
+                    </app-new-form>
+                </ng-container>
+
+
+            </div>
+        </div>
+    </div>
+</div>

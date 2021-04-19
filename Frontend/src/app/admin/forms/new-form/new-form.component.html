@@ -1,0 +1,41 @@
+<!-- <div class="panel-page-content"> -->
+<form class="form-horizontal form-bordered" [formGroup]="newForm">
+    <div class="col-md-12 form-parent-div">
+        <div class="form-title-section">
+            <div class="form-group field-section form-title">
+                <!-- <mat-label>Bot Name</mat-label> -->
+                <mat-form-field appearance="outline">
+                    <input matInput formControlName="formTitle">
+                    <!-- <mat-error class="form-error">
+                    {{formErrors.botName}}
+                  </mat-error> -->
+                </mat-form-field>
+            </div>
+
+            <div class="form-group field-section">
+                <!-- <mat-label>Bot Name</mat-label> -->
+                <mat-form-field appearance="outline">
+                    <input matInput formControlName="formDescription" placeholder="Description">
+                    <!-- <mat-error class="form-error">
+                    {{formErrors.botName}}
+                  </mat-error> -->
+                </mat-form-field>
+            </div>
+        </div>
+        <hr>
+
+
+
+    </div>
+
+</form>
+<!-- </div> -->
+
+
+
+
+
+<button (click)="onClose()" mat-flat-button>
+    <!-- <mat-icon>add</mat-icon> -->
+    back
+</button>

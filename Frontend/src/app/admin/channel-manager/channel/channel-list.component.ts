@@ -175,6 +175,7 @@ export class ChannelListComponent implements OnInit {
   //to get channel list by channel type id on expansion panel event, it accepts channel type object as 'data' paramter
   panelOpenCallback(data) {
 
+    this.channels = [];
     this.spinner = true;
     this.getChannels(data.id);
   }

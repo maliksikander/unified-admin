@@ -29,8 +29,6 @@ export class BotSettingsComponent implements OnInit {
   serializedFile;
 
   constructor(private commonService: CommonService,
-    private dialog: MatDialog,
-    private endPointService: EndpointService,
     private formBuilder: FormBuilder,
     private snackbar: SnackbarService,) { }
 

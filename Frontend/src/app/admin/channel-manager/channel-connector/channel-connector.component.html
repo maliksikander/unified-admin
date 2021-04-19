@@ -24,6 +24,12 @@
                     <mat-icon *ngIf="!arrow.expanded">arrow_drop_down</mat-icon>
                   </mat-panel-description>
                 </mat-expansion-panel-header>
+
+                <div *ngIf="channelConnectors && channelConnectors.length  == 0" class="no-data-warning">
+                  <i class="material-icons">warning_amber</i>
+                  <span>No Data Found</span>
+                </div>
+
                 <table class="channel-table" *ngIf="channelConnectors && channelConnectors.length > 0">
                   <thead>
                     <tr>

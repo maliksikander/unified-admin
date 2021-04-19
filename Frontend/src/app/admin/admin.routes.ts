@@ -17,6 +17,7 @@ import { LicenseManagerComponent } from './general-settings/license-manager/lice
 import { ChannelListComponent } from './channel-manager/channel/channel-list.component';
 import { ChannelConnectorComponent } from './channel-manager/channel-connector/channel-connector.component';
 import { BotListComponent } from './bot/bot-list/bot-list.component';
+import { FormsComponent } from './forms/forms.component';
 
 
 export const adminRoutes: Routes = [
@@ -41,6 +42,7 @@ export const adminRoutes: Routes = [
       { path: 'channel/channel-manager', component: ChannelListComponent },
       { path: 'channel/channel-connector', component: ChannelConnectorComponent },
       { path: 'bot-settings', component: BotListComponent },
+      { path: 'forms', component: FormsComponent },
     ]
   }
 ];

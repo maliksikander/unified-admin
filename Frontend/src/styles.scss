@@ -2505,7 +2505,7 @@ snack-bar-container {
   }
 }
 
-.channel-manager-link {
+.single-menu-link {
   .mat-list-item-content {
     padding: 0px 20px !important;
   }
@@ -2919,6 +2919,43 @@ snack-bar-container {
       display: block;
       opacity: 0.3;
       color: #25afcb;
+    }
+  }
+}
+
+.form-parent-div {
+  .mat-form-field-outline {
+    display: none !important;
+  }
+
+  .mat-form-field-appearance-outline {
+    .mat-form-field-wrapper {
+      padding-bottom: 0;
+    }
+    .mat-form-field-infix {
+      padding: 0.2rem 0;
+    }
+  }
+
+  mat-form-field {
+    &:focus,
+    &:focus-within {S
+      .mat-form-field-outline {
+        display: flex !important;
+      }
+    }
+  }
+
+  .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: #fafafa;
+    background: #fff;
+    border-radius: 3px;
+  }
+
+  .form-title {
+    .mat-form-field-infix {
+      font-size: 18px;
+      color: #343434;
     }
   }
 }

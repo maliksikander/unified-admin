@@ -74,6 +74,7 @@ export class ChannelConnectorComponent implements OnInit {
 
   panelOpenCallback(data) {
 
+    this.channelConnectors = [];
     this.spinner = true;
     this.getChannelConnector(data.id);
   }
@@ -202,10 +203,6 @@ export class ChannelConnectorComponent implements OnInit {
             console.log("Error fetching:", error);
             if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
           });
-
-
-
-
     })
   }
 }

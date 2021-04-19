@@ -36,6 +36,8 @@ import { BotListComponent } from './bot/bot-list/bot-list.component';
 import { BotSettingsComponent } from './bot/bot-list/bot-settings/bot-settings.component';
 import { ColorSketchModule } from 'ngx-color/sketch';
 import { ColorCircleModule } from 'ngx-color/circle';
+import { FormsComponent } from './forms/forms.component';
+import { NewFormComponent } from './forms/new-form/new-form.component';
 
 @NgModule({
     imports: [
@@ -75,7 +77,9 @@ import { ColorCircleModule } from 'ngx-color/circle';
         ChannelConnectorSettingsComponent,
         BotListComponent,
         BotSettingsComponent,
-        CalendarHeaderComponent
+        CalendarHeaderComponent,
+        FormsComponent,
+        NewFormComponent
     ],
     providers: [
         HttpClientModule,
