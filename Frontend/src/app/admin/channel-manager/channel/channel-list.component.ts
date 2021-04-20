@@ -111,12 +111,15 @@ export class ChannelListComponent implements OnInit {
     this.endPointService.deleteChannel(data.id, this.channelServiceReq).subscribe(
       (res: any) => {
         this.spinner = false;
-        if (res.code && res.code == "Success") {
-          this.channels = this.channels.filter(i => i !== data)
-            .map((i, idx) => (i.position = (idx + 1), i));
 
-          this.snackbar.snackbarMessage('success-snackbar', "Deleted", 1);
-        }
+        this.channels = this.channels.reduce(function (filtered, channel) {
+          if (channel !== data) {
+            filtered.push(channel);
+          }
+          return filtered;
+        }, []);
+
+        this.snackbar.snackbarMessage('success-snackbar', "Deleted", 1);
       },
       (error: any) => {
         this.spinner = false;

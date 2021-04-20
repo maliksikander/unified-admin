@@ -173,13 +173,15 @@ export class ChannelConnectorComponent implements OnInit {
     this.endPointService.deleteChannel(data.id, this.connectorServiceReq).subscribe(
       (res: any) => {
         this.spinner = false;
-        if (res.code && res.code == "Success") {
-          this.channelConnectors = this.channelConnectors.filter(i => i !== data)
-            .map((i, idx) => (i.position = (idx + 1), i));
 
-          this.snackbar.snackbarMessage('success-snackbar', "Deleted", 1);
-        }
+        this.channelConnectors = this.channelConnectors.reduce(function (filtered, connector) {
+          if (connector !== data) {
+            filtered.push(connector);
+          }
+          return filtered;
+        }, []);
 
+        this.snackbar.snackbarMessage('success-snackbar', "Deleted", 1);
       },
       (error: any) => {
         this.spinner = false;

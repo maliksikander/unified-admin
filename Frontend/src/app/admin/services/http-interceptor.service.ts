@@ -53,15 +53,20 @@ export class HttpInterceptorService {
         if (error.error.message) {
           msg = error.error.message;
           if (msg) msg = msg.toUpperCase();
-          code = error.error.code;
-          if (code) {
-            this.snackbar.snackbarMessage('error-snackbar', msg, 2);
-          }
+          // code = error.error.code;
+          // if (code) {
+          this.snackbar.snackbarMessage('error-snackbar', msg, 2);
+          // }
         }
         else {
           msg = error.error;
-          if (msg) msg = msg.toUpperCase();
-          this.snackbar.snackbarMessage('error-snackbar', msg, 2);
+          if (msg && typeof (msg) == 'string') {
+            msg = msg.toUpperCase();
+            this.snackbar.snackbarMessage('error-snackbar', msg, 2);
+          }
+          else {
+            this.snackbar.snackbarMessage('error-snackbar', error.message, 2);
+          }
         }
         this.commonService._spinnerSubject.next(false);
         return throwError(error);

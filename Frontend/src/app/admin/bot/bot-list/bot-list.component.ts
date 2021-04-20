@@ -32,7 +32,7 @@ export class BotListComponent implements OnInit {
   }
 
   //to get bot settings list, it accepts bot type as `type` parameter
-  getBotList(type):void {
+  getBotList(type): void {
 
     //calling bot setting endpoint, it accepts bot type as `type` parameter
     this.endPointService.getBotSetting(type).subscribe(
@@ -51,9 +51,9 @@ export class BotListComponent implements OnInit {
   }
 
   //to create bot, it accepts `data` object containing ('botName','botType'.'botUri') as parameter 
-  createBotSetting(data):void {
+  createBotSetting(data): void {
 
-     //calling bot setting endpoint, it accepts bot setting object as `data` parameter
+    //calling bot setting endpoint, it accepts bot setting object as `data` parameter
     this.endPointService.createBotSetting(data).subscribe(
       (res: any) => {
         this.snackbar.snackbarMessage('success-snackbar', "Bot Created", 1);
@@ -69,7 +69,7 @@ export class BotListComponent implements OnInit {
   }
 
   //to update bot, it accepts `data` object containing ('botId,'botName','botType'.'botUri') as parameter
-  updateBotSetting(data):void {
+  updateBotSetting(data): void {
 
     //calling bot setting endpoint, it accepts bot setting object as `data` parameter
     this.endPointService.updateBotSetting(data).subscribe(
@@ -87,14 +87,18 @@ export class BotListComponent implements OnInit {
 
   //to delete bot, it accepts `data` containing ('botName','botType'.'botUri') object as parameter  and
   //removes that particular object from local list variable if there is a success response
-  deleteBotSetting(data):void {
+  deleteBotSetting(data): void {
 
     //calling bot setting endpoint, it accepts bot setting object id as `data.botId` parameter
     this.endPointService.deleteBotSetting(data.botId).subscribe(
       (res: any) => {
 
-        this.botList = this.botList.filter(i => i !== data)
-          .map((i, idx) => (i.position = (idx + 1), i));
+        this.botList = this.botList.reduce(function (filtered, bot) {
+          if (bot !== data) {
+            filtered.push(bot);
+          }
+          return filtered;
+        }, []);
 
         this.spinner = false;
         this.snackbar.snackbarMessage('success-snackbar', "Deleted", 1);
@@ -108,7 +112,7 @@ export class BotListComponent implements OnInit {
   }
 
   //to edit bot settings and change the view to form page,it accepts  bot setting object as 'data' ('botName','botType'.'botUri') and bot type as 'type' parameter
-  editBotSettings(data, type):void {
+  editBotSettings(data, type): void {
 
     this.addBot = true;
     this.pageTitle = "Edit Bot Settings";

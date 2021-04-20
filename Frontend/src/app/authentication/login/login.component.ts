@@ -88,8 +88,6 @@ export class LoginComponent implements OnInit {
       (error: any) => {
         this.spinner = false;
         console.log("Error fetching:", error);
-        if (error && error.status == 401) this.snackbar.snackbarMessage('error-snackbar', "Unauthorized User", 1);
-        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
       });
   }
 }

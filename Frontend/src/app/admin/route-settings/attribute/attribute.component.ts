@@ -149,8 +149,14 @@ export class AttributeComponent implements OnInit {
       (res: any) => {
         this.spinner = false;
         if (res) {
-          this.attrData = this.attrData.filter(i => i !== data)
-            .map((i, idx) => (i.position = (idx + 1), i));
+
+          this.attrData = this.attrData.reduce(function (filtered, attr) {
+            if (attr !== data) {
+              filtered.push(attr);
+            }
+            return filtered;
+          }, []);
+
           this.snackbar.snackbarMessage('success-snackbar', "Attribute Deleted Successfully", 1);
         }
       },

@@ -301,8 +301,14 @@ export class PrecisionQueueComponent implements OnInit {
     this.endPointService.delete(id, this.reqServiceType).subscribe(
       (res: any) => {
         this.spinner = false;
-        this.queueData = this.queueData.filter(i => i !== data)
-          .map((i, idx) => (i.position = (idx + 1), i));
+
+        this.queueData = this.queueData.reduce(function (filtered, queue) {
+          if (queue !== queue) {
+            filtered.push(queue);
+          }
+          return filtered;
+        }, []);
+
         this.snackbar.snackbarMessage('success-snackbar', "Deleted Successfully", 1);
       },
       (error) => {
@@ -568,8 +574,17 @@ export class PrecisionQueueComponent implements OnInit {
     let queue = this.queueData[i];
     if (steps && steps.length > 0) {
       this.spinner = true;
+
       this.queueData[i].steps = this.queueData[i].steps.filter(i => i !== stepData)
         .map((i, idx) => (i.position = (idx + 1), i));
+
+      // this.queueData[i].steps = this.queueData[i].steps.reduce(function (filtered, step) {
+      //   if (step !== stepData) {
+      //     filtered.push(step);
+      //   }
+      //   return filtered;
+      // }, []);
+
       this.updateQueue(queue, queue.id);
 
     }

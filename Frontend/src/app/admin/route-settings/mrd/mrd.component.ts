@@ -139,11 +139,16 @@ export class MrdComponent implements OnInit {
   deleteMRD(data, id) {
     this.endPointService.delete(id, this.reqServiceType).subscribe(
       (res: any) => {
-
+        this.spinner = false;
+        
         if (res) {
-          this.spinner = false;
-          this.mrdData = this.mrdData.filter(i => i !== data)
-            .map((i, idx) => (i.position = (idx + 1), i));
+          this.mrdData = this.mrdData.reduce(function (filtered, mrd) {
+            if (mrd !== data) {
+              filtered.push(mrd);
+            }
+            return filtered;
+          }, []);
+
           this.snackbar.snackbarMessage('success-snackbar', "MRD Deleted Successfully", 1);
         }
       },
