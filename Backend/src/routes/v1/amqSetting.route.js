@@ -3,9 +3,9 @@ const router = express.Router();
 const validate = require('../../middlewares/validate');
 const amqValidation = require('../../validations/amqSetting.validation');
 const amqSettingController = require('../../controllers/amqSetting.controller');
+var config = require('../../../keycloak.json');
 var { NodeAdapter } = require("keycloak-nodejs-connect");
-const keycloak = new NodeAdapter();
-
+const keycloak = new NodeAdapter(config);
 
 router.get('/', keycloak.enforcer(['amq:view-amq'], {
     resource_server_id: 'unified-admin'

@@ -1,12 +1,12 @@
-var { NodeAdapter } = require("keycloak-nodejs-connect");
-const keycloak = new NodeAdapter();
 const catchAsync = require('../utils/catchAsync');
-const configObj = require('../../config.json');
+var config = require('../../keycloak.json');
+var { NodeAdapter } = require("keycloak-nodejs-connect");
+const keycloak = new NodeAdapter(config);
 
 const login = catchAsync(async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
-    const realm = configObj.realm
+    const realm = config.realm
 
 
     const result = await keycloak.authenticateUserViaKeycloak(username, password, realm).then((res) => {

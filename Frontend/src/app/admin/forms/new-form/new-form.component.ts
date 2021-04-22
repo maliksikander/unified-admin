@@ -15,6 +15,9 @@ export class NewFormComponent implements OnInit {
   @Output() uiBoolChange = new EventEmitter<any>();
   @Output() formSaveData = new EventEmitter<any>();
   newForm: FormGroup;
+  customCollapsedHeight: string = '40px';
+  expanded: boolean = false;
+  // customExpandedHeight: string = '200px';
 
 
   constructor(private commonService: CommonService,
@@ -25,8 +28,8 @@ export class NewFormComponent implements OnInit {
 
 
     this.newForm = this.formBuilder.group({
-      formTitle: ['Form Title'],
-      formDescription:['']
+      formTitle: [''],
+      formDescription: ['']
     });
   }
 
@@ -36,6 +39,16 @@ export class NewFormComponent implements OnInit {
     this.uiBoolChange.emit(!this.uiBool);
     // this.botSettingForm.reset();
   }
+
+  onRequiredToggleChange(e) { }
+
+  panelExpanded() {
+
+    this.expanded = !this.expanded;
+    // console.log("yo-->")
+  }
+
+  onSave() { }
 
 }
 
