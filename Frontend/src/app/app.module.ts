@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from "@angular/router";
 import { loginRoute } from './app-routing.module'
 // import { routes } from './app-routing.module'
@@ -51,6 +51,7 @@ import { ConfigService } from './admin/services/config.service';
     AdminModule
   ],
   bootstrap: [MainComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 
 

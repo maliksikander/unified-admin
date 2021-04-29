@@ -57,9 +57,15 @@ input::-webkit-inner-spin-button {
   .form-accordion {
     padding: 0 0 5px 0;
 
+    // .accordion-container {
+    // display: flex;
+    /* background: #c77e1c; */
+    // flex-direction: row;
+
     mat-expansion-panel {
       box-shadow: none;
       border-radius: 0;
+      // width: 100%;
     }
 
     .mat-expanded {
@@ -85,6 +91,25 @@ input::-webkit-inner-spin-button {
         flex-direction: column;
         max-height: 250px;
         overflow: auto;
+
+        .remove-category-btn {
+          width: 15px;
+          height: 15px;
+          box-shadow: none;
+          background: transparent;
+          position: absolute;
+          right: -5%;
+          top: 25%;
+
+          .mat-icon {
+            font-size: 15px;
+            color: #afafaf;
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding-right: 7px;
+          }
+        }
 
         .option-container {
           display: flex;
@@ -131,6 +156,7 @@ input::-webkit-inner-spin-button {
         .add-category-btn {
           position: relative;
           top: -5px;
+          padding: 0;
 
           button {
             background: transparent;
@@ -264,5 +290,21 @@ input::-webkit-inner-spin-button {
         top: 1px;
       }
     }
+  }
+  // }
+}
+
+.example-handle {
+  color: #e5e5e5;
+  position: absolute;
+  left: -1px;
+  cursor: move;
+  // width: 13px;
+  // height: 20px;
+  top: calc(100% - -40px);
+  // margin: 0 12px 0 0px;
+
+  .mat-icon {
+    font-size: 15px;
   }
 }

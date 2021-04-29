@@ -1,4 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from "@angular/core";
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatBadgeModule } from "@angular/material/badge";
 import { MatBottomSheet, MatBottomSheetModule } from "@angular/material/bottom-sheet";
@@ -41,6 +42,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
         SearchFilterPipe,
         ConfirmDialogComponent],
     imports: [
+        DragDropModule,
         MatIconModule, MatToolbarModule, MatSidenavModule, MatBadgeModule, MatDialogModule,
         BrowserAnimationsModule, MatCheckboxModule, MatButtonModule, MatMenuModule,
         MatRadioModule, ReactiveFormsModule, MatRippleModule,
@@ -75,7 +77,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 
     ],
     exports: [
-        MatIconModule, MatToolbarModule, MatSidenavModule, MatBadgeModule, MatNativeDateModule,
+        DragDropModule, MatIconModule, MatToolbarModule, MatSidenavModule, MatBadgeModule, MatNativeDateModule,
         MatDrawer, BrowserAnimationsModule, MatCheckboxModule, MatDialogModule,
         MatButtonModule, MatRadioModule, MatMenuModule,
         ReactiveFormsModule, MatListModule, MatSnackBarModule, MatRippleModule,
