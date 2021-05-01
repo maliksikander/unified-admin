@@ -13,7 +13,7 @@ export class FormsComponent implements OnInit {
 
 
   searchTerm = "";
-  addForm: boolean = true;
+  addForm: boolean = false;
   editFormData;
   pageTitle = "Forms";
 

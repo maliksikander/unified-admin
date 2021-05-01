@@ -145,7 +145,7 @@ export class NewFormComponent implements OnInit {
         this.addCategoryGroup()
       ]),
       datatype: [''],
-      description: ['This is helping text'],
+      description: [''],
       options: new FormArray([
         this.addOptionGroup()
       ]),
@@ -237,7 +237,7 @@ export class NewFormComponent implements OnInit {
 
   onClose() {
     this.uiBoolChange.emit(!this.uiBool);
-    // this.botSettingForm.reset();
+    this.newForm.reset();
   }
 
   onRequiredToggleChange(e) { }
@@ -251,9 +251,9 @@ export class NewFormComponent implements OnInit {
   onSave() { }
 
 
-  sortPredicate(index: number, item: CdkDrag<number>) {
-    return (index + 1) % 2 === item.data % 2;
-  }
+  // sortPredicate(index: number, item: CdkDrag<number>) {
+  //   return (index + 1) % 2 === item.data % 2;
+  // }
 
   drop(event: CdkDragDrop<string[]>) {
     let d = this.getAttribute(this.newForm);
@@ -263,6 +263,38 @@ export class NewFormComponent implements OnInit {
     // moveItemInArray(this.getAttribute(this.newForm), event.previousIndex, event.currentIndex);
     moveItemInArray(d, event.previousIndex, event.currentIndex);
     // console.log("d-->", d);
+  }
+
+
+  typeSelectChange(e, i) {
+    let type = e.typeValue
+
+
+    if (type == "CATEGORY_BASED_VALUE") {
+      const control = (<FormArray>this.newForm.controls['attributes']).at(i).get('options') as FormArray;
+
+      for (let i = control.length - 1; i >= 1; i--) {
+        control.removeAt(i);
+
+      }
+      control.at(i).reset();
+
+    }
+    else if (type == "SINGLE_CHOICE" || type == "MULTIPLE_CHOICE") {
+
+      const control = (<FormArray>this.newForm.controls['attributes']).at(i).get('categories') as FormArray;
+      for (let i = control.length - 1; i >= 1; i--) {
+        control.removeAt(i);
+      }
+
+      const opt = ((<FormArray>this.newForm.controls['attributes']).at(i).get('categories') as FormArray).at(0).get('categoryOptions') as FormArray
+      for (let j = opt.length - 1; j >= 1; j--) {
+
+        opt.removeAt(j);
+      }
+      control.at(i).reset();
+    }
+
   }
 
 }

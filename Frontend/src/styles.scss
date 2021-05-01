@@ -2941,27 +2941,56 @@ snack-bar-container {
     .mat-form-field-appearance-outline {
       .mat-form-field-wrapper {
         padding-bottom: 0;
-        padding-top: 0.313rem;
+        padding-top: 0.2rem;
       }
       .mat-form-field-infix {
         padding: 0.2rem 0;
       }
     }
 
-    mat-form-field {
-      &:focus,
-      &:focus-within {
-        .mat-form-field-outline {
-          display: flex !important;
-        }
-      }
-    }
+    // mat-form-field {
+    //   &:focus,
+    //   &:focus-within {
+    //     .mat-form-field-outline {
+    //       display: flex !important;
+    //     }
+
+    //   }
+    // }
 
     .form-title {
       .mat-form-field-infix {
         font-size: 18px;
         color: #343434;
       }
+      // .mat-form-field-wrapper {
+      // margin-bottom: 0;
+      // }
+    }
+
+    // .description-field {
+    // .mat-form-field-wrapper {
+    // padding: 0;
+    // margin: 0;
+    // }
+    // }
+
+    &:hover {
+      .mat-form-field-outline {
+        display: flex !important;
+      }
+
+      // .description-field {
+      // .mat-form-field-wrapper {
+      // padding: 0.2rem 0;
+      // margin: 0.1rem 0;
+      // }
+      // }
+      // .form-title {
+      // .mat-form-field-wrapper {
+      // margin-bottom: 0.25rem;
+      // }
+      // }
     }
   }
 }
@@ -2969,13 +2998,14 @@ snack-bar-container {
 .form-action-area button {
   span {
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 800;
   }
 }
 
 .form-attribute-section .add-attribute-btn {
   span {
-    font-size: 13px;
+    font-size: 12px;
+    color: #454545;
   }
 }
 
@@ -2986,6 +3016,13 @@ snack-bar-container {
 
   .mat-expansion-panel-header {
     padding: 0 20px;
+
+    &:hover {
+      background: transparent !important;
+      .panel-edit-btn {
+        display: inline-block;
+      }
+    }
   }
 
   .mat-expansion-panel-content {
@@ -3084,6 +3121,13 @@ snack-bar-container {
     .category-option-container {
       mat-form-field {
         max-width: calc(100% - 60px);
+      }
+    }
+    .attribute-action-area .save-btn-section button {
+      span {
+        font-size: 12px;
+        color: #4b4b4b;
+        font-weight: 600;
       }
     }
   }

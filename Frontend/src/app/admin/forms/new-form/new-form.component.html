@@ -2,54 +2,57 @@
     <div class="col-md-12 form-parent-div">
         <div class="form-title-section">
             <div class="form-group field-section form-title">
-                <!-- <mat-label>Bot Name</mat-label> -->
                 <mat-form-field appearance="outline">
                     <input matInput formControlName="formTitle" placeholder="Form Title">
-                    <!-- <mat-error class="form-error">
-                    {{formErrors.botName}}
-                  </mat-error> -->
                 </mat-form-field>
             </div>
 
-            <div class="form-group field-section">
-                <!-- <mat-label>Bot Name</mat-label> -->
+            <div class="form-group field-section description-field">
                 <mat-form-field appearance="outline">
                     <input matInput formControlName="formDescription" placeholder="Description(Optional)">
-                    <!-- <mat-error class="form-error">
-                    {{formErrors.botName}}
-                  </mat-error> -->
                 </mat-form-field>
             </div>
         </div>
-        <hr>
+
+        <hr class="title-section-hr" [ngStyle]="{'margin-bottom': expanded == true ? '0.5rem' :'0rem'}">
 
         <div class="form-attribute-section">
-
 
             <div class="form-accordion">
                 <mat-accordion cdkDropList (cdkDropListDropped)="drop($event)">
                     <ng-container formArrayName="attributes">
                         <ng-container *ngFor="let attribute of getAttribute(newForm); let i = index">
-                            <!-- <div class="accordion-container"> -->
+
 
                             <mat-expansion-panel cdkDrag [formGroupName]="i" (opened)="panelExpanded()"
                                 (closed)="panelExpanded()">
 
                                 <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight">
-
-                                    <div *ngIf="expanded == true" class="example-handle" cdkDragHandle>
+                                    <div class="drag-handle" cdkDragHandle>
                                         <!-- <img src="/assets/images/drag_indicator.svg" alt="bot"> -->
-                                        <mat-icon>apps</mat-icon>
+                                        <mat-icon>more_vert</mat-icon>
+                                        <!-- <span class="material-icons-outlined">
+                                            drag_indicator
+                                        </span> -->
 
                                     </div>
 
+
                                     <mat-panel-title>
-                                        <!-- <div> -->
-                                            {{attribute?.value?.attributeName}}
-                                            <!-- <span>{{attribute?.value?.attributeName}}</span> -->
-                                            <!-- <span>{{attribute?.value?.description}}</span> -->
-                                        <!-- </div> -->
+                                        <div class="panel-header">
+                                            <!-- {{attribute?.value?.attributeName}} -->
+                                            <span>{{attribute?.value?.attributeName}}</span>
+                                            <span>{{attribute?.value?.description}}</span>
+                                        </div>
                                     </mat-panel-title>
+
+                                    <span class="panel-edit-btn">
+                                        <button mat-mini-fab>
+                                            <!-- <i class="fa fa-pencil" aria-hidden="true"></i> -->
+                                            <mat-icon>mode_edit</mat-icon>
+                                        </button>
+                                        
+                                    </span>
 
                                 </mat-expansion-panel-header>
 
@@ -68,7 +71,8 @@
 
                                             <div class="form-group col-md-3">
                                                 <mat-form-field appearance="outline">
-                                                    <mat-select placeholder="Select Type" formControlName="type">
+                                                    <mat-select placeholder="Select Type" formControlName="type"
+                                                        (selectionChange)="typeSelectChange($event.value,i)">
                                                         <mat-option *ngFor="let type of typeList" [value]="type">
                                                             {{type?.typeName}}</mat-option>
                                                     </mat-select>
@@ -152,7 +156,7 @@
 
                                                     <div *ngIf="j == getCategories(attribute)?.length - 1"
                                                         class="add-category-btn form-group col-md-3">
-                                                        <button mat-flat-button (click)="addCategoryButton(i,j)">
+                                                        <button mat-button (click)="addCategoryButton(i,j)">
                                                             <mat-icon>add</mat-icon>
                                                             Add Category
                                                         </button>
@@ -187,7 +191,7 @@
 
                                                     <div class="add-category-btn form-group col-md-3 p-0"
                                                         *ngIf="j == getOptions(attribute)?.length - 1">
-                                                        <button (click)="addOptionButton(i,j)" mat-flat-button>
+                                                        <button (click)="addOptionButton(i,j)" mat-button>
                                                             <mat-icon>add</mat-icon>
                                                             Add Option
                                                         </button>
@@ -223,7 +227,7 @@
                                         <div class="line-break-div"></div>
 
                                         <div class="save-btn-section">
-                                            <button mat-raised-button class="save-btn" (click)="onSave()">Save
+                                            <button mat-button class="save-btn" (click)="onSave()">Save
                                                 Attribute</button>
                                         </div>
                                     </div>
@@ -232,14 +236,14 @@
                             </mat-expansion-panel>
 
                             <hr *ngIf="!expanded" class="attribute-hr">
-                            <!-- </div> -->
+
                         </ng-container>
                     </ng-container>
                 </mat-accordion>
             </div>
 
             <div class="add-attribute-btn" [ngStyle]="{'padding': expanded == true ? '10px 0 0 0' :'0 20px'}">
-                <button mat-flat-button (click)="addAttributeButton()">
+                <button mat-button (click)="addAttributeButton()">
                     <mat-icon>add</mat-icon>
                     Add Attribute
                 </button>
@@ -249,10 +253,9 @@
     </div>
 
     <div class="form-action-area">
-        <button mat-raised-button (click)="onClose()" class="gray-btn">Cancel</button>
-        <button [disabled]="!newForm.valid" mat-raised-button class="save-btn" (click)="onSave()">Save
+        <button mat-button (click)="onClose()" class="gray-btn">Cancel</button>
+        <button [disabled]="!newForm.valid" mat-button class="save-btn" (click)="onSave()">Save
             Form</button>
     </div>
 
 </form>
-<!-- </div> -->
