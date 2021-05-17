@@ -11,9 +11,8 @@ import { SnackbarService } from '../services/snackbar.service';
 })
 export class FormsComponent implements OnInit {
 
-
   searchTerm = "";
-  addForm: boolean = false;
+  addForm: boolean = true;
   editFormData;
   pageTitle = "Forms";
 
@@ -25,14 +24,10 @@ export class FormsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
   addNewForm() {
     this.addForm = true;
-    // this.botType = type;
     this.pageTitle = "New Form";
   }
-
-
 
   childToParentUIChange(e): void {
     this.addForm = e;
@@ -42,7 +37,7 @@ export class FormsComponent implements OnInit {
     this.editFormData = undefined;
   }
 
-  onSave(event) {
-
+  onSave(e) {
+    console.log("event-->", e)
   }
 }

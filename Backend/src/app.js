@@ -13,12 +13,11 @@ const { authLimiter } = require('./middlewares/rateLimiter');
 const routes = require('./routes/v1');
 const { errorConverter, errorHandler } = require('./middlewares/error');
 const path = require('path');
-const fs = require('fs');
 const ApiError = require('./utils/ApiError');
-const angularRoutes = require('./angular.route');
 const app = express();
 var session = require('express-session');
 var memoryStore = new session.MemoryStore();
+
 
 app.use(session({
   secret: 'secret1',

@@ -1,5 +1,6 @@
 const winston = require('winston');
 const config = require('./config');
+// const config = require('../../adminPanel.env');
 
 const enumerateErrorFormat = winston.format((info) => {
   if (info instanceof Error) {
@@ -8,8 +9,10 @@ const enumerateErrorFormat = winston.format((info) => {
   return info;
 });
 
+
 const logger = winston.createLogger({
-  level: config.env === 'development' ? 'debug' : 'info',
+  level: config.logLevel ? config.logLevel : 'info',
+  // level: config.logLevel,
   format: winston.format.combine(
     enumerateErrorFormat(),
     config.env === 'development' ? winston.format.colorize() : winston.format.uncolorize(),

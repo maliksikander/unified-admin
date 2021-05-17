@@ -15,7 +15,7 @@
     // background: bisque;
   }
   &:hover {
-    background: #fafafa;
+    background: #f8f8f8;
   }
 }
 
@@ -68,7 +68,7 @@ input::-webkit-inner-spin-button {
       padding: 10px 0;
 
       &:hover {
-        background: #fafafa;
+        background: #f8f8f8;
         .drag-handle {
           display: inline-block;
         }
@@ -244,10 +244,6 @@ input::-webkit-inner-spin-button {
           margin: 0 10px 0 10px;
         }
 
-        .toggle-section {
-          padding-right: 10px;
-        }
-
         .icon-btn-section {
           position: relative;
           top: 8px;
@@ -284,6 +280,14 @@ input::-webkit-inner-spin-button {
             box-shadow: none;
           }
         }
+      }
+
+      .toggle-section {
+        padding-right: 10px;
+      }
+
+      .multi-toggle {
+        padding: 0.375rem 0 0 0;
       }
     }
   }

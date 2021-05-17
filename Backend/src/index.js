@@ -3,14 +3,24 @@ const app = require('./app');
 const config = require('./config/config');
 const logger = require('./config/logger');
 const error = require('./middlewares/error');
+const https = require('https');
+const fs = require('fs');
 
 let server;
 mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
   logger.info('Connected to MongoDB');
-  server = app.listen(config.port, () => {
+
+  server = https.createServer({
+    key: fs.readFileSync('server.key'),
+    cert: fs.readFileSync('server.cert')
+  }, app).listen(config.port, () => {
     logger.info(`Listening to port ${config.port}`);
-  });
-}).catch(error => logger.error('DB connection Error:',error));
+  })
+
+  // server = app.listen(config.port, () => {
+  //   logger.info(`Listening to port ${config.port}`);
+  // });
+}).catch(error => logger.error('DB connection Error:', error));
 
 const exitHandler = () => {
   if (server) {

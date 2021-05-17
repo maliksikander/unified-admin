@@ -42,7 +42,7 @@ export const adminRoutes: Routes = [
       { path: 'channel/channel-manager', component: ChannelListComponent },
       { path: 'channel/channel-connector', component: ChannelConnectorComponent },
       { path: 'bot-settings', component: BotListComponent },
-      { path: 'forms', component: FormsComponent },
+      { path: 'form', component: FormsComponent },
     ]
   }
 ];

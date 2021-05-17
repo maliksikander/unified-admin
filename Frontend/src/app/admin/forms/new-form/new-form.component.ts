@@ -17,8 +17,6 @@ export class NewFormComponent implements OnInit {
   newForm: FormGroup;
   customCollapsedHeight: string = '40px';
   expanded: boolean = false;
-  // customExpandedHeight: string = '200px';
-
 
   typeList = [
 
@@ -128,7 +126,6 @@ export class NewFormComponent implements OnInit {
 
   ngOnInit(): void {
 
-
     this.newForm = this.formBuilder.group({
       formTitle: [''],
       formDescription: [''],
@@ -149,7 +146,7 @@ export class NewFormComponent implements OnInit {
       options: new FormArray([
         this.addOptionGroup()
       ]),
-      required: [''],
+      isRequired: [''],
       type: [''],
 
     });
@@ -232,71 +229,53 @@ export class NewFormComponent implements OnInit {
     control.removeAt(j);
   }
 
-
   ngOnChanges(changes: SimpleChanges) { }
 
   onClose() {
+
     this.uiBoolChange.emit(!this.uiBool);
     this.newForm.reset();
   }
 
   onRequiredToggleChange(e) { }
 
-  panelExpanded() {
+  panelExpanded() { this.expanded = !this.expanded; }
 
-    this.expanded = !this.expanded;
-    // console.log("yo-->")
+  onSave() {
+
+    let data = this.newForm.value;
+    this.formSaveData.emit(data);
+    this.newForm.reset();
   }
-
-  onSave() { }
-
-
-  // sortPredicate(index: number, item: CdkDrag<number>) {
-  //   return (index + 1) % 2 === item.data % 2;
-  // }
 
   drop(event: CdkDragDrop<string[]>) {
+
     let d = this.getAttribute(this.newForm);
-    // console.log("d-->", d);
-    // console.log("drop--->", event)
-    // this.editGroup = data;
-    // moveItemInArray(this.getAttribute(this.newForm), event.previousIndex, event.currentIndex);
+    let value = [];
     moveItemInArray(d, event.previousIndex, event.currentIndex);
-    // console.log("d-->", d);
+    d.forEach(item => {
+      value.push(item.value)
+    });
+    this.newForm.value.attributes = value;
   }
 
-
   typeSelectChange(e, i) {
+
     let type = e.typeValue
-
-
     if (type == "CATEGORY_BASED_VALUE") {
+
       const control = (<FormArray>this.newForm.controls['attributes']).at(i).get('options') as FormArray;
-
-      for (let i = control.length - 1; i >= 1; i--) {
-        control.removeAt(i);
-
-      }
+      for (let i = control.length - 1; i >= 1; i--) { control.removeAt(i); }
       control.at(i).reset();
-
     }
     else if (type == "SINGLE_CHOICE" || type == "MULTIPLE_CHOICE") {
 
       const control = (<FormArray>this.newForm.controls['attributes']).at(i).get('categories') as FormArray;
-      for (let i = control.length - 1; i >= 1; i--) {
-        control.removeAt(i);
-      }
+      for (let i = control.length - 1; i >= 1; i--) { control.removeAt(i); }
 
       const opt = ((<FormArray>this.newForm.controls['attributes']).at(i).get('categories') as FormArray).at(0).get('categoryOptions') as FormArray
-      for (let j = opt.length - 1; j >= 1; j--) {
-
-        opt.removeAt(j);
-      }
+      for (let j = opt.length - 1; j >= 1; j--) { opt.removeAt(j); }
       control.at(i).reset();
     }
-
   }
-
 }
-
-
