@@ -4,6 +4,10 @@ node_modules
 # package-lock.json (use yarn.lock instead)
 package-lock.json
 
+# package-lock.json (use yarn.lock instead)
+/Backend/server.cert
+/Backend/server.key
+
 # yarn error logs
 yarn-error.log
 
