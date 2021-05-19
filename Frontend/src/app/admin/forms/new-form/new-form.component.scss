@@ -79,7 +79,7 @@ input::-webkit-inner-spin-button {
     }
 
     .mat-expanded {
-      background: #fafafa;
+      background: #f8f8f8;
 
       .drag-handle {
         display: inline-block;
@@ -171,13 +171,13 @@ input::-webkit-inner-spin-button {
         }
 
         .add-category-btn {
-          position: relative;
-          top: -5px;
+          // position: relative;
+          // top: -5px;
           padding: 0;
 
           button {
-            background: transparent;
-            padding: 0 10px;
+            // background: transparent;
+            padding: 0;
 
             .mat-button-wrapper {
               font-size: 13px;
@@ -190,8 +190,25 @@ input::-webkit-inner-spin-button {
           }
         }
 
+        .add-option-btn {
+          // position: relative;
+          // top: -5px;
+          // padding: 0;
+
+          // button {
+            // background: transparent;
+            padding: 0;
+
+            mat-icon {
+              color: #25afcb;
+              font-size: 20px;
+            }
+          // }
+        }
+
         .category-option-container {
           display: flex;
+          flex-wrap: wrap;
 
           .add-category-option {
             position: relative;
@@ -236,7 +253,7 @@ input::-webkit-inner-spin-button {
 
       .attribute-action-area {
         justify-content: flex-end;
-        padding: 0 10px 10px 0;
+        padding: 0 10px 0px 0;
 
         .line-break-div {
           border-left: 1px solid #e3e3e3;

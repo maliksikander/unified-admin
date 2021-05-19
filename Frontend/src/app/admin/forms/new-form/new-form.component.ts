@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonService } from '../../services/common.service';
 import { SnackbarService } from '../../services/snackbar.service';
@@ -8,7 +8,7 @@ import { CdkDragDrop, moveItemInArray, CdkDrag } from "@angular/cdk/drag-drop";
   templateUrl: './new-form.component.html',
   styleUrls: ['./new-form.component.scss']
 })
-export class NewFormComponent implements OnInit {
+export class NewFormComponent implements OnInit, AfterViewInit {
 
   @Input() uiBool;
   @Input() formData;
@@ -18,136 +18,163 @@ export class NewFormComponent implements OnInit {
   customCollapsedHeight: string = '40px';
   expanded: boolean = false;
 
-  typeList = [
+  attributeTypeList = ["INPUT", "OPTIONS"];
 
-    {
-      typeName: "Category Based Value",
-      typeValue: "CATEGORY_BASED_VALUE"
-    },
-    {
-      typeName: "Multiple Choice",
-      typeValue: "MULTIPLE_CHOICE"
-    },
-    {
-      typeName: "Single Choice",
-      typeValue: "SINGLE_CHOICE"
-    },
-    {
-      typeName: "Text Answer",
-      typeValue: "TEXT_ANSWER"
-    },
-  ];
-
-  datatypeList = [
-    {
-      dataTypeName: "AlphaNum100",
-      dataTypeValue: "string",
-      datatypeCharLimit: "100",
-      maxValue: ""
-    },
-    {
-      dataTypeName: "AlphanumSpecialChars200",
-      dataTypeValue: "string",
-      datatypeCharLimit: "200",
-      maxValue: ""
-    },
-    {
-      dataTypeName: "Boolean",
-      dataTypeValue: "boolean",
-      datatypeCharLimit: "",
-      maxValue: ""
-    },
-    {
-      dataTypeName: "Email",
-      dataTypeValue: "string",
-      datatypeCharLimit: "",
-      maxValue: ""
-    },
+  valueTypeList = [
     // {
-    //   dataTypeName: "File",
+    //   dataTypeName: "AlphaNum100",
+    //   dataTypeValue: "string",
+    //   datatypeCharLimit: "100",
+    //   maxValue: ""
+    // },
+    // {
+    //   dataTypeName: "AlphanumSpecialChars200",
+    //   dataTypeValue: "string",
+    //   datatypeCharLimit: "200",
+    //   maxValue: ""
+    // },
+    // {
+    //   dataTypeName: "Boolean",
+    //   dataTypeValue: "boolean",
+    //   datatypeCharLimit: "",
+    //   maxValue: ""
+    // },
+    // {
+    //   dataTypeName: "Email",
     //   dataTypeValue: "string",
     //   datatypeCharLimit: "",
     //   maxValue: ""
     // },
-    {
-      dataTypeName: "IP",
-      dataTypeValue: "string",
-      datatypeCharLimit: "",
-      maxValue: ""
-    },
-    {
-      dataTypeName: "Number",
-      dataTypeValue: "number",
-      datatypeCharLimit: "",
-      maxValue: ""
-    },
-    {
-      dataTypeName: "Password",
-      dataTypeValue: "string",
-      datatypeCharLimit: "",
-      maxValue: ""
-    },
-    {
-      dataTypeName: "PositiveNumber",
-      dataTypeValue: "string",
-      datatypeCharLimit: "",
-      maxValue: "",
-    },
-    {
-      dataTypeName: "String2000",
-      dataTypeValue: "string",
-      datatypeCharLimit: "2000",
-      maxValue: ""
-    },
-    {
-      dataTypeName: "String50",
-      dataTypeValue: "string",
-      datatypeCharLimit: "50",
-      maxValue: ""
-    },
-    {
-      dataTypeName: "String100",
-      dataTypeValue: "string",
-      datatypeCharLimit: "100",
-      maxValue: ""
-    },
+    // // {
+    // //   dataTypeName: "File",
+    // //   dataTypeValue: "string",
+    // //   datatypeCharLimit: "",
+    // //   maxValue: ""
+    // // },
+    // {
+    //   dataTypeName: "IP",
+    //   dataTypeValue: "string",
+    //   datatypeCharLimit: "",
+    //   maxValue: ""
+    // },
+    // {
+    //   dataTypeName: "Number",
+    //   dataTypeValue: "number",
+    //   datatypeCharLimit: "",
+    //   maxValue: ""
+    // },
+    // {
+    //   dataTypeName: "Password",
+    //   dataTypeValue: "string",
+    //   datatypeCharLimit: "",
+    //   maxValue: ""
+    // },
+    // {
+    //   dataTypeName: "PositiveNumber",
+    //   dataTypeValue: "string",
+    //   datatypeCharLimit: "",
+    //   maxValue: "",
+    // },
+    // {
+    //   dataTypeName: "String2000",
+    //   dataTypeValue: "string",
+    //   datatypeCharLimit: "2000",
+    //   maxValue: ""
+    // },
+    // {
+    //   dataTypeName: "String50",
+    //   dataTypeValue: "string",
+    //   datatypeCharLimit: "50",
+    //   maxValue: ""
+    // },
+    // {
+    //   dataTypeName: "String100",
+    //   dataTypeValue: "string",
+    //   datatypeCharLimit: "100",
+    //   maxValue: ""
+    // },
 
-    {
-      dataTypeName: "URL",
-      dataTypeValue: "string",
-      datatypeCharLimit: "",
-      maxValue: ""
-    },
+    // {
+    //   dataTypeName: "URL",
+    //   dataTypeValue: "string",
+    //   datatypeCharLimit: "",
+    //   maxValue: ""
+    // },
+    // {
+    //   dataTypeName: "AlphaNum100",
+    //   dataTypeValue: "string",
+    //   datatypeCharLimit: "100",
+    //   maxValue: ""
+    // },
+    // {
+    //   dataTypeName: "AlphanumSpecialChars200",
+    //   dataTypeValue: "string",
+    //   datatypeCharLimit: "200",
+    //   maxValue: ""
+    // },
+    // {
+    //   dataTypeName: "Boolean",
+    //   dataTypeValue: "boolean",
+    //   datatypeCharLimit: "",
+    //   maxValue: ""
+    // },
+    // {
+    //   dataTypeName: "Email",
+    //   dataTypeValue: "string",
+    //   datatypeCharLimit: "",
+    //   maxValue: ""
+    // },
+    // {
+    ////   dataTypeName: "File",
+    ////   dataTypeValue: "string",
+    ////   datatypeCharLimit: "",
+    ////   maxValue: ""
+    //// },
+    "IP", "Number", "Password", "PositiveNumber", "String2000", "String50", "String100", "URL", "AlphaNum100", "AlphanumSpecialChars200", "Boolean", "Email", "StringList"
+
   ];
 
   constructor(private commonService: CommonService,
-    private formBuilder: FormBuilder,
-    private snackbar: SnackbarService,) { }
+    private fb: FormBuilder,
+    private snackbar: SnackbarService,
+    private cd: ChangeDetectorRef) { }
 
   ngOnInit(): void {
 
-    this.newForm = this.formBuilder.group({
-      formTitle: [''],
+    this.newForm = this.fb.group({
+      formTitle: ['New Form'],
       formDescription: [''],
-      attributes: this.formBuilder.array([
+      attributes: this.fb.array([
         this.addAttributeGroup()
       ])
     });
   }
 
+  ngAfterViewInit() {
+
+    // this.expanded = true;
+    this.cd.detectChanges();
+  }
+
   addAttributeGroup(): FormGroup {
-    return this.formBuilder.group({
-      attributeName: ['New Attribute'],
+
+    return this.fb.group({
+
+      attributeType: [''],
+      // categoryOptions: this.fb.group({
+      // this.addOptionGroup()
       categories: new FormArray([
         this.addCategoryGroup()
       ]),
-      datatype: [''],
-      description: [''],
-      options: new FormArray([
-        this.addOptionGroup()
-      ]),
-      isRequired: [''],
-      type: [''],
+
+      // }),
+      helpText: [''],
+      isRequired: [true],
+      key: [''],
+      label: ['New Attribute'],
+      valueType: [''],
+      isMultipleChoice: [false],
+
 
     });
   }
@@ -158,6 +185,7 @@ export class NewFormComponent implements OnInit {
 
   addAttributeButton() {
     (<FormArray>this.newForm.controls['attributes']).push(this.addAttributeGroup());
+    this.cd.detectChanges();
   }
 
   removeAttribute(i) {
@@ -166,30 +194,30 @@ export class NewFormComponent implements OnInit {
     this.expanded = !this.expanded;
   }
 
-  addOptionGroup(): FormGroup {
-    return this.formBuilder.group({
-      options: [''],
-    });
-  }
+  // addOptionGroup(): FormGroup {
+  //   return this.formBuilder.group({
+  //     options: [''],
+  //   });
+  // }
 
-  getOptions(form) {
-    return form.controls['options'].controls;
-  }
+  // getOptions(form) {
+  //   return form.controls['options'].controls;
+  // }
 
-  addOptionButton(i, j) {
-    const control = (<FormArray>this.newForm.controls['attributes']).at(i).get('options') as FormArray;
-    control.push(this.addOptionGroup());
-  }
+  // addOptionButton(i, j) {
+  //   const control = (<FormArray>this.newForm.controls['attributes']).at(i).get('options') as FormArray;
+  //   control.push(this.addOptionGroup());
+  // }
 
-  removeOptions(i) {
-    const control = (<FormArray>this.newForm.controls['attributes']).at(i).get('options') as FormArray;
-    control.removeAt(i);
-  }
+  // removeOptions(i) {
+  //   const control = (<FormArray>this.newForm.controls['attributes']).at(i).get('options') as FormArray;
+  //   control.removeAt(i);
+  // }
 
   addCategoryGroup(): FormGroup {
-    return this.formBuilder.group({
+    return this.fb.group({
       categoryName: [''],
-      categoryOptions: new FormArray([
+      values: new FormArray([
         this.addCategoryOptionGroup()
       ])
     });
@@ -210,22 +238,22 @@ export class NewFormComponent implements OnInit {
   }
 
   addCategoryOptionGroup(): FormGroup {
-    return this.formBuilder.group({
+    return this.fb.group({
       options: [''],
     });
   }
 
   getCategoryOptions(form, j) {
-    return form.controls['categories'].controls[j].controls['categoryOptions'].controls;
+    return form.controls['categories'].controls[j].controls['values'].controls;
   }
 
   addCategoryOptionButton(i, j) {
-    const control = ((<FormArray>this.newForm.controls['attributes']).at(i).get('categories') as FormArray).at(j).get('categoryOptions') as FormArray;
+    const control = ((<FormArray>this.newForm.controls['attributes']).at(i).get('categories') as FormArray).at(j).get('values') as FormArray;
     control.push(this.addCategoryOptionGroup());
   }
 
   removeCategoryOption(i, j, k) {
-    const control = ((<FormArray>this.newForm.controls['attributes']).at(i).get('categories') as FormArray).at(j).get('categoryOptions') as FormArray;
+    const control = ((<FormArray>this.newForm.controls['attributes']).at(i).get('categories') as FormArray).at(j).get('values') as FormArray;
     control.removeAt(j);
   }
 
@@ -243,9 +271,29 @@ export class NewFormComponent implements OnInit {
 
   onSave() {
 
-    let data = this.newForm.value;
-    this.formSaveData.emit(data);
-    this.newForm.reset();
+    let formDataObj = JSON.parse(JSON.stringify(this.newForm.value));
+    console.log("form data-->", formDataObj);
+    let attributes = this.attributeObjFormation(formDataObj.attributes)
+    // let attributeSchema = 
+    // this.formSaveData.emit(data);
+    // this.newForm.reset();
+  }
+
+  attributeObjFormation(list: Array<any>) {
+
+    list.forEach(item => {
+      // console.log("item-->", item);
+      item.categoryOptions = {};
+      if (item.attributeType == "OPTIONS") {
+        item.categoryOptions.isMultipleChoice = item.isMultipleChoice;
+        item.categoryOptions.categories = item.categories;
+      }
+
+      delete item.isMultipleChoice;
+      delete item.categories;
+    });
+
+    console.log("list-->", list);
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -261,19 +309,16 @@ export class NewFormComponent implements OnInit {
 
   typeSelectChange(e, i) {
 
-    let type = e.typeValue
-    if (type == "CATEGORY_BASED_VALUE") {
-
-      const control = (<FormArray>this.newForm.controls['attributes']).at(i).get('options') as FormArray;
-      for (let i = control.length - 1; i >= 1; i--) { control.removeAt(i); }
-      control.at(i).reset();
+    let type = e;
+    if (type == "OPTIONS") {
+      (<FormArray>this.newForm.controls['attributes']).at(i).get('valueType').setValue('StringList');
     }
-    else if (type == "SINGLE_CHOICE" || type == "MULTIPLE_CHOICE") {
+    else {
 
       const control = (<FormArray>this.newForm.controls['attributes']).at(i).get('categories') as FormArray;
       for (let i = control.length - 1; i >= 1; i--) { control.removeAt(i); }
 
-      const opt = ((<FormArray>this.newForm.controls['attributes']).at(i).get('categories') as FormArray).at(0).get('categoryOptions') as FormArray
+      const opt = ((<FormArray>this.newForm.controls['attributes']).at(i).get('categories') as FormArray).at(0).get('values') as FormArray
       for (let j = opt.length - 1; j >= 1; j--) { opt.removeAt(j); }
       control.at(i).reset();
     }

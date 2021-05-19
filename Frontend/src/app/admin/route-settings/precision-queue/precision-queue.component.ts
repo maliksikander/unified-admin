@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
@@ -12,7 +12,7 @@ import { map } from 'rxjs/operators';
   templateUrl: './precision-queue.component.html',
   styleUrls: ['./precision-queue.component.scss']
 })
-export class PrecisionQueueComponent implements OnInit {
+export class PrecisionQueueComponent implements OnInit, AfterViewInit {
   stepSaveBtnText = "Add";
   spinner: any = true;
   save = "save";
@@ -64,16 +64,19 @@ export class PrecisionQueueComponent implements OnInit {
   };
   queueForm: FormGroup;
   stepForm: FormGroup;
+  @ViewChild('tableData') tableData: ElementRef;
 
   constructor(private commonService: CommonService,
     private dialog: MatDialog,
     private endPointService: EndpointService,
     private fb: FormBuilder,
-    private snackbar: SnackbarService,) { }
+    private snackbar: SnackbarService,
+    private cd: ChangeDetectorRef) { }
 
   ngOnInit() {
 
     this.commonService.tokenVerification();
+    console.log("el 2-->", this.tableData);
 
     //setting local form validation messages 
     this.validations = this.commonService.queueFormErrorMessages;
@@ -107,6 +110,15 @@ export class PrecisionQueueComponent implements OnInit {
     });
 
     this.getQueue();
+  }
+
+
+  ngAfterViewInit() {
+
+    console.log("el 1-->", this.tableData);
+    this.cd.detectChanges();
+
+
   }
 
   //creating expression form array object
