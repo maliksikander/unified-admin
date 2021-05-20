@@ -38,6 +38,7 @@ export class FormsComponent implements OnInit {
   }
 
   onSave(e) {
-    console.log("event-->", e)
+    this.addForm = !this.addForm;
+    // console.log("event-->", e)
   }
 }

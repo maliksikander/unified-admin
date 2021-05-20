@@ -24,7 +24,7 @@
                         <ng-container *ngFor="let attribute of getAttribute(newForm); let i = index">
 
 
-                            <mat-expansion-panel [expanded]="true" cdkDrag [formGroupName]="i"
+                            <mat-expansion-panel #panel [expanded]="true" cdkDrag [formGroupName]="i"
                                 (opened)="panelExpanded()" (closed)="panelExpanded()">
 
                                 <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight">
@@ -32,10 +32,9 @@
                                         <mat-icon>more_vert</mat-icon>
                                     </div>
 
-
                                     <mat-panel-title>
                                         <div class="panel-header">
-                                            <span>{{attribute?.value?.label}}</span>
+                                            <span *ngIf="!panel.expanded">{{attribute?.value?.label}}</span>
                                             <span>{{attribute?.value?.description}}</span>
                                         </div>
                                     </mat-panel-title>
@@ -44,11 +43,8 @@
                                         <button mat-mini-fab>
                                             <mat-icon>mode_edit</mat-icon>
                                         </button>
-
                                     </span>
-
                                 </mat-expansion-panel-header>
-
 
                                 <div class="attribute-container col-md-12">
                                     <div class="attribute-fields">
@@ -58,6 +54,7 @@
                                                 [ngClass]="attribute?.value?.attributeType == 'INPUT' ? 'col-md-6' : 'col-md-9'">
                                                 <mat-form-field appearance="outline">
                                                     <input matInput placeholder="Attribute Name"
+                                                        (keyup)="attrKeyGenerator(attribute?.value?.label,i)"
                                                         formControlName="label">
                                                 </mat-form-field>
                                             </div>
@@ -104,11 +101,8 @@
                                             </div>
                                         </div>
 
-
-
                                         <ng-container *ngIf="attribute?.value?.attributeType == 'OPTIONS'"
                                             formArrayName="categories">
-
                                             <div class="attribute-col">
                                                 <ng-container
                                                     *ngFor="let category of getCategories(attribute); let j = index">
@@ -136,26 +130,12 @@
                                                                     </mat-form-field>
 
                                                                     <div class="add-category-option form-group">
-
                                                                         <button
                                                                             *ngIf="getCategoryOptions(attribute,j)?.length > 1"
                                                                             mat-mini-fab class="remove-btn"
                                                                             (click)="removeCategoryOption(i,j,k)">
                                                                             <mat-icon>close</mat-icon>
                                                                         </button>
-
-                                                                        <!-- <button
-                                                                            *ngIf="k == getCategoryOptions(attribute,j)?.length - 1"
-                                                                            mat-mini-fab
-                                                                            (click)="addCategoryOptionButton(i,j)">
-                                                                            <mat-icon class="add-icon">add
-                                                                            </mat-icon>
-                                                                        </button> -->
-
-                                                                        <!-- <div *ngIf="j == getCategories(attribute)?.length - 1" -->
-                                                                        <!-- > -->
-
-                                                                        <!-- </div> -->
                                                                     </div>
                                                                     <button
                                                                         *ngIf="k == getCategoryOptions(attribute,j)?.length - 1"
@@ -179,48 +159,12 @@
                                                     </div>
                                                 </ng-container>
                                             </div>
-
                                         </ng-container>
-
-                                        <!-- <ng-container
-                                            *ngIf="attribute?.value?.type?.typeValue == 'MULTIPLE_CHOICE' || attribute?.value?.type?.typeValue == 'SINGLE_CHOICE'"
-                                            formArrayName="options">
-
-                                            <div class="attribute-col">
-                                                <ng-container
-                                                    *ngFor="let option of getOptions(attribute); let j = index">
-                                                    <div class="form-group col-md-7 option-container"
-                                                        [formGroupName]="j">
-                                                        <mat-form-field appearance="outline">
-                                                            <input matInput placeholder="Option"
-                                                                formControlName="options">
-                                                        </mat-form-field>
-
-                                                        <div class="remove-option form-group"
-                                                            *ngIf="getOptions(attribute)?.length > 1">
-                                                            <button mat-mini-fab class="remove-btn"
-                                                                (click)="removeOptions(i)">
-                                                                <mat-icon>close</mat-icon>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="add-category-btn form-group col-md-3 p-0"
-                                                        *ngIf="j == getOptions(attribute)?.length - 1">
-                                                        <button (click)="addOptionButton(i,j)" mat-button>
-                                                            <mat-icon>add</mat-icon>
-                                                            Add Option
-                                                        </button>
-                                                    </div>
-                                                </ng-container>
-                                            </div>
-                                        </ng-container> -->
                                     </div>
 
                                     <hr class="main-attribute-hr">
 
                                     <div class="attribute-row attribute-action-area">
-
                                         <div class="toggle-section">
                                             <mat-slide-toggle formControlName="isRequired"
                                                 (change)="onRequiredToggleChange($event)">Required
@@ -231,7 +175,8 @@
 
                                         <div class="icon-btn-section">
                                             <span>
-                                                <button mat-mini-fab matTooltip="Copy">
+                                                <button mat-mini-fab matTooltip="Copy"
+                                                    (click)="copyAttribute(attribute,i)">
                                                     <i class="material-icons" aria-hidden="true">content_copy</i>
                                                 </button>
                                                 <button mat-mini-fab matTooltip="Delete" (click)="removeAttribute(i)">
@@ -243,7 +188,8 @@
                                         <div class="line-break-div"></div>
 
                                         <div class="save-btn-section">
-                                            <button mat-button class="save-btn" (click)="onSave()">Save
+                                            <button [disabled]="!newForm.valid" mat-button class="save-btn"
+                                                (click)="onAttributeSave()">Save
                                                 Attribute</button>
                                         </div>
                                     </div>
@@ -268,7 +214,7 @@
         <hr>
     </div>
 
-    <div class="form-action-area">
+    <div class="form-action-div">
         <button mat-button (click)="onClose()" class="gray-btn">Cancel</button>
         <button [disabled]="!newForm.valid" mat-button class="save-btn" (click)="onSave()">Save
             Form</button>

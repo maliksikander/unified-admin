@@ -20,119 +20,7 @@ export class NewFormComponent implements OnInit, AfterViewInit {
 
   attributeTypeList = ["INPUT", "OPTIONS"];
 
-  valueTypeList = [
-    // {
-    //   dataTypeName: "AlphaNum100",
-    //   dataTypeValue: "string",
-    //   datatypeCharLimit: "100",
-    //   maxValue: ""
-    // },
-    // {
-    //   dataTypeName: "AlphanumSpecialChars200",
-    //   dataTypeValue: "string",
-    //   datatypeCharLimit: "200",
-    //   maxValue: ""
-    // },
-    // {
-    //   dataTypeName: "Boolean",
-    //   dataTypeValue: "boolean",
-    //   datatypeCharLimit: "",
-    //   maxValue: ""
-    // },
-    // {
-    //   dataTypeName: "Email",
-    //   dataTypeValue: "string",
-    //   datatypeCharLimit: "",
-    //   maxValue: ""
-    // },
-    // // {
-    // //   dataTypeName: "File",
-    // //   dataTypeValue: "string",
-    // //   datatypeCharLimit: "",
-    // //   maxValue: ""
-    // // },
-    // {
-    //   dataTypeName: "IP",
-    //   dataTypeValue: "string",
-    //   datatypeCharLimit: "",
-    //   maxValue: ""
-    // },
-    // {
-    //   dataTypeName: "Number",
-    //   dataTypeValue: "number",
-    //   datatypeCharLimit: "",
-    //   maxValue: ""
-    // },
-    // {
-    //   dataTypeName: "Password",
-    //   dataTypeValue: "string",
-    //   datatypeCharLimit: "",
-    //   maxValue: ""
-    // },
-    // {
-    //   dataTypeName: "PositiveNumber",
-    //   dataTypeValue: "string",
-    //   datatypeCharLimit: "",
-    //   maxValue: "",
-    // },
-    // {
-    //   dataTypeName: "String2000",
-    //   dataTypeValue: "string",
-    //   datatypeCharLimit: "2000",
-    //   maxValue: ""
-    // },
-    // {
-    //   dataTypeName: "String50",
-    //   dataTypeValue: "string",
-    //   datatypeCharLimit: "50",
-    //   maxValue: ""
-    // },
-    // {
-    //   dataTypeName: "String100",
-    //   dataTypeValue: "string",
-    //   datatypeCharLimit: "100",
-    //   maxValue: ""
-    // },
-
-    // {
-    //   dataTypeName: "URL",
-    //   dataTypeValue: "string",
-    //   datatypeCharLimit: "",
-    //   maxValue: ""
-    // },
-    // {
-    //   dataTypeName: "AlphaNum100",
-    //   dataTypeValue: "string",
-    //   datatypeCharLimit: "100",
-    //   maxValue: ""
-    // },
-    // {
-    //   dataTypeName: "AlphanumSpecialChars200",
-    //   dataTypeValue: "string",
-    //   datatypeCharLimit: "200",
-    //   maxValue: ""
-    // },
-    // {
-    //   dataTypeName: "Boolean",
-    //   dataTypeValue: "boolean",
-    //   datatypeCharLimit: "",
-    //   maxValue: ""
-    // },
-    // {
-    //   dataTypeName: "Email",
-    //   dataTypeValue: "string",
-    //   datatypeCharLimit: "",
-    //   maxValue: ""
-    // },
-    // {
-    ////   dataTypeName: "File",
-    ////   dataTypeValue: "string",
-    ////   datatypeCharLimit: "",
-    ////   maxValue: ""
-    //// },
-    "IP", "Number", "Password", "PositiveNumber", "String2000", "String50", "String100", "URL", "AlphaNum100", "AlphanumSpecialChars200", "Boolean", "Email", "StringList"
-
-  ];
+  valueTypeList = ["IP", "Number", "Password", "PositiveNumber", "String2000", "String50", "String100", "URL", "AlphaNum100", "AlphanumSpecialChars200", "Boolean", "Email", "StringList"];
 
   constructor(private commonService: CommonService,
     private fb: FormBuilder,
@@ -142,7 +30,7 @@ export class NewFormComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
 
     this.newForm = this.fb.group({
-      formTitle: ['New Form'],
+      formTitle: ['', Validators.required],
       formDescription: [''],
       attributes: this.fb.array([
         this.addAttributeGroup()
@@ -150,32 +38,21 @@ export class NewFormComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngAfterViewInit() {
-
-    // this.expanded = true;
-    this.cd.detectChanges();
-  }
+  ngAfterViewInit() { this.cd.detectChanges(); }
 
   addAttributeGroup(): FormGroup {
 
     return this.fb.group({
-
-      attributeType: [''],
-      // categoryOptions: this.fb.group({
-      // this.addOptionGroup()
+      attributeType: ['', [Validators.required]],
       categories: new FormArray([
         this.addCategoryGroup()
       ]),
-
-      // }),
       helpText: [''],
       isRequired: [true],
-      key: [''],
-      label: ['New Attribute'],
+      key: ['New_Attribute'],
+      label: ['New Attribute', [Validators.required]],
       valueType: [''],
       isMultipleChoice: [false],
-
-
     });
   }
 
@@ -194,29 +71,9 @@ export class NewFormComponent implements OnInit, AfterViewInit {
     this.expanded = !this.expanded;
   }
 
-  // addOptionGroup(): FormGroup {
-  //   return this.formBuilder.group({
-  //     options: [''],
-  //   });
-  // }
-
-  // getOptions(form) {
-  //   return form.controls['options'].controls;
-  // }
-
-  // addOptionButton(i, j) {
-  //   const control = (<FormArray>this.newForm.controls['attributes']).at(i).get('options') as FormArray;
-  //   control.push(this.addOptionGroup());
-  // }
-
-  // removeOptions(i) {
-  //   const control = (<FormArray>this.newForm.controls['attributes']).at(i).get('options') as FormArray;
-  //   control.removeAt(i);
-  // }
-
   addCategoryGroup(): FormGroup {
     return this.fb.group({
-      categoryName: [''],
+      categoryName: ['', [Validators.required]],
       values: new FormArray([
         this.addCategoryOptionGroup()
       ])
@@ -239,7 +96,7 @@ export class NewFormComponent implements OnInit, AfterViewInit {
 
   addCategoryOptionGroup(): FormGroup {
     return this.fb.group({
-      options: [''],
+      options: ['', Validators.required],
     });
   }
 
@@ -269,31 +126,83 @@ export class NewFormComponent implements OnInit, AfterViewInit {
 
   panelExpanded() { this.expanded = !this.expanded; }
 
-  onSave() {
-
-    let formDataObj = JSON.parse(JSON.stringify(this.newForm.value));
-    console.log("form data-->", formDataObj);
-    let attributes = this.attributeObjFormation(formDataObj.attributes)
-    // let attributeSchema = 
-    // this.formSaveData.emit(data);
-    // this.newForm.reset();
+  savePredecessor() {
+    let data = JSON.parse(JSON.stringify(this.newForm.value));
+    let attributeList = this.attrListFormation(data.attributes);
+    data.attributes = attributeList;
+    console.log("data-->", data);
+    return data;
   }
 
-  attributeObjFormation(list: Array<any>) {
+  onAttributeSave() {
+    let attrSaveObj = this.savePredecessor();
+  }
+
+  onSave() {
+
+    let saveObj = this.savePredecessor();
+    // console.log("form data-->", formDataObj);
+    // console.log("list-->", attributeList);
+    this.formSaveData.emit(saveObj);
+    this.newForm.reset();
+  }
+
+  copyAttribute(attribute, i) {
+
+    // console.log(i, "<--attr-->", attribute);
+
+    (<FormArray>this.newForm.controls['attributes']).push(this.addAttributeGroup());
+    this.cd.detectChanges();
+    let length = this.newForm.value.attributes.length; // form attribute list length
+    // console.log("length-->", length);
+    (<FormArray>this.newForm.controls['attributes']).at(length - 1).patchValue({
+      attributeType: attribute.value.attributeType,
+      categories: attribute.value.categories,
+      helpText: attribute.value.helpText,
+      isRequired: attribute.value.isRequired,
+      key: "copy_of" + attribute.value.key,
+      label: "Copy of" + " " + attribute.value.label,
+      valueType: attribute.value.valueType,
+      isMultipleChoice: attribute.value.isMultipleChoice,
+    });
+
+  }
+
+  attrListFormation(list: Array<any>) {
 
     list.forEach(item => {
-      // console.log("item-->", item);
       item.categoryOptions = {};
       if (item.attributeType == "OPTIONS") {
+
+        item = this.formatOptionList(item);
         item.categoryOptions.isMultipleChoice = item.isMultipleChoice;
         item.categoryOptions.categories = item.categories;
       }
-
       delete item.isMultipleChoice;
       delete item.categories;
     });
+    return list
+  }
 
-    console.log("list-->", list);
+  formatOptionList(item) {
+    let categories = item.categories;
+    categories.forEach(category => {
+      let newVal = [];
+      let values = category.values;
+      values.forEach(val => {
+        newVal.push(val.options)
+      });
+      category.values = newVal;
+    });
+
+    return item;
+  }
+
+
+  attrKeyGenerator(attr: string, i: number) {
+
+    let key = attr.replace(" ", "_");
+    (<FormArray>this.newForm.controls['attributes']).at(i).get('key').setValue(key);
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -315,6 +224,7 @@ export class NewFormComponent implements OnInit, AfterViewInit {
     }
     else {
 
+      (<FormArray>this.newForm.controls['attributes']).at(i).get('valueType').setValue("String100");
       const control = (<FormArray>this.newForm.controls['attributes']).at(i).get('categories') as FormArray;
       for (let i = control.length - 1; i >= 1; i--) { control.removeAt(i); }
 

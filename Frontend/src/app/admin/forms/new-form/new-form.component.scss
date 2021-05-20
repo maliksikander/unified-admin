@@ -29,7 +29,7 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-.form-action-area {
+.form-action-div {
   text-align: right;
   padding: 0 30px;
 
@@ -48,6 +48,10 @@ input::-webkit-inner-spin-button {
 
     &.save-btn {
       background: #25afcb;
+    }
+
+    &:disabled {
+      color: rgba(0, 0, 0, 0.26);
     }
   }
 }
@@ -196,13 +200,13 @@ input::-webkit-inner-spin-button {
           // padding: 0;
 
           // button {
-            // background: transparent;
-            padding: 0;
+          // background: transparent;
+          padding: 0;
 
-            mat-icon {
-              color: #25afcb;
-              font-size: 20px;
-            }
+          mat-icon {
+            color: #25afcb;
+            font-size: 20px;
+          }
           // }
         }
 
@@ -291,10 +295,14 @@ input::-webkit-inner-spin-button {
             height: 27px;
             top: 5px;
             line-height: 27px;
-            // color: #4b4b4b;
+            color: #4b4b4b;
             // font-weight: 800;
             background: #d8e9fa;
             box-shadow: none;
+
+            &:disabled {
+              color: rgba(0, 0, 0, 0.26);
+            }
           }
         }
       }
