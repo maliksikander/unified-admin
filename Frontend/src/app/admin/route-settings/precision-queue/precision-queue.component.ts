@@ -76,7 +76,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
   ngOnInit() {
 
     this.commonService.tokenVerification();
-    console.log("el 2-->", this.tableData);
+    // console.log("el 2-->", this.tableData);
 
     //setting local form validation messages 
     this.validations = this.commonService.queueFormErrorMessages;

@@ -1961,6 +1961,11 @@ snack-bar-container {
   .ngx-pagination button {
     padding: 0.1875rem 0.125rem;
   }
+
+  .ngx-pagination .pagination-next a::after,
+  .ngx-pagination .pagination-next.disabled::after {
+    margin-left: 0rem;
+  }
 }
 
 .step-section {

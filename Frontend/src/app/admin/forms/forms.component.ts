@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 import { CommonService } from '../services/common.service';
 import { EndpointService } from '../services/endpoint.service';
 import { SnackbarService } from '../services/snackbar.service';
@@ -12,9 +13,15 @@ import { SnackbarService } from '../services/snackbar.service';
 export class FormsComponent implements OnInit {
 
   searchTerm = "";
-  addForm: boolean = true;
-  editFormData;
+  addForm: boolean = false;
+  editData;
   pageTitle = "Forms";
+  formsList = [];
+  spinner = true;
+  p: any = 1;
+  itemsPerPageList = [5, 10, 15];
+  itemsPerPage = 5;
+  selectedItem = this.itemsPerPageList[0];
 
   constructor(private commonService: CommonService,
     private dialog: MatDialog,
@@ -22,6 +29,10 @@ export class FormsComponent implements OnInit {
     private snackbar: SnackbarService,) { }
 
   ngOnInit(): void {
+
+    let pageNumber = localStorage.getItem('formsPage');
+    if (pageNumber) this.p = pageNumber;
+    this.getForms();
   }
 
   addNewForm() {
@@ -34,11 +45,91 @@ export class FormsComponent implements OnInit {
     if (this.addForm == false) {
       this.pageTitle = "Forms";
     }
-    this.editFormData = undefined;
+    this.editData = undefined;
   }
+
+
+  //to get form list and set the local variable with the response 
+  getForms() {
+    this.endPointService.getForm().subscribe(
+      (res: any) => {
+        this.spinner = false;
+        // console.log("data-->", res);
+        this.formsList = res;
+      },
+      error => {
+        this.spinner = false;
+        console.log("Error fetching:", error);
+        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
+      });
+  }
+
+  stringAsDate(dateStr: string) { return new Date(dateStr); }  //converting date string to `date`
+
+
+  //Confirmation dialog for delete operation , it accepts the form object as parameter 
+  deleteConfirm(data) {
+
+    let msg = "Are you sure you want to delete this form ?";
+    return this.dialog.open(ConfirmDialogComponent, {
+      panelClass: 'confirm-dialog-container',
+      disableClose: true,
+      data: {
+        heading: "Delete Form",
+        message: msg,
+        text: 'confirm',
+        data: data
+      }
+    }).afterClosed().subscribe((res: any) => {
+      this.spinner = true;
+      if (res === 'delete') {
+        this.deleteForm(data);
+      }
+      else {
+        this.spinner = false;
+      }
+    });
+  }
+
+  //to delete form, it accepts `data` containing `form` object as parameter and filters that particular object from local variable on success response
+  deleteForm(data): void {
+
+    //form delete endpoint, it accepts form object id as parameter
+    this.endPointService.deleteForm(data.id).subscribe(
+      (res: any) => {
+
+        if (res && res.code == "Deleted") {
+          this.formsList = this.formsList.filter(item => item.id != data.id);
+          this.snackbar.snackbarMessage('success-snackbar', "Deleted", 1);
+        }
+        this.spinner = false;
+      },
+      (error: any) => {
+        this.spinner = false;
+        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
+      });
+  }
+
+  //to edit form and change the view to edit  page,it accepts form object as parameter
+  editForm(data): void {
+
+    this.addForm = true;
+    this.pageTitle = "Edit Form";
+    this.editData = data;
+  }
+
+
 
   onSave(e) {
     this.addForm = !this.addForm;
-    // console.log("event-->", e)
   }
+
+  pageChange(e) { localStorage.setItem('formsPage', e); }
+
+  pageBoundChange(e) {
+    this.p = e;
+    localStorage.setItem('formsPage', e);
+  }
+
+  selectPage() { this.itemsPerPage = this.selectedItem; }
 }

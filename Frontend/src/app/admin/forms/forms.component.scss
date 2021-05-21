@@ -80,7 +80,7 @@ input::-webkit-inner-spin-button {
 
 .forms-list {
   padding: 0px 30px 0 33px;
- 
+
   .top-heading {
     display: block;
     overflow: hidden;
@@ -124,7 +124,8 @@ input::-webkit-inner-spin-button {
       border-bottom: 1px solid #e2e2e2;
       background: white !important;
       width: 100%;
-      padding: 10px 15px;
+      // padding: 10px 15px;
+      padding: 13px 15px 7px 15px;
       min-height: 45px;
       position: relative;
       list-style: none;
@@ -135,7 +136,7 @@ input::-webkit-inner-spin-button {
       }
 
       .second-data-div {
-        padding-left: 17px;
+        padding: 0 15px;
       }
 
       &:hover {
@@ -196,7 +197,7 @@ input::-webkit-inner-spin-button {
       right: 25px;
       top: 30%;
       z-index: 2;
-      
+
       mat-icon {
         position: relative;
         top: -6px;
@@ -204,4 +205,27 @@ input::-webkit-inner-spin-button {
       }
     }
   }
+}
+
+.no-data-warning {
+  position: absolute;
+  left: 45%;
+  padding: 20px 0 10px 0;
+  width: fit-content;
+  mat-icon {
+    font-size: 50px;
+    color: #777777;
+  }
+  span {
+    display: block;
+    font-size: 12px;
+    color: #777777;
+    top: -5px;
+    left: -15px;
+    position: relative;
+  }
+}
+
+.pagination-section{
+  right: 29px;
 }

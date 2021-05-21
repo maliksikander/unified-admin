@@ -1,3 +1,6 @@
+<div class="loading-area" *ngIf="spinner">
+    <mat-spinner></mat-spinner>
+</div>
 <div class="container main-custom-container">
     <div class="row">
         <div class="col-sm-12">
@@ -24,49 +27,54 @@
                             <li class="col-md-6">Name</li>
                             <li class="offset-md-3">Created On</li>
                         </ul>
-                        <ul class="form-list-data">
-                            <li>
-                                <div class="row">
-                                    <div class="col-sm-6 col-md-6">
-                                        <!-- <span> -->
-                                        Form 1
-                                        <!-- </span> -->
+                        <ng-container *ngIf="formsList && formsList.length > 0">
+                            <ul class="form-list-data">
+                                <li
+                                    *ngFor="let data of formsList | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-md-6">
+                                            {{data?.formTitle ? data?.formTitle : 'N/A'}}
+                                        </div>
+                                        <div class="offset-sm-3 offset-md-3 second-data-div">
+                                            {{stringAsDate(data?.createdAt) | date:'fullDate'}}
+                                        </div>
                                     </div>
-                                    <div class="offset-sm-3 offset-md-3 second-data-div">
-                                        <!-- <span> -->
-                                        Form 1
-                                        <!-- </span> -->
+                                    <div class="list-action-area">
+                                        <span class="list-actions">
+                                            <button mat-mini-fab matTooltip="Edit" (click)="editForm(data)">
+                                                <mat-icon>mode_edit</mat-icon>
+                                            </button>
+                                            <button mat-mini-fab matTooltip="Delete" (click)="deleteConfirm(data)">
+                                                <mat-icon>delete</mat-icon>
+                                            </button>
+                                        </span>
                                     </div>
-                                </div>
-                                <div class="list-action-area">
-                                    <span class="list-actions">
-                                        <button mat-mini-fab matTooltip="Edit">
-                                            <mat-icon>mode_edit</mat-icon>
-                                        </button>
-                                        <button mat-mini-fab matTooltip="Delete">
-                                            <mat-icon>delete</mat-icon>
-                                        </button>
-                                    </span>
-                                </div>
-                            </li>
-                        </ul>
-                        <!-- <div *ngIf="userData.length != 0" class="pagination-section">
-                          <span class="page-span">
-                            <span>Entries Per Page</span>
-                            <select (change)="selectPage()" [(ngModel)]="selectedItem">
-                              <option *ngFor="let item of itemsPerPageList" [value]="item">{{ item }}
-                              </option>
-                            </select>
-                          </span>
-                          <pagination-controls (pageBoundsCorrection)="pageBoundChange($event)"
-                            (pageChange)="p = $event;pageChange($event)" previousLabel="" nextLabel="">
-                          </pagination-controls>
-                        </div> -->
+                                </li>
+                            </ul>
+                        </ng-container>
+
+                        <div *ngIf="formsList && formsList.length == 0" class="no-data-warning">
+                            <mat-icon>warning_amber</mat-icon>
+                            <span>No Data Found</span>
+                        </div>
+
+                        <div *ngIf="formsList.length != 0" class="pagination-section">
+                            <span class="page-span">
+                                <span>Entries Per Page</span>
+                                <select (change)="selectPage()" [(ngModel)]="selectedItem">
+                                    <option *ngFor="let item of itemsPerPageList" [value]="item">{{ item }}
+                                    </option>
+                                </select>
+                            </span>
+                            <pagination-controls (pageBoundsCorrection)="pageBoundChange($event)"
+                                (pageChange)="p = $event;pageChange($event)" previousLabel="" nextLabel="">
+                            </pagination-controls>
+                        </div>
                     </div>
                 </div>
 
                 <ng-container *ngIf="addForm">
-                    <app-new-form [uiBool]="addForm" [formData]="editFormData"
+                    <app-new-form [uiBool]="addForm" [formData]="editData"
                         (uiBoolChange)='childToParentUIChange($event)' (formSaveData)='onSave($event)'>
                     </app-new-form>
                 </ng-container>

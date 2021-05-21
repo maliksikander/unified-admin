@@ -208,6 +208,44 @@ export class EndpointService {
     }).pipe(catchError(this.handleError));
   }
 
+  //////// Forms ///////
+
+  createForm(data): Observable<any> {
+    return this.httpClient.post<any>(`${this.ADMIN_URL}/forms`, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  getForm(): Observable<any> {
+    return this.httpClient.get(`${this.ADMIN_URL}/forms`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  updateForm(data): Observable<any> {
+    return this.httpClient.put<any>(`${this.ADMIN_URL}/forms`, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  deleteForm(id): Observable<any> {
+    return this.httpClient.delete<any>(`${this.ADMIN_URL}/forms/${id}`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
   /////////////// Keycloak /////////////////
 
   login(data): Observable<any> {

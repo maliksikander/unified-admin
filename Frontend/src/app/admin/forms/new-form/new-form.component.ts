@@ -36,9 +36,56 @@ export class NewFormComponent implements OnInit, AfterViewInit {
         this.addAttributeGroup()
       ])
     });
+
+
+    if (this.formData) {
+      this.formData = this.editObjectFormation(JSON.parse(JSON.stringify(this.formData)));
+      console.log("2-->", this.formData);
+      this.newForm.patchValue(this.formData);
+    }
   }
 
   ngAfterViewInit() { this.cd.detectChanges(); }
+
+  editObjectFormation(data) {
+    // console.log("1-->", data);
+    let attr: Array<any> = data.attributes;
+
+    attr.forEach(item => {
+      item.categories = [];
+      if (item.attributeType == "OPTIONS") {
+
+        item.isMultipleChoice = item.categoryOptions.isMultipleChoice;
+        item.categories = item.categoryOptions.categories;
+        let categories: Array<any> = item.categories;
+        categories.forEach(cat => {
+          let mutatedValues = [];
+          cat.values.forEach(item => {
+            let obj = {
+              ['options']: item,
+            }
+            mutatedValues.push(obj);
+          });
+
+          cat.values = mutatedValues;
+        });
+      }
+      else {
+        let defCategoryObj: any = {
+          categoryName: null,
+          values: [{ options: null }]
+        };
+        item.isMultipleChoice = false;
+        item.categories.push(defCategoryObj);
+
+      }
+      // delete item.isMultipleChoice;
+      delete item.categoryOptions;
+    });
+
+    return data;
+
+  }
 
   addAttributeGroup(): FormGroup {
 
@@ -73,7 +120,7 @@ export class NewFormComponent implements OnInit, AfterViewInit {
 
   addCategoryGroup(): FormGroup {
     return this.fb.group({
-      categoryName: ['', [Validators.required]],
+      categoryName: [''],
       values: new FormArray([
         this.addCategoryOptionGroup()
       ])
@@ -96,7 +143,7 @@ export class NewFormComponent implements OnInit, AfterViewInit {
 
   addCategoryOptionGroup(): FormGroup {
     return this.fb.group({
-      options: ['', Validators.required],
+      options: [''],
     });
   }
 
@@ -128,8 +175,8 @@ export class NewFormComponent implements OnInit, AfterViewInit {
 
   savePredecessor() {
     let data = JSON.parse(JSON.stringify(this.newForm.value));
-    let attributeList = this.attrListFormation(data.attributes);
-    data.attributes = attributeList;
+    // let attributeList = this.attrListFormation(data.attributes);
+    // data.attributes = attributeList;
     console.log("data-->", data);
     return data;
   }
