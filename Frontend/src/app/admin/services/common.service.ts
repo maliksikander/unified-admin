@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { AbstractControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup, FormArray } from '@angular/forms';
 import { SnackbarService } from './snackbar.service';
 import { Router } from '@angular/router';
 
@@ -423,6 +423,31 @@ export class CommonService {
     },
   };
 
+  formErrorMessages = {
+    'attributes': {
+      // 'required': "This field is required",
+      // 'minlength': "More characters required",
+      // 'maxlength': "Max 500 characters required",
+      // 'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+      'label': {
+        'required': "This field is required",
+        'maxlength': "Less characters required",
+      },
+    },
+    'formTitle': {
+      'required': "This field is required",
+      'maxlength': "Max 500 characters allowed",
+    },
+    'formDescription': {
+      'required': "This field is required",
+      'maxlength': "Max 500 characters allowed"
+    },
+    'label': {
+      'required': "This field is required",
+      'maxlength': "Max 500 characters required"
+    }
+  };
+
   constructor(private snackbar: SnackbarService,
     private router: Router) { }
 
@@ -449,6 +474,55 @@ export class CommonService {
     result = [formErrors, validations];
     return result;
   }
+
+  // newLog(group: FormGroup, formErrors, validations) {
+  //   let result = [];
+
+  //   // console.log("group-->", group);
+  //   // console.log("formsErrors-->", formErrors);
+  //   // console.log("validations-->", validations);
+
+  //   Object.keys(group.controls).forEach((key: string) => {
+  //     const abstractControl: any = group.get(key);
+  //     if (abstractControl instanceof FormGroup) {
+  //       this.logValidationErrors(abstractControl, formErrors, validations);
+  //     }
+  //     else {
+  //       formErrors[key] = '';
+  //       if (abstractControl && !abstractControl.valid) {
+  //         const messages = validations[key];
+  //         for (const errorKey in abstractControl.errors) {
+  //           if (errorKey) {
+  //             formErrors[key] += messages[errorKey] + ' ';
+  //           }
+  //         }
+  //       }
+  //     }
+  //   });
+
+  //   result = [formErrors, validations];
+  //   return result;
+  // }
+  // onValueChanged(heroForm: any, data: any, formErrors, validations) {
+  //   if (!heroForm) { return; }
+  //   const form = heroForm;
+
+  //   for (const field in formErrors) {
+  //     // clear previous error message (if any)
+  //     formErrors[field] = '';
+  //     const control = form.get(field);
+  //     console.log("control-->", control)
+  //     if (control && control.dirty && !control.valid) {
+
+  //       const messages = validations[field];
+  //       for (const key in control.errors) {
+  //         formErrors[field] += messages[key] + ' ';
+  //       }
+  //     }
+  //   }
+  //   console.log("errors-->", formErrors)
+  // }
+
 
   // verifying token existence form local storage
   tokenVerification() {

@@ -12,6 +12,7 @@ import { HttpInterceptorService } from './admin/services/http-interceptor.servic
 import { LoginComponent } from './authentication/login/login.component';
 import { APP_INITIALIZER } from '@angular/core';
 import { ConfigService } from './admin/services/config.service';
+import { RxReactiveFormsModule } from '@rxweb/reactive-form-validators'
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { ConfigService } from './admin/services/config.service';
     SharedModule,
     AdminModule,
     HttpClientModule,
+    RxReactiveFormsModule
   ],
   providers: [
     // [
@@ -48,7 +50,8 @@ import { ConfigService } from './admin/services/config.service';
     // ],
   ],
   exports: [
-    AdminModule
+    AdminModule,
+    RxReactiveFormsModule
   ],
   bootstrap: [MainComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

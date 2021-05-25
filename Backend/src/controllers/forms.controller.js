@@ -4,10 +4,9 @@ const { formsService } = require('../services');
 
 const getForms = catchAsync(async (req, res) => {
 
-    const param = req.params;
+    const param = req.query;
     let result;
     if (param.constructor === Object) {
-
         if (Object.entries(param).length === 0) {
             result = await formsService.getForms();
         }

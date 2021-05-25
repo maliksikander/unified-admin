@@ -44,6 +44,7 @@ export class FormsComponent implements OnInit {
     this.addForm = e;
     if (this.addForm == false) {
       this.pageTitle = "Forms";
+      this.getForms();
     }
     this.editData = undefined;
   }
@@ -118,10 +119,15 @@ export class FormsComponent implements OnInit {
     this.editData = data;
   }
 
-
-
   onSave(e) {
+
+    this.snackbar.snackbarMessage('success-snackbar', e + ' ' + 'Successfully', 1);
     this.addForm = !this.addForm;
+    this.editData = undefined;
+    this.spinner = true;
+    setTimeout(() => {                       
+      this.getForms();
+    }, 500);
   }
 
   pageChange(e) { localStorage.setItem('formsPage', e); }

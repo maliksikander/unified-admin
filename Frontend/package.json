@@ -23,6 +23,7 @@
     "@angular/platform-browser-dynamic": "~11.2.9",
     "@angular/router": "~11.2.9",
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
+    "@rxweb/reactive-form-validators": "^2.1.2",
     "angular-calendar": "^0.28.22",
     "core-js": "^2.5.4",
     "date-fns": "^2.16.1",

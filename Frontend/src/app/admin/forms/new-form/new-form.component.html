@@ -1,15 +1,25 @@
+<div class="loading-area" *ngIf="spinner">
+    <mat-spinner></mat-spinner>
+</div>
+
 <form class="form-horizontal form-bordered" [formGroup]="newForm">
     <div class="col-md-12 form-parent-div">
         <div class="form-title-section">
             <div class="form-group field-section form-title">
-                <mat-form-field appearance="outline">
+                <mat-form-field appearance="outline" class="validate-form-field">
                     <input matInput formControlName="formTitle" placeholder="Form Title">
+                    <mat-error *ngIf="newForm?.get('formTitle')?.errors?.maxlength">
+                        *{{formErrors?.formTitle}}
+                    </mat-error>
                 </mat-form-field>
             </div>
 
             <div class="form-group field-section description-field">
-                <mat-form-field appearance="outline">
+                <mat-form-field appearance="outline" class="validate-form-field">
                     <input matInput formControlName="formDescription" placeholder="Description(Optional)">
+                    <mat-error *ngIf="newForm?.get('formDescription')?.errors?.maxlength">
+                        *{{formErrors?.formTitle}}
+                    </mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -31,11 +41,11 @@
                                     <div class="drag-handle" cdkDragHandle>
                                         <mat-icon>more_vert</mat-icon>
                                     </div>
-
                                     <mat-panel-title>
                                         <div class="panel-header">
                                             <span *ngIf="!panel.expanded">{{attribute?.value?.label}}</span>
-                                            <span>{{attribute?.value?.description}}</span>
+
+                                            <span *ngIf="!panel.expanded">{{attribute?.value?.helpText}}</span>
                                         </div>
                                     </mat-panel-title>
 
@@ -52,10 +62,14 @@
                                         <div class="attribute-row">
                                             <div class="form-group col-md-6"
                                                 [ngClass]="attribute?.value?.attributeType == 'INPUT' ? 'col-md-6' : 'col-md-9'">
-                                                <mat-form-field appearance="outline">
+                                                <mat-form-field appearance="outline" class="label-form-field">
                                                     <input matInput placeholder="Attribute Name"
                                                         (keyup)="attrKeyGenerator(attribute?.value?.label,i)"
                                                         formControlName="label">
+                                                    <mat-error class="attribute-error"
+                                                        *ngIf="attribute?.get('label')?.errors?.unique">*Name
+                                                        should be unique
+                                                    </mat-error>
                                                 </mat-form-field>
                                             </div>
 
@@ -152,7 +166,7 @@
 
                                                     <div *ngIf="j == getCategories(attribute)?.length - 1"
                                                         class="add-category-btn form-group col-md-3">
-                                                        <button mat-button (click)="addCategoryButton(i,j)">
+                                                        <button mat-button (click)="addCategoryButton(i)">
                                                             <mat-icon>add</mat-icon>
                                                             Add Category
                                                         </button>
@@ -189,7 +203,7 @@
 
                                         <div class="save-btn-section">
                                             <button [disabled]="!newForm.valid" mat-button class="save-btn"
-                                                (click)="onAttributeSave()">Save
+                                                (click)="onSave('Attribute')">Save
                                                 Attribute</button>
                                         </div>
                                     </div>
@@ -216,7 +230,7 @@
 
     <div class="form-action-div">
         <button mat-button (click)="onClose()" class="gray-btn">Cancel</button>
-        <button [disabled]="!newForm.valid" mat-button class="save-btn" (click)="onSave()">Save
+        <button [disabled]="!newForm.valid" mat-button class="save-btn" (click)="onSave('Form')">Save
             Form</button>
     </div>
 

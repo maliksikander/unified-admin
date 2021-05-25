@@ -18,7 +18,7 @@ router.get('/', formsController.getForms);
 // keycloak.enforcer(['forms:view-forms'], {
 //     resource_server_id: 'unified-admin'
 // }),
-router.get('/:formID', formsController.getForms);
+// router.get('/?formID', formsController.getForms);
 
 // keycloak.enforcer(['forms:update-forms'], {
 //     resource_server_id: 'unified-admin'
