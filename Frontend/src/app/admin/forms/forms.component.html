@@ -10,12 +10,12 @@
                 </div>
                 <div *ngIf="!addForm" class="panel-page-content">
                     <div class="filter-section">
-                        <!-- <div class="form-group">
+                        <div class="form-group search-field">
                             <mat-form-field appearance="outline">
                                 <input matInput [(ngModel)]="searchTerm" placeholder="Search">
                                 <mat-icon>search</mat-icon>
                             </mat-form-field>
-                        </div> -->
+                        </div>
 
                         <button (click)="addNewForm()" mat-flat-button>
                             <mat-icon>add</mat-icon>
@@ -30,7 +30,7 @@
                         <ng-container *ngIf="formsList && formsList.length > 0">
                             <ul class="form-list-data">
                                 <li
-                                    *ngFor="let data of formsList | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
+                                    *ngFor="let data of formsList | searchFilter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
                                     <div class="row">
                                         <div class="col-sm-6 col-md-6">
                                             {{data?.formTitle ? data?.formTitle : 'N/A'}}

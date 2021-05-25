@@ -30,6 +30,7 @@ export class FormsComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.commonService.tokenVerification();
     let pageNumber = localStorage.getItem('formsPage');
     if (pageNumber) this.p = pageNumber;
     this.getForms();
@@ -44,6 +45,7 @@ export class FormsComponent implements OnInit {
     this.addForm = e;
     if (this.addForm == false) {
       this.pageTitle = "Forms";
+      this.searchTerm = "";
       this.getForms();
     }
     this.editData = undefined;
@@ -125,7 +127,7 @@ export class FormsComponent implements OnInit {
     this.addForm = !this.addForm;
     this.editData = undefined;
     this.spinner = true;
-    setTimeout(() => {                       
+    setTimeout(() => {
       this.getForms();
     }, 500);
   }

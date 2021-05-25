@@ -28,7 +28,6 @@ export class NewFormComponent implements OnInit, AfterViewInit {
   };
   validations;
   attributeTypeList = ["INPUT", "OPTIONS"];
-
   valueTypeList = ["IP", "Number", "Password", "PositiveNumber", "String2000", "String50", "String100", "URL", "AlphaNum100", "AlphanumSpecialChars200", "Boolean", "Email", "StringList"];
 
   constructor(private commonService: CommonService,
@@ -39,9 +38,8 @@ export class NewFormComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
 
-
+    this.commonService.tokenVerification();
     this.validations = this.commonService.formErrorMessages;
-
 
     this.newForm = this.fb.group({
       formTitle: ['', [Validators.required, Validators.maxLength(500)]],
@@ -54,9 +52,7 @@ export class NewFormComponent implements OnInit, AfterViewInit {
     if (this.formData) this.editOperations();
 
     this.newForm.valueChanges.subscribe((data) => {
-      // console.log("data-->", data);
       this.commonService.logValidationErrors(this.newForm, this.formErrors, this.validations);
-      // this.commonService.onValueChanged(this.newForm, data, this.formErrors, this.validations);
     });
 
   }
@@ -124,7 +120,7 @@ export class NewFormComponent implements OnInit, AfterViewInit {
         item.categories.push(defCategoryObj);
       }
       delete item.categoryOptions;
-      delete item.order
+      if (item._id) delete item._id
     });
 
     return data;
@@ -153,12 +149,6 @@ export class NewFormComponent implements OnInit, AfterViewInit {
   addAttributeButton() {
     (<FormArray>this.newForm.controls['attributes']).push(this.addAttributeGroup());
     this.cd.detectChanges();
-    let attrArray: Array<any> = this.newForm.controls['attributes'].value;
-    attrArray.forEach((item, i) => {
-      if (!item.order) {
-        item.order = i;
-      }
-    });
   }
 
   removeAttribute(i) {
@@ -365,12 +355,9 @@ export class NewFormComponent implements OnInit, AfterViewInit {
     let value = [];
     moveItemInArray(d, event.previousIndex, event.currentIndex);
     d.forEach((item, i) => {
-
-      item.value.order = i;
       value.push(item.value)
     });
     this.newForm.value.attributes = value;
-    // console.log("attr-->", this.newForm.controls['attributes'].value);
   }
 
   typeSelectChange(e, i) {

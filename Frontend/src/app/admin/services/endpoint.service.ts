@@ -214,7 +214,7 @@ export class EndpointService {
     return this.httpClient.post<any>(`${this.ADMIN_URL}/forms`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer' + this.token
+        'Authorization': 'Bearer ' + this.token
       })
     }).pipe(catchError(this.handleError));
   }
@@ -223,7 +223,7 @@ export class EndpointService {
     return this.httpClient.get(`${this.ADMIN_URL}/forms`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer' + this.token
+        'Authorization': 'Bearer ' + this.token
       })
     }).pipe(catchError(this.handleError));
   }
