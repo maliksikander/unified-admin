@@ -11,7 +11,7 @@ const enumerateErrorFormat = winston.format((info) => {
 
 
 const logger = winston.createLogger({
-  level: config.logLevel ? config.logLevel : 'info',
+  level: config.logLevel.toLowerCase() ? config.logLevel.toLowerCase() : 'info',
   // level: config.logLevel,
   format: winston.format.combine(
     enumerateErrorFormat(),

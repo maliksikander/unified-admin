@@ -6,20 +6,31 @@ const error = require('./middlewares/error');
 const https = require('https');
 const fs = require('fs');
 
-let server;
+let httpServer;
+let httpsServer;
+const keyPath = config.httpsKeyPath ? config.httpsKeyPath : "httpsFiles/server.key";
+const certPath = config.httpsCertPath ? config.httpsCertPath : "httpsFiles/server.cert";
+const certPassphrase = config.httpsCertPassphrase ? config.httpsCertPassphrase : "";
+const httpsKey = fs.readFileSync(keyPath, 'utf8');
+const httpsCert = fs.readFileSync(certPath, 'utf8');
+const httpsCredentials = {
+  key: httpsKey,
+  cert: httpsCert,
+  passphrase: certPassphrase
+};
+
 mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
   logger.info('Connected to MongoDB');
 
-  httpsServer = https.createServer({
-    key: fs.readFileSync('server.key'),
-    cert: fs.readFileSync('server.cert')
-  }, app).listen(config.httpsPort, () => {
-    logger.info(`Listening to https port ${config.httpsPort}`);
+  httpServer = app.listen(config.httpPort, () => {
+    logger.info(`Listening to port ${config.httpPort} on http`);
+  });
+
+  httpsServer = https.createServer(httpsCredentials, app).listen(config.httpsPort, () => {
+    logger.info(`Listening to port ${config.httpsPort} on https`);
   })
 
-  httpServer = app.listen(config.httpPort, () => {
-    logger.info(`Listening to http port ${config.httpPort}`);
-  });
+
 }).catch(error => logger.error('DB connection Error:', error));
 
 const exitHandler = () => {

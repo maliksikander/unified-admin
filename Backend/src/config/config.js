@@ -8,9 +8,12 @@ const envVarsSchema = Joi.object()
   .keys({
     NODE_ENV: Joi.string().valid('production', 'development', 'test').required(),
     HTTPPORT: Joi.number().default(3000).description('HTTP Port'),
-    HTTPSPORT:Joi.number().default(3100).description('HTTPS Port'),
+    HTTPSPORT: Joi.number().default(3100).description('HTTPS Port'),
     MONGODB_URL: Joi.string().required().description('Mongo DB url'),
     LOG_LEVEL: Joi.string().required().description('LOG LEVEL'),
+    HTTPS_KEY_PATH: Joi.string().description('HTTPs Key Path'),
+    HTTPS_CERTIFICATE_PATH: Joi.string().description('HTTPs Cartificate Path'),
+    HTTPS_CERTIFICATE_PASSPHRASE: Joi.string().allow("").description('HTTPs Passphrase'),
     // JWT_SECRET: Joi.string().required().description('JWT secret key'),
     // JWT_ACCESS_EXPIRATION_MINUTES: Joi.number().default(30).description('minutes after which access tokens expire'),
     // JWT_REFRESH_EXPIRATION_DAYS: Joi.number().default(30).description('days after which refresh tokens expire'),
@@ -33,6 +36,9 @@ module.exports = {
   httpPort: envVars.HTTPPORT,
   httpsPort: envVars.HTTPSPORT,
   logLevel: envVars.LOG_LEVEL,
+  httpsKeyPath: envVars.HTTPS_KEY_PATH,
+  httpsCertPath: envVars.HTTPS_CERTIFICATE_PATH,
+  httpsCertPassphrase: envVars.HTTPS_CERTIFICATE_PASSPHRASE,
   mongoose: {
     url: envVars.MONGODB_URL + (envVars.NODE_ENV === 'test' ? '-test' : ''),
     options: {
