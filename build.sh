@@ -11,7 +11,6 @@ echo 'Building frontend'
 echo 'Version : '$version
 cd frontend
 npm i
-npm audit fix
 ng build --prod
 cp -rf dist/base-template/* ../backend/src/public/
 cd ../backend

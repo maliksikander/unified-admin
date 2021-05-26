@@ -24,18 +24,23 @@
                     </div>
                     <div class="forms-list">
                         <ul class="top-heading">
-                            <li class="col-md-6">Name</li>
-                            <li class="offset-md-3">Created On</li>
+                            <li class="col-md-4">ID</li>
+                            <li class="col-md-4">Name</li>
+                            <li class="col-md-3">Created On</li>
                         </ul>
                         <ng-container *ngIf="formsList && formsList.length > 0">
                             <ul class="form-list-data">
                                 <li
                                     *ngFor="let data of formsList | searchFilter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
                                     <div class="row">
-                                        <div class="col-sm-6 col-md-6">
+                                        <div class="col-sm-4 col-md-4">
+                                            {{data?.id ? data?.id : 'N/A'}}
+                                        </div>
+
+                                        <div class="col-sm-4 col-md-4">
                                             {{data?.formTitle ? data?.formTitle : 'N/A'}}
                                         </div>
-                                        <div class="offset-sm-3 offset-md-3 second-data-div">
+                                        <div class="col-sm-3 col-md-3">
                                             {{stringAsDate(data?.createdAt) | date:'fullDate'}}
                                         </div>
                                     </div>

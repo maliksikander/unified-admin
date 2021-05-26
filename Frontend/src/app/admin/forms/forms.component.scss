@@ -133,10 +133,9 @@ input::-webkit-inner-spin-button {
       div {
         color: #686868;
         font-size: 13px;
-      }
-
-      .second-data-div {
-        padding: 0 15px;
+        text-overflow: ellipsis;
+        white-space: pre;
+        overflow: hidden;
       }
 
       &:hover {
@@ -226,6 +225,6 @@ input::-webkit-inner-spin-button {
   }
 }
 
-.pagination-section{
+.pagination-section {
   right: 29px;
 }
