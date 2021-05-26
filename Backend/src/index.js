@@ -10,25 +10,32 @@ let server;
 mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
   logger.info('Connected to MongoDB');
 
-  // server = https.createServer({
-  //   key: fs.readFileSync('server.key'),
-  //   cert: fs.readFileSync('server.cert')
-  // }, app).listen(config.port, () => {
-  //   logger.info(`Listening to port ${config.port}`);
-  // })
+  httpsServer = https.createServer({
+    key: fs.readFileSync('server.key'),
+    cert: fs.readFileSync('server.cert')
+  }, app).listen(config.httpsPort, () => {
+    logger.info(`Listening to https port ${config.httpsPort}`);
+  })
 
-  server = app.listen(config.port, () => {
-    logger.info(`Listening to port ${config.port}`);
+  httpServer = app.listen(config.httpPort, () => {
+    logger.info(`Listening to http port ${config.httpPort}`);
   });
 }).catch(error => logger.error('DB connection Error:', error));
 
 const exitHandler = () => {
-  if (server) {
-    server.close(() => {
-      logger.info('Server closed');
+  if (httpServer) {
+    httpServer.close(() => {
+      logger.info('Http Server closed');
       process.exit(1);
     });
-  } else {
+  }
+  else if (httpsServer) {
+    httpsServer.close(() => {
+      logger.info('Https Server closed');
+      process.exit(1);
+    });
+  }
+  else {
     process.exit(1);
   }
 };
@@ -43,7 +50,11 @@ process.on('unhandledRejection', unexpectedErrorHandler);
 
 process.on('SIGTERM', () => {
   logger.info('SIGTERM received');
-  if (server) {
-    server.close();
+  if (httpsServer) {
+    // server.close();
+    httpsServer.close();
+  }
+  else if (httpServer) {
+    httpServer.close();
   }
 });

@@ -28,7 +28,7 @@ export class NewFormComponent implements OnInit, AfterViewInit {
   };
   validations;
   attributeTypeList = ["INPUT", "OPTIONS"];
-  valueTypeList = ["IP", "Number", "Password", "PositiveNumber", "String2000", "String50", "String100", "URL", "AlphaNum100", "AlphanumSpecialChars200", "Boolean", "Email", "StringList"];
+  valueTypeList = ["IP", "Number", "Password", "PositiveNumber", "String2000", "String50", "String100", "URL", "AlphaNum100", "AlphanumSpecialChars200", "Boolean", "Email", "StringList","PhoneNumber"];
 
   constructor(private commonService: CommonService,
     private fb: FormBuilder,

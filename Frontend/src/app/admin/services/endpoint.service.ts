@@ -5,7 +5,7 @@ import { throwError } from "rxjs";
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { ConfigService } from './config.service';
-
+import { isDevMode } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -24,12 +24,21 @@ export class EndpointService {
     private httpClient: HttpClient,
     private configService: ConfigService,) {
 
+
+
     let e = this.configService.configData;
-    this.ADMIN_URL = e.Admin_URL;
     this.MRE_URL = e.MRE_URL;
     this.CCM_URL = e.CCM_URL;
     this.BOT_URL = e.BOT_URL;
     this.userRoles = e.BUSINESS_USER_ROLES;
+
+    if (isDevMode()) {
+
+      this.ADMIN_URL = 'http://localhost:3000';
+    }
+    else {
+      this.ADMIN_URL = location.origin;
+    }
 
     if (localStorage.getItem('token')) this.token = localStorage.getItem('token');
     if (localStorage.getItem('tenant')) this.tenant = localStorage.getItem('tenant');
