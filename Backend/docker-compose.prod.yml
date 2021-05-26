@@ -8,8 +8,8 @@ services:
     ports:
       - 3000:3000
     environment:
-      - HTTPPORT=3000
-      - HTTPSPORT=3100
+      - PORT=3000
+      - isSSL=true
       - HTTPS_KEY_PATH=src/server.key  
       - HTTPS_CERTIFICATE_PATH=src/server.cert 
       - HTTPS_CERTIFICATE_PASSPHRASE=

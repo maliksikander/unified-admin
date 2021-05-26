@@ -6,8 +6,7 @@ const error = require('./middlewares/error');
 const https = require('https');
 const fs = require('fs');
 
-let httpServer;
-let httpsServer;
+let server;
 const keyPath = config.httpsKeyPath ? config.httpsKeyPath : "httpsFiles/server.key";
 const certPath = config.httpsCertPath ? config.httpsCertPath : "httpsFiles/server.cert";
 const certPassphrase = config.httpsCertPassphrase ? config.httpsCertPassphrase : "";
@@ -22,27 +21,24 @@ const httpsCredentials = {
 mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
   logger.info('Connected to MongoDB');
 
-  httpServer = app.listen(config.httpPort, () => {
-    logger.info(`Listening to port ${config.httpPort} on http`);
-  });
-
-  httpsServer = https.createServer(httpsCredentials, app).listen(config.httpsPort, () => {
-    logger.info(`Listening to port ${config.httpsPort} on https`);
-  })
+  if (config.isSSL == true) {
+    server = https.createServer(httpsCredentials, app).listen(config.Port, () => {
+      logger.info(`Listening to port ${config.Port} on https`);
+    });
+  }
+  else {
+    server = app.listen(config.Port, () => {
+      logger.info(`Listening to port ${config.Port} on http`);
+    });
+  }
 
 
 }).catch(error => logger.error('DB connection Error:', error));
 
 const exitHandler = () => {
-  if (httpServer) {
-    httpServer.close(() => {
-      logger.info('Http Server closed');
-      process.exit(1);
-    });
-  }
-  else if (httpsServer) {
-    httpsServer.close(() => {
-      logger.info('Https Server closed');
+  if (server) {
+    server.close(() => {
+      logger.info('Server closed');
       process.exit(1);
     });
   }
@@ -61,11 +57,5 @@ process.on('unhandledRejection', unexpectedErrorHandler);
 
 process.on('SIGTERM', () => {
   logger.info('SIGTERM received');
-  if (httpsServer) {
-    // server.close();
-    httpsServer.close();
-  }
-  else if (httpServer) {
-    httpServer.close();
-  }
+  if (server) { server.close(); }
 });
