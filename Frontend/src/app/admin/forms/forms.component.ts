@@ -36,11 +36,13 @@ export class FormsComponent implements OnInit {
     this.getForms();
   }
 
+  // change the UI to form view and change page title
   addNewForm() {
     this.addForm = true;
     this.pageTitle = "New Form";
   }
 
+  // change the UI to list view and reset local data variable it accepts a boolean value as parameter
   childToParentUIChange(e): void {
     this.addForm = e;
     if (this.addForm == false) {
@@ -51,24 +53,21 @@ export class FormsComponent implements OnInit {
     this.editData = undefined;
   }
 
-
   //to get form list and set the local variable with the response 
   getForms() {
     this.endPointService.getForm().subscribe(
       (res: any) => {
         this.spinner = false;
-        // console.log("data-->", res);
         this.formsList = res;
       },
       error => {
         this.spinner = false;
         console.log("Error fetching:", error);
-        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
       });
   }
 
-  stringAsDate(dateStr: string) { return new Date(dateStr); }  //converting date string to `date`
-
+  //converting date string to `date` type
+  stringAsDate(dateStr: string) { return new Date(dateStr); }
 
   //Confirmation dialog for delete operation , it accepts the form object as parameter 
   deleteConfirm(data) {
@@ -121,6 +120,8 @@ export class FormsComponent implements OnInit {
     this.editData = data;
   }
 
+  // change form to lsit view and show snackbar message it accepts request repsonse('Created','Updated') as parameter 
+  // and resets data variable and makes request to get updated forms list
   onSave(e) {
 
     this.snackbar.snackbarMessage('success-snackbar', e + ' ' + 'Successfully', 1);
@@ -132,6 +133,7 @@ export class FormsComponent implements OnInit {
     }, 500);
   }
 
+  // ngx-pagination setting methods
   pageChange(e) { localStorage.setItem('formsPage', e); }
 
   pageBoundChange(e) {

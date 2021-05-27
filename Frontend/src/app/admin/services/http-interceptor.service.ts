@@ -16,16 +16,12 @@ import { catchError, tap } from 'rxjs/operators';
 })
 export class HttpInterceptorService {
 
-  permissionDeniedText;
-  unAuthorized_text;
-  licenseExpired_text;
-  internal_server_error_text;
+
   url;
   i = 1;
-  index;
   snackbar_ref;
   evt_type;
-  error_msg;
+
 
 
   constructor(private snackbar: SnackbarService,
@@ -53,10 +49,7 @@ export class HttpInterceptorService {
         if (error.error.message) {
           msg = error.error.message;
           if (msg) msg = msg.toUpperCase();
-          // code = error.error.code;
-          // if (code) {
           this.snackbar.snackbarMessage('error-snackbar', msg, 2);
-          // }
         }
         else {
           msg = error.error;

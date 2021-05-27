@@ -115,7 +115,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
 
-    console.log("el 1-->", this.tableData);
+    // console.log("el 1-->", this.tableData);
     this.cd.detectChanges();
 
 

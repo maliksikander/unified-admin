@@ -176,7 +176,7 @@ input::-webkit-inner-spin-button {
 
         .add-category-btn {
           // position: relative;
-          // top: -5px;
+          // top: -6px;
           padding: 0;
 
           button {
@@ -196,7 +196,7 @@ input::-webkit-inner-spin-button {
 
         .add-option-btn {
           // position: relative;
-          // top: -5px;
+          top: -6px;
           // padding: 0;
 
           // button {
@@ -267,7 +267,7 @@ input::-webkit-inner-spin-button {
 
         .icon-btn-section {
           position: relative;
-          top: 8px;
+          top: 7px;
 
           button {
             width: 20px;
@@ -279,9 +279,11 @@ input::-webkit-inner-spin-button {
             padding: 0px 3px;
 
             i {
-              font-size: 16px;
+              font-size: 15px;
               position: relative;
               top: -10px;
+
+            
             }
             &:hover {
               background: #efefefba;
@@ -305,10 +307,6 @@ input::-webkit-inner-spin-button {
             }
           }
         }
-      }
-
-      .toggle-section {
-        padding-right: 10px;
       }
 
       .multi-toggle {

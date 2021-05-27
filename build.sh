@@ -32,7 +32,7 @@ echo "Going to build image: $image_tag"
 # build docker image
 docker build -t $image_tag .
 # push docker image
-# docker push gitlab.expertflow.com:9242/cim/unified-admin:$version .
+# docker push $image_tag .
 
 
 

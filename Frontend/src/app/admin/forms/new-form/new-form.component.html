@@ -43,7 +43,7 @@
                                     </div>
                                     <mat-panel-title>
                                         <div class="panel-header">
-                                            <span *ngIf="!panel.expanded">{{attribute?.value?.label}}</span>
+                                            <span>{{attribute?.value?.label}}</span>
 
                                             <span *ngIf="!panel.expanded">{{attribute?.value?.helpText}}</span>
                                         </div>
@@ -108,9 +108,7 @@
 
                                             <div *ngIf="attribute?.value?.attributeType == 'OPTIONS'"
                                                 class="form-group col-md-3 toggle-section multi-toggle">
-                                                <mat-slide-toggle formControlName="isMultipleChoice"
-                                                    (change)="onRequiredToggleChange($event)">Multiple
-                                                    Choice
+                                                <mat-slide-toggle formControlName="isMultipleChoice">Multiple Choice
                                                 </mat-slide-toggle>
                                             </div>
                                         </div>
@@ -179,32 +177,29 @@
                                     <hr class="main-attribute-hr">
 
                                     <div class="attribute-row attribute-action-area">
-                                        <div class="toggle-section">
-                                            <mat-slide-toggle formControlName="isRequired"
-                                                (change)="onRequiredToggleChange($event)">Required
-                                            </mat-slide-toggle>
-                                        </div>
-
-                                        <div class="line-break-div"></div>
-
                                         <div class="icon-btn-section">
                                             <span>
                                                 <button mat-mini-fab matTooltip="Copy"
-                                                    (click)="copyAttribute(attribute,i)">
+                                                    (click)="copyAttribute(attribute)">
                                                     <i class="material-icons" aria-hidden="true">content_copy</i>
                                                 </button>
                                                 <button mat-mini-fab matTooltip="Delete" (click)="removeAttribute(i)">
-                                                    <i class="material-icons" aria-hidden="true">delete_outline</i>
+                                                    <i style="font-size: 17px;" class="material-icons" aria-hidden="true">delete_outline</i>
                                                 </button>
                                             </span>
                                         </div>
 
                                         <div class="line-break-div"></div>
 
-                                        <div class="save-btn-section">
+                                        <!-- <div class="save-btn-section">
                                             <button [disabled]="!newForm.valid" mat-button class="save-btn"
                                                 (click)="onSave('Attribute')">Save
                                                 Attribute</button>
+                                        </div> -->
+
+                                        <div class="toggle-section">
+                                            <mat-slide-toggle formControlName="isRequired">Required
+                                            </mat-slide-toggle>
                                         </div>
                                     </div>
                                 </div>
@@ -218,7 +213,7 @@
                 </mat-accordion>
             </div>
 
-            <div class="add-attribute-btn" [ngStyle]="{'padding': expanded == true ? '10px 0 0 0' :'0 20px'}">
+            <div class="add-attribute-btn" [ngStyle]="{'padding': expanded == true ? '10px 0 0 0' :'10px 20px 0 20px'}">
                 <button mat-button (click)="addAttributeButton()">
                     <mat-icon>add</mat-icon>
                     Add Attribute
