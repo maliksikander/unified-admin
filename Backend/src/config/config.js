@@ -47,12 +47,12 @@ module.exports = {
       useUnifiedTopology: true,
     },
   },
-  jwt: {
-    secret: envVars.JWT_SECRET,
-    accessExpirationMinutes: envVars.JWT_ACCESS_EXPIRATION_MINUTES,
-    refreshExpirationDays: envVars.JWT_REFRESH_EXPIRATION_DAYS,
-    resetPasswordExpirationMinutes: 10,
-  },
+  // jwt: {
+  //   secret: envVars.JWT_SECRET,
+  //   accessExpirationMinutes: envVars.JWT_ACCESS_EXPIRATION_MINUTES,
+  //   refreshExpirationDays: envVars.JWT_REFRESH_EXPIRATION_DAYS,
+  //   resetPasswordExpirationMinutes: 10,
+  // },
   // email: {
   //   smtp: {
   //     host: envVars.SMTP_HOST,

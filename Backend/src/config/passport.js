@@ -3,7 +3,7 @@ const config = require('./config');
 const { User } = require('../models');
 
 const jwtOptions = {
-  secretOrKey: config.jwt.secret,
+  // secretOrKey: config.jwt.secret,
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
 };
 
