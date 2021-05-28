@@ -29,22 +29,22 @@ export class BotListComponent implements OnInit {
   ngOnInit() {
 
     this.commonService.tokenVerification();
+    this.endPointService.getStorageValues();
   }
 
   //to get bot settings list, it accepts bot type as `type` parameter
-  getBotList(type): void {
+  getBotList(type) {
 
     //calling bot setting endpoint, it accepts bot type as `type` parameter
     this.endPointService.getBotSetting(type).subscribe(
       (res: any) => {
-
         //passing bot list response to the setter method
         this.setLocalListVariable(res);
         this.spinner = false;
       },
-      error => {
+      (error: any) => {
         this.spinner = false;
-        console.log("Error fetching:", error);
+        console.error("Error fetching:", error);
         if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
         // else this.snackbar.snackbarMessage('error-snackbar', error.error.message, 1);
       });

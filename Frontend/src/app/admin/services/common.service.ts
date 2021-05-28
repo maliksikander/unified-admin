@@ -475,55 +475,6 @@ export class CommonService {
     return result;
   }
 
-  // newLog(group: FormGroup, formErrors, validations) {
-  //   let result = [];
-
-  //   // console.log("group-->", group);
-  //   // console.log("formsErrors-->", formErrors);
-  //   // console.log("validations-->", validations);
-
-  //   Object.keys(group.controls).forEach((key: string) => {
-  //     const abstractControl: any = group.get(key);
-  //     if (abstractControl instanceof FormGroup) {
-  //       this.logValidationErrors(abstractControl, formErrors, validations);
-  //     }
-  //     else {
-  //       formErrors[key] = '';
-  //       if (abstractControl && !abstractControl.valid) {
-  //         const messages = validations[key];
-  //         for (const errorKey in abstractControl.errors) {
-  //           if (errorKey) {
-  //             formErrors[key] += messages[errorKey] + ' ';
-  //           }
-  //         }
-  //       }
-  //     }
-  //   });
-
-  //   result = [formErrors, validations];
-  //   return result;
-  // }
-  // onValueChanged(heroForm: any, data: any, formErrors, validations) {
-  //   if (!heroForm) { return; }
-  //   const form = heroForm;
-
-  //   for (const field in formErrors) {
-  //     // clear previous error message (if any)
-  //     formErrors[field] = '';
-  //     const control = form.get(field);
-  //     console.log("control-->", control)
-  //     if (control && control.dirty && !control.valid) {
-
-  //       const messages = validations[field];
-  //       for (const key in control.errors) {
-  //         formErrors[field] += messages[key] + ' ';
-  //       }
-  //     }
-  //   }
-  //   console.log("errors-->", formErrors)
-  // }
-
-
   // verifying token existence form local storage
   tokenVerification() {
     if (!localStorage.getItem('token')) {

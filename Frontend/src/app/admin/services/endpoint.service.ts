@@ -36,9 +36,7 @@ export class EndpointService {
     else {
       this.ADMIN_URL = location.origin;
     }
-
-    if (localStorage.getItem('token')) this.token = localStorage.getItem('token');
-    if (localStorage.getItem('tenant')) this.tenant = localStorage.getItem('tenant');
+    this.getStorageValues();
 
   }
 
@@ -46,6 +44,10 @@ export class EndpointService {
     return throwError(errorResponse);
   }
 
+  getStorageValues() {
+    if (localStorage.getItem('token')) this.token = localStorage.getItem('token');
+    if (localStorage.getItem('tenant')) this.tenant = localStorage.getItem('tenant');
+  }
 
   //////////////////// General Group CRUD ////////////
 
@@ -173,7 +175,6 @@ export class EndpointService {
   ///////////////// BOT CRUD ////////////
 
   createBotSetting(data): Observable<any> {
-
     return this.httpClient.post<any>(`${this.BOT_URL}/bot-connectors`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -184,7 +185,6 @@ export class EndpointService {
   }
 
   getBotSetting(type): Observable<any> {
-
     return this.httpClient.get(`${this.BOT_URL}/bot-connectors?type=${type}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
