@@ -32,7 +32,7 @@ echo "Going to build image: $image_tag"
 # build docker image
 docker build -t $image_tag .
 # push docker image
-# docker push $image_tag .
+docker push $image_tag 
 
 
 

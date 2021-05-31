@@ -2,7 +2,7 @@ const dotenv = require('dotenv');
 const path = require('path');
 const Joi = require('@hapi/joi');
 // const panelEnv = require('')
-dotenv.config({ path: path.join(__dirname, '../../adminPanel.env') });
+dotenv.config({ path: path.join(__dirname, '../../admin-panel.env') });
 
 const envVarsSchema = Joi.object()
   .keys({
