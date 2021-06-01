@@ -10,7 +10,7 @@
         </div>
         <div class="routing-content">
           <div class="filter-section">
-            <div class="form-group">
+            <div class="form-group search-field">
               <mat-form-field appearance="outline">
                 <input matInput [(ngModel)]="searchTerm" placeholder="Search">
                 <mat-icon>search</mat-icon>
@@ -33,7 +33,7 @@
                   <th scope="col">Default Value</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody *ngIf="attrData && attrData.length != 0">
                 <ng-container>
                   <tr
                     *ngFor="let data of attrData | searchFilter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
@@ -57,9 +57,16 @@
                     </td>
                   </tr>
                 </ng-container>
+
               </tbody>
+
+              <div *ngIf="attrData && attrData.length == 0" class="no-data-warning">
+                <i class="material-icons">warning_amber</i>
+                <span>No Data Found</span>
+              </div>
+              
             </table>
-            <div *ngIf="attrData.length != 0" class="pagination-section">
+            <div *ngIf="attrData && attrData.length > 5" class="pagination-section">
               <span class="page-span">
                 <span>Entries Per Page</span>
                 <select (change)="selectPage()" [(ngModel)]="selectedItem">
@@ -106,7 +113,7 @@
               </mat-error>
             </mat-form-field>
           </div>
-      
+
           <div [ngClass]="{'attribute-type-value': attributeForm.value.type == 'BOOLEAN'}">
             <div class="form-group" [ngClass]="{'col-md-8': attributeForm.value.type == 'BOOLEAN'}">
               <mat-label>Type</mat-label>

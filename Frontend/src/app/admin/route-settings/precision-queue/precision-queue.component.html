@@ -10,7 +10,7 @@
         </div>
         <div class="routing-content">
           <div class="filter-section">
-            <div class="form-group">
+            <div class="form-group search-field">
               <mat-form-field appearance="outline">
                 <input matInput [(ngModel)]="searchTerm" placeholder="Search">
                 <mat-icon>search</mat-icon>
@@ -31,7 +31,7 @@
                 <li>Agent Criteria</li>
                 <li>Associated MRD</li>
               </ul>
-              <ng-container>
+              <ng-container *ngIf="queueData && queueData.length != 0">
                 <mat-expansion-panel
                   *ngFor="let j = index;let data of queueData | searchFilter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
                   <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
@@ -118,7 +118,13 @@
                 </mat-expansion-panel>
               </ng-container>
             </mat-accordion>
-            <div *ngIf="queueData.length != 0" class="pagination-section">
+
+            <div *ngIf="queueData && queueData.length == 0" class="no-data-warning">
+              <i class="material-icons">warning_amber</i>
+              <span>No Data Found</span>
+            </div>
+
+            <div *ngIf="queueData && queueData.length > 5" class="pagination-section">
               <span class="page-span">
                 <span>Entries Per Page</span>
                 <select (change)="selectPage()" [(ngModel)]="selectedItem">
@@ -246,102 +252,107 @@
               <span class="msg-span">(sec)</span>
             </div>
           </div>
+          <div class="expression-parent-div">
+            <div class="expression-section" formArrayName="expressions">
+              <div class="expression-section-body" *ngFor="let expression of getExpressions(stepForm); let i = index">
+                <div class="expression-content" [formGroupName]="i">
+                  <div class="heading-section">
+                    <mat-label>Expression {{i + 1}}</mat-label>
 
-          <div class="expression-section" formArrayName="expressions">
-            <div class="expression-section-body" *ngFor="let expression of getExpressions(stepForm); let i = index">
-              <div class="expression-content" [formGroupName]="i">
-                <div class="heading-section">
-                  <mat-label>Expression {{i + 1}}</mat-label>
+                    <div class="right-flank">
 
-                  <div class="right-flank">
+                      <mat-select *ngIf="i > 0" formControlName="preExpressionCondition">
+                        <mat-option *ngFor="let data of conditionList" [value]="data">{{data}}
+                        </mat-option>
+                      </mat-select>
+                      <button class="expression-btn" [ngClass]="{'top-exp': i == 0}"
+                        *ngIf="i == getExpressions(stepForm).length -1 " mat-flat-button
+                        (click)="addExpressionButton()">
+                        Add Expression
+                      </button>
+                      <button *ngIf="getExpressions(stepForm).length > 1 " (click)="removeExpression(i)"
+                        class="exp-remove-btn" mat-flat-button>
+                        <mat-icon>close</mat-icon>
+                      </button>
+                    </div>
 
-                    <mat-select *ngIf="i > 0" formControlName="preExpressionCondition">
-                      <mat-option *ngFor="let data of conditionList" [value]="data">{{data}}
-                      </mat-option>
-                    </mat-select>
-                    <button class="expression-btn" [ngClass]="{'top-exp': i == 0}"
-                      *ngIf="i == getExpressions(stepForm).length -1 " mat-flat-button (click)="addExpressionButton()">
-                      Add Expression
-                    </button>
-                    <button *ngIf="getExpressions(stepForm).length > 1 " (click)="removeExpression(i)"
-                      class="exp-remove-btn" mat-flat-button>
-                      <mat-icon>close</mat-icon>
-                    </button>
+                  </div>
+                  <div class="term-section" formArrayName="terms">
+                    <div [ngClass]="{'top-term': j == 0}" class="expression-content-body"
+                      *ngFor="let term of getTerms(expression); let j = index">
+
+                      <ng-container [formGroupName]="j">
+                        <div class="form-group col-md-2">
+                          <mat-form-field *ngIf="j != 0" appearance="outline">
+                            <mat-select formControlName="preTermCondition">
+                              <mat-option *ngFor="let data of conditionList" [value]="data">{{data}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+
+                        <div class="form-group col-md-4 exp-selection">
+                          <mat-form-field appearance="outline">
+                            <mat-select formControlName="routingAttribute">
+                              <mat-option *ngFor="let data of attrData" [value]="data">{{data.name | titlecase}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+
+                        <div class="form-group col-md-2">
+                          <mat-form-field appearance="outline">
+                            <mat-select formControlName="relationalOperator">
+                              <ng-container *ngIf="term?.value.routingAttribute?.type == 'PROFICIENCY_LEVEL'">
+                                <mat-option *ngFor="let data of operatorList" [value]="data">{{data}}
+                                </mat-option>
+                              </ng-container>
+                              <ng-container *ngIf="term.value?.routingAttribute?.type == 'BOOLEAN'">
+                                <mat-option *ngFor="let data of boolOperatorList" [value]="data">{{data}}
+                                </mat-option>
+                              </ng-container>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+
+                        <div class="form-group col-md-3">
+                          <mat-slider *ngIf="term.value?.routingAttribute?.type == 'PROFICIENCY_LEVEL'"
+                            formControlName="profVal" thumbLabel [displayWith]="formatLabel" tickInterval="1" min="0"
+                            max="10">
+                          </mat-slider>
+
+
+                          <mat-radio-group *ngIf="term.value?.routingAttribute?.type == 'BOOLEAN'"
+                            formControlName="boolVal" aria-label="Select an option">
+                            <mat-radio-button value="1">True</mat-radio-button>
+                            <mat-radio-button value="0">False</mat-radio-button>
+                          </mat-radio-group>
+                        </div>
+
+                        <div class="form-group term-btn">
+                          <button (click)="removeTerm(i)" *ngIf="getTerms(expression)?.length > 1" class="remove-btn"
+                            mat-flat-button>
+                            <mat-icon>close</mat-icon>
+                          </button>
+                          <button *ngIf="j == getTerms(expression)?.length - 1" mat-flat-button class="add-btn"
+                            (click)="addExpressionTermButton(i,j)">
+                            <mat-icon class="add-icon">add</mat-icon>
+                          </button>
+                        </div>
+
+                       
+                      </ng-container>
+                    </div>
+                    <div [id]="'term-end' + i"></div>
                   </div>
 
-                </div>
-                <div class="term-section" formArrayName="terms">
-                  <div [ngClass]="{'top-term': j == 0}" class="expression-content-body"
-                    *ngFor="let term of getTerms(expression); let j = index">
-
-                    <ng-container [formGroupName]="j">
-                      <div class="form-group col-md-2">
-                        <mat-form-field *ngIf="j != 0" appearance="outline">
-                          <mat-select formControlName="preTermCondition">
-                            <mat-option *ngFor="let data of conditionList" [value]="data">{{data}}
-                            </mat-option>
-                          </mat-select>
-                        </mat-form-field>
-                      </div>
-
-                      <div class="form-group col-md-4 exp-selection">
-                        <mat-form-field appearance="outline">
-                          <mat-select formControlName="routingAttribute">
-                            <mat-option *ngFor="let data of attrData" [value]="data">{{data.name | titlecase}}
-                            </mat-option>
-                          </mat-select>
-                        </mat-form-field>
-                      </div>
-
-                      <div class="form-group col-md-2">
-                        <mat-form-field appearance="outline">
-                          <mat-select formControlName="relationalOperator">
-                            <ng-container *ngIf="term?.value.routingAttribute?.type == 'PROFICIENCY_LEVEL'">
-                              <mat-option *ngFor="let data of operatorList" [value]="data">{{data}}
-                              </mat-option>
-                            </ng-container>
-                            <ng-container *ngIf="term.value?.routingAttribute?.type == 'BOOLEAN'">
-                              <mat-option *ngFor="let data of boolOperatorList" [value]="data">{{data}}
-                              </mat-option>
-                            </ng-container>
-                          </mat-select>
-                        </mat-form-field>
-                      </div>
-
-                      <div class="form-group col-md-3">
-                        <mat-slider *ngIf="term.value?.routingAttribute?.type == 'PROFICIENCY_LEVEL'"
-                          formControlName="profVal" thumbLabel [displayWith]="formatLabel" tickInterval="1" min="0"
-                          max="10">
-                        </mat-slider>
-
-
-                        <mat-radio-group *ngIf="term.value?.routingAttribute?.type == 'BOOLEAN'"
-                          formControlName="boolVal" aria-label="Select an option">
-                          <mat-radio-button value="1">True</mat-radio-button>
-                          <mat-radio-button value="0">False</mat-radio-button>
-                        </mat-radio-group>
-                      </div>
-
-                      <div class="form-group term-btn">
-                        <button (click)="removeTerm(i)" *ngIf="getTerms(expression)?.length > 1" class="remove-btn"
-                          mat-flat-button>
-                          <mat-icon>close</mat-icon>
-                        </button>
-                        <button *ngIf="j == getTerms(expression)?.length - 1" mat-flat-button class="add-btn"
-                          (click)="addExpressionTermButton(i,j)">
-                          <mat-icon class="add-icon">add</mat-icon>
-                        </button>
-                      </div>
-                    </ng-container>
-                  </div>
                 </div>
 
               </div>
-
             </div>
+            <div id="expression-end"></div>
           </div>
-
-          <div class="template-action row">
+          <div class="template-action row padding-class">
             <div class="col-md-12">
               <div class="form-action-area">
                 <button mat-raised-button class="gray-btn" [mat-dialog-close]="false">Cancel</button>

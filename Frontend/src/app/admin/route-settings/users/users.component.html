@@ -10,7 +10,7 @@
         </div>
         <div class="routing-content">
           <div class="filter-section">
-            <div class="form-group">
+            <div class="form-group search-field">
               <mat-form-field appearance="outline">
                 <input matInput [(ngModel)]="searchTerm" placeholder="Search">
                 <mat-icon>search</mat-icon>
@@ -28,12 +28,13 @@
               <li>Name</li>
               <li>Attributes</li>
             </ul>
-            <ul class="routing-user-list">
+            <ul class="routing-user-list" *ngIf="(userData && userData.length != 0) && !warningBool">
               <li
                 *ngFor="let data of userData | searchFilter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
                 <div class="row">
                   <div class="col-sm-3 col-md-3">
-                    <span>{{data?.keycloakUser?.firstName ? data?.keycloakUser?.firstName : data?.keycloakUser?.userName}}</span>
+                    <span>{{data?.keycloakUser?.firstName ? data?.keycloakUser?.firstName :
+                      data?.keycloakUser?.userName}}</span>
                   </div>
                   <div class="list-view col-sm-9 col-md-9">
                     <mat-chip-list>
@@ -56,17 +57,24 @@
                 </div>
                 <div class="list-action-area">
                   <span class="list-actions">
-                    <button mat-mini-fab matTooltip="Edit" (click)="editUserAttributes(assignAttributeForm,data)">
+                    <button mat-mini-fab matTooltip="Add/Edit Attribute"
+                      (click)="editUserAttributes(assignAttributeForm,data)">
                       <i class="material-icons">add</i>
                     </button>
-                    <button mat-mini-fab matTooltip="Profile" (click)="viewUserProfile(userProfileForm,data)">
+                    <button mat-mini-fab matTooltip="View Profile" (click)="viewUserProfile(userProfileForm,data)">
                       <i class="material-icons">person</i>
                     </button>
                   </span>
                 </div>
               </li>
             </ul>
-            <div *ngIf="userData.length != 0" class="pagination-section">
+
+            <div *ngIf="(userData && userData.length == 0) || warningBool" class="no-data-warning">
+              <i class="material-icons">warning_amber</i>
+              <span>No Data Found</span>
+            </div>
+
+            <div *ngIf="userData && userData.length > 5" class="pagination-section">
               <span class="page-span">
                 <span>Entries Per Page</span>
                 <select (change)="selectPage()" [(ngModel)]="selectedItem">

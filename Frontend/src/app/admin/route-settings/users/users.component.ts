@@ -24,6 +24,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 export class UsersComponent implements OnInit {
 
   p: any = 1;
+  warningBool: boolean = true;
   itemsPerPageList = [5, 10, 15];
   itemsPerPage = 5;
   selectedItem = this.itemsPerPageList[0];
@@ -439,6 +440,7 @@ export class UsersComponent implements OnInit {
           }
         }
         this.spinner = false;
+        if (usersListLength > 0) this.warningBool = false;
       },
       error => {
         this.spinner = false;

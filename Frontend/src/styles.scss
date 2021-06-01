@@ -2355,7 +2355,7 @@ snack-bar-container {
 
   span.mat-expansion-indicator {
     position: absolute;
-    right: 10px;
+    right: 25px;
   }
   .mat-expansion-panel-content {
     overflow: auto;
@@ -2529,7 +2529,7 @@ snack-bar-container {
     .mat-expansion-panel-header-description {
       mat-icon {
         position: absolute;
-        right: 45px;
+        right: 20px;
         font-size: 25px;
         color: #afafaf;
       }
@@ -3140,13 +3140,19 @@ snack-bar-container {
 }
 
 .search-field {
+  max-height: 35px;
+  mat-form-field{
+    max-height: 35px;
+  }
+
   .mat-form-field-appearance-outline .mat-form-field-flex {
-    // padding: 0 .75em 0 .75em;
-    // margin-top: -0.25em;
-    // position: relative;
     top: 2px;
     height: 40px;
   }
+  .mat-form-field-appearance-outline .mat-form-field-wrapper {
+  max-height: 35px;
+}
+
 }
 
 .form-list-data {

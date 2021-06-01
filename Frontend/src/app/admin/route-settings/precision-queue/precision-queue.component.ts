@@ -139,6 +139,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
   // to add 'expression' group
   addExpressionButton() {
     (<FormArray>this.stepForm.controls['expressions']).push(this.addExpressionGroup());
+    this.downTheScrollAfterMilliSecs(50, 'smooth', 'expression-end');
   }
 
   // to remove 'expression' group 
@@ -168,6 +169,8 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     const exp: any = this.stepForm.get('expressions')
     const control = exp.controls[i].get('terms');
     control.push(this.addExpressionTermGroup());
+    let divID = 'term-end' + i;
+    this.downTheScrollAfterMilliSecs(50, 'smooth', divID);
   }
 
   // to remove 'expression' group 
@@ -250,6 +253,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
         if (res.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
         this.getMRD();
         this.getAttribute();
+        this.cd.detectChanges();
       },
       error => {
         this.spinner = false;
@@ -271,6 +275,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
           this.snackbar.snackbarMessage('success-snackbar', "Queue Updated Successfully", 1);
         }
         this.dialog.closeAll();
+        this.cd.detectChanges();
         this.spinner = false;
       },
       (error: any) => {
@@ -644,5 +649,14 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
 
     return value;
   }
+
+  // Move the scroll to down after the given time in milliseconds and the given behavior of the movement
+  downTheScrollAfterMilliSecs(milliseconds, behavior, div) {
+    setTimeout(() => {
+      let ele: any = document.getElementById(div);
+      if (ele) ele.scrollIntoView({ block: 'nearest', behavior: behavior });
+    }, milliseconds);
+  }
+
 
 }

@@ -10,7 +10,7 @@
         </div>
         <div class="routing-content">
           <div class="filter-section">
-            <div class="form-group">
+            <div class="form-group search-field">
               <mat-form-field appearance="outline">
                 <input matInput [(ngModel)]="searchTerm" placeholder="Search">
                 <mat-icon>search</mat-icon>
@@ -32,13 +32,15 @@
                   <th scope="col">Status</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody *ngIf="mrdData && mrdData.length != 0">
                 <ng-container>
-                  <tr *ngFor="let data of mrdData | searchFilter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
+                  <tr
+                    *ngFor="let data of mrdData | searchFilter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
                     <td scope="row">{{data.name ? data.name : 'N/A'}}</td>
-                    <td >{{data.description ? data.description : 'N/A'}}</td>
+                    <td>{{data.description ? data.description : 'N/A'}}</td>
                     <td class="table-trigger">
-                      <mat-slide-toggle (change)="onStatusChange($event,data)" [checked]="data.interruptible"> </mat-slide-toggle>
+                      <mat-slide-toggle (change)="onStatusChange($event,data)" [checked]="data.interruptible">
+                      </mat-slide-toggle>
 
                       <span class="list-trigger-area">
                         <button matTooltip="Edit" (click)="editMrd(newMrd,data)" mat-mini-fab><i class="fa fa-pencil"
@@ -52,8 +54,13 @@
                   </tr>
                 </ng-container>
               </tbody>
+
+              <div *ngIf="mrdData && mrdData.length == 0" class="no-data-warning">
+                <i class="material-icons">warning_amber</i>
+                <span>No Data Found</span>
+              </div>
             </table>
-            <div *ngIf="mrdData.length != 0" class="pagination-section">
+            <div *ngIf="mrdData && mrdData.length > 5" class="pagination-section">
               <span class="page-span">
                 <span>Entries Per Page</span>
                 <select (change)="selectPage()" [(ngModel)]="selectedItem">
@@ -61,7 +68,8 @@
                   </option>
                 </select>
               </span>
-              <pagination-controls (pageBoundsCorrection)="pageBoundChange($event)" (pageChange)="p = $event;pageChange($event)" previousLabel="" nextLabel="">
+              <pagination-controls (pageBoundsCorrection)="pageBoundChange($event)"
+                (pageChange)="p = $event;pageChange($event)" previousLabel="" nextLabel="">
               </pagination-controls>
             </div>
             <!-- <pagination-controls *ngIf="dataBool" (pageChange)="p = $event;pageChange($event)" previousLabel=""
