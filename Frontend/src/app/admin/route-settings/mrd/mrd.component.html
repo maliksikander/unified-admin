@@ -43,11 +43,13 @@
                       </mat-slide-toggle>
 
                       <span class="list-trigger-area">
-                        <button matTooltip="Edit" (click)="editMrd(newMrd,data)" mat-mini-fab><i class="fa fa-pencil"
-                            aria-hidden="true"></i>
+                        <button matTooltip="Edit" (click)="editMrd(newMrd,data)" mat-mini-fab>
+                          <!-- <i class="fa fa-pencil" aria-hidden="true"></i> -->
+                          <mat-icon>mode_edit</mat-icon>
                         </button>
-                        <button matTooltip="Delete" (click)="deleteConfirm(data)" mat-mini-fab><i class="fa fa-trash-o"
-                            aria-hidden="true"></i>
+                        <button matTooltip="Delete" (click)="deleteConfirm(data)" mat-mini-fab>
+                          <!-- <i class="fa fa-trash-o" aria-hidden="true"></i> -->
+                          <mat-icon>delete</mat-icon>
                         </button>
                       </span>
                     </td>

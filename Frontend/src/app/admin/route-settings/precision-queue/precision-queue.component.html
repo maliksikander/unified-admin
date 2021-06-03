@@ -53,11 +53,13 @@
                       <p class="group-name">{{data?.mrd?.name? data?.mrd?.name : 'N/A'}}</p>
                       <div class="table-trigger">
                         <span class="list-trigger-area">
-                          <button mat-mini-fab matTooltip="Edit" (click)="editQueue(newQueue,data)"><i
-                              class="fa fa-pencil" aria-hidden="true"></i>
+                          <button mat-mini-fab matTooltip="Edit" (click)="editQueue(newQueue,data)">
+                            <!-- <i class="fa fa-pencil" aria-hidden="true"></i> -->
+                            <mat-icon>mode_edit</mat-icon>
                           </button>
-                          <button matTooltip="Delete" (click)="deleteConfirm(data)" mat-mini-fab><i
-                              class="fa fa-trash-o" aria-hidden="true"></i>
+                          <button matTooltip="Delete" (click)="deleteConfirm(data)" mat-mini-fab>
+                            <!-- <i class="fa fa-trash-o" aria-hidden="true"></i> -->
+                            <mat-icon>delete</mat-icon>
                           </button>
                         </span>
                       </div>
@@ -98,10 +100,13 @@
                             <td class="step-table-trigger">{{stepData?.timeout ? stepData?.timeout : 'N/A'}}
                               <span class="step-trigger-area">
                                 <button matTooltip="Edit" (click)="editStep(stepFormTemplate,stepData,j)"
-                                  mat-mini-fab><i class="fa fa-pencil" aria-hidden="true"></i>
+                                  mat-mini-fab>
+                                  <mat-icon>mode_edit</mat-icon>
+                                  <!-- <i class="fa fa-pencil" aria-hidden="true"></i> -->
                                 </button>
-                                <button matTooltip="Delete" (click)="deleteStepConfirm(stepData,j)" mat-mini-fab><i
-                                    class="fa fa-trash-o" aria-hidden="true"></i>
+                                <button matTooltip="Delete" (click)="deleteStepConfirm(stepData,j)" mat-mini-fab>
+                                  <!-- <i class="fa fa-trash-o" aria-hidden="true"></i> -->
+                                  <mat-icon>delete</mat-icon>
                                 </button>
                               </span>
                             </td>
