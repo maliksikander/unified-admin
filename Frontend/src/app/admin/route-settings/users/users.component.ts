@@ -76,7 +76,7 @@ export class UsersComponent implements OnInit {
     //setting local form validation messages
     this.validations = this.commonService.userFormErrorMessages;
 
-    let pageNumber = localStorage.getItem('currentUsersPage');
+    let pageNumber = sessionStorage.getItem('currentUsersPage');
     if (pageNumber) this.p = pageNumber;
 
     this.userForm = this.formBuilder.group({
@@ -455,11 +455,11 @@ export class UsersComponent implements OnInit {
     this.getKeycloakUsers();
   }
 
-  pageChange(e) { localStorage.setItem('currentUsersPage', e); }
+  pageChange(e) { sessionStorage.setItem('currentUsersPage', e); }
 
   pageBoundChange(e) {
     this.p = e;
-    localStorage.setItem('currentUsersPage', e);
+    sessionStorage.setItem('currentUsersPage', e);
   }
 
   closeMenu() { this.attributeMenuTrigger.closeMenu(); }

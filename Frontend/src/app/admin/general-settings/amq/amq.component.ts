@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { CommonService } from '../../services/common.service';
 import { EndpointService } from '../../services/endpoint.service';
 import { SnackbarService } from '../../services/snackbar.service';
@@ -24,16 +25,22 @@ export class AmqComponent implements OnInit {
   spinner: any = true;
   editData: any;
   hide = true;
+  authorized: boolean = false;
 
   constructor(private snackbar: SnackbarService,
     private fb: FormBuilder,
     private commonService: CommonService,
     private endPointService: EndpointService,
-    private changeDetector: ChangeDetectorRef) { }
+    private changeDetector: ChangeDetectorRef,
+    private router: Router) { }
 
   ngOnInit() {
 
     this.commonService.tokenVerification();
+
+     this.commonService.getPermissionResourcesList();
+    // if (!permittedResources.includes('general-settings')) { this.router.navigate(['/general/amq-settings']); }
+
 
     //setting local form validation messages 
     this.validations = this.commonService.amqSettingErrorMessages;

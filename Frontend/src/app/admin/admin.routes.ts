@@ -18,6 +18,7 @@ import { ChannelListComponent } from './channel-manager/channel/channel-list.com
 import { ChannelConnectorComponent } from './channel-manager/channel-connector/channel-connector.component';
 import { BotListComponent } from './bot/bot-list/bot-list.component';
 import { FormsComponent } from './forms/forms.component';
+import { ChannelTypeComponent } from './channel-manager/channel-type/channel-type.component';
 
 
 export const adminRoutes: Routes = [
@@ -39,8 +40,9 @@ export const adminRoutes: Routes = [
       { path: 'routing/media-routing-domain', component: MrdComponent },
       { path: 'routing/precision-queue', component: PrecisionQueueComponent },
       { path: 'routing/agents', component: UsersComponent },
-      { path: 'channel/channel-manager', component: ChannelListComponent },
+      { path: 'channel/channel-type', component: ChannelTypeComponent },
       { path: 'channel/channel-connector', component: ChannelConnectorComponent },
+      { path: 'channel/channel-manager', component: ChannelListComponent },   
       { path: 'bot-settings', component: BotListComponent },
       { path: 'form', component: FormsComponent },
     ]

@@ -8,16 +8,16 @@ var config = require('../../../keycloak.json');
 var { NodeAdapter } = require("keycloak-nodejs-connect");
 const keycloak = new NodeAdapter(config);
 
-router.get('/', keycloak.enforcer(['locale:view-locale'], {
-    resource_server_id: 'unified-admin'
+router.get('/', keycloak.enforcer(['general-settings:manage'], {
+    resource_server_id: 'CIM'
 }), localeSettingController.getSettings);
 
-router.put('/', keycloak.enforcer(['locale:update-locale'], {
-    resource_server_id: 'unified-admin'
+router.put('/', keycloak.enforcer(['general-settings:manage'], {
+    resource_server_id: 'CIM'
 }), validate(localeValidation.updateSetting), localeSettingController.updateSettings);
 
-router.post('/', keycloak.enforcer(['locale:create-locale'], {
-    resource_server_id: 'unified-admin'
+router.post('/', keycloak.enforcer(['general-settings:manage'], {
+    resource_server_id: 'CIM'
 }), validate(localeValidation.createSetting), localeSettingController.createSettings);
 
 module.exports = router;

@@ -7,16 +7,16 @@ var config = require('../../../keycloak.json');
 var { NodeAdapter } = require("keycloak-nodejs-connect");
 const keycloak = new NodeAdapter(config);
 
-router.get('/', keycloak.enforcer(['amq:view-amq'], {
-    resource_server_id: 'unified-admin'
+router.get('/', keycloak.enforcer(['general-settings:manage','general-settings:view'], {
+    resource_server_id: 'CIM'
 }), amqSettingController.getSettings);
 
-router.put('/', keycloak.enforcer(['amq:update-amq'], {
-    resource_server_id: 'unified-admin'
+router.put('/', keycloak.enforcer(['general-settings:manage'], {
+    resource_server_id: 'CIM'
 }), validate(amqValidation.updateSetting), amqSettingController.updateSettings);
 
-router.post('/', keycloak.enforcer(['amq:create-amq'], {
-    resource_server_id: 'unified-admin'
+router.post('/', keycloak.enforcer(['general-settings:manage'], {
+    resource_server_id: 'CIM'
 }), validate(amqValidation.createSetting), amqSettingController.createSettings);
 
 module.exports = router;

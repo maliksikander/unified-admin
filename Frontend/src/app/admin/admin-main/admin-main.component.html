@@ -43,7 +43,9 @@
               </a>
             </mat-expansion-panel> -->
 
-            <mat-expansion-panel>
+
+            <!-- General Settings -->
+            <mat-expansion-panel *ngIf="generalBool">
               <mat-expansion-panel-header>
                 <i class="material-icons">settings</i>
                 <span class="sidebar-text">General Settings</span>
@@ -89,7 +91,8 @@
 
             </mat-expansion-panel>
 
-            <mat-expansion-panel>
+            <!-- Routing Configuration -->
+            <mat-expansion-panel *ngIf="routingBool">
               <mat-expansion-panel-header class='route-header-image-icon'>
                 <!-- <i style="font-size: 21px;" class="material-icons">compare_arrows</i> -->
                 <img src="/assets/images/routing.svg" alt="">
@@ -115,11 +118,16 @@
 
 
             <!-- CCM -->
-            <!-- <mat-expansion-panel>
+            <mat-expansion-panel>
               <mat-expansion-panel-header class='ccm-header-image-icon'>
                 <img src="/assets/images/customer-channels.svg" alt="ccm">
                 <span class="sidebar-text">Customer Channels</span>
               </mat-expansion-panel-header>
+
+              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/channel/channel-type']">
+                <img src="/assets/images/channel-connector.svg" alt="channel_type">
+                <span class="sidebar-text">Channel Type</span>
+              </a>
 
               <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/channel/channel-connector']">
                 <img src="/assets/images/channel-connector.svg" alt="channel_connector">
@@ -130,8 +138,8 @@
                 <img src="/assets/images/channel-manager.svg" alt="channel">
                 <span class="sidebar-text">Channel Manager</span>
               </a>
-            
-            </mat-expansion-panel> -->
+
+            </mat-expansion-panel>
 
             <a class="single-menu-link" mat-list-item [routerLinkActive]="['active-link']"
               [routerLink]="['/bot-settings']">

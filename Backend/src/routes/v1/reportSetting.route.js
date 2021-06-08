@@ -9,16 +9,16 @@ var { NodeAdapter } = require("keycloak-nodejs-connect");
 const keycloak = new NodeAdapter(config);
 
 
-router.get('/', keycloak.enforcer(['reporting:view-reporting'], {
-    resource_server_id: 'unified-admin'
+router.get('/', keycloak.enforcer(['general-settings:manage'], {
+    resource_server_id: 'CIM'
 }), reportSettingController.getSettings);
 
-router.put('/', keycloak.enforcer(['reporting:update-reporting'], {
-    resource_server_id: 'unified-admin'
+router.put('/', keycloak.enforcer(['general-settings:manage'], {
+    resource_server_id: 'CIM'
 }), validate(reportValidation.updateSetting), reportSettingController.updateSettings);
 
-router.post('/', keycloak.enforcer(['reporting:create-reporting'], {
-    resource_server_id: 'unified-admin'
+router.post('/', keycloak.enforcer(['general-settings:manage'], {
+    resource_server_id: 'CIM'
 }), validate(reportValidation.createSetting), reportSettingController.createSettings);
 
 module.exports = router;

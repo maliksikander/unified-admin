@@ -45,8 +45,8 @@ export class EndpointService {
   }
 
   getStorageValues() {
-    if (localStorage.getItem('token')) this.token = localStorage.getItem('token');
-    if (localStorage.getItem('tenant')) this.tenant = localStorage.getItem('tenant');
+    if (sessionStorage.getItem('token')) this.token = sessionStorage.getItem('token');
+    if (sessionStorage.getItem('tenant')) this.tenant = sessionStorage.getItem('tenant');
   }
 
   //////////////////// General Group CRUD ////////////

@@ -4,6 +4,7 @@ import { CommonService } from '../services/common.service';
 import { Router } from '@angular/router';
 import { ConfigService } from '../services/config.service';
 import { EndpointService } from '../services/endpoint.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-admin-main',
@@ -28,6 +29,9 @@ export class AdminMainComponent implements OnInit {
   isCustomTheme;
   isRightBarActive;
   isBarIconView;
+  generalBool: boolean = true;
+  routingBool: boolean = true;
+  subscription: Subscription;
 
   constructor(
     private commonService: CommonService,
@@ -35,7 +39,23 @@ export class AdminMainComponent implements OnInit {
     private router: Router,
     private changeDetector: ChangeDetectorRef,
     private configService: ConfigService) {
+    // this.commonService._generalSubject.subscribe((res: any) => {
+    //   console.log("triggered", res);
+    //   this.generalBool = res;
 
+    // });
+
+    // this.subscription = this.commonService.getMessage().subscribe(message => {
+    //   console.log("triggered");
+    //   console.log("message-->", message)
+    //   if (message) {
+    //     // this.messages.push(message);
+    //   } else {
+    //     // clear messages when empty message received
+    //     // this.messages = [];
+    //   }
+    // });
+    // console.log("bool 2", this.generalBool)
   }
 
   ngOnInit() {
@@ -56,11 +76,18 @@ export class AdminMainComponent implements OnInit {
       }
     });
 
+    // let permittedResources: Array<any> = this.commonService.getPermissionResourcesList();
+    // if (permittedResources.includes('general-settings')) this.generalBool = true;
+    // else if (permittedResources.includes('RE_Configuration')) this.routingBool = true;
+
+
+
     this.elem = document.documentElement;
     this.commonService.themeVersion.subscribe((data) => {
       console.log(data);
       this.changeTheme();
     });
+
   }
 
 

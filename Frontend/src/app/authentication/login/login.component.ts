@@ -68,22 +68,25 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.spinner = true;
-    const data = this.loginForm.value
-    this.endPointService.login(data).subscribe(
+    let data = this.loginForm.value;
+    let reqBody = JSON.parse(JSON.stringify(data));
+    delete reqBody.rememberMe
+    this.endPointService.login(reqBody).subscribe(
       (res: any) => {
         this.spinner = false;
-        // console.log("res-->", res);
+        console.log("res-->", res);
+        // this.commonService.permissionVerification(res.keycloak_User.permittedResources.Resources)
         if (data.rememberMe == true) {
-          localStorage.setItem('username', res.keycloak_User.username);
-          localStorage.setItem('tenant', res.keycloak_User.realm);
-          localStorage.setItem('token', res.token);
-          this.endPointService.token = res.token;
-
           sessionStorage.setItem('username', res.keycloak_User.username);
           sessionStorage.setItem('token', res.token);
-          localStorage.setItem('tenant', res.keycloak_User.realm);
+          sessionStorage.setItem('tenant', res.keycloak_User.realm);
+          sessionStorage.setItem('permittedResources', JSON.stringify(res.keycloak_User.permittedResources.Resources));
+          this.endPointService.token = res.token;
+          this.router.navigate(['/general/amq-settings'])
+          // let temp = sessionStorage.getItem('permittedResources');
+          // if (temp) this.commonService.getPermissionResourcesList();
         }
-        this.router.navigate(['/general/amq-settings']);
+
       },
       (error: any) => {
         this.spinner = false;

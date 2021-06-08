@@ -31,7 +31,7 @@ export class FormsComponent implements OnInit {
   ngOnInit(): void {
 
     this.commonService.tokenVerification();
-    let pageNumber = localStorage.getItem('formsPage');
+    let pageNumber = sessionStorage.getItem('formsPage');
     if (pageNumber) this.p = pageNumber;
     this.getForms();
   }
@@ -134,11 +134,11 @@ export class FormsComponent implements OnInit {
   }
 
   // ngx-pagination setting methods
-  pageChange(e) { localStorage.setItem('formsPage', e); }
+  pageChange(e) { sessionStorage.setItem('formsPage', e); }
 
   pageBoundChange(e) {
     this.p = e;
-    localStorage.setItem('formsPage', e);
+    sessionStorage.setItem('formsPage', e);
   }
 
   selectPage() { this.itemsPerPage = this.selectedItem; }

@@ -56,7 +56,7 @@ export class AttributeComponent implements OnInit {
       boolVal: [true]
     });
 
-    let pageNumber = localStorage.getItem('currentAttributePage');
+    let pageNumber = sessionStorage.getItem('currentAttributePage');
     if (pageNumber) this.p = pageNumber;
 
     //checking for Attribute form validation failures
@@ -77,7 +77,7 @@ export class AttributeComponent implements OnInit {
     this.saveBtnText = 'Create'
     let dialogRef = this.dialog.open(templateRef, {
       width: '550px',
-      height: '440px',
+      // height: '440px',
       panelClass: 'add-attribute',
       disableClose: true,
     });
@@ -194,7 +194,7 @@ export class AttributeComponent implements OnInit {
     this.saveBtnText = 'Update'
     let dialogRef = this.dialog.open(templateRef, {
       width: '550px',
-      height: '440px',
+      // height: '440px',
       panelClass: 'add-attribute',
       disableClose: true,
       data: data
@@ -267,12 +267,12 @@ export class AttributeComponent implements OnInit {
   }
 
   //save page number storage for reload
-  pageChange(e) { localStorage.setItem('currentAttributePage', e); }
+  pageChange(e) { sessionStorage.setItem('currentAttributePage', e); }
 
   //page bound change and saving for reload
   pageBoundChange(e) {
     this.p = e;
-    localStorage.setItem('currentAttributePage', e);
+    sessionStorage.setItem('currentAttributePage', e);
   }
 
   selectPage() { this.itemsPerPage = this.selectedItem; }

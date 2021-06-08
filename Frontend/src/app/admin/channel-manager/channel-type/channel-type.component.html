@@ -8,7 +8,7 @@
                 <div class="sub-heading">
                     <h2>{{pageTitle}}</h2>
                 </div>
-                <div *ngIf="!addForm" class="panel-page-content">
+                <div *ngIf="!addType" class="panel-page-content">
                     <div class="filter-section">
                         <div class="form-group search-field">
                             <mat-form-field appearance="outline">
@@ -17,36 +17,37 @@
                             </mat-form-field>
                         </div>
 
-                        <button (click)="addNewForm()" mat-flat-button>
+                        <button (click)="addChannelType()" mat-flat-button>
                             <mat-icon>add</mat-icon>
-                            New Form
+                            New Channel Type
                         </button>
                     </div>
-                    <div class="forms-list">
+                    <div class="types-list">
                         <ul class="top-heading">
-                            <li class="col-md-4">ID</li>
-                            <li class="col-md-4">Name</li>
-                            <li class="col-md-3">Created On</li>
+                            <li class="col-md-8">Name</li>
+                            <li class="col-md-2">Icon</li>
+                            <!-- <li class="col-md-3">Created On</li> -->
                         </ul>
-                        <ng-container *ngIf="formsList && formsList.length > 0">
-                            <ul class="form-list-data">
+                        <ng-container *ngIf="typeList && typeList.length > 0">
+                            <ul class="type-list-data">
                                 <li
-                                    *ngFor="let data of formsList | searchFilter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
+                                    *ngFor="let data of typeList | searchFilter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
                                     <div class="row">
-                                        <div class="col-sm-4 col-md-4">
-                                            {{data?.id ? data?.id : 'N/A'}}
+                                        <div class="col-md-8">
+                                            {{data?.typeName ? data?.typeName : 'N/A'}}
                                         </div>
 
-                                        <div class="col-sm-4 col-md-4">
-                                            {{data?.formTitle ? data?.formTitle : 'N/A'}}
+                                        <div class="col-md-8 offset-md-2">
+                                            <!-- {{data?.icon ? data?.formTitle : 'N/A'}} -->
+                                            <img src="data?.icon">
                                         </div>
-                                        <div class="col-sm-3 col-md-3">
+                                        <!-- <div class="col-sm-3 col-md-3">
                                             {{stringAsDate(data?.createdAt) | date:'fullDate'}}
-                                        </div>
+                                        </div> -->
                                     </div>
                                     <div class="list-action-area">
                                         <span class="list-actions">
-                                            <button mat-mini-fab matTooltip="Edit" (click)="editForm(data)">
+                                            <button mat-mini-fab matTooltip="Edit" (click)="editChannelType(data)">
                                                 <mat-icon>mode_edit</mat-icon>
                                             </button>
                                             <button mat-mini-fab matTooltip="Delete" (click)="deleteConfirm(data)">
@@ -58,12 +59,12 @@
                             </ul>
                         </ng-container>
 
-                        <div *ngIf="formsList && formsList.length == 0" class="no-data-warning">
+                        <div *ngIf="typeList && typeList.length == 0" class="no-data-warning">
                             <mat-icon>warning_amber</mat-icon>
                             <span>No Data Found</span>
                         </div>
 
-                        <div *ngIf="formsList && formsList.length > 5" class="pagination-section">
+                        <div *ngIf="typeList.length != 0" class="pagination-section">
                             <span class="page-span">
                                 <span>Entries Per Page</span>
                                 <select (change)="selectPage()" [(ngModel)]="selectedItem">
@@ -78,8 +79,8 @@
                     </div>
                 </div>
 
-                <ng-container *ngIf="addForm">
-                    <app-new-form [uiBool]="addForm" [formData]="editData"
+                <ng-container *ngIf="addType">
+                    <app-new-form [uiBool]="addType" [formData]="editData"
                         (uiBoolChange)='childToParentUIChange($event)' (formSaveData)='onSave($event)'>
                     </app-new-form>
                 </ng-container>

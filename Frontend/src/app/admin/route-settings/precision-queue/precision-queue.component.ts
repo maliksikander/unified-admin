@@ -81,7 +81,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     //setting local form validation messages 
     this.validations = this.commonService.queueFormErrorMessages;
 
-    let pageNumber = localStorage.getItem('currentQueuePage');
+    let pageNumber = sessionStorage.getItem('currentQueuePage');
     if (pageNumber) this.p = pageNumber;
 
     this.queueForm = this.fb.group({
@@ -632,11 +632,11 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     // console.log("save data-->", data);
   }
 
-  pageChange(e) { localStorage.setItem('currentQueuePage', e); }
+  pageChange(e) { sessionStorage.setItem('currentQueuePage', e); }
 
   pageBoundChange(e) {
     this.p = e;
-    localStorage.setItem('currentQueuePage', e);
+    sessionStorage.setItem('currentQueuePage', e);
   }
 
   selectPage() { this.itemsPerPage = this.selectedItem; }

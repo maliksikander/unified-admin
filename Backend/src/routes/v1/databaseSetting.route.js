@@ -8,16 +8,16 @@ var config = require('../../../keycloak.json');
 var { NodeAdapter } = require("keycloak-nodejs-connect");
 const keycloak = new NodeAdapter(config);
 
-router.get('/', keycloak.enforcer(['database:view-database'], {
-    resource_server_id: 'unified-admin'
+router.get('/', keycloak.enforcer(['general-settings:manage'], {
+    resource_server_id: 'CIM'
 }), databaseSettingController.getSettings);
 
-router.put('/', keycloak.enforcer(['database:update-database'], {
-    resource_server_id: 'unified-admin'
+router.put('/', keycloak.enforcer(['general-settings:manage'], {
+    resource_server_id: 'CIM'
 }), validate(databaseValidation.updateSetting), databaseSettingController.updateSettings);
 
-router.post('/', keycloak.enforcer(['database:create-database'], {
-    resource_server_id: 'unified-admin'
+router.post('/', keycloak.enforcer(['general-settings:manage'], {
+    resource_server_id: 'CIM'
 }), validate(databaseValidation.createSetting), databaseSettingController.createSettings);
 
 module.exports = router;

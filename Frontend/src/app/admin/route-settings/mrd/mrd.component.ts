@@ -49,7 +49,7 @@ export class MrdComponent implements OnInit {
       enabled: [],
     });
 
-    let pageNumber = localStorage.getItem('currentMRDPage');
+    let pageNumber = sessionStorage.getItem('currentMRDPage');
     if (pageNumber) this.p = pageNumber;
 
     //checking for MRD form validation failures
@@ -235,12 +235,12 @@ export class MrdComponent implements OnInit {
   }
 
   //save page number storage for reload
-  pageChange(e) { localStorage.setItem('currentMRDPage', e); }
+  pageChange(e) { sessionStorage.setItem('currentMRDPage', e); }
 
   //page bound change and saving for reload
   pageBoundChange(e) {
     this.p = e;
-    localStorage.setItem('currentMRDPage', e);
+    sessionStorage.setItem('currentMRDPage', e);
   }
 
   selectPage() { this.itemsPerPage = this.selectedItem; }

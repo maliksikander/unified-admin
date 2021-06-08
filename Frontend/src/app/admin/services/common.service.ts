@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { AbstractControl, FormGroup, FormArray } from '@angular/forms';
 import { SnackbarService } from './snackbar.service';
 import { Router } from '@angular/router';
@@ -11,6 +11,10 @@ import { Router } from '@angular/router';
 export class CommonService {
   themeVersion = new Subject();
   _spinnerSubject = new Subject();
+  _generalSubject = new Subject<any>();
+  _routingSubject = new Subject();
+  _botSubject = new Subject();
+  _formssubject = new Subject();
 
   amqSettingErrorMessages = {
     'amqUser': {
@@ -448,6 +452,10 @@ export class CommonService {
     }
   };
 
+  getMessage(): Observable<any> {
+    return this._generalSubject.asObservable();
+  }
+
   constructor(private snackbar: SnackbarService,
     private router: Router) { }
 
@@ -477,8 +485,30 @@ export class CommonService {
 
   // verifying token existence form local storage
   tokenVerification() {
-    if (!localStorage.getItem('token')) {
+    if (!sessionStorage.getItem('token')) {
       return this.router.navigate(['/login']);
     }
   }
+
+  // verify permission from keycloak
+
+  getPermissionResourcesList() {
+    try {
+      let permissions = sessionStorage.getItem('permittedResources');
+      let permList: Array<any> = JSON.parse(JSON.stringify(JSON.parse(permissions)));
+      let resourceList: Array<any> = [];
+      console.log("permissions-->", permList);
+      permList.forEach((item: any) => {
+        resourceList.push(item.rsname);
+      });
+      // if (resourceList.includes('general-settings')) { this.router.navigate(['/general/amq-settings']) }
+      // else if (resourceList.includes('RE_Configuration')) { this.router.navigate(['/routing/attributes']) }
+      return resourceList;
+    }
+    catch (e) {
+      this.router.navigate(['/login']);
+      console.log("Error", e);
+    }
+  }
+
 }
