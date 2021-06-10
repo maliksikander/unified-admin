@@ -145,8 +145,8 @@ export class EndpointService {
     }).pipe(catchError(this.handleError));
   }
 
-  updateChannel(data, reqServiceType): Observable<any> {
-    return this.httpClient.put<any>(`${this.CCM_URL}/${reqServiceType}`, data, {
+  updateChannel(data, reqServiceType,id): Observable<any> {
+    return this.httpClient.put<any>(`${this.CCM_URL}/${reqServiceType}/${id}`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.token

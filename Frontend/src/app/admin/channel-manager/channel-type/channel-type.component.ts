@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 import { CommonService } from '../../services/common.service';
 import { EndpointService } from '../../services/endpoint.service';
@@ -13,9 +14,9 @@ import { SnackbarService } from '../../services/snackbar.service';
 export class ChannelTypeComponent implements OnInit {
 
   addType: boolean = false;
-  spinner: boolean = false;
+  spinner: boolean = true;
   pageTitle: String = 'Channel Type'
-  editData;
+  editTypeData;
   typeList = [];
   searchTerm: String = '';
   p: any = 1;
@@ -27,7 +28,8 @@ export class ChannelTypeComponent implements OnInit {
   constructor(private commonService: CommonService,
     private dialog: MatDialog,
     private endPointService: EndpointService,
-    private snackbar: SnackbarService,) { }
+    private snackbar: SnackbarService,
+    private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
 
@@ -41,8 +43,9 @@ export class ChannelTypeComponent implements OnInit {
     this.endPointService.getChannel(this.reqEndpoint).subscribe(
       (res: any) => {
         this.spinner = false;
-        console.log("res-->", res);
-        // this.typeList = res;
+        // console.log("res-->", res);
+        this.typeList = res;
+        this.spinner = false;
       },
       (error: any) => {
         this.spinner = false;
@@ -51,14 +54,33 @@ export class ChannelTypeComponent implements OnInit {
       });
   }
 
+  //to sanitize and bypass dom security warnings for channel type logo images
+  transform(image) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(image);
+  }
 
-  addChannelType() { }
+  childToParentUIChange(e): void {
+    this.addType = e;
+    if (this.addType == false) {
+      this.pageTitle = "Channel Type";
+    }
+    this.editTypeData = undefined;
+  }
 
-  editChannelType(data) { }
+  addChannelType() {
+    this.addType = true;
+    this.pageTitle = "Channel Type Settings";
+  }
+
+  editChannelType(data) {
+    this.addType = true;
+    this.pageTitle = "Channel Type Settings";
+    this.editTypeData = data;
+  }
 
   //Confirmation dialog for delete operation , it accepts the attribute object as `data` parameter 
   deleteConfirm(data) {
-    let id = data.id;
+    // let id = data.id;
     let msg = "Are you sure you want to delete this channel type ?";
     return this.dialog.open(ConfirmDialogComponent, {
       panelClass: 'confirm-dialog-container',
@@ -71,11 +93,84 @@ export class ChannelTypeComponent implements OnInit {
       }
     }).afterClosed().subscribe((res: any) => {
       this.spinner = true;
-      if (res === 'delete') { this.deleteChannelType(data, id); }
-      else { this.spinner = false; }
+      if (res === 'delete') {
+        this.deleteChannelType(data);
+      }
+      else {
+        this.spinner = false;
+      }
     });
   }
 
-  deleteChannelType(data, id) { }
+
+  //to delete channel type, it accepts `data` as parameter containing channel type properties and 
+  //filters that particular object from local list variable if there is a success response.
+  deleteChannelType(data) {
+
+    //calling endpoint service method which accepts resource name as 'reqEndpoint' and channel type id as `id` object as parameter
+    this.endPointService.deleteChannel(data.id, this.reqEndpoint).subscribe(
+      (res: any) => {
+        this.spinner = false;
+        this.typeList = this.typeList.filter(item => item.id != data.id);
+        this.snackbar.snackbarMessage('success-snackbar', "Deleted", 1);
+      },
+      (error: any) => {
+        this.spinner = false;
+        console.log("Error fetching:", error);
+        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
+      });
+  }
+
+
+
+  //to create channel, it accepts `data` object as parameter containing channel type properties
+  createChannelType(data) {
+
+    //calling endpoint service method which accepts resource name as 'reqEndpoint' and `data` object as parameter
+    this.endPointService.createChannel(data, this.reqEndpoint).subscribe(
+      (res: any) => {
+        // this.spinner = false;
+        this.snackbar.snackbarMessage('success-snackbar', "Channel Type Created", 1);
+        this.getChannelTypes();
+
+      },
+      (error: any) => {
+        this.spinner = false;
+        console.log("Error fetching:", error);
+        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
+      });
+  }
+
+  //to update channel type, it accepts `data` object as parameter containing channel type properties
+  updateChannel(data) {
+
+    //calling endpoint service method which accepts resource endpoint as 'reqEndpoint' and `data` object as parameter
+    this.endPointService.updateChannel(data, this.reqEndpoint, data.id).subscribe(
+      (res: any) => {
+        // this.spinner = false;
+        this.snackbar.snackbarMessage('success-snackbar', "Updated", 1);
+        this.getChannelTypes();
+      },
+      (error: any) => {
+        this.spinner = false;
+        console.log("Error fetching:", error);
+        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
+      });
+  }
+
+  onSave(data) {
+    // console.log("E==>", data);
+
+    this.pageTitle = 'Channel Type';
+    this.addType = false;
+    this.spinner = true;
+    if (data.id) {
+      this.updateChannel(data);
+    }
+    else {
+      this.createChannelType(data);
+    }
+
+  }
 
 }

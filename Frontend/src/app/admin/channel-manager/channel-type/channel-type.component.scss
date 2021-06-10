@@ -94,15 +94,6 @@ input::-webkit-inner-spin-button {
       display: inline-block;
       list-style: none;
       padding: 10px 15px;
-    //   width: 50%;
-      //   &:first-child {
-      // padding: 10px 25px;
-      // width: 73%;
-      //   }
-      //   &:nth-child(2) {
-      // padding: 10px 13px;
-      // width: 27%;
-      //   }
     }
   }
 
@@ -124,7 +115,6 @@ input::-webkit-inner-spin-button {
       border-bottom: 1px solid #e2e2e2;
       background: white !important;
       width: 100%;
-      // padding: 10px 15px;
       padding: 13px 15px 7px 15px;
       min-height: 45px;
       position: relative;
@@ -136,6 +126,14 @@ input::-webkit-inner-spin-button {
         text-overflow: ellipsis;
         white-space: pre;
         overflow: hidden;
+
+        &:nth-child(2) {
+          padding: 0 10px 0 18px;
+        }
+
+        img {
+          height: 24px;
+        }
       }
 
       &:hover {

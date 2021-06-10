@@ -10,7 +10,7 @@ const keycloak = new NodeAdapter(config);
 
 
 router.get('/', keycloak.enforcer(['general-settings:manage'], {
-    resource_server_id: 'CIM'
+    resource_server_id: 'cim'
 }), displaySettingController.getSettings);
 
 router.put('/', keycloak.enforcer(['general-settings:manage'], {

@@ -91,7 +91,7 @@ export class ChannelListComponent implements OnInit {
   updateChannel(data) {
 
     //calling endpoint service method which accepts resource name as 'channelServiceReq' and `data` object as parameter
-    this.endPointService.updateChannel(data, this.channelServiceReq).subscribe(
+    this.endPointService.updateChannel(data, this.channelServiceReq,data.id).subscribe(
       (res: any) => {
         this.spinner = false;
         this.snackbar.snackbarMessage('success-snackbar', "Updated", 1);

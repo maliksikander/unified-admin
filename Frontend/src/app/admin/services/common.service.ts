@@ -410,6 +410,37 @@ export class CommonService {
     },
   };
 
+  channelTypeErrorMessages = {
+    'typeName': {
+      'required': "This field is required",
+      'minlength': "More characters required",
+      'maxlength': "Less characters required",
+      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+    },
+    'isInteractive': {
+      'required': "This field is required",
+      'pattern': "Enter valid url"
+    },
+    'channelConfigSchema': {
+      'required': "This field is required",
+      'minlength': "More characters required",
+      'maxlength': "Less characters required",
+      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+    },
+    'mediaRoutingDomain': {
+      'required': "This field is required",
+      'minlength': "More characters required",
+      'maxlength': "Less characters required",
+      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+    },
+    'channelLogo': {
+      'required': "This field is required",
+      'minlength': "More characters required",
+      'maxlength': "Less characters required",
+      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+    }
+  };
+
   botFormErrorMessages = {
     'botName': {
       'required': "This field is required",

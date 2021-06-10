@@ -1,21 +1,21 @@
 {
-  "realm": "cim",
+  "realm": "expertflow",
   "auth-server-url": "http://192.168.1.204:8080/auth/",
   "ssl-required": "external",
-  "resource": "CIM",
+  "resource": "cim",
   "verify-token-audience": false,
   "credentials": {
-    "secret": "35699893-253c-4b51-87fa-95918e7417ae"
+    "secret": "ef61df80-061c-4c29-b9ac-387e6bf67052"
   },
   "use-resource-role-mappings": true,
   "confidential-port": 0,
   "policy-enforcer": {},
-  "CLIENT_ID": "CIM",
-  "CLIENT_DB_ID": "95536d4e-c5d5-4876-8cc3-99025e18fc60",
+  "CLIENT_ID": "cim",
+  "CLIENT_DB_ID": "ef61df80-061c-4c29-b9ac-387e6bf67052",
   "GRANT_TYPE": "password",
   "GRANT_TYPE_PAT": "client_credentials",
-  "USERNAME_ADMIN": "uadmin",
-  "PASSWORD_ADMIN": "uadmin",
-  "SCOPE_NAME": "Any deafult scope",
+  "USERNAME_ADMIN": "admin",
+  "PASSWORD_ADMIN": "admin",
+  "SCOPE_NAME": "Any default scope",
   "bearer-only": true
 }

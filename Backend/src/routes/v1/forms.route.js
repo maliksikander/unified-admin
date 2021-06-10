@@ -7,20 +7,25 @@ var config = require('../../../keycloak.json');
 var { NodeAdapter } = require("keycloak-nodejs-connect");
 const keycloak = new NodeAdapter(config);
 
-router.get('/', keycloak.enforcer(['forms:manage'], {
-    resource_server_id: 'CIM'
+
+router.get('/', keycloak.enforcer(['forms:manage-form'], {
+    resource_server_id: 'cim'
 }), formsController.getForms);
 
-router.put('/', keycloak.enforcer(['forms:manage'], {
-    resource_server_id: 'CIM'
+router.get('/:formID', keycloak.enforcer(['forms:manage-form'], {
+    resource_server_id: 'cim'
+}), formsController.getFormByID);
+
+router.put('/', keycloak.enforcer(['forms:manage-form'], {
+    resource_server_id: 'cim'
 }), validate(formsValidation.updateForm), formsController.updateForm);
 
-router.post('/', keycloak.enforcer(['forms:manage'], {
-    resource_server_id: 'CIM'
+router.post('/', keycloak.enforcer(['forms:manage-form'], {
+    resource_server_id: 'cim'
 }), validate(formsValidation.createForm), formsController.createForm);
 
-router.delete('/:formID', keycloak.enforcer(['forms:manage'], {
-    resource_server_id: 'CIM'
+router.delete('/:formID', keycloak.enforcer(['forms:manage-form'], {
+    resource_server_id: 'cim'
 }), formsController.deleteForm);
 
 module.exports = router;

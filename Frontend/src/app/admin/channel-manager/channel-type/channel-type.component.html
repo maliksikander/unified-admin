@@ -26,7 +26,6 @@
                         <ul class="top-heading">
                             <li class="col-md-8">Name</li>
                             <li class="col-md-2">Icon</li>
-                            <!-- <li class="col-md-3">Created On</li> -->
                         </ul>
                         <ng-container *ngIf="typeList && typeList.length > 0">
                             <ul class="type-list-data">
@@ -37,13 +36,9 @@
                                             {{data?.typeName ? data?.typeName : 'N/A'}}
                                         </div>
 
-                                        <div class="col-md-8 offset-md-2">
-                                            <!-- {{data?.icon ? data?.formTitle : 'N/A'}} -->
-                                            <img src="data?.icon">
+                                        <div class="col-md-2">
+                                            <img [src]="transform(data?.channelLogo)" alt="type_logo">
                                         </div>
-                                        <!-- <div class="col-sm-3 col-md-3">
-                                            {{stringAsDate(data?.createdAt) | date:'fullDate'}}
-                                        </div> -->
                                     </div>
                                     <div class="list-action-area">
                                         <span class="list-actions">
@@ -64,7 +59,7 @@
                             <span>No Data Found</span>
                         </div>
 
-                        <div *ngIf="typeList.length != 0" class="pagination-section">
+                        <div *ngIf="typeList && typeList.length > 5" class="pagination-section">
                             <span class="page-span">
                                 <span>Entries Per Page</span>
                                 <select (change)="selectPage()" [(ngModel)]="selectedItem">
@@ -80,9 +75,9 @@
                 </div>
 
                 <ng-container *ngIf="addType">
-                    <app-new-form [uiBool]="addType" [formData]="editData"
-                        (uiBoolChange)='childToParentUIChange($event)' (formSaveData)='onSave($event)'>
-                    </app-new-form>
+                    <app-channel-type-form [parentBool]="addType" [editData]="editTypeData"
+                        (childBool)='childToParentUIChange($event)' (formSaveData)='onSave($event)'>
+                    </app-channel-type-form>
                 </ng-container>
 
 

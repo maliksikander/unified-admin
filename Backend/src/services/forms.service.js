@@ -11,6 +11,7 @@ const getForm = async (id) => {
 
     if (id.match(/^[0-9a-fA-F]{24}$/)) { //check for id format
         const result = await FormsModel.findById(id);
+        if (!result) throw new ApiError(httpStatus.NOT_FOUND, 'Not Found');
         return result;
     }
     else {
@@ -28,9 +29,7 @@ const updateForm = async (reqBody) => {
     const id = reqBody.id;
     if (id.match(/^[0-9a-fA-F]{24}$/)) {   //check for id format
         const result = await FormsModel.findById(id);
-        if (!result) {
-            throw new ApiError(httpStatus.NOT_FOUND, 'Form not found');
-        }
+        if (!result) throw new ApiError(httpStatus.NOT_FOUND, 'Form not found');
         Object.assign(result, reqBody);
         await result.save();
         return result;
@@ -44,9 +43,7 @@ const deleteForm = async (id) => {
 
     if (id.match(/^[0-9a-fA-F]{24}$/)) { //check for id format
         const result = await FormsModel.findByIdAndDelete(id);
-        if (!result) {
-            throw new ApiError(httpStatus.NOT_FOUND, 'Form not found');
-        }
+        if (!result) throw new ApiError(httpStatus.NOT_FOUND, 'Form not found');
         return result;
     }
     else {

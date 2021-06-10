@@ -10,15 +10,15 @@ const keycloak = new NodeAdapter(config);
 
 
 router.get('/', keycloak.enforcer(['general-settings:manage'], {
-    resource_server_id: 'CIM'
+    resource_server_id: 'cim'
 }), reportSettingController.getSettings);
 
 router.put('/', keycloak.enforcer(['general-settings:manage'], {
-    resource_server_id: 'CIM'
+    resource_server_id: 'cim'
 }), validate(reportValidation.updateSetting), reportSettingController.updateSettings);
 
 router.post('/', keycloak.enforcer(['general-settings:manage'], {
-    resource_server_id: 'CIM'
+    resource_server_id: 'cim'
 }), validate(reportValidation.createSetting), reportSettingController.createSettings);
 
 module.exports = router;

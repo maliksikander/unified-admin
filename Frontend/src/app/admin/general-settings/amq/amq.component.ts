@@ -38,7 +38,7 @@ export class AmqComponent implements OnInit {
 
     this.commonService.tokenVerification();
 
-     this.commonService.getPermissionResourcesList();
+    //  this.commonService.getPermissionResourcesList();
     // if (!permittedResources.includes('general-settings')) { this.router.navigate(['/general/amq-settings']); }
 
 

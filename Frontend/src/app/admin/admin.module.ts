@@ -39,6 +39,7 @@ import { ColorCircleModule } from 'ngx-color/circle';
 import { FormsComponent } from './forms/forms.component';
 import { NewFormComponent } from './forms/new-form/new-form.component';
 import { ChannelTypeComponent } from './channel-manager/channel-type/channel-type.component';
+import { ChannelTypeFormComponent } from './channel-manager/channel-type/channel-type-form/channel-type-form.component';
 
 @NgModule({
     imports: [
@@ -81,7 +82,8 @@ import { ChannelTypeComponent } from './channel-manager/channel-type/channel-typ
         CalendarHeaderComponent,
         FormsComponent,
         NewFormComponent,
-        ChannelTypeComponent
+        ChannelTypeComponent,
+        ChannelTypeFormComponent
     ],
     providers: [
         HttpClientModule,

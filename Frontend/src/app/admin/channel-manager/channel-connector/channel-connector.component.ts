@@ -154,7 +154,7 @@ export class ChannelConnectorComponent implements OnInit {
   updateChannelConnector(data) {
 
     //calling endpoint service method which accepts resource name as 'connectorServiceReq' and `data` object as parameter
-    this.endPointService.updateChannel(data, this.connectorServiceReq).subscribe(
+    this.endPointService.updateChannel(data, this.connectorServiceReq, data.id).subscribe(
       (res: any) => {
         this.spinner = false;
         this.snackbar.snackbarMessage('success-snackbar', "Updated", 1);

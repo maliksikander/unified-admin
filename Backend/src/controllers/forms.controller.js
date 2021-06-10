@@ -3,17 +3,14 @@ const catchAsync = require('../utils/catchAsync');
 const { formsService } = require('../services');
 
 const getForms = catchAsync(async (req, res) => {
+    let result = await formsService.getForms();
+    res.send(result);
+});
 
-    const param = req.query;
-    let result;
-    if (param.constructor === Object) {
-        if (Object.entries(param).length === 0) {
-            result = await formsService.getForms();
-        }
-        else {
-            result = await formsService.getForm(param.formID);
-        }
-    }
+const getFormByID = catchAsync(async (req, res) => {
+
+    const id = req.params.formID;
+    result = await formsService.getForm(id);
     res.send(result);
 });
 
@@ -45,6 +42,7 @@ const deleteForm = catchAsync(async (req, res) => {
 
 module.exports = {
     getForms,
+    getFormByID,
     createForm,
     updateForm,
     deleteForm

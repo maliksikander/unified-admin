@@ -11,7 +11,7 @@ const login = async (req, res) => {
 
     try {
         const result = await keycloak.authenticateUserViaKeycloak(username, password, realm).then((res) => {
-            console.log("RES==>", res);
+            // console.log("RES==>", res);
             return res;
         });
         res.send(result);
@@ -21,8 +21,9 @@ const login = async (req, res) => {
             res.status(e.response.status).send(e.message);
         }
         else {
-            res.status(500).send("Internal Server Error");
+            res.status(500).send(e.message);
         }
+        // console.log("Error ==>", e);
         logger.error('Error:', e)
     }
 };
