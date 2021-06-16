@@ -32,10 +32,11 @@ export class TopBarComponent implements OnInit {
     sessionStorage.removeItem('currentMRDPage');
     sessionStorage.removeItem('currentQueuePage');
     sessionStorage.removeItem('currentUsersPage');
+    sessionStorage.removeItem('channelTypePage');
     sessionStorage.removeItem('tenant');
     sessionStorage.removeItem('formsPage');
     sessionStorage.removeItem('permittedResources');
-    
+
     this.router.navigate(['/login']);
   }
 

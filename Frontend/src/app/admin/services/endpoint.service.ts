@@ -145,7 +145,7 @@ export class EndpointService {
     }).pipe(catchError(this.handleError));
   }
 
-  updateChannel(data, reqServiceType,id): Observable<any> {
+  updateChannel(data, reqServiceType, id): Observable<any> {
     return this.httpClient.put<any>(`${this.CCM_URL}/${reqServiceType}/${id}`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -227,6 +227,15 @@ export class EndpointService {
 
   getForm(): Observable<any> {
     return this.httpClient.get(`${this.ADMIN_URL}/forms`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  getFormByID(id): Observable<any> {
+    return this.httpClient.get(`${this.ADMIN_URL}/forms/${id}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.token

@@ -16,7 +16,7 @@
                 <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
                   [expandedHeight]="customExpandedHeight">
                   <mat-panel-title>
-                    <img src={{type?.channelLogo}}>
+                    <img [src]="transform(type?.channelLogo)">
                     <span>{{type?.typeName ? type?.typeName : 'N/A'}}</span>
                   </mat-panel-title>
                   <mat-panel-description>
@@ -48,11 +48,11 @@
                         <div class="data-overflow">{{channel?.channelConnector?.channelConnectorName ?
                           channel?.channelConnector?.channelConnectorName : 'N/A'}}</div>
                         <span class="list-actions">
-                          <button matTooltip="Edit" (click)="editChannel(channel)" mat-mini-fab><i class="fa fa-pencil"
-                              aria-hidden="true"></i>
+                          <button matTooltip="Edit" (click)="editChannel(channel)" mat-mini-fab>
+                            <mat-icon>mode_edit</mat-icon>
                           </button>
-                          <button matTooltip="Delete" (click)="deleteConfirm(channel)" mat-mini-fab><i
-                              class="fa fa-trash-o" aria-hidden="true"></i>
+                          <button matTooltip="Delete" (click)="deleteConfirm(channel)" mat-mini-fab>
+                            <mat-icon>delete</mat-icon>
                           </button>
                         </span>
                       </td>

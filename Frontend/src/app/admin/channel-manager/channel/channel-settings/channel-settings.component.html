@@ -4,6 +4,31 @@
 <div class="panel-page-content">
   <form class="form-horizontal form-bordered" [formGroup]="channelSettingForm">
     <div class="col-md-5">
+
+      <div class="form-group">
+        <mat-label>Agent Selection Policy</mat-label>
+        <mat-form-field appearance="outline">
+          <mat-select formControlName="agentSelectionPolicy">
+            <mat-option *ngFor="let policy of agentPolicy" [value]="policy">
+              {{policy | removeUnderscoreFilter}}</mat-option>
+          </mat-select>
+          <mat-error class="form-error">
+            {{formErrors?.agentSelectionPolicy}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <mat-label>Agent Request TTL(time to leave)</mat-label>
+        <mat-form-field appearance="outline">
+          <input type="number" matInput formControlName="agentRequestTTL">
+          <mat-error class="form-error">
+            {{formErrors.agentRequestTTL}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+
       <div class="form-group">
         <mat-label>Bot ID</mat-label>
         <mat-form-field appearance="outline">
@@ -62,6 +87,20 @@
       </div>
 
       <div class="form-group">
+        <mat-label>Default Queue</mat-label>
+        <mat-form-field appearance="outline">
+          <mat-select formControlName="defaultQueue">
+            <mat-option *ngFor="let queue of queueList" [value]="queue">
+              {{queue?.name}}</mat-option>
+          </mat-select>
+          <mat-error class="form-error">
+            {{formErrors.defaultQueue}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+
+      <div class="form-group">
         <mat-label>Response SLA</mat-label>
         <mat-form-field appearance="outline">
           <input type="number" matInput formControlName="responseSLA">
@@ -71,15 +110,6 @@
         </mat-form-field>
       </div>
 
-      <!-- <div class="form-group">
-        <mat-label>Routing Policy</mat-label>
-        <mat-form-field appearance="outline">
-          <input matInput formControlName="routingPolicy">
-          <mat-error class="form-error">
-            {{formErrors.amqUrl}}
-          </mat-error>
-        </mat-form-field>
-      </div> -->
 
       <div class="form-group password-privacy-icon">
         <mat-label>Service Identifier</mat-label>
@@ -91,7 +121,14 @@
         </mat-form-field>
       </div>
 
+
+      <div class="form-group interative-toggle">
+        <mat-label>Route To Last Agent</mat-label>
+        <mat-slide-toggle formControlName="routeToLastAgent"></mat-slide-toggle>
+      </div>
     </div>
+
+
     <div class="action-area btn-margin col-md-5">
       <button mat-raised-button (click)="onClose()" class="gray-btn">Cancel</button>
       <button [disabled]="!channelSettingForm.valid" mat-raised-button class="blue-btn service-trigger"

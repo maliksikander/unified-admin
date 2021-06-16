@@ -136,6 +136,12 @@ input::-webkit-inner-spin-button {
           right: 5px;
           top: 27%;
           z-index: 2;
+          
+          mat-icon {
+            position: relative;
+            top: -6px;
+            font-size: 17px;
+          }
 
           b {
             font-weight: normal;

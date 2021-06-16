@@ -361,7 +361,11 @@ export class CommonService {
       'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
 
     },
-    'channelWebhook': {
+    'interfaceAddress': {
+      'required': "This field is required",
+      'pattern': "Enter valid url"
+    },
+    'interface': {
       'required': "This field is required",
       'pattern': "Enter valid url"
     },
@@ -403,6 +407,30 @@ export class CommonService {
       'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
     },
     'botId': {
+      'required': "This field is required",
+      'minlength': "More characters required",
+      'maxlength': "Less characters required",
+      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+    },
+    'agentSelectionPolicy': {
+      'required': "This field is required",
+      'minlength': "More characters required",
+      'maxlength': "Less characters required",
+      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+    },
+    'agentRequestTTL': {
+      'required': "This field is required",
+      'minlength': "More characters required",
+      'maxlength': "Less characters required",
+      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+    },
+    'defaultQueue': {
+      'required': "This field is required",
+      'minlength': "More characters required",
+      'maxlength': "Less characters required",
+      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+    },
+    'routeToLastAgent': {
       'required': "This field is required",
       'minlength': "More characters required",
       'maxlength': "Less characters required",
@@ -482,10 +510,6 @@ export class CommonService {
       'maxlength': "Max 500 characters required"
     }
   };
-
-  getMessage(): Observable<any> {
-    return this._generalSubject.asObservable();
-  }
 
   constructor(private snackbar: SnackbarService,
     private router: Router) { }

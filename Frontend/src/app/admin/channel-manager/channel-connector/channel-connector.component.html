@@ -16,7 +16,7 @@
                 <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
                   [expandedHeight]="customExpandedHeight">
                   <mat-panel-title>
-                    <img src="{{type?.channelLogo}}">
+                    <img [src]="transform(type?.channelLogo)">
                     <span>{{type?.typeName ? type?.typeName : 'N/A'}}</span>
                   </mat-panel-title>
                   <mat-panel-description>
@@ -34,7 +34,7 @@
                   <thead>
                     <tr>
                       <th scope="col">Name</th>
-                      <th scope="col">Webhook URL</th>
+                      <th scope="col">Interface</th>
                       <th scope="col">Status</th>
                     </tr>
                   </thead>
@@ -42,7 +42,7 @@
                     <tr *ngFor="let connector of channelConnectors">
                       <td scope="row">{{connector?.channelConnectorName ? connector?.channelConnectorName : 'N/A'}}
                       </td>
-                      <td>{{connector?.channelWebhook ? connector?.channelWebhook : 'N/A'}}</td>
+                      <td>{{connector?.interface ? connector?.interface : 'N/A'}}</td>
                       <td class="list-action-area">
                         <!-- [ngStyle]="{'color':connector?.status == 'healthy' ? '#2DD393' : '#CE0000' }" -->
                         <i [ngStyle]="connector?.status == 'healthy' && { 'color':'#2DD393' } || connector?.status == 'unhealthy' && { 'color':'#CE0000' }"
@@ -50,11 +50,11 @@
                           (connector.status == 'healthy' ? 'done' : 'clear' ) : 'hourglass_empty'}}</i>
 
                         <span class="list-actions">
-                          <button matTooltip="Edit" (click)="editChannelConnector(connector)" mat-mini-fab><i
-                              class="fa fa-pencil" aria-hidden="true"></i>
+                          <button matTooltip="Edit" (click)="editChannelConnector(connector)" mat-mini-fab>
+                            <mat-icon>mode_edit</mat-icon>
                           </button>
-                          <button matTooltip="Delete" (click)="deleteConfirm(connector)" mat-mini-fab><i
-                              class="fa fa-trash-o" aria-hidden="true"></i>
+                          <button matTooltip="Delete" (click)="deleteConfirm(connector)" mat-mini-fab>
+                            <mat-icon>delete</mat-icon>
                           </button>
                         </span>
                       </td>

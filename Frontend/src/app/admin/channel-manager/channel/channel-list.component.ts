@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 import { CommonService } from '../../services/common.service';
 import { EndpointService } from '../../services/endpoint.service';
@@ -20,7 +21,7 @@ export class ChannelListComponent implements OnInit {
   pageTitle = "Customer Channels";
   editChannelData;
   channelType;
-  typeServiceReq = 'channel-types';
+  // typeServiceReq = 'channel-types';
   channelServiceReq = 'channels';
   channelTypes = [];
   channels = [];
@@ -30,7 +31,8 @@ export class ChannelListComponent implements OnInit {
     private dialog: MatDialog,
     private endPointService: EndpointService,
     private formBuilder: FormBuilder,
-    private snackbar: SnackbarService,) { }
+    private snackbar: SnackbarService,
+    private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
 
@@ -41,18 +43,23 @@ export class ChannelListComponent implements OnInit {
 
   getChannelType() {
 
-    //calling endpoint service method to get channel types list which accepts its resource name as 'typeServiceReq' parameter
-    this.endPointService.getChannel(this.typeServiceReq).subscribe(
+    //calling endpoint service method to get channel types list which accepts its request endpoint as parameter
+    this.endPointService.getChannel('channel-types').subscribe(
       (res: any) => {
         this.spinner = false;
-        this.channelTypes = res.channelTypes;
-        if (res.channelTypes.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
+        this.channelTypes = res;
+        if (res.length == 0) this.snackbar.snackbarMessage('error-snackbar', "No Channel Type Found", 2);
       },
       error => {
         this.spinner = false;
         console.log("Error fetching:", error);
         if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
       });
+  }
+
+  //to sanitize and bypass dom security warnings for channel type logo images
+  transform(image) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(image);
   }
 
   //to get channels list, it accepts channel-type-id as `typeId` parameter for fetching type particular channels
@@ -91,7 +98,7 @@ export class ChannelListComponent implements OnInit {
   updateChannel(data) {
 
     //calling endpoint service method which accepts resource name as 'channelServiceReq' and `data` object as parameter
-    this.endPointService.updateChannel(data, this.channelServiceReq,data.id).subscribe(
+    this.endPointService.updateChannel(data, this.channelServiceReq, data.id).subscribe(
       (res: any) => {
         this.spinner = false;
         this.snackbar.snackbarMessage('success-snackbar', "Updated", 1);
@@ -132,7 +139,8 @@ export class ChannelListComponent implements OnInit {
   editChannel(data) {
 
     this.addChannelBool = true;
-    this.pageTitle = "Edit" + " " + data.channelConnector.type.typeName + " " + "Type Channel";
+    this.pageTitle = "Edit" + " " + data.channelConnector.channelType.typeName + " " + "Type Channel";
+    // console.log("datya-->",data)
     this.editChannelData = data;
     this.channelType = data.channelConnector.type;
   }
@@ -160,7 +168,6 @@ export class ChannelListComponent implements OnInit {
 
   //to add channel and change the view to form page and load input fields and pass channel type object as 'type' parameter
   addChannel(type) {
-    this.addChannelBool = true;
     this.addChannelBool = true;
     this.channelType = type;
     this.pageTitle = "Set up" + " " + type.typeName + " " + "Type Channel";

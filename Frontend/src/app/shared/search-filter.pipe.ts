@@ -31,5 +31,10 @@ export class SearchFilterPipe implements PipeTransform {
       return list.filter(list =>
         list.typeName.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1);
     }
+
+    else if (list.length > 0 && list[0].id) {
+      return list.filter(list =>
+        list.id.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1);
+    }
   }
 }

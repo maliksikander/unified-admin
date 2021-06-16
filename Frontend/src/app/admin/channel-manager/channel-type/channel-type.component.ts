@@ -33,6 +33,9 @@ export class ChannelTypeComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.commonService.tokenVerification();
+    let pageNumber = sessionStorage.getItem('channelTypePage');
+    if (pageNumber) this.p = pageNumber;
     this.getChannelTypes();
   }
 
@@ -170,7 +173,15 @@ export class ChannelTypeComponent implements OnInit {
     else {
       this.createChannelType(data);
     }
-
   }
 
+  // ngx-pagination setting methods
+  pageChange(e) { sessionStorage.setItem('channelTypePage', e); }
+
+  pageBoundChange(e) {
+    this.p = e;
+    sessionStorage.setItem('channelTypePage', e);
+  }
+
+  selectPage() { this.itemsPerPage = this.selectedItem; }
 }

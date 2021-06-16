@@ -29,10 +29,15 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
     channelMode: '',
     responseSLA: '',
     customerActivityTimeout: '',
-    botId: ''
+    botId: '',
+    agentSelectionPolicy: '',
+    defaultQueue: '',
+    agentRequestTTL: ''
   };
   validations;
   channelConnectorList = [];
+  agentPolicy = ['LEAST_SKILLED', 'MOST_SKILLED', 'LONGEST_AVAILABLE'];
+  queueList = [];
 
 
   constructor(private commonService: CommonService,
@@ -56,6 +61,10 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
       channelMode: ['', [Validators.required]],
       responseSLA: ['', [Validators.required]],
       customerActivityTimeout: ['', [Validators.required]],
+      agentSelectionPolicy: ['', [Validators.required]],
+      routeToLastAgent: [true, [Validators.required]],
+      defaultQueue: ['', [Validators.required]],
+      agentRequestTTL: ['', [Validators.required]],
       botId: ['', [Validators.required]]
     });
 
@@ -64,7 +73,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
       this.commonService.logValidationErrors(this.channelSettingForm, this.formErrors, this.validations);
     });
 
-    this.getChannelConnector(this.channelTypeData.id);
+    this.getChannelConnector(this.channelTypeData?.id);
   }
 
   //lifecycle hook to reflect parent component changes in child component
@@ -77,20 +86,9 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
     //calling endpoint service method to get connector list which accepts resource name as 'reqType' and channnel type id as `typeId` object as parameter
     this.endPointService.getByChannelType(reqType, typeId).subscribe(
       (res: any) => {
-        this.spinner = false;
+        // this.spinner = false;
         this.channelConnectorList = res;
-        if (this.channelData) {
-          let connectorIndex = this.channelConnectorList.findIndex(item => item.id == this.channelData.channelConnector.id);
-          this.channelSettingForm.patchValue({
-            channelName: this.channelData.channelName,
-            serviceIdentifier: this.channelData.serviceIdentifier,
-            channelMode: this.channelData.channelConfig.channelMode,
-            responseSLA: this.channelData.channelConfig.responseSLA,
-            customerActivityTimeout: this.channelData.channelConfig.customerActivityTimeout,
-            botId: this.channelData.channelConfig.botId,
-            channelConnector: this.channelConnectorList[connectorIndex],
-          });
-        }
+        this.getQueue();
       },
       error => {
         this.spinner = false;
@@ -99,17 +97,60 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
       });
   }
 
+  //to get queue list
+  getQueue() {
+
+    //calling endpoint service method to get connector list which accepts resource name as 'reqType' and channnel type id as `typeId` object as parameter
+    this.endPointService.get('precision-queues').subscribe(
+      (res: any) => {
+        this.spinner = false;
+        this.queueList = res;
+        if (this.queueList?.length > 0 && this.channelConnectorList?.length > 0 && this.channelData) this.patchFormValues();
+      },
+      error => {
+        this.spinner = false;
+        console.log("Error fetching:", error);
+        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
+      });
+  }
+
+
+  patchFormValues() {
+    let connectorIndex = this.channelConnectorList.findIndex(item => item.id == this.channelData.channelConnector.id);
+    let queueIndex = this.queueList.findIndex(item => item.id == this.channelData.channelConfig.routingPolicy.defaultQueue);
+    this.channelSettingForm.patchValue({
+      channelName: this.channelData.channelName,
+      serviceIdentifier: this.channelData.serviceIdentifier,
+      channelMode: this.channelData.channelConfig.channelMode,
+      responseSLA: this.channelData.channelConfig.responseSLA,
+      customerActivityTimeout: this.channelData.channelConfig.customerActivityTimeout,
+      botId: this.channelData.channelConfig.botId,
+      channelConnector: this.channelConnectorList[connectorIndex],
+      agentSelectionPolicy: this.channelData.channelConfig.routingPolicy.agentSelectionPolicy,
+      routeToLastAgent: this.channelData.channelConfig.routingPolicy.routeToLastAgent,
+      defaultQueue: this.queueList[queueIndex],
+      agentRequestTTL: this.channelData.channelConfig.routingPolicy.agentRequestTTL,
+    });
+  }
+
+
   //to create 'data' object and pass it to the parent component
   onSave() {
+
+    let routingPolicy = {
+      agentSelectionPolicy: this.channelSettingForm.value.agentSelectionPolicy,
+      routeToLastAgent: this.channelSettingForm.value.routeToLastAgent,
+      defaultQueue: this.channelSettingForm.value.defaultQueue.id,
+      agentRequestTTL: this.channelSettingForm.value.agentRequestTTL,
+    }
 
     let channelConfigData = {
       botId: this.channelSettingForm.value.botId,
       channelMode: this.channelSettingForm.value.channelMode,
       conversationBot: "",
       customerActivityTimeout: this.channelSettingForm.value.customerActivityTimeout,
-      customerIdentificationCriteria: {},
       responseSLA: this.channelSettingForm.value.responseSLA,
-      routingPolicy: {},
+      routingPolicy: routingPolicy,
     };
 
     let data: any = {
@@ -120,6 +161,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
       channelConfig: channelConfigData,
     }
     if (this.channelData) data.id = this.channelData.id;
+    
     this.formSaveData.emit(data);
     this.channelSettingForm.reset();
   }

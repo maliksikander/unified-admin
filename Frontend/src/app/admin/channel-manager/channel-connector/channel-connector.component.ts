@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 import { CommonService } from '../../services/common.service';
 import { EndpointService } from '../../services/endpoint.service';
@@ -17,7 +18,6 @@ export class ChannelConnectorComponent implements OnInit {
   customCollapsedHeight: string = '40px';
   customExpandedHeight: string = '40px';
   addChannelBool = false;
-  typeServiceReq = 'channel-types';
   connectorServiceReq = 'channel-connectors';
   pageTitle = "Channel Connectors";
   channelTypes = [];
@@ -25,16 +25,15 @@ export class ChannelConnectorComponent implements OnInit {
   channelType;
   editConnectorData;
 
-
   constructor(
     private commonService: CommonService,
     private dialog: MatDialog,
     private endPointService: EndpointService,
     private snackbar: SnackbarService,
-    private httpClient: HttpClient) { }
+    private httpClient: HttpClient,
+    private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
-
 
     this.commonService.tokenVerification();
     this.getChannelType();
@@ -43,11 +42,11 @@ export class ChannelConnectorComponent implements OnInit {
   getChannelType() {
 
     //calling endpoint service method to get channel types list which accepts its resource name as 'typeServiceReq' parameter
-    this.endPointService.getChannel(this.typeServiceReq).subscribe(
+    this.endPointService.getChannel('channel-types').subscribe(
       (res: any) => {
         this.spinner = false;
-        this.channelTypes = res.channelTypes;
-        if (res.channelTypes.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
+        this.channelTypes = res;
+        if (res.length == 0) this.snackbar.snackbarMessage('error-snackbar', "No Channel Type Found", 2);
       },
       error => {
         this.spinner = false;
@@ -55,6 +54,12 @@ export class ChannelConnectorComponent implements OnInit {
         if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
       });
   }
+
+  //to sanitize and bypass dom security warnings for channel type logo images
+  transform(image) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(image);
+  }
+
 
   getChannelConnector(typeId) {
 
@@ -62,8 +67,9 @@ export class ChannelConnectorComponent implements OnInit {
     this.endPointService.getByChannelType(this.connectorServiceReq, typeId).subscribe(
       (res: any) => {
         this.spinner = false;
+        // console.log("res==>",res);
         this.channelConnectors = res;
-        this.getConnectorStatus(this.channelConnectors);
+        // this.getConnectorStatus(this.channelConnectors);
       },
       error => {
         this.spinner = false;
@@ -71,6 +77,8 @@ export class ChannelConnectorComponent implements OnInit {
         if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
       });
   }
+
+  
 
   panelOpenCallback(data) {
 
@@ -190,11 +198,10 @@ export class ChannelConnectorComponent implements OnInit {
       });
   }
 
-
-
+  //to hit channel connector health endpoint, it accetps the connectors list as parameter and takes the request URL from the `interface address` attribute
   getConnectorStatus(list) {
     list.forEach((item) => {
-      let url = item.channelWebhook;
+      let url = item.interfaceAddress;
       this.httpClient.get(`${url}/channel-connectors/health`)
         .subscribe((res: any) => {
           item['status'] = res.status.toLowerCase();

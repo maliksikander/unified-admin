@@ -35,11 +35,13 @@ import { MatTree, MatTreeModule } from "@angular/material/tree";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { SearchFilterPipe } from './search-filter.pipe';
+import { RemoveUnderscoreFilterPipe } from './remove-underscore.pipe';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 @NgModule({
     declarations: [
         SearchFilterPipe,
+        RemoveUnderscoreFilterPipe,
         ConfirmDialogComponent],
     imports: [
         DragDropModule,
@@ -109,6 +111,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
         MatTreeModule,
         MatBottomSheetModule,
         SearchFilterPipe,
+        RemoveUnderscoreFilterPipe,
         NgxPaginationModule,
 
     ],
