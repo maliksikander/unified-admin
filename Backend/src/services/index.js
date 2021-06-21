@@ -10,3 +10,4 @@ module.exports.logSettingService = require('./logSetting.service');
 module.exports.reportSettingService = require('./reportSetting.service');
 module.exports.securitySettingService = require('./securitySetting.service');
 module.exports.formsService = require('./forms.service');
+module.exports.formValidationService = require('./formValidation.service')

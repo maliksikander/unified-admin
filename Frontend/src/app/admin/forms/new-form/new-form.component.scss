@@ -341,7 +341,8 @@ input::-webkit-inner-spin-button {
 
 .drag-handle {
   position: absolute;
-  right: calc(100% - 520px);
+  // right: calc(100% - 520px);
+  left: 47%;
   top: -13px;
   display: none;
   cursor: move;

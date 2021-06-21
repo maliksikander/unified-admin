@@ -74,7 +74,7 @@ export class LoginComponent implements OnInit {
     this.endPointService.login(reqBody).subscribe(
       (res: any) => {
         this.spinner = false;
-        console.log("res-->", res);
+        // console.log("res-->", res);
         // this.commonService.permissionVerification(res.keycloak_User.permittedResources.Resources)
         if (data.rememberMe == true) {
           sessionStorage.setItem('username', res.keycloak_User.username);

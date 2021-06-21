@@ -3141,7 +3141,7 @@ snack-bar-container {
 
 .search-field {
   max-height: 35px;
-  mat-form-field{
+  mat-form-field {
     max-height: 35px;
   }
 
@@ -3150,14 +3150,22 @@ snack-bar-container {
     height: 40px;
   }
   .mat-form-field-appearance-outline .mat-form-field-wrapper {
-  max-height: 35px;
-}
-
+    max-height: 35px;
+  }
 }
 
 .form-list-data {
   .col-md-3,
   .col-md-4 {
     padding-left: 12px;
+  }
+}
+
+.channel-connector-form {
+  mat-select {
+    .mat-select-value-text {
+      max-width: 95%;
+      display: inline-block;
+    }
   }
 }

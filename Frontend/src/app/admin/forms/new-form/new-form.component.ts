@@ -27,7 +27,7 @@ export class NewFormComponent implements OnInit, AfterViewInit {
   };
   validations;
   attributeTypeList = ["INPUT", "OPTIONS"];
-  valueTypeList = ["IP", "Number", "Password", "PositiveNumber", "String2000", "String50", "String100", "URL", "Alphanum100", "AlphanumSpecial200", "Boolean", "Email", "StringList", "PhoneNumber"];
+  valueTypeList = ["IP", "Number", "Password", "PositiveNumber", "String2000", "String50", "String100", "URL", "Alphanum100", "AlphanumSpecial200", "Boolean", "Email", "PhoneNumber"];
 
   constructor(private commonService: CommonService,
     private fb: FormBuilder,
@@ -238,7 +238,7 @@ export class NewFormComponent implements OnInit, AfterViewInit {
 
     let type = e;
     if (type == "OPTIONS") {
-      (<FormArray>this.newForm.controls['attributes']).at(i).get('valueType').setValue('StringList');
+      (<FormArray>this.newForm.controls['attributes']).at(i).get('valueType').setValue('String2000');
       const control = (<FormArray>this.newForm.controls['attributes']).at(i).get('categories') as FormArray;
       if (control.controls.length == 0) this.addCategoryButton(i);
     }

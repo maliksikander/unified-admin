@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from "@angular/router";
 import { loginRoute } from './app-routing.module'
 // import { routes } from './app-routing.module'
@@ -13,6 +13,7 @@ import { LoginComponent } from './authentication/login/login.component';
 import { APP_INITIALIZER } from '@angular/core';
 import { ConfigService } from './admin/services/config.service';
 import { RxReactiveFormsModule } from '@rxweb/reactive-form-validators'
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,9 @@ import { RxReactiveFormsModule } from '@rxweb/reactive-form-validators'
       provide: HTTP_INTERCEPTORS,
       useClass: HttpInterceptorService,
       multi: true
+    },
+    {
+      provide: LocationStrategy, useClass: HashLocationStrategy
     },
     ConfigService,
     {

@@ -11,6 +11,7 @@ const securitySettingRoute = require('./securitySetting.route');
 const formsRoute = require('./forms.route');
 const loginRoute = require('./login.route');
 const userRoute = require('./user.route');
+const formValidationRoute = require('./formValidation.route');
 const router = express.Router();
 
 // router.use('/auth', authRoute);
@@ -23,6 +24,7 @@ router.use('/log-setting', logSettingRoute);
 router.use('/report-setting', reportSettingRoute);
 router.use('/security-setting', securitySettingRoute);
 router.use('/forms', formsRoute);
+router.use('/formValidation', formValidationRoute);
 router.use('/keycloakLogin', loginRoute);
 router.use('/users', userRoute);
 

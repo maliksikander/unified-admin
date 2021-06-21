@@ -89,9 +89,9 @@ export class ChannelConnectorComponent implements OnInit {
 
   editChannelConnector(data) {
 
-    this.addChannelBool = true;
-    this.pageTitle = "Edit" + " " + data.type.typeName + " " + "Type Connector";
-    this.editConnectorData = data;
+    // this.addChannelBool = true;
+    // this.pageTitle = "Edit" + " " + data.type.typeName + " " + "Type Connector";
+    // this.editConnectorData = data;
   }
 
   deleteConfirm(data) {

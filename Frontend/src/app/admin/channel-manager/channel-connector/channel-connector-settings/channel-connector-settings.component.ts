@@ -84,7 +84,7 @@ export class ChannelConnectorSettingsComponent implements OnInit {
         this.spinner = false;
         this.formSchema = res;
         console.log("res==>", this.formSchema);
-        this.generateForm(this.formSchema?.attributes)
+        this.addFormControls(this.formSchema?.attributes)
         // this.channelConnectors = res;
         // this.getConnectorStatus(this.channelConnectors);
       },
@@ -94,19 +94,12 @@ export class ChannelConnectorSettingsComponent implements OnInit {
         if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
       });
   }
-  generateForm(attrSchema: Array<any>) {
-    const formGroup = {};
+  addFormControls(attrSchema: Array<any>) {
     attrSchema.forEach((item) => {
-      formGroup[item.key] = new FormControl("",);
+      this.channelConnectorForm.addControl(item.key, new FormControl(''));
+      if (item.isRequired) this.channelConnectorForm.controls[item.key].setValidators([Validators.required])
     });
 
-    // this.channelConnectorForm = new FormGroup(formGroup);
-    // this.channelConnectorForm = this.formBuilder.group({
-    //   channelConnectorName: ['', [Validators.required]],
-    //   interface: ['', [Validators.required]],
-    //   interfaceAddress: ['', [Validators.required]],
-    // });
-    console.log("new controls-->", formGroup);
     console.log("form-->", this.channelConnectorForm.controls);
   }
 
@@ -122,7 +115,7 @@ export class ChannelConnectorSettingsComponent implements OnInit {
     }
     if (this.connectorData) data.id = this.connectorData.id;
 
-    console.log("save data--->", data);
+    console.log("save data--->", this.channelConnectorForm.value);
     // this.formSaveData.emit(data);
     // this.channelConnectorForm.reset();
   }
