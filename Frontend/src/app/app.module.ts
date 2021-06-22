@@ -12,7 +12,6 @@ import { HttpInterceptorService } from './admin/services/http-interceptor.servic
 import { LoginComponent } from './authentication/login/login.component';
 import { APP_INITIALIZER } from '@angular/core';
 import { ConfigService } from './admin/services/config.service';
-import { RxReactiveFormsModule } from '@rxweb/reactive-form-validators'
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 @NgModule({
@@ -27,10 +26,9 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     SharedModule,
     AdminModule,
     HttpClientModule,
-    RxReactiveFormsModule
   ],
   providers: [
-    // [
+
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpInterceptorService,
@@ -51,11 +49,9 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
       deps: [ConfigService],
       multi: true
     }
-    // ],
   ],
   exports: [
     AdminModule,
-    RxReactiveFormsModule
   ],
   bootstrap: [MainComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
