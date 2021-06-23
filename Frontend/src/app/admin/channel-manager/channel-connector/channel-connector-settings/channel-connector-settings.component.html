@@ -50,12 +50,14 @@
         <div *ngIf="attrSchema.attributeType == 'INPUT'">
 
           <div class="form-group">
+            <!-- <h1>{{formValidation[attrSchema?.valueType].regex}}</h1> -->
             <mat-label>{{attrSchema.label}}</mat-label>
             <mat-form-field *ngIf="attrSchema?.valueType !='Boolean'" appearance="outline">
               <input matInput formControlName="{{attrSchema.key}}">
               <!-- <mat-error class="form-error"> -->
               <!-- {{formErrors.interfaceAddress}} -->
               <!-- </mat-error> -->
+              <!-- {{channelConnectorForm.value[attrSchema.key].length}} -->
             </mat-form-field>
 
             <mat-slide-toggle *ngIf="attrSchema?.valueType =='Boolean'" formControlName="{{attrSchema.key}}">

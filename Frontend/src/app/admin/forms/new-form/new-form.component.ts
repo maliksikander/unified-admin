@@ -5,6 +5,7 @@ import { SnackbarService } from '../../services/snackbar.service';
 import { CdkDragDrop, moveItemInArray, CdkDrag } from "@angular/cdk/drag-drop";
 import { EndpointService } from '../../services/endpoint.service';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
+import { CdkNoDataRow } from '@angular/cdk/table';
 @Component({
   selector: 'app-new-form',
   templateUrl: './new-form.component.html',
@@ -27,7 +28,7 @@ export class NewFormComponent implements OnInit, AfterViewInit {
   };
   validations;
   attributeTypeList = ["INPUT", "OPTIONS"];
-  valueTypeList = ["IP", "Number", "Password", "PositiveNumber", "String2000", "String50", "String100", "URL", "Alphanum100", "AlphanumSpecial200", "Boolean", "Email", "PhoneNumber"];
+  valueTypeList = ["Alphanum100", "AlphanumSpecial200", "Boolean", "Email", "IP", "Number", "Password", "PhoneNumber", "PositiveNumber", "String50", "String100", "String2000", "URL"];
 
   constructor(private commonService: CommonService,
     private fb: FormBuilder,
@@ -370,7 +371,7 @@ export class NewFormComponent implements OnInit, AfterViewInit {
   }
 
   //to update Form and it accepts form object as parameter and resets the view on success response 
-  updateQueue(data, saveType) {
+  updateForm(data, saveType) {
 
     this.endPointService.updateForm(data).subscribe(
       (res: any) => {
@@ -429,8 +430,8 @@ export class NewFormComponent implements OnInit, AfterViewInit {
 
     let saveObj = this.savePredecessor();
     if (this.formData) {
-      saveObj.id = this.formData.id
-      this.updateQueue(saveObj, saveType);
+      saveObj.id = this.formData.id;
+      this.updateForm(saveObj, saveType);
     }
     else {
       this.createForm(saveObj, saveType);

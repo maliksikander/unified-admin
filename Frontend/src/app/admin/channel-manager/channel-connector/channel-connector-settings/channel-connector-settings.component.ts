@@ -27,6 +27,7 @@ export class ChannelConnectorSettingsComponent implements OnInit {
   validations;
   interfaceList = ["JMS", "REST"];
   formSchema;
+  formValidation;
 
   constructor(private commonService: CommonService,
     private dialog: MatDialog,
@@ -58,12 +59,13 @@ export class ChannelConnectorSettingsComponent implements OnInit {
     // }
 
     //checking for channel connector form validation failures
-    // this.channelConnectorForm.valueChanges.subscribe((data) => {
-    //   this.commonService.logValidationErrors(this.channelConnectorForm, this.formErrors, this.validations);
-    // });
+    this.channelConnectorForm.valueChanges.subscribe((data) => {
+      console.log("form value==>", this.channelConnectorForm)
+      // this.commonService.logValidationErrors(this.channelConnectorForm, this.formErrors, this.validations);
+    });
 
-    this.getFormSchema();
-
+    // this.getFormSchema();
+    this.getFormValidation();
 
   }
 
@@ -83,26 +85,71 @@ export class ChannelConnectorSettingsComponent implements OnInit {
       (res: any) => {
         this.spinner = false;
         this.formSchema = res;
-        console.log("res==>", this.formSchema);
-        this.addFormControls(this.formSchema?.attributes)
+        // this.getFormValidation();
+        console.log("schema==>", this.formSchema);
+        this.addFormControls(JSON.parse(JSON.stringify(this.formSchema?.attributes)));
         // this.channelConnectors = res;
         // this.getConnectorStatus(this.channelConnectors);
       },
-      error => {
+      (error: any) => {
         this.spinner = false;
         console.log("Error fetching:", error);
         if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
       });
   }
+
   addFormControls(attrSchema: Array<any>) {
     attrSchema.forEach((item) => {
-      this.channelConnectorForm.addControl(item.key, new FormControl(''));
-      if (item.isRequired) this.channelConnectorForm.controls[item.key].setValidators([Validators.required])
+      let validatorArray: any = [];
+      if (item?.isRequired) validatorArray.push(Validators.required);
+      console.log("==>",this.formValidation[item?.valueType]?.regex);
+      if (item.attributeType != "OPTIONS") validatorArray.push(Validators.pattern(this.formValidation[item?.valueType]?.regex));
+      console.log("validators==>", validatorArray);
+      this.channelConnectorForm.addControl(item.key, new FormControl('', validatorArray));
+
     });
 
-    console.log("form-->", this.channelConnectorForm.controls);
+    // console.log("form-->", this.channelConnectorForm.controls);
   }
 
+
+
+  convertArrayToObject(array, key) {
+    const initialValue = {};
+    return array.reduce((obj, item) => {
+      return {
+        ...obj,
+        [item[key]]: item,
+      };
+    }, initialValue);
+  };
+
+  getFormValidation() {
+
+    // console.log("channel type data-->", this.channelTypeData)
+    // const id = this.channelTypeData.channelConfigSchema
+
+    //calling endpoint service method to get forms schema, it accepts form id as `id` as parameter
+    this.endPointService.getFormValidation().subscribe(
+      (res: any) => {
+        // this.spinner = false;
+        // console.log("res==>", res);
+        // this.formValidation = res;
+        let temp = JSON.parse(JSON.stringify(res));
+        this.formValidation = this.convertArrayToObject(temp, 'type');
+        console.log("val==>", this.formValidation);
+        this.getFormSchema()
+        // this.addFormControls(this.formSchema?.attributes)
+        // this.addFormControls(this.formSchema?.attributes)
+        // this.channelConnectors = res;
+        // this.getConnectorStatus(this.channelConnectors);
+      },
+      (error: any) => {
+        this.spinner = false;
+        console.log("Error fetching:", error);
+        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
+      });
+  }
 
   onSave() {
 

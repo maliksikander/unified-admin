@@ -22,7 +22,7 @@ const httpsCredentials = {
 mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
   logger.info('Connected to MongoDB');
 
-  bootValidation();
+  addFormValidations();
 
   if (config.isSSL == true) {
     server = https.createServer(httpsCredentials, app).listen(config.Port, () => {
@@ -63,35 +63,35 @@ process.on('SIGTERM', () => {
   if (server) { server.close(); }
 });
 
-async function bootValidation() {
+async function addFormValidations() {
 
   try {
     const res = await FormValidationModel.bulkWrite([
       {
         updateOne: {
-          filter: { type: 'AlphaNum100' },
-          update: { regex: "%5E%5Ba-zA-Z0-9%20%5D%7B0,100%7D$" },
+          filter: { type: 'Alphanum100' },
+          update: { regex: "%5Ba-zA-Z0-9%20%5D%7B1,100%7D$" },
           upsert: true
         }
       },
       {
         updateOne: {
-          filter: { type: 'AlphaNumSpecial200' },
-          update: { regex: "%5B%20A-Za-z0-9_@.,;:=*%25$!%5E/#&+()??%7B%7D%3E&lt;%7C-%5D%7B0,200%7D$" },
+          filter: { type: 'AlphanumSpecial200' },
+          update: { regex: "%5B%20A-Za-z0-9_@.,;:%60~=*'%25$!%5E/#&+()?%7B%7D%3E&lt;%7C-%5D%7B0,200%7D$" },
           upsert: true
         }
       },
       {
         updateOne: {
           filter: { type: 'Boolean' },
-          update: { regex: "%5E(true%7Cfalse%7C1%7C0)$" },
+          update: { regex: "(true%7Cfalse%7C1%7C0)$" },
           upsert: true
         }
       },
       {
         updateOne: {
           filter: { type: 'Email' },
-          update: { regex: "%5E%5B%5Es@%5D+@%5B%5Es@%5D+$" },
+          update: { regex: "%5Ba-zA-Z0-9.!#$%25&%E2%80%99*+/=?%5E_%60%7B%7C%7D~-%5D+@%5Ba-zA-Z0-9-%5D+(?:.%5Ba-zA-Z0-9-%5D+)*$" },
           upsert: true
         }
       },
@@ -105,56 +105,56 @@ async function bootValidation() {
       {
         updateOne: {
           filter: { type: 'Number' },
-          update: { regex: "%5E%5B-+0-9%5D+$" },
+          update: { regex: "%5B-+0-9.%5D+$" },
           upsert: true
         }
       },
       {
         updateOne: {
           filter: { type: 'Password' },
-          update: { regex: "%5E(?=.*d)(?=.*%5Ba-z%5D)(?=.*%5BA-Z%5D)(?=.*%5Ba-zA-Z%5D).%7B8,256%7D$" },
+          update: { regex: "(?=.*%5Ba-z%5D)(?=.*%5BA-Z%5D)(?=.*%5Cd)%5Ba-zA-Z%5Cd%5D%7B8,256%7D$" },
           upsert: true
         }
       },
       {
         updateOne: {
           filter: { type: 'PositiveNumber' },
-          update: { regex: "" },
+          update: { regex: "%5B+%5D?(%5B.%5D%5Cd+%7C%5Cd+(%5B.%5D%5Cd+)?)$" },
           upsert: true
         }
       },
       {
         updateOne: {
           filter: { type: 'PhoneNumber' },
-          update: { regex: "%5E%5B+%5D?(%5B0-9%5D+(?:%5B.%5D%5B0-9%5D*)?%7C.%5B0-9%5D+)$" },
+          update: { regex: "%5B+%5D?(%5B0-9%5D+(?:%5B.%5D%5B0-9%5D*)?%7C.%5B0-9%5D+)$" },
           upsert: true
         }
       },
       {
         updateOne: {
           filter: { type: 'String50' },
-          update: { regex: "%5E(?=.%7B0,50%7D$)." },
+          update: { regex: ".%7B1,50%7D$" },
           upsert: true
         }
       },
       {
         updateOne: {
           filter: { type: 'String100' },
-          update: { regex: "%5E(?=.%7B0,100%7D$)." },
+          update: { regex: ".%7B1,100%7D$" },
           upsert: true
         }
       },
       {
         updateOne: {
           filter: { type: 'String2000' },
-          update: { regex: "%5E(?=.%7B0,2000%7D$)." },
+          update: { regex: ".%7B1,2000%7D$" },
           upsert: true
         }
       },
       {
         updateOne: {
           filter: { type: 'URL' },
-          update: { regex: "(((%5BA-Za-z%5D%7B2,9%7D:(?://)?)(?:%5B-;:&=+$,w%5D+@)?%5BA-Za-z0-9.-%5D+%7C(?:www.%7C%5B-;:&=+$,w%5D+@)%5BA-Za-z0-9.-%5D+)((?:/%5B+~%25/.w-_%5D*)???(?:%5B-+=&;%25@.w_%5D*)#?(?:%5B.!/%5Cw%5D*))?)" },
+          update: { regex: "(((%5BA-Za-z%5D%7B2,9%7D:(?:%5C/%5C/)?)(?:%5B%5C-;:&=%5C+%5C$,%5Cw%5D+@)?%5BA-Za-z0-9%5C.%5C-%5D+%7C(?:www%5C.%7C%5B%5C-;:&=%5C+%5C$,%5Cw%5D+@)%5BA-Za-z0-9%5C.%5C-%5D+)((?:%5C/%5B%5C+~%25%5C/%5C.%5Cw%5C-_%5D*)?%5C??(?:%5B%5C-%5C+=&;%25@%5C.%5Cw_%5D*)#?(?:%5B%5C.%5C!%5C/%5C%5C%5Cw%5D*))?)" },
           upsert: true
         }
       },

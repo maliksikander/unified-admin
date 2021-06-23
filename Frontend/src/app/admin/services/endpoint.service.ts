@@ -261,6 +261,19 @@ export class EndpointService {
     }).pipe(catchError(this.handleError));
   }
 
+  ////////////////// Form Validation //////////////////////
+
+
+  getFormValidation(): Observable<any> {
+    return this.httpClient.get(`${this.ADMIN_URL}/formValidation`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+
   /////////////// Keycloak /////////////////
 
   login(data): Observable<any> {
