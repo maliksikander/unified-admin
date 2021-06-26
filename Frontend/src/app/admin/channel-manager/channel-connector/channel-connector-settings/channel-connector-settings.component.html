@@ -39,12 +39,12 @@
         </mat-form-field>
       </div>
 
-      <ng-container *ngIf="channelConnectorForm.value.interfaceAddress">
+      <!-- <ng-container *ngIf="channelConnectorForm.value.interfaceAddress">
         <p class="url-info"><strong>Webhook URL : </strong>
           {{channelConnectorForm.value.interfaceAddress}}/channel-connectors/webhook </p>
         <p class="url-info"><strong>Health Status URL : </strong>
           {{channelConnectorForm.value.interfaceAddress}}/channel-connectors/health </p>
-      </ng-container>
+      </ng-container> -->
 
       <div *ngFor="let attrSchema of formSchema?.attributes">
         <div *ngIf="attrSchema.attributeType == 'INPUT'">
@@ -54,10 +54,10 @@
             <mat-label>{{attrSchema.label}}</mat-label>
             <mat-form-field *ngIf="attrSchema?.valueType !='Boolean'" appearance="outline">
               <input matInput formControlName="{{attrSchema.key}}">
-              <!-- <mat-error class="form-error"> -->
-              <!-- {{formErrors.interfaceAddress}} -->
-              <!-- </mat-error> -->
-              <!-- {{channelConnectorForm.value[attrSchema.key].length}} -->
+              <mat-error class="form-error">
+                {{formErrors[attrSchema.key]}}
+              </mat-error>
+              {{channelConnectorForm.value[attrSchema.key].length}}
             </mat-form-field>
 
             <mat-slide-toggle *ngIf="attrSchema?.valueType =='Boolean'" formControlName="{{attrSchema.key}}">
@@ -84,9 +84,9 @@
                   <mat-option *ngFor="let option of attrSchema?.categoryOptions?.categories[0]?.values"
                     [value]="option"> {{option}}</mat-option>
                 </mat-select>
-                <!-- <mat-error class="form-error"> -->
-                <!-- {{formErrors.interfaceAddress}} -->
-                <!-- </mat-error> -->
+                <mat-error class="form-error">
+                  {{formErrors[attrSchema.key]}}
+                </mat-error>
               </mat-form-field>
             </div>
           </ng-container>

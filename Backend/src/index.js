@@ -112,14 +112,14 @@ async function addFormValidations() {
       {
         updateOne: {
           filter: { type: 'Password' },
-          update: { regex: "(?=.*%5Ba-z%5D)(?=.*%5BA-Z%5D)(?=.*%5Cd)%5Ba-zA-Z%5Cd%5D%7B8,256%7D$" },
+          update: { regex: "(?=.*%5Ba-z%5D)(?=.*%5BA-Z%5D)(?=.*%5B0-9%5D)%5B%20a-zA-Z0-9%5D%7B8,256%7D" },
           upsert: true
         }
       },
       {
         updateOne: {
           filter: { type: 'PositiveNumber' },
-          update: { regex: "%5B+%5D?(%5B.%5D%5Cd+%7C%5Cd+(%5B.%5D%5Cd+)?)$" },
+          update: { regex: '%5B+%5D?%5B0-9%5D*(%5C.%5B0-9%5D+)?$' },
           upsert: true
         }
       },

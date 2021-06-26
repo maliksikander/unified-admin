@@ -19,7 +19,7 @@ export class ChannelConnectorSettingsComponent implements OnInit {
   @Output() formSaveData = new EventEmitter<any>();
   spinner = true;
   channelConnectorForm: FormGroup;
-  formErrors = {
+  formErrors: any = {
     channelConnectorName: '',
     interface: '',
     interfaceAddress: '',
@@ -58,26 +58,19 @@ export class ChannelConnectorSettingsComponent implements OnInit {
     //   });
     // }
 
-    //checking for channel connector form validation failures
-    this.channelConnectorForm.valueChanges.subscribe((data) => {
-      console.log("form value==>", this.channelConnectorForm)
-      // this.commonService.logValidationErrors(this.channelConnectorForm, this.formErrors, this.validations);
-    });
-
-    // this.getFormSchema();
     this.getFormValidation();
+
+    //setting up error messages on form validation failures
+    this.channelConnectorForm.valueChanges.subscribe((data) => {
+      this.commonService.logValidationErrors(this.channelConnectorForm, this.formErrors, this.validations);
+    });
 
   }
 
   //lifecycle to update all 'input' changes from parent component
   ngOnChanges(changes: SimpleChanges) { }
 
-
-
-
   getFormSchema() {
-
-    // console.log("channel type data-->", this.channelTypeData)
     const id = this.channelTypeData.channelConfigSchema
 
     //calling endpoint service method to get forms schema, it accepts form id as `id` as parameter
@@ -85,11 +78,23 @@ export class ChannelConnectorSettingsComponent implements OnInit {
       (res: any) => {
         this.spinner = false;
         this.formSchema = res;
-        // this.getFormValidation();
-        console.log("schema==>", this.formSchema);
         this.addFormControls(JSON.parse(JSON.stringify(this.formSchema?.attributes)));
-        // this.channelConnectors = res;
-        // this.getConnectorStatus(this.channelConnectors);
+      },
+      (error: any) => {
+        this.spinner = false;
+        console.log("Error fetching:", error);
+        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
+      });
+  }
+
+  getFormValidation() {
+
+    //calling endpoint service method to get forms validations
+    this.endPointService.getFormValidation().subscribe(
+      (res: any) => {
+        let temp = JSON.parse(JSON.stringify(res));
+        this.formValidation = this.convertArrayToObject(temp, 'type');
+        this.getFormSchema()
       },
       (error: any) => {
         this.spinner = false;
@@ -99,20 +104,31 @@ export class ChannelConnectorSettingsComponent implements OnInit {
   }
 
   addFormControls(attrSchema: Array<any>) {
+
     attrSchema.forEach((item) => {
-      let validatorArray: any = [];
-      if (item?.isRequired) validatorArray.push(Validators.required);
-      console.log("==>",this.formValidation[item?.valueType]?.regex);
-      if (item.attributeType != "OPTIONS") validatorArray.push(Validators.pattern(this.formValidation[item?.valueType]?.regex));
-      console.log("validators==>", validatorArray);
+      let validatorArray: any = this.addFormValidations(item);
+      this.addFormErrorMsg(item.key);
       this.channelConnectorForm.addControl(item.key, new FormControl('', validatorArray));
-
     });
-
-    // console.log("form-->", this.channelConnectorForm.controls);
   }
 
+  addFormValidations(item) {
+    let temp = [];
+    if (item?.isRequired) temp.push(Validators.required);
+    if (item.attributeType != "OPTIONS") temp.push(Validators.pattern(this.formValidation[item?.valueType]?.regex));
+    return temp;
+  }
 
+  addFormErrorMsg(key) {
+
+    let errors = {
+      required: 'This field is required',
+      pattern: 'Please match the requested format'
+    };
+    this.validations[key] = {};
+    this.formErrors[key] = '';
+    this.validations[key] = errors;
+  }
 
   convertArrayToObject(array, key) {
     const initialValue = {};
@@ -124,45 +140,69 @@ export class ChannelConnectorSettingsComponent implements OnInit {
     }, initialValue);
   };
 
-  getFormValidation() {
 
-    // console.log("channel type data-->", this.channelTypeData)
-    // const id = this.channelTypeData.channelConfigSchema
+  createRequestPayload() {
 
-    //calling endpoint service method to get forms schema, it accepts form id as `id` as parameter
-    this.endPointService.getFormValidation().subscribe(
-      (res: any) => {
-        // this.spinner = false;
-        // console.log("res==>", res);
-        // this.formValidation = res;
-        let temp = JSON.parse(JSON.stringify(res));
-        this.formValidation = this.convertArrayToObject(temp, 'type');
-        console.log("val==>", this.formValidation);
-        this.getFormSchema()
-        // this.addFormControls(this.formSchema?.attributes)
-        // this.addFormControls(this.formSchema?.attributes)
-        // this.channelConnectors = res;
-        // this.getConnectorStatus(this.channelConnectors);
-      },
-      (error: any) => {
-        this.spinner = false;
-        console.log("Error fetching:", error);
-        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
-      });
-  }
-
-  onSave() {
-
+    let formData = this.createFormDataObject();
     let data: any = {
       channelConnectorName: this.channelConnectorForm.value.channelConnectorName,
       interface: this.channelConnectorForm.value.interface,
       interfaceAddress: this.channelConnectorForm.value.interfaceAddress,
       channelType: this.channelTypeData,
+      channelConnectorData: formData,
       tenant: {}
-    }
-    if (this.connectorData) data.id = this.connectorData.id;
+    };
+    return data;
+  }
 
-    console.log("save data--->", this.channelConnectorForm.value);
+
+  createFormDataObject() {
+
+    // form data object declaration and initialization
+    let data = {
+      formID: '',
+      filledBy: '',
+      attributes: [],
+      createdOn: new Date()
+    };
+
+    //getting filled form values and converting variable to arrat of objects
+    let filledValues: any = JSON.parse(JSON.stringify(this.channelConnectorForm.value));
+    delete filledValues.channelConnectorName;
+    delete filledValues.interface;
+    delete filledValues.interfaceAddress;
+    filledValues = Object.entries(filledValues).map((e) => ({ [e[0]]: e[1] }));
+
+    //setting form Data values
+    let user = sessionStorage.getItem('username');
+    data.formID = this.formSchema.id;
+    data.filledBy = user;
+    let attrTemp = [];  // temp array variable
+
+    //creating attributes array by iterating over `form Schema attributes` and `filled form attributes`
+    this.formSchema?.attributes.forEach((item) => {
+      let obj: any = {};
+      filledValues.forEach((val) => {
+        let key = Object.keys(val)[0];
+        if (key == item.key) {
+          obj.key = key;
+          obj.type = item.valueType;
+          obj.value = Object.values(val)[0];
+          attrTemp.push(obj);
+        }
+      });
+    });
+
+    //setting form data attributes array to create array
+    data.attributes = attrTemp;
+    return data;
+  }
+
+  onSave() {
+
+    let data: any = this.createRequestPayload();
+    if (this.connectorData) data.id = this.connectorData.id;
+    console.log("save data--->", data);
     // this.formSaveData.emit(data);
     // this.channelConnectorForm.reset();
   }

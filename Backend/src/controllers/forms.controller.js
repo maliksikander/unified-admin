@@ -10,8 +10,17 @@ const getForms = catchAsync(async (req, res) => {
 const getFormByID = catchAsync(async (req, res) => {
 
     const id = req.params.formID;
+    let resType = req?.query?.responseType;
+    resType = resType?.toLowerCase();
+
     result = await formsService.getForm(id);
-    res.send(result);
+
+    if (resType == "html") {
+        res.send("Not yet");
+    }
+    else {
+        res.send(result);
+    }
 });
 
 const createForm = catchAsync(async (req, res) => {
