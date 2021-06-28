@@ -1,5 +1,6 @@
 #!/bin/sh
 envsubst < src/public/assets/config/config.json.template > src/public/assets/config/config.json
+envsubst < keycloak.json.template > keycloak.json
 sed -i -e "/PORT=/c PORT=$PORT" /usr/src/app/admin-panel.env
 sed -i -e "/isSSL=/c isSSL=$isSSL" /usr/src/app/admin-panel.env
 sed -i -e "/MONGODB_URL=/c MONGODB_URL=$MONGODB_URL" /usr/src/app/admin-panel.env
