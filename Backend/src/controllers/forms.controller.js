@@ -1,4 +1,3 @@
-const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
 const { formsService } = require('../services');
 
@@ -10,8 +9,8 @@ const getForms = catchAsync(async (req, res) => {
 const getFormByID = catchAsync(async (req, res) => {
 
     const id = req.params.formID;
-    let resType = req?.query?.responseType;
-    resType = resType?.toLowerCase();
+    let resType = req.query.responseType;
+    if (resType) resType = resType.toLowerCase();
 
     result = await formsService.getForm(id);
 

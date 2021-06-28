@@ -5,9 +5,9 @@
   "resource": "${RESOURCE}",
   "verify-token-audience": ${VERIFY_TOKEN_AUDIENCE},
   "credentials":${CREDENTIALS},
-  "use-resource-role-mappings": "${USE_RESOURCE_ROLE_MAPPINGS},
-  "confidential-port": "${CONFIDENTIAL_PORT}",
-  "policy-enforcer": "${POLICY_ENFORCER}",
+  "use-resource-role-mappings": ${USE_RESOURCE_ROLE_MAPPINGS},
+  "confidential-port": ${CONFIDENTIAL_PORT},
+  "policy-enforcer": ${POLICY_ENFORCER},
   "CLIENT_ID": "${CLIENT_ID}",
   "CLIENT_DB_ID": "${CLIENT_DB_ID}",
   "GRANT_TYPE": "${GRANT_TYPE}",
@@ -15,6 +15,6 @@
   "USERNAME_ADMIN": "${USERNAME_ADMIN}",
   "PASSWORD_ADMIN": "${PASSWORD_ADMIN}",
   "SCOPE_NAME": "${SCOPE_NAME}",
-  "bearer-only": "${BEARER_ONLY}
+  "bearer-only": ${BEARER_ONLY}
 
 }
