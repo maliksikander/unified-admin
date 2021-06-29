@@ -1,0 +1,19 @@
+<label for="New_Attribute1>New Attribute1</label>
+<select name="New_Attribute1" id="New_Attribute1">
+  <option value="Option1">Option1</option>
+  <option value="Option2">Option2</option>
+  <option value="Option3">Option3</option>
+  <option value="Option4">Option4</option>
+  <option value="Option5">Option5</option>
+  <option value="Option6">Option6</option>
+  <option value="Option7">Option7</option>
+  <option value="Option8">Option8</option>
+  <option value="Option9">Option9</option>
+  <option value="Option10">Option10</option>
+  <option value="Option11">Option11</option>
+  <option value="Option12">Option12</option>
+  <option value="Option13">Option13</option>
+  <option value="Option14">Option14</option>
+  <option value="Option15">Option15</option>
+  <option value="Option1">Option1</option>
+</select>

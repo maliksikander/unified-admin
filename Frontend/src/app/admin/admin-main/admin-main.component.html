@@ -91,37 +91,21 @@
 
             </mat-expansion-panel>
 
-            <!-- Routing Configuration -->
-            <mat-expansion-panel *ngIf="routingBool">
-              <mat-expansion-panel-header class='route-header-image-icon'>
-                <!-- <i style="font-size: 21px;" class="material-icons">compare_arrows</i> -->
-                <img src="/assets/images/routing.svg" alt="">
-                <span class="sidebar-text">Routing</span>
-              </mat-expansion-panel-header>
-              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/routing/attributes']">
-                <img src="/assets/images/attribute.svg" alt="attr">
-                <span class="sidebar-text">Attributes</span>
-              </a>
-              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/routing/media-routing-domain']">
-                <img src="/assets/images/mrd.svg" alt="mrd">
-                <span class="sidebar-text">MRD's</span>
-              </a>
-              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/routing/precision-queue']">
-                <img src="/assets/images/precision_queue.svg" alt="queue">
-                <span class="sidebar-text">Precision Queues</span>
-              </a>
-              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/routing/agents']">
-                <img src="/assets/images/users.svg" alt="user">
-                <span class="sidebar-text">Agents</span>
-              </a>
-            </mat-expansion-panel>
+
+
+            <!-- BOT SETTINGS -->
+            <a class="single-menu-link" mat-list-item [routerLinkActive]="['active-link']"
+              [routerLink]="['/bot-settings']">
+              <img src="/assets/images/bot.svg" alt="bot">
+              <span class="sidebar-text">Bot Settings</span>
+            </a>
 
 
             <!-- CCM -->
             <mat-expansion-panel>
               <mat-expansion-panel-header class='ccm-header-image-icon'>
                 <img src="/assets/images/customer-channels.svg" alt="ccm">
-                <span class="sidebar-text">Customer Channels</span>
+                <span class="sidebar-text">Channel Manager</span>
               </mat-expansion-panel-header>
 
               <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/channel/channel-type']">
@@ -136,21 +120,42 @@
 
               <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/channel/channel-manager']">
                 <img src="/assets/images/channel-manager.svg" alt="channel">
-                <span class="sidebar-text">Channel Manager</span>
+                <span class="sidebar-text">Channel</span>
               </a>
 
             </mat-expansion-panel>
 
-            <a class="single-menu-link" mat-list-item [routerLinkActive]="['active-link']"
-              [routerLink]="['/bot-settings']">
-              <img src="/assets/images/bot.svg" alt="bot">
-              <span class="sidebar-text">Bot Settings</span>
-            </a>
+
 
             <a class="single-menu-link" mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/form']">
               <img src="/assets/images/forms.svg" alt="bot">
               <span class="sidebar-text">Forms</span>
             </a>
+
+            <!-- Routing Configuration -->
+            <mat-expansion-panel *ngIf="routingBool">
+              <mat-expansion-panel-header class='route-header-image-icon'>
+                <!-- <i style="font-size: 21px;" class="material-icons">compare_arrows</i> -->
+                <img src="/assets/images/routing.svg" alt="">
+                <span class="sidebar-text">Routing</span>
+              </mat-expansion-panel-header>
+              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/routing/attributes']">
+                <img src="/assets/images/attribute.svg" alt="attr">
+                <span class="sidebar-text">Attribute</span>
+              </a>
+              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/routing/media-routing-domain']">
+                <img src="/assets/images/mrd.svg" alt="mrd">
+                <span class="sidebar-text">MRD</span>
+              </a>
+              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/routing/precision-queue']">
+                <img src="/assets/images/precision_queue.svg" alt="queue">
+                <span class="sidebar-text">Precision Queue</span>
+              </a>
+              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/routing/agents']">
+                <img src="/assets/images/users.svg" alt="user">
+                <span class="sidebar-text">Agent</span>
+              </a>
+            </mat-expansion-panel>
 
           </mat-accordion>
 

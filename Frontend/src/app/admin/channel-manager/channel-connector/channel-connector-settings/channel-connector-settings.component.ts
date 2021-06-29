@@ -141,45 +141,22 @@ export class ChannelConnectorSettingsComponent implements OnInit {
   };
 
 
-  createRequestPayload() {
+  //getting filled form values and converting variable to array of objects
+  removeStaticFormAttributes() {
 
-    let formData = this.createFormDataObject();
-    let data: any = {
-      channelConnectorName: this.channelConnectorForm.value.channelConnectorName,
-      interface: this.channelConnectorForm.value.interface,
-      interfaceAddress: this.channelConnectorForm.value.interfaceAddress,
-      channelType: this.channelTypeData,
-      channelConnectorData: formData,
-      tenant: {}
-    };
-    return data;
+    let filledAttributes: any = JSON.parse(JSON.stringify(this.channelConnectorForm.value));
+    delete filledAttributes.channelConnectorName;
+    delete filledAttributes.interface;
+    delete filledAttributes.interfaceAddress;
+    filledAttributes = Object.entries(filledAttributes).map((e) => ({ [e[0]]: e[1] }));
+    return filledAttributes;
   }
 
+  //creating attributes array by iterating over `form Schema attributes` and `filled form attributes`
+  createFormDataAttributes(filledValues) {
 
-  createFormDataObject() {
-
-    // form data object declaration and initialization
-    let data = {
-      formID: '',
-      filledBy: '',
-      attributes: [],
-      createdOn: new Date()
-    };
-
-    //getting filled form values and converting variable to arrat of objects
-    let filledValues: any = JSON.parse(JSON.stringify(this.channelConnectorForm.value));
-    delete filledValues.channelConnectorName;
-    delete filledValues.interface;
-    delete filledValues.interfaceAddress;
-    filledValues = Object.entries(filledValues).map((e) => ({ [e[0]]: e[1] }));
-
-    //setting form Data values
-    let user = sessionStorage.getItem('username');
-    data.formID = this.formSchema.id;
-    data.filledBy = user;
     let attrTemp = [];  // temp array variable
 
-    //creating attributes array by iterating over `form Schema attributes` and `filled form attributes`
     this.formSchema?.attributes.forEach((item) => {
       let obj: any = {};
       filledValues.forEach((val) => {
@@ -193,8 +170,44 @@ export class ChannelConnectorSettingsComponent implements OnInit {
       });
     });
 
-    //setting form data attributes array to create array
-    data.attributes = attrTemp;
+    return attrTemp;
+
+  }
+
+  //create form data object 
+  createAndSetupFormDataObject() {
+
+    // form data object declaration and initialization
+    let data: any = {
+      formID: '',
+      filledBy: '',
+      attributes: [],
+    };
+
+    let filledValues: any = this.removeStaticFormAttributes();
+
+    //setting form Data values
+    let user = sessionStorage.getItem('username');
+    data.formID = this.formSchema.id;
+    data.filledBy = user;
+    if (!this.connectorData) data.createdOn = new Date();
+    data.attributes = this.createFormDataAttributes(filledValues);
+
+    return data;
+  }
+
+  //creating request body
+  createRequestPayload() {
+
+    let formData = this.createAndSetupFormDataObject();
+    let data: any = {
+      channelConnectorName: this.channelConnectorForm.value.channelConnectorName,
+      interface: this.channelConnectorForm.value.interface,
+      interfaceAddress: this.channelConnectorForm.value.interfaceAddress,
+      channelType: this.channelTypeData,
+      channelConnectorData: formData,
+      tenant: {}
+    };
     return data;
   }
 

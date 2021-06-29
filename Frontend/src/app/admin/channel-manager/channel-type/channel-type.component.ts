@@ -15,7 +15,7 @@ export class ChannelTypeComponent implements OnInit {
 
   addType: boolean = false;
   spinner: boolean = true;
-  pageTitle: String = 'Channel Type'
+  pageTitle: String = 'Channel Types'
   editTypeData;
   typeList = [];
   searchTerm: String = '';
