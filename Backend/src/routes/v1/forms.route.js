@@ -12,9 +12,11 @@ router.get('/', keycloak.enforcer(['forms:manage-form'], {
     resource_server_id: 'cim'
 }), formsController.getForms);
 
-router.get('/:formID', keycloak.enforcer(['forms:manage-form'], {
-    resource_server_id: 'cim'
-}), formsController.getFormByID);
+// keycloak.enforcer(['forms:manage-form'], {
+    // resource_server_id: 'cim'
+// }),
+
+router.get('/:formID',  formsController.getFormByID);
 
 router.put('/', keycloak.enforcer(['forms:manage-form'], {
     resource_server_id: 'cim'

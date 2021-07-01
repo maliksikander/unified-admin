@@ -15,7 +15,7 @@ export class ChannelConnectorSettingsComponent implements OnInit {
   @Input() parentChannelBool;
   @Input() channelTypeData;
   @Input() connectorData;
-  @Output() childChannelBool = new EventEmitter<any>();
+  @Output() formCancelEvent = new EventEmitter<any>();
   @Output() formSaveData = new EventEmitter<any>();
   spinner = true;
   channelConnectorForm: FormGroup;
@@ -28,6 +28,7 @@ export class ChannelConnectorSettingsComponent implements OnInit {
   interfaceList = ["JMS", "REST"];
   formSchema;
   formValidation;
+  reqEndpoint = 'channel-connectors';
 
   constructor(private commonService: CommonService,
     private dialog: MatDialog,
@@ -48,16 +49,6 @@ export class ChannelConnectorSettingsComponent implements OnInit {
       interfaceAddress: ['', [Validators.required]],
     });
 
-    // if (this.connectorData) {
-    //   this.channelConnectorForm.patchValue({
-    //     channelConnectorName: this.connectorData.channelConnectorName,
-    //     interface: this.connectorData.interface,
-    //     interfaceAddress: this.connectorData.interfaceAddress,
-    //     webhookUrl: `${this.connectorData.interfaceAddress}/channel-connectors/webhook`,
-    //     healthUrl: `${this.connectorData.interfaceAddress}/channel-connectors/health`
-    //   });
-    // }
-
     this.getFormValidation();
 
     //setting up error messages on form validation failures
@@ -67,9 +58,10 @@ export class ChannelConnectorSettingsComponent implements OnInit {
 
   }
 
-  //lifecycle to update all 'input' changes from parent component
+  //lifecycle to update all '@input' changes from parent component
   ngOnChanges(changes: SimpleChanges) { }
 
+  //calling forms endpoint to fetch forms schema
   getFormSchema() {
     const id = this.channelTypeData.channelConfigSchema
 
@@ -79,6 +71,7 @@ export class ChannelConnectorSettingsComponent implements OnInit {
         this.spinner = false;
         this.formSchema = res;
         this.addFormControls(JSON.parse(JSON.stringify(this.formSchema?.attributes)));
+        if (this.connectorData) { this.patchFormValues(this.connectorData); }
       },
       (error: any) => {
         this.spinner = false;
@@ -87,6 +80,7 @@ export class ChannelConnectorSettingsComponent implements OnInit {
       });
   }
 
+  //calling forms validaition endpoint to fetch form validation definitions
   getFormValidation() {
 
     //calling endpoint service method to get forms validations
@@ -94,7 +88,7 @@ export class ChannelConnectorSettingsComponent implements OnInit {
       (res: any) => {
         let temp = JSON.parse(JSON.stringify(res));
         this.formValidation = this.convertArrayToObject(temp, 'type');
-        this.getFormSchema()
+        this.getFormSchema();
       },
       (error: any) => {
         this.spinner = false;
@@ -103,15 +97,17 @@ export class ChannelConnectorSettingsComponent implements OnInit {
       });
   }
 
+  // adding forms controls to existing form group using attributes in from schema as `attrSchema` parameter
   addFormControls(attrSchema: Array<any>) {
 
     attrSchema.forEach((item) => {
       let validatorArray: any = this.addFormValidations(item);
       this.addFormErrorMsg(item.key);
-      this.channelConnectorForm.addControl(item.key, new FormControl('', validatorArray));
+      this.channelConnectorForm.addControl(item.key, new FormControl(item.valueType == 'Boolean' ? true : '', validatorArray));
     });
   }
 
+  // creating validation definitions for form controls, using form schema attribute as parameter 
   addFormValidations(item) {
     let temp = [];
     if (item?.isRequired) temp.push(Validators.required);
@@ -119,6 +115,7 @@ export class ChannelConnectorSettingsComponent implements OnInit {
     return temp;
   }
 
+  // adding form error messages to the local error object, using attribute key as `key` parameter
   addFormErrorMsg(key) {
 
     let errors = {
@@ -130,6 +127,44 @@ export class ChannelConnectorSettingsComponent implements OnInit {
     this.validations[key] = errors;
   }
 
+  // patching existing values to form for editing, using channel connector data from parent as `connectorData` parameter 
+  patchFormValues(connectorData) {
+
+    let patchData: any = {
+      channelConnectorName: this.connectorData.channelConnectorName,
+      interface: this.connectorData.interface,
+      interfaceAddress: this.connectorData.interfaceAddress,
+    };
+
+    connectorData.channelConnectorData?.attributes.forEach((item) => {
+      patchData[item.key] = item.value;
+      let attr = this.formSchema?.attributes.filter((val) => val.key == item.key);
+      attr = attr[0];
+      if (attr.attributeType == "OPTIONS") patchData[item.key] = this.checkValueExistenceInOtions(attr, item);
+
+    });
+    this.channelConnectorForm.patchValue(patchData);
+  }
+
+  // to check if the selected value exists in the form schema options, it uses the form schema attribute as `attr` and connector form data value as `item` parameters 
+  checkValueExistenceInOtions(attr, item) {
+
+    let temp;
+    let categories = attr?.categoryOptions?.categories;
+    for (let i = 0; i < categories.length; i++) {
+      for (let j = 0; j < categories[i].values.length; j++) {
+        if (categories[i].values[j] == item.value) {
+          temp = item.value;
+          break;
+        }
+        temp = null;
+      }
+      if (temp != undefined || temp != null) break;
+    }
+    return temp;
+  }
+
+  // to convert an array of objects to an object of objects
   convertArrayToObject(array, key) {
     const initialValue = {};
     return array.reduce((obj, item) => {
@@ -140,6 +175,41 @@ export class ChannelConnectorSettingsComponent implements OnInit {
     }, initialValue);
   };
 
+  //creating request body
+  createRequestPayload() {
+
+    let formData = this.createAndSetupFormDataObject();
+    let data: any = {
+      channelConnectorName: this.channelConnectorForm.value.channelConnectorName,
+      interface: this.channelConnectorForm.value.interface,
+      interfaceAddress: this.channelConnectorForm.value.interfaceAddress,
+      channelType: this.channelTypeData,
+      channelConnectorData: formData,
+      tenant: {}
+    };
+    return data;
+  }
+
+  //create form data object 
+  createAndSetupFormDataObject() {
+
+    // form data object declaration and initialization
+    let data: any = {
+      formID: '',
+      filledBy: '',
+      attributes: [],
+    };
+    let filledValues: any = this.removeStaticFormAttributes();
+
+    //setting form Data values
+    let user = sessionStorage.getItem('username');
+    data.formID = this.formSchema.id;
+    data.filledBy = user;
+    if (!this.connectorData) data.createdOn = new Date().toISOString();
+    data.attributes = this.createFormDataAttributes(filledValues);
+
+    return data;
+  }
 
   //getting filled form values and converting variable to array of objects
   removeStaticFormAttributes() {
@@ -174,56 +244,63 @@ export class ChannelConnectorSettingsComponent implements OnInit {
 
   }
 
-  //create form data object 
-  createAndSetupFormDataObject() {
-
-    // form data object declaration and initialization
-    let data: any = {
-      formID: '',
-      filledBy: '',
-      attributes: [],
-    };
-
-    let filledValues: any = this.removeStaticFormAttributes();
-
-    //setting form Data values
-    let user = sessionStorage.getItem('username');
-    data.formID = this.formSchema.id;
-    data.filledBy = user;
-    if (!this.connectorData) data.createdOn = new Date();
-    data.attributes = this.createFormDataAttributes(filledValues);
-
-    return data;
-  }
-
-  //creating request body
-  createRequestPayload() {
-
-    let formData = this.createAndSetupFormDataObject();
-    let data: any = {
-      channelConnectorName: this.channelConnectorForm.value.channelConnectorName,
-      interface: this.channelConnectorForm.value.interface,
-      interfaceAddress: this.channelConnectorForm.value.interfaceAddress,
-      channelType: this.channelTypeData,
-      channelConnectorData: formData,
-      tenant: {}
-    };
-    return data;
-  }
-
-  onSave() {
-
-    let data: any = this.createRequestPayload();
-    if (this.connectorData) data.id = this.connectorData.id;
-    console.log("save data--->", data);
-    // this.formSaveData.emit(data);
-    // this.channelConnectorForm.reset();
-  }
-
   //to cancel form editing
   onClose() {
-    this.childChannelBool.emit(!this.parentChannelBool);
+
+    this.formCancelEvent.emit();
     this.channelConnectorForm.reset();
+  }
+
+  // to reset form and pass event to parent component
+  resetForm(msg) {
+    this.formSaveData.emit(msg);
+    this.channelConnectorForm.reset();
+  }
+
+  // save callback function
+  onSave() {
+
+    this.spinner = true;
+    let data: any = this.createRequestPayload();
+    if (this.connectorData) {
+      data.id = this.connectorData.id;
+      this.updateChannelConnector(data);
+    }
+    else {
+      this.createChannelConnector(data);
+    }
+  }
+
+  //to create channel connector and it accepts `data` object as parameter containing channel connector properties
+  createChannelConnector(data) {
+
+    //calling endpoint service method which accepts resource name as 'connectorServiceReq' and `data` object as parameter
+    this.endPointService.createChannel(data, this.reqEndpoint).subscribe(
+      (res: any) => {
+        this.spinner = false;
+        this.resetForm("Created");
+      },
+      (error: any) => {
+        this.spinner = false;
+        console.log("Error fetching:", error);
+        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
+      });
+  }
+
+  //to update channel connector and it accepts `data` object as parameter containing channel connector properties
+  updateChannelConnector(data) {
+
+    //calling endpoint service method which accepts resource name as 'connectorServiceReq' and `data` object as parameter
+    this.endPointService.updateChannel(data, this.reqEndpoint, data.id).subscribe(
+      (res: any) => {
+        this.spinner = false;
+        this.resetForm("Updated");
+      },
+      (error: any) => {
+        this.spinner = false;
+        console.log("Error fetching:", error);
+        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
+      });
   }
 
 }

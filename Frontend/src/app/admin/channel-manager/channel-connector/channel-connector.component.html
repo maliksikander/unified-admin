@@ -62,7 +62,7 @@
 
                   </tbody>
                 </table>
-                <button class="add-channel-btn" mat-flat-button (click)="addChannelConnector(type)">
+                <button class="add-channel-btn" mat-flat-button (click)="changeViewToSetings(type)">
                   Add New Connector
                 </button>
               </mat-expansion-panel>
@@ -75,7 +75,7 @@
 
   <ng-container *ngIf="addChannelBool">
     <app-channel-connector-settings [parentChannelBool]="addChannelBool" [channelTypeData]="channelType"
-      [connectorData]="editConnectorData" (childChannelBool)='childToParentUIChange($event)'
+      [connectorData]="editConnectorData" (formCancelEvent)='resetUI()'
       (formSaveData)='onSave($event)'>
     </app-channel-connector-settings>
   </ng-container>

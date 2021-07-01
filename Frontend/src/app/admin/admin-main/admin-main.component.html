@@ -43,63 +43,12 @@
               </a>
             </mat-expansion-panel> -->
 
-
-            <!-- General Settings -->
-            <mat-expansion-panel *ngIf="generalBool">
-              <mat-expansion-panel-header>
-                <i class="material-icons">settings</i>
-                <span class="sidebar-text">General Settings</span>
-              </mat-expansion-panel-header>
-
-              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/general/amq-settings']">
-                <img src="/assets/images/AMQ.svg" alt="">
-                <span class="sidebar-text">AMQ</span>
-              </a>
-              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/general/database-settings']">
-                <img src="/assets/images/database.svg" alt="">
-                <span class="sidebar-text">Database</span>
-              </a>
-              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/general/display-settings']">
-                <img src="/assets/images/display.svg" alt="">
-                <span class="sidebar-text">Display</span>
-              </a>
-              <!-- <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/general/license-manager']">
-                <img src="/assets/images/license.svg" alt="">
-                <span class="sidebar-text">License Info</span>
-              </a> -->
-              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/general/locale-settings']">
-                <img src="/assets/images/globe.svg" alt="">
-                <span class="sidebar-text">Locale</span>
-              </a>
-              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/general/logging-settings']">
-                <img src="/assets/images/logging.svg" alt="">
-                <span class="sidebar-text">Logging</span>
-              </a>
-              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/general/reporting-settings']">
-                <img src="/assets/images/reporting.svg" alt="">
-                <span class="sidebar-text">Reporting</span>
-              </a>
-              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/general/security-settings']">
-                <img src="/assets/images/security.svg" alt="">
-                <span class="sidebar-text">Security</span>
-              </a>
-
-              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/general/business-calendar']">
-                <img src="/assets/images/calendar.svg" alt="">
-                <span class="sidebar-text">Business Calendar</span>
-              </a>
-
-            </mat-expansion-panel>
-
-
-
             <!-- BOT SETTINGS -->
             <a class="single-menu-link" mat-list-item [routerLinkActive]="['active-link']"
               [routerLink]="['/bot-settings']">
               <img src="/assets/images/bot.svg" alt="bot">
-              <span class="sidebar-text">Bot Settings</span>
+              <span class="sidebar-text">Bot</span>
             </a>
-
 
             <!-- CCM -->
             <mat-expansion-panel>
@@ -132,12 +81,59 @@
               <span class="sidebar-text">Forms</span>
             </a>
 
+            <!-- General Settings -->
+            <mat-expansion-panel *ngIf="generalBool">
+              <mat-expansion-panel-header>
+                <i class="material-icons">settings</i>
+                <span class="sidebar-text">General</span>
+              </mat-expansion-panel-header>
+
+              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/general/amq-settings']">
+                <img src="/assets/images/AMQ.svg" alt="">
+                <span class="sidebar-text">AMQ</span>
+              </a>
+              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/general/database-settings']">
+                <img src="/assets/images/database.svg" alt="">
+                <span class="sidebar-text">Database</span>
+              </a>
+              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/general/display-settings']">
+                <img src="/assets/images/display.svg" alt="">
+                <span class="sidebar-text">Display</span>
+              </a>
+              <!-- <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/general/license-manager']">
+                      <img src="/assets/images/license.svg" alt="">
+                      <span class="sidebar-text">License Info</span>
+                    </a> -->
+              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/general/locale-settings']">
+                <img src="/assets/images/globe.svg" alt="">
+                <span class="sidebar-text">Locale</span>
+              </a>
+              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/general/logging-settings']">
+                <img src="/assets/images/logging.svg" alt="">
+                <span class="sidebar-text">Logging</span>
+              </a>
+              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/general/reporting-settings']">
+                <img src="/assets/images/reporting.svg" alt="">
+                <span class="sidebar-text">Reporting</span>
+              </a>
+              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/general/security-settings']">
+                <img src="/assets/images/security.svg" alt="">
+                <span class="sidebar-text">Security</span>
+              </a>
+
+              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/general/business-calendar']">
+                <img src="/assets/images/calendar.svg" alt="">
+                <span class="sidebar-text">Business Calendar</span>
+              </a>
+
+            </mat-expansion-panel>
+
             <!-- Routing Configuration -->
             <mat-expansion-panel *ngIf="routingBool">
               <mat-expansion-panel-header class='route-header-image-icon'>
                 <!-- <i style="font-size: 21px;" class="material-icons">compare_arrows</i> -->
                 <img src="/assets/images/routing.svg" alt="">
-                <span class="sidebar-text">Routing</span>
+                <span class="sidebar-text">Routing Engine</span>
               </mat-expansion-panel-header>
               <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/routing/attributes']">
                 <img src="/assets/images/attribute.svg" alt="attr">
@@ -149,7 +145,7 @@
               </a>
               <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/routing/precision-queue']">
                 <img src="/assets/images/precision_queue.svg" alt="queue">
-                <span class="sidebar-text">Precision Queue</span>
+                <span class="sidebar-text">Queue</span>
               </a>
               <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/routing/agents']">
                 <img src="/assets/images/users.svg" alt="user">

@@ -946,6 +946,11 @@ ngx-charts-pie-chart span.legend-label-color {
   .padding-btn {
     width: 42%;
   }
+
+  .mat-expansion-indicator::after {
+    position: relative;
+    top: -3px;
+  }
 }
 //Custom Modal
 .widget-selection {

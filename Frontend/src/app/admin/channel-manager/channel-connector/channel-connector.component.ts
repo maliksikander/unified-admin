@@ -39,47 +39,12 @@ export class ChannelConnectorComponent implements OnInit {
     this.getChannelType();
   }
 
-  getChannelType() {
-
-    //calling endpoint service method to get channel types list which accepts its resource name as 'typeServiceReq' parameter
-    this.endPointService.getChannel('channel-types').subscribe(
-      (res: any) => {
-        this.spinner = false;
-        this.channelTypes = res;
-        if (res.length == 0) this.snackbar.snackbarMessage('error-snackbar', "No Channel Type Found", 2);
-      },
-      error => {
-        this.spinner = false;
-        console.log("Error fetching:", error);
-        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
-      });
-  }
-
   //to sanitize and bypass dom security warnings for channel type logo images
   transform(image) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(image);
   }
 
-
-  getChannelConnector(typeId) {
-
-    //calling endpoint service method to get connector list which accepts resource name as 'connectorServiceReq' and channnel type id as `typeId` object as parameter
-    this.endPointService.getByChannelType(this.connectorServiceReq, typeId).subscribe(
-      (res: any) => {
-        this.spinner = false;
-        // console.log("res==>",res);
-        this.channelConnectors = res;
-        // this.getConnectorStatus(this.channelConnectors);
-      },
-      error => {
-        this.spinner = false;
-        console.log("Error fetching:", error);
-        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
-      });
-  }
-
-  
-
+  // expansion panel callback function,triggered on expanded event 
   panelOpenCallback(data) {
 
     this.channelConnectors = [];
@@ -87,13 +52,16 @@ export class ChannelConnectorComponent implements OnInit {
     this.getChannelConnector(data.id);
   }
 
+  //to change view to settings and pass connector object to child component
   editChannelConnector(data) {
 
-    // this.addChannelBool = true;
-    // this.pageTitle = "Edit" + " " + data.type.typeName + " " + "Type Connector";
-    // this.editConnectorData = data;
+    this.addChannelBool = true;
+    this.pageTitle = "Edit" + " " + data.channelType.typeName + " " + "Type Connector";
+    this.channelType = data.channelType;
+    this.editConnectorData = data;
   }
 
+  // to open delete confirmation dialog
   deleteConfirm(data) {
 
     let msg = "Are you sure you want to delete this Channel Connector?";
@@ -114,60 +82,56 @@ export class ChannelConnectorComponent implements OnInit {
     });
   }
 
-  addChannelConnector(type) {
+  // change UI to settings view from list view
+  changeViewToSetings(type) {
     this.addChannelBool = true;
     this.channelType = type;
     this.pageTitle = "Set up" + " " + type.typeName + " " + "Type Connector";
   }
 
-  childToParentUIChange(e) {
-    this.addChannelBool = e;
-    if (this.addChannelBool == false) {
-      this.pageTitle = "Channel Connectors";
-      this.editConnectorData = undefined;
-    }
+  // reset UI to list view from settings view
+  resetUI() {
 
-  }
-
-  onSave(data) {
-    this.spinner = true;
     this.addChannelBool = false;
     this.pageTitle = "Channel Connectors";
     this.editConnectorData = undefined;
-    if (data.id) {
-      this.updateChannelConnector(data);
-    }
-    else {
-      this.createChannelConnector(data);
-    }
   }
 
-  //to create channel connector and it accepts `data` object as parameter containing channel connector properties
-  createChannelConnector(data) {
+  // to reset view on save event received by the child component
+  onSave(msg) {
 
-    //calling endpoint service method which accepts resource name as 'connectorServiceReq' and `data` object as parameter
-    this.endPointService.createChannel(data, this.connectorServiceReq).subscribe(
+    this.resetUI();
+    this.snackbar.snackbarMessage('success-snackbar', msg, 1.5);
+  }
+
+  // to fetch channel type list
+  getChannelType() {
+
+    //calling endpoint service method to get channel types list,it requires resource endpoint as parameter
+    this.endPointService.getChannel('channel-types').subscribe(
       (res: any) => {
         this.spinner = false;
-        this.snackbar.snackbarMessage('success-snackbar', "Connector Created", 1);
+        this.channelTypes = res;
+        if (res.length == 0) this.snackbar.snackbarMessage('error-snackbar', "No Channel Type Found", 2);
       },
-      (error: any) => {
+      error => {
         this.spinner = false;
         console.log("Error fetching:", error);
         if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
       });
   }
 
-  //to update channel connector and it accepts `data` object as parameter containing channel connector properties
-  updateChannelConnector(data) {
+  // to fetch connector list by using channel type, it uses channel type Id as `typeId` parameter 
+  getChannelConnector(typeId) {
 
-    //calling endpoint service method which accepts resource name as 'connectorServiceReq' and `data` object as parameter
-    this.endPointService.updateChannel(data, this.connectorServiceReq, data.id).subscribe(
+    //calling endpoint service method to get connector list which accepts resource name as 'connectorServiceReq' and channnel type id as `typeId` object as parameter
+    this.endPointService.getByChannelType(this.connectorServiceReq, typeId).subscribe(
       (res: any) => {
         this.spinner = false;
-        this.snackbar.snackbarMessage('success-snackbar', "Updated", 1);
+        this.channelConnectors = res;
+        this.getConnectorStatus(this.channelConnectors);
       },
-      (error: any) => {
+      error => {
         this.spinner = false;
         console.log("Error fetching:", error);
         if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
