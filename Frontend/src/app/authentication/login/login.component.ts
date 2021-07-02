@@ -82,7 +82,7 @@ export class LoginComponent implements OnInit {
           sessionStorage.setItem('tenant', res.keycloak_User.realm);
           sessionStorage.setItem('permittedResources', JSON.stringify(res.keycloak_User.permittedResources.Resources));
           this.endPointService.token = res.token;
-          this.router.navigate(['/general/display-settings'])
+          this.router.navigate(['/bot-settings'])
           // let temp = sessionStorage.getItem('permittedResources');
           // this.commonService.getPermissionResourcesList();
         }

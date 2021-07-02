@@ -32,9 +32,13 @@
       <div class="form-group">
         <mat-label>Bot ID</mat-label>
         <mat-form-field appearance="outline">
-          <input matInput formControlName="botId">
+          <!-- <input matInput formControlName="botId"> -->
+          <mat-select formControlName="botID">
+            <mat-option *ngFor="let bot of botList" [value]="bot">
+              {{bot?.botName}}</mat-option>
+          </mat-select>
           <mat-error class="form-error">
-            {{formErrors.botId}}
+            {{formErrors.botID}}
           </mat-error>
         </mat-form-field>
       </div>

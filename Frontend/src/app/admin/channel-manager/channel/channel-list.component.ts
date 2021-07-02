@@ -178,6 +178,7 @@ export class ChannelListComponent implements OnInit {
     this.addChannelBool = e;
     if (this.addChannelBool == false) {
       this.pageTitle = "Customer Channels";
+      this.editChannelData = undefined;
     }
 
   }

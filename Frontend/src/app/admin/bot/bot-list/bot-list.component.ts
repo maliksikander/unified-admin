@@ -36,7 +36,7 @@ export class BotListComponent implements OnInit {
   getBotList(type) {
 
     //calling bot setting endpoint, it accepts bot type as `type` parameter
-    this.endPointService.getBotSetting(type).subscribe(
+    this.endPointService.getBotSettingByType(type).subscribe(
       (res: any) => {
         //passing bot list response to the setter method
         this.setLocalListVariable(res);

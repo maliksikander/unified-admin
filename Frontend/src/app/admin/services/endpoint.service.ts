@@ -35,9 +35,9 @@ export class EndpointService {
     if (isDevMode()) {
       this.ADMIN_URL = 'http://localhost:3000';
     }
-    else {
-      this.ADMIN_URL = location.origin + '/unfied-admin';
-    }
+    // else {
+    //   this.ADMIN_URL = location.origin + '/unfied-admin';
+    // }
     console.log("url===>", this.ADMIN_URL)
 
     this.getStorageValues();
@@ -188,7 +188,17 @@ export class EndpointService {
     }).pipe(catchError(this.handleError));
   }
 
-  getBotSetting(type): Observable<any> {
+  getBotSetting(): Observable<any> {
+    return this.httpClient.get(`${this.BOT_URL}/bot-connectors`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer' + this.token,
+        'Tenant': this.tenant
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  getBotSettingByType(type): Observable<any> {
     return this.httpClient.get(`${this.BOT_URL}/bot-connectors?type=${type}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

@@ -46,7 +46,7 @@ export class ChannelConnectorSettingsComponent implements OnInit {
     this.channelConnectorForm = this.formBuilder.group({
       channelConnectorName: ['', [Validators.required]],
       interface: ['', [Validators.required]],
-      interfaceAddress: ['', [Validators.required]],
+      interfaceAddress: ['', [Validators.required, Validators.pattern(/((([A-Za-z]{2,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/)]],
     });
 
     this.getFormValidation();
@@ -207,7 +207,7 @@ export class ChannelConnectorSettingsComponent implements OnInit {
     data.filledBy = user;
     if (!this.connectorData) data.createdOn = new Date().toISOString();
     data.attributes = this.createFormDataAttributes(filledValues);
-
+    console.log("save data==>", data);
     return data;
   }
 
@@ -239,7 +239,6 @@ export class ChannelConnectorSettingsComponent implements OnInit {
         }
       });
     });
-
     return attrTemp;
 
   }
@@ -264,11 +263,12 @@ export class ChannelConnectorSettingsComponent implements OnInit {
     let data: any = this.createRequestPayload();
     if (this.connectorData) {
       data.id = this.connectorData.id;
-      this.updateChannelConnector(data);
+      // this.updateChannelConnector(data);
     }
     else {
-      this.createChannelConnector(data);
+      // this.createChannelConnector(data);
     }
+
   }
 
   //to create channel connector and it accepts `data` object as parameter containing channel connector properties

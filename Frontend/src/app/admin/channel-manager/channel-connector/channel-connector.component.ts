@@ -127,7 +127,7 @@ export class ChannelConnectorComponent implements OnInit {
     //calling endpoint service method to get connector list which accepts resource name as 'connectorServiceReq' and channnel type id as `typeId` object as parameter
     this.endPointService.getByChannelType(this.connectorServiceReq, typeId).subscribe(
       (res: any) => {
-        this.spinner = false;
+        // this.spinner = false;
         this.channelConnectors = res;
         this.getConnectorStatus(this.channelConnectors);
       },
@@ -176,6 +176,7 @@ export class ChannelConnectorComponent implements OnInit {
             console.log("Error fetching:", error);
             if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
           });
-    })
+    });
+    this.spinner = false
   }
 }

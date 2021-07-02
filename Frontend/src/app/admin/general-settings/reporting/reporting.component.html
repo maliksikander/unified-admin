@@ -11,10 +11,6 @@
         <div class="panel-page-content">
           <form class="form-horizontal form-bordered" [formGroup]="reportSettingForm">
             <div class="col-md-5">
-              <div class="form-group" [ngClass]="{'bottom-padding': reportSettingForm.value.reportingEnabled == true}">
-                <mat-label>Enable Reporting</mat-label>
-                <mat-slide-toggle (change)="onChange($event)" formControlName="reportingEnabled"></mat-slide-toggle>
-              </div>
               <ng-container *ngIf="reportSettingForm.value.reportingEnabled">
                 <div class="form-group">
                   <mat-label>Database Name</mat-label>
@@ -54,10 +50,15 @@
                   </mat-form-field>
                 </div>
               </ng-container>
+
+              <div class="form-group" [ngClass]="{'bottom-padding': reportSettingForm.value.reportingEnabled == true}">
+                <mat-label>Enable Reporting</mat-label>
+                <mat-slide-toggle (change)="onChange($event)" formControlName="reportingEnabled"></mat-slide-toggle>
+              </div>
             </div>
             <div [ngStyle]="{'margin-top':reportSettingForm.value.reportingEnabled == false ? '10px' : '0px' }"
               class="action-area col-md-5">
-              
+
               <button [disabled]="!valid" mat-raised-button class="blue-btn service-trigger"
                 (click)="onSave()">Save</button>
             </div>

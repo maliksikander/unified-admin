@@ -29,7 +29,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
     channelMode: '',
     responseSLA: '',
     customerActivityTimeout: '',
-    botId: '',
+    botID: '',
     agentSelectionPolicy: '',
     defaultQueue: '',
     agentRequestTTL: ''
@@ -38,6 +38,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
   channelConnectorList = [];
   agentPolicy = ['LEAST_SKILLED', 'MOST_SKILLED', 'LONGEST_AVAILABLE'];
   queueList = [];
+  botList = [];
 
 
   constructor(private commonService: CommonService,
@@ -65,7 +66,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
       routeToLastAgent: [true, [Validators.required]],
       defaultQueue: ['', [Validators.required]],
       agentRequestTTL: ['', [Validators.required]],
-      botId: ['', [Validators.required]]
+      botID: ['', [Validators.required]]
     });
 
     //setting form validation messages 
@@ -74,6 +75,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
     });
 
     this.getChannelConnector(this.channelTypeData?.id);
+
   }
 
   //lifecycle hook to reflect parent component changes in child component
@@ -103,9 +105,9 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
     //calling endpoint service method to get connector list which accepts resource name as 'reqType' and channnel type id as `typeId` object as parameter
     this.endPointService.get('precision-queues').subscribe(
       (res: any) => {
-        this.spinner = false;
         this.queueList = res;
-        if (this.queueList?.length > 0 && this.channelConnectorList?.length > 0 && this.channelData) this.patchFormValues();
+        this.getBotList();
+
       },
       error => {
         this.spinner = false;
@@ -114,23 +116,43 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
       });
   }
 
+  //to get bot settings list, it accepts bot type as `type` parameter
+  getBotList() {
+
+    //calling bot setting endpoint, it accepts bot type as `type` parameter
+    this.endPointService.getBotSetting().subscribe(
+      (res: any) => {
+        this.botList = res;
+        if (this.queueList?.length > 0 && this.channelConnectorList?.length > 0 && this.channelData) { this.patchFormValues(); }
+        else { this.spinner = false; }
+      },
+      (error: any) => {
+        this.spinner = false;
+        console.error("Error fetching:", error);
+        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
+      });
+  }
+
 
   patchFormValues() {
+
     let connectorIndex = this.channelConnectorList.findIndex(item => item.id == this.channelData.channelConnector.id);
     let queueIndex = this.queueList.findIndex(item => item.id == this.channelData.channelConfig.routingPolicy.defaultQueue);
+    let botIndex = this.botList.findIndex(item => item.botId == this.channelData.channelConfig.botId);
     this.channelSettingForm.patchValue({
       channelName: this.channelData.channelName,
       serviceIdentifier: this.channelData.serviceIdentifier,
       channelMode: this.channelData.channelConfig.channelMode,
       responseSLA: this.channelData.channelConfig.responseSLA,
       customerActivityTimeout: this.channelData.channelConfig.customerActivityTimeout,
-      botId: this.channelData.channelConfig.botId,
-      channelConnector: this.channelConnectorList[connectorIndex],
+      botID: botIndex != -1 ? this.botList[botIndex] : null,
+      channelConnector: connectorIndex != -1 ? this.channelConnectorList[connectorIndex] : null,
       agentSelectionPolicy: this.channelData.channelConfig.routingPolicy.agentSelectionPolicy,
       routeToLastAgent: this.channelData.channelConfig.routingPolicy.routeToLastAgent,
-      defaultQueue: this.queueList[queueIndex],
+      defaultQueue: queueIndex != -1 ? this.queueList[queueIndex] : null,
       agentRequestTTL: this.channelData.channelConfig.routingPolicy.agentRequestTTL,
     });
+    this.spinner = false;
   }
 
 
@@ -145,7 +167,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
     }
 
     let channelConfigData = {
-      botId: this.channelSettingForm.value.botId,
+      botId: this.channelSettingForm.value.botID.botId,
       channelMode: this.channelSettingForm.value.channelMode,
       conversationBot: "",
       customerActivityTimeout: this.channelSettingForm.value.customerActivityTimeout,
@@ -161,9 +183,10 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
       channelConfig: channelConfigData,
     }
     if (this.channelData) data.id = this.channelData.id;
-    
-    this.formSaveData.emit(data);
-    this.channelSettingForm.reset();
+
+    console.log("save==>", data);
+    // this.formSaveData.emit(data);
+    // this.channelSettingForm.reset();
   }
 
   //to cancel form editing
