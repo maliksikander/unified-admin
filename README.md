@@ -5,7 +5,8 @@
  <!-- `formSchema` is the form schema object -->
  <!-- `array2` is the filled form attribute list -->
 
-function createFormdata(formSchema,array2) {
+function createFormdata(formSchema,array2) 
+{
   let data;
   data.formID = formSchema.id; // form schema id
   data.filledBy = "user"; // the user name
