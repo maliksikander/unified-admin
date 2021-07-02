@@ -12,7 +12,7 @@ echo 'Version : '$version
 cd frontend
 npm i
 # ng build --prod 
-# ng build --prod --base-href unified-admin/ #for cim deployement profile
+ng build --prod --base-href unified-admin/ #for cim deployement profile
 cp -rf dist/base-template/* ../backend/src/public/
 cd ../backend
 
