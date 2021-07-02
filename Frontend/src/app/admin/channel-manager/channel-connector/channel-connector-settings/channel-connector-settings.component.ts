@@ -207,7 +207,6 @@ export class ChannelConnectorSettingsComponent implements OnInit {
     data.filledBy = user;
     if (!this.connectorData) data.createdOn = new Date().toISOString();
     data.attributes = this.createFormDataAttributes(filledValues);
-    console.log("save data==>", data);
     return data;
   }
 
@@ -263,10 +262,10 @@ export class ChannelConnectorSettingsComponent implements OnInit {
     let data: any = this.createRequestPayload();
     if (this.connectorData) {
       data.id = this.connectorData.id;
-      // this.updateChannelConnector(data);
+      this.updateChannelConnector(data);
     }
     else {
-      // this.createChannelConnector(data);
+      this.createChannelConnector(data);
     }
 
   }
