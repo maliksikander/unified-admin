@@ -1,3 +1,5 @@
+### Change file endings for build.sh, dockerfile, docker-entrypoint.sh & docker-compose.prod.yml to LF from CRLF  ###
+
 #### Form Data Object Sample ###
 
 ### Sample Function for Attribute List  ###

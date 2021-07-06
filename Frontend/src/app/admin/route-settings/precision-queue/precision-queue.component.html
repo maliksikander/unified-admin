@@ -28,8 +28,8 @@
             <mat-accordion>
               <ul class="top-heading routing-group-list">
                 <li>Name</li>
-                <li>Agent Criteria</li>
                 <li>Associated MRD</li>
+                <li>Service Level Threshold</li>
               </ul>
               <ng-container *ngIf="queueData && queueData.length != 0">
                 <mat-expansion-panel
@@ -41,16 +41,17 @@
                     </mat-panel-title>
                     <mat-panel-title>
                       <p class="group-name">
-                        <ng-container *ngIf="data?.agentSelectionCriteria == 'LEAST_SKILLED'">Least Skilled
+                        <!-- <ng-container *ngIf="data?.agentSelectionCriteria == 'LEAST_SKILLED'">Least Skilled
                         </ng-container>
                         <ng-container *ngIf="data?.agentSelectionCriteria == 'MOST_SKILLED'">Most Skilled</ng-container>
                         <ng-container *ngIf="data?.agentSelectionCriteria == 'LONGEST_AVAILABLE'">Longest Available
-                        </ng-container>
-                        <!-- {{data.agentSelectionCriteria | titlecase}} -->
+                        </ng-container> -->
+                        {{data?.mrd?.name? data?.mrd?.name : 'N/A'}}
+
                       </p>
                     </mat-panel-title>
                     <mat-panel-title>
-                      <p class="group-name">{{data?.mrd?.name? data?.mrd?.name : 'N/A'}}</p>
+                      <p class="group-name">{{data.serviceLevelThreshold}}</p>
                       <div class="table-trigger">
                         <span class="list-trigger-area">
                           <button mat-mini-fab matTooltip="Edit" (click)="editQueue(newQueue,data)">
@@ -99,8 +100,7 @@
                             </td>
                             <td class="step-table-trigger">{{stepData?.timeout ? stepData?.timeout : 'N/A'}}
                               <span class="step-trigger-area">
-                                <button matTooltip="Edit" (click)="editStep(stepFormTemplate,stepData,j)"
-                                  mat-mini-fab>
+                                <button matTooltip="Edit" (click)="editStep(stepFormTemplate,stepData,j)" mat-mini-fab>
                                   <mat-icon>mode_edit</mat-icon>
                                   <!-- <i class="fa fa-pencil" aria-hidden="true"></i> -->
                                 </button>
@@ -177,12 +177,11 @@
               </mat-error>
             </mat-form-field>
           </div>
-          <div class="form-group">
+          <!-- <div class="form-group">
             <mat-label>Agent Selection Criteria</mat-label>
             <mat-form-field appearance="outline">
               <mat-select formControlName="agentCriteria">
-                <!-- <mat-option *ngFor="let criteria of agentCriteria" [value]="criteria">{{criteria | titlecase}}
-                </mat-option> -->
+           
                 <mat-option [value]="'LEAST_SKILLED'">Least Skilled</mat-option>
                 <mat-option [value]="'MOST_SKILLED'">Most Skilled</mat-option>
                 <mat-option [value]="'LONGEST_AVAILABLE'">Longest Available</mat-option>
@@ -191,7 +190,7 @@
                 {{formErrors.agentCriteria}}
               </mat-error>
             </mat-form-field>
-          </div>
+          </div> -->
 
           <div class="form-group">
             <mat-label>Service Level Type</mat-label>
@@ -345,7 +344,7 @@
                           </button>
                         </div>
 
-                       
+
                       </ng-container>
                     </div>
                     <div [id]="'term-end' + i"></div>

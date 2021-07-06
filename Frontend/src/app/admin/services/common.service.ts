@@ -318,9 +318,9 @@ export class CommonService {
       'required': "This field is required",
       'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
     },
-    'agentCriteria': {
-      'required': "This field is required",
-    },
+    // 'agentCriteria': {
+    //   'required': "This field is required",
+    // },
     'serviceLevelType': {
       'required': "This field is required",
       'min': "Min 1 required",

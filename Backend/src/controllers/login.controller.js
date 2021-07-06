@@ -1,5 +1,5 @@
 const catchAsync = require('../utils/catchAsync');
-var config = require('../../keycloak.json');
+var config = require('../../config.json');
 var { NodeAdapter } = require("keycloak-nodejs-connect");
 const keycloak = new NodeAdapter(config);
 const logger = require('../config/logger');

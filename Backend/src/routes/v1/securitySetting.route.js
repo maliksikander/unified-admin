@@ -4,7 +4,7 @@ const router = express.Router();
 const validate = require('../../middlewares/validate');
 const securityValidation = require('../../validations/securitySetting.validation');
 const securitySettingController = require('../../controllers/securitySetting.controller');
-var config = require('../../../keycloak.json');
+var config = require('../../../config.json');
 var { NodeAdapter } = require("keycloak-nodejs-connect");
 const keycloak = new NodeAdapter(config);
 

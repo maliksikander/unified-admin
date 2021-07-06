@@ -49,7 +49,7 @@ export class AttributeComponent implements OnInit {
     this.validations = this.commonService.attributeFormErrorMessages;
 
     this.attributeForm = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(110), Validators.pattern("^[a-zA-Z0-9!@#$%^*_&()\\\"-]*$")]],
+      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(256)]],
       description: ['', [Validators.maxLength(500)]],
       type: ['', [Validators.required]],
       profVal: [1],
@@ -164,7 +164,7 @@ export class AttributeComponent implements OnInit {
         this.spinner = false;
         console.log("Error fetching:", error);
         if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
-        // if (error && error.status == 409) this.snackbar.snackbarMessage('error-snackbar', "Attribute in use,cannot be deleted", 1);
+        if (error && error.status == 409) this.snackbar.snackbarMessage('error-snackbar', "Attribute is assigned, Cannot be deleted", 1);
       });
   }
 

@@ -5,7 +5,7 @@ import { SnackbarService } from '../../services/snackbar.service';
 import { CdkDragDrop, moveItemInArray, CdkDrag } from "@angular/cdk/drag-drop";
 import { EndpointService } from '../../services/endpoint.service';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
-import { CdkNoDataRow } from '@angular/cdk/table';
+
 @Component({
   selector: 'app-new-form',
   templateUrl: './new-form.component.html',

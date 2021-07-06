@@ -5,7 +5,6 @@ import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-di
 import { CommonService } from '../../services/common.service';
 import { EndpointService } from '../../services/endpoint.service';
 import { SnackbarService } from '../../services/snackbar.service';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-precision-queue',
@@ -24,12 +23,12 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
   formErrors = {
     name: '',
     mrd: '',
-    agentCriteria: '',
+    // agentCriteria: '',
     serviceLevelType: '',
     serviceLevelThreshold: '',
   };
   validations;
-  agentCriteria = ['longest available', 'most skilled', 'least skilled'];
+  // agentCriteria = ['longest available', 'most skilled', 'least skilled'];
   conditionList = ["AND", "OR"]
   reqServiceType = 'precision-queues';
   formHeading = 'Add New Queue';
@@ -85,9 +84,9 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     if (pageNumber) this.p = pageNumber;
 
     this.queueForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50), Validators.pattern("^[a-zA-Z0-9!@#$%^*_&()\\\"-]*$")]],
+      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(256)]],
       mrd: ['', [Validators.required]],
-      agentCriteria: ['', [Validators.required]],
+      // agentCriteria: ['', [Validators.required]],
       serviceLevelType: [1, [Validators.required, Validators.min(1)]],
       serviceLevelThreshold: [1, [Validators.required, Validators.min(1)]],
     });
@@ -292,7 +291,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     this.editData = data;
     this.queueForm.patchValue({
       name: data.name,
-      agentCriteria: data.agentSelectionCriteria,
+      // agentCriteria: data.agentSelectionCriteria,
       mrd: this.mrdData[mrdIndex],
       serviceLevelThreshold: data.serviceLevelThreshold,
       serviceLevelType: data.serviceLevelType,
@@ -364,7 +363,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     };
     data.name = temp.name;
     data.mrd.id = temp.mrd.id;
-    data.agentSelectionCriteria = temp.agentCriteria;
+    // data.agentSelectionCriteria = temp.agentCriteria;
     data.serviceLevelThreshold = temp.serviceLevelThreshold;
     data.serviceLevelType = temp.serviceLevelType;
     return data;
@@ -402,7 +401,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     let expressions = JSON.parse(JSON.stringify(data.expressions));
     for (let i = 0; i < expressions.length; i++) {
       let termsCopy = JSON.parse(JSON.stringify(expressions[i].terms));
-      expressions[0].preExpressionCondition = 'null';
+      expressions[0].preExpressionCondition = null;
       for (let j = 0; j < termsCopy.length; j++) {
         let termObj: any = {
           routingAttribute: {},
@@ -410,7 +409,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
           value: "",
           preTermCondition: ""
         };
-        termsCopy[0].preTermCondition = 'null';
+        termsCopy[0].preTermCondition = null;
         termObj.routingAttribute = termsCopy[j].routingAttribute;
         termObj.relationalOperator = termsCopy[j].relationalOperator;
         termObj.preTermCondition = termsCopy[j].preTermCondition;

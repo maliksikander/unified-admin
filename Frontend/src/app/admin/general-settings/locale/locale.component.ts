@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { SnackbarService } from '../../services/snackbar.service';
 import { CommonService } from '../../services/common.service'
 import { EndpointService } from '../../services/endpoint.service';
-import { TestBed } from '@angular/core/testing';
+
 declare var require: any
 @Component({
   selector: 'app-locale',

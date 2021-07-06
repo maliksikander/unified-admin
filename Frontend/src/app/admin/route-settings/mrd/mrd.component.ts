@@ -44,7 +44,7 @@ export class MrdComponent implements OnInit {
 
     //setting local form validation messages 
     this.mrdForm = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(110), Validators.pattern("^[a-zA-Z0-9!@#$%^*_&()\\\"-]*$")]],
+      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(256)]],
       description: ['', [Validators.maxLength(500)]],
       enabled: [],
     });
@@ -156,7 +156,7 @@ export class MrdComponent implements OnInit {
         this.spinner = false;
         console.log("Error fetching:", error);
         if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
-        // if (error && error.status == 409) this.snackbar.snackbarMessage('error-snackbar', "MRD in use,cannot be deleted", 1);
+        if (error && error.status == 409) this.snackbar.snackbarMessage('error-snackbar', "MRD is assigned, Cannot be deleted", 1);
       });
   }
 

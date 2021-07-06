@@ -32,12 +32,7 @@ export class EndpointService {
     this.userRoles = e.BUSINESS_USER_ROLES;
 
 
-    if (isDevMode()) {
-      this.ADMIN_URL = 'http://localhost:3000';
-    }
-    // else {
-    //   this.ADMIN_URL = location.origin + '/unfied-admin';
-    // }
+    if (isDevMode()) { this.ADMIN_URL = 'http://localhost:3000'; }
     console.log("url===>", this.ADMIN_URL)
 
     this.getStorageValues();
