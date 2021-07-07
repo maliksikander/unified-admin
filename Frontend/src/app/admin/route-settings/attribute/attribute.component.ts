@@ -150,12 +150,7 @@ export class AttributeComponent implements OnInit {
         this.spinner = false;
         if (res) {
 
-          this.attrData = this.attrData.reduce(function (filtered, attr) {
-            if (attr !== data) {
-              filtered.push(attr);
-            }
-            return filtered;
-          }, []);
+          this.attrData = this.attrData.filter(item => item.id != data.id);
 
           this.snackbar.snackbarMessage('success-snackbar', "Attribute Deleted Successfully", 1);
         }

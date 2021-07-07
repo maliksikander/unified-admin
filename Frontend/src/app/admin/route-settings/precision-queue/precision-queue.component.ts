@@ -318,12 +318,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
       (res: any) => {
         this.spinner = false;
 
-        this.queueData = this.queueData.reduce(function (filtered, queue) {
-          if (queue !== queue) {
-            filtered.push(queue);
-          }
-          return filtered;
-        }, []);
+        this.queueData = this.queueData.filter(item => item.id != data.id);
 
         this.snackbar.snackbarMessage('success-snackbar', "Deleted Successfully", 1);
       },

@@ -142,12 +142,7 @@ export class MrdComponent implements OnInit {
         this.spinner = false;
         
         if (res) {
-          this.mrdData = this.mrdData.reduce(function (filtered, mrd) {
-            if (mrd !== data) {
-              filtered.push(mrd);
-            }
-            return filtered;
-          }, []);
+          this.mrdData = this.mrdData.filter(item => item.id != data.id);
 
           this.snackbar.snackbarMessage('success-snackbar', "MRD Deleted Successfully", 1);
         }
