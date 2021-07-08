@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonService } from '../../services/common.service';
 import { SnackbarService } from '../../services/snackbar.service';
 import { CdkDragDrop, moveItemInArray, CdkDrag } from "@angular/cdk/drag-drop";
@@ -132,7 +132,7 @@ export class NewFormComponent implements OnInit, AfterViewInit {
     const control = (<FormArray>this.newForm.controls['attributes']).at(i).get('categories') as FormArray;
     control.push(this.addCategoryGroup());
     let index = control.length - 1;
-    control.controls[index].get("categoryName").setValidators([Validators.required]);
+    control.controls[index].get("categoryName").setValidators([Validators.required,RxwebValidators.unique()]);
     this.cd.detectChanges();
   }
 

@@ -14,7 +14,7 @@ const createForm = {
                 isRequired: Joi.boolean().required(),
                 categoryOptions: Joi.object().keys({
                     isMultipleChoice: Joi.boolean(),
-                    categories: Joi.array().items(
+                    categories: Joi.array().unique((a, b) => a.categoryName == b.categoryName).items(
                         Joi.object({
                             categoryName: Joi.string().required(),
                             values: Joi.array().items(Joi.string()).required(),
@@ -42,7 +42,7 @@ const updateForm = {
                 isRequired: Joi.boolean(),
                 categoryOptions: Joi.object().keys({
                     isMultipleChoice: Joi.boolean(),
-                    categories: Joi.array().items(
+                    categories: Joi.array().unique((a, b) => a.categoryName == b.categoryName).items(
                         Joi.object({
                             categoryName: Joi.string().required(),
                             values: Joi.array().items(Joi.string()).required(),

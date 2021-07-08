@@ -3053,9 +3053,9 @@ snack-bar-container {
     // .attribute-action-area
 
     .attribute-col {
-      // .mat-form-field-appearance-outline .mat-form-field-wrapper {
-      //   padding-bottom: 5px;
-      // }
+      .category-name-field {
+        line-height: 2;
+      }
 
       .add-category-btn button {
         // background: transparent;
