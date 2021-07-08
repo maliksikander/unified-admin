@@ -16,7 +16,7 @@ const formSchema = mongoose.Schema(
                 label: { type: String, required: true },
                 helpText: { type: String },
                 key: { type: String },
-                valueType: { type: String, enum: ["Alphanum100", "AlphanumSpecial200", "Boolean", "Email", "IP", "Number", "Password", "PhoneNumber", "PositiveNumber", "String50", "String100", "String2000", "URL"] },
+                valueType: { type: String, enum: ["Alphanum100", "AlphanumSpecial200", "Boolean", "Email", "IP", "Number", "Password", "PhoneNumber", "PositiveNumber", "String50", "String100", "String2000","StringList","URL"] },
                 attributeType: { type: String, enum: ['INPUT', 'OPTIONS'] },
                 isRequired: { type: Boolean },
                 categoryOptions: { type: Object }

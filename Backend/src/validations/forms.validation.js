@@ -9,7 +9,7 @@ const createForm = {
                 label: Joi.string().required(),
                 helpText: Joi.string().allow(''),
                 key: Joi.string(),
-                valueType: Joi.string().valid("Alphanum100", "AlphanumSpecial200", "Boolean", "Email", "IP", "Number", "Password", "PhoneNumber", "PositiveNumber", "String50", "String100", "String2000", "URL"),
+                valueType: Joi.string().valid("Alphanum100", "AlphanumSpecial200", "Boolean", "Email", "IP", "Number", "Password", "PhoneNumber", "PositiveNumber", "String50", "String100", "String2000", "StringList", "URL"),
                 attributeType: Joi.string().valid('INPUT', 'OPTIONS'),
                 isRequired: Joi.boolean().required(),
                 categoryOptions: Joi.object().keys({
@@ -37,7 +37,7 @@ const updateForm = {
                 label: Joi.string().required(),
                 helpText: Joi.string().allow(''),
                 key: Joi.string(),
-                valueType: Joi.string().valid("Alphanum100", "AlphanumSpecial200", "Boolean", "Email", "IP", "Number", "Password", "PhoneNumber", "PositiveNumber", "String50", "String100", "String2000", "URL"),
+                valueType: Joi.string().valid("Alphanum100", "AlphanumSpecial200", "Boolean", "Email", "IP", "Number", "Password", "PhoneNumber", "PositiveNumber", "String50", "String100", "String2000", "StringList", "URL"),
                 attributeType: Joi.string().valid('INPUT', 'OPTIONS'),
                 isRequired: Joi.boolean(),
                 categoryOptions: Joi.object().keys({

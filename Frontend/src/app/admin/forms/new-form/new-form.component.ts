@@ -132,7 +132,7 @@ export class NewFormComponent implements OnInit, AfterViewInit {
     const control = (<FormArray>this.newForm.controls['attributes']).at(i).get('categories') as FormArray;
     control.push(this.addCategoryGroup());
     let index = control.length - 1;
-    control.controls[index].get("categoryName").setValidators([Validators.required,RxwebValidators.unique()]);
+    control.controls[index].get("categoryName").setValidators([Validators.required, RxwebValidators.unique()]);
     this.cd.detectChanges();
   }
 
@@ -425,9 +425,20 @@ export class NewFormComponent implements OnInit, AfterViewInit {
     return data;
   }
 
-  // to save form object, it accepts save type(Attribute,Form) as parameter
-  onSave(saveType) {
+  //change `valueType` of `options` type attribute
+  changeAttrValueType(e, attr) {
+    let checkValue = e.checked;
+    if (checkValue == true) {
+      attr.valueType = "StringList";
+    }
+    else {
+      attr.valueType = "String2000";
+    }
+  }
 
+  // to save form object, it accepts save type(Attribute,Form) as parameter 
+  onSave(saveType) {
+    this.spinner = true;
     let saveObj = this.savePredecessor();
     if (this.formData) {
       saveObj.id = this.formData.id;
