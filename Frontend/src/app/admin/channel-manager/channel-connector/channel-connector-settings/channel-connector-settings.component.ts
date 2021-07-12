@@ -140,14 +140,14 @@ export class ChannelConnectorSettingsComponent implements OnInit {
       patchData[item.key] = item.value;
       let attr = this.formSchema?.attributes.filter((val) => val.key == item.key);
       attr = attr[0];
-      if (attr.attributeType == "OPTIONS") patchData[item.key] = this.checkValueExistenceInOtions(attr, item);
+      if (attr.attributeType == "OPTIONS") patchData[item.key] = this.checkValueExistenceInOptions(attr, item);
 
     });
     this.channelConnectorForm.patchValue(patchData);
   }
 
   // to check if the selected value exists in the form schema options, it uses the form schema attribute as `attr` and connector form data value as `item` parameters 
-  checkValueExistenceInOtions(attr, item) {
+  checkValueExistenceInOptions(attr, item) {
 
     let temp;
     let categories = attr?.categoryOptions?.categories;

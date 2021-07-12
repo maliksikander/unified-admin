@@ -28,7 +28,7 @@ body,
 @font-face {
   font-family: "Roboto";
   src: local("Roboto Regular"), local("Roboto-Regular"),
-    url("/assets/fonts/roboto/Roboto-Regular.woff") format("woff");
+    url("assets/fonts/roboto/Roboto-Regular.woff") format("woff");
   font-weight: 500;
   font-style: normal;
 }
@@ -36,7 +36,7 @@ body,
 @font-face {
   font-family: "Roboto";
   src: local("Roboto Medium"), local("Roboto-Medium"),
-    url("/assets/fonts/roboto/Roboto-Medium.woff") format("woff");
+    url("assets/fonts/roboto/Roboto-Medium.woff") format("woff");
   font-weight: 600;
   font-style: normal;
 }
@@ -46,14 +46,14 @@ body,
   font-family: "Quicksand";
   font-style: normal;
   font-weight: 300;
-  src: url("/assets/fonts/quicksand/quicksand-v9-latin-300.eot"); /* IE9 Compat Modes */
+  src: url("assets/fonts/quicksand/quicksand-v9-latin-300.eot"); /* IE9 Compat Modes */
   src: local("Quicksand Light"), local("Quicksand-Light"),
-    url("/assets/fonts/quicksand/quicksand-v9-latin-300.eot?#iefix")
+    url("assets/fonts/quicksand/quicksand-v9-latin-300.eot?#iefix")
       format("embedded-opentype"),
-    /* IE6-IE8 */ url("/assets/fonts/quicksand/quicksand-v9-latin-300.woff2")
+    /* IE6-IE8 */ url("assets/fonts/quicksand/quicksand-v9-latin-300.woff2")
       format("woff2"),
     /* Super Modern Browsers */
-      url("/assets/fonts/quicksand/quicksand-v9-latin-300.woff") format("woff"); /* Modern Browsers */
+      url("assets/fonts/quicksand/quicksand-v9-latin-300.woff") format("woff"); /* Modern Browsers */
 }
 
 /* quicksand-regular - latin */
@@ -61,15 +61,15 @@ body,
   font-family: "Quicksand";
   font-style: normal;
   font-weight: 400;
-  src: url("/assets/fonts/quicksand/quicksand-v9-latin-regular.eot"); /* IE9 Compat Modes */
+  src: url("assets/fonts/quicksand/quicksand-v9-latin-regular.eot"); /* IE9 Compat Modes */
   src: local("Quicksand Regular"), local("Quicksand-Regular"),
-    url("/assets/fonts/quicksand/quicksand-v9-latin-regular.eot?#iefix")
+    url("assets/fonts/quicksand/quicksand-v9-latin-regular.eot?#iefix")
       format("embedded-opentype"),
     /* IE6-IE8 */
-      url("/assets/fonts/quicksand/quicksand-v9-latin-regular.woff2")
+      url("assets/fonts/quicksand/quicksand-v9-latin-regular.woff2")
       format("woff2"),
     /* Super Modern Browsers */
-      url("/assets/fonts/quicksand/quicksand-v9-latin-regular.woff")
+      url("assets/fonts/quicksand/quicksand-v9-latin-regular.woff")
       format("woff"); /* Modern Browsers */
 }
 
@@ -78,14 +78,14 @@ body,
   font-family: "Quicksand";
   font-style: normal;
   font-weight: 700;
-  src: url("/assets/fonts/quicksand/quicksand-v9-latin-700.eot"); /* IE9 Compat Modes */
+  src: url("assets/fonts/quicksand/quicksand-v9-latin-700.eot"); /* IE9 Compat Modes */
   src: local("Quicksand Bold"), local("Quicksand-Bold"),
-    url("/assets/fonts/quicksand/quicksand-v9-latin-700.eot?#iefix")
+    url("assets/fonts/quicksand/quicksand-v9-latin-700.eot?#iefix")
       format("embedded-opentype"),
-    /* IE6-IE8 */ url("/assets/fonts/quicksand/quicksand-v9-latin-700.woff2")
+    /* IE6-IE8 */ url("assets/fonts/quicksand/quicksand-v9-latin-700.woff2")
       format("woff2"),
     /* Super Modern Browsers */
-      url("/assets/fonts/quicksand/quicksand-v9-latin-700.woff") format("woff"); /* Modern Browsers */
+      url("assets/fonts/quicksand/quicksand-v9-latin-700.woff") format("woff"); /* Modern Browsers */
 }
 
 .fa,

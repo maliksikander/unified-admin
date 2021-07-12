@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   forgotPassword = false;
   hide = true;
   loginForm: FormGroup;
-  logoUrl = "/assets/images/expertflow-logo.png";
+  logoUrl = "assets/images/expertflow-logo.png";
   spinner = false;
   rememberMe: boolean = true;
 

@@ -10,9 +10,10 @@ const keycloak = new NodeAdapter(config);
 // keycloak.enforcer(['forms:manage-form'], {
 //     resource_server_id: 'cim'
 // })
-router.get('/', keycloak.enforcer(['forms:manage-form'], {
-    resource_server_id: 'cim'
-}), formValidationController.getFormValidation);
+// keycloak.enforcer(['forms:manage-form'], {
+//     resource_server_id: 'cim'
+// }),
+router.get('/', formValidationController.getFormValidation);
 
 
 // router.put('/', keycloak.enforcer(['forms:manage-form'], {

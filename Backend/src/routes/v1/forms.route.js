@@ -7,14 +7,15 @@ var config = require('../../../config.json');
 var { NodeAdapter } = require("keycloak-nodejs-connect");
 const keycloak = new NodeAdapter(config);
 
+// keycloak.enforcer(['forms:manage-form'], {
+//     resource_server_id: 'cim'
+// }),
 
 router.get('/', keycloak.enforcer(['forms:manage-form'], {
     resource_server_id: 'cim'
 }), formsController.getForms);
 
-router.get('/:formID', keycloak.enforcer(['forms:manage-form'], {
-    resource_server_id: 'cim'
-}), formsController.getFormByID);
+router.get('/:formID', formsController.getFormByID);
 
 router.put('/', keycloak.enforcer(['forms:manage-form'], {
     resource_server_id: 'cim'
