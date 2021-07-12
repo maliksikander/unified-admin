@@ -59,7 +59,8 @@
                   "type": "anyComponentStyle",
                   "maximumWarning": "1mb"
                 }
-              ]
+              ],
+              "baseHref": "/unified-admin/"
             }
           }
         },

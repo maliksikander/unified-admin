@@ -8,11 +8,11 @@ var { NodeAdapter } = require("keycloak-nodejs-connect");
 const keycloak = new NodeAdapter(config);
 
 
-// router.get('/', keycloak.enforcer(['forms:manage-form'], {
-//     resource_server_id: 'cim'
-// }), formValidationController.getFormValidation);
+router.get('/', keycloak.enforcer(['forms:manage-form'], {
+    resource_server_id: 'cim'
+}), formValidationController.getFormValidation);
 
-router.get('/', formValidationController.getFormValidation);
+// router.get('/', formValidationController.getFormValidation);
 
 
 // router.put('/', keycloak.enforcer(['forms:manage-form'], {
