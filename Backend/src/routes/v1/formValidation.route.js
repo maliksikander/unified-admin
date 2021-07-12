@@ -7,12 +7,11 @@ var config = require('../../../config.json');
 var { NodeAdapter } = require("keycloak-nodejs-connect");
 const keycloak = new NodeAdapter(config);
 
-// keycloak.enforcer(['forms:manage-form'], {
+
+// router.get('/', keycloak.enforcer(['forms:manage-form'], {
 //     resource_server_id: 'cim'
-// })
-// keycloak.enforcer(['forms:manage-form'], {
-//     resource_server_id: 'cim'
-// }),
+// }), formValidationController.getFormValidation);
+
 router.get('/', formValidationController.getFormValidation);
 
 
