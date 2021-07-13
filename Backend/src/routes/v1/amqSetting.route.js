@@ -4,7 +4,7 @@ const validate = require('../../middlewares/validate');
 const amqValidation = require('../../validations/amqSetting.validation');
 const amqSettingController = require('../../controllers/amqSetting.controller');
 var config = require('../../../config.json');
-var { NodeAdapter } = require("keycloak-nodejs-connect");
+var { NodeAdapter } = require("ef-keycloak-connect");
 const keycloak = new NodeAdapter(config);
 
 router.get('/', keycloak.enforcer(['general-settings:manage','general-settings:view'], {

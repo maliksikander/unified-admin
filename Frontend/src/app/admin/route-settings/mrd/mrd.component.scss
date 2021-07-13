@@ -95,6 +95,11 @@
       height: 40px;
       line-height: 40px;
       padding: 0 15px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      // width: 20%;
+      max-width: 0px;
+      white-space: nowrap;
 
       &:first-child {
         width: 20% !important;

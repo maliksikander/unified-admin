@@ -5,7 +5,7 @@ const validate = require('../../middlewares/validate');
 const displayValidation = require('../../validations/displaySetting.validation');
 const displaySettingController = require('../../controllers/displaySetting.controller');
 var config = require('../../../config.json');
-var { NodeAdapter } = require("keycloak-nodejs-connect");
+var { NodeAdapter } = require("ef-keycloak-connect");
 const keycloak = new NodeAdapter(config);
 
 

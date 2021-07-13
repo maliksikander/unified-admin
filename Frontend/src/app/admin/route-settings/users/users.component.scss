@@ -428,6 +428,7 @@ input::-webkit-inner-spin-button {
   display: flex;
   padding: 0 5px;
   height: 40px;
+  justify-content: space-around;
 
   input {
     width: 25%;
@@ -454,7 +455,7 @@ input::-webkit-inner-spin-button {
 
   .close-attr-btn {
     position: relative;
-    // right: 5px;
+    right: 5px;
     // width: 12%;
     border-left: 1px solid #d8d8d8;
     mat-icon {
@@ -473,7 +474,7 @@ input::-webkit-inner-spin-button {
   }
 
   .close-attr-btn {
-    right: -20px;
+    right: 5px;
   }
 }
 

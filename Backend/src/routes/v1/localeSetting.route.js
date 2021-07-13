@@ -5,7 +5,7 @@ const validate = require('../../middlewares/validate');
 const localeValidation = require('../../validations/localeSetting.validation');
 const localeSettingController = require('../../controllers/localeSetting.controller');
 var config = require('../../../config.json');
-var { NodeAdapter } = require("keycloak-nodejs-connect");
+var { NodeAdapter } = require("ef-keycloak-connect");
 const keycloak = new NodeAdapter(config);
 
 router.get('/', keycloak.enforcer(['general-settings:manage'], {

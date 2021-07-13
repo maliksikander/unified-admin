@@ -174,9 +174,19 @@ export class UsersComponent implements OnInit {
   //and patches the existing values with form controls and opens the form dialog
   editUserAttributes(templateRef, item) {
 
+    let userData = {
+      firstName: "",
+      lastName: "",
+      id: "",
+      roles: [],
+      username: "",
+      realm: sessionStorage.getItem('tenant')
+    }
     this.attrSpinner = true;
     let data = JSON.parse(JSON.stringify(item));
     this.editREUserData = JSON.parse(JSON.stringify(item));
+    let temp = { ...userData, ...this.editREUserData.keycloakUser };
+    this.editREUserData.keycloakUser = temp;
     if (data.associatedRoutingAttributes) {
       data.associatedRoutingAttributes.forEach(item => {
         if (item.routingAttribute.type == 'BOOLEAN') {
@@ -213,7 +223,7 @@ export class UsersComponent implements OnInit {
     this.spinner = true;
     let data = JSON.parse(JSON.stringify(this.editREUserData));
     data.associatedRoutingAttributes = this.userAttributeForm.value.associatedRoutingAttributes;
-    data.participantType = "CCUser"
+    data.participantType = "CCUser";
     if (data.associatedRoutingAttributes) {
       data.associatedRoutingAttributes.forEach(item => {
         if (item.routingAttribute.type == 'BOOLEAN') {
@@ -342,8 +352,10 @@ export class UsersComponent implements OnInit {
   onAttrChange(e) {
 
     if (this.userObj.associatedRoutingAttributes && this.userObj.associatedRoutingAttributes.length > 0) {
+      this.spinner = true;
       let attr = this.userObj.associatedRoutingAttributes.find(item => item.routingAttribute.id == this.attrId);
       let index = this.userObj.associatedRoutingAttributes.indexOf(attr);
+      this.userObj.participantType = "CCUser";
       if (e == 'false') {
         this.userObj.associatedRoutingAttributes.splice(index, 1);
         if (this.userObj.associatedRoutingAttributes.length == 0) return this.deleteREUser(this.userObj.id);
@@ -360,8 +372,10 @@ export class UsersComponent implements OnInit {
   removeAttribute() {
 
     if (this.userObj.associatedRoutingAttributes && this.userObj.associatedRoutingAttributes.length > 0) {
+      this.spinner = true;
       let attr = this.userObj.associatedRoutingAttributes.find(item => item.routingAttribute.id == this.attrId);
       let index = this.userObj.associatedRoutingAttributes.indexOf(attr)
+      this.userObj.participantType = "CCUser";
       this.userObj.associatedRoutingAttributes.splice(index, 1);
       if (this.userObj.associatedRoutingAttributes.length == 0) {
         return this.deleteREUser(this.userObj.id);

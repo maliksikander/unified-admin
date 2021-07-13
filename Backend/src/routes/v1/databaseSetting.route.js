@@ -5,7 +5,7 @@ const validate = require('../../middlewares/validate');
 const databaseValidation = require('../../validations/databaseSetting.validation');
 const databaseSettingController = require('../../controllers/databaseSetting.controller');
 var config = require('../../../config.json');
-var { NodeAdapter } = require("keycloak-nodejs-connect");
+var { NodeAdapter } = require("ef-keycloak-connect");
 const keycloak = new NodeAdapter(config);
 
 router.get('/', keycloak.enforcer(['general-settings:manage'], {

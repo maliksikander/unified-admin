@@ -4,7 +4,7 @@ const validate = require('../../middlewares/validate');
 const formsValidation = require('../../validations/forms.validation');
 const formsController = require('../../controllers/forms.controller');
 var config = require('../../../config.json');
-var { NodeAdapter } = require("keycloak-nodejs-connect");
+var { NodeAdapter } = require("ef-keycloak-connect");
 const keycloak = new NodeAdapter(config);
 
 
@@ -13,11 +13,11 @@ router.get('/', keycloak.enforcer(['forms:manage-form'], {
     resource_server_id: 'cim'
 }), formsController.getForms);
 
-router.get('/:formID', keycloak.enforcer(['forms:manage-form'], {
-    resource_server_id: 'cim'
-}), formsController.getFormByID);
+// router.get('/:formID', keycloak.enforcer(['forms:manage-form'], {
+//     resource_server_id: 'cim'
+// }), formsController.getFormByID);
 
-// router.get('/:formID', formsController.getFormByID);
+router.get('/:formID', formsController.getFormByID);
 
 router.put('/', keycloak.enforcer(['forms:manage-form'], {
     resource_server_id: 'cim'
