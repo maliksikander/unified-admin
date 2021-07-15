@@ -180,7 +180,7 @@ export class UsersComponent implements OnInit {
       id: "",
       roles: [],
       username: "",
-      realm: sessionStorage.getItem('tenant')
+      realm: localStorage.getItem('tenant') ? localStorage.getItem('tenant') : sessionStorage.getItem('tenant')
     }
     this.attrSpinner = true;
     let data = JSON.parse(JSON.stringify(item));
@@ -236,6 +236,7 @@ export class UsersComponent implements OnInit {
         }
       });
     }
+    console.log("data==>", data);
     if (data && data.id) {
       if (data.associatedRoutingAttributes.length == 0) {
         return this.deleteREUser(data.id);
@@ -465,6 +466,7 @@ export class UsersComponent implements OnInit {
   //get keycloak users
   getUsers() {
     this.spinner = true;
+    this.userData = [];
     this.getKeycloakUsers();
   }
 

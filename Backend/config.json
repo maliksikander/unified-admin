@@ -2,7 +2,7 @@
   "realm": "university",
   "auth-server-url": "http://192.168.1.204:8080/auth/",
   "ssl-required": "external",
-  "resource": "AGENT_MANAGER",
+  "resource": "Agent_Manager",
   "verify-token-audience": false,
   "credentials": {
     "secret": "eb8564ea-cd23-4cf0-94e9-e4a936beab90"
@@ -10,7 +10,7 @@
   "use-resource-role-mappings": true,
   "confidential-port": 0,
   "policy-enforcer": {},
-  "CLIENT_ID": "AGENT_MANAGER",
+  "CLIENT_ID": "Agent_Manager",
   "CLIENT_DB_ID": "eb8564ea-cd23-4cf0-94e9-e4a936beab90",
   "GRANT_TYPE": "password",
   "GRANT_TYPE_PAT": "client_credentials",

@@ -73,24 +73,30 @@ export class LoginComponent implements OnInit {
     delete reqBody.rememberMe
     this.endPointService.login(reqBody).subscribe(
       (res: any) => {
-        this.spinner = false;
-        // console.log("res-->", res);
-        // this.commonService.permissionVerification(res.keycloak_User.permittedResources.Resources)
-        if (data.rememberMe == true) {
-          sessionStorage.setItem('username', res.keycloak_User.username);
-          sessionStorage.setItem('token', res.token);
-          sessionStorage.setItem('tenant', res.keycloak_User.realm);
-          sessionStorage.setItem('permittedResources', JSON.stringify(res.keycloak_User.permittedResources.Resources));
-          this.endPointService.token = res.token;
-          this.router.navigate(['/bot-settings'])
-          // let temp = sessionStorage.getItem('permittedResources');
-          // this.commonService.getPermissionResourcesList();
-        }
 
+        this.storeValues(res, data);
+        this.spinner = false;
       },
       (error: any) => {
         this.spinner = false;
         console.log("Error fetching:", error);
       });
   }
+
+  storeValues(res, data) {
+    if (data.rememberMe == true) {
+
+      localStorage.setItem('username', res.keycloak_User.username);
+      localStorage.setItem('tenant', res.keycloak_User.realm);
+      localStorage.setItem('token', res.token);
+      // sessionStorage.setItem('permittedResources', JSON.stringify(res.keycloak_User.permittedResources.Resources));
+    }
+    sessionStorage.setItem('username', res.keycloak_User.username);
+    sessionStorage.setItem('tenant', res.keycloak_User.realm);
+    sessionStorage.setItem('token', res.token);
+    this.endPointService.token = res.token;
+    this.router.navigate(['/bot-settings']);
+
+  }
+
 }

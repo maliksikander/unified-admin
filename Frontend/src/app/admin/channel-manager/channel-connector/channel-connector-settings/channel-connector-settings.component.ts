@@ -202,7 +202,7 @@ export class ChannelConnectorSettingsComponent implements OnInit {
     let filledValues: any = this.removeStaticFormAttributes();
 
     //setting form Data values
-    let user = sessionStorage.getItem('username');
+    let user = localStorage.getItem('username') ? localStorage.getItem('username') : sessionStorage.getItem('username');
     data.formID = this.formSchema.id;
     data.filledBy = user;
     if (!this.connectorData) data.createdOn = new Date().toISOString();

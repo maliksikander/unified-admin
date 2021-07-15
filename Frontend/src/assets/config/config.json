@@ -1,6 +1,6 @@
 {
   "ADMIN_URL": "https://cim.expertflow.com/unified-admin",
-  "MRE_URL": "https://ed7a5863f296.ngrok.io",
+  "MRE_URL": "http://192.168.2.50:8081",
   "BUSINESS_USER_ROLES": [
     "agent",
     "supervisor"

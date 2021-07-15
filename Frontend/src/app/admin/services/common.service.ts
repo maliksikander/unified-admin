@@ -540,9 +540,10 @@ export class CommonService {
 
   // verifying token existence form local storage
   tokenVerification() {
-    if (!sessionStorage.getItem('token')) {
-      return this.router.navigate(['/login']);
-    }
+    
+    let local = localStorage.getItem('token');
+    let session = sessionStorage.getItem('token');
+    if (local == null && session == null) return this.router.navigate(['/login']);
   }
 
   // verify permission from keycloak

@@ -13,7 +13,7 @@ export class TopBarComponent implements OnInit {
   constructor(private router: Router,) { }
 
   ngOnInit() {
-    let user = sessionStorage.getItem('username');
+    let user = localStorage.getItem('username') ? localStorage.getItem('username') : sessionStorage.getItem('username');
     if (user) this.userName = user;
     // this.clock();
   }
@@ -35,7 +35,10 @@ export class TopBarComponent implements OnInit {
     sessionStorage.removeItem('channelTypePage');
     sessionStorage.removeItem('tenant');
     sessionStorage.removeItem('formsPage');
-    sessionStorage.removeItem('permittedResources');
+    localStorage.removeItem('username');
+    localStorage.removeItem('tenant');
+    localStorage.removeItem('token');
+    // sessionStorage.removeItem('permittedResources');
 
     this.router.navigate(['/login']);
   }

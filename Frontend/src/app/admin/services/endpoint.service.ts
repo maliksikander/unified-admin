@@ -33,10 +33,7 @@ export class EndpointService {
 
 
     if (isDevMode()) { this.ADMIN_URL = 'http://localhost:3000'; }
-    console.log("url===>", this.ADMIN_URL)
-
     this.getStorageValues();
-
   }
 
   private handleError(errorResponse: HttpErrorResponse) {
@@ -44,8 +41,8 @@ export class EndpointService {
   }
 
   getStorageValues() {
-    if (sessionStorage.getItem('token')) this.token = sessionStorage.getItem('token');
-    if (sessionStorage.getItem('tenant')) this.tenant = sessionStorage.getItem('tenant');
+    this.token = localStorage.getItem('token') ? localStorage.getItem('token') : sessionStorage.getItem('token');
+    this.tenant = localStorage.getItem('tenant') ? localStorage.getItem('tenant') : sessionStorage.getItem('tenant');
   }
 
   //////////////////// General Group CRUD ////////////
