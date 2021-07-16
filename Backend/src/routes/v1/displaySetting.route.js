@@ -4,21 +4,22 @@ const router = express.Router();
 const validate = require('../../middlewares/validate');
 const displayValidation = require('../../validations/displaySetting.validation');
 const displaySettingController = require('../../controllers/displaySetting.controller');
-var config = require('../../../config.json');
-var { NodeAdapter } = require("ef-keycloak-connect");
+let config = require('../../../config.json');
+let { NodeAdapter } = require("ef-keycloak-connect");
 const keycloak = new NodeAdapter(config);
+let resource = config.resource;
 
 
 router.get('/', keycloak.enforcer(['general-settings:manage'], {
-    resource_server_id: 'cim'
+    resource_server_id: resource
 }), displaySettingController.getSettings);
 
 router.put('/', keycloak.enforcer(['general-settings:manage'], {
-    resource_server_id: 'CIM'
+    resource_server_id: resource
 }), validate(displayValidation.updateSetting), displaySettingController.updateSettings);
 
 router.post('/', keycloak.enforcer(['general-settings:manage'], {
-    resource_server_id: 'CIM'
+    resource_server_id: resource
 }), validate(displayValidation.createSetting), displaySettingController.createSettings);
 
 module.exports = router;

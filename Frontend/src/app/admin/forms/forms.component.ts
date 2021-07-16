@@ -57,8 +57,8 @@ export class FormsComponent implements OnInit {
   getForms() {
     this.endPointService.getForm().subscribe(
       (res: any) => {
-        this.spinner = false;
         this.formsList = res;
+        this.spinner = false;
       },
       error => {
         this.spinner = false;
@@ -120,17 +120,18 @@ export class FormsComponent implements OnInit {
     this.editData = data;
   }
 
-  // change form to lsit view and show snackbar message it accepts request repsonse('Created','Updated') as parameter 
+  // change form to list view and show snackbar message it accepts request repsonse('Created','Updated') as parameter 
   // and resets data variable and makes request to get updated forms list
   onSave(e) {
 
-    this.snackbar.snackbarMessage('success-snackbar', e + ' ' + 'Successfully', 1);
     this.addForm = !this.addForm;
     this.editData = undefined;
+    this.searchTerm = "";
+    this.snackbar.snackbarMessage('success-snackbar', e + ' ' + 'Successfully', 1.5);
     this.spinner = true;
     setTimeout(() => {
       this.getForms();
-    }, 500);
+    }, 300);
   }
 
   // ngx-pagination setting methods
