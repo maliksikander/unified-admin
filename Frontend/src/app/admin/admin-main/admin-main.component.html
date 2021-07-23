@@ -128,6 +128,12 @@
 
             </mat-expansion-panel>
 
+            <!-- Reason Code -->
+            <a class="single-menu-link" mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/reason-code']">
+              <img src="assets/images/forms.svg" alt="reasons">
+              <span class="sidebar-text">Reason Code</span>
+            </a>
+
             <!-- Routing Configuration -->
             <mat-expansion-panel *ngIf="routingBool">
               <mat-expansion-panel-header class='route-header-image-icon'>

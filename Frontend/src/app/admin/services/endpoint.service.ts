@@ -279,6 +279,54 @@ export class EndpointService {
     }).pipe(catchError(this.handleError));
   }
 
+  //////// Reason Code ///////
+
+  createReasonCode(data): Observable<any> {
+    return this.httpClient.post<any>(`https://652849f0-8ae3-4345-a0c9-4aab8c6b05d6.mock.pstmn.io/reasons`, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  getReasonCode(): Observable<any> {
+    return this.httpClient.get(`https://652849f0-8ae3-4345-a0c9-4aab8c6b05d6.mock.pstmn.io/reasons`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  getReasonCodeByID(id): Observable<any> {
+    return this.httpClient.get(`https://652849f0-8ae3-4345-a0c9-4aab8c6b05d6.mock.pstmn.io/reasons/${id}`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  updatReasonCode(data): Observable<any> {
+    return this.httpClient.put<any>(`https://652849f0-8ae3-4345-a0c9-4aab8c6b05d6.mock.pstmn.io/reasons`, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  deleteReasonCode(id): Observable<any> {
+    return this.httpClient.delete<any>(`https://652849f0-8ae3-4345-a0c9-4aab8c6b05d6.mock.pstmn.io/reasons/${id}`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+
 
   /////////////// Keycloak /////////////////
 

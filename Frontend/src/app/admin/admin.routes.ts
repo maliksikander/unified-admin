@@ -19,6 +19,7 @@ import { ChannelConnectorComponent } from './channel-manager/channel-connector/c
 import { BotListComponent } from './bot/bot-list/bot-list.component';
 import { FormsComponent } from './forms/forms.component';
 import { ChannelTypeComponent } from './channel-manager/channel-type/channel-type.component';
+import { ReasonCodesComponent } from './reason-codes/reason-codes.component';
 
 
 export const adminRoutes: Routes = [
@@ -45,6 +46,7 @@ export const adminRoutes: Routes = [
       { path: 'channel/channel-manager', component: ChannelListComponent },   
       { path: 'bot-settings', component: BotListComponent },
       { path: 'form', component: FormsComponent },
+      { path: 'reason-code', component: ReasonCodesComponent },
     ]
   }
 ];
