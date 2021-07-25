@@ -511,6 +511,25 @@ export class CommonService {
     }
   };
 
+  reasonFormErrorMessages = {
+    'label': {
+      'required': "This field is required",
+      'minlength': "Min 3 characters required",
+      'maxlength': "Max 100 characters allowed",
+      'pattern': 'Not a valid pattern',
+      'validName': 'Already exists'
+
+    },
+    'description': {
+      'required': "This field is required",
+      'maxlength': "Max 500 characters allowed",
+      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+    },
+    'type': {
+      'required': "This field is required",
+    },
+  };
+
   constructor(private snackbar: SnackbarService,
     private router: Router) { }
 

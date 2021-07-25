@@ -9,3 +9,4 @@ module.exports.ReportSetting = require('./reportSettings.model');
 module.exports.SecuritySetting = require('./securitySettings.model');
 module.exports.FormsModel = require('./forms.model');
 module.exports.FormValidationModel = require('./formValidation.model');
+module.exports.ReasonCodeModel = require('./reason.model');

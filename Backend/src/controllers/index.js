@@ -10,3 +10,4 @@ module.exports.securitySettingController = require('./securitySetting.controller
 module.exports.loginController = require('./login.controller');
 module.exports.formsController = require('./forms.controller');
 module.exports.formValidationController = require('./formValidation.controller');
+module.exports.reasonController = require('./reason.controller');

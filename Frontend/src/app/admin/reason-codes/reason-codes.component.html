@@ -29,14 +29,18 @@
                             <li>Label</li>
                             <li>Description</li>
                             <li>Type</li>
-                            
+
                         </ul>
                         <ng-container *ngIf="reasonCodeData && reasonCodeData.length != 0">
-                            <div class="reason-code-data" *ngFor="let data of reasonCodeData | searchFilter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
-                                <p class="group-name">{{data?.label ? data.label : 'N/A'}}</p>
-                                <p class="group-name">{{data?.description ? data.description : 'N/A'}}</p>
-                                <p class="group-name">{{data?.type ? data?.type : 'N/A'}}</p>
-                                <div class="table-trigger">
+                            <div class="reason-code-data"
+                                *ngFor="let data of reasonCodeData | searchFilter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
+                                <span class="group-name">{{data?.label ? data.label : 'N/A'}}</span>
+                                <span class="group-name">{{data?.description ? data.description : 'N/A'}}</span>
+                                <span class="group-name">
+                                    <span [ngStyle]="{'background-color':data?.type == 'LOG_OUT' ? '#ffab00' : '#f76453' }"
+                                        class="reason-type-style">{{data?.type | removeUnderscoreFilter |
+                                        titlecase}}</span>
+                                    <!-- <span class="table-trigger"> -->
                                     <span class="list-trigger-area">
                                         <button mat-mini-fab matTooltip="Edit"
                                             (click)="editReasonCode(reasonCodeForm,data)">
@@ -46,7 +50,9 @@
                                             <mat-icon>delete</mat-icon>
                                         </button>
                                     </span>
-                                </div>
+                                    <!-- </div> -->
+                                </span>
+
                             </div>
                         </ng-container>
 
@@ -81,13 +87,13 @@
                 <h4 class="content-span full-width">{{formHeading}}</h4>
             </div>
             <div class="dialog-content">
-                <form class="form-horizontal form-bordered queue-arrow" [formGroup]="reasonForm">
+                <form class="form-horizontal form-bordered" [formGroup]="reasonForm">
                     <div class="form-group">
                         <mat-label>Label</mat-label>
                         <mat-form-field appearance="outline">
                             <input matInput formControlName="label">
                             <mat-error class="form-error">
-                                {{formErrors?.name}}
+                                {{formErrors?.label}}
                             </mat-error>
                         </mat-form-field>
                     </div>
@@ -119,7 +125,7 @@
                         <div class="col-md-12">
                             <div class="form-action-area">
                                 <button mat-raised-button [mat-dialog-close]="true" class="gray-btn">Cancel</button>
-                                <button mat-raised-button [disabled]="!queueForm.valid" (click)="onSave()"
+                                <button mat-raised-button [disabled]="!reasonForm.valid" (click)="onSave()"
                                     [mat-dialog-close]="save" class="blue-btn service-trigger">{{saveBtnText}}</button>
                             </div>
                         </div>

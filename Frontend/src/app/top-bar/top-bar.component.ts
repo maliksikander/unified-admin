@@ -33,6 +33,7 @@ export class TopBarComponent implements OnInit {
     sessionStorage.removeItem('currentQueuePage');
     sessionStorage.removeItem('currentUsersPage');
     sessionStorage.removeItem('channelTypePage');
+    sessionStorage.removeItem('currentReasonCodePage');
     sessionStorage.removeItem('tenant');
     sessionStorage.removeItem('formsPage');
     localStorage.removeItem('username');

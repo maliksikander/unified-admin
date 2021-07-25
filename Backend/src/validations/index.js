@@ -8,3 +8,4 @@ module.exports.displayValidation = require('./displaySetting.validation');
 module.exports.localeValidation = require('./localeSetting.validation');
 module.exports.securityValidation = require('./securitySetting.validation');
 module.exports.formsValidation = require('./forms.validation');
+module.exports.reasonValidation = require('./reason.validation');

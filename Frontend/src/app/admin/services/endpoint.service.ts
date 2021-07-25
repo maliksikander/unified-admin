@@ -282,7 +282,7 @@ export class EndpointService {
   //////// Reason Code ///////
 
   createReasonCode(data): Observable<any> {
-    return this.httpClient.post<any>(`https://652849f0-8ae3-4345-a0c9-4aab8c6b05d6.mock.pstmn.io/reasons`, data, {
+    return this.httpClient.post<any>(`${this.ADMIN_URL}/reasons`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.token
@@ -291,7 +291,7 @@ export class EndpointService {
   }
 
   getReasonCode(): Observable<any> {
-    return this.httpClient.get(`https://652849f0-8ae3-4345-a0c9-4aab8c6b05d6.mock.pstmn.io/reasons`, {
+    return this.httpClient.get(`${this.ADMIN_URL}/reasons`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.token
@@ -300,7 +300,7 @@ export class EndpointService {
   }
 
   getReasonCodeByID(id): Observable<any> {
-    return this.httpClient.get(`https://652849f0-8ae3-4345-a0c9-4aab8c6b05d6.mock.pstmn.io/reasons/${id}`, {
+    return this.httpClient.get(`${this.ADMIN_URL}/reasons/${id}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.token
@@ -308,8 +308,8 @@ export class EndpointService {
     }).pipe(catchError(this.handleError));
   }
 
-  updatReasonCode(data): Observable<any> {
-    return this.httpClient.put<any>(`https://652849f0-8ae3-4345-a0c9-4aab8c6b05d6.mock.pstmn.io/reasons`, data, {
+  updateReasonCode(data): Observable<any> {
+    return this.httpClient.put<any>(`${this.ADMIN_URL}/reasons`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.token
@@ -318,7 +318,7 @@ export class EndpointService {
   }
 
   deleteReasonCode(id): Observable<any> {
-    return this.httpClient.delete<any>(`https://652849f0-8ae3-4345-a0c9-4aab8c6b05d6.mock.pstmn.io/reasons/${id}`, {
+    return this.httpClient.delete<any>(`${this.ADMIN_URL}/reasons/${id}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.token
