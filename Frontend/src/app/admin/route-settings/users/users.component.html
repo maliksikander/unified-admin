@@ -30,7 +30,7 @@
             </ul>
             <ul class="routing-user-list" *ngIf="(userData && userData.length != 0) && !warningBool">
               <li
-                *ngFor="let data of userData | searchFilter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
+                *ngFor="let data of userData | filter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
                 <div class="row">
                   <div class="col-sm-3 col-md-3">
                     <span>{{data?.keycloakUser?.firstName ? data?.keycloakUser?.firstName :
@@ -182,7 +182,7 @@
                     [ngModelOptions]="{standalone: true}">
                 </div>
                 <ul class="attributes-area">
-                  <li *ngFor="let i=index;let item of attrData | searchFilter:attributeFilterTerm">
+                  <li *ngFor="let i=index;let item of attrData | filter:attributeFilterTerm">
                     <p class="checbox-custom checkbox-team">
                       <!-- <input class="mat-checkbox mat-accent" formControlName="attributes" type="checkbox"
                               (change)="checkFilterState($event,item);filterValue(item)" [checked]="item.isChecked">
@@ -207,7 +207,7 @@
                 <div class="selected-attribute-panel">
                   <mat-accordion>
                     <mat-expansion-panel
-                      *ngFor="let i = index;let data of userAttributeForm.value.associatedRoutingAttributes | searchFilter:selectedAttributeFilterTerm">
+                      *ngFor="let i = index;let data of userAttributeForm.value.associatedRoutingAttributes | filter:selectedAttributeFilterTerm">
                       <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
                         [expandedHeight]="customExpandedHeight">
                         <mat-panel-title>

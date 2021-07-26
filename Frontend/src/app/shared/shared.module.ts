@@ -38,12 +38,16 @@ import { SearchFilterPipe } from './search-filter.pipe';
 import { RemoveUnderscoreFilterPipe } from './remove-underscore.pipe';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+
 @NgModule({
     declarations: [
         SearchFilterPipe,
         RemoveUnderscoreFilterPipe,
+        // Ng2SearchPipeModule,
         ConfirmDialogComponent],
     imports: [
+        Ng2SearchPipeModule,
         DragDropModule,
         MatIconModule, MatToolbarModule, MatSidenavModule, MatBadgeModule, MatDialogModule,
         BrowserAnimationsModule, MatCheckboxModule, MatButtonModule, MatMenuModule,
@@ -113,6 +117,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
         SearchFilterPipe,
         RemoveUnderscoreFilterPipe,
         NgxPaginationModule,
+        Ng2SearchPipeModule
 
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],

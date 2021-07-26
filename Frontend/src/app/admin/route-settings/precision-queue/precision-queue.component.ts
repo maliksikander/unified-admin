@@ -30,7 +30,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
   validations;
   // agentCriteria = ['longest available', 'most skilled', 'least skilled'];
   conditionList = ["AND", "OR"]
-  reqServiceType = 'precision-queues';
+  // reqServiceType = 'precision-queues';
   formHeading = 'Add New Queue';
   saveBtnText = 'Create';
   mrdData = [];
@@ -63,7 +63,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
   };
   queueForm: FormGroup;
   stepForm: FormGroup;
-  @ViewChild('tableData') tableData: ElementRef;
+  // @ViewChild('tableData') tableData: ElementRef;
 
   constructor(private commonService: CommonService,
     private dialog: MatDialog,
@@ -202,7 +202,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
 
   //to get MRD list and set the local variable with the response
   getMRD() {
-    this.endPointService.get('media-routing-domains').subscribe(
+    this.endPointService.getMrd().subscribe(
       (res: any) => {
         this.spinner = false;
         this.mrdData = res;
@@ -216,7 +216,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
 
   //to get attribute list and set the local variable with the response 
   getAttribute() {
-    this.endPointService.get('routing-attributes').subscribe(
+    this.endPointService.getAttribute().subscribe(
       (res: any) => {
         this.spinner = false;
         this.attrData = res;
@@ -231,7 +231,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
   //to create PQ and it accepts `data` object as parameter with following properties (name:string, mrd:object, agentSelectcriteria:string, serviceLevelType:string ,serviceLevelThreshold:number)
   //and update the local list
   createQueue(data) {
-    this.endPointService.create(data, this.reqServiceType).subscribe(
+    this.endPointService.createQueue(data).subscribe(
       (res: any) => {
         this.getQueue();
         this.snackbar.snackbarMessage('success-snackbar', "Created Successfully", 1);
@@ -245,7 +245,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
 
   //to get PQ list and set the local variable with the response 
   getQueue() {
-    this.endPointService.get(this.reqServiceType).subscribe(
+    this.endPointService.getQueue().subscribe(
       (res: any) => {
         this.spinner = false;
         this.queueData = res;
@@ -265,7 +265,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
   //and updating the local list with the success response object
   updateQueue(data, id) {
 
-    this.endPointService.update(data, id, this.reqServiceType).subscribe(
+    this.endPointService.updateQueue(data, id).subscribe(
       (res: any) => {
         if (res.id) {
           let queue = this.queueData.find(item => item.id == res.id);
@@ -314,7 +314,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
   //to delete PQ and it accepts `data` object & `id` as parameter,`data` object (name:string, mrd:object, agentSelectcriteria:string, serviceLevelType:string ,serviceLevelThreshold:number)
   //and to update the local list when the operation is successful
   deleteQueue(data, id) {
-    this.endPointService.delete(id, this.reqServiceType).subscribe(
+    this.endPointService.deleteQueue(id).subscribe(
       (res: any) => {
         this.spinner = false;
 

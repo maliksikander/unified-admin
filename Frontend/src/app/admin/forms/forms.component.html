@@ -31,7 +31,7 @@
                         <ng-container *ngIf="formsList && formsList.length > 0">
                             <ul class="form-list-data">
                                 <li
-                                    *ngFor="let data of formsList | searchFilter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
+                                    *ngFor="let data of formsList | filter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
                                     <div class="row">
                                         <div class="col-sm-4 col-md-4">
                                             {{data?.id ? data?.id : 'N/A'}}

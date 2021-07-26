@@ -32,7 +32,7 @@ export class LocaleComponent implements OnInit {
   langSearchTerm: string;
   selectedCount = [];
   selectedLanguages = [];
-  reqServiceType = 'locale-setting';
+  // reqServiceType = 'locale-setting';
   spinner: any = true;
   editData: any;
 
@@ -147,7 +147,7 @@ export class LocaleComponent implements OnInit {
 
   //to get locale setting list and set the local variable with the response 
   getLocaleSetting() {
-    this.endPointService.getSetting(this.reqServiceType).subscribe(
+    this.endPointService.getLocaleSetting().subscribe(
       (res: any) => {
         this.spinner = false;
         if (res.status == 200 && res.localeSetting.length > 0) {
@@ -180,7 +180,7 @@ export class LocaleComponent implements OnInit {
   //to create locale setting object and it accepts locale setting object as `data`
   createLocaleSetting(data) {
     this.spinner = true;
-    this.endPointService.createSetting(data, this.reqServiceType).subscribe(
+    this.endPointService.createLocaleSetting(data).subscribe(
       (res: any) => {
         this.spinner = false;
         if (res.status == 200) {
@@ -198,7 +198,7 @@ export class LocaleComponent implements OnInit {
 
   //to update locale setting object and it accepts locale setting object as `data`
   updateLocaleSetting(data) {
-    this.endPointService.updateSetting(data, this.reqServiceType).subscribe(
+    this.endPointService.updateLocaleSetting(data).subscribe(
       (res: any) => {
         this.spinner = false;
         if (res.status == 200) this.snackbar.snackbarMessage('success-snackbar', "Settings Updated", 1);

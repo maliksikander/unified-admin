@@ -17,7 +17,7 @@
                   <mat-select (openedChange)="panelClose($event)" formControlName="timezone">
                     <input class="search-filter" type="text" [(ngModel)]="searchTerm"
                       [ngModelOptions]="{standalone: true}" placeholder="Search">
-                    <mat-option *ngFor="let tz of timeZones | searchFilter:searchTerm" [value]="tz">{{tz.name}}
+                    <mat-option *ngFor="let tz of timeZones | filter:searchTerm" [value]="tz">{{tz.name}}
                     </mat-option>
                   </mat-select>
                   <mat-error class="form-error">

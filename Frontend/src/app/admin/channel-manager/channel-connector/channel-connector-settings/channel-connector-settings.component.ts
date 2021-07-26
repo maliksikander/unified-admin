@@ -28,7 +28,7 @@ export class ChannelConnectorSettingsComponent implements OnInit {
   interfaceList = ["JMS", "REST"];
   formSchema;
   formValidation;
-  reqEndpoint = 'channel-connectors';
+  // reqEndpoint = 'channel-connectors';
 
   constructor(private commonService: CommonService,
     private dialog: MatDialog,
@@ -274,7 +274,7 @@ export class ChannelConnectorSettingsComponent implements OnInit {
   createChannelConnector(data) {
 
     //calling endpoint service method which accepts resource name as 'connectorServiceReq' and `data` object as parameter
-    this.endPointService.createChannel(data, this.reqEndpoint).subscribe(
+    this.endPointService.createConnector(data).subscribe(
       (res: any) => {
         this.spinner = false;
         this.resetForm("Created");
@@ -290,7 +290,7 @@ export class ChannelConnectorSettingsComponent implements OnInit {
   updateChannelConnector(data) {
 
     //calling endpoint service method which accepts resource name as 'connectorServiceReq' and `data` object as parameter
-    this.endPointService.updateChannel(data, this.reqEndpoint, data.id).subscribe(
+    this.endPointService.updateConnector(data, data.id).subscribe(
       (res: any) => {
         this.spinner = false;
         this.resetForm("Updated");

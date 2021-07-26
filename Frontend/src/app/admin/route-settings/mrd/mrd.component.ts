@@ -29,7 +29,7 @@ export class MrdComponent implements OnInit {
   saveBtnText = 'Create';
   mrdData = [];
   editData: any;
-  reqServiceType = 'media-routing-domains';
+  // reqServiceType = 'media-routing-domains';
 
   constructor(private commonService: CommonService,
     private dialog: MatDialog,
@@ -86,7 +86,7 @@ export class MrdComponent implements OnInit {
   //to create MRD and it accepts `data` object as parameter with following properties (name:string, description:string, interruptible:string)
   //and update the local list 
   createMRD(data) {
-    this.endPointService.create(data, this.reqServiceType).subscribe(
+    this.endPointService.createMrd(data).subscribe(
       (res: any) => {
         this.getMRD();
         this.snackbar.snackbarMessage('success-snackbar', "MRD Created Successfully", 1);
@@ -100,7 +100,7 @@ export class MrdComponent implements OnInit {
 
   //to get MRD list and set the local variable with the response 
   getMRD() {
-    this.endPointService.get(this.reqServiceType).subscribe(
+    this.endPointService.getMrd().subscribe(
       (res: any) => {
         this.spinner = false;
         this.mrdData = res;
@@ -116,7 +116,7 @@ export class MrdComponent implements OnInit {
   //to update MRD and it accepts `data` object & `id` as parameter,`data` object (name:string, description:string, interruptible:string)
   //and updating the local list with the success response object
   updateMRD(data, id) {
-    this.endPointService.update(data, id, this.reqServiceType).subscribe(
+    this.endPointService.updateMrd(data, id).subscribe(
       (res: any) => {
         if (res.id) {
           let attr = this.mrdData.find(item => item.id == res.id);
@@ -137,7 +137,7 @@ export class MrdComponent implements OnInit {
   //to delete MRD and it accepts `data` object & `id` as parameter,`data` object (name:string, description:string, interruptible:string)
   //and to update the local list when the operation is successful
   deleteMRD(data, id) {
-    this.endPointService.delete(id, this.reqServiceType).subscribe(
+    this.endPointService.deleteMrd(id).subscribe(
       (res: any) => {
         this.spinner = false;
         

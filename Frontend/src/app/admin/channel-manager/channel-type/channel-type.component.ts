@@ -23,7 +23,7 @@ export class ChannelTypeComponent implements OnInit {
   itemsPerPageList = [5, 10, 15];
   itemsPerPage = 5;
   selectedItem = this.itemsPerPageList[0];
-  reqEndpoint = 'channel-types';
+  // reqEndpoint = 'channel-types';
 
   constructor(private commonService: CommonService,
     private dialog: MatDialog,
@@ -43,7 +43,7 @@ export class ChannelTypeComponent implements OnInit {
   getChannelTypes() {
 
     //calling endpoint service method to get channel list which accepts resource name as 'channelServiceReq' and channnel type id as `typeId` object as parameter
-    this.endPointService.getChannel(this.reqEndpoint).subscribe(
+    this.endPointService.getChannelType().subscribe(
       (res: any) => {
         this.spinner = false;
         // console.log("res-->", res);
@@ -111,7 +111,7 @@ export class ChannelTypeComponent implements OnInit {
   deleteChannelType(data) {
 
     //calling endpoint service method which accepts resource name as 'reqEndpoint' and channel type id as `id` object as parameter
-    this.endPointService.deleteChannel(data.id, this.reqEndpoint).subscribe(
+    this.endPointService.deleteChannelType(data.id).subscribe(
       (res: any) => {
         this.spinner = false;
         this.typeList = this.typeList.filter(item => item.id != data.id);
@@ -130,7 +130,7 @@ export class ChannelTypeComponent implements OnInit {
   createChannelType(data) {
 
     //calling endpoint service method which accepts resource name as 'reqEndpoint' and `data` object as parameter
-    this.endPointService.createChannel(data, this.reqEndpoint).subscribe(
+    this.endPointService.createChannelType(data).subscribe(
       (res: any) => {
         // this.spinner = false;
         this.snackbar.snackbarMessage('success-snackbar', "Channel Type Created", 1);
@@ -148,7 +148,7 @@ export class ChannelTypeComponent implements OnInit {
   updateChannel(data) {
 
     //calling endpoint service method which accepts resource endpoint as 'reqEndpoint' and `data` object as parameter
-    this.endPointService.updateChannel(data, this.reqEndpoint, data.id).subscribe(
+    this.endPointService.updateChannelType(data, data.id).subscribe(
       (res: any) => {
         // this.spinner = false;
         this.snackbar.snackbarMessage('success-snackbar', "Updated", 1);

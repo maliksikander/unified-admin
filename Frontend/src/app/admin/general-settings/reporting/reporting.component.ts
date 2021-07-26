@@ -18,7 +18,7 @@ export class ReportingComponent implements OnInit {
     rcDBUrl: ''
   };
   validations;
-  reqServiceType = 'report-setting';
+  // reqServiceType = 'report-setting';
   spinner: any = true;
   editData: any;
   hide = true;
@@ -69,7 +69,7 @@ export class ReportingComponent implements OnInit {
 
   //to get log setting list and set the local variable with the response
   getReportSetting() {
-    this.endPointService.getSetting(this.reqServiceType).subscribe(
+    this.endPointService.getReportSetting().subscribe(
       (res: any) => {
         this.spinner = false;
         if (res.status == 200 && res.reportSetting.length > 0) {
@@ -101,7 +101,7 @@ export class ReportingComponent implements OnInit {
       data.rcDBPwd = '';
       data.rcDBName = '';
     }
-    this.endPointService.createSetting(data, this.reqServiceType).subscribe(
+    this.endPointService.createReportSetting(data).subscribe(
       (res: any) => {
         this.resetForm();
         if (res.status == 200) {
@@ -124,7 +124,7 @@ export class ReportingComponent implements OnInit {
       data.rcDBPwd = '';
       data.rcDBName = '';
     }
-    this.endPointService.updateSetting(data, this.reqServiceType).subscribe(
+    this.endPointService.updateReportSetting(data).subscribe(
       (res: any) => {
         this.resetForm();
         if (res.status == 200) this.snackbar.snackbarMessage('success-snackbar', "Settings Updated", 1);

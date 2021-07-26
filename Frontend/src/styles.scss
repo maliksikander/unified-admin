@@ -65,7 +65,8 @@ body,
   src: local("Quicksand Regular"), local("Quicksand-Regular"),
     url("/assets/fonts/quicksand/quicksand-v9-latin-regular.eot?#iefix")
       format("embedded-opentype"),
-    /* IE6-IE8 */ url("/assets/fonts/quicksand/quicksand-v9-latin-regular.woff2")
+    /* IE6-IE8 */
+      url("/assets/fonts/quicksand/quicksand-v9-latin-regular.woff2")
       format("woff2"),
     /* Super Modern Browsers */
       url("/assets/fonts/quicksand/quicksand-v9-latin-regular.woff")
@@ -1431,6 +1432,10 @@ input.mat-input-element {
   color: #8b8b8b;
 }
 
+textarea.mat-input-element {
+  color: #8b8b8b;
+}
+
 //snackbar
 
 snack-bar-container {
@@ -2570,8 +2575,6 @@ snack-bar-container {
   }
 }
 
-
-
 .tool-tip {
   white-space: pre-line !important;
   height: auto !important;
@@ -3164,24 +3167,26 @@ snack-bar-container {
 }
 
 // .routing-user-list {
-  .chip-menu.mat-menu-panel, .chip-width.mat-menu-panel {
-    min-height: 40px;
-    // width: 280px;
-    overflow: hidden;
-  }
+.chip-menu.mat-menu-panel,
+.chip-width.mat-menu-panel {
+  min-height: 40px;
+  // width: 280px;
+  overflow: hidden;
+}
 
-  // .chip-width.mat-menu-panel {
-  //   min-height: 40px;
-  // }
-  .chip-menu.mat-menu-panel .mat-icon , .chip-width.mat-menu-panel .mat-icon {
-    height: 40px;
-    padding: 0 !important;
-    line-height: 40px;
-    margin: 0 auto;
-    position: relative;
-    left: 7px;
-    font-size: 20px !important;
-  }
+// .chip-width.mat-menu-panel {
+//   min-height: 40px;
+// }
+.chip-menu.mat-menu-panel .mat-icon,
+.chip-width.mat-menu-panel .mat-icon {
+  height: 40px;
+  padding: 0 !important;
+  line-height: 40px;
+  margin: 0 auto;
+  position: relative;
+  left: 7px;
+  font-size: 20px !important;
+}
 // }
 
 .chip-menu {

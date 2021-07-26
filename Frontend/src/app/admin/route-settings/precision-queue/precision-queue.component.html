@@ -33,7 +33,7 @@
               </ul>
               <ng-container *ngIf="queueData && queueData.length != 0">
                 <mat-expansion-panel
-                  *ngFor="let j = index;let data of queueData | searchFilter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
+                  *ngFor="let j = index;let data of queueData | filter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
                   <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
                     [expandedHeight]="customExpandedHeight">
                     <mat-panel-title>

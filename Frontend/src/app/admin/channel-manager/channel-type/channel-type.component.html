@@ -30,7 +30,7 @@
                         <ng-container *ngIf="typeList && typeList.length > 0">
                             <ul class="type-list-data">
                                 <li
-                                    *ngFor="let data of typeList | searchFilter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
+                                    *ngFor="let data of typeList | filter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
                                     <div class="row">
                                         <div class="col-md-8">
                                             {{data?.typeName ? data?.typeName : 'N/A'}}

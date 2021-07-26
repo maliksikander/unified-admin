@@ -30,7 +30,7 @@ export class AttributeComponent implements OnInit {
   saveBtnText = 'Create';
   attrData = [];
   editData;
-  reqServiceType = 'routing-attributes';
+  // reqServiceType = 'routing-attributes';
   editFlag: boolean = false;
 
   constructor(
@@ -94,7 +94,7 @@ export class AttributeComponent implements OnInit {
   //to create attribute and it accepts `data` object as parameter with following properties
   //name:string, description:string, type:string, defaultValue:string
   createAttribute(data) {
-    this.endPointService.create(data, this.reqServiceType).subscribe(
+    this.endPointService.createAttribute(data).subscribe(
       (res: any) => {
         this.getAttribute();
         this.snackbar.snackbarMessage('success-snackbar', "Attribute Created Successfully", 1);
@@ -108,7 +108,7 @@ export class AttributeComponent implements OnInit {
 
   //to get attribute list and set the local variable with the response 
   getAttribute() {
-    this.endPointService.get(this.reqServiceType).subscribe(
+    this.endPointService.getAttribute().subscribe(
       (res: any) => {
         this.spinner = false;
         this.attrData = res;
@@ -124,7 +124,7 @@ export class AttributeComponent implements OnInit {
   //to update attribute and it accepts `data` object & `id` as parameter,`data` object (name:string, description:string, type:string, defaultValue:string)
   //and updating the local list with the success response object
   updateAttribute(data, id) {
-    this.endPointService.update(data, id, this.reqServiceType).subscribe(
+    this.endPointService.updateAttribute(data, id).subscribe(
       (res: any) => {
         if (res.id) {
           let attr = this.attrData.find(item => item.id == res.id);
@@ -145,7 +145,7 @@ export class AttributeComponent implements OnInit {
   //to delete attribute and it accepts `data` object & `id` as parameter,`data` object (name:string, description:string, type:string, defaultValue:string)
   //and to update the local list when the operation is successful
   deleteAttribute(data, id) {
-    this.endPointService.delete(id, this.reqServiceType).subscribe(
+    this.endPointService.deleteAttribute(id).subscribe(
       (res: any) => {
         this.spinner = false;
         if (res) {

@@ -38,7 +38,7 @@ export class UsersComponent implements OnInit {
   userForm: FormGroup;
   userAttributeForm: FormGroup;
   formHeading = 'User Profile';
-  reqServiceType = 'agents';
+  // reqServiceType = 'agents';
   userData = [];
   attrData = [];
   attrSpinner = false;
@@ -109,7 +109,7 @@ export class UsersComponent implements OnInit {
   //to get RE attributes and upadte if already assigned to any agent
   getAttribute() {
 
-    this.endPointService.get('routing-attributes').subscribe(
+    this.endPointService.getAttribute().subscribe(
       (res: any) => {
         this.attrData = JSON.parse(JSON.stringify(res));
         if (this.attrData && this.attrData.length > 0) {
@@ -138,7 +138,7 @@ export class UsersComponent implements OnInit {
 
   //update routing engine user with RE user object as 'data' parameter and object id as 'id'
   updateREUserAttribute(data, id) {
-    this.endPointService.update(data, id, this.reqServiceType).subscribe(
+    this.endPointService.updateAgent(data, id).subscribe(
       (res: any) => {
         this.snackbar.snackbarMessage('success-snackbar', "User Updated Successfully", 1);
         if (res.id) {
@@ -158,7 +158,7 @@ export class UsersComponent implements OnInit {
 
   //removing user from RE 
   deleteREUser(id) {
-    this.endPointService.delete(id, this.reqServiceType).subscribe(
+    this.endPointService.deleteAgent(id).subscribe(
       (res: any) => {
         this.spinner = false;
         this.getUsers();
@@ -387,7 +387,7 @@ export class UsersComponent implements OnInit {
 
   //create RE user and accepts user object(keycloakUser:object, associatedRoutingAttributes:[]) as 'data'
   createREUser(data) {
-    this.endPointService.create(data, this.reqServiceType).subscribe(
+    this.endPointService.createAgent(data).subscribe(
       (res: any) => {
         if (res.id) {
           let user = this.userData.find(item => item.keycloakUser.id == res.keycloakUser.id);
@@ -438,7 +438,7 @@ export class UsersComponent implements OnInit {
 
   // get RE users list and update the local user list if any agent exists in RE list and keycloak user list
   getRoutingEngineUsers() {
-    this.endPointService.get(this.reqServiceType).subscribe(
+    this.endPointService.getAgent().subscribe(
       (res: any) => {
         this.routingEngineUsers = JSON.parse(JSON.stringify(res));
         const usersListLength = this.userData.length;

@@ -27,7 +27,7 @@ export class DatabaseComponent implements OnInit {
     ecmDBEngine: ''
   };
   validations;
-  reqServiceType = 'database-setting';
+  // reqServiceType = 'database-setting';
   spinner: any = true;
   editData: any;
   hide1 = true;
@@ -79,7 +79,7 @@ export class DatabaseComponent implements OnInit {
 
   //to get database setting list and set the local variable with the response 
   getDatabaseSetting() {
-    this.endPointService.getSetting(this.reqServiceType).subscribe(
+    this.endPointService.getDatabaseSetting().subscribe(
       (res: any) => {
         this.spinner = false;
         if (res.status == 200 && res.databaseSetting.length > 0) {
@@ -111,7 +111,7 @@ export class DatabaseComponent implements OnInit {
   //to create database setting object and it accepts amq setting object as `data`
   createDatabaseSetting(data) {
     this.spinner = true;
-    this.endPointService.createSetting(data, this.reqServiceType).subscribe(
+    this.endPointService.createDatabaseSetting(data).subscribe(
       (res: any) => {
         this.spinner = false;
         if (res.status == 200) {
@@ -128,7 +128,7 @@ export class DatabaseComponent implements OnInit {
 
   //to update database setting object and it accepts amq setting object as `data`
   updateDatabaseSetting(data) {
-    this.endPointService.updateSetting(data, this.reqServiceType).subscribe(
+    this.endPointService.updateDatabaseSetting(data).subscribe(
       (res: any) => {
         this.spinner = false;
         if (res.status == 200) this.snackbar.snackbarMessage('success-snackbar', "Settings Updated", 1);

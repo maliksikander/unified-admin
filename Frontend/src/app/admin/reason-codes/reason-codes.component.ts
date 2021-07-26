@@ -17,7 +17,7 @@ export class ReasonCodesComponent implements OnInit {
   itemsPerPageList = [5, 10, 15];
   itemsPerPage = 5;
   selectedItem = this.itemsPerPageList[0];
-  spinner: any = false;
+  spinner: any = true;
   searchTerm = '';
   formErrors = {
     label: '',
@@ -31,8 +31,7 @@ export class ReasonCodesComponent implements OnInit {
   reasonCodeData = [];
   reasonType = ["LOG_OUT", "NOT_READY"]
   editReasonData;
-  // reqServiceType = 'routing-attributes';
-  // editFlag: boolean = false;
+
 
   constructor(
     private commonService: CommonService,
@@ -67,13 +66,13 @@ export class ReasonCodesComponent implements OnInit {
 
   }
 
-  //to get attribute list and set the local variable with the response 
+  //to get reason code list and set the local variable with response 
   getReasonCode() {
     this.endPointService.getReasonCode().subscribe(
       (res: any) => {
-        // this.spinner = false;
         this.reasonCodeData = res;
         if (res.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
+        this.spinner = false;
       },
       error => {
         this.spinner = false;
@@ -91,7 +90,6 @@ export class ReasonCodesComponent implements OnInit {
     this.saveBtnText = 'Create'
     let dialogRef = this.dialog.open(templateRef, {
       width: '550px',
-      // height: '440px',
       panelClass: 'add-attribute',
       disableClose: true,
     });
@@ -105,7 +103,7 @@ export class ReasonCodesComponent implements OnInit {
     this.searchTerm = "";
   }
 
-  //Confirmation dialog for delete operation , it accepts the attribute object as `data` parameter 
+  //Confirmation dialog for delete operation , it accepts the reason object as `data` parameter 
   deleteConfirm(data) {
     let id = data.id;
     let msg = "Are you sure you want to delete this reason code ?";
@@ -127,6 +125,7 @@ export class ReasonCodesComponent implements OnInit {
     });
   }
 
+  // to edit reason code ,it excepts form template reference in html as `templateRef` and reason object as `data` parameter  
   editReasonCode(templateRef, data) {
 
     this.editReasonData = data
@@ -146,6 +145,7 @@ export class ReasonCodesComponent implements OnInit {
     });
   }
 
+  //to delete reason code, it accepts reason code object id as `id` parameter and updating the local list on success response
   deleteReasonCode(id) {
     this.endPointService.deleteReasonCode(id).subscribe(
       (res: any) => {
@@ -162,11 +162,14 @@ export class ReasonCodesComponent implements OnInit {
       });
   }
 
+  // to save the reason object
   onSave() {
-    // this.spinner = true;
+    this.spinner = true;
     let data = this.reasonForm.value;
     if (this.editReasonData) {
       data.id = this.editReasonData.id;
+      data.code = this.editReasonData.code;
+      // console.log("data==>", data);
       this.updateReasonCode(data);
     }
     else {
@@ -174,8 +177,8 @@ export class ReasonCodesComponent implements OnInit {
     }
   }
 
-  //to update attribute and it accepts `data` object & `id` as parameter,`data` object (name:string, description:string, type:string, defaultValue:string)
-  //and updating the local list with the success response object
+  //to update reason object, it accepts reason object (label:string, description:string, type:string, code:string) as `data` parameter
+  //and update the local list on success response
   updateReasonCode(data) {
     this.endPointService.updateReasonCode(data).subscribe(
       (res: any) => {
@@ -195,13 +198,14 @@ export class ReasonCodesComponent implements OnInit {
       });
   }
 
-  //to create attribute and it accepts `data` object as parameter with following properties
-  //name:string, description:string, type:string, defaultValue:string
+  //to create reason object, it accepts reason object (label:string, description:string, type:string, code:string) as `data` parameter
+  //and update the local list on success response
   createReasonCode(data) {
     this.endPointService.createReasonCode(data).subscribe(
       (res: any) => {
         this.getReasonCode();
         this.snackbar.snackbarMessage('success-snackbar', "Created Successfully", 1);
+        this.spinner = false;
       },
       (error: any) => {
         this.spinner = false;

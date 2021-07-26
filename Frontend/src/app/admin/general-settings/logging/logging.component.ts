@@ -18,7 +18,7 @@ export class LoggingComponent implements OnInit {
     logFilePath: ''
   };
   validations;
-  reqServiceType = 'log-setting';
+  // reqServiceType = 'log-setting';
   spinner: any = true;
   editData: any;
   logLevel = ['all', 'debug', 'error', 'fatal', 'info', 'off', 'trace', 'warn'];
@@ -58,7 +58,7 @@ export class LoggingComponent implements OnInit {
 
   //to get log setting list and set the local variable with the response
   getLogSetting() {
-    this.endPointService.getSetting(this.reqServiceType).subscribe(
+    this.endPointService.getLogSetting().subscribe(
       (res: any) => {
         this.spinner = false;
         if (res.status == 200 && res.logSetting.length > 0) {
@@ -82,7 +82,7 @@ export class LoggingComponent implements OnInit {
   //to create log setting object and it accepts log setting object as `data`
   createLogSetting(data) {
     this.spinner = true;
-    this.endPointService.createSetting(data, this.reqServiceType).subscribe(
+    this.endPointService.createLogSetting(data).subscribe(
       (res: any) => {
         this.spinner = false;
         if (res.status == 200) {
@@ -99,7 +99,7 @@ export class LoggingComponent implements OnInit {
 
   //to update log setting object and it accepts amq setting object as `data`
   updateLogSetting(data) {
-    this.endPointService.updateSetting(data, this.reqServiceType).subscribe(
+    this.endPointService.updateLogSetting(data).subscribe(
       (res: any) => {
         this.spinner = false;
         if (res.status == 200) this.snackbar.snackbarMessage('success-snackbar', "Settings Updated", 1);

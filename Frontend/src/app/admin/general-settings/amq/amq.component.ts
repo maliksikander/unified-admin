@@ -21,7 +21,7 @@ export class AmqComponent implements OnInit {
     amqUrl: ''
   };
   validations;
-  reqServiceType = 'amq-setting';
+  // reqServiceType = 'amq-setting';
   spinner: any = true;
   editData: any;
   hide = true;
@@ -37,10 +37,6 @@ export class AmqComponent implements OnInit {
   ngOnInit() {
 
     this.commonService.tokenVerification();
-
-    //  this.commonService.getPermissionResourcesList();
-    // if (!permittedResources.includes('general-settings')) { this.router.navigate(['/general/amq-settings']); }
-
 
     //setting local form validation messages 
     this.validations = this.commonService.amqSettingErrorMessages;
@@ -71,7 +67,7 @@ export class AmqComponent implements OnInit {
 
   //to get amq setting list and set the local variable with the response 
   getAmqSetting() {
-    this.endPointService.getSetting(this.reqServiceType).subscribe(
+    this.endPointService.getAmqSetting().subscribe(
       (res: any) => {
         this.spinner = false;
         if (res.status == 200 && res.amqSetting.length > 0) {
@@ -97,7 +93,7 @@ export class AmqComponent implements OnInit {
   //to create amq setting object and it accepts amq setting object as `data` 
   createAmqSetting(data) {
     this.spinner = true;
-    this.endPointService.createSetting(data, this.reqServiceType).subscribe(
+    this.endPointService.createAmqSetting(data).subscribe(
       (res: any) => {
         this.spinner = false;
         if (res.status == 200) {
@@ -115,7 +111,7 @@ export class AmqComponent implements OnInit {
 
   //to update amq setting object and it accepts amq setting object as `data` 
   updateAmqSetting(data) {
-    this.endPointService.updateSetting(data, this.reqServiceType).subscribe(
+    this.endPointService.updateAmqSetting(data).subscribe(
       (res: any) => {
         this.spinner = false;
         if (res.status == 200) this.snackbar.snackbarMessage('success-snackbar', "Settings Updated", 1);

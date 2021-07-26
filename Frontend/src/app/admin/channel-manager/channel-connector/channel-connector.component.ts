@@ -18,7 +18,7 @@ export class ChannelConnectorComponent implements OnInit {
   customCollapsedHeight: string = '40px';
   customExpandedHeight: string = '40px';
   addChannelBool = false;
-  connectorServiceReq = 'channel-connectors';
+  // connectorServiceReq = 'channel-connectors';
   pageTitle = "Channel Connectors";
   channelTypes = [];
   channelConnectors = [];
@@ -108,7 +108,7 @@ export class ChannelConnectorComponent implements OnInit {
   getChannelType() {
 
     //calling endpoint service method to get channel types list,it requires resource endpoint as parameter
-    this.endPointService.getChannel('channel-types').subscribe(
+    this.endPointService.getChannelType().subscribe(
       (res: any) => {
         this.spinner = false;
         this.channelTypes = res;
@@ -125,7 +125,7 @@ export class ChannelConnectorComponent implements OnInit {
   getChannelConnector(typeId) {
 
     //calling endpoint service method to get connector list which accepts resource name as 'connectorServiceReq' and channnel type id as `typeId` object as parameter
-    this.endPointService.getByChannelType(this.connectorServiceReq, typeId).subscribe(
+    this.endPointService.getConnectorByChannelType(typeId).subscribe(
       (res: any) => {
         // this.spinner = false;
         this.channelConnectors = res;
@@ -142,7 +142,7 @@ export class ChannelConnectorComponent implements OnInit {
   deleteChannelConnector(data) {
 
     //calling endpoint service method which accepts resource name as 'connectorServiceReq' and connector id as `id` object as parameter
-    this.endPointService.deleteChannel(data.id, this.connectorServiceReq).subscribe(
+    this.endPointService.deleteConnector(data.id).subscribe(
       (res: any) => {
         this.spinner = false;
 

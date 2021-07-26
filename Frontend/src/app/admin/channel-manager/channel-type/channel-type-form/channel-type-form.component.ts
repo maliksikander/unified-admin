@@ -102,7 +102,7 @@ export class ChannelTypeFormComponent implements OnInit {
 
   //to get MRD list and set the local variable with the response 
   getMRD() {
-    this.endPointService.get('media-routing-domains').subscribe(
+    this.endPointService.getMrd().subscribe(
       (res: any) => {
 
         this.mrdData = res;

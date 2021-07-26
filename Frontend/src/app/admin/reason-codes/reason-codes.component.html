@@ -8,7 +8,7 @@
                 <div class="sub-heading">
                     <h2>Reason Codes</h2>
                 </div>
-                <div class="routing-content">
+                <div class="reason-code-content">
                     <div class="filter-section">
                         <div class="form-group search-field">
                             <mat-form-field appearance="outline">
@@ -23,9 +23,9 @@
                         </button>
                     </div>
 
-                    <div class="routing-accordion pq-accordion">
+                    <div class="reason-code-list">
 
-                        <ul class="top-heading routing-group-list">
+                        <ul class="top-heading reason-code-labels">
                             <li>Label</li>
                             <li>Description</li>
                             <li>Type</li>
@@ -33,14 +33,13 @@
                         </ul>
                         <ng-container *ngIf="reasonCodeData && reasonCodeData.length != 0">
                             <div class="reason-code-data"
-                                *ngFor="let data of reasonCodeData | searchFilter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
+                                *ngFor="let data of reasonCodeData | filter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
                                 <span class="group-name">{{data?.label ? data.label : 'N/A'}}</span>
                                 <span class="group-name">{{data?.description ? data.description : 'N/A'}}</span>
                                 <span class="group-name">
-                                    <span [ngStyle]="{'background-color':data?.type == 'LOG_OUT' ? '#ffab00' : '#f76453' }"
+                                    <span [ngStyle]="{'background-color':data?.type == 'LOG_OUT' ? '#ffab00' : '#b4b4b4' }"
                                         class="reason-type-style">{{data?.type | removeUnderscoreFilter |
                                         titlecase}}</span>
-                                    <!-- <span class="table-trigger"> -->
                                     <span class="list-trigger-area">
                                         <button mat-mini-fab matTooltip="Edit"
                                             (click)="editReasonCode(reasonCodeForm,data)">
@@ -50,7 +49,6 @@
                                             <mat-icon>delete</mat-icon>
                                         </button>
                                     </span>
-                                    <!-- </div> -->
                                 </span>
 
                             </div>

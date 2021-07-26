@@ -34,7 +34,7 @@ export class SecurityComponent implements OnInit {
     stompSSLEnabled: '',
   };
   validations;
-  reqServiceType = 'security-setting';
+  // reqServiceType = 'security-setting';
   spinner: any = true;
   editData: any;
   hide1 = true;
@@ -92,9 +92,9 @@ export class SecurityComponent implements OnInit {
     this.getSecuritySetting();
   }
 
-   //to get security setting list and set the local variable with the response
+  //to get security setting list and set the local variable with the response
   getSecuritySetting() {
-    this.endPointService.getSetting(this.reqServiceType).subscribe(
+    this.endPointService.getSecuritySetting().subscribe(
       (res: any) => {
         this.spinner = false;
         if (res.status == 200 && res.securitySetting.length > 0) {
@@ -134,7 +134,7 @@ export class SecurityComponent implements OnInit {
   //to create security setting object and it accepts security setting object as `data`
   createSecuritySetting(data) {
     this.spinner = true;
-    this.endPointService.createSetting(data, this.reqServiceType).subscribe(
+    this.endPointService.createSecuritySetting(data).subscribe(
       (res: any) => {
         this.spinner = false;
         if (res.status == 200) {
@@ -151,7 +151,7 @@ export class SecurityComponent implements OnInit {
 
   //to update security setting object and it accepts security setting object as `data`
   updateSecuritySetting(data) {
-    this.endPointService.updateSetting(data, this.reqServiceType).subscribe(
+    this.endPointService.updateSecuritySetting(data).subscribe(
       (res: any) => {
         this.spinner = false;
         if (res.status == 200) this.snackbar.snackbarMessage('success-snackbar', "Settings Updated", 1);

@@ -21,7 +21,7 @@ export class DisplayComponent implements OnInit {
   public imagePath;
   imageName = '';
   imgURL: any;
-  reqServiceType = 'display-setting';
+  // reqServiceType = 'display-setting';
   spinner: any = true;
   editData: any;
 
@@ -79,7 +79,7 @@ export class DisplayComponent implements OnInit {
 
   //to get display setting list and set the local variable with the response 
   getDisplaySetting() {
-    this.endPointService.getSetting(this.reqServiceType).subscribe(
+    this.endPointService.getDisplaySetting().subscribe(
       (res: any) => {
         this.spinner = false;
         if (res.status == 200 && res.displaySetting.length > 0) {
@@ -102,7 +102,7 @@ export class DisplayComponent implements OnInit {
   //to create display setting object and it accepts amq setting object as `data`
   createDisplaySetting(data) {
     this.spinner = true;
-    this.endPointService.createSetting(data, this.reqServiceType).subscribe(
+    this.endPointService.createDisplaySetting(data).subscribe(
       (res: any) => {
         this.spinner = false;
         if (res.status == 200) {
@@ -119,7 +119,7 @@ export class DisplayComponent implements OnInit {
 
   //to update display setting object and it accepts amq setting object as `data`
   updateDisplaySetting(data) {
-    this.endPointService.updateSetting(data, this.reqServiceType).subscribe(
+    this.endPointService.updateDisplaySetting(data).subscribe(
       (res: any) => {
         this.spinner = false;
         if (res.status == 200) this.snackbar.snackbarMessage('success-snackbar', "Settings Updated", 1);

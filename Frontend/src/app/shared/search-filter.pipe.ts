@@ -8,6 +8,9 @@ export class SearchFilterPipe implements PipeTransform {
       return list;
     }
 
+    console.log("list==>", list);
+    console.log("search==>", searchTerm);
+
     if (list.length > 0 && list[0].name) {
       return list.filter(list =>
         list.name.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1);
@@ -27,8 +30,20 @@ export class SearchFilterPipe implements PipeTransform {
         list.typeName.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1);
     }
 
+    // else if (list.length > 0 && (list[0].label || list[0].type)) {
+    //   console.log("triggered==>", list);
+    //   return list.filter(list => {
+    //     list.label.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1;
+    //     // list.type.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1;
+    //   });
+    // }
+
+    // else if (list.length > 0 && list[0].type) {
+    // return list.filter(list =>
+    // list.type.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1);
+    // }
+
     else if (list.length > 0 && list[0].id) {
-      // console.log(searchTerm, "<====>", list)
       return list.filter(list =>
         list.id.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1);
     }
@@ -37,5 +52,7 @@ export class SearchFilterPipe implements PipeTransform {
       return list.filter(list =>
         list.formTitle.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1);
     }
+
+
   }
 }

@@ -20,6 +20,36 @@ export class EndpointService {
   token;
   tenant;
 
+  endpoints = {
+    botSetting: 'bot-connectors',
+    ccm: {
+      channelType: 'channel-types',
+      channelConnector: 'channel-connectors',
+      channel: 'channels'
+    },
+    forms: 'forms',
+    formValidation: 'formValidation',
+    general: {
+      amq: 'amq-setting',
+      database: 'database-setting',
+      display: 'display-setting',
+      locale: 'locale-setting',
+      log: 'log-setting',
+      report: 'report-setting',
+      security: 'security-setting',
+    },
+    reason: 'reasons',
+    routing: {
+      attribute: 'routing-attributes',
+      mrd: 'media-routing-domains',
+      queue: 'precision-queues',
+      agent: 'agents'
+    },
+    keycloakLogin: 'keycloakLogin',
+    keycloakUsers: 'users'
+
+  }
+
   constructor(private snackbar: SnackbarService,
     private httpClient: HttpClient,
     private configService: ConfigService,) {
@@ -47,8 +77,10 @@ export class EndpointService {
 
   //////////////////// General Group CRUD ////////////
 
-  createSetting(data, reqServiceType): Observable<any> {
-    return this.httpClient.post<any>(`${this.ADMIN_URL}/${reqServiceType}`, data, {
+  //////  AMQ Setting CRUD //////
+
+  createAmqSetting(data): Observable<any> {
+    return this.httpClient.post<any>(`${this.ADMIN_URL}/${this.endpoints.general.amq}`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.token
@@ -56,8 +88,8 @@ export class EndpointService {
     }).pipe(catchError(this.handleError));
   }
 
-  getSetting(reqServiceType): Observable<any> {
-    return this.httpClient.get<any>(`${this.ADMIN_URL}/${reqServiceType}`, {
+  getAmqSetting(): Observable<any> {
+    return this.httpClient.get<any>(`${this.ADMIN_URL}/${this.endpoints.general.amq}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.token
@@ -65,8 +97,8 @@ export class EndpointService {
     }).pipe(catchError(this.handleError));
   }
 
-  updateSetting(data, reqServiceType): Observable<void> {
-    return this.httpClient.put<void>(`${this.ADMIN_URL}/${reqServiceType}`, data, {
+  updateAmqSetting(data): Observable<void> {
+    return this.httpClient.put<void>(`${this.ADMIN_URL}/${this.endpoints.general.amq}`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.token
@@ -74,10 +106,186 @@ export class EndpointService {
     }).pipe(catchError(this.handleError));
   }
 
-  ///////////////////// Routing Engine CRUD ////////////////////////
+  //////  Database Setting CRUD //////
 
-  create(data, reqServiceType): Observable<any> {
-    return this.httpClient.post<any>(`${this.MRE_URL}/${reqServiceType}`, data, {
+  createDatabaseSetting(data): Observable<any> {
+    return this.httpClient.post<any>(`${this.ADMIN_URL}/${this.endpoints.general.database}`, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  getDatabaseSetting(): Observable<any> {
+    return this.httpClient.get<any>(`${this.ADMIN_URL}/${this.endpoints.general.database}`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  updateDatabaseSetting(data): Observable<void> {
+    return this.httpClient.put<void>(`${this.ADMIN_URL}/${this.endpoints.general.database}`, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  //////  Display Setting CRUD //////
+
+  createDisplaySetting(data): Observable<any> {
+    return this.httpClient.post<any>(`${this.ADMIN_URL}/${this.endpoints.general.display}`, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  getDisplaySetting(): Observable<any> {
+    return this.httpClient.get<any>(`${this.ADMIN_URL}/${this.endpoints.general.display}`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  updateDisplaySetting(data): Observable<void> {
+    return this.httpClient.put<void>(`${this.ADMIN_URL}/${this.endpoints.general.display}`, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  //////  Locale Setting CRUD //////
+
+  createLocaleSetting(data): Observable<any> {
+    return this.httpClient.post<any>(`${this.ADMIN_URL}/${this.endpoints.general.locale}`, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  getLocaleSetting(): Observable<any> {
+    return this.httpClient.get<any>(`${this.ADMIN_URL}/${this.endpoints.general.locale}`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  updateLocaleSetting(data): Observable<void> {
+    return this.httpClient.put<void>(`${this.ADMIN_URL}/${this.endpoints.general.locale}`, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  //////  Log Setting CRUD //////
+
+  createLogSetting(data): Observable<any> {
+    return this.httpClient.post<any>(`${this.ADMIN_URL}/${this.endpoints.general.log}`, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  getLogSetting(): Observable<any> {
+    return this.httpClient.get<any>(`${this.ADMIN_URL}/${this.endpoints.general.log}`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  updateLogSetting(data): Observable<void> {
+    return this.httpClient.put<void>(`${this.ADMIN_URL}/${this.endpoints.general.log}`, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  //////  Reporting Setting CRUD //////
+
+  createReportSetting(data): Observable<any> {
+    return this.httpClient.post<any>(`${this.ADMIN_URL}/${this.endpoints.general.report}`, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  getReportSetting(): Observable<any> {
+    return this.httpClient.get<any>(`${this.ADMIN_URL}/${this.endpoints.general.report}`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  updateReportSetting(data): Observable<void> {
+    return this.httpClient.put<void>(`${this.ADMIN_URL}/${this.endpoints.general.report}`, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  //////  Security Setting CRUD //////
+
+  createSecuritySetting(data): Observable<any> {
+    return this.httpClient.post<any>(`${this.ADMIN_URL}/${this.endpoints.general.security}`, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  getSecuritySetting(): Observable<any> {
+    return this.httpClient.get<any>(`${this.ADMIN_URL}/${this.endpoints.general.security}`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  updateSecuritySetting(data): Observable<void> {
+    return this.httpClient.put<void>(`${this.ADMIN_URL}/${this.endpoints.general.security}`, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  ///////////////////// Routing Engine ////////////////////////
+
+  //////// Attribute CRUD /////////
+
+  createAttribute(data): Observable<any> {
+    return this.httpClient.post<any>(`${this.MRE_URL}/${this.endpoints.routing.attribute}`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer' + this.token
@@ -85,8 +293,8 @@ export class EndpointService {
     }).pipe(catchError(this.handleError));
   }
 
-  get(reqServiceType): Observable<any> {
-    return this.httpClient.get(`${this.MRE_URL}/${reqServiceType}`, {
+  getAttribute(): Observable<any> {
+    return this.httpClient.get(`${this.MRE_URL}/${this.endpoints.routing.attribute}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer' + this.token
@@ -94,8 +302,8 @@ export class EndpointService {
     }).pipe(catchError(this.handleError));
   }
 
-  update(data, id, reqServiceType): Observable<any> {
-    return this.httpClient.put<any>(`${this.MRE_URL}/${reqServiceType}/${id}`, data, {
+  updateAttribute(data, id): Observable<any> {
+    return this.httpClient.put<any>(`${this.MRE_URL}/${this.endpoints.routing.attribute}/${id}`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.token
@@ -103,8 +311,8 @@ export class EndpointService {
     }).pipe(catchError(this.handleError));
   }
 
-  delete(id, reqServiceType): Observable<any> {
-    return this.httpClient.delete<any>(`${this.MRE_URL}/${reqServiceType}/${id}`, {
+  deleteAttribute(id): Observable<any> {
+    return this.httpClient.delete<any>(`${this.MRE_URL}/${this.endpoints.routing.attribute}/${id}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.token
@@ -112,10 +320,10 @@ export class EndpointService {
     }).pipe(catchError(this.handleError));
   }
 
-  ///////////////////// CCM CRUD ////////////////////////
+  /////////////// MRD CRUD ///////////
 
-  createChannel(data, reqServiceType): Observable<any> {
-    return this.httpClient.post<any>(`${this.CCM_URL}/${reqServiceType}`, data, {
+  createMrd(data): Observable<any> {
+    return this.httpClient.post<any>(`${this.MRE_URL}/${this.endpoints.routing.mrd}`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer' + this.token
@@ -123,8 +331,8 @@ export class EndpointService {
     }).pipe(catchError(this.handleError));
   }
 
-  getChannel(reqServiceType): Observable<any> {
-    return this.httpClient.get(`${this.CCM_URL}/${reqServiceType}`, {
+  getMrd(): Observable<any> {
+    return this.httpClient.get(`${this.MRE_URL}/${this.endpoints.routing.mrd}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer' + this.token
@@ -132,17 +340,8 @@ export class EndpointService {
     }).pipe(catchError(this.handleError));
   }
 
-  getByChannelType(reqServiceType, typeid): Observable<any> {
-    return this.httpClient.get(`${this.CCM_URL}/${reqServiceType}?channelTypeId=${typeid}`, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer' + this.token
-      })
-    }).pipe(catchError(this.handleError));
-  }
-
-  updateChannel(data, reqServiceType, id): Observable<any> {
-    return this.httpClient.put<any>(`${this.CCM_URL}/${reqServiceType}/${id}`, data, {
+  updateMrd(data, id): Observable<any> {
+    return this.httpClient.put<any>(`${this.MRE_URL}/${this.endpoints.routing.mrd}/${id}`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.token
@@ -150,8 +349,171 @@ export class EndpointService {
     }).pipe(catchError(this.handleError));
   }
 
-  deleteChannel(id, reqServiceType): Observable<any> {
-    return this.httpClient.delete<any>(`${this.CCM_URL}/${reqServiceType}/${id}`, {
+  deleteMrd(id): Observable<any> {
+    return this.httpClient.delete<any>(`${this.MRE_URL}/${this.endpoints.routing.mrd}/${id}`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  /////////////// Precision Queue CRUD ///////////
+
+  createQueue(data): Observable<any> {
+    return this.httpClient.post<any>(`${this.MRE_URL}/${this.endpoints.routing.queue}`, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  getQueue(): Observable<any> {
+    return this.httpClient.get(`${this.MRE_URL}/${this.endpoints.routing.queue}`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  updateQueue(data, id): Observable<any> {
+    return this.httpClient.put<any>(`${this.MRE_URL}/${this.endpoints.routing.queue}/${id}`, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  deleteQueue(id): Observable<any> {
+    return this.httpClient.delete<any>(`${this.MRE_URL}/${this.endpoints.routing.queue}/${id}`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  /////////////// Agent/Users CRUD ///////////
+
+  createAgent(data): Observable<any> {
+    return this.httpClient.post<any>(`${this.MRE_URL}/${this.endpoints.routing.agent}`, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  getAgent(): Observable<any> {
+    return this.httpClient.get(`${this.MRE_URL}/${this.endpoints.routing.agent}`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  updateAgent(data, id): Observable<any> {
+    return this.httpClient.put<any>(`${this.MRE_URL}/${this.endpoints.routing.agent}/${id}`, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  deleteAgent(id): Observable<any> {
+    return this.httpClient.delete<any>(`${this.MRE_URL}/${this.endpoints.routing.agent}/${id}`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  ///////////////////// Channel Manager ////////////////////////
+
+  ///////// Channel Type CRUD ///////////
+
+  createChannelType(data): Observable<any> {
+    return this.httpClient.post<any>(`${this.CCM_URL}/${this.endpoints.ccm.channelType}`, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  getChannelType(): Observable<any> {
+    return this.httpClient.get(`${this.CCM_URL}/${this.endpoints.ccm.channelType}`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  updateChannelType(data, id): Observable<any> {
+    return this.httpClient.put<any>(`${this.CCM_URL}/${this.endpoints.ccm.channelType}/${id}`, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  deleteChannelType(id): Observable<any> {
+    return this.httpClient.delete<any>(`${this.CCM_URL}/${this.endpoints.ccm.channelType}/${id}`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  ///////////////// Channel Connector CRUD //////////
+
+  createConnector(data): Observable<any> {
+    return this.httpClient.post<any>(`${this.CCM_URL}/${this.endpoints.ccm.channelConnector}`, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  getConnector(): Observable<any> {
+    return this.httpClient.get(`${this.CCM_URL}/${this.endpoints.ccm.channelConnector}`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  getConnectorByChannelType(typeid): Observable<any> {
+    return this.httpClient.get(`${this.CCM_URL}/${this.endpoints.ccm.channelConnector}?channelTypeId=${typeid}`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  updateConnector(data, id): Observable<any> {
+    return this.httpClient.put<any>(`${this.CCM_URL}/${this.endpoints.ccm.channelConnector}/${id}`, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  deleteConnector(id): Observable<any> {
+    return this.httpClient.delete<any>(`${this.CCM_URL}/${this.endpoints.ccm.channelConnector}/${id}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.token
@@ -160,7 +522,7 @@ export class EndpointService {
   }
 
   getConnectorHealth(url): Observable<any> {
-    return this.httpClient.get(`${url}/channel-connectors/health`, {
+    return this.httpClient.get(`${url}/${this.endpoints.ccm.channelConnector}/health`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer' + this.token
@@ -168,10 +530,57 @@ export class EndpointService {
     }).pipe(catchError(this.handleError));
   }
 
+  /////////// Channel CRUD /////////////
+
+  createChannel(data): Observable<any> {
+    return this.httpClient.post<any>(`${this.CCM_URL}/${this.endpoints.ccm.channel}`, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  getChannel(): Observable<any> {
+    return this.httpClient.get(`${this.CCM_URL}/${this.endpoints.ccm.channel}`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  getChannelByChannelType(typeid): Observable<any> {
+    return this.httpClient.get(`${this.CCM_URL}/${this.endpoints.ccm.channel}?channelTypeId=${typeid}`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  updateChannel(data, id): Observable<any> {
+    return this.httpClient.put<any>(`${this.CCM_URL}/${this.endpoints.ccm.channel}/${id}`, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
+  deleteChannel(id): Observable<any> {
+    return this.httpClient.delete<any>(`${this.CCM_URL}/${this.endpoints.ccm.channel}/${id}`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    }).pipe(catchError(this.handleError));
+  }
+
   ///////////////// BOT CRUD ////////////
 
   createBotSetting(data): Observable<any> {
-    return this.httpClient.post<any>(`${this.BOT_URL}/bot-connectors`, data, {
+    return this.httpClient.post<any>(`${this.BOT_URL}/${this.endpoints.botSetting}`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer' + this.token,
@@ -181,7 +590,7 @@ export class EndpointService {
   }
 
   getBotSetting(): Observable<any> {
-    return this.httpClient.get(`${this.BOT_URL}/bot-connectors`, {
+    return this.httpClient.get(`${this.BOT_URL}/${this.endpoints.botSetting}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer' + this.token,
@@ -191,7 +600,7 @@ export class EndpointService {
   }
 
   getBotSettingByType(type): Observable<any> {
-    return this.httpClient.get(`${this.BOT_URL}/bot-connectors?type=${type}`, {
+    return this.httpClient.get(`${this.BOT_URL}/${this.endpoints.botSetting}?type=${type}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer' + this.token,
@@ -201,7 +610,7 @@ export class EndpointService {
   }
 
   updateBotSetting(data): Observable<any> {
-    return this.httpClient.put<any>(`${this.BOT_URL}/bot-connectors/${data.botIvd}`, data, {
+    return this.httpClient.put<any>(`${this.BOT_URL}/${this.endpoints.botSetting}/${data.botIvd}`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.token,
@@ -211,7 +620,7 @@ export class EndpointService {
   }
 
   deleteBotSetting(id): Observable<any> {
-    return this.httpClient.delete<any>(`${this.BOT_URL}/bot-connectors/${id}`, {
+    return this.httpClient.delete<any>(`${this.BOT_URL}/${this.endpoints.botSetting}/${id}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.token,
@@ -223,7 +632,7 @@ export class EndpointService {
   //////// Forms ///////
 
   createForm(data): Observable<any> {
-    return this.httpClient.post<any>(`${this.ADMIN_URL}/forms`, data, {
+    return this.httpClient.post<any>(`${this.ADMIN_URL}/${this.endpoints.forms}`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.token
@@ -232,7 +641,7 @@ export class EndpointService {
   }
 
   getForm(): Observable<any> {
-    return this.httpClient.get(`${this.ADMIN_URL}/forms`, {
+    return this.httpClient.get(`${this.ADMIN_URL}/${this.endpoints.forms}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.token
@@ -241,7 +650,7 @@ export class EndpointService {
   }
 
   getFormByID(id): Observable<any> {
-    return this.httpClient.get(`${this.ADMIN_URL}/forms/${id}`, {
+    return this.httpClient.get(`${this.ADMIN_URL}/${this.endpoints.forms}/${id}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.token
@@ -250,7 +659,7 @@ export class EndpointService {
   }
 
   updateForm(data): Observable<any> {
-    return this.httpClient.put<any>(`${this.ADMIN_URL}/forms`, data, {
+    return this.httpClient.put<any>(`${this.ADMIN_URL}/${this.endpoints.forms}`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.token
@@ -259,7 +668,7 @@ export class EndpointService {
   }
 
   deleteForm(id): Observable<any> {
-    return this.httpClient.delete<any>(`${this.ADMIN_URL}/forms/${id}`, {
+    return this.httpClient.delete<any>(`${this.ADMIN_URL}/${this.endpoints.forms}/${id}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.token
@@ -271,7 +680,7 @@ export class EndpointService {
 
 
   getFormValidation(): Observable<any> {
-    return this.httpClient.get(`${this.ADMIN_URL}/formValidation`, {
+    return this.httpClient.get(`${this.ADMIN_URL}/${this.endpoints.formValidation}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.token
@@ -282,7 +691,7 @@ export class EndpointService {
   //////// Reason Code ///////
 
   createReasonCode(data): Observable<any> {
-    return this.httpClient.post<any>(`${this.ADMIN_URL}/reasons`, data, {
+    return this.httpClient.post<any>(`${this.ADMIN_URL}/${this.endpoints.reason}`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.token
@@ -291,7 +700,7 @@ export class EndpointService {
   }
 
   getReasonCode(): Observable<any> {
-    return this.httpClient.get(`${this.ADMIN_URL}/reasons`, {
+    return this.httpClient.get(`${this.ADMIN_URL}/${this.endpoints.reason}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.token
@@ -300,7 +709,7 @@ export class EndpointService {
   }
 
   getReasonCodeByID(id): Observable<any> {
-    return this.httpClient.get(`${this.ADMIN_URL}/reasons/${id}`, {
+    return this.httpClient.get(`${this.ADMIN_URL}/${this.endpoints.reason}/${id}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.token
@@ -309,7 +718,7 @@ export class EndpointService {
   }
 
   updateReasonCode(data): Observable<any> {
-    return this.httpClient.put<any>(`${this.ADMIN_URL}/reasons`, data, {
+    return this.httpClient.put<any>(`${this.ADMIN_URL}/${this.endpoints.reason}`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.token
@@ -318,7 +727,7 @@ export class EndpointService {
   }
 
   deleteReasonCode(id): Observable<any> {
-    return this.httpClient.delete<any>(`${this.ADMIN_URL}/reasons/${id}`, {
+    return this.httpClient.delete<any>(`${this.ADMIN_URL}/${this.endpoints.reason}/${id}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.token
@@ -326,12 +735,10 @@ export class EndpointService {
     }).pipe(catchError(this.handleError));
   }
 
-
-
   /////////////// Keycloak /////////////////
 
   login(data): Observable<any> {
-    return this.httpClient.post<any>(`${this.ADMIN_URL}/keycloakLogin`, data, {
+    return this.httpClient.post<any>(`${this.ADMIN_URL}/${this.endpoints.keycloakLogin}`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         // 'Authorization': 'Bearer'
@@ -340,7 +747,7 @@ export class EndpointService {
   }
 
   getKeycloakUser(): Observable<any> {
-    let url = this.ADMIN_URL + '/users';
+    let url = `${this.ADMIN_URL}/${this.endpoints.keycloakUsers}`;
     if (this.userRoles && this.userRoles.length > 0) {
       for (let i = 0; i < this.userRoles.length; i++) {
         if (url.indexOf('?') === -1) {

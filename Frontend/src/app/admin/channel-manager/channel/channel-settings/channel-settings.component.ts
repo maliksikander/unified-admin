@@ -84,9 +84,9 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
   //to get channel connector list, it accepts channel type id as `typeId` parameter
   getChannelConnector(typeId) {
 
-    let reqType = 'channel-connectors'
+    // let reqType = 'channel-connectors'
     //calling endpoint service method to get connector list which accepts resource name as 'reqType' and channnel type id as `typeId` object as parameter
-    this.endPointService.getByChannelType(reqType, typeId).subscribe(
+    this.endPointService.getConnectorByChannelType(typeId).subscribe(
       (res: any) => {
         // this.spinner = false;
         this.channelConnectorList = res;
@@ -103,7 +103,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
   getQueue() {
 
     //calling endpoint service method to get connector list which accepts resource name as 'reqType' and channnel type id as `typeId` object as parameter
-    this.endPointService.get('precision-queues').subscribe(
+    this.endPointService.getQueue().subscribe(
       (res: any) => {
         this.queueList = res;
         this.getBotList();
