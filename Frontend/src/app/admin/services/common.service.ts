@@ -557,33 +557,36 @@ export class CommonService {
     return result;
   }
 
-  // verifying token existence form local storage
+  //to verify token existence in local/session storage
   tokenVerification() {
-    
+
     let local = localStorage.getItem('token');
     let session = sessionStorage.getItem('token');
-    if (local == null && session == null) return this.router.navigate(['/login']);
+    if (local == null && session == null) this.navigateToLogin();
   }
+
+  //to navigate to login page
+  navigateToLogin() { return this.router.navigate(['/login']); }
 
   // verify permission from keycloak
 
-  getPermissionResourcesList() {
-    try {
-      let permissions = sessionStorage.getItem('permittedResources');
-      let permList: Array<any> = JSON.parse(JSON.stringify(JSON.parse(permissions)));
-      let resourceList: Array<any> = [];
-      console.log("permissions-->", permList);
-      permList.forEach((item: any) => {
-        resourceList.push(item.rsname);
-      });
-      // if (resourceList.includes('general-settings')) { this.router.navigate(['/general/amq-settings']) }
-      // else if (resourceList.includes('RE_Configuration')) { this.router.navigate(['/routing/attributes']) }
-      return resourceList;
-    }
-    catch (e) {
-      this.router.navigate(['/login']);
-      console.log("Error", e);
-    }
-  }
+  // getPermissionResourcesList() {
+  //   try {
+  //     let permissions = sessionStorage.getItem('permittedResources');
+  //     let permList: Array<any> = JSON.parse(JSON.stringify(JSON.parse(permissions)));
+  //     let resourceList: Array<any> = [];
+  //     console.log("permissions-->", permList);
+  //     permList.forEach((item: any) => {
+  //       resourceList.push(item.rsname);
+  //     });
+  //     // if (resourceList.includes('general-settings')) { this.router.navigate(['/general/amq-settings']) }
+  //     // else if (resourceList.includes('RE_Configuration')) { this.router.navigate(['/routing/attributes']) }
+  //     return resourceList;
+  //   }
+  //   catch (e) {
+  //     this.router.navigate(['/login']);
+  //     console.log("Error", e);
+  //   }
+  // }
 
 }

@@ -52,8 +52,17 @@
           <div class="form-group">
             <!-- <h1>{{formValidation[attrSchema?.valueType].regex}}</h1> -->
             <mat-label>{{attrSchema.label}}</mat-label>
-            <mat-form-field *ngIf="attrSchema?.valueType !='Boolean'" appearance="outline">
+            <mat-form-field *ngIf="(attrSchema?.valueType !='Boolean' && attrSchema?.valueType !='Number')"
+              appearance="outline">
               <input matInput formControlName="{{attrSchema.key}}">
+              <mat-error class="form-error">
+                {{formErrors[attrSchema.key]}}
+              </mat-error>
+              <!-- {{channelConnectorForm.value[attrSchema.key].length}} -->
+            </mat-form-field>
+
+            <mat-form-field *ngIf="attrSchema?.valueType =='Number'" appearance="outline">
+              <input type="number" matInput formControlName="{{attrSchema.key}}">
               <mat-error class="form-error">
                 {{formErrors[attrSchema.key]}}
               </mat-error>

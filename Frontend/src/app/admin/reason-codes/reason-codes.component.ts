@@ -57,7 +57,7 @@ export class ReasonCodesComponent implements OnInit {
     let pageNumber = sessionStorage.getItem('currentReasonCodePage');
     if (pageNumber) this.p = pageNumber;
 
-    //checking for Attribute form validation failures
+    //checking for reason form validation failures
     this.reasonForm.valueChanges.subscribe((data) => {
       this.commonService.logValidationErrors(this.reasonForm, this.formErrors, this.validations);
     });
@@ -86,7 +86,7 @@ export class ReasonCodesComponent implements OnInit {
   openModal(templateRef) {
 
     this.reasonForm.reset();
-    this.formHeading = 'Add New Attribute';
+    this.formHeading = 'Add Reason Code';
     this.saveBtnText = 'Create'
     let dialogRef = this.dialog.open(templateRef, {
       width: '550px',
@@ -103,7 +103,7 @@ export class ReasonCodesComponent implements OnInit {
     this.searchTerm = "";
   }
 
-  //Confirmation dialog for delete operation , it accepts the reason object as `data` parameter 
+  //Confirmation dialog for delete, it accepts the reason object as `data` parameter 
   deleteConfirm(data) {
     let id = data.id;
     let msg = "Are you sure you want to delete this reason code ?";
@@ -169,7 +169,6 @@ export class ReasonCodesComponent implements OnInit {
     if (this.editReasonData) {
       data.id = this.editReasonData.id;
       data.code = this.editReasonData.code;
-      // console.log("data==>", data);
       this.updateReasonCode(data);
     }
     else {
@@ -177,7 +176,7 @@ export class ReasonCodesComponent implements OnInit {
     }
   }
 
-  //to update reason object, it accepts reason object (label:string, description:string, type:string, code:string) as `data` parameter
+  //to update reason object, it accepts reason object (label:string, description:string, type:string, code:number) as `data` parameter
   //and update the local list on success response
   updateReasonCode(data) {
     this.endPointService.updateReasonCode(data).subscribe(
@@ -198,7 +197,7 @@ export class ReasonCodesComponent implements OnInit {
       });
   }
 
-  //to create reason object, it accepts reason object (label:string, description:string, type:string, code:string) as `data` parameter
+  //to create reason object, it accepts reason object (label:string, description:string, type:string) as `data` parameter
   //and update the local list on success response
   createReasonCode(data) {
     this.endPointService.createReasonCode(data).subscribe(

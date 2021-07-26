@@ -293,9 +293,6 @@ button:focus {
     // border-left: 1px solid #e0e0e0;
   }
 
-  .mat-select-value-text {
-    color: #8b8b8b;
-  }
   .mat-select-arrow {
     width: 0;
     border-left: 5px solid transparent;
@@ -2885,13 +2882,14 @@ snack-bar-container {
 }
 
 .mat-select-value-text {
-  color: #5b5b5b !important;
+  // color: #5b5b5b !important;
   // font-weight: 400;
   // font-size: 13px !important;
 
   span {
     font-weight: 400;
     font-size: 13px !important;
+    color: #8b8b8b;
   }
 }
 

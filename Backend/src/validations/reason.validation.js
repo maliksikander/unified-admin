@@ -13,7 +13,7 @@ const updateReason = {
         label: Joi.string().max(100).required(),
         description: Joi.string().allow(null, '').max(500),
         type: Joi.string().valid("LOG_OUT", "NOT_READY").required(),
-        code: Joi.number(),
+        code: Joi.number().required(),
         id: Joi.string().required(),
     }),
 };

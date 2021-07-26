@@ -103,7 +103,12 @@ export class ChannelConnectorSettingsComponent implements OnInit {
     attrSchema.forEach((item) => {
       let validatorArray: any = this.addFormValidations(item);
       this.addFormErrorMsg(item.key);
-      this.channelConnectorForm.addControl(item.key, new FormControl(item.valueType == 'Boolean' ? true : '', validatorArray));
+      if (item.valueType != "Number") {
+        this.channelConnectorForm.addControl(item.key, new FormControl(item.valueType == 'Boolean' ? true : '', validatorArray));
+      }
+      else {
+        this.channelConnectorForm.addControl(item.key, new FormControl(item.valueType == 'Boolean' ? true : null, validatorArray));
+      }
     });
   }
 
@@ -140,7 +145,7 @@ export class ChannelConnectorSettingsComponent implements OnInit {
       patchData[item.key] = item.value;
       let attr = this.formSchema?.attributes.filter((val) => val.key == item.key);
       attr = attr[0];
-      if (attr.attributeType == "OPTIONS") patchData[item.key] = this.checkValueExistenceInOptions(attr, item);
+      if (attr?.attributeType == "OPTIONS") patchData[item.key] = this.checkValueExistenceInOptions(attr, item);
 
     });
     this.channelConnectorForm.patchValue(patchData);
@@ -258,15 +263,16 @@ export class ChannelConnectorSettingsComponent implements OnInit {
   // save callback function
   onSave() {
 
-    this.spinner = true;
+    // this.spinner = true;
     let data: any = this.createRequestPayload();
     if (this.connectorData) {
       data.id = this.connectorData.id;
-      this.updateChannelConnector(data);
+      // this.updateChannelConnector(data);
     }
     else {
-      this.createChannelConnector(data);
+      // this.createChannelConnector(data);
     }
+    console.log("test==>", data);
 
   }
 
