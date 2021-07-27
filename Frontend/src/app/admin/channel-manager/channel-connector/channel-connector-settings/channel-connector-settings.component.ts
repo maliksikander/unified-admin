@@ -102,13 +102,8 @@ export class ChannelConnectorSettingsComponent implements OnInit {
 
     attrSchema.forEach((item) => {
       let validatorArray: any = this.addFormValidations(item);
-      this.addFormErrorMsg(item.key);
-      if (item.valueType != "Number") {
-        this.channelConnectorForm.addControl(item.key, new FormControl(item.valueType == 'Boolean' ? true : '', validatorArray));
-      }
-      else {
-        this.channelConnectorForm.addControl(item.key, new FormControl(item.valueType == 'Boolean' ? true : null, validatorArray));
-      }
+      this.addFormErrorMsg(item);
+      this.channelConnectorForm.addControl(item.key, new FormControl(item.valueType == 'Boolean' ? true : '', validatorArray));
     });
   }
 
@@ -121,15 +116,15 @@ export class ChannelConnectorSettingsComponent implements OnInit {
   }
 
   // adding form error messages to the local error object, using attribute key as `key` parameter
-  addFormErrorMsg(key) {
+  addFormErrorMsg(item) {
 
     let errors = {
       required: 'This field is required',
-      pattern: 'Please match the requested format'
+      pattern: `Please match the ${item?.valueType} format`
     };
-    this.validations[key] = {};
-    this.formErrors[key] = '';
-    this.validations[key] = errors;
+    this.validations[item.key] = {};
+    this.formErrors[item.key] = '';
+    this.validations[item.key] = errors;
   }
 
   // patching existing values to form for editing, using channel connector data from parent as `connectorData` parameter 
