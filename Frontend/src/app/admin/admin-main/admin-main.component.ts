@@ -29,8 +29,8 @@ export class AdminMainComponent implements OnInit {
   isCustomTheme;
   isRightBarActive;
   isBarIconView;
-  generalBool: boolean = true;
-  routingBool: boolean = true;
+  // generalBool: boolean = true;
+  // routingBool: boolean = true;
   subscription: Subscription;
 
   constructor(

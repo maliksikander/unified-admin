@@ -68,7 +68,7 @@
               </a>
 
               <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/channel/channel-manager']">
-                <img src="assets/images/channel-manager.svg" alt="channel">
+                <img src="assets/images/channel-2.svg" alt="channel">
                 <span class="sidebar-text">Channel</span>
               </a>
 
@@ -82,7 +82,7 @@
             </a>
 
             <!-- General Settings -->
-            <mat-expansion-panel *ngIf="generalBool">
+            <mat-expansion-panel>
               <mat-expansion-panel-header>
                 <i class="material-icons">settings</i>
                 <span class="sidebar-text">General</span>
@@ -129,13 +129,14 @@
             </mat-expansion-panel>
 
             <!-- Reason Code -->
-            <a class="single-menu-link" mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/reason-code']">
-              <img src="assets/images/forms.svg" alt="reasons">
+            <a class="single-menu-link" mat-list-item [routerLinkActive]="['active-link']"
+              [routerLink]="['/reason-code']">
+              <img src="assets/images/reason-code.svg" class="img-size-adjustment" alt="reasons">
               <span class="sidebar-text">Reason Code</span>
             </a>
 
             <!-- Routing Configuration -->
-            <mat-expansion-panel *ngIf="routingBool">
+            <mat-expansion-panel>
               <mat-expansion-panel-header class='route-header-image-icon'>
                 <!-- <i style="font-size: 21px;" class="material-icons">compare_arrows</i> -->
                 <img src="assets/images/routing.svg" alt="">
@@ -143,7 +144,7 @@
               </mat-expansion-panel-header>
               <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/routing/attributes']">
                 <img src="assets/images/attribute.svg" alt="attr">
-                <span class="sidebar-text">Attribute</span>
+                <span class="sidebar-text">Routing Attribute</span>
               </a>
               <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/routing/media-routing-domain']">
                 <img src="assets/images/mrd.svg" alt="mrd">

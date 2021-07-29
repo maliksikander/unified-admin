@@ -151,27 +151,27 @@
                 </mat-form-field>
               </div>
               <div class="security-toggle">
-              <div class="form-group">
-                <mat-label>Bypass SSL</mat-label>
-                <mat-slide-toggle formControlName="commBypassSSL"></mat-slide-toggle>
+                <div class="form-group adjust-toggle">
+                  <mat-label>Bypass SSL</mat-label>
+                  <mat-slide-toggle formControlName="commBypassSSL"></mat-slide-toggle>
+                </div>
+                <div class="form-group adjust-toggle">
+                  <mat-label>Enable SSL</mat-label>
+                  <mat-slide-toggle formControlName="enableSSL"></mat-slide-toggle>
+                </div>
+                <div class="form-group adjust-toggle">
+                  <mat-label style="padding-right: 5px;">Minio SSL</mat-label>
+                  <mat-slide-toggle formControlName="minioSSL"></mat-slide-toggle>
+                </div>
+                <div class="form-group adjust-toggle">
+                  <mat-label>Mongo SSL</mat-label>
+                  <mat-slide-toggle formControlName="mongoSSL"></mat-slide-toggle>
+                </div>
+                <div class="form-group adjust-toggle">
+                  <mat-label>Stomp SSL</mat-label>
+                  <mat-slide-toggle formControlName="stompSSLEnabled"></mat-slide-toggle>
+                </div>
               </div>
-              <div class="form-group">
-                <mat-label>Enable SSL</mat-label>
-                <mat-slide-toggle formControlName="enableSSL"></mat-slide-toggle>
-              </div>
-              <div class="form-group">
-                <mat-label style="padding-right: 5px;">Minio SSL</mat-label>
-                <mat-slide-toggle formControlName="minioSSL"></mat-slide-toggle>
-              </div>
-              <div class="form-group">
-                <mat-label>Mongo SSL</mat-label>
-                <mat-slide-toggle formControlName="mongoSSL"></mat-slide-toggle>
-              </div>
-              <div class="form-group">
-                <mat-label>Stomp SSL</mat-label>
-                <mat-slide-toggle formControlName="stompSSLEnabled"></mat-slide-toggle>
-              </div>
-            </div>
             </div>
 
             <div class="action-area col-md-5">

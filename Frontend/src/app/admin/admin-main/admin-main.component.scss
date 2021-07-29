@@ -1,5 +1,3 @@
-
-
 .main-nav {
   background-color: #ffffff;
   z-index: 1000;
@@ -15,30 +13,25 @@
   margin: 0;
 }
 
-
-
 mat-sidenav-container.main-sidebar {
-
-
   width: 100%;
   height: calc(100% - 50px);
   position: absolute;
   top: 50px;
   left: 0;
-  &.secondary-sidebar{
+  &.secondary-sidebar {
     top: 0;
   }
-  
+
   mat-sidenav {
     box-shadow: none;
   }
 
-
-  .mat-list-item-content{
+  .mat-list-item-content {
     padding-left: 25px !important;
   }
 
-  &.mat-drawer-opened{
+  &.mat-drawer-opened {
     position: absolute;
     width: 100%;
     left: 0;
@@ -47,10 +40,9 @@ mat-sidenav-container.main-sidebar {
   mat-sidenav.mat-drawer {
     width: 208px;
     overflow: hidden !important;
-    background: #F3F6F8;
+    background: #f3f6f8;
     color: #ffffff;
   }
-
 
   .main-outlet {
     position: relative;
@@ -58,20 +50,20 @@ mat-sidenav-container.main-sidebar {
   }
 
   .mat-expansion-panel-header-title {
-    i{
+    i {
       position: relative;
       top: 2px;
     }
   }
 }
 
-.menu-trigger{
+.menu-trigger {
   position: absolute;
   left: 0;
   top: 0;
   height: 50px;
   box-shadow: none;
-  background: #F3F6F8;
+  background: #f3f6f8;
   border-radius: 0;
   outline: none;
   color: #939393;
@@ -96,29 +88,26 @@ mat-sidenav-container.main-sidebar {
     white-space: nowrap;
   }
 }
-a.bottom-trigger{
+a.bottom-trigger {
   position: absolute;
   bottom: 0;
 }
 
 .logo-container {
-
   &.bottom-logo img {
     width: auto;
     height: 25px;
   }
 }
 
-.custom-theme{
-  .main-nav{
-    background: rgba(0,0,0,0.50);
+.custom-theme {
+  .main-nav {
+    background: rgba(0, 0, 0, 0.5);
   }
-  .menu-trigger{
-    background: rgba(0,0,0,0.36);
-
+  .menu-trigger {
+    background: rgba(0, 0, 0, 0.36);
   }
 }
-
 
 button.menu-trigger.right-btn.mat-raised-button {
   float: right;
@@ -127,12 +116,25 @@ button.menu-trigger.right-btn.mat-raised-button {
   left: inherit;
 }
 
-
-.mat-list-option:hover, .mat-list-option:focus, .mat-nav-list .mat-list-item:hover, .mat-nav-list .mat-list-item:focus, .mat-action-list .mat-list-item:hover, .mat-action-list .mat-list-item:focus {
-  background: #EBEBEB;
+.mat-list-option:hover,
+.mat-list-option:focus,
+.mat-nav-list .mat-list-item:hover,
+.mat-nav-list .mat-list-item:focus,
+.mat-action-list .mat-list-item:hover,
+.mat-action-list .mat-list-item:focus {
+  background: #ebebeb;
 }
 
-.mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled='true']).cdk-keyboard-focused, .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled='true']).cdk-program-focused, .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled='true']):hover {
-  background: #EBEBEB;
+.mat-expansion-panel:not(.mat-expanded)
+  .mat-expansion-panel-header:not([aria-disabled="true"]).cdk-keyboard-focused,
+.mat-expansion-panel:not(.mat-expanded)
+  .mat-expansion-panel-header:not([aria-disabled="true"]).cdk-program-focused,
+.mat-expansion-panel:not(.mat-expanded)
+  .mat-expansion-panel-header:not([aria-disabled="true"]):hover {
+  background: #ebebeb;
 }
 
+.img-size-adjustment {
+  height: 17px;
+  width: 17px;
+}

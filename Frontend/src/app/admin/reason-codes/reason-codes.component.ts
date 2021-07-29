@@ -214,12 +214,12 @@ export class ReasonCodesComponent implements OnInit {
   }
 
   //save page number storage for reload
-  pageChange(e) { sessionStorage.setItem('currentAttributePage', e); }
+  pageChange(e) { sessionStorage.setItem('currentReasonCodePage', e); }
 
   //page bound change and saving for reload
   pageBoundChange(e) {
     this.p = e;
-    sessionStorage.setItem('currentAttributePage', e);
+    sessionStorage.setItem('currentReasonCodePage', e);
   }
 
   selectPage() { this.itemsPerPage = this.selectedItem; }
