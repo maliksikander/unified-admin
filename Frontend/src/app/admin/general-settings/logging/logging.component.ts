@@ -21,7 +21,7 @@ export class LoggingComponent implements OnInit {
   // reqServiceType = 'log-setting';
   spinner: any = true;
   editData: any;
-  logLevel = ['all', 'debug', 'error', 'fatal', 'info', 'off', 'trace', 'warn'];
+  logLevel = ['debug', 'error', 'fatal', 'info', 'off', 'trace', 'warn'];
   constructor(private snackbar: SnackbarService,
     private fb: FormBuilder,
     private commonService: CommonService,

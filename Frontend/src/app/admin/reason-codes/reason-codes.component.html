@@ -101,7 +101,7 @@
                         <mat-form-field appearance="outline">
                             <mat-select formControlName="type">
                                 <mat-option *ngFor="let val of reasonType" [value]="val">{{val |
-                                    removeUnderscoreFilter}}
+                                    removeUnderscoreFilter | titlecase}}
                                 </mat-option>
                             </mat-select>
                             <mat-error class="form-error">
