@@ -137,7 +137,13 @@ export class ChannelConnectorSettingsComponent implements OnInit {
     };
 
     connectorData.channelConnectorData?.attributes.forEach((item) => {
-      patchData[item.key] = item.value;
+
+      if (item.type == 'Boolean' || item.type == 'StringList') {
+        patchData[item.key] = JSON.parse(item.value);
+      }
+      else {
+        patchData[item.key] = item.value;
+      }
       let attr = this.formSchema?.attributes.filter((val) => val.key == item.key);
       attr = attr[0];
       if (attr?.attributeType == "OPTIONS") patchData[item.key] = this.checkValueExistenceInOptions(attr, item);
@@ -234,6 +240,7 @@ export class ChannelConnectorSettingsComponent implements OnInit {
           obj.key = key;
           obj.type = item.valueType;
           obj.value = Object.values(val)[0];
+          if (obj.type == 'Boolean' || obj.type == 'StringList') obj.value = JSON.stringify(obj.value);
           attrTemp.push(obj);
         }
       });
@@ -262,10 +269,10 @@ export class ChannelConnectorSettingsComponent implements OnInit {
     let data: any = this.createRequestPayload();
     if (this.connectorData) {
       data.id = this.connectorData.id;
-      // this.updateChannelConnector(data);
+      this.updateChannelConnector(data);
     }
     else {
-      // this.createChannelConnector(data);
+      this.createChannelConnector(data);
     }
     console.log("test==>", data);
 

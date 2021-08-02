@@ -168,7 +168,6 @@ export class ReasonCodesComponent implements OnInit {
     let data = this.reasonForm.value;
     if (this.editReasonData) {
       data.id = this.editReasonData.id;
-      data.code = this.editReasonData.code;
       this.updateReasonCode(data);
     }
     else {

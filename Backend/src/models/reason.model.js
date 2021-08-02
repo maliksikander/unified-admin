@@ -23,7 +23,7 @@ const reasonCodeSchema = mongoose.Schema(
         },
     },
     {
-        timestamps: true,
+        timestamps: false,
     }
 );
 

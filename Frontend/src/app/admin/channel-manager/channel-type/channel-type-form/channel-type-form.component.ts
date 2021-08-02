@@ -122,7 +122,7 @@ export class ChannelTypeFormComponent implements OnInit {
     if (this.editData) {
 
       const mrdIndex = this.mrdData.findIndex(item => item.id === this.editData.mediaRoutingDomain);
-      const formIndex = this.formsList.findIndex((item: any) => item.id === this.editData.channelConfigSchema);
+      const formIndex = this.formsList.findIndex((item: any) => item.id === this.editData.channelConfigSchema.id);
 
       this.channelTypeForm.patchValue({
         typeName: this.editData.typeName,
@@ -139,9 +139,10 @@ export class ChannelTypeFormComponent implements OnInit {
 
     let data = JSON.parse(JSON.stringify(this.channelTypeForm.value));
     data.channelLogo = this.imageData;
-    data.channelConfigSchema = data.channelConfigSchema.id;
+    data.channelConfigSchema.id = data.channelConfigSchema.id;
     data.mediaRoutingDomain = data.mediaRoutingDomain.id;
     if (this.editData) data.id = this.editData.id;
+    // console.log("test==>", data);
     this.formSaveData.emit(data);
     this.channelTypeForm.reset();
   }

@@ -13,7 +13,7 @@ router.get('/', reasonController.getReasons);
 
 router.get('/:reasonID', reasonController.getReasonByID);
 
-router.put('/', validate(reasonValidation.updateReason), reasonController.updateReason);
+router.put('/:reasonID', validate(reasonValidation.updateReason), reasonController.updateReason);
 
 router.post('/', validate(reasonValidation.createReason), reasonController.createReason);
 

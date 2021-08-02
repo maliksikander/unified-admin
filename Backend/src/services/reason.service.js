@@ -24,9 +24,9 @@ const createReason = async (reqBody) => {
     return result;
 };
 
-const updateReason = async (reqBody) => {
+const updateReason = async (reqBody,id) => {
 
-    const id = reqBody.id;
+    // const id = reqBody.id;
     if (id.match(/^[0-9a-fA-F]{24}$/)) {   //check for id format
         const result = await ReasonCodeModel.findById(id);
         if (!result) throw new ApiError(httpStatus.NOT_FOUND, 'Not found');
