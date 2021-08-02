@@ -56,10 +56,21 @@ export class ChannelConnectorSettingsComponent implements OnInit {
       this.commonService.logValidationErrors(this.channelConnectorForm, this.formErrors, this.validations);
     });
 
+    // console.log("channel type==>", this.channelTypeData);
+
   }
 
   //lifecycle to update all '@input' changes from parent component
   ngOnChanges(changes: SimpleChanges) { }
+
+  // to assign form schema from channel type data to local variable
+  assignFormSchema(data) {
+    this.formSchema = data;
+    // console.log("schema==>", data)
+    this.addFormControls(JSON.parse(JSON.stringify(this.formSchema?.attributes)));
+    if (this.connectorData) { this.patchFormValues(this.connectorData); }
+    this.spinner = false;
+  }
 
   //calling forms endpoint to fetch forms schema
   getFormSchema() {
@@ -86,9 +97,11 @@ export class ChannelConnectorSettingsComponent implements OnInit {
     //calling endpoint service method to get forms validations
     this.endPointService.getFormValidation().subscribe(
       (res: any) => {
+
         let temp = JSON.parse(JSON.stringify(res));
         this.formValidation = this.convertArrayToObject(temp, 'type');
-        this.getFormSchema();
+        this.assignFormSchema(this.channelTypeData.channelConfigSchema);
+        // this.getFormSchema();
       },
       (error: any) => {
         this.spinner = false;
@@ -265,7 +278,7 @@ export class ChannelConnectorSettingsComponent implements OnInit {
   // save callback function
   onSave() {
 
-    // this.spinner = true;
+    this.spinner = true;
     let data: any = this.createRequestPayload();
     if (this.connectorData) {
       data.id = this.connectorData.id;
@@ -274,7 +287,7 @@ export class ChannelConnectorSettingsComponent implements OnInit {
     else {
       this.createChannelConnector(data);
     }
-    console.log("test==>", data);
+    // console.log("test==>", data);
 
   }
 

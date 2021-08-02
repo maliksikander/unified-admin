@@ -98,7 +98,7 @@ export class ChannelListComponent implements OnInit {
   updateChannel(data) {
 
     //calling endpoint service method which accepts resource name as 'channelServiceReq' and `data` object as parameter
-    this.endPointService.updateChannel(data, data.id).subscribe(
+    this.endPointService.updateChannel(data, data.serviceIdentifier).subscribe(
       (res: any) => {
         this.spinner = false;
         this.snackbar.snackbarMessage('success-snackbar', "Updated", 1);
@@ -115,17 +115,10 @@ export class ChannelListComponent implements OnInit {
   deleteChannel(data) {
 
     //calling endpoint service method which accepts resource name as 'channelServiceReq' and channel id as `id` object as parameter
-    this.endPointService.deleteChannel(data.id).subscribe(
+    this.endPointService.deleteChannel(data.serviceIdentifier).subscribe(
       (res: any) => {
         this.spinner = false;
-
-        this.channels = this.channels.reduce(function (filtered, channel) {
-          if (channel !== data) {
-            filtered.push(channel);
-          }
-          return filtered;
-        }, []);
-
+        this.channels = this.channels.filter(item => item.id != data.id);
         this.snackbar.snackbarMessage('success-snackbar', "Deleted", 1);
       },
       (error: any) => {

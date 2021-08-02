@@ -588,14 +588,6 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
 
       this.queueData[i].steps = this.queueData[i].steps.filter(i => i !== stepData)
         .map((i, idx) => (i.position = (idx + 1), i));
-
-      // this.queueData[i].steps = this.queueData[i].steps.reduce(function (filtered, step) {
-      //   if (step !== stepData) {
-      //     filtered.push(step);
-      //   }
-      //   return filtered;
-      // }, []);
-
       this.updateQueue(queue, queue.id);
 
     }

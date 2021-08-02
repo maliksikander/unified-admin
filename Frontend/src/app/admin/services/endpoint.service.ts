@@ -559,8 +559,8 @@ export class EndpointService {
     }).pipe(catchError(this.handleError));
   }
 
-  updateChannel(data, id): Observable<any> {
-    return this.httpClient.put<any>(`${this.CCM_URL}/${this.endpoints.ccm.channel}/${id}`, data, {
+  updateChannel(data, serviceIdentifier): Observable<any> {
+    return this.httpClient.put<any>(`${this.CCM_URL}/${this.endpoints.ccm.channel}/${serviceIdentifier}`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.token
@@ -568,8 +568,8 @@ export class EndpointService {
     }).pipe(catchError(this.handleError));
   }
 
-  deleteChannel(id): Observable<any> {
-    return this.httpClient.delete<any>(`${this.CCM_URL}/${this.endpoints.ccm.channel}/${id}`, {
+  deleteChannel(serviceIdentifier): Observable<any> {
+    return this.httpClient.delete<any>(`${this.CCM_URL}/${this.endpoints.ccm.channel}/${serviceIdentifier}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.token

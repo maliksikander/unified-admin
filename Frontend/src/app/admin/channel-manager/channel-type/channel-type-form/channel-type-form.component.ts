@@ -134,12 +134,18 @@ export class ChannelTypeFormComponent implements OnInit {
     }
   }
 
+  removeAttrInFormSchema(data) {
+    let obj = { id: "" };
+    obj.id = data.id;
+    return obj;
+  }
+
   //to create 'data' object and pass it to the parent component
   onSave() {
 
     let data = JSON.parse(JSON.stringify(this.channelTypeForm.value));
+    data.channelConfigSchema = this.removeAttrInFormSchema(data.channelConfigSchema);
     data.channelLogo = this.imageData;
-    data.channelConfigSchema.id = data.channelConfigSchema.id;
     data.mediaRoutingDomain = data.mediaRoutingDomain.id;
     if (this.editData) data.id = this.editData.id;
     // console.log("test==>", data);

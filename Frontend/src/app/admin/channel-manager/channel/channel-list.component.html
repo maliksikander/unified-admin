@@ -43,7 +43,7 @@
                     <tr *ngFor="let channel of channels">
                       <td scope="row">{{channel?.channelName ? channel?.channelName : 'N/A'}}</td>
                       <td>{{channel?.channelConfig?.channelMode ? channel?.channelConfig?.channelMode : 'N/A'}}</td>
-                      <td>{{channel?.channelConfig?.responseSLA ? channel?.channelConfig?.responseSLA : 'N/A'}}</td>
+                      <td>{{channel?.channelConfig?.responseSla ? channel?.channelConfig?.responseSla : 'N/A'}}</td>
                       <td class="list-action-area">
                         <div class="data-overflow">{{channel?.channelConnector?.channelConnectorName ?
                           channel?.channelConnector?.channelConnectorName : 'N/A'}}</div>

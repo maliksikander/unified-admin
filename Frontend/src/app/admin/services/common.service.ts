@@ -394,7 +394,7 @@ export class CommonService {
       'maxlength': "Less characters required",
       'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
     },
-    'responseSLA': {
+    'responseSla': {
       'required': "This field is required",
       'minlength': "More characters required",
       'maxlength': "Less characters required",

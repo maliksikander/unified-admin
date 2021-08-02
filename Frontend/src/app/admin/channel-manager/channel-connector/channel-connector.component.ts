@@ -146,12 +146,7 @@ export class ChannelConnectorComponent implements OnInit {
       (res: any) => {
         this.spinner = false;
 
-        this.channelConnectors = this.channelConnectors.reduce(function (filtered, connector) {
-          if (connector !== data) {
-            filtered.push(connector);
-          }
-          return filtered;
-        }, []);
+        this.channelConnectors = this.channelConnectors.filter(item => item.id != data.id);
 
         this.snackbar.snackbarMessage('success-snackbar', "Deleted", 1);
       },

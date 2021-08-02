@@ -90,13 +90,7 @@ export class BotListComponent implements OnInit {
     this.endPointService.deleteBotSetting(data.botId).subscribe(
       (res: any) => {
 
-        this.botList = this.botList.reduce(function (filtered, bot) {
-          if (bot !== data) {
-            filtered.push(bot);
-          }
-          return filtered;
-        }, []);
-
+        this.botList = this.botList.filter(item => item.id != data.id);
         this.spinner = false;
         this.snackbar.snackbarMessage('success-snackbar', "Deleted", 1);
       },

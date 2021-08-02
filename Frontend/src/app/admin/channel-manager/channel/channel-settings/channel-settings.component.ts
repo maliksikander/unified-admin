@@ -27,7 +27,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
     serviceIdentifier: '',
     channelConnector: '',
     channelMode: '',
-    responseSLA: '',
+    responseSla: '',
     customerActivityTimeout: '',
     botID: '',
     agentSelectionPolicy: '',
@@ -60,7 +60,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
       serviceIdentifier: ['', [Validators.required]],
       channelConnector: [, [Validators.required]],
       channelMode: ['', [Validators.required]],
-      responseSLA: ['', [Validators.required]],
+      responseSla: ['', [Validators.required]],
       customerActivityTimeout: ['', [Validators.required]],
       agentSelectionPolicy: ['', [Validators.required]],
       routeToLastAgent: [true, [Validators.required]],
@@ -143,7 +143,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
       channelName: this.channelData.channelName,
       serviceIdentifier: this.channelData.serviceIdentifier,
       channelMode: this.channelData.channelConfig.channelMode,
-      responseSLA: this.channelData.channelConfig.responseSLA,
+      responseSla: this.channelData.channelConfig.responseSla,
       customerActivityTimeout: this.channelData.channelConfig.customerActivityTimeout,
       botID: botIndex != -1 ? this.botList[botIndex] : null,
       channelConnector: connectorIndex != -1 ? this.channelConnectorList[connectorIndex] : null,
@@ -171,7 +171,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
       channelMode: this.channelSettingForm.value.channelMode,
       conversationBot: "",
       customerActivityTimeout: this.channelSettingForm.value.customerActivityTimeout,
-      responseSLA: this.channelSettingForm.value.responseSLA,
+      responseSla: this.channelSettingForm.value.responseSla,
       routingPolicy: routingPolicy,
     };
 
@@ -184,9 +184,9 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
     }
     if (this.channelData) data.id = this.channelData.id;
 
-    console.log("save==>", data);
-    // this.formSaveData.emit(data);
-    // this.channelSettingForm.reset();
+    // console.log("save==>", data);
+    this.formSaveData.emit(data);
+    this.channelSettingForm.reset();
   }
 
   //to cancel form editing

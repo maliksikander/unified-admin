@@ -39,33 +39,18 @@
         </mat-form-field>
       </div>
 
-      <!-- <ng-container *ngIf="channelConnectorForm.value.interfaceAddress">
-        <p class="url-info"><strong>Webhook URL : </strong>
-          {{channelConnectorForm.value.interfaceAddress}}/channel-connectors/webhook </p>
-        <p class="url-info"><strong>Health Status URL : </strong>
-          {{channelConnectorForm.value.interfaceAddress}}/channel-connectors/health </p>
-      </ng-container> -->
-
       <div *ngFor="let attrSchema of formSchema?.attributes">
         <div *ngIf="attrSchema.attributeType == 'INPUT'">
 
           <div class="form-group">
-            <!-- <h1>{{formValidation[attrSchema?.valueType].regex}}</h1> -->
+
             <mat-label>{{attrSchema.label}}</mat-label>
             <mat-form-field *ngIf="attrSchema?.valueType !='Boolean'" appearance="outline">
               <input matInput formControlName="{{attrSchema.key}}">
               <mat-error class="form-error">
                 {{formErrors[attrSchema.key]}}
               </mat-error>
-              <!-- {{channelConnectorForm.value[attrSchema.key].length}} -->
             </mat-form-field>
-
-            <!-- <mat-form-field *ngIf="attrSchema?.valueType =='Number'" appearance="outline">
-              <input type="number" matInput formControlName="{{attrSchema.key}}">
-              <mat-error class="form-error">
-                {{formErrors[attrSchema.key]}}
-              </mat-error>
-            </mat-form-field> -->
 
             <mat-slide-toggle *ngIf="attrSchema?.valueType =='Boolean'" formControlName="{{attrSchema.key}}">
             </mat-slide-toggle>
