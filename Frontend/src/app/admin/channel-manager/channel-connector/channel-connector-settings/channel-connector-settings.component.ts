@@ -118,6 +118,7 @@ export class ChannelConnectorSettingsComponent implements OnInit {
       this.addFormErrorMsg(item);
       this.channelConnectorForm.addControl(item.key, new FormControl(item.valueType == 'Boolean' ? true : '', validatorArray));
     });
+    //  console.log("channel conenctor form==>",this.channelC)
   }
 
   // creating validation definitions for form controls, using form schema attribute as parameter 
@@ -145,24 +146,25 @@ export class ChannelConnectorSettingsComponent implements OnInit {
 
     let patchData: any = {
       channelConnectorName: this.connectorData.channelConnectorName,
-      interface: this.connectorData.interface,
+      interface: this.connectorData.channelConnectorInterface,
       interfaceAddress: this.connectorData.interfaceAddress,
     };
 
     connectorData.channelConnectorData?.attributes.forEach((item) => {
 
-      if (item.type == 'Boolean' || item.type == 'StringList') {
-        patchData[item.key] = JSON.parse(item.value);
+      if (item.type == 'StringList') {
+        item.value = JSON.parse(item.value);
       }
-      else {
-        patchData[item.key] = item.value;
-      }
+
+      patchData[item.key] = item.value;
       let attr = this.formSchema?.attributes.filter((val) => val.key == item.key);
       attr = attr[0];
       if (attr?.attributeType == "OPTIONS") patchData[item.key] = this.checkValueExistenceInOptions(attr, item);
 
     });
+    // console.log("patch data==>", patchData);
     this.channelConnectorForm.patchValue(patchData);
+    // console.log("form value data==>", this.channelConnectorForm.value);
   }
 
   // to check if the selected value exists in the form schema options, it uses the form schema attribute as `attr` and connector form data value as `item` parameters 
@@ -170,17 +172,81 @@ export class ChannelConnectorSettingsComponent implements OnInit {
 
     let temp;
     let categories = attr?.categoryOptions?.categories;
+    if (Array.isArray(item.value)) {
+      if (item.value.length > 1) {
+        temp = this.multiSelectValues(categories, item);
+      }
+      else {
+        for (let i = 0; i < categories.length; i++) {
+          for (let j = 0; j < categories[i].values.length; j++) {
+            if (categories[i].values[j] == item.value) {
+              temp = item.value;
+              break;
+            }
+            temp = null;
+          }
+          if (temp != undefined || temp != null) break;
+        }
+      }
+    }
+    else {
+      for (let i = 0; i < categories.length; i++) {
+        for (let j = 0; j < categories[i].values.length; j++) {
+
+          // console.log("==>", categories[i].values[j])
+
+          // if (Array.isArray(item.value)) {
+          //   // console.log("2==>", item.value.length)
+          //   if (item.value.length > 1) {
+
+          //     for (let k = 0; k < item.value.length; k++) {
+          //       if (categories[i].values[j] == item.value[k]) {
+          //         result.push(item.value[k])
+
+          //       }
+          //     }
+          //     console.log("result==>", result);
+          //     temp = result;
+          //     break;
+          //   }
+          //   // else {
+          //   // 
+          //   // }
+          // }
+          // else {
+          if (categories[i].values[j] == item.value) {
+            temp = item.value;
+            break;
+            // }
+          }
+          temp = null;
+        }
+        if (temp != undefined || temp != null) break;
+      }
+    }
+    // console.log("temp==>", temp);
+    return temp;
+  }
+
+  multiSelectValues(categories, item) {
+    // let temp;
+    let result = [];
     for (let i = 0; i < categories.length; i++) {
       for (let j = 0; j < categories[i].values.length; j++) {
-        if (categories[i].values[j] == item.value) {
-          temp = item.value;
-          break;
+        for (let k = 0; k < item.value.length; k++) {
+          if (categories[i].values[j] == item.value[k]) {
+            if (result.includes(item.value[k])) { }
+            else { result.push(item.value[k]) }
+          }
+          // if (result.length == 0) return null;
+
+          // break;
         }
-        temp = null;
       }
-      if (temp != undefined || temp != null) break;
+
     }
-    return temp;
+    // console.log("result==>", result);
+    return result;
   }
 
   // to convert an array of objects to an object of objects
@@ -200,7 +266,7 @@ export class ChannelConnectorSettingsComponent implements OnInit {
     let formData = this.createAndSetupFormDataObject();
     let data: any = {
       channelConnectorName: this.channelConnectorForm.value.channelConnectorName,
-      interface: this.channelConnectorForm.value.interface,
+      interface: this.channelConnectorForm.value.channelConnectorInterface,
       interfaceAddress: this.channelConnectorForm.value.interfaceAddress,
       channelType: this.channelTypeData,
       channelConnectorData: formData,

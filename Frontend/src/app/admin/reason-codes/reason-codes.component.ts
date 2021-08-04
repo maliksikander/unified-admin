@@ -11,6 +11,7 @@ import { SnackbarService } from '../services/snackbar.service';
   templateUrl: './reason-codes.component.html',
   styleUrls: ['./reason-codes.component.scss']
 })
+
 export class ReasonCodesComponent implements OnInit {
 
   p: any = 1;
@@ -68,8 +69,10 @@ export class ReasonCodesComponent implements OnInit {
 
   //to get reason code list and set the local variable with response 
   getReasonCode() {
+
     this.endPointService.getReasonCode().subscribe(
       (res: any) => {
+
         this.reasonCodeData = res;
         if (res.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
         this.spinner = false;
@@ -83,7 +86,7 @@ export class ReasonCodesComponent implements OnInit {
 
 
   //to open form dialog,this method accepts the `template variable` as a parameter assigned to the form in html.
-  openModal(templateRef) {
+  openCreateReasonModal(templateRef) {
 
     this.reasonForm.reset();
     this.formHeading = 'Add Reason Code';
@@ -105,6 +108,7 @@ export class ReasonCodesComponent implements OnInit {
 
   //Confirmation dialog for delete, it accepts the reason object as `data` parameter 
   deleteConfirm(data) {
+    
     let id = data.id;
     let msg = "Are you sure you want to delete this reason code ?";
     return this.dialog.open(ConfirmDialogComponent, {
@@ -134,7 +138,6 @@ export class ReasonCodesComponent implements OnInit {
     this.saveBtnText = 'Update';
     let dialogRef = this.dialog.open(templateRef, {
       width: '550px',
-
       panelClass: 'add-attribute',
       disableClose: true,
       data: data

@@ -84,7 +84,6 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
   //to get channel connector list, it accepts channel type id as `typeId` parameter
   getChannelConnector(typeId) {
 
-    // let reqType = 'channel-connectors'
     //calling endpoint service method to get connector list which accepts resource name as 'reqType' and channnel type id as `typeId` object as parameter
     this.endPointService.getConnectorByChannelType(typeId).subscribe(
       (res: any) => {
@@ -150,7 +149,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
       agentSelectionPolicy: this.channelData.channelConfig.routingPolicy.agentSelectionPolicy,
       routeToLastAgent: this.channelData.channelConfig.routingPolicy.routeToLastAgent,
       defaultQueue: queueIndex != -1 ? this.queueList[queueIndex] : null,
-      agentRequestTTL: this.channelData.channelConfig.routingPolicy.agentRequestTTL,
+      agentRequestTTL: this.channelData.channelConfig.routingPolicy.agentRequestTtl,
     });
     this.spinner = false;
   }
@@ -163,7 +162,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
       agentSelectionPolicy: this.channelSettingForm.value.agentSelectionPolicy,
       routeToLastAgent: this.channelSettingForm.value.routeToLastAgent,
       defaultQueue: this.channelSettingForm.value.defaultQueue.id,
-      agentRequestTTL: this.channelSettingForm.value.agentRequestTTL,
+      agentRequestTtl: this.channelSettingForm.value.agentRequestTTL,
     }
 
     let channelConfigData = {

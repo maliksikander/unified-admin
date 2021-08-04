@@ -58,32 +58,36 @@
 
         </div>
 
-        <div *ngIf="attrSchema.attributeType == 'OPTIONS'">
-          <ng-container *ngIf="attrSchema?.categoryOptions?.categories?.length > 0">
-            <div class="form-group">
-              <mat-label>{{attrSchema.label}}</mat-label>
-              <mat-form-field appearance="outline">
+        <!-- <div *ngIf="attrSchema.attributeType == 'OPTIONS'"> -->
+        <ng-container
+          *ngIf="attrSchema.attributeType == 'OPTIONS' && attrSchema?.categoryOptions?.categories?.length > 0">
+          <div class="form-group">
+            <mat-label>{{attrSchema.label}}</mat-label>
+            <mat-form-field *ngIf="attrSchema?.categoryOptions?.isMultipleChoice == false" appearance="outline">
+              <mat-select formControlName="{{attrSchema.key}}">
+                <ng-container *ngFor="let category of attrSchema?.categoryOptions?.categories">
+                  <mat-option *ngFor="let option of category?.values" [value]="option">
+                    {{option}}</mat-option>
+                </ng-container>
+              </mat-select>
 
-                <mat-select *ngIf="attrSchema?.categoryOptions?.isMultipleChoice == false"
-                  formControlName="{{attrSchema.key}}">
-                  <ng-container *ngFor="let category of attrSchema?.categoryOptions?.categories">
-                    <mat-option *ngFor="let option of category?.values" [value]="option">
-                      {{option}}</mat-option>
-                  </ng-container>
-                </mat-select>
+              <mat-error class="form-error">
+                {{formErrors[attrSchema.key]}}
+              </mat-error>
+            </mat-form-field>
 
-                <mat-select *ngIf="attrSchema?.categoryOptions?.isMultipleChoice" multiple
-                  formControlName="{{attrSchema.key}}">
-                  <mat-option *ngFor="let option of attrSchema?.categoryOptions?.categories[0]?.values"
-                    [value]="option"> {{option}}</mat-option>
-                </mat-select>
-                <mat-error class="form-error">
-                  {{formErrors[attrSchema.key]}}
-                </mat-error>
-              </mat-form-field>
-            </div>
-          </ng-container>
-        </div>
+            <mat-form-field appearance="outline" *ngIf="attrSchema?.categoryOptions?.isMultipleChoice" multiple>
+              <mat-select multiple formControlName="{{attrSchema.key}}">
+                <mat-option *ngFor="let option of attrSchema?.categoryOptions?.categories[0]?.values" [value]="option">
+                  {{option}}</mat-option>
+              </mat-select>
+              <mat-error class="form-error">
+                {{formErrors[attrSchema.key]}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </ng-container>
+        <!-- </div> -->
       </div>
     </div>
 

@@ -42,7 +42,7 @@
                     <tr *ngFor="let connector of channelConnectors">
                       <td scope="row">{{connector?.channelConnectorName ? connector?.channelConnectorName : 'N/A'}}
                       </td>
-                      <td>{{connector?.interface ? connector?.interface : 'N/A'}}</td>
+                      <td>{{connector?.channelConnectorInterface ? connector?.channelConnectorInterface : 'N/A'}}</td>
                       <td class="list-action-area">
                         <!-- [ngStyle]="{'color':connector?.status == 'healthy' ? '#2DD393' : '#CE0000' }" -->
                         <i [ngStyle]="connector?.status == 'healthy' && { 'color':'#2DD393' } || connector?.status == 'unhealthy' && { 'color':'#CE0000' }"

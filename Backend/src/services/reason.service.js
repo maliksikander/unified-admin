@@ -2,7 +2,14 @@ const httpStatus = require('http-status');
 const { ReasonCodeModel } = require('../models');
 const ApiError = require('../utils/ApiError');
 
-const getReasons = async () => {
+const getReasons = async (type) => {
+
+
+    if (type == 'LOG_OUT' || type == 'NOT_READY') {
+        const filtered = await ReasonCodeModel.find({ 'type': { $lte: type } });
+        return filtered;
+    }
+
     const result = await ReasonCodeModel.find();
     return result;
 };
@@ -24,7 +31,7 @@ const createReason = async (reqBody) => {
     return result;
 };
 
-const updateReason = async (reqBody,id) => {
+const updateReason = async (reqBody, id) => {
 
     // const id = reqBody.id;
     if (id.match(/^[0-9a-fA-F]{24}$/)) {   //check for id format

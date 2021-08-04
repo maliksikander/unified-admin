@@ -18,7 +18,7 @@ export class ChannelListComponent implements OnInit {
   customCollapsedHeight: string = '40px';
   customExpandedHeight: string = '40px';
   addChannelBool = false;
-  pageTitle = "Customer Channels";
+  pageTitle = "Channels";
   editChannelData;
   channelType;
   // typeServiceReq = 'channel-types';
@@ -135,7 +135,7 @@ export class ChannelListComponent implements OnInit {
     this.pageTitle = "Edit" + " " + data.channelConnector.channelType.typeName + " " + "Type Channel";
     // console.log("datya-->",data)
     this.editChannelData = data;
-    this.channelType = data.channelConnector.type;
+    this.channelType = data.channelConnector.channelType;
   }
 
   // to open delete confirmation dialog
