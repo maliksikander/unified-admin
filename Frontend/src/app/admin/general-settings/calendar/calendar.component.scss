@@ -192,8 +192,18 @@
 }
 .event-dialog {
   padding: 10px 20px !important;
-  max-height: 400px !important;
+  max-height: 550px !important;
   overflow: auto;
+
+  mat-icon{
+    color: #818181;
+    font-size: 17px;
+    padding: 0px 15px 0 0;
+    position: relative;
+    top: 5px;
+    width: 17px;
+    height: 17px;
+  }
 }
 
 .event-header {
@@ -207,7 +217,7 @@
   }
 
   .title-section {
-    padding: 0 0 0 24px;
+    padding: 0 0 0 30px;
   }
 
   .shift-section {
@@ -216,60 +226,63 @@
     display: flex;
     flex-wrap: wrap;
     max-height: 100px;
+    padding: 0 0 0 30px;
 
-    i {
-      color: #818181;
-      font-size: 17px;
-      padding: 0px 15px 0 0;
-      position: relative;
-      top: 5px;
-      width: 17px;
-      height: 17px;
+    mat-icon.time-icon {
+      position: absolute;
+      left: 0;
+      top: 2px;
     }
 
-    .datepicker-section {
+    .datepicker-section, .date-range-section {
       position: relative;
-      top: -13px;
-      padding: 0 0 0 4px;
+      //top: -13px;
+      //padding: 0 0 0 4px;
+      mat-form-field{
+        height: 20px;
+      }
     }
 
     .shift-info {
       position: relative;
-      top: -13px;
-      padding: 0 26px;
+      //top: -13px;
+      //padding: 0 26px;
       /* margin-left: -6px; */
       overflow: auto;
+      //mat-form-field{
+      //  height: 20px;
+      //}
 
       .remove-btn {
-        padding: 0px !important;
-        margin: 0 !important;
-        min-width: 0 !important;
+        //padding: 0px !important;
+        //margin: 0 !important;
+        //min-width: 0 !important;
         .mat-icon {
           font-size: 15px;
-          padding: 6px 0px;
           color: #b1b1b1;
+          position: static;
+          line-height: 17px;
+
         }
       }
     }
-    .add-shift {
-      position: relative;
-      right: -20px;
-      top: -54px;
-
-      button {
+    //.add-shift {
+    //  position: relative;
+    //  right: -20px;
+    //  top: -54px;
+    //
+      .shift-btn {
         border: 1px solid #25afcb;
-        color: #25afcb;
-        height: 1.563rem;
-        width: 2.825rem;
+        height: 24px;
         box-shadow: none;
+        line-height: 20px;
+        color: #25afcb;
 
         span {
-          font-size: 12px;
-          position: relative;
-          top: -7px;
+          font-size: 11px;
         }
       }
-    }
+    //}
   }
 
   .time-section {
@@ -298,7 +311,6 @@
   flex-wrap: wrap;
   height: 3.125rem;
   position: relative;
-  top: -3.5rem;
 
   img {
     position: relative;
@@ -311,16 +323,25 @@
   padding: 5px 3px 0px 10px;
   // height: 100%;
 }
-
-.recurrence-section {
-  position: relative;
-  top: -15px;
-  img {
-    position: relative;
-    top: -2px;
-    width: 12px;
-    height: 15px;
+.time-selection{
+  mat-form-field{
+    width: 85px;
+    height: 30px;
   }
+}
+.recurrence-section, .end-date-section, .select-calendar-section, .event-fields {
+  position: relative;
+  padding-left: 30px;
+  //top: -15px;
+  mat-icon{
+    position: absolute;
+    left: 0;
+    top: 10px;
+  }
+  //mat-form-field{
+  //  height: 38px;
+  //}
+
 }
 
 .repeat-day {
@@ -340,12 +361,18 @@
       text-align: center;
       color: #adadad;
       margin-right: 10px;
+      cursor: pointer;
+      &:hover {
+        color: #fff;
+        background: #25afcb;
+      }
     }
-
     .selected-day {
       color: #fff;
       background: #25afcb;
     }
+
+
   }
 }
 
@@ -359,4 +386,76 @@
   // strong {
   //   font-size: 10px;
   // }
+}
+
+.form-group{
+
+  &.name-field{
+    width: calc(100% - 60px);
+    display: inline-block;
+  }
+  &.selection-color{
+    width: 50px;
+    margin-left: 5px;
+    display: inline-block;
+
+    mat-form-field{
+      margin: 0 !important;
+    }
+  }
+}
+.shift-main {
+  width: 100%;
+  position: relative;
+
+  .shift-btn{
+    position: absolute;
+    right: 0;
+    top: 8px;
+  }
+}
+
+span.circle-event {
+  width: 15px;
+  height: 15px;
+  background: transparent;
+  display: inline-block;
+  border-radius: 100%;
+  transform: rotate(45deg);
+  position: relative;
+  top: 2px;
+  margin-right: 8px;
+}
+.preview-dialog{
+  p{
+    padding: 3px 0;
+    margin: 0;
+    color: #717171;
+    font-size: 13px;
+  }
+
+  .mat-card-header{
+    h4{
+      display: inline-block;
+    }
+    span{
+      float: right;
+      mat-icon{
+        border-width: 0;
+        position: relative;
+        top: 8px;
+        right: 0;
+        font-size: 20px;
+        width: 25px;
+        height: 25px;
+        line-height: 24px;
+        &:last-child{
+          border-width: 1px;
+        }
+      }
+      &.circle-event{
+        float: none;
+      }
+    }
+  }
 }

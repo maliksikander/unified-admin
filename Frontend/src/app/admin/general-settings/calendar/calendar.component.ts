@@ -26,7 +26,8 @@ import {
 } from 'angular-calendar';
 import { CustomDateFormatter } from './custom-date-formatter.provider';
 import { Subject } from 'rxjs';
-import { DatePipe } from '@angular/common';
+import {DatePipe, Time} from '@angular/common';
+import {ConfirmDialogComponent} from "../../../shared/confirm-dialog/confirm-dialog.component";
 
 @Component({
   selector: 'app-calendar',
@@ -43,6 +44,106 @@ import { DatePipe } from '@angular/common';
 })
 export class CalendarComponent implements OnInit {
 
+
+  selectTime = [
+    {value: '5:00 AM', viewValue: '5:00 AM'},
+    {value: '5:15 AM', viewValue: '5:15 AM'},
+    {value: '5:30 AM', viewValue: '5:30 AM'},
+    {value: '5:45 AM', viewValue: '5:45 AM'},
+
+    {value: '6:00 AM', viewValue: '6:00 AM'},
+    {value: '6:15 AM', viewValue: '6:15 AM'},
+    {value: '6:30 AM', viewValue: '6:30 AM'},
+    {value: '6:45 AM', viewValue: '6:45 AM'},
+
+    {value: '7:00 AM', viewValue: '7:00 AM'},
+    {value: '7:15 AM', viewValue: '7:15 AM'},
+    {value: '7:30 AM', viewValue: '7:30 AM'},
+    {value: '7:45 AM', viewValue: '7:45 AM'},
+
+    {value: '8:00 AM', viewValue: '8:00 AM'},
+    {value: '8:15 AM', viewValue: '8:15 AM'},
+    {value: '8:30 AM', viewValue: '8:30 AM'},
+    {value: '8:45 AM', viewValue: '8:45 AM'},
+
+    {value: '9:00 AM', viewValue: '9:00 AM'},
+    {value: '9:15 AM', viewValue: '9:15 AM'},
+    {value: '9:30 AM', viewValue: '9:30 AM'},
+    {value: '9:45 AM', viewValue: '9:45 AM'},
+
+    {value: '10:00 AM', viewValue: '10:00 AM'},
+    {value: '10:15 AM', viewValue: '10:15 AM'},
+    {value: '10:30 AM', viewValue: '10:30 AM'},
+    {value: '10:45 AM', viewValue: '10:45 AM'},
+
+    {value: '11:00 AM', viewValue: '11:00 AM'},
+    {value: '11:15 AM', viewValue: '11:15 AM'},
+    {value: '11:30 AM', viewValue: '11:30 AM'},
+    {value: '11:45 AM', viewValue: '11:45 AM'},
+
+    {value: '12:00 PM', viewValue: '12:00 PM'},
+    {value: '12:15 PM', viewValue: '12:15 PM'},
+    {value: '12:30 PM', viewValue: '12:30 PM'},
+    {value: '12:45 PM', viewValue: '12:45 PM'},
+
+    {value: '1:00 PM', viewValue: '1:00 PM'},
+    {value: '1:15 PM', viewValue: '1:15 PM'},
+    {value: '1:30 PM', viewValue: '1:30 PM'},
+    {value: '1:45 PM', viewValue: '1:45 PM'},
+
+    {value: '2:00 PM', viewValue: '2:00 PM'},
+    {value: '2:15 PM', viewValue: '2:15 PM'},
+    {value: '2:30 PM', viewValue: '2:30 PM'},
+    {value: '2:45 PM', viewValue: '2:45 PM'},
+
+    {value: '3:00 PM', viewValue: '3:00 PM'},
+    {value: '3:15 PM', viewValue: '3:15 PM'},
+    {value: '3:30 PM', viewValue: '3:30 PM'},
+    {value: '3:45 PM', viewValue: '3:45 PM'},
+
+    {value: '4:00 PM', viewValue: '4:00 PM'},
+    {value: '4:15 PM', viewValue: '4:15 PM'},
+    {value: '4:30 PM', viewValue: '4:30 PM'},
+    {value: '4:45 PM', viewValue: '4:45 PM'},
+
+    {value: '5:00 PM', viewValue: '5:00 PM'},
+    {value: '5:15 PM', viewValue: '5:15 PM'},
+    {value: '5:30 PM', viewValue: '5:30 PM'},
+    {value: '5:45 PM', viewValue: '5:45 PM'},
+
+    {value: '6:00 PM', viewValue: '6:00 PM'},
+    {value: '6:15 PM', viewValue: '6:15 PM'},
+    {value: '6:30 PM', viewValue: '6:30 PM'},
+    {value: '6:45 PM', viewValue: '6:45 PM'},
+
+    {value: '7:00 PM', viewValue: '7:00 PM'},
+    {value: '7:15 PM', viewValue: '7:15 PM'},
+    {value: '7:30 PM', viewValue: '7:30 PM'},
+    {value: '7:45 PM', viewValue: '7:45 PM'},
+
+    {value: '8:00 PM', viewValue: '8:00 PM'},
+    {value: '8:15 PM', viewValue: '8:15 PM'},
+    {value: '8:30 PM', viewValue: '8:30 PM'},
+    {value: '8:45 PM', viewValue: '8:45 PM'},
+
+    {value: '9:00 PM', viewValue: '9:00 PM'},
+    {value: '9:15 PM', viewValue: '9:15 PM'},
+    {value: '9:30 PM', viewValue: '9:30 PM'},
+    {value: '9:45 PM', viewValue: '9:45 PM'},
+
+    {value: '10:00 PM', viewValue: '10:00 PM'},
+    {value: '10:15 PM', viewValue: '10:15 PM'},
+    {value: '10:30 PM', viewValue: '10:30 PM'},
+    {value: '10:45 PM', viewValue: '10:45 PM'},
+
+    {value: '11:00 PM', viewValue: '11:00 PM'},
+    {value: '11:15 PM', viewValue: '11:15 PM'},
+    {value: '11:30 PM', viewValue: '11:30 PM'},
+    {value: '11:45 PM', viewValue: '11:45 PM'}
+  ];
+calendarPreviewData = {};
+  selectedTimeFrom = this.selectTime[0].value;
+editView = false;
   underLineColor: ThemePalette = 'accent';
   defColor = '#25afcb';
   color = ['#CB2572', '#CB2525', '#7E25CB', '#3225CB', '#25CBC5', '#25AFCB', '#25CB85', '#5ECB25', '#C5CB25', '#FDC251', '#FF8307', '#FF2700'];
@@ -132,6 +233,7 @@ export class CalendarComponent implements OnInit {
       // actions: this.actions,
       allDay: true,
       meta: {
+        calendarType: 'Out of Office',
         eventType: "",
         shift: {}
       }
@@ -146,12 +248,22 @@ export class CalendarComponent implements OnInit {
       title: 'An event with no end date',
       color: { primary: "#b22222", secondary: "#b22222" },
       // actions: this.actions,
+      meta: {
+        calendarType: 'Business Hours',
+        eventType: "",
+        shift: {}
+      }
     },
     {
       start: new Date,
       title: 'An extra',
       color: { primary: "#485234", secondary: "#485234" },
       // actions: this.actions,
+      meta: {
+        calendarType: 'Holiday',
+        eventType: "",
+        shift: {}
+      }
     },
     // {
     //   start: subDays(endOfMonth(new Date()), 3),
@@ -172,6 +284,7 @@ export class CalendarComponent implements OnInit {
       // },
       // draggable: false,
     },
+
   ];
 
   activeDayIsOpen: boolean = true;
@@ -193,8 +306,8 @@ export class CalendarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
     // this.commonService.tokenVerification();
+
     this.currentDay = this.dateFormation("month");
 
     this.calendarForm = this.fb.group({
@@ -214,9 +327,12 @@ export class CalendarComponent implements OnInit {
       // dateRange: this.fb.group({
       dateRangeStart: [''],
       dateRangeEnd: [''],
+
       // }),
 
     });
+
+
     this.recurrenceForm = this.fb.group({
       viewType: ['day'],
     });
@@ -228,7 +344,6 @@ export class CalendarComponent implements OnInit {
     this.endDateForm.controls['endDate'].setValue(new Date());
     this.eventForm.controls['dateRangeStart'].setValue(new Date());
     this.eventForm.controls['dateRangeEnd'].setValue(new Date(Date.now() + (3600 * 1000 * 24)));
-
 
 
     let d = new Date();
@@ -379,6 +494,7 @@ export class CalendarComponent implements OnInit {
     console.log("event", event);
   }
 
+
   addEvent(): void {
     this.events = [
       // ...this.events,
@@ -455,4 +571,58 @@ export class CalendarComponent implements OnInit {
     else if (val == 7) this.sunday = !this.sunday;
   }
 
+  recurrence(event, templateRef) {
+    if (event.value === 'custom'){
+      let dialogRef = this.dialog.open(templateRef, {
+        width: '500px',
+        minHeight: '170px',
+        panelClass: 'add-attribute',
+      });
+      dialogRef.afterClosed().subscribe(result => {
+      });
+    }
+  }
+
+  previewEvent(event, templateRef) {
+
+    console.log('calendar event', event)
+    this.calendarPreviewData = event;
+    const dialogRef = this.dialog.open(templateRef, {
+      width: '520px',
+      // height: '350px',
+      panelClass: 'add-attribute',
+      disableClose: true,
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.editView = false;
+    });
+  }
+
+  deleteSaveEvent(e){
+    let msg = "Are you sure you want to delete " + e.title + '?';
+    return this.dialog.open(ConfirmDialogComponent, {
+      panelClass: 'confirm-dialog-container',
+      disableClose: true,
+      width: '450px',
+      data: {
+        heading: 'Delete calendar',
+        message: msg,
+        text: 'confirm',
+      }
+    });
+  }
+
+  editEventModal (templateRef) {
+    // this.eventForm.reset();
+this.editView = true;
+    console.log('hekllo', this.calendarPreviewData)
+
+    let dialogRef = this.dialog.open(templateRef, {
+      width: '550px',
+      panelClass: 'add-attribute',
+      disableClose: true,
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    });
+  }
 }

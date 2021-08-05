@@ -1,9 +1,8 @@
 <div class="loading-area" *ngIf="spinner">
   <mat-spinner></mat-spinner>
 </div>
-<div class="container main-custom-container">
-  <div class="row">
-    <div class="col-sm-12">
+<div class="row m-0">
+    <div class="col-sm-12 p-0">
       <div class="panel-body">
         <div class="sub-heading">
           <h2>Business Calendar</h2>
@@ -40,8 +39,8 @@
             <div class="my-calendar-section">
               <div class="heading">
                 <span>All Calendars</span>
-                <!-- <mat-icon (click)="openCalendarModal(newCalendar)">add</mat-icon> -->
-                <mat-icon (click)="openEndDateModal(endDateReference)">add</mat-icon>
+                 <mat-icon (click)="openCalendarModal(newCalendar)">add</mat-icon>
+<!--                <mat-icon (click)="openEndDateModal(endDateReference)">add</mat-icon>-->
               </div>
 
               <div class="calendar-content">
@@ -78,12 +77,12 @@
           </div>
 
           <ng-template #customCellTemplate let-day="day" let-locale="locale">
-            <div (click)="dayClicked(day)" class="cal-cell-top">
+            <div (click)="openEventModal(eventFormVariable)" class="cal-cell-top">
               <!-- <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span> -->
               <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
             </div>
             <ng-container *ngFor="let event of day?.events">
-              <small (click)="handleEvent('Clicked',event)" class="month-event-title"
+              <small (click)="previewEvent(event, eventPreview)" class="month-event-title"
                 [ngStyle]="{'background':event?.color?.primary}">
                 {{event?.title}}</small>
             </ng-container>
@@ -122,7 +121,7 @@
       </div>
       <div class="dialog-content">
         <form class="form-horizontal form-bordered" [formGroup]="calendarForm">
-          <div class="form-group">
+          <div class="form-group name-field">
             <mat-label>Name</mat-label>
             <mat-form-field appearance="outline">
               <input matInput formControlName="name">
@@ -132,6 +131,13 @@
               <!-- <mat-error *ngIf="attributeForm.controls['name'].hasError('validName')">
               This name already exists
             </mat-error> -->
+            </mat-form-field>
+          </div>
+          <div class="form-group selection-color">
+            <mat-form-field #colorMenuTrigger="matMenuTrigger" [matMenuTriggerFor]="colorPicker"
+                            style="margin-left: 2.125rem;" appearance="fill">
+              <mat-select [ngStyle]="{'background':selectedColor}" class="color-select" formControlName="color">
+              </mat-select>
             </mat-form-field>
           </div>
           <div class="form-group text-area">
@@ -167,19 +173,19 @@
       </div>
       <div class="dialog-content event-dialog">
         <form class="form-horizontal form-bordered" [formGroup]="eventForm">
-          <mat-tab-group>
+          <mat-tab-group animationDuration="0ms">
             <mat-tab label="Business Hours">
 
-              <div class="col-md-12">
+              <div class="col-md-12 p-0">
 
-                <div class="title-section">
+                <div class="title-section event-fields">
                   <mat-form-field [color]="underLineColor">
                     <input matInput formControlName="title">
                   </mat-form-field>
                 </div>
 
-                <div class="shift-section">
-                  <i class="material-icons">access_time</i>
+                <div class="shift-section event-fields">
+                  <mat-icon class="time-icon">access_time</mat-icon>
 
                   <div class="datepicker-section">
                     <mat-form-field [color]="underLineColor">
@@ -188,38 +194,37 @@
                       <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
                   </div>
-
-                  <div class="shift-info col-md-9">
+                <div class="shift-main">
+                  <div class="shift-info">
                     <mat-form-field [color]="underLineColor">
                       <input matInput formControlName="shift">
                     </mat-form-field>
                     <!-- #timeMenuTrigger="matMenuTrigger" [matMenuTriggerFor]="timePicker" -->
-                    <button class="remove-btn" mat-flat-button>
+                    <button class="remove-btn" mat-icon-button>
                       <mat-icon>close</mat-icon>
                     </button>
                   </div>
 
-                  <div class="add-shift col-md-2 offset-md-9">
-                    <button mat-raised-button class="shift-btn">Add Shift</button>
-                  </div>
+                  <button mat-raised-button class="shift-btn">Add Shift</button>
+                </div>
                 </div>
 
-                <div class="recurrence-section">
-                  <img src="assets/images/reload.svg" alt="done">
+                <div class="recurrence-section event-fields">
+                  <mat-icon>replay</mat-icon>
                   <mat-form-field appearance="fill">
-                    <mat-select formControlName="recurrenceCriteria">
+                    <mat-select (selectionChange)="recurrence($event, customRecurrence)" formControlName="recurrenceCriteria">
                       <mat-option *ngFor="let option of recurrenceOptions" [value]="option">
                         {{option | titlecase}}</mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>
 
-                <div class="end-date-section">
-                  <img src="assets/images/check_outline.svg" alt="done">
+                <div class="end-date-section event-fields">
+                  <mat-icon>check_circle_outline</mat-icon>
                   <mat-form-field appearance="fill">
                     <mat-select formControlName="endDateCriteria">
                       <mat-option value="never">Never</mat-option>
-                      <mat-option value="custom">Custom</mat-option>
+                      <mat-option value="custom" (click)="openEndDateModal(endDateReference)">Custom</mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>
@@ -228,27 +233,49 @@
             </mat-tab>
 
             <mat-tab label="Out of Office">
+              <div class="col-md-12 p-0">
 
-              <div class="col-md-12">
-
-                <div class="title-section">
+                <div class="title-section event-fields">
                   <mat-form-field [color]="underLineColor">
                     <input matInput formControlName="title">
                   </mat-form-field>
                 </div>
 
-                <div class="time-section">
-                  <i class="material-icons">access_time</i>
+                <div class="datepicker-section time-selection event-fields">
+                  <mat-icon>access_time</mat-icon>
+                  <mat-form-field [color]="underLineColor">
+                    <!-- <mat-label>Choose a date</mat-label> -->
+                    <input formControlName="datePicker" matInput [matDatepicker]="picker5" (click)="picker5.open()">
+                    <mat-datepicker #picker5></mat-datepicker>
+                  </mat-form-field>
 
-                  <!-- <div class="datepicker-section">
-                    <mat-form-field [color]="underLineColor">
-                      <input formControlName="datePicker" matInput [matDatepicker]="picker" (click)="picker.open()">
-                      <mat-datepicker #picker></mat-datepicker>
-                    </mat-form-field>
-                  </div> -->
+                  <mat-form-field appearance="fill" class="time-select-value time-from">
+                    <mat-select [(value)]="selectedTimeFrom">
+                      <mat-option *ngFor="let timeFrom of selectTime" [value]="timeFrom.value">
+                        {{timeFrom.viewValue}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
 
-                  <div class="form-group">
-                    <mat-label>Message</mat-label>
+                  <mat-form-field appearance="fill" class="time-select-value">
+                  <mat-select [(value)]="selectedTimeFrom">
+                    <mat-option *ngFor="let timeTo of selectTime" [value]="timeTo.value">
+                    {{timeTo.viewValue}}
+                  </mat-option>
+                </mat-select>
+                </mat-form-field>
+                  <mat-form-field [color]="underLineColor" class="pl-2">
+                    <!-- <mat-label>Choose a date</mat-label> -->
+                    <input formControlName="datePicker" matInput [matDatepicker]="picker6" (click)="picker6.open()">
+                    <mat-datepicker #picker6></mat-datepicker>
+                  </mat-form-field>
+                  <div class="clearfix"></div>
+                  <mat-checkbox>All Day</mat-checkbox>
+
+                </div>
+                <div class="message-section event-fields">
+                  <div class="form-group p-0">
+                    <mat-label class="p-0">Message</mat-label>
                     <mat-form-field [color]="underLineColor" appearance="fill">
                       <input matInput formControlName="timeMessage" placeholder="Enter Message">
                     </mat-form-field>
@@ -259,18 +286,21 @@
                   </div> -->
                 </div>
 
-                <div class="recurrence-section">
-                  <img src="assets/images/reload.svg" alt="done">
+                <div class="recurrence-section event-fields">
+<!--                  <img src="/assets/images/reload.svg" alt="done">-->
+                  <mat-icon>replay</mat-icon>
                   <mat-form-field appearance="fill">
-                    <mat-select formControlName="recurrenceCriteria">
+                    <mat-select (selectionChange)="recurrence($event, customRecurrence)" formControlName="recurrenceCriteria">
                       <mat-option *ngFor="let option of recurrenceOptions" [value]="option">
                         {{option | titlecase}}</mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>
 
-                <div class="date-range-section">
-                  <img src="assets/images/check_outline.svg" alt="done">
+                <div class="date-range-section event-fields">
+<!--                  <img src="/assets/images/check_outline.svg" alt="done">-->
+                  <mat-icon>check_circle_outline</mat-icon>
+
                   <mat-form-field appearance="fill">
                     <mat-date-range-input [rangePicker]="picker1">
                       <input matStartDate formControlName="dateRangeStart" matInput placeholder="Start date">
@@ -283,28 +313,29 @@
               </div>
 
             </mat-tab>
+
             <mat-tab label="Holiday">
 
-              <div class="col-md-12">
+              <div class="col-md-12 p-0">
 
-                <div class="title-section">
+                <div class="title-section event-fields">
                   <mat-form-field [color]="underLineColor">
                     <input matInput formControlName="title">
                   </mat-form-field>
                 </div>
 
-                <div class="message-section">
-                  <div class="form-group">
-                    <mat-label>Message</mat-label>
+                <div class="message-section event-fields">
+                  <div class="form-group p-0">
+                    <mat-label class="p-0">Message</mat-label>
                     <mat-form-field [color]="underLineColor" appearance="fill">
                       <input matInput formControlName="timeMessage" placeholder="Enter Message">
                     </mat-form-field>
                   </div>
                 </div>
 
-                <div>
-                  <i class="material-icons">access_time</i>
-                  <!-- <img src="assets/images/check_outline.svg" alt="done"> -->
+                <div class="date-range-section event-fields">
+                  <mat-icon>access_time</mat-icon>
+                  <!-- <img src="/assets/images/check_outline.svg" alt="done"> -->
                   <mat-form-field appearance="fill">
                     <mat-date-range-input [rangePicker]="picker2">
                       <input matStartDate formControlName="dateRangeStart" matInput placeholder="Start date">
@@ -315,8 +346,8 @@
                   </mat-form-field>
                 </div>
 
-                <!-- <div class="recurrence-section">
-                  <img src="assets/images/reload.svg" alt="done">
+                <!-- <div class="recurrence-section event-fields">
+                  <img src="/assets/images/reload.svg" alt="done">
                   <mat-form-field appearance="fill">
                     <mat-select formControlName="recurrenceCriteria">
                       <mat-option *ngFor="let option of recurrenceOptions" [value]="option">
@@ -325,8 +356,8 @@
                   </mat-form-field>
                 </div> -->
 
-                <!-- <div class="end-date-section"> -->
-                <!-- <img src="assets/images/check_outline.svg" alt="done"> -->
+                <!-- <div class="end-date-section event-fields"> -->
+                <!-- <img src="/assets/images/check_outline.svg" alt="done"> -->
                 <!-- <mat-form-field appearance="fill"> -->
                 <!-- <mat-label>Enter a date range</mat-label> -->
                 <!-- <mat-date-range-input [formGroup]="range" [rangePicker]="picker"> -->
@@ -345,9 +376,9 @@
             </mat-tab>
           </mat-tab-group>
 
-          <div class="col-md-12 select-calendar-section">
-            <img src="assets/images/calendar.svg" alt="cal">
-            <!-- <i class="material-icons">access_time</i> -->
+          <div class="select-calendar-section">
+<!--            <img src="/assets/images/calendar.svg" alt="cal">-->
+             <mat-icon>today</mat-icon>
             <!-- <div class=""> -->
             <mat-form-field appearance="fill">
 
@@ -380,8 +411,167 @@
       </div>
     </div>
   </ng-template>
+<!---->
+<ng-template #editCalendarEvent>
+  <div class="dialog-container event-header">
+    <div class="mat-card-header">
+      <mat-icon (click)="onClose()">close</mat-icon>
+      <h4 class="content-span full-width">{{calendarPreviewData.meta.calendarType}} - {{calendarPreviewData.title}}</h4>
+    </div>
+    <div class="dialog-content event-dialog">
+      <form class="form-horizontal form-bordered" [formGroup]="eventForm">
+
+            <div class="col-md-12 p-0">
+
+              <div class="title-section event-fields">
+                <mat-form-field [color]="underLineColor">
+                  <input matInput value="{{calendarPreviewData.title}}">
+                </mat-form-field>
+              </div>
+
+<!--Out of office-->
+              <div *ngIf="calendarPreviewData.meta.calendarType == 'Out of Office'" class="datepicker-section time-selection event-fields">
+                <mat-icon>access_time</mat-icon>
+                <mat-form-field [color]="underLineColor">
+                  <!-- <mat-label>Choose a date</mat-label> -->
+                  <input formControlName="datePicker" matInput [matDatepicker]="picker3" (click)="picker3.open()">
+                  <mat-datepicker #picker3></mat-datepicker>
+                </mat-form-field>
 
 
+
+                <mat-form-field appearance="fill" class="time-select-value time-from">
+                  <mat-select [(value)]="selectedTimeFrom">
+                    <mat-option *ngFor="let timeFrom of selectTime" [value]="timeFrom.value">
+                      {{timeFrom.viewValue}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="time-select-value">
+                  <mat-select [(value)]="selectedTimeFrom">
+                    <mat-option *ngFor="let timeTo of selectTime" [value]="timeTo.value">
+                      {{timeTo.viewValue}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field [color]="underLineColor" class="pl-2">
+                  <!-- <mat-label>Choose a date</mat-label> -->
+                  <input formControlName="datePicker" matInput [matDatepicker]="picker4" (click)="picker4.open()">
+                  <mat-datepicker #picker4></mat-datepicker>
+                </mat-form-field>
+                <div class="clearfix"></div>
+                <mat-checkbox>All Day</mat-checkbox>
+              </div>
+              <div *ngIf="calendarPreviewData.meta.calendarType !=='Business Hours'" class="message-section event-fields">
+                <div class="form-group p-0">
+                  <mat-label class="p-0">Message</mat-label>
+                  <mat-form-field [color]="underLineColor" appearance="fill">
+                    <input matInput formControlName="timeMessage" placeholder="Enter Message">
+                  </mat-form-field>
+                </div>
+              </div>
+
+<!--./-->
+
+              <div *ngIf="calendarPreviewData.meta.calendarType =='Business Hours'" class="shift-section event-fields">
+                <mat-icon class="time-icon">access_time</mat-icon>
+
+                <div class="datepicker-section">
+                  <mat-form-field [color]="underLineColor">
+                    <!-- <mat-label>Choose a date</mat-label> -->
+                    <input formControlName="datePicker" matInput [matDatepicker]="picker" (click)="picker.open()">
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                </div>
+                <div class="shift-main">
+                  <div class="shift-info">
+                    <mat-form-field [color]="underLineColor">
+                      <input matInput formControlName="shift">
+                    </mat-form-field>
+                    <!-- #timeMenuTrigger="matMenuTrigger" [matMenuTriggerFor]="timePicker" -->
+                    <button class="remove-btn" mat-icon-button>
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </div>
+
+                  <button mat-raised-button class="shift-btn">Add Shift</button>
+                </div>
+              </div>
+
+              <div *ngIf="calendarPreviewData.meta.calendarType !=='Holiday'" class="recurrence-section event-fields">
+                <mat-icon>replay</mat-icon>
+                <mat-form-field appearance="fill">
+                  <mat-select (selectionChange)="recurrence($event, customRecurrence)" formControlName="recurrenceCriteria">
+                    <mat-option *ngFor="let option of recurrenceOptions" [value]="option">
+                      {{option | titlecase}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div *ngIf="calendarPreviewData.meta.calendarType =='Business Hours'" class="end-date-section event-fields">
+                <mat-icon>check_circle_outline</mat-icon>
+                <mat-form-field appearance="fill">
+                  <mat-select formControlName="endDateCriteria">
+                    <mat-option value="never">Never</mat-option>
+                    <mat-option value="custom" (click)="openEndDateModal(endDateReference)">Custom</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+
+              <div *ngIf="calendarPreviewData.meta.calendarType !=='Business Hours'" class="date-range-section event-fields">
+                <!--                  <img src="/assets/images/check_outline.svg" alt="done">-->
+                <mat-icon>check_circle_outline</mat-icon>
+
+                <mat-form-field appearance="fill">
+                  <mat-date-range-input [rangePicker]="picker1">
+                    <input matStartDate formControlName="dateRangeStart" matInput placeholder="Start date">
+                    <input matEndDate formControlName="dateRangeEnd" matInput placeholder="End date">
+                  </mat-date-range-input>
+                  <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                  <mat-date-range-picker #picker1></mat-date-range-picker>
+                </mat-form-field>
+              </div>
+            </div>
+
+
+        <div class="select-calendar-section m-0">
+          <!--            <img src="/assets/images/calendar.svg" alt="cal">-->
+          <mat-icon>today</mat-icon>
+          <!-- <div class=""> -->
+          <mat-form-field appearance="fill">
+
+            <mat-select formControlName="calendars" placeholder="Select Calender">
+              <mat-option *ngFor="let calendar of calendarList" [value]="calendar">
+                {{calendar?.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <!-- </div> -->
+
+          <!-- <div class=""> -->
+          <mat-form-field #colorMenuTrigger="matMenuTrigger" [matMenuTriggerFor]="colorPicker"
+                          style="margin-left: 2.125rem;" appearance="fill">
+            <mat-select [ngStyle]="{'background':selectedColor}" class="color-select" formControlName="color">
+            </mat-select>
+          </mat-form-field>
+          <!-- </div> -->
+        </div>
+
+        <div class="template-action row">
+          <div class="col-md-12">
+            <div class="form-action-area">
+              <button mat-raised-button (click)="onClose()" class="gray-btn">Cancel</button>
+              <button mat-raised-button [disabled]="!eventForm.valid" (click)="onEventSave()"
+                      [mat-dialog-close]="true" class="dark-blue-btn service-trigger">{{saveBtnText}}</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-template>
+<!---->
   <mat-menu [class]="'color-div'" #colorPicker="matMenu" yPosition="below">
     <!-- <div class="color-picker-menu"> -->
     <color-circle (click)="$event.stopPropagation()" [circleSize]='18' [colors]='color'
@@ -402,7 +592,8 @@
         <form class="form-horizontal form-bordered" [formGroup]="recurrenceForm">
 
           <div class="repeat-type-section form-group">
-            <img src="assets/images/reload.svg" alt="reload">
+<!--            <img src="/assets/images/reload.svg" alt="reload">-->
+            <mat-icon>replay</mat-icon>
             <mat-label>Repeat every</mat-label>
             <mat-form-field appearance="fill" [color]="underLineColor">
               <mat-select formControlName="viewType">
@@ -479,6 +670,28 @@
       </div>
     </div>
   </ng-template>
+
+<ng-template #eventPreview>
+  <div class="dialog-container preview-dialog">
+    <div class="mat-card-header">
+      <h4 class="content-span full-width"><span class="circle-event"
+                                                [style]="{backgroundColor:  calendarPreviewData.color.primary}"></span>{{calendarPreviewData.title}}
+      </h4>
+      <span>
+      <mat-icon (click)="editEventModal(editCalendarEvent)">edit</mat-icon>
+      <mat-icon (click)="deleteSaveEvent(calendarPreviewData)">delete</mat-icon>
+      <mat-icon (click)="onClose()">close</mat-icon>
+      </span>
+
+    </div>
+    <div class="dialog-content">
+      <p *ngIf="calendarPreviewData.allDay">All Day</p>
+      <p *ngIf="calendarPreviewData.allDay == false">{{calendarPreviewData.start | date:'h:mm a'}} {{calendarPreviewData.end ? '-' : ''}} {{calendarPreviewData.end | date:'h:mm a'}}</p>
+      <p>{{calendarPreviewData.start | date:'MMMM d, y'}} {{calendarPreviewData.end ? '-' : ''}} {{calendarPreviewData.end | date:'MMMM d, y'}} {{calendarPreviewData.end ? '':'- Never Ending'}}</p>
+      <p>{{calendarList[0].name}}</p>
+    </div>
+  </div>
+</ng-template>
 
   <mat-menu #menu="matMenu">
     <button mat-menu-item>Edit</button>
