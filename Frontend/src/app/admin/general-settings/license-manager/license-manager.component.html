@@ -3,20 +3,19 @@
 </div>
 <div class="container main-custom-container">
   <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-12 p-0">
       <div class="panel-body">
         <div class="sub-heading">
           <h2>License Info</h2>
         </div>
         <div class="panel-page-content">
-          <form class="form-horizontal form-bordered" [formGroup]="licenseForm">
+          <!-- <form class="form-horizontal form-bordered" [formGroup]="licenseForm">
             <div class="key-section">
               <div class="form-group col-md-5">
                 <mat-label>Master API Key</mat-label>
                 <mat-form-field appearance="outline">
                   <input matInput formControlName="licenseKey">
                   <mat-error class="form-error">
-                    <!-- {{formErrors.amqUser}} -->
                     *Enter Master Key
                   </mat-error>
                 </mat-form-field>
@@ -26,9 +25,9 @@
                   (click)="onSave()">Save</button>
               </div>
             </div>
-          </form>
+          </form> -->
 
-          <div class="form-group license-table">
+          <!-- <div class="form-group license-table">
             <mat-label>Purchased Products </mat-label>
             <span class="refresh-span">Refresh</span>
             <table class="table">
@@ -42,7 +41,6 @@
                 </tr>
               </thead>
               <tbody>
-                <!-- <ng-container> -->
                 <tr class="product-info">
                   <td scope="row">
                     <h6>Status</h6>
@@ -64,7 +62,7 @@
                     <h6>Status</h6>
                     Data
                   </td>
-                  <!-- <td class="table-trigger">{{data.value ? data.value : 'N/A'}}
+                   <td class="table-trigger">{{data.value ? data.value : 'N/A'}}
                       <span class="list-trigger-area">
                         <button matTooltip="Edit" (click)="editAttribute(newAttribute,data)" mat-mini-fab><i
                             class="fa fa-pencil" aria-hidden="true"></i>
@@ -73,9 +71,8 @@
                             aria-hidden="true"></i>
                         </button>
                       </span>
-                    </td> -->
+                    </td>
                 </tr>
-                <!-- </ng-container> -->
               </tbody>
             </table>
             <table class="table">
@@ -89,7 +86,7 @@
                 </tr>
               </thead>
               <tbody>
-                <!-- <ng-container> -->
+       
                 <tr class="product-info not-active">
                   <td scope="row">
                     <h6>Status</h6>
@@ -126,7 +123,7 @@
               </mat-error>
             </table>
         
-          </div>
+          </div> -->
 
         </div>
       </div>
