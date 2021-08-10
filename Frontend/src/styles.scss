@@ -2660,10 +2660,10 @@ snack-bar-container {
   }
 
   .end-date-section {
-    mat-form-field {
-      //max-width: calc(100% - 340px);
-      //padding-left: 4px;
-    }
+    // mat-form-field {
+    //max-width: calc(100% - 340px);
+    //padding-left: 4px;
+    // }
 
     .mat-form-field.mat-focused .mat-form-field-underline {
       display: none;
@@ -2675,11 +2675,11 @@ snack-bar-container {
   }
 
   .recurrence-section {
-    mat-form-field {
-      //max-width: calc(100% - 150px);
-      //padding-left: 4px;
-      //height: 0;
-    }
+    // mat-form-field {
+    //max-width: calc(100% - 150px);
+    //padding-left: 4px;
+    //height: 0;
+    // }
 
     .mat-form-field.mat-focused .mat-form-field-underline {
       display: none;
@@ -2708,7 +2708,12 @@ snack-bar-container {
 
   // }
 
-  .date-range-section, .datepicker-section, .shift-info, .recurrence-section, .end-date-section, .select-calendar-section {
+  .date-range-section,
+  .datepicker-section,
+  .shift-info,
+  .recurrence-section,
+  .end-date-section,
+  .select-calendar-section {
     // .mat-form-field.mat-focused .mat-form-field-underline {
     //   display: none;
     // }
@@ -2726,9 +2731,9 @@ snack-bar-container {
       //padding: 0 5px;
       //height: 1.875rem;
 
-       .mat-form-field-infix {
-         padding: 0;
-         border: 0;
+      .mat-form-field-infix {
+        padding: 0;
+        border: 0;
       }
     }
 
@@ -2824,7 +2829,6 @@ snack-bar-container {
       max-width: 0;
     }
   }
-
 }
 .color-select {
   width: 16px !important;
@@ -3195,51 +3199,51 @@ snack-bar-container {
     }
   }
 }
-.selection-color{
-  .mat-form-field-flex{
+.selection-color {
+  .mat-form-field-flex {
     background: transparent !important;
     border: 0;
   }
-  .mat-form-field-infix{
+  .mat-form-field-infix {
     border: 0;
   }
-  .mat-form-field-underline{
+  .mat-form-field-underline {
     display: none !important;
   }
-  .mat-select-arrow{
+  .mat-select-arrow {
     top: 9px !important;
     left: -3px;
   }
 }
 
 .event-dialog {
-  .mat-tab-body-content{
-  padding: 0 10px;
+  .mat-tab-body-content {
+    padding: 0 10px;
   }
 }
 
-.time-selection{
+.time-selection {
   .mat-select-arrow-wrapper {
     transform: translateY(0);
-    opacity:0;
+    opacity: 0;
   }
 
-  .time-from  {
+  .time-from {
     padding-left: 0 !important;
-    .mat-select-min-line{
-      &:after{
-        content: '-';
+    .mat-select-min-line {
+      &:after {
+        content: "-";
         position: absolute;
         right: 0;
       }
     }
   }
 }
-.date-range-section{
-  .mat-form-field-flex{
+.date-range-section {
+  .mat-form-field-flex {
     padding: 0;
   }
-  .mat-form-field-suffix{
+  .mat-form-field-suffix {
     position: absolute;
     right: 0;
     top: 0;
@@ -3249,19 +3253,18 @@ snack-bar-container {
 .time-select-value {
   width: auto !important;
   padding-left: 6px;
-  .mat-select-value{
+  .mat-select-value {
     display: table-row !important;
 
-    .mat-select-min-line{
+    .mat-select-min-line {
       font-size: 14px !important;
       position: relative;
       top: -1px;
       padding-right: 10px;
     }
-
   }
 
-  div{
+  div {
     padding-right: 0 !important;
     width: 100%;
   }
@@ -3272,7 +3275,6 @@ snack-bar-container {
     padding-left: 35px !important;
   }
 }
-
 
 // .routing-user-list {
 .chip-menu.mat-menu-panel,
@@ -3307,5 +3309,70 @@ snack-bar-container {
   width: 75% !important;
   .mat-menu-content {
     padding: 0 !important;
+  }
+}
+
+///////// license ///////
+
+.activation-area {
+
+
+  
+  .mat-tab-label {
+    min-width: 120px;
+  }
+
+  .mat-tab-label .mat-tab-label-content {
+    font-size: 12px;
+    left: 28px;
+    position: absolute;
+ 
+
+  }
+
+  .mat-tab-label-active {
+    color: #25afcb !important;
+  }
+
+  .mat-ink-bar {
+    margin-left: 24px;
+    width: 90px !important;
+    height: 1.5px !important;
+  }
+
+  .mat-tab-group.mat-primary .mat-ink-bar,
+  .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: #25afcb;
+  }
+
+  .mat-tab-header {
+    border-left: 1px solid #e6e6e6;
+    border-right: 1px solid #e6e6e6;
+    border-top: 1px solid #e6e6e6;
+    border-bottom: none;
+  }
+
+  .mat-tab-body-wrapper {
+    border-left: 1px solid #e6e6e6;
+    border-right: 1px solid #e6e6e6;
+    border-bottom: 1px solid #e6e6e6;
+    border-top: none;
+  }
+
+  .mat-tab-body-content {
+    overflow-y: hidden;
+      padding: 15px 13px;
+  }
+
+  .mat-tab-list {
+    background: #f8f8f8;
+    height: 35px;
+    .mat-tab-labels {
+      height: 35px;
+      .mat-tab-label {
+        height: 35px;
+        color: #7e7e7e;
+      }
+    }
   }
 }

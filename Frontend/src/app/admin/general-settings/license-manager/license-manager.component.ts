@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CommonService } from '../../services/common.service';
 import { EndpointService } from '../../services/endpoint.service';
 import { SnackbarService } from '../../services/snackbar.service';
@@ -13,6 +13,12 @@ export class LicenseManagerComponent implements OnInit {
 
   spinner = false;
   licenseForm: FormGroup;
+  fileName = '';
+  filePath;
+  fileURL;
+
+  licenseKey = new FormControl('', [Validators.required]);
+  licenseFile = new FormControl('', [Validators.required]);
 
   constructor(private snackbar: SnackbarService,
     private fb: FormBuilder,
@@ -27,9 +33,10 @@ export class LicenseManagerComponent implements OnInit {
     this.commonService.tokenVerification();
 
 
-    this.licenseForm = this.fb.group({
-      licenseKey: ['',Validators.required],
-    });
+    // this.licenseForm = this.fb.group({
+    //   licenseKey: ['',Validators.required],
+    //   licenseFile:['']
+    // });
 
     // this.licenseForm.valueChanges.subscribe((data) => {
     //   let result = this.commonService.logValidationErrors(this.amqSettingForm, this.formErrors, this.validations);
@@ -41,6 +48,21 @@ export class LicenseManagerComponent implements OnInit {
       this.spinner = res;
       this.changeDetector.markForCheck();
     });
+  }
+
+  //to view selected image and save in base64 format and it accepts file properties as 'files' and change event as 'e'
+  fileUpload(files, e) {
+    var reader = new FileReader();
+    this.filePath = files;
+    if (files.length != 0) {
+      if (files[0].size > 2097152) return this.snackbar.snackbarMessage('error-snackbar', 'Image Size greater than 2Mb', 3);
+      reader.readAsDataURL(files[0]);
+      reader.onload = (_event) => {
+        this.fileURL = reader.result;
+        this.licenseFile.setValue(this.fileURL);
+        this.fileName = e.target.files[0].name;
+      }
+    }
   }
 
   onSave() { }
