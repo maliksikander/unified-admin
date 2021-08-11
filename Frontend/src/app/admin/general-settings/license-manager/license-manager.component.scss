@@ -9,6 +9,7 @@
 .key-section {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   // mat-form-field-flex {
   // height: 40px !important;
   // }
@@ -16,13 +17,20 @@
   .key-btn {
     display: inline-block;
     position: relative;
-    top: 25px;
+    top: 3px;
+    margin: 0px 0px 0px 10px;
   }
 
-  .form-error {
+  // .form-error {
+  //   font-size: 11px;
+  //   // padding: 0 !important;
+  // }
+}
+
+mat-error {
+  span {
     font-size: 11px;
-    // padding: 0 !important;
-  }
+  } // padding: 0 !important;
 }
 
 // .license-table {

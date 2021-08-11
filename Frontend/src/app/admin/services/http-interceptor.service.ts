@@ -46,7 +46,7 @@ export class HttpInterceptorService {
         let code;
         let msg: string
 
-        if (error.error.message) {
+        if (error.error && error.error.message) {
           msg = error.error.message;
           if (msg) msg = msg.toUpperCase();
           this.snackbar.snackbarMessage('error-snackbar', msg, 2);

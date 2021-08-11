@@ -3315,9 +3315,6 @@ snack-bar-container {
 ///////// license ///////
 
 .activation-area {
-
-
-  
   .mat-tab-label {
     min-width: 120px;
   }
@@ -3326,8 +3323,6 @@ snack-bar-container {
     font-size: 12px;
     left: 28px;
     position: absolute;
- 
-
   }
 
   .mat-tab-label-active {
@@ -3360,8 +3355,8 @@ snack-bar-container {
   }
 
   .mat-tab-body-content {
-    overflow-y: hidden;
-      padding: 15px 13px;
+    // overflow-y: hidden;
+    padding: 15px 13px;
   }
 
   .mat-tab-list {

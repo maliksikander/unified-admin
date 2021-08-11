@@ -127,45 +127,44 @@
           <p>Please select option and enter the detail to activate your license</p>
           <div class="activation-area">
             <mat-tab-group>
-              <mat-tab  label="Activate Online">
-                <!-- <form class="form-horizontal form-bordered" [formGroup]="licenseForm"> -->
+              <mat-tab label="Activate Online">
                 <div class="key-section">
-                  <div class="form-group col-md-5">
+                  <div class="form-group col-md-5 col-sm-12">
                     <mat-label>Master API Key</mat-label>
                     <mat-form-field appearance="outline">
-                      <!-- <mat-label>Enter your email</mat-label> -->
                       <input matInput placeholder="Enter Master Key" [formControl]="licenseKey" required>
-                      <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+                      <mat-error *ngIf="licenseKey.invalid">
+                        <span *ngIf="licenseKey.errors?.required">Field is required</span>
+                      </mat-error>
                     </mat-form-field>
                   </div>
                   <span class="key-btn">
-                    <!-- *ngIf="licenseKey.valid" -->
-                    <button mat-flat-button class="blue-btn service-trigger" (click)="onSave()">Save</button>
+                    <button *ngIf="licenseKey.valid" mat-flat-button class="blue-btn service-trigger"
+                      (click)="onSave()">Save</button>
                   </span>
                 </div>
-                <!-- </form> -->
               </mat-tab>
-              <mat-tab  label="Activate Offline">
-                <!-- <form class="form-horizontal form-bordered" [formGroup]="licenseForm"> -->
+              <mat-tab label="Activate Offline">
                 <div class="key-section">
-                    <div class="form-group col-md-5">
-                      <mat-label>Upload File</mat-label>
-                      <mat-form-field appearance="outline">
-                        <input readonly style="display: none;" #file type="file" accept='image/*'
-                          (change)="fileUpload(file.files,$event)" />
-                        <input [readonly]="true" matInput [formControl]="licenseFile" [value]="fileName">
-                        <button class="select-file-button" mat-icon-button matSuffix (click)="file.click()">
-                          <img src="assets/images/upload.svg" alt="upload">
-                        </button>
-                        <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
-                      </mat-form-field>
-                    </div>
+                  <div class="form-group col-md-5 col-sm-12">
+                    <mat-label>Upload File</mat-label>
+                    <mat-form-field appearance="outline">
+                      <input readonly style="display: none;" #file type="file" accept='image/*'
+                        (change)="fileUpload(file.files,$event)" />
+                      <input [readonly]="true" matInput [formControl]="licenseFile" [value]="fileName">
+                      <button class="select-file-button" mat-icon-button matSuffix (click)="file.click()">
+                        <img src="assets/images/upload.svg" alt="upload">
+                      </button>
+                      <mat-error *ngIf="licenseFile.invalid">
+                        <span *ngIf="licenseFile.errors?.required">Field is required</span>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
                   <div class="key-btn">
-                    <!-- *ngIf="licenseFile.valid" -->
-                    <button mat-flat-button class="blue-btn service-trigger" (click)="onSave()">Upload</button>
+                    <button *ngIf="licenseFile.valid" mat-flat-button class="blue-btn service-trigger"
+                      (click)="onSave()">Upload</button>
                   </div>
                 </div>
-                <!-- </form> -->
               </mat-tab>
             </mat-tab-group>
           </div>
