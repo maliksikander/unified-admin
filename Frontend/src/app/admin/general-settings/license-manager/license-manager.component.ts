@@ -32,18 +32,6 @@ export class LicenseManagerComponent implements OnInit {
 
     this.commonService.tokenVerification();
 
-
-    // this.licenseForm = this.fb.group({
-    //   licenseKey: ['',Validators.required],
-    //   licenseFile:['']
-    // });
-
-    // this.licenseForm.valueChanges.subscribe((data) => {
-    //   let result = this.commonService.logValidationErrors(this.amqSettingForm, this.formErrors, this.validations);
-    //   this.formErrors = result[0];
-    //   this.validations = result[1];
-    // });
-
     this.commonService._spinnerSubject.subscribe((res: any) => {
       this.spinner = res;
       this.changeDetector.markForCheck();
@@ -55,14 +43,20 @@ export class LicenseManagerComponent implements OnInit {
     var reader = new FileReader();
     this.filePath = files;
     if (files.length != 0) {
-      if (files[0].size > 2097152) return this.snackbar.snackbarMessage('error-snackbar', 'Image Size greater than 2Mb', 3);
+      // if (files[0].size > 2097152) return this.snackbar.snackbarMessage('error-snackbar', 'Image Size greater than 2Mb', 3);
       reader.readAsDataURL(files[0]);
       reader.onload = (_event) => {
         this.fileURL = reader.result;
         this.licenseFile.setValue(this.fileURL);
         this.fileName = e.target.files[0].name;
+        // console.log("1==>", this.filePath)
+        // console.log("2==>", this.fileName)
+        // console.log("3==>", this.fileURL)
+        // console.log("4==>", reader)
+
       }
     }
+
   }
 
   onSave() { }
