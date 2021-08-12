@@ -9,11 +9,11 @@ const keycloak = new NodeAdapter(config);
 let resource = config.resource;
 
 
-router.get('/', keycloak.enforcer(['forms:manage-form'], {
-    resource_server_id: resource
-}), formValidationController.getFormValidation);
+// router.get('/', keycloak.enforcer(['forms:manage-form'], {
+//     resource_server_id: resource
+// }), formValidationController.getFormValidation);
 
-// router.get('/', formValidationController.getFormValidation);
+router.get('/', formValidationController.getFormValidation);
 
 
 // router.put('/', keycloak.enforcer(['forms:manage-form'], {
