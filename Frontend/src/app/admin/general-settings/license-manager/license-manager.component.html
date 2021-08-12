@@ -140,7 +140,7 @@
                   </div>
                   <span class="key-btn">
                     <button *ngIf="licenseKey.valid" mat-flat-button class="blue-btn service-trigger"
-                      (click)="onSave()">Save</button>
+                      (click)="onSave('save')">Save</button>
                   </span>
                 </div>
               </mat-tab>
@@ -150,7 +150,7 @@
                     <mat-label>Upload File</mat-label>
                     <mat-form-field appearance="outline">
                       <input readonly style="display: none;" #file type="file" accept='*'
-                        (change)="fileUpload(file.files,$event)" />
+                        (change)="fileUpload(file.files,$event.target.files)" />
                       <input [readonly]="true" matInput [formControl]="licenseFile" [value]="fileName">
                       <button class="select-file-button" mat-icon-button matSuffix (click)="file.click()">
                         <img src="assets/images/upload.svg" alt="upload">
@@ -162,7 +162,7 @@
                   </div>
                   <div class="key-btn">
                     <button *ngIf="licenseFile.valid" mat-flat-button class="blue-btn service-trigger"
-                      (click)="onSave()">Upload</button>
+                      (click)="onSave('upload')">Upload</button>
                   </div>
                 </div>
               </mat-tab>
