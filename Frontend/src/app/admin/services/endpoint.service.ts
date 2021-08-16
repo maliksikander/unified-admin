@@ -929,7 +929,7 @@ export class EndpointService {
   fileUpload(data): Observable<any> {
     return this.httpClient
       .post<any>(
-        `${this.LICENSE_URL}/${this.endpoints.license.fileUpload}`,
+        `${this.LICENSE_URL}/${this.endpoints.license.fileUpload}?file=available`,
         data,
         {
           // headers: new HttpHeaders({

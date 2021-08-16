@@ -22,8 +22,8 @@ export class LicenseManagerComponent implements OnInit {
   // filePath;
   // fileURL;
   // fileData = new FormData();
-  fileUploadData = {
-    file: new FormData(),
+  fileUploadData: any = {
+    file: "",
   };
 
   licenseKey = new FormControl("", [Validators.required]);
@@ -48,6 +48,10 @@ export class LicenseManagerComponent implements OnInit {
 
   //to view selected image and save in base64 format and it accepts file properties as 'files' and change event as 'e'
   fileUpload(file, e) {
+    this.licenseFile.reset();
+    this.fileName = "";
+    let fd = new FormData();
+    // this.fileUploadData.file.;
     // console.log("file==>", file[0]);
     // console.log("event==>", e[0]);
     // var reader = new FileReader();
@@ -61,27 +65,33 @@ export class LicenseManagerComponent implements OnInit {
     //     this.fileName = e.target.files[0].name;
     //   }
     // }
-    // let fd: any = new FormData();
-    this.licenseFile.setValue(file[0]);
-    this.fileName = file[0].name;
-    this.fileUploadData.file.append("file", file[0]);
-    console.log(this.fileUploadData.file.get('file'))
-  }
 
-  onSave(mode) {
-    if (mode == "upload") {
-      this.endPointService.fileUpload(this.fileUploadData).subscribe(
-        (res: any) => {
-          this.spinner = false;
-          // this.channelTypes = res;
-          // if (res.length == 0) this.snackbar.snackbarMessage('error-snackbar', "No Channel Type Found", 2);
-        },
-        (error) => {
-          this.spinner = false;
-          console.log("Error fetching:", error);
-          // if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
-        }
-      );
+    if (file[0]) {
+      this.licenseFile.setValue(file[0]);
+      this.fileName = file[0].name;
+      fd.append("file", file[0]);
+      this.fileUploadData.file = fd;
+      // console.log(this.fileUploadData.file.get('file'))
     }
   }
+
+  onUpload() {
+    this.spinner = true;
+    this.endPointService.fileUpload(this.fileUploadData).subscribe(
+      (res: any) => {
+        this.spinner = false;
+        if (res.status == 200) {
+          this.snackbar.snackbarMessage("success-snackbar", res.message, 2);
+        } else {
+          this.snackbar.snackbarMessage("error-snackbar", res.message, 2);
+        }
+      },
+      (error) => {
+        this.spinner = false;
+        console.log("Error fetching:", error);
+      }
+    );
+  }
+
+  onSave() {}
 }

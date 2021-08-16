@@ -140,7 +140,7 @@
                   </div>
                   <span class="key-btn">
                     <button *ngIf="licenseKey.valid" mat-flat-button class="blue-btn service-trigger"
-                      (click)="onSave('save')">Save</button>
+                      (click)="onSave()">Save</button>
                   </span>
                 </div>
               </mat-tab>
@@ -162,7 +162,7 @@
                   </div>
                   <div class="key-btn">
                     <button *ngIf="licenseFile.valid" mat-flat-button class="blue-btn service-trigger"
-                      (click)="onSave('upload')">Upload</button>
+                      (click)="onUpload()">Upload</button>
                   </div>
                 </div>
               </mat-tab>
