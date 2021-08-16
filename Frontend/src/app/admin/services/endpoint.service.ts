@@ -70,9 +70,8 @@ export class EndpointService {
     this.LICENSE_URL = e.LICENSE_MANAGER_URL;
     this.userRoles = e.BUSINESS_USER_ROLES;
 
-    if (isDevMode()) {
-      this.ADMIN_URL = "http://localhost:3000";
-    }
+    if (isDevMode()) this.ADMIN_URL = "http://localhost:3000";
+
     this.getStorageValues();
   }
 
@@ -929,13 +928,13 @@ export class EndpointService {
   fileUpload(data): Observable<any> {
     return this.httpClient
       .post<any>(
-        `${this.LICENSE_URL}/${this.endpoints.license.fileUpload}?file=available`,
+        `${this.LICENSE_URL}/${this.endpoints.license.fileUpload}`,
         data,
         {
-          // headers: new HttpHeaders({
-          //   'Content-Type': undefined,
-          //   // 'Authorization': 'Bearer'
-          // })
+          headers: new HttpHeaders({
+            // "Content-Type": undefined,
+            // 'Authorization': 'Bearer'
+          }),
         }
       )
       .pipe(catchError(this.handleError));

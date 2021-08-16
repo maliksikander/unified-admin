@@ -7,5 +7,5 @@
   ],
   "CCM_URL": "https://192.168.2.50:8082",
   "BOT_URL": "https://9881be0c-b5cb-4b01-a4cd-61751c5c81f5.mock.pstmn.io",
-  "LICENSE_MANAGER_URL":"https://fe42520c-5cce-47f3-91ac-27d0a1c21668.mock.pstmn.io"
+  "LICENSE_MANAGER_URL":"http://192.168.1.47:8888"
 }
