@@ -27,7 +27,6 @@ export class PullModeRoutingComponent implements OnInit {
   formHeading = "Add New Pull Mode List";
   saveBtnText = "Create";
   pullModeListData = [];
-  // reasonType = ["LOG_OUT", "NOT_READY"]
   editPullModeListData;
 
   constructor(
@@ -52,7 +51,7 @@ export class PullModeRoutingComponent implements OnInit {
     let pageNumber = sessionStorage.getItem("currentPullModePage");
     if (pageNumber) this.p = pageNumber;
 
-    //checking for reason form validation failures
+    //checking for pull mode list form validation failures
     this.pullModeListForm.valueChanges.subscribe((data) => {
       this.commonService.logValidationErrors(
         this.pullModeListForm,
@@ -120,7 +119,7 @@ export class PullModeRoutingComponent implements OnInit {
       .subscribe((res: any) => {
         // this.spinner = true;
         if (res === "delete") {
-          // this.deleteReasonCode(id);
+          // this.deletePullModeList(id);
         } else {
           this.spinner = false;
         }
@@ -146,7 +145,7 @@ export class PullModeRoutingComponent implements OnInit {
   }
 
   //to delete pull mode list, it accepts pull mode list object id as `id` parameter and updating the local list on success response
-  // deleteReasonCode(id) {
+  // deletePullModeList(id) {
   //   this.endPointService.deletePullModeList(id).subscribe(
   //     (res: any) => {
   //       this.spinner = false;
@@ -160,7 +159,7 @@ export class PullModeRoutingComponent implements OnInit {
   //     });
   // }
 
-  // to save the reason object
+  // to save the pull mode list
   onSave() {
     this.spinner = true;
     let data = this.pullModeListForm.value;

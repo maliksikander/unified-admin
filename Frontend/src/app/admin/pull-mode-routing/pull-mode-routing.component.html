@@ -33,7 +33,6 @@
                             <div class="pull-mode-data"
                                 *ngFor="let data of pullModeListData | filter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
                                 <span class="group-name">{{data?.name ? data.name : 'N/A'}}</span>
-                                <!-- <span class="group-name">{{data?.description ? data.description : 'N/A'}}</span> -->
                                 <span class="group-name">
                                     {{data?.description ? data.description :'N/A'}}
                                     <span class="list-trigger-area">
@@ -92,19 +91,6 @@
                         </mat-form-field>
                     </div>
 
-                    <!-- <div class="form-group">
-                        <mat-label>Type</mat-label>
-                        <mat-form-field appearance="outline">
-                            <mat-select formControlName="type">
-                                <mat-option *ngFor="let val of reasonType" [value]="val">{{val |
-                                    removeUnderscoreFilter | titlecase}}
-                                </mat-option>
-                            </mat-select>
-                            <mat-error class="form-error">
-                                {{formErrors?.type}}
-                            </mat-error>
-                        </mat-form-field>
-                    </div> -->
                     <div class="form-group">
                         <mat-label>Description</mat-label>
                         <mat-form-field appearance="outline">
