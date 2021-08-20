@@ -36,7 +36,7 @@ export class ChannelListComponent implements OnInit {
 
   ngOnInit() {
 
-    this.commonService.tokenVerification();
+    this.commonService.checkTokenExistenceInStorage();
     this.getChannelType();
   }
 

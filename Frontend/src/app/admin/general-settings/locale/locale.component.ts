@@ -45,7 +45,7 @@ export class LocaleComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.commonService.tokenVerification();
+    this.commonService.checkTokenExistenceInStorage();
 
     //setting local form validation messages 
     this.validations = this.commonService.localeSettingErrorMessages;

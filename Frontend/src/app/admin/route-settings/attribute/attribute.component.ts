@@ -43,7 +43,7 @@ export class AttributeComponent implements OnInit {
 
   ngOnInit() {
 
-    this.commonService.tokenVerification();
+    this.commonService.checkTokenExistenceInStorage();
 
     //setting local form validation messages 
     this.validations = this.commonService.attributeFormErrorMessages;

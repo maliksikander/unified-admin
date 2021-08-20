@@ -29,7 +29,7 @@ export class LoggingComponent implements OnInit {
     private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.commonService.tokenVerification();
+    this.commonService.checkTokenExistenceInStorage();
 
     //setting local form validation messages 
     this.validations = this.commonService.logSettingErrorMessages;

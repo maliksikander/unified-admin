@@ -574,7 +574,7 @@ export class CommonService {
   }
 
   //to verify token existence in local/session storage
-  tokenVerification() {
+  checkTokenExistenceInStorage() {
 
     let local = localStorage.getItem('token');
     let session = sessionStorage.getItem('token');

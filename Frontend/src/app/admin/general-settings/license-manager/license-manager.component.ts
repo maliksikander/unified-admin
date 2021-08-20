@@ -30,7 +30,7 @@ export class LicenseManagerComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.commonService.tokenVerification();
+    this.commonService.checkTokenExistenceInStorage();
 
     this.commonService._spinnerSubject.subscribe((res: any) => {
       this.spinner = res;

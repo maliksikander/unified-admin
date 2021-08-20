@@ -38,7 +38,7 @@ export class NewFormComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
 
-    this.commonService.tokenVerification();
+    this.commonService.checkTokenExistenceInStorage();
     this.validations = this.commonService.formErrorMessages;
 
     this.newForm = this.fb.group({

@@ -39,7 +39,7 @@ export class PullModeRoutingComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.commonService.tokenVerification();
+    this.commonService.checkTokenExistenceInStorage();
 
     //setting local form validation messages
     this.validations = this.commonService.pullModeListFormErrorMessages;
@@ -70,7 +70,7 @@ export class PullModeRoutingComponent implements OnInit {
       (res: any) => {
         this.pullModeListData = res;
         // if (res.length == 0)
-          // this.snackbar.snackbarMessage("error-snackbar", "NO DATA FOUND", 2);
+        // this.snackbar.snackbarMessage("error-snackbar", "NO DATA FOUND", 2);
         this.spinner = false;
       },
       (error) => {
@@ -101,7 +101,7 @@ export class PullModeRoutingComponent implements OnInit {
     this.searchTerm = "";
   }
 
-  //Confirmation dialog for delete, it accepts the reason object as `data` parameter
+  //Confirmation dialog for delete, it accepts the pull mode list object as `data` parameter
   deleteConfirm(data) {
     let id = data.id;
     let msg = "Are you sure you want to delete this pull mode list ?";

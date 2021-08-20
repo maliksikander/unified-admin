@@ -30,7 +30,7 @@ export class FormsComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.commonService.tokenVerification();
+    this.commonService.checkTokenExistenceInStorage();
     let pageNumber = sessionStorage.getItem('formsPage');
     if (pageNumber) this.p = pageNumber;
     this.getForms();
