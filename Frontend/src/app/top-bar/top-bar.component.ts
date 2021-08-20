@@ -34,6 +34,7 @@ export class TopBarComponent implements OnInit {
     sessionStorage.removeItem('currentUsersPage');
     sessionStorage.removeItem('channelTypePage');
     sessionStorage.removeItem('currentReasonCodePage');
+    sessionStorage.removeItem('currentPullModePage');
     sessionStorage.removeItem('tenant');
     sessionStorage.removeItem('formsPage');
     localStorage.removeItem('username');

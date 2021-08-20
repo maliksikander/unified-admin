@@ -530,6 +530,22 @@ export class CommonService {
     },
   };
 
+  pullModeListFormErrorMessages = {
+    'name': {
+      'required': "This field is required",
+      'minlength': "Min 3 characters required",
+      'maxlength': "Max 100 characters allowed",
+      'pattern': 'Not a valid pattern',
+      'validName': 'Already exists'
+
+    },
+    'description': {
+      'required': "This field is required",
+      'maxlength': "Max 500 characters allowed",
+      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+    }
+  };
+
   constructor(private snackbar: SnackbarService,
     private router: Router) { }
 

@@ -41,6 +41,7 @@ import { NewFormComponent } from './forms/new-form/new-form.component';
 import { ChannelTypeComponent } from './channel-manager/channel-type/channel-type.component';
 import { ChannelTypeFormComponent } from './channel-manager/channel-type/channel-type-form/channel-type-form.component';
 import { ReasonCodesComponent } from './reason-codes/reason-codes.component';
+import { PullModeRoutingComponent } from './pull-mode-routing/pull-mode-routing.component';
 
 @NgModule({
     imports: [
@@ -85,7 +86,8 @@ import { ReasonCodesComponent } from './reason-codes/reason-codes.component';
         NewFormComponent,
         ChannelTypeComponent,
         ChannelTypeFormComponent,
-        ReasonCodesComponent
+        ReasonCodesComponent,
+        PullModeRoutingComponent
     ],
     providers: [
         HttpClientModule,

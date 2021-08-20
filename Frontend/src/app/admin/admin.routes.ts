@@ -20,6 +20,7 @@ import { BotListComponent } from './bot/bot-list/bot-list.component';
 import { FormsComponent } from './forms/forms.component';
 import { ChannelTypeComponent } from './channel-manager/channel-type/channel-type.component';
 import { ReasonCodesComponent } from './reason-codes/reason-codes.component';
+import { PullModeRoutingComponent } from './pull-mode-routing/pull-mode-routing.component';
 
 
 export const adminRoutes: Routes = [
@@ -47,6 +48,7 @@ export const adminRoutes: Routes = [
       { path: 'bot-settings', component: BotListComponent },
       { path: 'form', component: FormsComponent },
       { path: 'reason-code', component: ReasonCodesComponent },
+      { path: 'pull-mode-list', component: PullModeRoutingComponent }
     ]
   }
 ];
