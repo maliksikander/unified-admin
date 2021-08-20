@@ -12,3 +12,4 @@ module.exports.securitySettingService = require('./securitySetting.service');
 module.exports.formsService = require('./forms.service');
 module.exports.formValidationService = require('./formValidation.service')
 module.exports.reasonService = require('./reason.service')
+module.exports.pullModeListService = require('./pull-mode-list.service')

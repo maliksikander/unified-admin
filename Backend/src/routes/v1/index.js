@@ -13,6 +13,7 @@ const loginRoute = require('./login.route');
 const userRoute = require('./user.route');
 const formValidationRoute = require('./formValidation.route');
 const reasonRoute = require('./reason.route');
+const pullModeRoute = require('./pull-mode-list.route');
 const router = express.Router();
 
 // router.use('/auth', authRoute);
@@ -29,5 +30,6 @@ router.use('/formValidation', formValidationRoute);
 router.use('/keycloakLogin', loginRoute);
 router.use('/users', userRoute);
 router.use('/reasons', reasonRoute);
+router.use('/pull-mode-list', pullModeRoute);
 
 module.exports = router;

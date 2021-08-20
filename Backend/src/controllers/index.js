@@ -11,3 +11,4 @@ module.exports.loginController = require('./login.controller');
 module.exports.formsController = require('./forms.controller');
 module.exports.formValidationController = require('./formValidation.controller');
 module.exports.reasonController = require('./reason.controller');
+module.exports.pullModeListController = require('./pull-mode-list.controller');
