@@ -436,6 +436,18 @@ export class CommonService {
       'maxlength': "Less characters required",
       'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
     },
+    'routingMode': {
+      'required': "This field is required",
+      'minlength': "More characters required",
+      'maxlength': "Less characters required",
+      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+    },
+    'routingObjectID': {
+      'required': "This field is required",
+      'minlength': "More characters required",
+      'maxlength': "Less characters required",
+      'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+    },
   };
 
   channelTypeErrorMessages = {

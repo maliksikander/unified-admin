@@ -38,6 +38,7 @@ export class PullModeRoutingComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    
     this.commonService.checkTokenExistenceInStorage();
 
     //setting local form validation messages

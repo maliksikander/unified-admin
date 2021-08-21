@@ -91,14 +91,34 @@
       </div>
 
       <div class="form-group">
-        <mat-label>Default Queue</mat-label>
+        <mat-label>Routing Mode</mat-label>
         <mat-form-field appearance="outline">
-          <mat-select formControlName="defaultQueue">
-            <mat-option *ngFor="let queue of queueList" [value]="queue">
-              {{queue?.name}}</mat-option>
+          <mat-select (selectionChange)="resetFormControl()" formControlName="routingMode">
+            <mat-option *ngFor="let mode of routingModeList" [value]="mode">
+              {{mode | titlecase}}</mat-option>
           </mat-select>
           <mat-error class="form-error">
-            {{formErrors.defaultQueue}}
+            {{formErrors?.routingMode}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <mat-label>Default {{channelSettingForm.value?.routingMode == 'PUSH' ? 'Queue' :'List' }}</mat-label>
+
+        <mat-form-field appearance="outline">
+          <mat-select formControlName="routingObjectID">
+            <ng-container *ngIf="channelSettingForm.value?.routingMode == 'PUSH'">
+              <mat-option *ngFor="let queue of queueList" [value]="queue">
+                {{queue?.name}}</mat-option>
+            </ng-container>
+            <ng-container *ngIf="channelSettingForm.value?.routingMode == 'PULL'">
+              <mat-option *ngFor="let list of pullModeListData" [value]="list">
+                {{list?.name}}</mat-option>
+            </ng-container>
+          </mat-select>
+          <mat-error class="form-error">
+            {{formErrors?.routingObjectID}}
           </mat-error>
         </mat-form-field>
       </div>
