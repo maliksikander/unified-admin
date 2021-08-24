@@ -8,27 +8,37 @@ let { NodeAdapter } = require("ef-keycloak-connect");
 const keycloak = new NodeAdapter(config);
 let resource = config.resource;
 
-
-router.get('/', keycloak.enforcer(['forms:manage-form'], {
-    resource_server_id: resource
-}), formsController.getForms);
+// router.get('/', keycloak.enforcer(['forms:manage-form'], {
+//     resource_server_id: resource
+// }), formsController.getForms);
 
 // router.get('/:formID', keycloak.enforcer(['forms:manage-form'], {
 //     resource_server_id: resource
 // }), formsController.getFormByID);
 
+// router.put('/', keycloak.enforcer(['forms:manage-form'], {
+//     resource_server_id: resource
+// }), validate(formsValidation.updateForm), formsController.updateForm);
+
+// router.post('/', keycloak.enforcer(['forms:manage-form'], {
+//     resource_server_id: resource
+// }), validate(formsValidation.createForm), formsController.createForm);
+
+// router.delete('/:formID', keycloak.enforcer(['forms:manage-form'], {
+//     resource_server_id: resource
+// }), formsController.deleteForm);
+
+
+router.get('/', formsController.getForms);
+
 router.get('/:formID', formsController.getFormByID);
 
-router.put('/', keycloak.enforcer(['forms:manage-form'], {
-    resource_server_id: resource
-}), validate(formsValidation.updateForm), formsController.updateForm);
+router.put('/', validate(formsValidation.updateForm), formsController.updateForm);
 
-router.post('/', keycloak.enforcer(['forms:manage-form'], {
-    resource_server_id: resource
-}), validate(formsValidation.createForm), formsController.createForm);
+router.post('/', validate(formsValidation.createForm), formsController.createForm);
 
-router.delete('/:formID', keycloak.enforcer(['forms:manage-form'], {
-    resource_server_id: resource
-}), formsController.deleteForm);
+router.delete('/:formID', formsController.deleteForm);
+
+
 
 module.exports = router;

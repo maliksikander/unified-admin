@@ -37,7 +37,7 @@
                                     {{data?.description ? data.description :'N/A'}}
                                     <span class="list-trigger-area">
                                         <button mat-mini-fab matTooltip="Edit"
-                                            (click)="editPullModeList(pullModeForm,data)">
+                                            (click)="openEditPullModeModal(pullModeForm,data)">
                                             <mat-icon>mode_edit</mat-icon>
                                         </button>
                                         <button matTooltip="Delete" (click)="deleteConfirm(data)" mat-mini-fab>
@@ -73,6 +73,7 @@
         </div>
     </div>
 
+    <!-- Pull Mode Form -->
     <ng-template #pullModeForm>
         <div class="dialog-container">
             <div class="mat-card-header">

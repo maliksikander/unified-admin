@@ -38,7 +38,7 @@ export class PullModeRoutingComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    
+    //to check if token exits in local/session storage
     this.commonService.checkTokenExistenceInStorage();
 
     //setting local form validation messages
@@ -69,8 +69,6 @@ export class PullModeRoutingComponent implements OnInit {
     this.endPointService.getPullModeList().subscribe(
       (res: any) => {
         this.pullModeListData = res;
-        // if (res.length == 0)
-        // this.snackbar.snackbarMessage("error-snackbar", "NO DATA FOUND", 2);
         this.spinner = false;
       },
       (error) => {
@@ -95,7 +93,7 @@ export class PullModeRoutingComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {});
   }
 
-  //resetting dialog
+  //to close dialog
   onClose() {
     this.dialog.closeAll();
     this.searchTerm = "";
@@ -128,9 +126,8 @@ export class PullModeRoutingComponent implements OnInit {
   }
 
   // to edit pull Mode ,it excepts form template reference in html as `templateRef` and pull mode list object as `data` parameter
-  editPullModeList(templateRef, data) {
-    this.editPullModeListData = data;
-    this.pullModeListForm.patchValue(data);
+  openEditPullModeModal(templateRef, data) {
+    this.patchEditValues(data);
     this.formHeading = "Edit Pull Mode List";
     this.saveBtnText = "Update";
     let dialogRef = this.dialog.open(templateRef, {
@@ -145,22 +142,13 @@ export class PullModeRoutingComponent implements OnInit {
     });
   }
 
-  //to delete pull mode list, it accepts pull mode list object id as `id` parameter and updating the local list on success response
-  // deletePullModeList(id) {
-  //   this.endPointService.deletePullModeList(id).subscribe(
-  //     (res: any) => {
-  //       this.spinner = false;
-  //       this.pullModeListData = this.pullModeListData.filter(item => item.id != id);
-  //       this.snackbar.snackbarMessage('success-snackbar', "Deleted Successfully", 1);
-  //     },
-  //     (error) => {
-  //       this.spinner = false;
-  //       console.log("Error fetching:", error);
-  //       if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
-  //     });
-  // }
+  //to patch pull Mode list values to form, it excepts  pull mode list object as `data` parameter
+  patchEditValues(data) {
+    this.editPullModeListData = data;
+    this.pullModeListForm.patchValue(data);
+  }
 
-  // to save the pull mode list
+  //on save callback method
   onSave() {
     this.spinner = true;
     let data = this.pullModeListForm.value;
@@ -173,7 +161,7 @@ export class PullModeRoutingComponent implements OnInit {
   }
 
   //to update pull mode list object, it accepts list object (name:string, description:string) as `data` parameter
-  //and update the local list on success response
+  //and updates the local list on success response
   updatePullModeList(data) {
     this.endPointService.updatePullModeList(data).subscribe(
       (res: any) => {
@@ -235,4 +223,19 @@ export class PullModeRoutingComponent implements OnInit {
   selectPage() {
     this.itemsPerPage = this.selectedItem;
   }
+
+  //to delete pull mode list, it accepts pull mode list object id as `id` parameter and updating the local list on success response
+  // deletePullModeList(id) {
+  //   this.endPointService.deletePullModeList(id).subscribe(
+  //     (res: any) => {
+  //       this.spinner = false;
+  //       this.pullModeListData = this.pullModeListData.filter(item => item.id != id);
+  //       this.snackbar.snackbarMessage('success-snackbar', "Deleted Successfully", 1);
+  //     },
+  //     (error) => {
+  //       this.spinner = false;
+  //       console.log("Error fetching:", error);
+  //       if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
+  //     });
+  // }
 }
