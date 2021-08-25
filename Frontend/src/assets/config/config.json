@@ -1,6 +1,6 @@
 {
-  "ADMIN_URL": "https://652849f0-8ae3-4345-a0c9-4aab8c6b05d6.mock.pstmn.io",
-  "MRE_URL": "https://f21122db-c99d-4bb8-aa79-0a2140b5ef65.mock.pstmn.io",
+  "ADMIN_URL": "https://cim.expertflow.com/unified-admin",
+  "MRE_URL": "https://cim.expertflow.com/routing-engine",
   "BUSINESS_USER_ROLES": [
     "agent",
     "supervisor"

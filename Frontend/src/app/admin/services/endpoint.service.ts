@@ -71,7 +71,7 @@ export class EndpointService {
     this.LICENSE_URL = e.LICENSE_MANAGER_URL;
     this.userRoles = e.BUSINESS_USER_ROLES;
 
-    if (isDevMode()) this.ADMIN_URL = "http://localhost:3000";
+    // if (isDevMode()) this.ADMIN_URL = "http://localhost:3000";
 
     this.getStorageValues();
   }
@@ -729,6 +729,18 @@ export class EndpointService {
       )
       .pipe(catchError(this.handleError));
   }
+
+  getChannelMapping(id): Observable<any> {
+    return this.httpClient
+      .get(`${this.CCM_URL}/channels/routing-id/${id}`, {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json",
+          Authorization: "Bearer" + this.token,
+        }),
+      })
+      .pipe(catchError(this.handleError));
+  }
+
 
   ///////////////// BOT CRUD ////////////
 

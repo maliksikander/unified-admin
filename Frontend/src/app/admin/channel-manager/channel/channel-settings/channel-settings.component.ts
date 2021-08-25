@@ -170,13 +170,23 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
   }
 
   patchFormValues() {
+    let routingIndex;
     let connectorIndex = this.channelConnectorList.findIndex(
       (item) => item.id == this.channelData.channelConnector.id
     );
-    let queueIndex = this.queueList.findIndex(
-      (item) =>
-        item.id == this.channelData.channelConfig.routingPolicy.defaultQueue
-    );
+    if (this.channelData.channelConfig.routingPolicy.routingMode == "PUSH") {
+      routingIndex = this.queueList.findIndex(
+        (item) =>
+          item.id ==
+          this.channelData.channelConfig.routingPolicy.routingObjectId
+      );
+    } else {
+      routingIndex = this.pullModeListData.findIndex(
+        (item) =>
+          item.id ==
+          this.channelData.channelConfig.routingPolicy.routingObjectId
+      );
+    }
     let botIndex = this.botList.findIndex(
       (item) => item.botId == this.channelData.channelConfig.botId
     );
@@ -194,11 +204,26 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
         this.channelData.channelConfig.routingPolicy.agentSelectionPolicy,
       routeToLastAgent:
         this.channelData.channelConfig.routingPolicy.routeToLastAgent,
-      defaultQueue: queueIndex != -1 ? this.queueList[queueIndex] : null,
+      routingMode: this.channelData.channelConfig.routingPolicy.routingMode,
+      routingObjectID:
+        routingIndex != -1
+          ? this.patchRoutingObjectValue(
+              routingIndex,
+              this.channelData.channelConfig.routingPolicy.routingMode
+            )
+          : null,
       agentRequestTTL:
         this.channelData.channelConfig.routingPolicy.agentRequestTtl,
     });
     this.spinner = false;
+  }
+
+  patchRoutingObjectValue(index, mode) {
+    if (mode == "PUSH") {
+      return this.queueList[index];
+    } else {
+      return this.pullModeListData[index];
+    }
   }
 
   //to create 'data' object and pass it to the parent component
@@ -206,7 +231,8 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
     let routingPolicy = {
       agentSelectionPolicy: this.channelSettingForm.value.agentSelectionPolicy,
       routeToLastAgent: this.channelSettingForm.value.routeToLastAgent,
-      defaultQueue: this.channelSettingForm.value.defaultQueue.id,
+      routingObjectId: this.channelSettingForm.value.routingObjectID.id,
+      routingMode: this.channelSettingForm.value.routingMode,
       agentRequestTtl: this.channelSettingForm.value.agentRequestTTL,
     };
 

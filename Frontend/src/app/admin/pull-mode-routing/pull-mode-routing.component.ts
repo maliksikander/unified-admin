@@ -116,9 +116,10 @@ export class PullModeRoutingComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((res: any) => {
-        // this.spinner = true;
+        this.spinner = true;
         if (res === "delete") {
           // this.deletePullModeList(id);
+          this.checkChannelMapping(id);
         } else {
           this.spinner = false;
         }
@@ -225,17 +226,53 @@ export class PullModeRoutingComponent implements OnInit {
   }
 
   //to delete pull mode list, it accepts pull mode list object id as `id` parameter and updating the local list on success response
-  // deletePullModeList(id) {
-  //   this.endPointService.deletePullModeList(id).subscribe(
-  //     (res: any) => {
-  //       this.spinner = false;
-  //       this.pullModeListData = this.pullModeListData.filter(item => item.id != id);
-  //       this.snackbar.snackbarMessage('success-snackbar', "Deleted Successfully", 1);
-  //     },
-  //     (error) => {
-  //       this.spinner = false;
-  //       console.log("Error fetching:", error);
-  //       if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
-  //     });
-  // }
+  deletePullModeList(id) {
+    this.endPointService.deletePullModeList(id).subscribe(
+      (res: any) => {
+        this.spinner = false;
+        this.pullModeListData = this.pullModeListData.filter(
+          (item) => item.id != id
+        );
+        this.snackbar.snackbarMessage(
+          "success-snackbar",
+          "Deleted Successfully",
+          1
+        );
+      },
+      (error) => {
+        this.spinner = false;
+        console.log("Error fetching:", error);
+        if (error && error.status == 0)
+          this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
+      }
+    );
+  }
+
+  checkChannelMapping(id) {
+    this.endPointService.getChannelMapping(id).subscribe(
+      (res: any) => {
+        try {
+          if (res?.length == 0) {
+            this.deletePullModeList(id);
+          } else {
+            // console.log("req==>", res);
+            this.snackbar.snackbarMessage(
+              "error-snackbar",
+              "Cannot delete list,it is being used in a channel",
+              2
+            );
+          }
+        } catch (e) {
+          console.log("Error in mapping req ==>", e);
+        }
+        this.spinner = false;
+      },
+      (error: any) => {
+        this.spinner = false;
+        console.log("Error fetching:", error);
+        if (error && error.status == 0)
+          this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
+      }
+    );
+  }
 }

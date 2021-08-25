@@ -119,10 +119,11 @@ export class ChannelTypeFormComponent implements OnInit {
 
   //patch value to form to be edited
   patchEditValues() {
+    try{
     if (this.editData) {
 
       const mrdIndex = this.mrdData.findIndex(item => item.id === this.editData.mediaRoutingDomain);
-      const formIndex = this.formsList.findIndex((item: any) => item.id === this.editData.channelConfigSchema.id);
+      const formIndex = this.formsList.findIndex((item: any) => item.id === this.editData?.channelConfigSchema?.id);
 
       this.channelTypeForm.patchValue({
         typeName: this.editData.typeName,
@@ -132,6 +133,11 @@ export class ChannelTypeFormComponent implements OnInit {
       });
       this.imageData = this.editData.channelLogo;
     }
+  }
+  catch(e){
+    console.error("Error==>",e);
+    this.spinner = false;
+  }
   }
 
   removeAttrInFormSchema(data) {

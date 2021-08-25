@@ -89,6 +89,10 @@ input::-webkit-inner-spin-button {
             white-space: nowrap;
             max-width: 0;
             width: 20%;
+            &:nth-child(3){
+              padding-left: 0;
+            }
+
             &:nth-child(4) {
               width: 30% !important;
             }
