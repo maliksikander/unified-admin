@@ -89,12 +89,13 @@ export class ChannelConnectorSettingsComponent implements OnInit {
   // to assign form schema from channel type data to local variable
   assignFormSchema(data) {
     this.formSchema = data;
-    // console.log("schema==>", data)
-    this.addFormControls(
-      JSON.parse(JSON.stringify(this.formSchema?.attributes))
-    );
-    if (this.connectorData) {
-      this.patchFormValues(this.connectorData, this.formSchema?.attributes);
+    if (this.formSchema && this.formSchema != null) {
+      this.addFormControls(
+        JSON.parse(JSON.stringify(this.formSchema?.attributes))
+      );
+      if (this.connectorData) {
+        this.patchFormValues(this.connectorData, this.formSchema?.attributes);
+      }
     }
     this.spinner = false;
   }

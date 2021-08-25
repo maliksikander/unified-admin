@@ -55,7 +55,7 @@
                             <span>No Data Found</span>
                         </div>
 
-                        <div *ngIf="pullModeListData && pullModeListData.length > 5" class="pagination-section">
+                        <div *ngIf="pullModeListData && pullModeListData.length >= 5" class="pagination-section">
                             <span class="page-span">
                                 <span>Entries Per Page</span>
                                 <select (change)="selectPage()" [(ngModel)]="selectedItem">

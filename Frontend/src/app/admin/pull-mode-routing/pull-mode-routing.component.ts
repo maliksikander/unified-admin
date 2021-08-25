@@ -118,7 +118,6 @@ export class PullModeRoutingComponent implements OnInit {
       .subscribe((res: any) => {
         this.spinner = true;
         if (res === "delete") {
-          // this.deletePullModeList(id);
           this.checkChannelMapping(id);
         } else {
           this.spinner = false;
@@ -248,6 +247,7 @@ export class PullModeRoutingComponent implements OnInit {
     );
   }
 
+  //to check if a list is mapped to any list
   checkChannelMapping(id) {
     this.endPointService.getChannelMapping(id).subscribe(
       (res: any) => {
@@ -255,7 +255,6 @@ export class PullModeRoutingComponent implements OnInit {
           if (res?.length == 0) {
             this.deletePullModeList(id);
           } else {
-            // console.log("req==>", res);
             this.snackbar.snackbarMessage(
               "error-snackbar",
               "Cannot delete list,it is being used in a channel",

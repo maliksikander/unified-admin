@@ -31,6 +31,7 @@ export class EndpointService {
       channelType: "channel-types",
       channelConnector: "channel-connectors",
       channel: "channels",
+      channelMapping: "channels/routing-id",
     },
     forms: "forms",
     formValidation: "formValidation",
@@ -46,7 +47,7 @@ export class EndpointService {
     license: {
       fileUpload: "license-manager/license/attachment",
     },
-    pullMode:"pull-mode-list",
+    pullMode: "pull-mode-list",
     reason: "reasons",
     routing: {
       attribute: "routing-attributes",
@@ -71,7 +72,7 @@ export class EndpointService {
     this.LICENSE_URL = e.LICENSE_MANAGER_URL;
     this.userRoles = e.BUSINESS_USER_ROLES;
 
-    // if (isDevMode()) this.ADMIN_URL = "http://localhost:3000";
+    if (isDevMode()) this.ADMIN_URL = "http://localhost:3000";
 
     this.getStorageValues();
   }
@@ -732,7 +733,7 @@ export class EndpointService {
 
   getChannelMapping(id): Observable<any> {
     return this.httpClient
-      .get(`${this.CCM_URL}/channels/routing-id/${id}`, {
+      .get(`${this.CCM_URL}/${this.endpoints.ccm.channelMapping}/${id}`, {
         headers: new HttpHeaders({
           "Content-Type": "application/json",
           Authorization: "Bearer" + this.token,
@@ -740,7 +741,6 @@ export class EndpointService {
       })
       .pipe(catchError(this.handleError));
   }
-
 
   ///////////////// BOT CRUD ////////////
 
@@ -935,62 +935,66 @@ export class EndpointService {
       .pipe(catchError(this.handleError));
   }
 
-//////// Pull Mode List ///////
+  //////// Pull Mode List ///////
 
-createPullModeList(data): Observable<any> {
-  return this.httpClient
-    .post<any>(`${this.ADMIN_URL}/${this.endpoints.pullMode}`, data, {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + this.token,
-      }),
-    })
-    .pipe(catchError(this.handleError));
-}
+  createPullModeList(data): Observable<any> {
+    return this.httpClient
+      .post<any>(`${this.ADMIN_URL}/${this.endpoints.pullMode}`, data, {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.token,
+        }),
+      })
+      .pipe(catchError(this.handleError));
+  }
 
-getPullModeList(): Observable<any> {
-  return this.httpClient
-    .get(`${this.ADMIN_URL}/${this.endpoints.pullMode}`, {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + this.token,
-      }),
-    })
-    .pipe(catchError(this.handleError));
-}
+  getPullModeList(): Observable<any> {
+    return this.httpClient
+      .get(`${this.ADMIN_URL}/${this.endpoints.pullMode}`, {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.token,
+        }),
+      })
+      .pipe(catchError(this.handleError));
+  }
 
-getPullModeListByID(id): Observable<any> {
-  return this.httpClient
-    .get(`${this.ADMIN_URL}/${this.endpoints.pullMode}/${id}`, {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + this.token,
-      }),
-    })
-    .pipe(catchError(this.handleError));
-}
+  getPullModeListByID(id): Observable<any> {
+    return this.httpClient
+      .get(`${this.ADMIN_URL}/${this.endpoints.pullMode}/${id}`, {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.token,
+        }),
+      })
+      .pipe(catchError(this.handleError));
+  }
 
-updatePullModeList(data): Observable<any> {
-  return this.httpClient
-    .put<any>(`${this.ADMIN_URL}/${this.endpoints.pullMode}/${data.id}`, data, {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + this.token,
-      }),
-    })
-    .pipe(catchError(this.handleError));
-}
+  updatePullModeList(data): Observable<any> {
+    return this.httpClient
+      .put<any>(
+        `${this.ADMIN_URL}/${this.endpoints.pullMode}/${data.id}`,
+        data,
+        {
+          headers: new HttpHeaders({
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + this.token,
+          }),
+        }
+      )
+      .pipe(catchError(this.handleError));
+  }
 
-deletePullModeList(id): Observable<any> {
-  return this.httpClient
-    .delete<any>(`${this.ADMIN_URL}/${this.endpoints.pullMode}/${id}`, {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + this.token,
-      }),
-    })
-    .pipe(catchError(this.handleError));
-}
+  deletePullModeList(id): Observable<any> {
+    return this.httpClient
+      .delete<any>(`${this.ADMIN_URL}/${this.endpoints.pullMode}/${id}`, {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.token,
+        }),
+      })
+      .pipe(catchError(this.handleError));
+  }
 
   //////////// License Manager /////////////
 
