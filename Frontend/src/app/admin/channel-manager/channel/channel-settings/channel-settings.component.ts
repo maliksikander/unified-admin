@@ -249,7 +249,9 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
     let data: any = {
       channelName: this.channelSettingForm.value.channelName,
       serviceIdentifier: this.channelSettingForm.value.serviceIdentifier,
-      channelConnector: this.channelSettingForm.value.channelConnector,
+      channelConnector: {
+        id: this.channelSettingForm.value.channelConnector.id,
+      },
       tenant: {},
       channelConfig: channelConfigData,
     };

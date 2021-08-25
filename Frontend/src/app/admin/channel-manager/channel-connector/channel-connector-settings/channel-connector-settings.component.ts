@@ -323,11 +323,10 @@ export class ChannelConnectorSettingsComponent implements OnInit {
         this.channelConnectorForm.value.channelConnectorName,
       interface: this.channelConnectorForm.value.interface,
       interfaceAddress: this.channelConnectorForm.value.interfaceAddress,
-      channelType: this.channelTypeData,
+      channelType: { id: this.channelTypeData.id },
       channelConnectorData: formData,
       tenant: {},
     };
-    // console.log("payload data==>",this.channelConnectorForm.value)
     return data;
   }
 
@@ -403,7 +402,6 @@ export class ChannelConnectorSettingsComponent implements OnInit {
   onSave() {
     this.spinner = true;
     let data: any = this.createRequestPayload();
-
     if (this.connectorData) {
       data.id = this.connectorData.id;
       this.updateChannelConnector(data);
