@@ -321,7 +321,7 @@ export class ChannelConnectorSettingsComponent implements OnInit {
     let data: any = {
       channelConnectorName:
         this.channelConnectorForm.value.channelConnectorName,
-      interface: this.channelConnectorForm.value.interface,
+      channelConnectorInterface: this.channelConnectorForm.value.interface,
       interfaceAddress: this.channelConnectorForm.value.interfaceAddress,
       channelType: { id: this.channelTypeData.id },
       channelConnectorData: formData,
