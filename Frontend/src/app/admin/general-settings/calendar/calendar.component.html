@@ -40,30 +40,18 @@
             <div class="heading">
               <span>All Calendars</span>
               <mat-icon (click)="openCalendarModal(newCalendar)">add</mat-icon>
-              <!--                <mat-icon (click)="openEndDateModal(endDateReference)">add</mat-icon>-->
             </div>
 
             <div class="calendar-content">
-              <!-- <span *ngFor="let calendar of calendarList" class="content-span">
-                  <mat-checkbox class="example-margin" [checked]="calendar?.isChecked" [color]="calendar?.color">
-                    {{calendar?.name}}
-                  </mat-checkbox>
-                  <div class="menu-btn">
-                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="menu">
-                      <mat-icon>more_vert</mat-icon>
-                    </button>
-                  </div>
-                </span> -->
-
               <span *ngFor="let calendar of calendarList" class="content-span">
                 <span [ngStyle]="{'background':calendar?.color,'border-color':calendar?.color}" class="input-span">
-                  <mat-checkbox class="example-margin" [checked]="calendar?.isChecked">
+                  <mat-checkbox (change)="onCalendarCheck(calendar)" [checked]="calendar?.isChecked">
                   </mat-checkbox>
-                  <!-- <input type="checkbox" [checked]="calendar?.isChecked"> -->
                 </span>
                 {{calendar?.name}}
                 <div class="menu-btn">
-                  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="menu">
+                  <button (click)="setEditValue(calendar)" mat-icon-button [matMenuTriggerData]="calendar"
+                    [matMenuTriggerFor]="menu" aria-label="menu">
                     <mat-icon>more_vert</mat-icon>
                   </button>
                 </div>
@@ -155,8 +143,8 @@
           <div class="col-md-12">
             <div class="form-action-area">
               <button mat-raised-button (click)="onClose()" class="gray-btn">Cancel</button>
-              <button mat-raised-button [disabled]="!calendarForm.valid" (click)="onSave()" [mat-dialog-close]="true"
-                class="dark-blue-btn service-trigger">{{saveBtnText}}</button>
+              <button mat-raised-button [disabled]="!calendarForm.valid" (click)="onCalendarSave()"
+                [mat-dialog-close]="true" class="dark-blue-btn service-trigger">{{saveBtnText}}</button>
             </div>
           </div>
         </div>
@@ -575,14 +563,12 @@
     </div>
   </div>
 </ng-template>
-<!---->
+
+
+<!-- Color Picker-->
 <mat-menu [class]="'color-div'" #colorPicker="matMenu" yPosition="below">
-  <!-- <div class="color-picker-menu"> -->
   <color-circle (click)="$event.stopPropagation()" [circleSize]='18' [colors]='color'
     (onChangeComplete)="onColorChange($event)"></color-circle>
-  <!-- <color-sketch (click)="$event.stopPropagation()" [color]='defColor' (onChangeComplete)="onColorChange($event)">
-      </color-sketch> -->
-  <!-- </div> -->
 </mat-menu>
 
 
@@ -699,6 +685,13 @@
   </div>
 </ng-template>
 
-<mat-menu #menu="matMenu">
-  <button mat-menu-item>Edit</button>
+<mat-menu class="edit-menu" #menu="matMenu">
+  <ng-container>
+    <button (click)="editCalendar(newCalendar)" mat-menu-item>
+      <span>Edit</span>
+    </button>
+    <button (click)="setDeleteCalenderData()" mat-menu-item>
+      <span>Delete</span>
+    </button>
+  </ng-container>
 </mat-menu>

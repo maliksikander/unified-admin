@@ -7,5 +7,6 @@
   ],
   "CCM_URL": "https://cim.expertflow.com/ccm",
   "BOT_URL": "https://9881be0c-b5cb-4b01-a4cd-61751c5c81f5.mock.pstmn.io",
-  "LICENSE_MANAGER_URL":"http://192.168.1.47:8888"
+  "LICENSE_MANAGER_URL":"http://192.168.1.47:8888",
+  "BUSINESS_CALENDAR_URL":"https://77051bc4-c351-4b9d-af9e-21c42ab1c9f6.mock.pstmn.io"
 }

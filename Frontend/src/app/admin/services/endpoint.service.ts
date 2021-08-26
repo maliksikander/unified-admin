@@ -22,11 +22,15 @@ export class EndpointService {
   CCM_URL;
   BOT_URL;
   LICENSE_URL;
+  BUSINESS_CALENDAR_URL;
   token;
   tenant;
 
   endpoints = {
     botSetting: "bot-connectors",
+    businessCalendars: {
+      calendars: "calendars",
+    },
     ccm: {
       channelType: "channel-types",
       channelConnector: "channel-connectors",
@@ -69,6 +73,7 @@ export class EndpointService {
     this.MRE_URL = e.MRE_URL;
     this.CCM_URL = e.CCM_URL;
     this.BOT_URL = e.BOT_URL;
+    this.BUSINESS_CALENDAR_URL = e.BUSINESS_CALENDAR_URL;
     this.LICENSE_URL = e.LICENSE_MANAGER_URL;
     this.userRoles = e.BUSINESS_USER_ROLES;
 
@@ -1008,6 +1013,82 @@ export class EndpointService {
           headers: new HttpHeaders({
             // "Content-Type": undefined,
             // 'Authorization': 'Bearer'
+          }),
+        }
+      )
+      .pipe(catchError(this.handleError));
+  }
+
+  ////////////////// Business Calendars ////////////////
+
+  //////// Calendars  CRUD ///////
+
+  createCalendars(data): Observable<any> {
+    return this.httpClient
+      .post<any>(
+        `${this.BUSINESS_CALENDAR_URL}/${this.endpoints.businessCalendars.calendars}`,
+        data,
+        {
+          headers: new HttpHeaders({
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + this.token,
+          }),
+        }
+      )
+      .pipe(catchError(this.handleError));
+  }
+
+  getCalendars(): Observable<any> {
+    return this.httpClient
+      .get(
+        `${this.BUSINESS_CALENDAR_URL}/${this.endpoints.businessCalendars.calendars}`,
+        {
+          headers: new HttpHeaders({
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + this.token,
+          }),
+        }
+      )
+      .pipe(catchError(this.handleError));
+  }
+
+  getCalendarByID(id): Observable<any> {
+    return this.httpClient
+      .get(
+        `${this.BUSINESS_CALENDAR_URL}/${this.endpoints.businessCalendars.calendars}/${id}`,
+        {
+          headers: new HttpHeaders({
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + this.token,
+          }),
+        }
+      )
+      .pipe(catchError(this.handleError));
+  }
+
+  updateCalendar(data): Observable<any> {
+    return this.httpClient
+      .put<any>(
+        `${this.BUSINESS_CALENDAR_URL}/${this.endpoints.businessCalendars.calendars}/${data.id}`,
+        data,
+        {
+          headers: new HttpHeaders({
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + this.token,
+          }),
+        }
+      )
+      .pipe(catchError(this.handleError));
+  }
+
+  deleteCalendar(id): Observable<any> {
+    return this.httpClient
+      .delete<any>(
+        `${this.BUSINESS_CALENDAR_URL}/${this.endpoints.businessCalendars.calendars}/${id}`,
+        {
+          headers: new HttpHeaders({
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + this.token,
           }),
         }
       )
