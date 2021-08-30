@@ -74,7 +74,7 @@ export class ReasonCodesComponent implements OnInit {
       (res: any) => {
 
         this.reasonCodeData = res;
-        if (res.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
+        // if (res.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
         this.spinner = false;
       },
       error => {

@@ -87,11 +87,11 @@
                                   <span
                                     *ngIf="exp?.preExpressionCondition != null">[{{exp?.preExpressionCondition}}]</span>
                                   <ng-container *ngFor="let k =index;let data of exp?.terms">
-                                    <span *ngIf="data?.preTermCondition != null">{{data?.preTermCondition}}</span>
-                                    <span>({{data?.routingAttribute?.name}}{{data?.relationalOperator}}
+                                    <span *ngIf="data?.preTermCondition != null">{{data?.preTermCondition}} </span>
+                                    <span>({{data?.routingAttribute?.name}} {{data?.relationalOperator}}
                                       <ng-container *ngIf="data?.routingAttribute?.type == 'BOOLEAN'">{{data?.value ==
                                         '1' ? 'true' :'false'}})</ng-container>
-                                      <ng-container *ngIf="data?.routingAttribute?.type != 'BOOLEAN'">{{data?.value}})
+                                      <ng-container *ngIf="data?.routingAttribute?.type != 'BOOLEAN'"> {{data?.value}})
                                       </ng-container>
                                     </span>
                                   </ng-container>
@@ -102,10 +102,8 @@
                               <span class="step-trigger-area">
                                 <button matTooltip="Edit" (click)="editStep(stepFormTemplate,stepData,j)" mat-mini-fab>
                                   <mat-icon>mode_edit</mat-icon>
-                                  <!-- <i class="fa fa-pencil" aria-hidden="true"></i> -->
                                 </button>
                                 <button matTooltip="Delete" (click)="deleteStepConfirm(stepData,data)" mat-mini-fab>
-                                  <!-- <i class="fa fa-trash-o" aria-hidden="true"></i> -->
                                   <mat-icon>delete</mat-icon>
                                 </button>
                               </span>
@@ -222,8 +220,8 @@
             <div class="col-md-12">
               <div class="form-action-area">
                 <button mat-raised-button [mat-dialog-close]="true" class="gray-btn">Cancel</button>
-                <button mat-raised-button [disabled]="!queueForm.valid" (click)="onQueueSave()" [mat-dialog-close]="save"
-                  class="blue-btn service-trigger">{{saveBtnText}}</button>
+                <button mat-raised-button [disabled]="!queueForm.valid" (click)="onQueueSave()"
+                  [mat-dialog-close]="save" class="blue-btn service-trigger">{{saveBtnText}}</button>
               </div>
             </div>
           </div>

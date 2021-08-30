@@ -257,7 +257,7 @@ export class PullModeRoutingComponent implements OnInit {
           } else {
             this.snackbar.snackbarMessage(
               "error-snackbar",
-              "Cannot delete list,it is being used in a channel",
+              "List is assigned to a channel,cannot be deleted",
               2
             );
           }

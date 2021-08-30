@@ -360,7 +360,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
           } else {
             this.snackbar.snackbarMessage(
               "error-snackbar",
-              "Cannot delete queue, it is being used in a channel",
+              "Queue is assigned to a channel,cannot be deleted",
               2
             );
             this.spinner = false;
@@ -399,6 +399,12 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
         console.log("Error fetching:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
+        else if (error && error.status == 409)
+          this.snackbar.snackbarMessage(
+            "error-snackbar",
+            "Queue is in use,Cannot be deleted",
+            1
+          );
       }
     );
   }

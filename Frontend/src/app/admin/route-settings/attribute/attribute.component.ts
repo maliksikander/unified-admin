@@ -112,7 +112,7 @@ export class AttributeComponent implements OnInit {
       (res: any) => {
         this.spinner = false;
         this.attrData = res;
-        if (res.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
+        // if (res.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
       },
       error => {
         this.spinner = false;
