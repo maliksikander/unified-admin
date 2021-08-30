@@ -56,7 +56,10 @@ export class EndpointService {
     routing: {
       attribute: "routing-attributes",
       mrd: "media-routing-domains",
-      queue: "precision-queues",
+      pq: {
+        queue: "precision-queues",
+        step: "steps",
+      },
       agent: "agents",
     },
     keycloakLogin: "keycloakLogin",
@@ -443,11 +446,13 @@ export class EndpointService {
       .pipe(catchError(this.handleError));
   }
 
-  /////////////// Precision Queue CRUD ///////////
+  ///////////////////  Precision Queue  /////////////////////
+
+  ///////////////  Queue CRUD ///////////
 
   createQueue(data): Observable<any> {
     return this.httpClient
-      .post<any>(`${this.MRE_URL}/${this.endpoints.routing.queue}`, data, {
+      .post<any>(`${this.MRE_URL}/${this.endpoints.routing.pq.queue}`, data, {
         headers: new HttpHeaders({
           "Content-Type": "application/json",
           Authorization: "Bearer" + this.token,
@@ -458,7 +463,7 @@ export class EndpointService {
 
   getQueue(): Observable<any> {
     return this.httpClient
-      .get(`${this.MRE_URL}/${this.endpoints.routing.queue}`, {
+      .get(`${this.MRE_URL}/${this.endpoints.routing.pq.queue}`, {
         headers: new HttpHeaders({
           "Content-Type": "application/json",
           Authorization: "Bearer" + this.token,
@@ -469,7 +474,22 @@ export class EndpointService {
 
   updateQueue(data, id): Observable<any> {
     return this.httpClient
-      .put<any>(`${this.MRE_URL}/${this.endpoints.routing.queue}/${id}`, data, {
+      .put<any>(
+        `${this.MRE_URL}/${this.endpoints.routing.pq.queue}/${id}`,
+        data,
+        {
+          headers: new HttpHeaders({
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + this.token,
+          }),
+        }
+      )
+      .pipe(catchError(this.handleError));
+  }
+
+  deleteQueue(id): Observable<any> {
+    return this.httpClient
+      .delete<any>(`${this.MRE_URL}/${this.endpoints.routing.pq.queue}/${id}`, {
         headers: new HttpHeaders({
           "Content-Type": "application/json",
           Authorization: "Bearer " + this.token,
@@ -478,14 +498,60 @@ export class EndpointService {
       .pipe(catchError(this.handleError));
   }
 
-  deleteQueue(id): Observable<any> {
+  ///////////////  Step CRUD ///////////
+
+  createStep(data, queueId): Observable<any> {
     return this.httpClient
-      .delete<any>(`${this.MRE_URL}/${this.endpoints.routing.queue}/${id}`, {
-        headers: new HttpHeaders({
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + this.token,
-        }),
-      })
+      .post<any>(
+        `${this.MRE_URL}/${this.endpoints.routing.pq.queue}/${queueId}/${this.endpoints.routing.pq.step}`,
+        data,
+        {
+          headers: new HttpHeaders({
+            "Content-Type": "application/json",
+            Authorization: "Bearer" + this.token,
+          }),
+        }
+      )
+      .pipe(catchError(this.handleError));
+  }
+
+  // getStep(): Observable<any> {
+  //   return this.httpClient
+  //     .get(`${this.MRE_URL}/${this.endpoints.routing.pq.queue}`, {
+  //       headers: new HttpHeaders({
+  //         "Content-Type": "application/json",
+  //         Authorization: "Bearer" + this.token,
+  //       }),
+  //     })
+  //     .pipe(catchError(this.handleError));
+  // }
+
+  updateStep(data, queueId, stepId): Observable<any> {
+    return this.httpClient
+      .put<any>(
+        `${this.MRE_URL}/${this.endpoints.routing.pq.queue}/${queueId}/${this.endpoints.routing.pq.step}/${stepId}`,
+        data,
+        {
+          headers: new HttpHeaders({
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + this.token,
+          }),
+        }
+      )
+      .pipe(catchError(this.handleError));
+  }
+
+  deleteStep(queueId, stepId): Observable<any> {
+    return this.httpClient
+      .delete<any>(
+        `${this.MRE_URL}/${this.endpoints.routing.pq.queue}/${queueId}/${this.endpoints.routing.pq.step}/${stepId}`,
+        {
+          headers: new HttpHeaders({
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + this.token,
+          }),
+        }
+      )
       .pipe(catchError(this.handleError));
   }
 

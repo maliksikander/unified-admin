@@ -276,12 +276,13 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
 
   //to get PQ list and set the local variable with the response
   getQueue() {
+    this.spinner = true;
     this.endPointService.getQueue().subscribe(
       (res: any) => {
         this.spinner = false;
         this.queueData = res;
-        if (res.length == 0)
-          this.snackbar.snackbarMessage("error-snackbar", "NO DATA FOUND", 2);
+        // if (res.length == 0)
+        // this.snackbar.snackbarMessage("error-snackbar", "NO DATA FOUND", 2);
         this.getMRD();
         this.getAttribute();
         this.cd.detectChanges();
@@ -368,7 +369,6 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
           this.spinner = false;
           console.log("Error in mapping req ==>", e);
         }
-       
       },
       (error: any) => {
         this.spinner = false;
@@ -435,7 +435,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     const temp = this.queueForm.value;
     let data: any = {
       mrd: {},
-      steps: [],
+      // steps: [],
     };
     data.name = temp.name;
     data.mrd.id = temp.mrd.id;
@@ -445,7 +445,21 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     return data;
   }
 
-  //  Step Functions //
+  onQueueSave() {
+    // this.spinner = true;
+    let data = this.saveObjFormation();
+
+    if (this.editData) {
+      data.id = this.editData.id;
+      // data.steps = this.editData.steps;
+      this.updateQueue(data, data.id);
+    } else {
+      this.createQueue(data);
+    }
+    console.log("queue data ===>", data);
+  }
+
+  ///////////////////  Step Functions  /////////////
 
   //to open step form dialog,this method accepts the `templateRef` as a parameter assigned to the form in html and index of the PQ in the list as 'i'.
   openStepModal(templateRef, i) {
@@ -457,12 +471,12 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
       panelClass: "add-attribute",
       disableClose: true,
     });
-    let mode = {
-      mode: "new",
-    };
+    // let mode = {
+    //   mode: "new",
+    // };
     dialogRef.afterClosed().subscribe((res) => {
       if (res == "save") {
-        this.onStepSave(i, mode);
+        this.createNewStep(i);
       } else {
         this.resetStepForm();
         this.stepForm.reset();
@@ -500,34 +514,119 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     return data;
   }
 
-  //saving queue step, it accepts index of PQ object as 'i' and saving mode i.e either create or update as 'mode'
-  onStepSave(i, mode) {
-    this.spinner = true;
-    const formData = JSON.parse(JSON.stringify(this.stepForm.value));
-    let newStep = this.manipulateExpTerm(formData);
-    let data: any = {
-      mrd: {},
-    };
-    let temp = JSON.parse(JSON.stringify(this.queueData[i]));
-    data.agentSelectionCriteria = temp.agentSelectionCriteria;
-    data.id = temp.id;
-    data.mrd.id = temp.mrd.id;
-    data.name = temp.name;
-    data.serviceLevelThreshold = temp.serviceLevelThreshold;
-    data.serviceLevelType = temp.serviceLevelType;
-    data.steps = temp.steps;
-
-    if (mode.mode == "update") {
-      let stepIndex = data.steps.findIndex((x) => x.id == mode.id);
-      if (stepIndex != -1) {
-        data.steps[stepIndex] = newStep;
+  //to create PQ step and it accepts `data` object as parameter
+  createStep(data, queueId) {
+    this.endPointService.createStep(data, queueId).subscribe(
+      (res: any) => {
+        this.getQueue();
+        this.snackbar.snackbarMessage(
+          "success-snackbar",
+          "Created Successfully",
+          1
+        );
+      },
+      (error: any) => {
+        this.spinner = false;
+        console.log("Error fetching:", error);
+        if (error && error.status == 0)
+          this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }
-    } else {
-      data.steps.push(newStep);
-    }
-    this.updateQueue(data, data.id);
-    this.resetStepForm();
+    );
   }
+
+  //to create PQ step and it accepts `data` object as parameter
+  updateStep(data, queueId, stepId) {
+    this.endPointService.updateStep(data, queueId, stepId).subscribe(
+      (res: any) => {
+        this.getQueue();
+        this.snackbar.snackbarMessage(
+          "success-snackbar",
+          "Created Successfully",
+          1
+        );
+      },
+      (error: any) => {
+        this.spinner = false;
+        console.log("Error fetching:", error);
+        if (error && error.status == 0)
+          this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
+      }
+    );
+  }
+
+  //to create PQ step and it accepts `data` object as parameter
+  deleteStep(i, queueId, stepId) {
+    this.endPointService.deleteStep(queueId, stepId).subscribe(
+      (res: any) => {
+        let queue = this.queueData[i];
+        this.queueData[i].steps = queue?.steps.filter((item) => {
+          item.id != stepId;
+        });
+
+        if (queue?.steps?.length == 0) this.getQueue();
+
+        this.snackbar.snackbarMessage(
+          "success-snackbar",
+          "Created Successfully",
+          1
+        );
+        this.spinner = false;
+      },
+      (error: any) => {
+        this.spinner = false;
+        console.log("Error fetching:", error);
+        if (error && error.status == 0)
+          this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
+      }
+    );
+  }
+
+  //delete confirmation dialog with mrd object as `data` parameter
+  deleteStepConfirm(stepData, queueData, i) {
+    let msg = "Are you sure you want to delete this Step ?";
+    return this.dialog
+      .open(ConfirmDialogComponent, {
+        panelClass: "confirm-dialog-container",
+        disableClose: true,
+        data: {
+          heading: "Delete Step",
+          message: msg,
+          text: "confirm",
+          // stepData: stepData,
+          // i: i,
+        },
+      })
+      .afterClosed()
+      .subscribe((res: any) => {
+        this.spinner = true;
+        if (res === "delete") {
+          this.deleteStep(i, queueData.id, stepData.id);
+        } else {
+          this.spinner = false;
+        }
+      });
+  }
+
+  //to remove step and it accepts step object as 'stepData' & PQ object index as `i` parameter
+  //and to update the local list when the operation is successful
+  // deleteStepPreReq(i, stepData, queueData) {
+  //   // let steps = this.queueData[i].steps;
+  //   this.spinner = true;
+  //   let stepId = stepData.id;
+  //   let queueId = queueData.id;
+  //   // console.log("step==>", stepData);
+
+  //   this.deleteStep(i, queueId, stepId);
+
+  //   // console.log("queue==>", queue);
+  //   // if (steps && steps.length > 0) {
+
+  //   // this.queueData[i].steps = this.queueData[i].steps
+  //   //   .filter((i) => i !== stepData)
+  //   //   .map((i, idx) => ((i.position = idx + 1), i));
+  //   // this.updateQueue(queue, queue.id);
+  //   // }
+  // }
 
   //Updating reponse object to match required form object structure
   reconstructFormData(stepData) {
@@ -595,20 +694,85 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     this.loadFormExpression(tempStep);
     let dialogRef = this.dialog.open(templateRef, {
       width: "800px",
-      // height: '350px',
       panelClass: "add-attribute",
       disableClose: true,
     });
-    let mode = {
-      mode: "update",
-    };
+    // let mode = {
+    //   mode: "update",
+    // };
+
     dialogRef.afterClosed().subscribe((res) => {
       if (res == "save") {
-        this.onStepSave(i, mode);
+        this.saveEditStep(i, data.id);
       } else {
         this.resetStepForm();
       }
     });
+  }
+
+  //saving queue step, it accepts index of PQ object as 'i' and saving mode i.e either create or update as 'mode'
+  createNewStep(i) {
+    this.spinner = true;
+    const formData = JSON.parse(JSON.stringify(this.stepForm.value));
+    let stepData = this.manipulateExpTerm(formData);
+    let data = stepData;
+    let queueId = this.queueData[i].id;
+
+    this.createStep(data, queueId);
+    // let temp = JSON.parse(JSON.stringify(this.queueData[i]));
+    // data.agentSelectionCriteria = temp.agentSelectionCriteria;
+    // data.id = temp.id;
+    // data.mrd.id = temp.mrd.id;
+    // data.name = temp.name;
+    // data.serviceLevelThreshold = temp.serviceLevelThreshold;
+    // data.serviceLevelType = temp.serviceLevelType;
+    // data.steps = temp.steps;
+
+    // if (mode.mode == "update") {
+    // let stepIndex = data.steps.findIndex((x) => x.id == mode.id);
+    // if (stepIndex != -1) {
+    //   data.steps[stepIndex] = newStep;
+    // }
+    // } else {
+    // data.steps.push(newStep);
+    // }
+    // this.updateQueue(data, data.id);
+
+    // console.log("new step  ==>", data);
+    // console.log("queue data ==>", this.queueData[i]);
+    this.resetStepForm();
+  }
+
+  saveEditStep(i, stepId) {
+    this.spinner = true;
+    const formData = JSON.parse(JSON.stringify(this.stepForm.value));
+    let stepData = this.manipulateExpTerm(formData);
+    let data = stepData;
+    data.id = stepId;
+    const queueId = this.queueData[i].id;
+    this.updateStep(data, queueId, stepId);
+    // let temp = JSON.parse(JSON.stringify(this.queueData[i]));
+    // data.agentSelectionCriteria = temp.agentSelectionCriteria;
+    // data.id = temp.id;
+    // data.mrd.id = temp.mrd.id;
+    // data.name = temp.name;
+    // data.serviceLevelThreshold = temp.serviceLevelThreshold;
+    // data.serviceLevelType = temp.serviceLevelType;
+    // data.steps = temp.steps;
+
+    // if (mode.mode == "update") {
+    // let stepIndex = data.steps.findIndex((x) => x.id == mode.id);
+    // if (stepIndex != -1) {
+    //   data.steps[stepIndex] = newStep;
+    // }
+    // } else {
+    // data.steps.push(newStep);
+    // }
+    // this.updateQueue(data, data.id);
+
+    // console.log("edit save ==>", data);
+    // console.log("queue data ==>", this.queueData[i]);
+    this.resetStepForm();
   }
 
   get term(): FormGroup {
@@ -628,42 +792,6 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     });
   }
 
-  //delete confirmation dialog with mrd object as `data` parameter
-  deleteStepConfirm(stepData, i) {
-    let msg = "Are you sure you want to delete this Step ?";
-    return this.dialog
-      .open(ConfirmDialogComponent, {
-        panelClass: "confirm-dialog-container",
-        disableClose: true,
-        data: {
-          heading: "Delete Step",
-          message: msg,
-          text: "confirm",
-          stepData: stepData,
-          i: i,
-        },
-      })
-      .afterClosed()
-      .subscribe((res: any) => {
-        if (res === "delete") this.deleteStep(stepData, i);
-      });
-  }
-
-  //to remove step and it accepts step object as 'stepData' & PQ object index as `i` parameter
-  //and to update the local list when the operation is successful
-  deleteStep(stepData, i) {
-    let steps = this.queueData[i].steps;
-    let queue = this.queueData[i];
-    if (steps && steps.length > 0) {
-      this.spinner = true;
-
-      this.queueData[i].steps = this.queueData[i].steps
-        .filter((i) => i !== stepData)
-        .map((i, idx) => ((i.position = idx + 1), i));
-      this.updateQueue(queue, queue.id);
-    }
-  }
-
   // to reset step form after dialog close
   resetStepForm() {
     this.stepForm.reset();
@@ -672,20 +800,6 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
       control.removeAt(i);
     }
     this.addExpressionButton();
-  }
-
-  onSave() {
-    this.spinner = true;
-    let data = this.saveObjFormation();
-
-    if (this.editData) {
-      data.id = this.editData.id;
-      data.steps = this.editData.steps;
-      this.updateQueue(data, data.id);
-    } else {
-      this.createQueue(data);
-    }
-    // console.log("save data-->", data);
   }
 
   pageChange(e) {

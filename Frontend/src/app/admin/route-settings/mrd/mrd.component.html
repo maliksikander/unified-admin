@@ -62,7 +62,7 @@
                 <span>No Data Found</span>
               </div>
             </table>
-            <div *ngIf="mrdData && mrdData.length > 5" class="pagination-section">
+            <div *ngIf="mrdData && mrdData.length >= 6" class="pagination-section">
               <span class="page-span">
                 <span>Entries Per Page</span>
                 <select (change)="selectPage()" [(ngModel)]="selectedItem">

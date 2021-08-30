@@ -68,7 +68,7 @@
               </div>
 
             </table>
-            <div *ngIf="attrData && attrData.length > 5" class="pagination-section">
+            <div *ngIf="attrData && attrData.length >= 6" class="pagination-section">
               <span class="page-span">
                 <span>Entries Per Page</span>
                 <select (change)="selectPage()" [(ngModel)]="selectedItem">

@@ -104,7 +104,7 @@
                                   <mat-icon>mode_edit</mat-icon>
                                   <!-- <i class="fa fa-pencil" aria-hidden="true"></i> -->
                                 </button>
-                                <button matTooltip="Delete" (click)="deleteStepConfirm(stepData,j)" mat-mini-fab>
+                                <button matTooltip="Delete" (click)="deleteStepConfirm(stepData,data)" mat-mini-fab>
                                   <!-- <i class="fa fa-trash-o" aria-hidden="true"></i> -->
                                   <mat-icon>delete</mat-icon>
                                 </button>
@@ -129,7 +129,7 @@
               <span>No Data Found</span>
             </div>
 
-            <div *ngIf="queueData && queueData.length > 5" class="pagination-section">
+            <div *ngIf="queueData && queueData.length >= 6" class="pagination-section">
               <span class="page-span">
                 <span>Entries Per Page</span>
                 <select (change)="selectPage()" [(ngModel)]="selectedItem">
@@ -222,7 +222,7 @@
             <div class="col-md-12">
               <div class="form-action-area">
                 <button mat-raised-button [mat-dialog-close]="true" class="gray-btn">Cancel</button>
-                <button mat-raised-button [disabled]="!queueForm.valid" (click)="onSave()" [mat-dialog-close]="save"
+                <button mat-raised-button [disabled]="!queueForm.valid" (click)="onQueueSave()" [mat-dialog-close]="save"
                   class="blue-btn service-trigger">{{saveBtnText}}</button>
               </div>
             </div>

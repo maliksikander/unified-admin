@@ -63,7 +63,7 @@
                             <span>No Data Found</span>
                         </div>
 
-                        <div *ngIf="formsList && formsList.length > 5" class="pagination-section">
+                        <div *ngIf="formsList && formsList.length >= 6" class="pagination-section">
                             <span class="page-span">
                                 <span>Entries Per Page</span>
                                 <select (change)="selectPage()" [(ngModel)]="selectedItem">

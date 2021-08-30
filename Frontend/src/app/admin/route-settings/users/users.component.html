@@ -74,7 +74,7 @@
               <span>No Data Found</span>
             </div>
 
-            <div *ngIf="userData && userData.length > 5" class="pagination-section">
+            <div *ngIf="userData && userData.length >= 6" class="pagination-section">
               <span class="page-span">
                 <span>Entries Per Page</span>
                 <select (change)="selectPage()" [(ngModel)]="selectedItem">
@@ -95,8 +95,7 @@
 
 
 <!-- [hasBackdrop]="false" -->
-<mat-menu  [class]="attrType === 'BOOLEAN' ? 'chip-width' : 'chip-menu'" #updateAttrMenu="matMenu"
-  yPosition="below">
+<mat-menu [class]="attrType === 'BOOLEAN' ? 'chip-width' : 'chip-menu'" #updateAttrMenu="matMenu" yPosition="below">
   <div class="attribute-dialog" [ngClass]="{'bool-attribute':attrType =='BOOLEAN'}">
     <input (click)="$event.stopPropagation()" [disabled]="true" [ngModel]="attrName" matInput>
     <select [(ngModel)]="attrValue" (click)="$event.stopPropagation()" (change)="onAttrChange($event.target.value)">
