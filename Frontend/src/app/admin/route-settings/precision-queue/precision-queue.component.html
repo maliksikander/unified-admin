@@ -117,7 +117,7 @@
                       </table>
                     </div>
                     <div *ngIf="data?.Steps?.length != 10" class="step-section">
-                      <button mat-flat-button (click)="openStepModal(stepFormTemplate,j)">
+                      <button mat-flat-button (click)="checkStepsLength(stepFormTemplate,j)">
                         Add Step
                       </button>
                     </div>

@@ -102,7 +102,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
       ],
       mrd: ["", [Validators.required]],
       serviceLevelType: [1, [Validators.required, Validators.min(1)]],
-      serviceLevelThreshold: [1, [Validators.required, Validators.min(1)]],
+      serviceLevelThreshold: [1, [Validators.required, Validators.min(0)]],
     });
 
     this.stepForm = this.fb.group({
@@ -453,6 +453,25 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
 
   ///////////////////  Step Functions  /////////////
 
+  //to check existing step length in a precision queue,this method accepts the `templateRef` as a parameter assigned to the form in html and index of the PQ in the list as 'i'.
+  checkStepsLength(templateRef, i) {
+    const stepLength = this.queueData[i].steps?.length;
+
+    try {
+      if (stepLength && stepLength >= 10) {
+        this.snackbar.snackbarMessage(
+          "error-snackbar",
+          "Only 10 Step allowed in a queue",
+          2
+        );
+      } else {
+        this.openStepModal(templateRef, i);
+      }
+    } catch (e) {
+      console.error("Error PQ:", e);
+    }
+  }
+
   //to open step form dialog,this method accepts the `templateRef` as a parameter assigned to the form in html and index of the PQ in the list as 'i'.
   openStepModal(templateRef, i) {
     this.stepFormHeading = "Add Step";
@@ -546,18 +565,10 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
   deleteStep(i, queueId, stepId) {
     this.endPointService.deleteStep(queueId, stepId).subscribe(
       (res: any) => {
-        // console.log("queue id==>", queueId);
-        // let queue = this.queueData.find((item) => item.id == queueId);
-        // console.log("queue==>", queue);
-        // queue?.steps.filter((item) => {
-        //   item.id != stepId;
-        // });
-        // if (queue?.steps?.length == 0) 
         this.getQueue();
-
         this.snackbar.snackbarMessage(
           "success-snackbar",
-          "Created Successfully",
+          "Deleted Successfully",
           1
         );
         this.spinner = false;
@@ -686,16 +697,8 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     const stepLength = queue?.steps?.length;
     // const stepLength = 10;
     // console.log("queue==>", stepLength);
-    if (stepLength && stepLength >= 10) {
-      this.snackbar.snackbarMessage(
-        "error-snackbar",
-        "Only 10 Step allowed in a queue",
-        2
-      );
-      this.spinner = false;
-    } else {
-      this.createStep(data, queue.id);
-    }
+    this.createStep(data, queue.id);
+
     this.resetStepForm();
   }
 
