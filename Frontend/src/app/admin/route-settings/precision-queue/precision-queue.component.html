@@ -17,7 +17,7 @@
               </mat-form-field>
             </div>
 
-            <button mat-flat-button (click)="openModal(newQueue)">
+            <button mat-flat-button (click)="openQueueModal(newQueue)">
               <!-- <button mat-flat-button (click)="openStepModal(stepFormTemplate)"> -->
               <mat-icon>add</mat-icon>
               Create Queue
@@ -76,40 +76,44 @@
                             <th scope="col">Timeout(sec)</th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <!-- <div class="test-class"> -->
+                          <tbody>
 
-                          <tr *ngFor="let stepData of data.steps;let i = index">
-                            <!-- {{stepData | json}} -->
-                            <td scope="row" #tableData>
-                              <!-- [style.width]="tableData.offsetWidth + 'px'" -->
-                              <span class="step-table-span" [style.width]="tableData.offsetWidth + 'px'">
-                                <ng-container *ngFor="let j = index;let exp of stepData?.expressions">
-                                  <span
-                                    *ngIf="exp?.preExpressionCondition != null">[{{exp?.preExpressionCondition}}]</span>
-                                  <ng-container *ngFor="let k =index;let data of exp?.terms">
-                                    <span *ngIf="data?.preTermCondition != null">{{data?.preTermCondition}} </span>
-                                    <span>({{data?.routingAttribute?.name}} {{data?.relationalOperator}}
-                                      <ng-container *ngIf="data?.routingAttribute?.type == 'BOOLEAN'">{{data?.value ==
-                                        '1' ? 'true' :'false'}})</ng-container>
-                                      <ng-container *ngIf="data?.routingAttribute?.type != 'BOOLEAN'"> {{data?.value}})
-                                      </ng-container>
-                                    </span>
+                            <tr *ngFor="let stepData of data.steps;let i = index">
+                              <!-- {{stepData | json}} -->
+                              <td scope="row" #tableData>
+                                <!-- [style.width]="tableData.offsetWidth + 'px'" -->
+                                <span class="step-table-span" [style.width]="tableData.offsetWidth + 'px'">
+                                  <ng-container *ngFor="let j = index;let exp of stepData?.expressions">
+                                    <span
+                                      *ngIf="exp?.preExpressionCondition != null"> [{{exp?.preExpressionCondition}}] </span>
+                                    <ng-container *ngFor="let k =index;let data of exp?.terms">
+                                      <span *ngIf="data?.preTermCondition != null">{{data?.preTermCondition}} </span>
+                                      <span>({{data?.routingAttribute?.name}} {{data?.relationalOperator}}
+                                        <ng-container *ngIf="data?.routingAttribute?.type == 'BOOLEAN'">{{data?.value ==
+                                          '1' ? 'true' :'false'}})</ng-container>
+                                        <ng-container *ngIf="data?.routingAttribute?.type != 'BOOLEAN'">
+                                          {{data?.value}})
+                                        </ng-container>
+                                      </span>
+                                    </ng-container>
                                   </ng-container>
-                                </ng-container>
-                              </span>
-                            </td>
-                            <td class="step-table-trigger">{{stepData?.timeout ? stepData?.timeout : 'N/A'}}
-                              <span class="step-trigger-area">
-                                <button matTooltip="Edit" (click)="editStep(stepFormTemplate,stepData,j)" mat-mini-fab>
-                                  <mat-icon>mode_edit</mat-icon>
-                                </button>
-                                <button matTooltip="Delete" (click)="deleteStepConfirm(stepData,data)" mat-mini-fab>
-                                  <mat-icon>delete</mat-icon>
-                                </button>
-                              </span>
-                            </td>
-                          </tr>
-                        </tbody>
+                                </span>
+                              </td>
+                              <td class="step-table-trigger">{{stepData?.timeout ? stepData?.timeout : 'N/A'}}
+                                <span class="step-trigger-area">
+                                  <button matTooltip="Edit" (click)="editStep(stepFormTemplate,stepData,j)"
+                                    mat-mini-fab>
+                                    <mat-icon>mode_edit</mat-icon>
+                                  </button>
+                                  <button matTooltip="Delete" (click)="deleteStepConfirm(stepData,data)" mat-mini-fab>
+                                    <mat-icon>delete</mat-icon>
+                                  </button>
+                                </span>
+                              </td>
+                            </tr>
+                          </tbody>
+                        <!-- </div> -->
                       </table>
                     </div>
                     <div *ngIf="data?.Steps?.length != 10" class="step-section">

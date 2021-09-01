@@ -266,7 +266,7 @@ export class UsersComponent implements OnInit {
         }
       });
     }
-    console.log("data==>", data);
+    // console.log("data==>", data);
     if (data && data.id) {
       if (data.associatedRoutingAttributes.length == 0) {
         return this.deleteREUser(data.id);
@@ -405,15 +405,16 @@ export class UsersComponent implements OnInit {
       );
       let index = this.userObj.associatedRoutingAttributes.indexOf(attr);
       this.userObj.participantType = "CCUser";
+      let data = JSON.parse(JSON.stringify(this.userObj));
       if (e == "false") {
-        this.userObj.associatedRoutingAttributes.splice(index, 1);
-        if (this.userObj.associatedRoutingAttributes.length == 0)
-          return this.deleteREUser(this.userObj.id);
+        data.associatedRoutingAttributes.splice(index, 1);
+        if (data.associatedRoutingAttributes.length == 0)
+          return this.removeREUser(data.id, index);
       } else {
-        this.userObj.associatedRoutingAttributes[index].value = JSON.parse(e);
+        data.associatedRoutingAttributes[index].value = JSON.parse(e);
         this.closeMenu();
       }
-      this.updateREUserAttribute(this.userObj, this.userObj.id);
+      this.updateREUserAttrValue(data, data.id, index);
     }
   }
 
@@ -429,12 +430,65 @@ export class UsersComponent implements OnInit {
       );
       let index = this.userObj.associatedRoutingAttributes.indexOf(attr);
       this.userObj.participantType = "CCUser";
-      this.userObj.associatedRoutingAttributes.splice(index, 1);
-      if (this.userObj.associatedRoutingAttributes.length == 0) {
-        return this.deleteREUser(this.userObj.id);
+      let data = JSON.parse(JSON.stringify(this.userObj));
+      data.associatedRoutingAttributes.splice(index, 1);
+      if (data.associatedRoutingAttributes.length == 0) {
+        return this.removeREUser(data.id, index);
       }
-      this.updateREUserAttribute(this.userObj, this.userObj.id);
+      this.updateREUserAttrValue(data, data.id, index);
     }
+  }
+
+  //removing user from RE
+  removeREUser(id, index) {
+    this.endPointService.deleteAgent(id).subscribe(
+      (res: any) => {
+        this.spinner = false;
+        this.userObj.associatedRoutingAttributes.splice(index, 1);
+        this.getUsers();
+      },
+      (error) => {
+        this.spinner = false;
+        console.log("Error fetching:", error);
+        if (error && error.status == 0)
+          this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
+        else if (error && error.status == 409)
+          this.snackbar.snackbarMessage(
+            "error-snackbar",
+            "Agent is assigned to a task,Cannot be deleted",
+            1
+          );
+      }
+    );
+  }
+
+  //update routing engine user with RE user object as 'data' parameter and object id as 'id'
+  updateREUserAttrValue(data, id, index) {
+    this.endPointService.updateAgent(data, id).subscribe(
+      (res: any) => {
+        // this.userObj.associatedRoutingAttributes.splice(index, 1);
+        this.snackbar.snackbarMessage(
+          "success-snackbar",
+          "User Updated Successfully",
+          1
+        );
+        if (res.id) {
+          let user = this.userData.find(
+            (item) => item.keycloakUser.id == res.keycloakUser.id
+          );
+          let index = this.userData.indexOf(user);
+          this.userData[index] = res;
+        }
+        this.dialog.closeAll();
+        this.spinner = false;
+      },
+      (error: any) => {
+        this.spinner = false;
+        console.log("Error fetching:", error);
+        if (error && error.status == 0)
+          this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
+      }
+    );
   }
 
   //create RE user and accepts user object(keycloakUser:object, associatedRoutingAttributes:[]) as 'data'
