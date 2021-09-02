@@ -193,133 +193,60 @@ export class CalendarComponent implements OnInit {
   eventForm: FormGroup;
   recurrenceForm: FormGroup;
   endDateForm: FormGroup;
-  // dateRange: FormGroup;
   formHeading = "Create New Attribute";
   saveBtnText = "Save";
   @ViewChild("colorMenuTrigger") colorMenuTrigger: MatMenuTrigger;
   recurrenceOptions = ["does not repeat", "daily", "custom"];
-  // colors: any = {
-  //   red: {
-  //     primary: '#ad2121',
-  //     secondary: '#FAE3E3',
-  //   },
-  //   blue: {
-  //     primary: '#25AFCB',
-  //     secondary: '#D1E8FF',
-  //   },
-  //   yellow: {
-  //     primary: '#e3bc08',
-  //     secondary: '#FDF1BA',
-  //   },
-  // };
-  // static: boolean;
-  // @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
 
   view: CalendarView = CalendarView.Month;
-
   CalendarView = CalendarView;
 
   viewDate: Date = new Date();
   calendarList = [];
-  //   {
-  //     id: "1",
-  //     name: "Calendar 1",
-  //     description: "description",
-  //     color: "#77eb34",
-  //     isChecked: true,
-  //   },
-  //   {
-  //     id: "2",
-  //     name: "Calendar 2",
-  //     description: "description",
-  //     color: "#ffe70a",
-  //     isChecked: false,
-  //   },
-  // ];
-
-  // modalData: {
-  //   action: string;
-  //   event: CalendarEvent;
-  // };
-
-  // actions: CalendarEventAction[] = [
-  //   {
-  //     label: '<i class="fas fa-fw fa-pencil-alt"></i>',
-  //     a11yLabel: "Edit",
-  //     onClick: ({ event }: { event: CalendarEvent }): void => {
-  //       this.handleEvent("Edited", event);
-  //     },
-  //   },
-  //   {
-  //     label: '<i class="fas fa-fw fa-trash-alt"></i>',
-  //     a11yLabel: "Delete",
-  //     onClick: ({ event }: { event: CalendarEvent }): void => {
-  //       this.events = this.events.filter((iEvent) => iEvent !== event);
-  //       this.handleEvent("Deleted", event);
-  //     },
-  //   },
-  // ];
 
   events: CalendarEvent[] = [
     {
-      start: subDays(new Date(), 0),
-      end: addDays(new Date(), 3),
+      start: subDays(new Date("Wed Sep 03 2021 12:00:00 GMT+0500"), 0),
+      end: addDays(new Date("Wed Sep 15 2021 16:00:00 GMT+0500"), 1),
       title: "A 3 day event",
       color: { primary: "#25AFCB", secondary: "#25AFCB" },
-      // actions: this.actions,
-      allDay: true,
+      // allDay: true,
       meta: {
-        calendarType: "Out of Office",
-        eventType: "",
-        shift: {},
+        eventType: "Holiday",
       },
-      // resizable: {
-      //   beforeStart: true,
-      //   afterEnd: true,
-      // },
-      // draggable: true,
     },
     {
       start: startOfDay(new Date()),
       title: "An event with no end date",
       color: { primary: "#b22222", secondary: "#b22222" },
-      // actions: this.actions,
       meta: {
-        calendarType: "Business Hours",
-        eventType: "",
-        shift: {},
-      },
-    },
-    {
-      start: new Date(),
-      title: "An extra",
-      color: { primary: "#485234", secondary: "#485234" },
-      // actions: this.actions,
-      meta: {
-        calendarType: "Holiday",
-        eventType: "",
+        eventType: "Out Of Office",
         shift: {},
       },
     },
     // {
-    //   start: subDays(endOfMonth(new Date()), 3),
-    //   end: addDays(endOfMonth(new Date()), 3),
-    //   title: 'A long event that spans 2 months',
+    //   start: new Date(),
+    //   title: "An extra",
     //   color: { primary: "#485234", secondary: "#485234" },
-    //   // allDay: true,
+    //   // actions: this.actions,
+    //   meta: {
+    //     calendarType: "Holiday",
+    //     eventType: "",
+    //     shift: {},
+    //   },
     // },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      // end: addHours(new Date(), 2),
-      title: "A draggable and resizable event",
-      color: { primary: "#a7a7a7", secondary: "#a7a7a7" },
-      // actions: this.actions,
-      // resizable: {
-      //   beforeStart: true,
-      //   afterEnd: true,
-      // },
-      // draggable: false,
-    },
+    // {
+    //   start: addHours(startOfDay(new Date()), 2),
+    //   // end: addHours(new Date(), 2),
+    //   title: "A draggable and resizable event",
+    //   color: { primary: "#a7a7a7", secondary: "#a7a7a7" },
+    //   // actions: this.actions,
+    //   // resizable: {
+    //   //   beforeStart: true,
+    //   //   afterEnd: true,
+    //   // },
+    //   // draggable: false,
+    // },
   ];
 
   activeDayIsOpen: boolean = true;
@@ -357,10 +284,10 @@ export class CalendarComponent implements OnInit {
     });
 
     this.eventForm = this.fb.group({
-      title: ["Title"],
+      title: ["Title", [Validators.required]],
       datePicker: [""],
       shift: ["Shift"],
-      calendars: [""],
+      calendars: ["", [Validators.required]],
       color: [""],
       endDateCriteria: ["never"],
       recurrenceCriteria: ["does not repeat"],
@@ -546,13 +473,48 @@ export class CalendarComponent implements OnInit {
     this.activeDayIsOpen = false;
   }
 
-  onEventSave() {}
+  onEventSave() {
+    console.log("end data form==>", this.endDateForm.value);
+    console.log("event form =>", this.eventForm.value);
+
+    let startDate = "Wed Sep 10 2021 12:00:00 GMT+0500";
+    let endDate = "Wed Sep 21 2021 16:00:00 GMT+0500";
+
+    console.log(
+      "day diff==>",
+      Math.abs(this.calculateDiff(startDate, endDate))
+    );
+
+    let data = {
+      color: { primary: this.selectedColor, secondary: this.selectedColor },
+      meta: {},
+    };
+  }
+
+  calculateDiff(first, second) {
+    let currentDate = new Date(first);
+    let endDate = new Date(second);
+    return Math.floor(
+      (Date.UTC(
+        currentDate.getFullYear(),
+        currentDate.getMonth(),
+        currentDate.getDate()
+      ) -
+        Date.UTC(
+          endDate.getFullYear(),
+          endDate.getMonth(),
+          endDate.getDate()
+        )) /
+        (1000 * 60 * 60 * 24)
+    );
+  }
 
   onTimeChange(e) {}
 
   onColorChange(e) {
     // console.log("color event-->", e);
     this.selectedColor = e.color.hex;
+    this.eventForm.controls["color"].setValue(this.selectedColor);
     // if (mode == "calendar") {
     //   this.calendarForm.controls["color"].setValue(this.selectedColor);
     // }

@@ -85,10 +85,10 @@ export class ChannelTypeFormComponent implements OnInit {
   fileUpload(files, e) {
     let reader = new FileReader();
     if (files.length != 0) {
-      if (files[0].size > 2097152)
+      if (files[0].size > 1000000)
         return this.snackbar.snackbarMessage(
           "error-snackbar",
-          "Image Size greater than 2MB",
+          "Image Size greater than 1MB",
           3
         );
       reader.readAsDataURL(files[0]);

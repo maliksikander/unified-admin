@@ -44,7 +44,7 @@
             <div class="form-group col-md-5">
                 <mat-label>Channel Type Logo</mat-label>
                 <mat-form-field appearance="outline">
-                    <input style="display: none;" #file type="file" accept='image/*'
+                    <input style="display: none;" #file type="file" accept='.png, .svg'
                         (change)="fileUpload(file.files,$event)" />
                     <input [readonly]="true" matInput formControlName="channelLogo" [value]="imageName">
                     <button class="select-file-button" mat-icon-button matSuffix (click)="file.click()">
@@ -60,12 +60,12 @@
                 </div>
             </div>
             <div class="form-group col-md-4" style="padding: 0;">
-                <span class="logo-msg-span">*Image size shouldn't exceed 2MB</span>
+                <span class="logo-msg-span">*Image size shouldn't exceed 1MB</span>
             </div>
         </div>
 
 
-        <div class="form-group adjust-toggle col-md-5">
+        <div class="form-group adjust-toggle col-md-5" style="padding-top: 15px">
             <mat-label>Interactive</mat-label>
             <mat-slide-toggle formControlName="isInteractive"></mat-slide-toggle>
         </div>

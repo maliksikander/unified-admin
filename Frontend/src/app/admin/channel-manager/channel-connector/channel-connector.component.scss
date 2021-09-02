@@ -37,6 +37,8 @@ input::-webkit-inner-spin-button {
         .mat-expansion-panel-header-title {
           img {
             padding: 1px 8px 0px 0px;
+            max-width: 26px;
+            max-height: 30px;
           }
           span {
             color: #797979;
