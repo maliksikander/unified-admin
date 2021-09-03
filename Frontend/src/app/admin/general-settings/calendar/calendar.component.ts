@@ -35,11 +35,32 @@ import {
   CalendarEventTimesChangedEvent,
   CalendarDateFormatter,
   CalendarView,
+  CalendarDayViewBeforeRenderEvent,
+  CalendarWeekViewBeforeRenderEvent,
+  CalendarMonthViewBeforeRenderEvent,
 } from "angular-calendar";
 import { CustomDateFormatter } from "./custom-date-formatter.provider";
 import { Subject } from "rxjs";
 import { DatePipe, Time } from "@angular/common";
 import { ConfirmDialogComponent } from "../../../shared/confirm-dialog/confirm-dialog.component";
+import RRule from "rrule";
+import * as moment from "moment-timezone";
+import { ViewPeriod } from "calendar-utils";
+
+interface RecurringEvent {
+  title: string;
+  color: any;
+  start?: Date;
+  rrule?: {
+    freq: any;
+    bymonth?: number;
+    bymonthday?: number;
+    byweekday?: any;
+    interval?: any;
+    until?: any;
+    dtstart?: any;
+  };
+}
 
 @Component({
   selector: "app-calendar",
@@ -249,6 +270,38 @@ export class CalendarComponent implements OnInit {
     // },
   ];
 
+  calendarEvents: CalendarEvent[] = [];
+
+  recurringEvents: RecurringEvent[] = [
+    {
+      title: "Recurs on the 5th of each month",
+      color: { primary: "#c5cb25", secondary: "#c5cb25" },
+      rrule: {
+        freq: RRule.MONTHLY,
+        bymonthday: 5,
+      },
+    },
+    {
+      title: "Recurs weekly",
+      color: { primary: "#ff2700", secondary: "#ff2700" },
+      rrule: {
+        freq: RRule.WEEKLY,
+        byweekday: [RRule.MO, RRule.TU, RRule.WE, RRule.TH, RRule.FR],
+      },
+    },
+    // {
+    //   title: "Recurs yearly on the 10th of the current month",
+    //   color: { primary: "#25AFCB", secondary: "#25AFCB" },
+    //   rrule: {
+    //     freq: RRule.YEARLY,
+    //     bymonth: moment().month() + 1,
+    //     bymonthday: 10,
+    //   },
+    // },
+  ];
+
+  viewPeriod: ViewPeriod;
+
   activeDayIsOpen: boolean = true;
   refresh: Subject<any> = new Subject();
   monday = false;
@@ -269,7 +322,7 @@ export class CalendarComponent implements OnInit {
     private commonService: CommonService,
     private endPointService: EndpointService,
     private dialog: MatDialog,
-    private changeDetector: ChangeDetectorRef
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -332,7 +385,8 @@ export class CalendarComponent implements OnInit {
 
     this.recurrenceListFormation();
     this.getCalendarList();
-    this.changeDetector.detectChanges();
+    // this.updateCalendar();
+    this.cd.detectChanges();
   }
 
   layoutChange(e) {
@@ -422,7 +476,7 @@ export class CalendarComponent implements OnInit {
     newStart,
     newEnd,
   }: CalendarEventTimesChangedEvent): void {
-    this.events = this.events.map((iEvent) => {
+    this.calendarEvents = this.calendarEvents.map((iEvent) => {
       if (iEvent === event) {
         return {
           ...event,
@@ -443,7 +497,7 @@ export class CalendarComponent implements OnInit {
   }
 
   addEvent(): void {
-    this.events = [
+    this.calendarEvents = [
       // ...this.events,
       // {
       //   title: 'New event',
@@ -460,7 +514,9 @@ export class CalendarComponent implements OnInit {
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {
-    this.events = this.events.filter((event) => event !== eventToDelete);
+    this.calendarEvents = this.calendarEvents.filter(
+      (event) => event !== eventToDelete
+    );
   }
 
   setView(e) {
@@ -617,14 +673,14 @@ export class CalendarComponent implements OnInit {
       (res: any) => {
         this.spinner = false;
         this.calendarList = res;
-        this.changeDetector.detectChanges();
+        this.cd.detectChanges();
       },
       (error) => {
         this.spinner = false;
         console.log("Error fetching:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
-        this.changeDetector.detectChanges();
+        this.cd.detectChanges();
       }
     );
   }
@@ -635,7 +691,7 @@ export class CalendarComponent implements OnInit {
     this.endPointService.createCalendars(data).subscribe(
       (res: any) => {
         // this.spinner = false;
-        this.changeDetector.detectChanges();
+        this.cd.detectChanges();
         this.getCalendarList();
       },
       (error) => {
@@ -643,7 +699,7 @@ export class CalendarComponent implements OnInit {
         console.log("Error fetching:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
-        this.changeDetector.detectChanges();
+        this.cd.detectChanges();
       }
     );
   }
@@ -655,7 +711,7 @@ export class CalendarComponent implements OnInit {
       (res: any) => {
         // this.spinner = false;
         this.editCalendarData = undefined;
-        this.changeDetector.detectChanges();
+        this.cd.detectChanges();
         this.getCalendarList();
       },
       (error) => {
@@ -664,7 +720,7 @@ export class CalendarComponent implements OnInit {
         console.log("Error fetching:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
-        this.changeDetector.detectChanges();
+        this.cd.detectChanges();
       }
     );
   }
@@ -681,7 +737,7 @@ export class CalendarComponent implements OnInit {
         );
         this.editCalendarData = undefined;
         this.spinner = false;
-        this.changeDetector.detectChanges();
+        this.cd.detectChanges();
       },
       (error) => {
         this.spinner = false;
@@ -689,7 +745,7 @@ export class CalendarComponent implements OnInit {
         console.log("Error fetching:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
-        this.changeDetector.detectChanges();
+        this.cd.detectChanges();
       }
     );
   }
@@ -707,7 +763,7 @@ export class CalendarComponent implements OnInit {
       data.isChecked = false;
       this.createCalendar(data);
     }
-    this.changeDetector.detectChanges();
+    this.cd.detectChanges();
   }
 
   //callback event on calendar checkbox change event
@@ -779,7 +835,47 @@ export class CalendarComponent implements OnInit {
         } else {
           this.spinner = false;
         }
-        this.changeDetector.detectChanges();
+        this.cd.detectChanges();
       });
+  }
+
+  ///////////
+
+  updateCalendarEvents(
+    viewRender:
+      | CalendarMonthViewBeforeRenderEvent
+      | CalendarWeekViewBeforeRenderEvent
+      | CalendarDayViewBeforeRenderEvent
+  ): void {
+    if (
+      !this.viewPeriod ||
+      !moment(this.viewPeriod.start).isSame(viewRender.period.start) ||
+      !moment(this.viewPeriod.end).isSame(viewRender.period.end)
+    ) {
+      this.viewPeriod = viewRender.period;
+      let calendar = [];
+      this.calendarEvents = [];
+
+      this.recurringEvents.forEach((event) => {
+        const rule: RRule = new RRule({
+          ...event.rrule,
+          dtstart: new Date(),
+          until: moment(viewRender.period.end).endOf("day").toDate(),
+        });
+        const { title, color } = event;
+
+        rule.all().forEach((date) => {
+          calendar.push({
+            title,
+            color,
+            start: moment(date).toDate(),
+          });
+        });
+      });
+
+      this.calendarEvents = [...this.events, ...calendar];
+      console.log("calendar==>", this.calendarEvents);
+      this.cd.detectChanges();
+    }
   }
 }

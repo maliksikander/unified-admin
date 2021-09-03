@@ -82,17 +82,17 @@
             <!-- <mwl-demo-utils-calendar-header [(view)]="view" [(viewDate)]="viewDate">
               </mwl-demo-utils-calendar-header> -->
 
-            <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="events"
+            <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="calendarEvents"
               [cellTemplate]="customCellTemplate" [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen"
-              (eventTimesChanged)="eventTimesChanged($event)">
+              (eventTimesChanged)="eventTimesChanged($event)" (beforeViewRender)="updateCalendarEvents($event)">
             </mwl-calendar-month-view>
-            <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events"
+            <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="calendarEvents"
               [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
-              (eventTimesChanged)="eventTimesChanged($event)">
+              (eventTimesChanged)="eventTimesChanged($event)" (beforeViewRender)="updateCalendarEvents($event)">
             </mwl-calendar-week-view>
-            <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events"
+            <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="calendarEvents"
               [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
-              (eventTimesChanged)="eventTimesChanged($event)">
+              (eventTimesChanged)="eventTimesChanged($event)" (beforeViewRender)="updateCalendarEvents($event)">
             </mwl-calendar-day-view>
           </div>
         </div>

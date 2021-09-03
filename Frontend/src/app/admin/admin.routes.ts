@@ -29,7 +29,7 @@ export const adminRoutes: Routes = [
     children: [
       { path: '', redirectTo: '/login', pathMatch: 'full' },
       // { path: '', redirectTo: 'general/amq-settings', pathMatch: 'full' },
-      { path: 'general/business-calendar', component: CalendarComponent },
+      { path: 'business-calendar', component: CalendarComponent },
       { path: 'general/display-settings', component: DisplayComponent },
       { path: 'general/locale-settings', component: LocaleComponent },
       { path: 'general/database-settings', component: DatabaseComponent },
