@@ -61,7 +61,7 @@ interface RecurringEvent {
     dtstart?: any;
   };
 }
-
+moment.tz.setDefault('Utc');
 @Component({
   selector: "app-calendar",
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -273,20 +273,23 @@ export class CalendarComponent implements OnInit {
   calendarEvents: CalendarEvent[] = [];
 
   recurringEvents: RecurringEvent[] = [
+    // {
+    //   title: "Recurs on the 5th of each month",
+    //   color: { primary: "#c5cb25", secondary: "#c5cb25" },
+    //   rrule: {
+    //     freq: RRule.MONTHLY,
+    //     bymonthday: 5,
+    //   },
+    // },
     {
-      title: "Recurs on the 5th of each month",
-      color: { primary: "#c5cb25", secondary: "#c5cb25" },
-      rrule: {
-        freq: RRule.MONTHLY,
-        bymonthday: 5,
-      },
-    },
-    {
-      title: "Recurs weekly",
+      title: "Reoccurs Weekly",
       color: { primary: "#ff2700", secondary: "#ff2700" },
       rrule: {
         freq: RRule.WEEKLY,
         byweekday: [RRule.MO, RRule.TU, RRule.WE, RRule.TH, RRule.FR],
+        dtstart: new Date(Date.UTC(2021, 8, 3, 10, 0, 0)),
+        until: new Date(Date.UTC(2021, 8, 10, 19, 0, 0)),
+        interval: 1
       },
     },
     // {
@@ -859,8 +862,9 @@ export class CalendarComponent implements OnInit {
       this.recurringEvents.forEach((event) => {
         const rule: RRule = new RRule({
           ...event.rrule,
-          dtstart: new Date(),
-          until: moment(viewRender.period.end).endOf("day").toDate(),
+          // dtstart: new Date(Date.UTC(2021, 8, 3, 10, 0, 0)),
+          // until: new Date(Date.UTC(2021, 8, 10, 19, 0, 0)),
+          // interval: 1
         });
         const { title, color } = event;
 
