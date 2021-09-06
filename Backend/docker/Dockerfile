@@ -16,4 +16,6 @@ RUN yarn install --pure-lockfile
 
 COPY --chown=node:node . .
 
+RUN chmod 755 ./docker-entrypoint.sh
+
 ENTRYPOINT ["./docker-entrypoint.sh"]
