@@ -29,7 +29,7 @@ node_artifacts_frontend:
    image: node:latest
    script:
    - cd Frontend
-   - npm install
+   - npm install --legacy-peer-deps
    #- export TIME_TOKEN=$(env TZ=GMT-5 date +%d_%m_%Y-%H_%M_%S)
    #- echo "${TIME_TOKEN}"
    allow_failure: false
