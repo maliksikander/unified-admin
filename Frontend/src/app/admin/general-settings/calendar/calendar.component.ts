@@ -51,6 +51,7 @@ interface RecurringEvent {
   title: string;
   color: any;
   start?: Date;
+  end?: Date;
   rrule?: {
     freq: any;
     bymonth?: number;
@@ -61,7 +62,7 @@ interface RecurringEvent {
     dtstart?: any;
   };
 }
-moment.tz.setDefault('Utc');
+moment.tz.setDefault("Utc");
 @Component({
   selector: "app-calendar",
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -73,7 +74,7 @@ moment.tz.setDefault('Utc');
       useClass: CustomDateFormatter,
     },
   ],
-  encapsulation: ViewEncapsulation.None,
+  // encapsulation: ViewEncapsulation.None,
 })
 export class CalendarComponent implements OnInit {
   selectTime = [
@@ -227,8 +228,8 @@ export class CalendarComponent implements OnInit {
 
   events: CalendarEvent[] = [
     {
-      start: subDays(new Date("Wed Sep 03 2021 12:00:00 GMT+0500"), 0),
-      end: addDays(new Date("Wed Sep 15 2021 16:00:00 GMT+0500"), 1),
+      start: subDays(new Date("Wed Sep 06 2021 12:00:00 GMT+0500"), 0),
+      end: new Date("Wed Sep 06 2021 16:00:00 GMT+0500"),
       title: "A 3 day event",
       color: { primary: "#25AFCB", secondary: "#25AFCB" },
       // allDay: true,
@@ -284,12 +285,13 @@ export class CalendarComponent implements OnInit {
     {
       title: "Reoccurs Weekly",
       color: { primary: "#ff2700", secondary: "#ff2700" },
+      end: new Date(Date.UTC(2021, 8, 10, 19, 0, 0)),
       rrule: {
         freq: RRule.WEEKLY,
         byweekday: [RRule.MO, RRule.TU, RRule.WE, RRule.TH, RRule.FR],
-        dtstart: new Date(Date.UTC(2021, 8, 3, 10, 0, 0)),
+        dtstart: new Date(Date.UTC(2021, 8, 1, 10, 0, 0)),
         until: new Date(Date.UTC(2021, 8, 10, 19, 0, 0)),
-        interval: 1
+        interval: 1,
       },
     },
     // {

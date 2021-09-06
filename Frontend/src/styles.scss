@@ -3394,3 +3394,13 @@ snack-bar-container {
     line-height: 14px;
   }
 }
+
+.calendar-content .content-span {
+
+  .mat-checkbox-frame{
+    border-color: transparent !important;
+  }
+  .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+    background-color: transparent !important;
+  }
+}
