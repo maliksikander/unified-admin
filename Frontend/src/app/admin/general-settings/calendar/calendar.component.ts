@@ -285,7 +285,8 @@ export class CalendarComponent implements OnInit {
     {
       title: "Reoccurs Weekly",
       color: { primary: "#ff2700", secondary: "#ff2700" },
-      end: new Date(Date.UTC(2021, 8, 10, 19, 0, 0)),
+      start: new Date("Mon Sep 06 2021 16:00:00 GMT+0500"),
+      end: new Date("Mon Sep 06 2021 19:00:00 GMT+0500"),
       rrule: {
         freq: RRule.WEEKLY,
         byweekday: [RRule.MO, RRule.TU, RRule.WE, RRule.TH, RRule.FR],
@@ -864,17 +865,19 @@ export class CalendarComponent implements OnInit {
       this.recurringEvents.forEach((event) => {
         const rule: RRule = new RRule({
           ...event.rrule,
-          // dtstart: new Date(Date.UTC(2021, 8, 3, 10, 0, 0)),
-          // until: new Date(Date.UTC(2021, 8, 10, 19, 0, 0)),
-          // interval: 1
+          dtstart: event?.start,
+          until: event?.end,
+          interval: 1
         });
-        const { title, color } = event;
+        const { title, color, end, start } = event;
 
-        rule.all().forEach((date) => {
+        rule.all().forEach((date, index) => {
+          console.log("index==>", index);
           calendar.push({
             title,
             color,
-            start: moment(date).toDate(),
+            start: start,
+            end: end,
           });
         });
       });
