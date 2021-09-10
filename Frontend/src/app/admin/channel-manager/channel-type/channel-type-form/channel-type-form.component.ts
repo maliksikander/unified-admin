@@ -38,6 +38,10 @@ export class ChannelTypeFormComponent implements OnInit {
   formsList: [];
   spinner = true;
   valid = false;
+  disclaimerText =
+    "• Please select an image with no background. \n • A maximum file size of 100KB is allowed.";
+
+  uploadFilePayload;
 
   constructor(
     private commonService: CommonService,
@@ -82,21 +86,32 @@ export class ChannelTypeFormComponent implements OnInit {
   }
 
   //to set selected file name and set file name on UI and it accepts file properties as 'files' and change event as 'e'
-  fileUpload(files, e) {
+  fileUpload(file, e) {
     let reader = new FileReader();
-    if (files.length != 0) {
-      if (files[0].size > 1000000)
+    if (file.length != 0) {
+      if (file[0].size > 100000)
         return this.snackbar.snackbarMessage(
           "error-snackbar",
-          "Image Size greater than 1MB",
+          "Image Size greater than 100KB",
           3
         );
-      reader.readAsDataURL(files[0]);
+      reader.readAsDataURL(file[0]);
       reader.onload = (_event) => {
         this.imageData = reader.result;
-        this.channelTypeForm.controls["channelLogo"].setValue(this.imageData);
         this.imageName = e.target.files[0].name;
+        this.channelTypeForm.controls["channelLogo"].setValue(this.imageName);
       };
+    }
+
+    let fd = new FormData();
+    if (file[0]) {
+      fd.append("file", file[0]);
+      fd.append(
+        "conversationId",
+        `${Math.floor(Math.random() * 90000) + 10000}`
+      );
+
+      this.uploadFilePayload = fd;
     }
   }
 
@@ -162,7 +177,9 @@ export class ChannelTypeFormComponent implements OnInit {
           mediaRoutingDomain: this.mrdData[mrdIndex],
           channelLogo: " ",
         });
-        this.imageData = this.editData.channelLogo;
+
+        // this.getFileStats(this.editData.channelLogo);
+        this.imageData = `${this.endPointService.FILE_ENGINE_URL}/${this.endPointService.endpoints.fileEngine.downloadFileStream}?filename=${this.editData?.channelLogo}`;
       }
     } catch (e) {
       console.error("Error==>", e);
@@ -176,16 +193,75 @@ export class ChannelTypeFormComponent implements OnInit {
     return obj;
   }
 
+  uploadFile() {
+    this.endPointService.uploadToFileEngine(this.uploadFilePayload).subscribe(
+      (res: any) => {
+        let fileName = res.name;
+        this.setRequestPayloadAndEmit(fileName);
+      },
+      (error: any) => {
+        this.spinner = false;
+        console.log("Error while uploading:", error);
+      }
+    );
+  }
+
   //to create 'data' object and pass it to the parent component
   onSave() {
+    this.spinner = true;
+    if (this.uploadFilePayload) {
+      this.uploadFile();
+    } else {
+      this.setRequestPayloadAndEmit(this.editData?.channelLogo);
+    }
+  }
+
+  setRequestPayloadAndEmit(filename) {
     let data = JSON.parse(JSON.stringify(this.channelTypeForm.value));
     data.channelConfigSchema = this.removeAttrInFormSchema(
       data.channelConfigSchema
     );
-    data.channelLogo = this.imageData;
+    data.channelLogo = filename;
     data.mediaRoutingDomain = data.mediaRoutingDomain.id;
     if (this.editData) data.id = this.editData.id;
+    this.spinner = false;
+    // console.log("save data==>", data);
     this.formSaveData.emit(data);
     this.channelTypeForm.reset();
   }
+
+  // getFileStats(filename) {
+  //   this.endPointService.getFileStats(filename).subscribe(
+  //     (res: any) => {
+  //       // console.log("res==>", res);
+  //       if (!res.code) {
+  //         this.imageData = `${this.endPointService.FILE_ENGINE_URL}/${this.endPointService.endpoints.fileEngine.downloadFileStream}?filename=${filename}`;
+  //         // this.getFile(filename)
+  //       }
+  //       this.spinner = false;
+  //     },
+  //     (error) => {
+  //       this.spinner = false;
+  //       console.log("Error fetching file stats:", error);
+  //       if (error && error.status == 0)
+  //         this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
+  //     }
+  //   );
+  // }
+
+  // getFile(filename) {
+  //   this.endPointService.getFromFileEngine(filename).subscribe(
+  //     (res: any) => {
+  //       this.imageData = res
+  //       // console.log("res==>", res);
+  //       this.spinner = false;
+  //     },
+  //     (error) => {
+  //       this.spinner = false;
+  //       console.log("Error fetching file stats:", error);
+  //       if (error && error.status == 0)
+  //         this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
+  //     }
+  //   );
+  // }
 }

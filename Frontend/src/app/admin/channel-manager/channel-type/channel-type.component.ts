@@ -57,8 +57,29 @@ export class ChannelTypeComponent implements OnInit {
   }
 
   //to sanitize and bypass dom security warnings for channel type logo images
-  transform(image) {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(image);
+  transform(filename) {
+    // this.getFileStats(file)
+    return `${this.endPointService.FILE_ENGINE_URL}/${this.endPointService.endpoints.fileEngine.downloadFileStream}?filename=${filename}`
+    // return this.sanitizer.bypassSecurityTrustResourceUrl(image);
+  }
+
+  getFileStats(filename) {
+    this.endPointService.getFileStats(filename).subscribe(
+      (res: any) => {
+        // console.log("res==>", res);
+        if (!res.code) {
+          // this.imageData = `${this.endPointService.FILE_ENGINE_URL}/${this.endPointService.endpoints.fileEngine.downloadFileStream}?filename=${filename}`;
+          // this.getFile(filename)
+        }
+        this.spinner = false;
+      },
+      (error) => {
+        this.spinner = false;
+        console.log("Error fetching file stats:", error);
+        if (error && error.status == 0)
+          this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
+      }
+    );
   }
 
   childToParentUIChange(e): void {

@@ -62,8 +62,14 @@ export class ChannelListComponent implements OnInit {
   }
 
   //to sanitize and bypass dom security warnings for channel type logo images
-  transform(image) {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(image);
+  // transform(image) {
+  //   return this.sanitizer.bypassSecurityTrustResourceUrl(image);
+  // }
+
+  transform(filename) {
+    // this.getFileStats(file)
+    return `${this.endPointService.FILE_ENGINE_URL}/${this.endPointService.endpoints.fileEngine.downloadFileStream}?filename=${filename}`
+    // return this.sanitizer.bypassSecurityTrustResourceUrl(image);
   }
 
   //to get channels list, it accepts channel-type-id as `typeId` parameter for fetching type particular channels

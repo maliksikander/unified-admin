@@ -23,6 +23,7 @@ export class EndpointService {
   BOT_URL;
   LICENSE_URL;
   BUSINESS_CALENDAR_URL;
+  FILE_ENGINE_URL;
   token;
   tenant;
 
@@ -39,6 +40,11 @@ export class EndpointService {
     },
     forms: "forms",
     formValidation: "formValidation",
+    fileEngine: {
+      uploadFile: "api/uploadFileStream",
+      downloadFileStream: "api/downloadFileStream",
+      fileStat:"api/getFileStat"
+    },
     general: {
       amq: "amq-setting",
       database: "database-setting",
@@ -75,9 +81,10 @@ export class EndpointService {
     this.ADMIN_URL = e.ADMIN_URL;
     this.MRE_URL = e.MRE_URL;
     this.CCM_URL = e.CCM_URL;
-    this.BOT_URL = e.BOT_URL;
+    this.BOT_URL = e.BOT_FRAMEWORK_URL;
     this.BUSINESS_CALENDAR_URL = e.BUSINESS_CALENDAR_URL;
     this.LICENSE_URL = e.LICENSE_MANAGER_URL;
+    this.FILE_ENGINE_URL = e.FILE_ENGINE_URL;
     this.userRoles = e.BUSINESS_USER_ROLES;
 
     if (isDevMode()) this.ADMIN_URL = "http://localhost:3000";
@@ -810,6 +817,52 @@ export class EndpointService {
           Authorization: "Bearer" + this.token,
         }),
       })
+      .pipe(catchError(this.handleError));
+  }
+
+  //////////////////  FILE ENGINE API's ////////////////
+
+  uploadToFileEngine(data): Observable<any> {
+    return this.httpClient
+      .post<any>(
+        `${this.FILE_ENGINE_URL}/${this.endpoints.fileEngine.uploadFile}`,
+        data,
+        {
+          headers: new HttpHeaders({
+            // "Content-Type": "multipart/form-data; boundary=<calculated when request is sent>",
+            // "enctype": "multipart/form-data"
+            // 'Authorization': 'Bearer'
+          }),
+        }
+      )
+      .pipe(catchError(this.handleError));
+  }
+
+  getFromFileEngine(fileName): Observable<any> {
+    return this.httpClient
+      .get(
+        `${this.FILE_ENGINE_URL}/${this.endpoints.fileEngine.downloadFileStream}?filename=${fileName}`,
+        {
+          headers: new HttpHeaders({
+            // "Content-Type": "application/json",
+            // Authorization: "Bearer" + this.token,
+          }),
+        }
+      )
+      .pipe(catchError(this.handleError));
+  }
+
+  getFileStats(fileName): Observable<any> {
+    return this.httpClient
+      .get(
+        `${this.FILE_ENGINE_URL}/${this.endpoints.fileEngine.fileStat}?filename=${fileName}`,
+        {
+          headers: new HttpHeaders({
+            "Content-Type": "application/json",
+            // Authorization: "Bearer" + this.token,
+          }),
+        }
+      )
       .pipe(catchError(this.handleError));
   }
 
