@@ -187,12 +187,11 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     this.downTheScrollAfterMilliSecs(50, "smooth", divID);
   }
 
-  // to remove 'expression' group
-  removeTerm(i) {
+  // to remove 'term' group from an expression, it accepts expression index as `i` and term index as `j` parameter
+  removeTerm(i, j) {
     const exp: any = this.stepForm.get("expressions");
-    const control: any = exp.controls[i].get("terms");
-    const terms: any = control.controls;
-    control.removeAt(i);
+    const terms: any = exp.controls[i].get("terms") as FormArray;
+    terms.removeAt(j);
   }
 
   //to open form dialog,this method accepts the `template variable` as a parameter assigned to the form in html.
