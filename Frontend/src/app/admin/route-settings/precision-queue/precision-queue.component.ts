@@ -548,7 +548,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
         this.getQueue();
         this.snackbar.snackbarMessage(
           "success-snackbar",
-          "Created Successfully",
+          "Updated Successfully",
           1
         );
       },

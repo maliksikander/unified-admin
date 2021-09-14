@@ -85,16 +85,20 @@
                               <!-- [style.width]="tableData.offsetWidth + 'px'" -->
                               <span class="step-table-span" [style.width]="tableData.offsetWidth + 'px'">
                                 <ng-container *ngFor="let j = index;let exp of stepData?.expressions">
-                                  <span *ngIf="exp?.preExpressionCondition != null"> [{{exp?.preExpressionCondition}}]
+                                  <span *ngIf="exp?.preExpressionCondition != null"> {{exp?.preExpressionCondition}}
                                   </span>
-                                  <ng-container *ngFor="let k =index;let data of exp?.terms">
+                                  <ng-container
+                                    *ngFor="let k =index;let first = first;let last= last;let data of exp?.terms">
+                                    <span *ngIf="first">(</span>
                                     <span *ngIf="data?.preTermCondition != null">{{data?.preTermCondition}} </span>
-                                    <span>({{data?.routingAttribute?.name}} {{data?.relationalOperator}}
+                                    <span>{{data?.routingAttribute?.name}} {{data?.relationalOperator}}
                                       <ng-container *ngIf="data?.routingAttribute?.type == 'BOOLEAN'">{{data?.value ==
-                                        '1' ? 'true' :'false'}})</ng-container>
+                                        '1' ? 'true' :'false'}} </ng-container>
                                       <ng-container *ngIf="data?.routingAttribute?.type != 'BOOLEAN'">
-                                        {{data?.value}})
+                                        {{data?.value}}
                                       </ng-container>
+
+                                      <span *ngIf="last">)</span>
                                     </span>
                                   </ng-container>
                                 </ng-container>

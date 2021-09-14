@@ -19,7 +19,7 @@
             <div class="form-group">
                 <mat-label>Channel Config Schema</mat-label>
                 <mat-form-field appearance="outline">
-                    <mat-select placeholder="Select Form" formControlName="channelConfigSchema">
+                    <mat-select placeholder="Select Form Schema" formControlName="channelConfigSchema">
                         <mat-option *ngFor="let form of formsList" [value]="form">{{form?.formTitle}}</mat-option>
                     </mat-select>
                     <mat-error class="form-error">
