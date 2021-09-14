@@ -66,11 +66,9 @@ export class ChannelListComponent implements OnInit {
   //   return this.sanitizer.bypassSecurityTrustResourceUrl(image);
   // }
 
-  //to get logo/image from file engine, it accepts the file name as parameter and returns the url 
+  //to get logo/image from file engine, it accepts the file name as parameter and returns the url
   getFileURL(filename) {
-    // this.getFileStats(file)
-    return `${this.endPointService.FILE_ENGINE_URL}/${this.endPointService.endpoints.fileEngine.downloadFileStream}?filename=${filename}`
-    // return this.sanitizer.bypassSecurityTrustResourceUrl(image);
+    return `${this.endPointService.FILE_ENGINE_URL}/${this.endPointService.endpoints.fileEngine.downloadFileStream}?filename=${filename}`;
   }
 
   //to get channels list, it accepts channel-type-id as `typeId` parameter for fetching type particular channels
@@ -131,14 +129,16 @@ export class ChannelListComponent implements OnInit {
     this.endPointService.deleteChannel(data.serviceIdentifier).subscribe(
       (res: any) => {
         this.spinner = false;
-        this.channels = this.channels.filter(item => item.id != data.id);
-        this.snackbar.snackbarMessage('success-snackbar', "Deleted", 1);
+        this.channels = this.channels.filter((item) => item.id != data.id);
+        this.snackbar.snackbarMessage("success-snackbar", "Deleted", 1);
       },
       (error: any) => {
         this.spinner = false;
         console.log("Error fetching:", error);
-        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
-      });
+        if (error && error.status == 0)
+          this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
+      }
+    );
   }
 
   //to edit channel and change the view to form page and load input fields and pass channel object as 'data' parameter

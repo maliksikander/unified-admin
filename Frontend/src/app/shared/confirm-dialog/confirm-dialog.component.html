@@ -1,14 +1,17 @@
 <div class="content-container">
   <div class="mat-card-header">
-      <mat-icon id="close-icon" (click)="dialogRef.close(true)">close</mat-icon>
-      <h4 class="content-span full-width">{{data.heading}}</h4>
+    <mat-icon id="close-icon" (click)="dialogRef.close(true)">close</mat-icon>
+    <h4 class="content-span full-width">{{data.heading}}</h4>
   </div>
   <div class="dialog-content">
-      <p class="content-span full-width">{{data.message}}</p>
-      <div class="clearfix"></div>
-      <button mat-flat-button class="gray-btn" color="accent" *ngIf="data.text !== 'notification'" [mat-dialog-close]="true">Cancel</button>
-      <button mat-flat-button color="warn" *ngIf="data.text == 'confirm'" [mat-dialog-close]="delete">Delete</button>
-      <button mat-flat-button style="background: #25AFCB" color="warn" *ngIf="data.text == 'notification'" [mat-dialog-close]="true">Dismiss</button>
-      <button mat-flat-button style="background: #25CB8D" color="warn" *ngIf="data.text == 'savedata'" [mat-dialog-close]>Save</button>
+    <p class="content-span full-width">{{data.message}}</p>
+    <div class="clearfix"></div>
+    <button mat-flat-button class="gray-btn" color="accent" *ngIf="data.text !== 'notification'"
+      [mat-dialog-close]="true">Cancel</button>
+    <button mat-flat-button color="warn" *ngIf="data.text == 'confirm'" [mat-dialog-close]="delete">Delete</button>
+    <button mat-flat-button style="background: #25AFCB" color="warn" *ngIf="data.text == 'notification'"
+      [mat-dialog-close]="true">Dismiss</button>
+    <button mat-flat-button style="background: #25CB8D" color="warn" *ngIf="data.text == 'savedata'"
+      [mat-dialog-close]>Save</button>
   </div>
 </div>

@@ -1,16 +1,15 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { NewFormComponent } from './new-form.component';
+import { NewFormComponent } from "./new-form.component";
 
-describe('NewFormComponent', () => {
+describe("NewFormComponent", () => {
   let component: NewFormComponent;
   let fixture: ComponentFixture<NewFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NewFormComponent ]
-    })
-    .compileComponents();
+      declarations: [NewFormComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +18,7 @@ describe('NewFormComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

@@ -1,34 +1,33 @@
-import { CommonService } from './common.service';
-import { SnackbarService } from './snackbar.service';
-import { Injectable, OnInit } from '@angular/core';
+import { CommonService } from "./common.service";
+import { SnackbarService } from "./snackbar.service";
+import { Injectable, OnInit } from "@angular/core";
 import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpErrorResponse
-} from '@angular/common/http';
-import { Observable, throwError, Subject } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
-
+  HttpErrorResponse,
+} from "@angular/common/http";
+import { Observable, throwError, Subject } from "rxjs";
+import { catchError, tap } from "rxjs/operators";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class HttpInterceptorService {
-
-
   url;
   i = 1;
   snackbar_ref;
   evt_type;
 
+  constructor(
+    private snackbar: SnackbarService,
+    private commonService: CommonService
+  ) {}
 
-
-  constructor(private snackbar: SnackbarService,
-    private commonService: CommonService,) { }
-
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
+  intercept(
+    request: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
       tap((evt: any) => {
         this.evt_type = evt.type;
@@ -41,30 +40,26 @@ export class HttpInterceptorService {
         }
       }),
       catchError((error: HttpErrorResponse) => {
-
         this.url = error.url;
         let code;
-        let msg: string
+        let msg: string;
 
         if (error.error && error.error.message) {
           msg = error.error.message;
           if (msg) msg = msg.toUpperCase();
-          this.snackbar.snackbarMessage('error-snackbar', msg, 2);
-        }
-        else {
+          this.snackbar.snackbarMessage("error-snackbar", msg, 2);
+        } else {
           msg = error.error;
-          if (msg && typeof (msg) == 'string') {
+          if (msg && typeof msg == "string") {
             msg = msg.toUpperCase();
-            this.snackbar.snackbarMessage('error-snackbar', msg, 2);
-          }
-          else {
-            this.snackbar.snackbarMessage('error-snackbar', error.message, 2);
+            this.snackbar.snackbarMessage("error-snackbar", msg, 2);
+          } else {
+            this.snackbar.snackbarMessage("error-snackbar", error.message, 2);
           }
         }
         this.commonService._spinnerSubject.next(false);
         return throwError(error);
-
       })
-    )
-  };
+    );
+  }
 }

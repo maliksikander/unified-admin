@@ -3,12 +3,12 @@
     <a routerLink="/" class="logo">
       <img src="assets/images/expertflow-logo.png" height="35" alt="Wall Board Admin">
     </a>
-  
+
     <div class="topbar-right right float-right">
       <!-- <p>{{today | date:'MMM d, y' }} &nbsp;| &nbsp;{{ today | date:'EEEE'}}&nbsp; |
         &nbsp;{{ today | date:'h: m a'}}</p> -->
       <ul class="notification-area">
-  
+
         <!-- <li class="multi-language">
           <button mat-button [matMenuTriggerFor]="languageSelection" class="language-trigger">
             <img src="{{languageFlag}}" width="20">{{language}} <i class="material-icons">
@@ -26,7 +26,7 @@
 
         <li class="app-btn">
 
-          <button  mat-icon-button [matMenuTriggerFor]="moreOption">
+          <button mat-icon-button [matMenuTriggerFor]="moreOption">
             <mat-icon>apps</mat-icon>
           </button>
           <mat-menu #moreOption="matMenu" xPosition="before">
@@ -48,7 +48,7 @@
             <button mat-menu-item (click)="logout()">Log Out</button>
           </mat-menu> -->
         </li>
-        <li >
+        <li>
           <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="log_out">
             <mat-icon>more_vert</mat-icon>
           </button>

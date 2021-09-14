@@ -1,15 +1,13 @@
-import { PipeTransform, Pipe } from '@angular/core';
+import { PipeTransform, Pipe } from "@angular/core";
 @Pipe({
-    name: 'removeUnderscoreFilter'
+  name: "removeUnderscoreFilter",
 })
 export class RemoveUnderscoreFilterPipe implements PipeTransform {
-    transform(list: any): any {
-        if (!list) {
-            return list;
-        }
-
-        else if (list.length > 0) {
-            return list.replace("_", " ");
-        }
+  transform(list: any): any {
+    if (!list) {
+      return list;
+    } else if (list.length > 0) {
+      return list.replace("_", " ");
     }
+  }
 }

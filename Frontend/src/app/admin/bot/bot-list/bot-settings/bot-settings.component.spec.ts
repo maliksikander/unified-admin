@@ -1,17 +1,18 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
-import { BotSettingsComponent } from './bot-settings.component';
+import { BotSettingsComponent } from "./bot-settings.component";
 
-describe('BotSettingsComponent', () => {
+describe("BotSettingsComponent", () => {
   let component: BotSettingsComponent;
   let fixture: ComponentFixture<BotSettingsComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ BotSettingsComponent ]
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [BotSettingsComponent],
+      }).compileComponents();
     })
-    .compileComponents();
-  }));
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(BotSettingsComponent);
@@ -19,7 +20,7 @@ describe('BotSettingsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

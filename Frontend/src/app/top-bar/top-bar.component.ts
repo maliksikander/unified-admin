@@ -1,19 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-top-bar',
-  templateUrl: './top-bar.component.html',
-  styleUrls: ['./top-bar.component.scss']
+  selector: "app-top-bar",
+  templateUrl: "./top-bar.component.html",
+  styleUrls: ["./top-bar.component.scss"],
 })
 export class TopBarComponent implements OnInit {
   today = new Date();
-  userName = "User Name"
+  userName = "User Name";
 
-  constructor(private router: Router,) { }
+  constructor(private router: Router) {}
 
   ngOnInit() {
-    let user = localStorage.getItem('username') ? localStorage.getItem('username') : sessionStorage.getItem('username');
+    let user = localStorage.getItem("username")
+      ? localStorage.getItem("username")
+      : sessionStorage.getItem("username");
     if (user) this.userName = user;
     // this.clock();
   }
@@ -26,23 +28,22 @@ export class TopBarComponent implements OnInit {
   // }
 
   logout() {
-    sessionStorage.removeItem('token');
-    sessionStorage.removeItem('username');
-    sessionStorage.removeItem('currentAttributePage');
-    sessionStorage.removeItem('currentMRDPage');
-    sessionStorage.removeItem('currentQueuePage');
-    sessionStorage.removeItem('currentUsersPage');
-    sessionStorage.removeItem('channelTypePage');
-    sessionStorage.removeItem('currentReasonCodePage');
-    sessionStorage.removeItem('currentPullModePage');
-    sessionStorage.removeItem('tenant');
-    sessionStorage.removeItem('formsPage');
-    localStorage.removeItem('username');
-    localStorage.removeItem('tenant');
-    localStorage.removeItem('token');
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("username");
+    sessionStorage.removeItem("currentAttributePage");
+    sessionStorage.removeItem("currentMRDPage");
+    sessionStorage.removeItem("currentQueuePage");
+    sessionStorage.removeItem("currentUsersPage");
+    sessionStorage.removeItem("channelTypePage");
+    sessionStorage.removeItem("currentReasonCodePage");
+    sessionStorage.removeItem("currentPullModePage");
+    sessionStorage.removeItem("tenant");
+    sessionStorage.removeItem("formsPage");
+    localStorage.removeItem("username");
+    localStorage.removeItem("tenant");
+    localStorage.removeItem("token");
     // sessionStorage.removeItem('permittedResources');
 
-    this.router.navigate(['/login']);
+    this.router.navigate(["/login"]);
   }
-
 }

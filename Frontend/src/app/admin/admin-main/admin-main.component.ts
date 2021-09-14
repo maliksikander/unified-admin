@@ -1,20 +1,24 @@
-import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
-import { MatSidenav } from '@angular/material/sidenav';
-import { CommonService } from '../services/common.service';
-import { Router } from '@angular/router';
-import { ConfigService } from '../services/config.service';
-import { EndpointService } from '../services/endpoint.service';
-import { Subscription } from 'rxjs';
+import {
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnInit,
+  ViewChild,
+} from "@angular/core";
+import { MatSidenav } from "@angular/material/sidenav";
+import { CommonService } from "../services/common.service";
+import { Router } from "@angular/router";
+import { ConfigService } from "../services/config.service";
+import { EndpointService } from "../services/endpoint.service";
+import { Subscription } from "rxjs";
 
 @Component({
-  selector: 'app-admin-main',
-  templateUrl: './admin-main.component.html',
-  styleUrls: ['./admin-main.component.scss']
+  selector: "app-admin-main",
+  templateUrl: "./admin-main.component.html",
+  styleUrls: ["./admin-main.component.scss"],
 })
-
 export class AdminMainComponent implements OnInit {
-
-  @ViewChild('sidenav', { static: true }) sidenav: MatSidenav;
+  @ViewChild("sidenav", { static: true }) sidenav: MatSidenav;
   @Input() themeChange: string;
   elem;
   events: string[] = [];
@@ -38,13 +42,12 @@ export class AdminMainComponent implements OnInit {
     private endPointService: EndpointService,
     private router: Router,
     private changeDetector: ChangeDetectorRef,
-    private configService: ConfigService) {
+    private configService: ConfigService
+  ) {
     // this.commonService._generalSubject.subscribe((res: any) => {
     //   console.log("triggered", res);
     //   this.generalBool = res;
-
     // });
-
     // this.subscription = this.commonService.getMessage().subscribe(message => {
     //   console.log("triggered");
     //   console.log("message-->", message)
@@ -59,7 +62,6 @@ export class AdminMainComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.configService.onReadConfig.subscribe((e) => {
       this.defaultTheme = this.configService.Theme;
       this.defaultLanguage = this.configService.DefaultLanguage;
@@ -71,8 +73,8 @@ export class AdminMainComponent implements OnInit {
         this.appColor = this.configService.appThemeColor;
       }
 
-      if (this.sidebarPosition === 'left' && this.defaultLanguage === 'ar') {
-        this.sidebarPosition = 'right';
+      if (this.sidebarPosition === "left" && this.defaultLanguage === "ar") {
+        this.sidebarPosition = "right";
       }
     });
 
@@ -80,22 +82,19 @@ export class AdminMainComponent implements OnInit {
     // if (permittedResources.includes('general-settings')) this.generalBool = true;
     // else if (permittedResources.includes('RE_Configuration')) this.routingBool = true;
 
-
-
     this.elem = document.documentElement;
     this.commonService.themeVersion.subscribe((data) => {
       console.log(data);
       this.changeTheme();
     });
-
   }
-
 
   clickEvent() {
     if (this.isBarIconView) {
       this.barStatus = true;
+    } else {
+      this.barStatus = !this.barStatus;
     }
-    else { this.barStatus = !this.barStatus; }
   }
 
   changeTheme() {

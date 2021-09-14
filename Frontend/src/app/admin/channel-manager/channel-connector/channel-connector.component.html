@@ -75,7 +75,6 @@
 
   <ng-container *ngIf="addChannelBool">
     <app-channel-connector-settings [parentChannelBool]="addChannelBool" [channelTypeData]="channelType"
-      [connectorData]="editConnectorData" (formCancelEvent)='resetUI()'
-      (formSaveData)='onSave($event)'>
+      [connectorData]="editConnectorData" (formCancelEvent)='resetUI()' (formSaveData)='onSave($event)'>
     </app-channel-connector-settings>
   </ng-container>

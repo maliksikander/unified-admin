@@ -121,7 +121,7 @@ export class MrdComponent implements OnInit {
         this.spinner = false;
         this.mrdData = res;
         // if (res.length == 0)
-          // this.snackbar.snackbarMessage("error-snackbar", "NO DATA FOUND", 2);
+        // this.snackbar.snackbarMessage("error-snackbar", "NO DATA FOUND", 2);
       },
       (error) => {
         this.spinner = false;

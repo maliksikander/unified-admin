@@ -1,25 +1,26 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
-import { ChannelTypeSettingsComponent } from './channel-type-settings.component';
+import { ChannelSettingsComponent } from "./channel-settings.component";
 
-describe('ChannelTypeSettingsComponent', () => {
-  let component: ChannelTypeSettingsComponent;
-  let fixture: ComponentFixture<ChannelTypeSettingsComponent>;
+describe("ChannelTypeSettingsComponent", () => {
+  let component: ChannelSettingsComponent;
+  let fixture: ComponentFixture<ChannelSettingsComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ ChannelTypeSettingsComponent ]
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [ChannelSettingsComponent],
+      }).compileComponents();
     })
-    .compileComponents();
-  }));
+  );
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ChannelTypeSettingsComponent);
+    fixture = TestBed.createComponent(ChannelSettingsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

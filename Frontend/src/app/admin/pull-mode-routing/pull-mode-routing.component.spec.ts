@@ -1,16 +1,15 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { PullModeRoutingComponent } from './pull-mode-routing.component';
+import { PullModeRoutingComponent } from "./pull-mode-routing.component";
 
-describe('PullModeRoutingComponent', () => {
+describe("PullModeRoutingComponent", () => {
   let component: PullModeRoutingComponent;
   let fixture: ComponentFixture<PullModeRoutingComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PullModeRoutingComponent ]
-    })
-    .compileComponents();
+      declarations: [PullModeRoutingComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +18,7 @@ describe('PullModeRoutingComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

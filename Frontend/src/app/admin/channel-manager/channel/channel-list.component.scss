@@ -91,7 +91,7 @@ input::-webkit-inner-spin-button {
             white-space: nowrap;
             max-width: 0;
             width: 20%;
-            &:nth-child(3){
+            &:nth-child(3) {
               padding-left: 0;
             }
 
@@ -142,7 +142,7 @@ input::-webkit-inner-spin-button {
           right: 5px;
           top: 27%;
           z-index: 2;
-          
+
           mat-icon {
             position: relative;
             top: -6px;

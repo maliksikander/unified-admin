@@ -1,4 +1,4 @@
-@import '~@angular/material/theming';
+@import "~@angular/material/theming";
 //@import '/tile.component';
 
 @include mat-core();
@@ -10,7 +10,6 @@ $theme: mat-light-theme($primary, $accent, $warn);
 
 @include angular-material-theme($theme);
 
-
 // Our dark theme
 .dark-theme {
   color: $light-primary-text;
@@ -21,13 +20,12 @@ $theme: mat-light-theme($primary, $accent, $warn);
   @include angular-material-theme($dark-theme);
 }
 
-
 .dark-theme {
   /**
    * Backgrounds
    */
   $color-bg-darkest: #13141b;
-  $color-bg-darker: #1D2C3F;
+  $color-bg-darker: #1d2c3f;
   $color-bg-dark: #182331;
   $color-bg-med: #2f3646;
   $color-bg-light: #455066;
@@ -38,21 +36,22 @@ $theme: mat-light-theme($primary, $accent, $warn);
    */
   $color-text-dark: #72809b;
   $color-text-med-dark: #919db5;
-  $color-text-med: #A0AABE;
+  $color-text-med: #a0aabe;
   $color-text-med-light: #d9dce1;
   $color-text-light: #f0f1f6;
   $color-text-lighter: #fff;
 
-  &.main-section-area, .main-nav {
+  &.main-section-area,
+  .main-nav {
     background: $color-bg-darker !important;
 
     .mat-card {
       background: $color-bg-dark;
 
-      &.code-header{
+      &.code-header {
         background: $color-bg-darkest;
 
-        h3{
+        h3 {
           color: $color-text-dark;
         }
       }
@@ -60,14 +59,12 @@ $theme: mat-light-theme($primary, $accent, $warn);
   }
 
   .topbar-right {
-
     p {
-      color: #E67E22 !important;
+      color: #e67e22 !important;
     }
   }
 
   .ngx-charts {
-
     text {
       fill: $color-text-med;
     }
@@ -154,7 +151,6 @@ $theme: mat-light-theme($primary, $accent, $warn);
     .polar-chart .polar-chart-background {
       fill: rgb(30, 34, 46);
     }
-
   }
 
   .chart-legend {
@@ -204,13 +200,14 @@ $theme: mat-light-theme($primary, $accent, $warn);
     table {
       td {
         border-color: $color-bg-dark;
-        background: #0F1924;
-        color: #BDC3C7;
+        background: #0f1924;
+        color: #bdc3c7;
       }
     }
   }
 
-  .mat-stepper-horizontal, .mat-stepper-vertical {
+  .mat-stepper-horizontal,
+  .mat-stepper-vertical {
     background-color: transparent;
   }
 
@@ -220,15 +217,15 @@ $theme: mat-light-theme($primary, $accent, $warn);
       background: darken($color-bg-darker, 12%) !important;
     }
   }
-  .page-height-selection .main-page-content, .admin-panel{
+  .page-height-selection .main-page-content,
+  .admin-panel {
     background: darken($color-bg-darker, 7%) !important;
   }
-  .admin-panel{
-
-    .mat-row .mat-cell{
+  .admin-panel {
+    .mat-row .mat-cell {
       color: $color-text-light;
     }
-    .mat-table{
+    .mat-table {
       background: $color-bg-darker !important;
     }
   }
@@ -238,25 +235,24 @@ $theme: mat-light-theme($primary, $accent, $warn);
 
     .reg {
       border: 2px solid darken($color-bg-darker, 10%) !important;
-
     }
   }
   ngx-charts-pie-chart span.legend-label-color:before {
     background: #182331;
   }
-  .main-sidebar{
-    .mat-drawer{
+  .main-sidebar {
+    .mat-drawer {
       background: $color-bg-light !important;
     }
   }
 
-
   .main-sidebar .mat-sidenav {
-    .mat-expansion-panel, a.mat-list-item span{
+    .mat-expansion-panel,
+    a.mat-list-item span {
       color: $color-text-med !important;
     }
   }
-  .menu-trigger{
+  .menu-trigger {
     background: $color-bg-light !important;
     color: $color-text-med !important;
   }

@@ -44,7 +44,7 @@
                       <td class="list-action-area">
                         <div class="data-overflow">{{bot?.botUri ? bot?.botUri : 'N/A'}}</div>
                         <span class="list-actions">
-                          <button matTooltip="Edit" (click)="editBotSettings(bot,'RASA')" mat-mini-fab> 
+                          <button matTooltip="Edit" (click)="editBotSettings(bot,'RASA')" mat-mini-fab>
                             <mat-icon>mode_edit</mat-icon>
                           </button>
                           <button matTooltip="Delete" (click)="openConfirmDialog(bot)" mat-mini-fab>
@@ -92,7 +92,8 @@
                       <td scope="row">{{bot?.botId ? bot?.botId : 'N/A'}}</td>
                       <td>{{bot?.botName ? bot?.botName : 'N/A'}}</td>
                       <td class="list-action-area">
-                        <div class="data-overflow">{{bot?.botUri?.metaData?.name ? bot?.botUri?.metaData?.name : 'N/A'}}</div>
+                        <div class="data-overflow">{{bot?.botUri?.metaData?.name ? bot?.botUri?.metaData?.name : 'N/A'}}
+                        </div>
                         <span class="list-actions">
                           <button matTooltip="Edit" (click)="editBotSettings(bot,'DIALOGFLOW')" mat-mini-fab>
                             <mat-icon>mode_edit</mat-icon>

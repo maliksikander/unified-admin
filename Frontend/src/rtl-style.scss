@@ -1,10 +1,9 @@
-.main-section-area.rtl-language{
-
+.main-section-area.rtl-language {
   //.main-sidebar mat-sidenav.mat-drawer{
   //  right: 0;
   //  transform: translate(0) !important;
   //}
-  .menu-trigger{
+  .menu-trigger {
     right: 0;
     left: inherit;
   }
@@ -12,19 +11,17 @@
     margin-left: 0;
     margin-right: 65px;
 
-
     .topbar-right {
       float: none !important;
       text-align: right;
       direction: rtl;
       display: inline-block;
     }
-    .logo{
+    .logo {
       float: right;
     }
   }
-  .action-area{
-
+  .action-area {
     mat-expansion-panel-header {
       direction: rtl;
       text-align: right;
@@ -34,7 +31,7 @@
     direction: rtl;
     text-align: right;
 
-    .mat-slide-toggle{
+    .mat-slide-toggle {
       direction: ltr;
     }
   }

@@ -1,17 +1,18 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
-import { PrecisionQueueComponent } from './precision-queue.component';
+import { PrecisionQueueComponent } from "./precision-queue.component";
 
-describe('PrecisionQueueComponent', () => {
+describe("PrecisionQueueComponent", () => {
   let component: PrecisionQueueComponent;
   let fixture: ComponentFixture<PrecisionQueueComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ PrecisionQueueComponent ]
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [PrecisionQueueComponent],
+      }).compileComponents();
     })
-    .compileComponents();
-  }));
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(PrecisionQueueComponent);
@@ -19,7 +20,7 @@ describe('PrecisionQueueComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

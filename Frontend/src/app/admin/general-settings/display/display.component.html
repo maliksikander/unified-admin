@@ -32,7 +32,8 @@
               <div class="form-group col-md-5">
                 <mat-label>Company Logo</mat-label>
                 <mat-form-field appearance="outline">
-                  <input style="display: none;" #file type="file" accept='image/*' (change)="preview(file.files,$event)" />
+                  <input style="display: none;" #file type="file" accept='image/*'
+                    (change)="preview(file.files,$event)" />
                   <input matInput formControlName="companyLogo" [value]="imageName">
                   <button class="select-file-button" mat-raised-button matSuffix (click)="file.click()">
                     <!-- <i class="material-icons">folder</i> -->
@@ -52,7 +53,8 @@
               </div>
             </div>
             <div class="action-area col-md-5">
-              <button [disabled]="!displaySettingForm.valid" mat-raised-button class="blue-btn service-trigger" (click)="onSave()">Save</button>
+              <button [disabled]="!displaySettingForm.valid" mat-raised-button class="blue-btn service-trigger"
+                (click)="onSave()">Save</button>
             </div>
 
           </form>

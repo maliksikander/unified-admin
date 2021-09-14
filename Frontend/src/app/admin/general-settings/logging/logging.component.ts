@@ -1,48 +1,59 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CommonService } from '../../services/common.service';
-import { EndpointService } from '../../services/endpoint.service';
-import { SnackbarService } from '../../services/snackbar.service';
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { CommonService } from "../../services/common.service";
+import { EndpointService } from "../../services/endpoint.service";
+import { SnackbarService } from "../../services/snackbar.service";
 @Component({
-  selector: 'app-logging',
-  templateUrl: './logging.component.html',
-  styleUrls: ['./logging.component.scss']
+  selector: "app-logging",
+  templateUrl: "./logging.component.html",
+  styleUrls: ["./logging.component.scss"],
 })
 export class LoggingComponent implements OnInit {
-
   logSettingForm: FormGroup;
   formErrors = {
-    logLevel: '',
-    agentLogsMaxFiles: '',
-    agentLogsFileSize: '',
-    logFilePath: ''
+    logLevel: "",
+    agentLogsMaxFiles: "",
+    agentLogsFileSize: "",
+    logFilePath: "",
   };
   validations;
   // reqServiceType = 'log-setting';
   spinner: any = true;
   editData: any;
-  logLevel = ['debug', 'error', 'fatal', 'info', 'off', 'trace', 'warn'];
-  constructor(private snackbar: SnackbarService,
+  logLevel = ["debug", "error", "fatal", "info", "off", "trace", "warn"];
+  constructor(
+    private snackbar: SnackbarService,
     private fb: FormBuilder,
     private commonService: CommonService,
     private endPointService: EndpointService,
-    private changeDetector: ChangeDetectorRef) { }
+    private changeDetector: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.commonService.checkTokenExistenceInStorage();
 
-    //setting local form validation messages 
+    //setting local form validation messages
     this.validations = this.commonService.logSettingErrorMessages;
 
     this.logSettingForm = this.fb.group({
-      logLevel: ['warn', [Validators.required]],
-      agentLogsMaxFiles: ['', [Validators.required, Validators.min(1), , Validators.max(1000)]],
-      agentLogsFileSize: ['', [Validators.required, Validators.min(1), , Validators.max(1024)]],
-      logFilePath: ['', [Validators.required, Validators.maxLength(256)]],
+      logLevel: ["warn", [Validators.required]],
+      agentLogsMaxFiles: [
+        "",
+        [Validators.required, Validators.min(1), , Validators.max(1000)],
+      ],
+      agentLogsFileSize: [
+        "",
+        [Validators.required, Validators.min(1), , Validators.max(1024)],
+      ],
+      logFilePath: ["", [Validators.required, Validators.maxLength(256)]],
     });
 
     this.logSettingForm.valueChanges.subscribe((data) => {
-      let result = this.commonService.logValidationErrors(this.logSettingForm, this.formErrors, this.validations);
+      let result = this.commonService.logValidationErrors(
+        this.logSettingForm,
+        this.formErrors,
+        this.validations
+      );
       this.formErrors = result[0];
       this.validations = result[1];
     });
@@ -53,7 +64,6 @@ export class LoggingComponent implements OnInit {
     });
 
     this.getLogSetting();
-
   }
 
   //to get log setting list and set the local variable with the response
@@ -69,14 +79,16 @@ export class LoggingComponent implements OnInit {
             agentLogsFileSize: this.editData.agentLogsFileSize,
             logFilePath: this.editData.logFilePath,
           });
-        }
-        else if (res.status == 200 && res.logSetting.length == 0) this.snackbar.snackbarMessage('error-snackbar', "NO DATA FOUND", 2);
+        } else if (res.status == 200 && res.logSetting.length == 0)
+          this.snackbar.snackbarMessage("error-snackbar", "NO DATA FOUND", 2);
       },
-      error => {
+      (error) => {
         this.spinner = false;
         console.log("Error fetching:", error);
-        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
-      });
+        if (error && error.status == 0)
+          this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
+      }
+    );
   }
 
   //to create log setting object and it accepts log setting object as `data`
@@ -86,15 +98,21 @@ export class LoggingComponent implements OnInit {
       (res: any) => {
         this.spinner = false;
         if (res.status == 200) {
-          this.snackbar.snackbarMessage('success-snackbar', "Settings Created", 1);
+          this.snackbar.snackbarMessage(
+            "success-snackbar",
+            "Settings Created",
+            1
+          );
           this.editData = res.logSetting;
         }
       },
       (error: any) => {
         this.spinner = false;
         console.log("Error creating", error);
-        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
-      });
+        if (error && error.status == 0)
+          this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
+      }
+    );
   }
 
   //to update log setting object and it accepts amq setting object as `data`
@@ -102,13 +120,20 @@ export class LoggingComponent implements OnInit {
     this.endPointService.updateLogSetting(data).subscribe(
       (res: any) => {
         this.spinner = false;
-        if (res.status == 200) this.snackbar.snackbarMessage('success-snackbar', "Settings Updated", 1);
+        if (res.status == 200)
+          this.snackbar.snackbarMessage(
+            "success-snackbar",
+            "Settings Updated",
+            1
+          );
       },
       (error: any) => {
         this.spinner = false;
         console.log("Error updating", error);
-        if (error && error.status == 0) this.snackbar.snackbarMessage('error-snackbar', error.statusText, 1);
-      });
+        if (error && error.status == 0)
+          this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
+      }
+    );
   }
 
   onSave() {
@@ -117,10 +142,8 @@ export class LoggingComponent implements OnInit {
       data.id = this.editData.id;
       this.spinner = true;
       this.updateLogSetting(data);
-    }
-    else {
+    } else {
       this.createLogSetting(data);
     }
   }
-
 }

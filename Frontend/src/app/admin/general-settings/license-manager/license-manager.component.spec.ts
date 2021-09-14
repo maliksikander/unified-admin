@@ -1,17 +1,18 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
-import { LicenseManagerComponent } from './license-manager.component';
+import { LicenseManagerComponent } from "./license-manager.component";
 
-describe('LicenseManagerComponent', () => {
+describe("LicenseManagerComponent", () => {
   let component: LicenseManagerComponent;
   let fixture: ComponentFixture<LicenseManagerComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ LicenseManagerComponent ]
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [LicenseManagerComponent],
+      }).compileComponents();
     })
-    .compileComponents();
-  }));
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(LicenseManagerComponent);
@@ -19,7 +20,7 @@ describe('LicenseManagerComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

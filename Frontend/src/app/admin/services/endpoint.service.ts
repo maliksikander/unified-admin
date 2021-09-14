@@ -43,7 +43,7 @@ export class EndpointService {
     fileEngine: {
       uploadFile: "api/uploadFileStream",
       downloadFileStream: "api/downloadFileStream",
-      fileStat:"api/getFileStat"
+      fileStat: "api/getFileStat",
     },
     general: {
       amq: "amq-setting",

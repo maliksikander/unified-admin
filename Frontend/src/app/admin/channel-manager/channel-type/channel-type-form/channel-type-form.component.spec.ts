@@ -1,16 +1,15 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { ChannelTypeFormComponent } from './channel-type-form.component';
+import { ChannelTypeFormComponent } from "./channel-type-form.component";
 
-describe('ChannelTypeFormComponent', () => {
+describe("ChannelTypeFormComponent", () => {
   let component: ChannelTypeFormComponent;
   let fixture: ComponentFixture<ChannelTypeFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ChannelTypeFormComponent ]
-    })
-    .compileComponents();
+      declarations: [ChannelTypeFormComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +18,7 @@ describe('ChannelTypeFormComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

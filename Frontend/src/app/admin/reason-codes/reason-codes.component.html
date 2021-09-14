@@ -37,7 +37,8 @@
                                 <span class="group-name">{{data?.label ? data.label : 'N/A'}}</span>
                                 <span class="group-name">{{data?.description ? data.description : 'N/A'}}</span>
                                 <span class="group-name">
-                                    <span [ngStyle]="{'background-color':data?.type == 'LOG_OUT' ? '#ffab00' : '#b4b4b4' }"
+                                    <span
+                                        [ngStyle]="{'background-color':data?.type == 'LOG_OUT' ? '#ffab00' : '#b4b4b4' }"
                                         class="reason-type-style">{{data?.type | removeUnderscoreFilter |
                                         titlecase}}</span>
                                     <span class="list-trigger-area">

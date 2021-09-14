@@ -1,17 +1,18 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
-import { ChannelConnectorSettingsComponent } from './channel-connector-settings.component';
+import { ChannelConnectorSettingsComponent } from "./channel-connector-settings.component";
 
-describe('ChannelConnectorSettingsComponent', () => {
+describe("ChannelConnectorSettingsComponent", () => {
   let component: ChannelConnectorSettingsComponent;
   let fixture: ComponentFixture<ChannelConnectorSettingsComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ ChannelConnectorSettingsComponent ]
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [ChannelConnectorSettingsComponent],
+      }).compileComponents();
     })
-    .compileComponents();
-  }));
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ChannelConnectorSettingsComponent);
@@ -19,7 +20,7 @@ describe('ChannelConnectorSettingsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });
