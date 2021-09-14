@@ -44,7 +44,8 @@ export class ChannelConnectorComponent implements OnInit {
   //   return this.sanitizer.bypassSecurityTrustResourceUrl(image);
   // }
 
-  transform(filename) {
+  //to get logo/image from file engine, it accepts the file name as parameter and returns the url 
+  getFileURL(filename) {
     // this.getFileStats(file)
     return `${this.endPointService.FILE_ENGINE_URL}/${this.endPointService.endpoints.fileEngine.downloadFileStream}?filename=${filename}`
     // return this.sanitizer.bypassSecurityTrustResourceUrl(image);

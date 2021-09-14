@@ -16,7 +16,7 @@
                 <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
                   [expandedHeight]="customExpandedHeight">
                   <mat-panel-title>
-                    <img [src]="transform(type?.channelLogo)">
+                    <img [src]="getFileURL(type?.channelLogo)">
                     <span>{{type?.typeName ? type?.typeName : 'N/A'}}</span>
                   </mat-panel-title>
                   <mat-panel-description>
