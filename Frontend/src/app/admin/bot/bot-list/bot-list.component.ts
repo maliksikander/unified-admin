@@ -91,7 +91,7 @@ export class BotListComponent implements OnInit {
     //calling bot setting endpoint, it accepts bot setting object id as `data.botId` parameter
     this.endPointService.deleteBotSetting(data.botId).subscribe(
       (res: any) => {
-        this.botList = this.botList.filter((item) => item.id != data.id);
+        this.botList = this.botList.filter((item) => item.botId != data.botId);
         this.spinner = false;
         this.snackbar.snackbarMessage("success-snackbar", "Deleted", 1);
       },
