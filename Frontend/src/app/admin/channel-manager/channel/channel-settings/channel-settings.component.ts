@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -54,7 +55,8 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
     private dialog: MatDialog,
     private endPointService: EndpointService,
     private formBuilder: FormBuilder,
-    private snackbar: SnackbarService
+    private snackbar: SnackbarService,
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -67,14 +69,14 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
       channelName: ["", [Validators.required]],
       serviceIdentifier: ["", [Validators.required]],
       channelConnector: [, [Validators.required]],
-      channelMode: ["", [Validators.required]],
+      channelMode: ["BOT", [Validators.required]],
       responseSla: ["", [Validators.required]],
       customerActivityTimeout: ["", [Validators.required]],
-      agentSelectionPolicy: ["", [Validators.required]],
-      routeToLastAgent: [true, [Validators.required]],
-      routingMode: ["PUSH", [Validators.required]],
-      routingObjectID: ["", [Validators.required]],
-      agentRequestTTL: ["", [Validators.required]],
+      agentSelectionPolicy: [""],
+      routeToLastAgent: [true],
+      routingMode: ["PUSH"],
+      routingObjectID: [""],
+      agentRequestTTL: [""],
       botID: ["", [Validators.required]],
     });
 
@@ -215,6 +217,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
       agentRequestTTL:
         this.channelData.channelConfig.routingPolicy.agentRequestTtl,
     });
+    this.onChannelModeSelection(this.channelSettingForm.value.channelMode);
     this.spinner = false;
   }
 
@@ -228,10 +231,10 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
 
   //to create 'data' object and pass it to the parent component
   onSave() {
-    let routingPolicy = {
+    let routingPolicyData = {
       agentSelectionPolicy: this.channelSettingForm.value.agentSelectionPolicy,
       routeToLastAgent: this.channelSettingForm.value.routeToLastAgent,
-      routingObjectId: this.channelSettingForm.value.routingObjectID.id,
+      routingObjectId: this.channelSettingForm.value.routingObjectID?.id,
       routingMode: this.channelSettingForm.value.routingMode,
       agentRequestTtl: this.channelSettingForm.value.agentRequestTTL,
     };
@@ -243,7 +246,10 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
       customerActivityTimeout:
         this.channelSettingForm.value.customerActivityTimeout,
       responseSla: this.channelSettingForm.value.responseSla,
-      routingPolicy: routingPolicy,
+      routingPolicy:
+        this.channelSettingForm.value.channelMode != "BOT"
+          ? routingPolicyData
+          : {},
     };
 
     let data: any = {
@@ -268,7 +274,54 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
     this.channelSettingForm.reset();
   }
 
-  resetFormControl() {
+  // to reset routing object id form control on routing mode selection change
+  resetRoutingObjecIdFormControl() {
+    this.channelSettingForm.controls["routingObjectID"].reset();
+  }
+
+  //to set/remove validations on channel mode selection on routing policy attributes, it accepts the channel mode value('BOT','AGENT','HYBRID') as val parameter
+
+  onChannelModeSelection(val) {
+    if (val != "BOT") {
+      this.setRoutingPolicyAttrValidation();
+    } else {
+      this.resetAndRemoveRoutingPolicyAttrValidation();
+    }
+    this.cd.detectChanges();
+  }
+
+  // to set validations  on routing policy attributes
+  setRoutingPolicyAttrValidation() {
+    this.channelSettingForm.controls["agentRequestTTL"].setValidators([
+      Validators.required,
+    ]);
+    this.channelSettingForm.controls["agentSelectionPolicy"].setValidators([
+      Validators.required,
+    ]);
+    this.channelSettingForm.controls["routeToLastAgent"].setValidators([
+      Validators.required,
+    ]);
+    this.channelSettingForm.controls["routingMode"].setValidators([
+      Validators.required,
+    ]);
+    this.channelSettingForm.controls["routingObjectID"].setValidators([
+      Validators.required,
+    ]);
+  }
+
+  //to reset form controls and remove validations on routing policy attributes
+  resetAndRemoveRoutingPolicyAttrValidation() {
+    this.channelSettingForm.controls["agentRequestTTL"].setValidators(null);
+    this.channelSettingForm.controls["agentSelectionPolicy"].setValidators(
+      null
+    );
+    this.channelSettingForm.controls["routeToLastAgent"].setValidators(null);
+    this.channelSettingForm.controls["routingMode"].setValidators(null);
+    this.channelSettingForm.controls["routingObjectID"].setValidators(null);
+
+    this.channelSettingForm.controls["agentRequestTTL"].reset();
+    this.channelSettingForm.controls["agentSelectionPolicy"].reset();
+    this.channelSettingForm.controls["routingMode"].reset();
     this.channelSettingForm.controls["routingObjectID"].reset();
   }
 }
