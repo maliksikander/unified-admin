@@ -75,7 +75,7 @@ export class EndpointService {
     this.ADMIN_URL = e.ADMIN_URL;
     this.MRE_URL = e.MRE_URL;
     this.CCM_URL = e.CCM_URL;
-    this.BOT_URL = e.BOT_URL;
+    this.BOT_URL = e.BOT_FRAMEWORK_URL;
     this.BUSINESS_CALENDAR_URL = e.BUSINESS_CALENDAR_URL;
     this.LICENSE_URL = e.LICENSE_MANAGER_URL;
     this.userRoles = e.BUSINESS_USER_ROLES;
