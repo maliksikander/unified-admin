@@ -140,7 +140,7 @@ export class BotListComponent implements OnInit {
   addBotSettings(type) {
     this.addBot = true;
     this.botType = type;
-    this.pageTitle = "Configure Bot";
+    this.pageTitle = `Configure ${this.botType} Bot`;
   }
 
   //to change the view from `form` to `list` page and load bot type list and it accepts boolean value as 'e' parameter from child component

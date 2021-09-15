@@ -49,12 +49,8 @@ export class BotSettingsComponent implements OnInit {
     this.botSettingForm = this.formBuilder.group({
       botName: ["", [Validators.required]],
       botURL: [""],
-      botType: [{ value: "", disabled: true }],
       botFile: [{ value: null, disabled: true }],
     });
-
-    //binding bot type value from parent component
-    this.botSettingForm.controls["botType"].patchValue(this.botTypeData);
 
     this.setValidation(this.botTypeData);
 
@@ -70,7 +66,6 @@ export class BotSettingsComponent implements OnInit {
       }
       this.botSettingForm.patchValue({
         botName: this.botData.botName,
-        botType: this.botTypeData,
       });
 
       if (this.botSettingForm.status == "INVALID") {
