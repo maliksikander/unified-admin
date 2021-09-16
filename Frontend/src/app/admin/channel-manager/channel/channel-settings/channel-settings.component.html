@@ -5,29 +5,28 @@
   <form class="form-horizontal form-bordered" [formGroup]="channelSettingForm">
     <div class="col-md-5">
 
+
+
+
       <div class="form-group">
-        <mat-label>Agent Selection Policy</mat-label>
+        <mat-label>Channel Name</mat-label>
         <mat-form-field appearance="outline">
-          <mat-select formControlName="agentSelectionPolicy">
-            <mat-option *ngFor="let policy of agentPolicy" [value]="policy">
-              {{policy | removeUnderscoreFilter}}</mat-option>
-          </mat-select>
+          <input matInput formControlName="channelName">
           <mat-error class="form-error">
-            {{formErrors?.agentSelectionPolicy}}
+            {{formErrors.channelName}}
           </mat-error>
         </mat-form-field>
       </div>
 
-      <div class="form-group">
-        <mat-label>Agent Request TTL(time to leave)</mat-label>
+      <div class="form-group password-privacy-icon">
+        <mat-label>Service Identifier</mat-label>
         <mat-form-field appearance="outline">
-          <input type="number" matInput formControlName="agentRequestTTL">
+          <input matInput formControlName="serviceIdentifier">
           <mat-error class="form-error">
-            {{formErrors.agentRequestTTL}}
+            {{formErrors.serviceIdentifier}}
           </mat-error>
         </mat-form-field>
       </div>
-
 
       <div class="form-group">
         <mat-label>Bot ID</mat-label>
@@ -44,6 +43,17 @@
       </div>
 
       <div class="form-group">
+        <mat-label>Response SLA(sec)</mat-label>
+        <mat-form-field appearance="outline">
+          <input type="number" matInput formControlName="responseSla">
+          <mat-error class="form-error">
+            {{formErrors?.responseSla}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+
+      <div class="form-group">
         <mat-label>Channel Connector</mat-label>
         <mat-form-field appearance="outline">
           <mat-select formControlName="channelConnector">
@@ -56,21 +66,21 @@
         </mat-form-field>
       </div>
 
-
       <div class="form-group">
-        <mat-label>Channel Name</mat-label>
+        <mat-label>Customer Activity Timeout(sec)</mat-label>
         <mat-form-field appearance="outline">
-          <input matInput formControlName="channelName">
+          <input type="number" matInput formControlName="customerActivityTimeout">
           <mat-error class="form-error">
-            {{formErrors.channelName}}
+            {{formErrors.customerActivityTimeout}}
           </mat-error>
         </mat-form-field>
       </div>
 
+
       <div class="form-group">
         <mat-label>Channel Mode</mat-label>
         <mat-form-field appearance="outline">
-          <mat-select formControlName="channelMode">
+          <mat-select (selectionChange)="onChannelModeSelection($event.value)" formControlName="channelMode">
             <mat-option *ngFor="let mode of modeVal" [value]="mode">{{mode | uppercase}}
             </mat-option>
           </mat-select>
@@ -80,76 +90,70 @@
         </mat-form-field>
       </div>
 
-      <div class="form-group">
-        <mat-label>Customer Activity Timeout</mat-label>
-        <mat-form-field appearance="outline">
-          <input type="number" matInput formControlName="customerActivityTimeout">
-          <mat-error class="form-error">
-            {{formErrors.customerActivityTimeout}}
-          </mat-error>
-        </mat-form-field>
-      </div>
+      <!-- Routing Policy Attributes -->
+      <ng-container *ngIf="channelSettingForm.value.channelMode != 'BOT'">
+        <div class="form-group">
+          <mat-label>Agent Selection Policy</mat-label>
+          <mat-form-field appearance="outline">
+            <mat-select formControlName="agentSelectionPolicy">
+              <mat-option *ngFor="let policy of agentPolicy" [value]="policy">
+                {{policy | removeUnderscoreFilter}}</mat-option>
+            </mat-select>
+            <mat-error class="form-error">
+              {{formErrors?.agentSelectionPolicy}}
+            </mat-error>
+          </mat-form-field>
+        </div>
 
-      <div class="form-group">
-        <mat-label>Routing Mode</mat-label>
-        <mat-form-field appearance="outline">
-          <mat-select (selectionChange)="resetFormControl()" formControlName="routingMode">
-            <mat-option *ngFor="let mode of routingModeList" [value]="mode">
-              {{mode | titlecase}}</mat-option>
-          </mat-select>
-          <mat-error class="form-error">
-            {{formErrors?.routingMode}}
-          </mat-error>
-        </mat-form-field>
-      </div>
+        <div class="form-group">
+          <mat-label>Agent Request TTL(sec)</mat-label>
+          <mat-form-field appearance="outline">
+            <input type="number" matInput formControlName="agentRequestTTL">
+            <mat-error class="form-error">
+              {{formErrors.agentRequestTTL}}
+            </mat-error>
+          </mat-form-field>
+        </div>
 
-      <div class="form-group">
-        <mat-label>Default {{channelSettingForm.value?.routingMode == 'PUSH' ? 'Queue' :'List' }}</mat-label>
+        <div class="form-group">
+          <mat-label>Routing Mode</mat-label>
+          <mat-form-field appearance="outline">
+            <mat-select (selectionChange)="resetRoutingObjecIdFormControl()" formControlName="routingMode">
+              <mat-option *ngFor="let mode of routingModeList" [value]="mode">
+                {{mode | titlecase}}</mat-option>
+            </mat-select>
+            <mat-error class="form-error">
+              {{formErrors?.routingMode}}
+            </mat-error>
+          </mat-form-field>
+        </div>
 
-        <mat-form-field appearance="outline">
-          <mat-select formControlName="routingObjectID">
-            <ng-container *ngIf="channelSettingForm.value?.routingMode == 'PUSH'">
-              <mat-option *ngFor="let queue of queueList" [value]="queue">
-                {{queue?.name}}</mat-option>
-            </ng-container>
-            <ng-container *ngIf="channelSettingForm.value?.routingMode == 'PULL'">
-              <mat-option *ngFor="let list of pullModeListData" [value]="list">
-                {{list?.name}}</mat-option>
-            </ng-container>
-          </mat-select>
-          <mat-error class="form-error">
-            {{formErrors?.routingObjectID}}
-          </mat-error>
-        </mat-form-field>
-      </div>
+        <div class="form-group">
+          <mat-label>Default {{channelSettingForm.value?.routingMode == 'PUSH' ? 'Queue' :'List' }}</mat-label>
 
+          <mat-form-field appearance="outline">
+            <mat-select formControlName="routingObjectID">
+              <ng-container *ngIf="channelSettingForm.value?.routingMode == 'PUSH'">
+                <mat-option *ngFor="let queue of queueList" [value]="queue">
+                  {{queue?.name}}</mat-option>
+              </ng-container>
+              <ng-container *ngIf="channelSettingForm.value?.routingMode == 'PULL'">
+                <mat-option *ngFor="let list of pullModeListData" [value]="list">
+                  {{list?.name}}</mat-option>
+              </ng-container>
+            </mat-select>
+            <mat-error class="form-error">
+              {{formErrors?.routingObjectID}}
+            </mat-error>
+          </mat-form-field>
+        </div>
 
-      <div class="form-group">
-        <mat-label>Response SLA</mat-label>
-        <mat-form-field appearance="outline">
-          <input type="number" matInput formControlName="responseSla">
-          <mat-error class="form-error">
-            {{formErrors?.responseSla}}
-          </mat-error>
-        </mat-form-field>
-      </div>
+        <div class="form-group interative-toggle">
+          <mat-label>Route To Last Agent</mat-label>
+          <mat-slide-toggle formControlName="routeToLastAgent"></mat-slide-toggle>
+        </div>
 
-
-      <div class="form-group password-privacy-icon">
-        <mat-label>Service Identifier</mat-label>
-        <mat-form-field appearance="outline">
-          <input matInput formControlName="serviceIdentifier">
-          <mat-error class="form-error">
-            {{formErrors.serviceIdentifier}}
-          </mat-error>
-        </mat-form-field>
-      </div>
-
-
-      <div class="form-group interative-toggle">
-        <mat-label>Route To Last Agent</mat-label>
-        <mat-slide-toggle formControlName="routeToLastAgent"></mat-slide-toggle>
-      </div>
+      </ng-container>
     </div>
 
 
