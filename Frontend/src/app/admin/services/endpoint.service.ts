@@ -907,7 +907,7 @@ export class EndpointService {
   updateBotSetting(data): Observable<any> {
     return this.httpClient
       .put<any>(
-        `${this.BOT_URL}/${this.endpoints.botSetting}/${data.botIvd}`,
+        `${this.BOT_URL}/${this.endpoints.botSetting}/${data.botId}`,
         data,
         {
           headers: new HttpHeaders({

@@ -142,7 +142,7 @@ export class UsersComponent implements OnInit {
       (error) => {
         this.spinner = false;
         this.attrSpinner = false;
-        console.log("Error fetching:", error);
+        console.error("Error fetching:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }
@@ -170,7 +170,7 @@ export class UsersComponent implements OnInit {
       },
       (error: any) => {
         this.spinner = false;
-        console.log("Error fetching:", error);
+        console.error("Error fetching:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }
@@ -186,7 +186,7 @@ export class UsersComponent implements OnInit {
       },
       (error) => {
         this.spinner = false;
-        console.log("Error fetching:", error);
+        console.error("Error fetching:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
         else if (error && error.status == 409)
@@ -449,7 +449,7 @@ export class UsersComponent implements OnInit {
       },
       (error) => {
         this.spinner = false;
-        console.log("Error fetching:", error);
+        console.error("Error fetching:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
         else if (error && error.status == 409)
@@ -484,7 +484,7 @@ export class UsersComponent implements OnInit {
       },
       (error: any) => {
         this.spinner = false;
-        console.log("Error fetching:", error);
+        console.error("Error fetching:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }
@@ -507,7 +507,7 @@ export class UsersComponent implements OnInit {
       },
       (error: any) => {
         this.spinner = false;
-        console.log("Error fetching:", error);
+        console.error("Error fetching:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }
@@ -540,7 +540,7 @@ export class UsersComponent implements OnInit {
         this.getRoutingEngineUsers();
       },
       (error) => {
-        console.log("Error fetching:", error);
+        console.error("Error fetching:", error);
         this.spinner = false;
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
@@ -574,7 +574,7 @@ export class UsersComponent implements OnInit {
       },
       (error) => {
         this.spinner = false;
-        console.log("Error fetching:", error);
+        console.error("Error fetching:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }

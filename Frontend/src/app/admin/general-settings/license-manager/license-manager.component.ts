@@ -65,7 +65,7 @@ export class LicenseManagerComponent implements OnInit {
       },
       (error) => {
         this.spinner = false;
-        console.log("Error fetching:", error);
+        console.error("Error fetching:", error);
       }
     );
   }

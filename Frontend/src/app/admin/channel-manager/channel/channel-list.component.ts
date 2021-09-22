@@ -54,7 +54,7 @@ export class ChannelListComponent implements OnInit {
       },
       (error) => {
         this.spinner = false;
-        console.log("Error fetching:", error);
+        console.error("Error fetching:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }
@@ -81,41 +81,7 @@ export class ChannelListComponent implements OnInit {
       },
       (error) => {
         this.spinner = false;
-        console.log("Error fetching:", error);
-        if (error && error.status == 0)
-          this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
-      }
-    );
-  }
-
-  //to create channel, it accepts `data` object as parameter containing channel properties
-  createChannel(data) {
-    //calling endpoint service method which accepts resource name as 'channelServiceReq' and `data` object as parameter
-    this.endPointService.createChannel(data).subscribe(
-      (res: any) => {
-        this.spinner = false;
-        this.snackbar.snackbarMessage("success-snackbar", "Channel Created", 1);
-      },
-      (error: any) => {
-        this.spinner = false;
-        console.log("Error fetching:", error);
-        if (error && error.status == 0)
-          this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
-      }
-    );
-  }
-
-  //to update channel, it accepts `data` object as parameter containing channel properties
-  updateChannel(data) {
-    //calling endpoint service method which accepts resource name as 'channelServiceReq' and `data` object as parameter
-    this.endPointService.updateChannel(data, data.serviceIdentifier).subscribe(
-      (res: any) => {
-        this.spinner = false;
-        this.snackbar.snackbarMessage("success-snackbar", "Updated", 1);
-      },
-      (error: any) => {
-        this.spinner = false;
-        console.log("Error fetching:", error);
+        console.error("Error fetching:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }
@@ -134,7 +100,7 @@ export class ChannelListComponent implements OnInit {
       },
       (error: any) => {
         this.spinner = false;
-        console.log("Error fetching:", error);
+        console.error("Error fetching:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }
@@ -203,15 +169,11 @@ export class ChannelListComponent implements OnInit {
   }
 
   //to create/update a channel, it accepts channel object as 'data' paramter
-  onSave(data) {
-    this.spinner = true;
+  onSave(msg) {
+    // this.spinner = true;
     this.addChannelBool = false;
     this.pageTitle = "Customer Channels";
     this.editChannelData = undefined;
-    if (data.id) {
-      this.updateChannel(data);
-    } else {
-      this.createChannel(data);
-    }
+    this.snackbar.snackbarMessage("success-snackbar", msg, 1);
   }
 }

@@ -84,7 +84,7 @@ export class AdminMainComponent implements OnInit {
 
     this.elem = document.documentElement;
     this.commonService.themeVersion.subscribe((data) => {
-      console.log(data);
+      // console.log(data);
       this.changeTheme();
     });
   }

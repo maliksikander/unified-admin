@@ -76,7 +76,7 @@ export class LoginComponent implements OnInit {
       },
       (error: any) => {
         this.spinner = false;
-        console.log("Error fetching:", error);
+        console.error("Error fetching:", error);
       }
     );
   }

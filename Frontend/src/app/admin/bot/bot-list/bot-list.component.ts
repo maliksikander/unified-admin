@@ -51,39 +51,7 @@ export class BotListComponent implements OnInit {
     );
   }
 
-  //to create bot, it accepts `data` object containing ('botName','botType'.'botUri') as parameter
-  createBotSetting(data): void {
-    //calling bot setting endpoint, it accepts bot setting object as `data` parameter
-    this.endPointService.createBotSetting(data).subscribe(
-      (res: any) => {
-        this.snackbar.snackbarMessage("success-snackbar", "Bot Created", 1);
-        this.spinner = false;
-      },
-      (error: any) => {
-        this.spinner = false;
-        console.log("Error fetching:", error);
-        if (error && error.status == 0)
-          this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
-      }
-    );
-  }
 
-  //to update bot, it accepts `data` object containing ('botId,'botName','botType'.'botUri') as parameter
-  updateBotSetting(data): void {
-    //calling bot setting endpoint, it accepts bot setting object as `data` parameter
-    this.endPointService.updateBotSetting(data).subscribe(
-      (res: any) => {
-        this.snackbar.snackbarMessage("success-snackbar", "Updated", 1);
-        this.spinner = false;
-      },
-      (error: any) => {
-        this.spinner = false;
-        console.log("Error fetching:", error);
-        if (error && error.status == 0)
-          this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
-      }
-    );
-  }
 
   //to delete bot, it accepts `data` containing ('botName','botType'.'botUri') object as parameter  and
   //removes that particular object from local list variable if there is a success response
@@ -97,7 +65,7 @@ export class BotListComponent implements OnInit {
       },
       (error: any) => {
         this.spinner = false;
-        console.log("Error fetching:", error);
+        console.error("Error fetching:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }
@@ -175,15 +143,11 @@ export class BotListComponent implements OnInit {
   }
 
   //to create/update a bot setting object, it accepts bot object as 'data' parameter
-  onSave(data) {
-    this.spinner = true;
+  onSave(msg) {
+    // this.spinner = true;
     this.addBot = false;
     this.pageTitle = "Bot Settings";
     this.editBotData = undefined;
-    if (data.botId) {
-      this.updateBotSetting(data);
-    } else {
-      this.createBotSetting(data);
-    }
+    this.snackbar.snackbarMessage("success-snackbar", msg, 1);
   }
 }

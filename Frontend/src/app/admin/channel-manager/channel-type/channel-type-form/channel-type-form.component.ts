@@ -131,7 +131,7 @@ export class ChannelTypeFormComponent implements OnInit {
       },
       (error) => {
         this.spinner = false;
-        console.log("Error fetching:", error);
+        console.error("Error fetching:", error);
       }
     );
   }
@@ -152,7 +152,7 @@ export class ChannelTypeFormComponent implements OnInit {
       },
       (error) => {
         this.spinner = false;
-        console.log("Error fetching:", error);
+        console.error("Error fetching:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }
@@ -167,9 +167,8 @@ export class ChannelTypeFormComponent implements OnInit {
           (item) => item.id === this.editData.mediaRoutingDomain
         );
         const formIndex = this.formsList.findIndex(
-          (item: any) => item.id === this.editData?.channelConfigSchema?.id
+          (item: any) => item.id === this.editData?.channelConfigSchema
         );
-
         this.channelTypeForm.patchValue({
           typeName: this.editData.typeName,
           isInteractive: this.editData.isInteractive,
@@ -187,21 +186,15 @@ export class ChannelTypeFormComponent implements OnInit {
     }
   }
 
-  removeAttrInFormSchema(data) {
-    let obj = { id: "" };
-    obj.id = data.id;
-    return obj;
-  }
-
   uploadFile() {
     this.endPointService.uploadToFileEngine(this.uploadFilePayload).subscribe(
       (res: any) => {
         let fileName = res.name;
-        this.setRequestPayloadAndEmit(fileName);
+        this.setRequestPayload(fileName);
       },
       (error: any) => {
         this.spinner = false;
-        console.log("Error while uploading:", error);
+        console.error("Error while uploading:", error);
       }
     );
   }
@@ -212,56 +205,56 @@ export class ChannelTypeFormComponent implements OnInit {
     if (this.uploadFilePayload) {
       this.uploadFile();
     } else {
-      this.setRequestPayloadAndEmit(this.editData?.channelLogo);
+      this.setRequestPayload(this.editData?.channelLogo);
     }
   }
 
-  setRequestPayloadAndEmit(filename) {
+  // to create request payload, it receives selected file for logo as filename parameter
+  setRequestPayload(filename) {
     let data = JSON.parse(JSON.stringify(this.channelTypeForm.value));
-    data.channelConfigSchema = this.removeAttrInFormSchema(
-      data.channelConfigSchema
-    );
+    data.channelConfigSchema = data.channelConfigSchema.id;
     data.channelLogo = filename;
     data.mediaRoutingDomain = data.mediaRoutingDomain.id;
     if (this.editData) data.id = this.editData.id;
-    this.spinner = false;
-    // console.log("save data==>", data);
-    this.formSaveData.emit(data);
+    if (data.id) {
+      this.updateChannel(data);
+    } else {
+      this.createChannelType(data);
+    }
+  }
+
+  // to send event msg and reset form after success response
+  emitMsgAndResetForm(status) {
+    let msg = `${status} Successfully`;
+    this.formSaveData.emit(msg);
     this.channelTypeForm.reset();
   }
 
-  // getFileStats(filename) {
-  //   this.endPointService.getFileStats(filename).subscribe(
-  //     (res: any) => {
-  //       // console.log("res==>", res);
-  //       if (!res.code) {
-  //         this.imageData = `${this.endPointService.FILE_ENGINE_URL}/${this.endPointService.endpoints.fileEngine.downloadFileStream}?filename=${filename}`;
-  //         // this.getFile(filename)
-  //       }
-  //       this.spinner = false;
-  //     },
-  //     (error) => {
-  //       this.spinner = false;
-  //       console.log("Error fetching file stats:", error);
-  //       if (error && error.status == 0)
-  //         this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
-  //     }
-  //   );
-  // }
+  //to create channel, it accepts `data` object as parameter containing channel type properties
+  createChannelType(data) {
+    //calling endpoint service method which accepts resource name as 'reqEndpoint' and `data` object as parameter
+    this.endPointService.createChannelType(data).subscribe(
+      (res: any) => {
+        this.emitMsgAndResetForm("Created");
+      },
+      (error: any) => {
+        this.spinner = false;
+        console.error("Error fetching:", error);
+      }
+    );
+  }
 
-  // getFile(filename) {
-  //   this.endPointService.getFromFileEngine(filename).subscribe(
-  //     (res: any) => {
-  //       this.imageData = res
-  //       // console.log("res==>", res);
-  //       this.spinner = false;
-  //     },
-  //     (error) => {
-  //       this.spinner = false;
-  //       console.log("Error fetching file stats:", error);
-  //       if (error && error.status == 0)
-  //         this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
-  //     }
-  //   );
-  // }
+  //to update channel type, it accepts `data` object as parameter containing channel type properties
+  updateChannel(data) {
+    //calling endpoint service method which accepts resource endpoint as 'reqEndpoint' and `data` object as parameter
+    this.endPointService.updateChannelType(data, data.id).subscribe(
+      (res: any) => {
+        this.emitMsgAndResetForm("Updated");
+      },
+      (error: any) => {
+        this.spinner = false;
+        console.error("Error fetching:", error);
+      }
+    );
+  }
 }

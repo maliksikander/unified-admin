@@ -33,11 +33,13 @@ export class BotSettingsComponent implements OnInit {
   valid = false;
   fileData: any;
   serializedFile;
+  spinner = false;
 
   constructor(
     private commonService: CommonService,
     private formBuilder: FormBuilder,
-    private snackbar: SnackbarService
+    private snackbar: SnackbarService,
+    private endPointService: EndpointService
   ) {}
 
   ngOnInit() {
@@ -123,7 +125,19 @@ export class BotSettingsComponent implements OnInit {
 
     if (this.botData) data.botId = this.botData.botId;
 
-    this.formSaveData.emit(data);
+    if (data.botId) {
+      this.updateBotSetting(data);
+    } else {
+      this.createBotSetting(data);
+    }
+    // this.formSaveData.emit(data);
+    // this.botSettingForm.reset();
+  }
+
+  // to send event msg and reset form after success response
+  emitMsgAndResetForm(status) {
+    let msg = `${status} Successfully`;
+    this.formSaveData.emit(msg);
     this.botSettingForm.reset();
   }
 
@@ -192,5 +206,41 @@ export class BotSettingsComponent implements OnInit {
         ),
       ]);
     }
+  }
+
+  //to create bot, it accepts `data` object containing ('botName','botType'.'botUri') as parameter
+  createBotSetting(data): void {
+    //calling bot setting endpoint, it accepts bot setting object as `data` parameter
+    this.endPointService.createBotSetting(data).subscribe(
+      (res: any) => {
+        // this.snackbar.snackbarMessage("success-snackbar", "Bot Created", 1);
+        // this.spinner = false;
+        this.emitMsgAndResetForm("Created");
+      },
+      (error: any) => {
+        this.spinner = false;
+        console.error("Error fetching:", error);
+        if (error && error.status == 0)
+          this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
+      }
+    );
+  }
+
+  //to update bot, it accepts `data` object containing ('botId,'botName','botType'.'botUri') as parameter
+  updateBotSetting(data): void {
+    //calling bot setting endpoint, it accepts bot setting object as `data` parameter
+    this.endPointService.updateBotSetting(data).subscribe(
+      (res: any) => {
+        this.emitMsgAndResetForm("Updated");
+        // this.snackbar.snackbarMessage("success-snackbar", "Updated", 1);
+        // this.spinner = false;
+      },
+      (error: any) => {
+        this.spinner = false;
+        console.error("Error fetching:", error);
+        if (error && error.status == 0)
+          this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
+      }
+    );
   }
 }
