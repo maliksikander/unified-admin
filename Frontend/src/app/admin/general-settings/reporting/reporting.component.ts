@@ -88,7 +88,7 @@ export class ReportingComponent implements OnInit {
       },
       (error) => {
         this.spinner = false;
-        console.log("Error fetching:", error);
+        console.error("Error fetching:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }
@@ -118,7 +118,7 @@ export class ReportingComponent implements OnInit {
       },
       (error: any) => {
         this.spinner = false;
-        console.log("Error creating", error);
+        console.error("Error creating", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }
@@ -146,7 +146,7 @@ export class ReportingComponent implements OnInit {
       },
       (error: any) => {
         this.spinner = false;
-        console.log("Error updating", error);
+        console.error("Error updating", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }

@@ -51,7 +51,7 @@ export class ChannelTypeComponent implements OnInit {
       },
       (error: any) => {
         this.spinner = false;
-        console.log("Error fetching:", error);
+        console.error("Error fetching:", error);
       }
     );
   }
@@ -121,57 +121,18 @@ export class ChannelTypeComponent implements OnInit {
       },
       (error: any) => {
         this.spinner = false;
-        console.log("Error fetching:", error);
-      }
-    );
-  }
-
-  //to create channel, it accepts `data` object as parameter containing channel type properties
-  createChannelType(data) {
-    //calling endpoint service method which accepts resource name as 'reqEndpoint' and `data` object as parameter
-    this.endPointService.createChannelType(data).subscribe(
-      (res: any) => {
-        // this.spinner = false;
-        this.snackbar.snackbarMessage(
-          "success-snackbar",
-          "Channel Type Created",
-          1
-        );
-        this.getChannelTypes();
-      },
-      (error: any) => {
-        this.spinner = false;
-        console.log("Error fetching:", error);
-      }
-    );
-  }
-
-  //to update channel type, it accepts `data` object as parameter containing channel type properties
-  updateChannel(data) {
-    //calling endpoint service method which accepts resource endpoint as 'reqEndpoint' and `data` object as parameter
-    this.endPointService.updateChannelType(data, data.id).subscribe(
-      (res: any) => {
-        // this.spinner = false;
-        this.snackbar.snackbarMessage("success-snackbar", "Updated", 1);
-        this.getChannelTypes();
-      },
-      (error: any) => {
-        this.spinner = false;
-        console.log("Error fetching:", error);
+        console.error("Error fetching:", error);
       }
     );
   }
 
   //on save callback function
-  onSave(data) {
+  onSave(msg) {
     this.pageTitle = "Channel Type";
     this.addType = false;
     this.spinner = true;
-    if (data.id) {
-      this.updateChannel(data);
-    } else {
-      this.createChannelType(data);
-    }
+    this.snackbar.snackbarMessage("success-snackbar", msg, 1);
+    this.getChannelTypes();
   }
 
   // ngx-pagination setting methods

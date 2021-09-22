@@ -148,12 +148,81 @@
           </mat-form-field>
         </div>
 
-        <div class="form-group interative-toggle">
+        <div class="form-group adjust-toggle" style="padding-bottom: 10px;">
           <mat-label>Route To Last Agent</mat-label>
           <mat-slide-toggle formControlName="routeToLastAgent"></mat-slide-toggle>
         </div>
 
       </ng-container>
+
+      <div class="form-group">
+        <mat-label>Form Schema</mat-label>
+        <mat-form-field appearance="outline">
+          <mat-select (selectionChange)="onFormSchemaSelection($event.value)" placeholder="Select Form Schema"
+            formControlName="formSchema">
+            <mat-option [value]="'none'">None</mat-option>
+            <mat-option *ngFor="let form of formsList" [value]="form">{{form?.formTitle}}</mat-option>
+          </mat-select>
+          <!-- <mat-error class="form-error">
+            {{formErrors?.channelConfigSchema}}
+          </mat-error> -->
+        </mat-form-field>
+      </div>
+
+      <div *ngFor="let attrSchema of formSchema?.attributes">
+
+        <!-- INPUT -->
+        <div *ngIf="attrSchema.attributeType == 'INPUT'">
+          <div *ngIf="attrSchema?.valueType !='Boolean'" class="form-group">
+            <mat-label>{{attrSchema.label}}</mat-label>
+            <mat-form-field appearance="outline">
+              <input matInput formControlName="{{attrSchema.key}}">
+              <mat-error class="form-error">
+                {{formErrors[attrSchema.key]}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div *ngIf="attrSchema?.valueType =='Boolean'" class="form-group adjust-toggle" style="padding-bottom: 15px;">
+            <mat-label>{{attrSchema.label}}</mat-label>
+            <mat-slide-toggle formControlName="{{attrSchema.key}}">
+            </mat-slide-toggle>
+          </div>
+
+        </div>
+
+        <!-- OPTIONS -->
+        <ng-container
+          *ngIf="attrSchema.attributeType == 'OPTIONS' && attrSchema?.categoryOptions?.categories?.length > 0">
+          <div class="form-group">
+            <mat-label>{{attrSchema.label}}</mat-label>
+            <mat-form-field *ngIf="attrSchema?.categoryOptions?.isMultipleChoice == false" appearance="outline">
+              <mat-select formControlName="{{attrSchema.key}}">
+                <ng-container *ngFor="let category of attrSchema?.categoryOptions?.categories">
+                  <mat-option *ngFor="let option of category?.values" [value]="option">
+                    {{option}}</mat-option>
+                </ng-container>
+              </mat-select>
+
+              <mat-error class="form-error">
+                {{formErrors[attrSchema.key]}}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" *ngIf="attrSchema?.categoryOptions?.isMultipleChoice" multiple>
+              <mat-select multiple formControlName="{{attrSchema.key}}">
+                <mat-option *ngFor="let option of attrSchema?.categoryOptions?.categories[0]?.values" [value]="option">
+                  {{option}}</mat-option>
+              </mat-select>
+              <mat-error class="form-error">
+                {{formErrors[attrSchema.key]}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </ng-container>
+        <!-- </div> -->
+      </div>
+
     </div>
 
 

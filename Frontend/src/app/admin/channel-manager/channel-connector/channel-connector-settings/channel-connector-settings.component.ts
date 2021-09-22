@@ -79,8 +79,6 @@ export class ChannelConnectorSettingsComponent implements OnInit {
         this.validations
       );
     });
-
-    // console.log("channel type==>", this.channelTypeData);
   }
 
   //lifecycle to update all '@input' changes from parent component
@@ -107,18 +105,25 @@ export class ChannelConnectorSettingsComponent implements OnInit {
     //calling endpoint service method to get forms schema, it accepts form id as `id` as parameter
     this.endPointService.getFormByID(id).subscribe(
       (res: any) => {
-        this.spinner = false;
+        // this.spinner = false;
         this.formSchema = res;
-        this.addFormControls(
-          JSON.parse(JSON.stringify(this.formSchema?.attributes))
-        );
-        if (this.connectorData) {
-          this.patchFormValues(this.connectorData, this.formSchema?.attributes);
+        // console.log("form schema==>", this.formSchema);
+        try {
+          this.assignFormSchema(this.formSchema);
+        } catch (e) {
+          console.error("Error :", e);
+          this.spinner = false;
         }
+        // this.addFormControls(
+        //   JSON.parse(JSON.stringify(this.formSchema?.attributes))
+        // );
+        // if (this.connectorData) {
+        //   this.patchFormValues(this.connectorData, this.formSchema?.attributes);
+        // }
       },
       (error: any) => {
         this.spinner = false;
-        console.log("Error fetching:", error);
+        console.error("Error fetching:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }
@@ -132,12 +137,11 @@ export class ChannelConnectorSettingsComponent implements OnInit {
       (res: any) => {
         let temp = JSON.parse(JSON.stringify(res));
         this.formValidation = this.convertArrayToObject(temp, "type");
-        this.assignFormSchema(this.channelTypeData.channelConfigSchema);
-        // this.getFormSchema();
+        this.getFormSchema();
       },
       (error: any) => {
         this.spinner = false;
-        console.log("Error fetching:", error);
+        console.error("Error fetching:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }
@@ -154,7 +158,6 @@ export class ChannelConnectorSettingsComponent implements OnInit {
         new FormControl(item.valueType == "Boolean" ? true : "", validatorArray)
       );
     });
-    //  console.log("channel conenctor form==>",this.channelC)
   }
 
   // creating validation definitions for form controls, using form schema attribute as parameter
@@ -196,7 +199,7 @@ export class ChannelConnectorSettingsComponent implements OnInit {
       interface: this.connectorData.channelConnectorInterface,
       interfaceAddress: this.connectorData.interfaceAddress,
     };
-    connectorData.channelConnectorData?.attributes.forEach((item) => {
+    connectorData.connectorConfig?.attributes.forEach((item) => {
       let schema = this.getAttrSchema(attrSchema, item.key);
       patchData[item.key] = item.value;
       let attr = this.formSchema?.attributes.filter(
@@ -324,7 +327,7 @@ export class ChannelConnectorSettingsComponent implements OnInit {
       channelConnectorInterface: this.channelConnectorForm.value.interface,
       interfaceAddress: this.channelConnectorForm.value.interfaceAddress,
       channelType: { id: this.channelTypeData.id },
-      channelConnectorData: formData,
+      connectorConfig: formData,
       tenant: {},
     };
     return data;
@@ -334,7 +337,7 @@ export class ChannelConnectorSettingsComponent implements OnInit {
   createAndSetupFormDataObject() {
     // form data object declaration and initialization
     let data: any = {
-      formID: "",
+      formId: "",
       filledBy: "",
       attributes: [],
     };
@@ -344,9 +347,13 @@ export class ChannelConnectorSettingsComponent implements OnInit {
     let user = localStorage.getItem("username")
       ? localStorage.getItem("username")
       : sessionStorage.getItem("username");
-    data.formID = this.formSchema.id;
+    data.formId = this.formSchema.id;
     data.filledBy = user;
-    if (!this.connectorData) data.createdOn = new Date().toISOString();
+    if (!this.connectorData) {
+      data.createdOn = new Date().toISOString();
+    } else {
+      data.createdOn = this.connectorData?.connectorConfig?.createdOn;
+    }
     data.attributes = this.createFormDataAttributes(filledValues);
     return data;
   }
@@ -420,7 +427,7 @@ export class ChannelConnectorSettingsComponent implements OnInit {
       },
       (error: any) => {
         this.spinner = false;
-        console.log("Error fetching:", error);
+        console.error("Error fetching:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }
@@ -437,7 +444,7 @@ export class ChannelConnectorSettingsComponent implements OnInit {
       },
       (error: any) => {
         this.spinner = false;
-        console.log("Error fetching:", error);
+        console.error("Error fetching:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }

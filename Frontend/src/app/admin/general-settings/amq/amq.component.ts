@@ -107,7 +107,7 @@ export class AmqComponent implements OnInit {
       },
       (error) => {
         this.spinner = false;
-        console.log("Error:", error);
+        console.error("Error:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }
@@ -131,7 +131,7 @@ export class AmqComponent implements OnInit {
       },
       (error: any) => {
         this.spinner = false;
-        console.log("Error", error);
+        console.error("Error :", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }
@@ -152,7 +152,7 @@ export class AmqComponent implements OnInit {
       },
       (error: any) => {
         this.spinner = false;
-        console.log("Error", error);
+        console.error("Error :", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }

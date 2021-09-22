@@ -40,25 +40,28 @@
       </div>
 
       <div *ngFor="let attrSchema of formSchema?.attributes">
+
+        <!-- INPUT -->
         <div *ngIf="attrSchema.attributeType == 'INPUT'">
-
-          <div class="form-group">
-
+          <div *ngIf="attrSchema?.valueType !='Boolean'" class="form-group">
             <mat-label>{{attrSchema.label}}</mat-label>
-            <mat-form-field *ngIf="attrSchema?.valueType !='Boolean'" appearance="outline">
+            <mat-form-field appearance="outline">
               <input matInput formControlName="{{attrSchema.key}}">
               <mat-error class="form-error">
                 {{formErrors[attrSchema.key]}}
               </mat-error>
             </mat-form-field>
+          </div>
 
+          <div *ngIf="attrSchema?.valueType =='Boolean'" class="form-group adjust-toggle" style="padding-bottom:15px;">
+            <mat-label>{{attrSchema.label}}</mat-label>
             <mat-slide-toggle *ngIf="attrSchema?.valueType =='Boolean'" formControlName="{{attrSchema.key}}">
             </mat-slide-toggle>
           </div>
 
         </div>
 
-        <!-- <div *ngIf="attrSchema.attributeType == 'OPTIONS'"> -->
+        <!--OPTIONS -->
         <ng-container
           *ngIf="attrSchema.attributeType == 'OPTIONS' && attrSchema?.categoryOptions?.categories?.length > 0">
           <div class="form-group">

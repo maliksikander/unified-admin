@@ -107,7 +107,7 @@ export class MrdComponent implements OnInit {
       },
       (error: any) => {
         this.spinner = false;
-        console.log("Error fetching:", error);
+        console.error("Error fetching:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }
@@ -125,7 +125,7 @@ export class MrdComponent implements OnInit {
       },
       (error) => {
         this.spinner = false;
-        console.log("Error fetching:", error);
+        console.error("Error fetching:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }
@@ -152,7 +152,7 @@ export class MrdComponent implements OnInit {
       },
       (error: any) => {
         this.spinner = false;
-        console.log("Error fetching:", error);
+        console.error("Error fetching:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }
@@ -178,7 +178,7 @@ export class MrdComponent implements OnInit {
       },
       (error) => {
         this.spinner = false;
-        console.log("Error fetching:", error);
+        console.error("Error fetching:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
         else if (error && error.status == 409)

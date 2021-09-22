@@ -73,7 +73,7 @@ export class PullModeRoutingComponent implements OnInit {
       },
       (error) => {
         this.spinner = false;
-        console.log("Error fetching:", error);
+        console.error("Error fetching:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }
@@ -180,7 +180,7 @@ export class PullModeRoutingComponent implements OnInit {
       },
       (error: any) => {
         this.spinner = false;
-        console.log("Error fetching:", error);
+        console.error("Error fetching:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }
@@ -202,7 +202,7 @@ export class PullModeRoutingComponent implements OnInit {
       },
       (error: any) => {
         this.spinner = false;
-        console.log("Error fetching:", error);
+        console.error("Error fetching:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }
@@ -240,7 +240,7 @@ export class PullModeRoutingComponent implements OnInit {
       },
       (error) => {
         this.spinner = false;
-        console.log("Error fetching:", error);
+        console.error("Error fetching:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }
@@ -262,13 +262,13 @@ export class PullModeRoutingComponent implements OnInit {
             );
           }
         } catch (e) {
-          console.log("Error in mapping req ==>", e);
+          console.error("Error in mapping req ==>", e);
         }
         this.spinner = false;
       },
       (error: any) => {
         this.spinner = false;
-        console.log("Error fetching:", error);
+        console.error("Error fetching:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }

@@ -8,8 +8,8 @@ export class SearchFilterPipe implements PipeTransform {
       return list;
     }
 
-    console.log("list==>", list);
-    console.log("search==>", searchTerm);
+    // console.log("list==>", list);
+    // console.log("search==>", searchTerm);
 
     if (list.length > 0 && list[0].name) {
       return list.filter(
