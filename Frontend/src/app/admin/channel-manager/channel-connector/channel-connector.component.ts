@@ -42,11 +42,6 @@ export class ChannelConnectorComponent implements OnInit {
     this.getChannelType();
   }
 
-  //to sanitize and bypass dom security warnings for channel type logo images
-  // transform(image) {
-  //   return this.sanitizer.bypassSecurityTrustResourceUrl(image);
-  // }
-
   //to get logo/image from file engine, it accepts the file name as parameter and returns the url
   getFileURL(filename) {
     return `${this.endPointService.FILE_ENGINE_URL}/${this.endPointService.endpoints.fileEngine.downloadFileStream}?filename=${filename}`;

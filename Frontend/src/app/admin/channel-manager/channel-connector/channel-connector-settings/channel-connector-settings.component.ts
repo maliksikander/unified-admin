@@ -163,11 +163,21 @@ export class ChannelConnectorSettingsComponent implements OnInit {
   // creating validation definitions for form controls, using form schema attribute as parameter
   addFormValidations(item) {
     let temp = [];
+    let maxVal = 2147483647;
+    let minVal = -2147483647;
     if (item?.isRequired) temp.push(Validators.required);
-    if (item.attributeType != "OPTIONS")
+    if (item.attributeType != "OPTIONS") {
       temp.push(
         Validators.pattern(this.formValidation[item?.valueType]?.regex)
       );
+      if (item.valueType == "Number") {
+        temp.push(Validators.max(maxVal));
+        temp.push(Validators.min(minVal));
+      }
+      if (item.valueType == "PositiveNumber") {
+        temp.push(Validators.max(maxVal));
+      }
+    }
     return temp;
   }
 
@@ -176,6 +186,8 @@ export class ChannelConnectorSettingsComponent implements OnInit {
     let errors = {
       required: "This field is required",
       pattern: `Please match the ${item?.valueType} format`,
+      max: `Max Value of 2147483647 is allowed`,
+      min: `Min Value of -2147483647 is allowed`,
     };
     this.validations[item.key] = {};
     this.formErrors[item.key] = "";
