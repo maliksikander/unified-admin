@@ -186,11 +186,12 @@ export class ChannelTypeFormComponent implements OnInit {
     }
   }
 
+  // to upload file to file server and passing saved file fileName on success response
   uploadFile() {
     this.endPointService.uploadToFileEngine(this.uploadFilePayload).subscribe(
       (res: any) => {
         let fileName = res.name;
-        this.setRequestPayload(fileName);
+        this.setChannelTypeRequestPayload(fileName);
       },
       (error: any) => {
         this.spinner = false;
@@ -199,18 +200,18 @@ export class ChannelTypeFormComponent implements OnInit {
     );
   }
 
-  //to create 'data' object and pass it to the parent component
+  //on save callback function to create
   onSave() {
     this.spinner = true;
     if (this.uploadFilePayload) {
       this.uploadFile();
     } else {
-      this.setRequestPayload(this.editData?.channelLogo);
+      this.setChannelTypeRequestPayload(this.editData?.channelLogo);
     }
   }
 
   // to create request payload, it receives selected file for logo as filename parameter
-  setRequestPayload(filename) {
+  setChannelTypeRequestPayload(filename) {
     let data = JSON.parse(JSON.stringify(this.channelTypeForm.value));
     data.channelConfigSchema = data.channelConfigSchema.id;
     data.channelLogo = filename;
