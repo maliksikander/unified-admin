@@ -13,6 +13,7 @@
     "format:fix": "prettier --write **/*.ts",
     "sonar": "node sonar-project.js"
   },
+  
   "private": true,
   "dependencies": {
     "@angular/animations": "~11.2.9",

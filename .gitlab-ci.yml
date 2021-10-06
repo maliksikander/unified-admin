@@ -79,12 +79,14 @@ node_artifacts_frontend:
 #==================================================================
 
 
-#==============SPACE FOR  CODE SCAN JOB============================
+# #==============SPACE FOR  CODE SCAN JOB============================
+##============UNCOMMENT ONCE FRONTEND TESTS ARE ADDED##==============
+
 # sonarqube-test:
 #   stage: node-scan-frontend
 #   image: adoptopenjdk/openjdk11:alpine-jre
 #   script:
-#     - apk add --no-cache git python3 py-pip bash shellcheck 'nodejs>10' 'npm>10'
+#     - apk add --no-cache git python3 py-pip bash shellcheck 'nodejs>14' 'npm>7'
 #     - npm install -g typescript@3.7.5
 #     - pip install --no-cache-dir --upgrade pip
 #     - pip install --no-cache-dir pylint
@@ -200,35 +202,35 @@ node-test-backend:
 
 #==============SPACE FOR  CODE SCAN JOB============================
 
-# sonarqube-backend:
-#   stage: node-scan-backend
-#   image: adoptopenjdk/openjdk11:alpine-jre
-#   script:
-#     - apk add --no-cache git python3 py-pip bash shellcheck 'nodejs>10' 'npm>10'
-#     - npm install -g typescript@3.7.5
-#     - pip install --no-cache-dir --upgrade pip
-#     - pip install --no-cache-dir pylint
-#     #- npm install
-#     #- npm run test
-#     #- npm run coverage
-#     - cd Backend
-#     - npm run sonar
-#   only:
-#     - /^CIM-.*$/
-#     - /^.+_b-.+$/
-#     - /^.+_f-.+$/
-#     - merge_requests
-#   allow_failure: false
-#   cache:
-#        key: unified-admin-backend
-#        paths:
-#            - Backend/node_modules/
-#            #- dist/
-#            #- ${CI_PROJECT_DIR}/.npm/
-#        policy: pull
-#   #=artifacts:
-#     #paths:
-#         #- coverage
+sonarqube-backend:
+  stage: node-scan-backend
+  image: adoptopenjdk/openjdk11:alpine-jre
+  script:
+    - apk add --no-cache git python3 py-pip bash shellcheck 'nodejs>14' 'npm>7'
+    - npm install -g typescript@3.7.5
+    - pip install --no-cache-dir --upgrade pip
+    - pip install --no-cache-dir pylint
+    #- npm install
+    #- npm run test
+    #- npm run coverage
+    - cd Backend
+    - npm run sonar
+  only:
+    - /^CIM-.*$/
+    - /^.+_b-.+$/
+    - /^.+_f-.+$/
+    - merge_requests
+  allow_failure: false
+  cache:
+       key: unified-admin-backend
+       paths:
+           - Backend/node_modules/
+           #- dist/
+           #- ${CI_PROJECT_DIR}/.npm/
+       policy: pull
+  #=artifacts:
+    #paths:
+        #- coverage
 
 
 #==================================================================
@@ -332,7 +334,7 @@ anchore_scan_api:
     ANCHORE_CLI_USER: "admin"
     ANCHORE_CLI_PASS: "foobar"
     ANCHORE_CLI_SSL_VERIFY: "false"
-    ANCHORE_TIMEOUT: 900
+    ANCHORE_TIMEOUT: 3600
     ANCHORE_FAIL_ON_POLICY: "false"
   script:
     - echo "Adding image to Anchore engine at ${ANCHORE_CLI_URL}"

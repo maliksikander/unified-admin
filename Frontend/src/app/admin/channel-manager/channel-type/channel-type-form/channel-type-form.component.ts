@@ -27,7 +27,7 @@ export class ChannelTypeFormComponent implements OnInit {
     typeName: "",
     channelLogo: "",
     isInteractive: "",
-    channelConfigSchema: "",
+    // channelConfigSchema: "",
     mediaRoutingDomain: "",
   };
   validations;
@@ -60,11 +60,12 @@ export class ChannelTypeFormComponent implements OnInit {
       typeName: ["", [Validators.required]],
       channelLogo: [null, [Validators.required]],
       isInteractive: [true, [Validators.required]],
-      channelConfigSchema: ["", [Validators.required]],
+      // channelConfigSchema: ["", [Validators.required]],
       mediaRoutingDomain: ["", [Validators.required]],
     });
 
-    this.getForms();
+    // this.getForms();
+    this.getMRD();
 
     //setting form validation messages
     this.channelTypeForm.valueChanges.subscribe((data) => {
@@ -116,25 +117,25 @@ export class ChannelTypeFormComponent implements OnInit {
   }
 
   //to get form list and set the local variable with the response
-  getForms() {
-    this.endPointService.getForm().subscribe(
-      (res: any) => {
-        // this.spinner = false;
-        if (res.length == 0)
-          this.snackbar.snackbarMessage(
-            "error-snackbar",
-            "NO FORM DATA FOUND",
-            2
-          );
-        this.formsList = res;
-        this.getMRD();
-      },
-      (error) => {
-        this.spinner = false;
-        console.error("Error fetching:", error);
-      }
-    );
-  }
+  // getForms() {
+  //   this.endPointService.getForm().subscribe(
+  //     (res: any) => {
+  //       // this.spinner = false;
+  //       if (res.length == 0)
+  //         this.snackbar.snackbarMessage(
+  //           "error-snackbar",
+  //           "NO FORM DATA FOUND",
+  //           2
+  //         );
+  //       this.formsList = res;
+  //       this.getMRD();
+  //     },
+  //     (error) => {
+  //       this.spinner = false;
+  //       console.error("Error fetching:", error);
+  //     }
+  //   );
+  // }
 
   //to get MRD list and set the local variable with the response
   getMRD() {
@@ -166,17 +167,18 @@ export class ChannelTypeFormComponent implements OnInit {
         const mrdIndex = this.mrdData.findIndex(
           (item) => item.id === this.editData.mediaRoutingDomain
         );
-        const formIndex = this.formsList.findIndex(
-          (item: any) => item.id === this.editData?.channelConfigSchema
-        );
+        // const formIndex = this.formsList.findIndex(
+        //   (item: any) => item.id === this.editData?.channelConfigSchema
+        // );
         this.channelTypeForm.patchValue({
           typeName: this.editData.typeName,
           isInteractive: this.editData.isInteractive,
-          channelConfigSchema: this.formsList[formIndex],
+          // channelConfigSchema: this.formsList[formIndex],
           mediaRoutingDomain: this.mrdData[mrdIndex],
           channelLogo: " ",
         });
 
+        this.channelTypeForm.controls["typeName"].disable();
         // this.getFileStats(this.editData.channelLogo);
         this.imageData = `${this.endPointService.FILE_ENGINE_URL}/${this.endPointService.endpoints.fileEngine.downloadFileStream}?filename=${this.editData?.channelLogo}`;
       }
@@ -212,11 +214,17 @@ export class ChannelTypeFormComponent implements OnInit {
 
   // to create request payload, it receives selected file for logo as filename parameter
   setChannelTypeRequestPayload(filename) {
+    // console.log("Fprm value==>",this.channelTypeForm.value)
     let data = JSON.parse(JSON.stringify(this.channelTypeForm.value));
-    data.channelConfigSchema = data.channelConfigSchema.id;
+
+    // data.channelConfigSchema = data.channelConfigSchema.id;
     data.channelLogo = filename;
     data.mediaRoutingDomain = data.mediaRoutingDomain.id;
-    if (this.editData) data.id = this.editData.id;
+    if (this.editData) {
+      if (!data.typeName) data.typeName = this.editData.typeName;
+      data.id = this.editData.id;
+    }
+    // console.log("data==>", data);
     if (data.id) {
       this.updateChannel(data);
     } else {
