@@ -79,7 +79,7 @@ export class ChannelTypeComponent implements OnInit {
   //to edit channel type and enable form view and change page title an pass data to child component
   editChannelType(data) {
     this.addType = true;
-    this.pageTitle = "Channel Type Settings";
+    this.pageTitle = "Edit Channel Type Settings";
     this.editTypeData = data;
   }
 
