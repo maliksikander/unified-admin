@@ -38,7 +38,7 @@ import { MatTree, MatTreeModule } from "@angular/material/tree";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { SearchFilterPipe } from "./search-filter.pipe";
-import { RemoveUnderscoreFilterPipe } from "./remove-underscore.pipe";
+import { RemoveCharacterFilterPipe } from "./remove-character.pipe";
 import { ConfirmDialogComponent } from "./confirm-dialog/confirm-dialog.component";
 import { NgxPaginationModule } from "ngx-pagination";
 import { Ng2SearchPipeModule } from "ng2-search-filter";
@@ -46,7 +46,7 @@ import { Ng2SearchPipeModule } from "ng2-search-filter";
 @NgModule({
   declarations: [
     SearchFilterPipe,
-    RemoveUnderscoreFilterPipe,
+    RemoveCharacterFilterPipe,
     // Ng2SearchPipeModule,
     ConfirmDialogComponent,
   ],
@@ -162,7 +162,7 @@ import { Ng2SearchPipeModule } from "ng2-search-filter";
     MatTreeModule,
     MatBottomSheetModule,
     SearchFilterPipe,
-    RemoveUnderscoreFilterPipe,
+    RemoveCharacterFilterPipe,
     NgxPaginationModule,
     Ng2SearchPipeModule,
   ],

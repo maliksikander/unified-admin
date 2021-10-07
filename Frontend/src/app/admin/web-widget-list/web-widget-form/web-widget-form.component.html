@@ -1,0 +1,108 @@
+<div class="loading-area" *ngIf="spinner">
+    <mat-spinner></mat-spinner>
+</div>
+
+<div class="panel-page-content web-widget-class">
+    <form class="form-horizontal form-bordered" [formGroup]="widgetConfigForm">
+        <div class="col-md-5">
+
+            <div class="form-group">
+                <mat-label>Widget Identifier</mat-label>
+                <mat-form-field appearance="outline">
+                    <input matInput formControlName="widgetIdentifier">
+                    <mat-error class="form-error">
+                        {{formErrors?.widgetIdentifier}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="form-group">
+                <mat-label>Widget Title</mat-label>
+                <mat-form-field appearance="outline">
+                    <input matInput formControlName="title">
+                    <mat-error class="form-error">
+                        {{formErrors?.title}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="form-group">
+                <mat-label>Widget Sub Title</mat-label>
+                <mat-form-field appearance="outline">
+                    <input matInput formControlName="subTitle">
+                    <mat-error class="form-error">
+                        {{formErrors?.subTitle}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="form-group">
+                <mat-label>Customer Reconnect Time(sec)</mat-label>
+                <mat-form-field appearance="outline">
+                    <input type="number" matInput formControlName="customerReconnectTime">
+                    <mat-error class="form-error">
+                        {{formErrors?.customerReconnectTime}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="form-group">
+                <mat-label>Language</mat-label>
+                <mat-form-field appearance="outline">
+                    <mat-select placeholder="Select Language" formControlName="language">
+                        <mat-option *ngFor="let lang of languageList" [value]="lang">{{lang}}</mat-option>
+                    </mat-select>
+                    <mat-error class="form-error">
+                        {{formErrors?.language}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="form-group">
+                <mat-label>Theme</mat-label>
+                <mat-form-field appearance="outline">
+                    <mat-select placeholder="Select Theme" formControlName="theme">
+                        <mat-option *ngFor="let theme of themeList" [value]="theme">{{theme | removeCharacterFilter |
+                            titlecase}}</mat-option>
+                    </mat-select>
+                    <mat-error class="form-error">
+                        {{formErrors?.theme}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+        </div>
+
+        <div class="form-group adjust-toggle col-md-5" style="padding-top: 15px">
+            <mat-label>Enable Download Transcript</mat-label>
+            <mat-slide-toggle formControlName="downloadTranscript"></mat-slide-toggle>
+        </div>
+
+        <div class="form-group adjust-toggle col-md-5" style="padding-top: 15px">
+            <mat-label>Enable Dynamic Link</mat-label>
+            <mat-slide-toggle formControlName="dynamicLink"></mat-slide-toggle>
+        </div>
+
+        <div class="form-group adjust-toggle col-md-5" style="padding-top: 15px">
+            <mat-label>Enable Emoji</mat-label>
+            <mat-slide-toggle formControlName="emoji"></mat-slide-toggle>
+        </div>
+
+        <div class="form-group adjust-toggle col-md-5" style="padding-top: 15px">
+            <mat-label>Enable File Transfer</mat-label>
+            <mat-slide-toggle formControlName="fileTransfer"></mat-slide-toggle>
+        </div>
+
+        <div class="form-group adjust-toggle col-md-5" style="padding-top: 15px">
+            <mat-label>Enable Font Resize</mat-label>
+            <mat-slide-toggle formControlName="fontResize"></mat-slide-toggle>
+        </div>
+
+        <div class="action-area btn-margin col-md-5">
+            <button mat-raised-button (click)="onClose()" class="gray-btn">Cancel</button>
+            <button [disabled]="!widgetConfigForm.valid" mat-raised-button class="blue-btn service-trigger"
+                (click)="onSave()">Save</button>
+        </div>
+
+    </form>
+</div>

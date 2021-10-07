@@ -8,16 +8,22 @@ let { NodeAdapter } = require("ef-keycloak-connect");
 const keycloak = new NodeAdapter(config);
 let resource = config.resource;
 
-router.get('/', keycloak.enforcer(['general-settings:manage'], {
-    resource_server_id: resource
-}), localeSettingController.getSettings);
+// router.get('/', keycloak.enforcer(['general-settings:manage'], {
+//     resource_server_id: resource
+// }), localeSettingController.getSettings);
 
-router.put('/', keycloak.enforcer(['general-settings:manage'], {
-    resource_server_id: resource
-}), validate(localeValidation.updateSetting), localeSettingController.updateSettings);
+// router.put('/', keycloak.enforcer(['general-settings:manage'], {
+//     resource_server_id: resource
+// }), validate(localeValidation.updateSetting), localeSettingController.updateSettings);
 
-router.post('/', keycloak.enforcer(['general-settings:manage'], {
-    resource_server_id: resource
-}), validate(localeValidation.createSetting), localeSettingController.createSettings);
+// router.post('/', keycloak.enforcer(['general-settings:manage'], {
+//     resource_server_id: resource
+// }), validate(localeValidation.createSetting), localeSettingController.createSettings);
+
+router.get('/', localeSettingController.getSettings);
+
+router.put('/', validate(localeValidation.updateSetting), localeSettingController.updateSettings);
+
+router.post('/', validate(localeValidation.createSetting), localeSettingController.createSettings);
 
 module.exports = router;

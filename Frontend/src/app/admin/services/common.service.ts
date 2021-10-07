@@ -540,6 +540,81 @@ export class CommonService {
     },
   };
 
+  webWidgetFormErrorMessages = {
+    customerReconnectTime: {
+      required: "This field is required",
+      minlength: "Min 3 characters required",
+      maxlength: "Max 100 characters allowed",
+      pattern: "Not a valid pattern",
+      validName: "Already exists",
+    },
+    dynamicLink: {
+      required: "This field is required",
+      maxlength: "Max 500 characters allowed",
+      pattern: 'Allowed special characters "[!@#$%^&*()-_=+~`"]+"',
+    },
+    downloadTranscript: {
+      required: "This field is required",
+      maxlength: "Max 500 characters allowed",
+      pattern: 'Allowed special characters "[!@#$%^&*()-_=+~`"]+"',
+    },
+    emoji: {
+      required: "This field is required",
+      minlength: "Min 3 characters required",
+      maxlength: "Max 100 characters allowed",
+      pattern: "Not a valid pattern",
+      validName: "Already exists",
+    },
+    fileTransfer: {
+      required: "This field is required",
+      minlength: "Min 3 characters required",
+      maxlength: "Max 100 characters allowed",
+      pattern: "Not a valid pattern",
+      validName: "Already exists",
+    },
+    fontResize: {
+      required: "This field is required",
+      minlength: "Min 3 characters required",
+      maxlength: "Max 100 characters allowed",
+      pattern: "Not a valid pattern",
+      validName: "Already exists",
+    },
+    language: {
+      required: "This field is required",
+      minlength: "Min 3 characters required",
+      maxlength: "Max 100 characters allowed",
+      pattern: "Not a valid pattern",
+      validName: "Already exists",
+    },
+    subTitle: {
+      required: "This field is required",
+      minlength: "Min 3 characters required",
+      maxlength: "Max 100 characters allowed",
+      pattern: "Not a valid pattern",
+      validName: "Already exists",
+    },
+    theme: {
+      required: "This field is required",
+      minlength: "Min 3 characters required",
+      maxlength: "Max 100 characters allowed",
+      pattern: "Not a valid pattern",
+      validName: "Already exists",
+    },
+    title: {
+      required: "This field is required",
+      minlength: "Min 3 characters required",
+      maxlength: "Max 100 characters allowed",
+      pattern: "Not a valid pattern",
+      validName: "Already exists",
+    },
+    widgetIdentifier: {
+      required: "This field is required",
+      minlength: "Min 3 characters required",
+      maxlength: "Max 50 characters allowed",
+      pattern: "Only alphanumeric and ( _ * - ) characters allowed",
+    },
+  };
+
   constructor(private snackbar: SnackbarService, private router: Router) {}
 
   //assign form validation errors dynamically
