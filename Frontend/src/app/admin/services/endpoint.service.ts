@@ -1147,10 +1147,10 @@ export class EndpointService {
       .pipe(catchError(this.handleError));
   }
 
-  updateWebWidgetConfig(data): Observable<any> {
+  updateWebWidgetConfig(data,identifier): Observable<any> {
     return this.httpClient
       .put<any>(
-        `${this.CCM_URL}/${this.endpoints.webWidget}/${data.id}`,
+        `${this.CCM_URL}/${this.endpoints.webWidget}/${identifier}`,
         data,
         {
           headers: new HttpHeaders({

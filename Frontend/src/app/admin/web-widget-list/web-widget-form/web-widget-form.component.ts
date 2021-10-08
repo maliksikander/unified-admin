@@ -19,17 +19,16 @@ import { SnackbarService } from "../../services/snackbar.service";
 export class WebWidgetFormComponent implements OnInit {
   @Input() parentBool;
   @Input() editWebWidgetData;
-  // @Input() botData;
   @Output() childBool = new EventEmitter<any>();
   @Output() formSaveData = new EventEmitter<any>();
   widgetConfigForm: FormGroup;
   formErrors = {
     customerReconnectTime: "",
-    dynamicLink: "",
-    downloadTranscript: "",
-    emoji: "",
-    fileTransfer: "",
-    fontResize: "",
+    enableDynamicLink: "",
+    enableDownloadTranscript: "",
+    enableEmoji: "",
+    enableFileTransfer: "",
+    enableFontResize: "",
     language: "",
     subTitle: "",
     theme: "",
@@ -58,11 +57,11 @@ export class WebWidgetFormComponent implements OnInit {
 
     this.widgetConfigForm = this.formBuilder.group({
       customerReconnectTime: ["", [Validators.required]],
-      dynamicLink: [true, [Validators.required]],
-      downloadTranscript: [true, [Validators.required]],
-      emoji: [true, [Validators.required]],
-      fileTransfer: [true, [Validators.required]],
-      fontResize: [true, [Validators.required]],
+      enableDynamicLink: [true, [Validators.required]],
+      enableDownloadTranscript: [true, [Validators.required]],
+      enableEmoji: [true, [Validators.required]],
+      enableFileTransfer: [true, [Validators.required]],
+      enableFontResize: [true, [Validators.required]],
       language: ["", [Validators.required]],
       subTitle: ["", [Validators.required]],
       theme: ["", [Validators.required]],
@@ -101,59 +100,40 @@ export class WebWidgetFormComponent implements OnInit {
   //patch value to form to be edited
   patchEditValues() {
     try {
-      if (this.editWebWidgetData) {
-        // const mrdIndex = this.mrdData.findIndex(
-        //   (item) => item.id === this.editData.mediaRoutingDomain
-        // );
-        // const formIndex = this.formsList.findIndex(
-        //   (item: any) => item.id === this.editData?.channelConfigSchema
-        // );
-        this.widgetConfigForm.patchValue({
-          typeName: this.editWebWidgetData.typeName,
-          isInteractive: this.editWebWidgetData.isInteractive,
-          // channelConfigSchema: this.formsList[formIndex],
-          // mediaRoutingDomain: this.mrdData[mrdIndex],
-          channelLogo: " ",
-        });
-
-        this.widgetConfigForm.controls["typeName"].disable();
-        // this.getFileStats(this.editData.channelLogo);
-        // this.imageData = `${this.endPointService.FILE_ENGINE_URL}/${this.endPointService.endpoints.fileEngine.downloadFileStream}?filename=${this.editData?.channelLogo}`;
-      }
+      const languageIndex = this.languageList.findIndex(
+        (item) => item.code === this.editWebWidgetData.language.code
+      );
+      this.widgetConfigForm.patchValue(this.editWebWidgetData);
+      this.widgetConfigForm.patchValue({
+        language: this.languageList[languageIndex],
+      });
+      this.widgetConfigForm.controls["widgetIdentifier"].disable();
     } catch (e) {
       console.error("Error==>", e);
       this.spinner = false;
     }
   }
 
-  //on save callback function to create
+  //on save callback function
   onSave() {
-    // this.spinner = true;
-
+    this.spinner = true;
     let data: any = this.setChannelTypeRequestPayload();
-    // if (data.id) {
-    //   this.updateChannel(data);
-    // } else {
-    //   this.createChannelType(data);
-    // }
-    console.log("data==>", data);
+    if (data.id) {
+      this.updateWidgetConfig(data);
+    } else {
+      this.createWebWidget(data);
+    }
+    // console.log("data==>", data);
   }
 
-  // to create request payload, it receives selected file for logo as filename parameter
+  // to create request payload
   setChannelTypeRequestPayload() {
-    // console.log("Fprm value==>",this.widgetConfigForm.value)
     let data = JSON.parse(JSON.stringify(this.widgetConfigForm.value));
-    console.log("data==>", data);
-    // data.channelConfigSchema = data.channelConfigSchema.id;
-    // data.channelLogo = filename;
-    // data.mediaRoutingDomain = data.mediaRoutingDomain.id;
     if (this.editWebWidgetData) {
       if (!data.widgetIdentifier)
         data.widgetIdentifier = this.editWebWidgetData.widgetIdentifier;
       data.id = this.editWebWidgetData.id;
     }
-    // console.log("data==>", data);
-
     return data;
   }
 
@@ -165,9 +145,9 @@ export class WebWidgetFormComponent implements OnInit {
   }
 
   //to create channel, it accepts `data` object as parameter containing channel type properties
-  createChannelType(data) {
+  createWebWidget(data) {
     //calling endpoint service method which accepts resource name as 'reqEndpoint' and `data` object as parameter
-    this.endPointService.createChannelType(data).subscribe(
+    this.endPointService.createWebWidget(data).subscribe(
       (res: any) => {
         this.emitMsgAndResetForm("Created");
       },
@@ -179,32 +159,32 @@ export class WebWidgetFormComponent implements OnInit {
   }
 
   //to update channel type, it accepts `data` object as parameter containing channel type properties
-  updateChannel(data) {
+  updateWidgetConfig(data) {
     //calling endpoint service method which accepts resource endpoint as 'reqEndpoint' and `data` object as parameter
     this.endPointService
-      .updateChannelType(data, data.widgetIdentifier)
+      .updateWebWidgetConfig(data, data.widgetIdentifier)
       .subscribe(
         (res: any) => {
           this.emitMsgAndResetForm("Updated");
         },
         (error: any) => {
           this.spinner = false;
-          console.error("Error fetching:", error);
+          console.error("Error Updating widget:", error);
         }
       );
   }
 
-  getLocalSettings(){
-     //calling endpoint service method to get web widget list
-     this.endPointService.getLocaleSetting().subscribe(
+  getLocalSettings() {
+    //calling endpoint service method to get local settings
+    this.endPointService.getLocaleSetting().subscribe(
       (res: any) => {
-        // this.webWidgetList = res;
-        console.log("res==>",res)
+        this.languageList = res?.localeSetting[0]?.supportedLanguages;
+        if (this.editWebWidgetData) this.patchEditValues();
         this.spinner = false;
       },
       (error: any) => {
         this.spinner = false;
-        console.error("Error fetching web widget list:", error);
+        console.error("Error fetching locale settings:", error);
       }
     );
   }

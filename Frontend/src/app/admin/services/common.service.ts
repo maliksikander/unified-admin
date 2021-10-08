@@ -548,31 +548,31 @@ export class CommonService {
       pattern: "Not a valid pattern",
       validName: "Already exists",
     },
-    dynamicLink: {
+    enableDynamicLink: {
       required: "This field is required",
       maxlength: "Max 500 characters allowed",
       pattern: 'Allowed special characters "[!@#$%^&*()-_=+~`"]+"',
     },
-    downloadTranscript: {
+    enableDownloadTranscript: {
       required: "This field is required",
       maxlength: "Max 500 characters allowed",
       pattern: 'Allowed special characters "[!@#$%^&*()-_=+~`"]+"',
     },
-    emoji: {
+    enableEmoji: {
       required: "This field is required",
       minlength: "Min 3 characters required",
       maxlength: "Max 100 characters allowed",
       pattern: "Not a valid pattern",
       validName: "Already exists",
     },
-    fileTransfer: {
+    enableFileTransfer: {
       required: "This field is required",
       minlength: "Min 3 characters required",
       maxlength: "Max 100 characters allowed",
       pattern: "Not a valid pattern",
       validName: "Already exists",
     },
-    fontResize: {
+    enableFontResize: {
       required: "This field is required",
       minlength: "Min 3 characters required",
       maxlength: "Max 100 characters allowed",
