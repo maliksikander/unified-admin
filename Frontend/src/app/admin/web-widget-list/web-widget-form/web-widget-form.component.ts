@@ -44,7 +44,6 @@ export class WebWidgetFormComponent implements OnInit {
   constructor(
     private commonService: CommonService,
     private formBuilder: FormBuilder,
-    private snackbar: SnackbarService,
     private endPointService: EndpointService
   ) {}
 
