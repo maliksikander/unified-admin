@@ -28,7 +28,7 @@
                         <ul class="top-heading reason-code-labels">
                             <li>Widget Identifier</li>
                             <li>Title</li>
-                            <li>Theme</li>
+                            <li>Language</li>
 
                         </ul>
                         <ng-container *ngIf="webWidgetList && webWidgetList.length != 0">
@@ -37,7 +37,7 @@
                                 <span class="group-name">{{data?.widgetIdentifier ? data.widgetIdentifier :
                                     'N/A'}}</span>
                                 <span class="group-name">{{data?.title ? data.title : 'N/A'}}</span>
-                                <span class="group-name">{{data?.theme| removeCharacterFilter | titlecase}}
+                                <span class="group-name">{{data?.language?.name ? data?.language?.name : 'N/A'}}
                                     <span class="list-trigger-area">
                                         <button mat-mini-fab matTooltip="Edit" (click)="editWebWidget(data)">
                                             <mat-icon>mode_edit</mat-icon>

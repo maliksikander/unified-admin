@@ -137,7 +137,11 @@ export class ChannelConnectorSettingsComponent implements OnInit {
       (res: any) => {
         let temp = JSON.parse(JSON.stringify(res));
         this.formValidation = this.convertArrayToObject(temp, "type");
-        this.getFormSchema();
+        // this.getFormSchema();
+        this.spinner = false;
+        if (this.connectorData) {
+          this.patchFormValues(this.connectorData, this.formSchema?.attributes);
+        }
       },
       (error: any) => {
         this.spinner = false;
@@ -359,7 +363,7 @@ export class ChannelConnectorSettingsComponent implements OnInit {
     let user = localStorage.getItem("username")
       ? localStorage.getItem("username")
       : sessionStorage.getItem("username");
-    data.formId = this.formSchema.id;
+    data.formId = this.formSchema?.id;
     data.filledBy = user;
     if (!this.connectorData) {
       data.createdOn = new Date().toISOString();
