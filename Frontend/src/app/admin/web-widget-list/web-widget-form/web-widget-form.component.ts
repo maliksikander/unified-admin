@@ -44,7 +44,8 @@ export class WebWidgetFormComponent implements OnInit {
   constructor(
     private commonService: CommonService,
     private formBuilder: FormBuilder,
-    private endPointService: EndpointService
+    private endPointService: EndpointService,
+    private snackbar: SnackbarService
   ) {}
 
   ngOnInit(): void {
@@ -98,10 +99,13 @@ export class WebWidgetFormComponent implements OnInit {
 
   //patch value to form to be edited
   patchEditValues() {
+    let languageIndex = -1;
     try {
-      const languageIndex = this.languageList.findIndex(
-        (item) => item.code === this.editWebWidgetData.language.code
-      );
+      if (this.languageList.length > 0) {
+        languageIndex = this.languageList.findIndex(
+          (item) => item.code === this.editWebWidgetData.language.code
+        );
+      }
       this.widgetConfigForm.patchValue(this.editWebWidgetData);
       this.widgetConfigForm.patchValue({
         language: languageIndex != -1 ? this.languageList[languageIndex] : null,
@@ -177,7 +181,15 @@ export class WebWidgetFormComponent implements OnInit {
     //calling endpoint service method to get local settings
     this.endPointService.getLocaleSetting().subscribe(
       (res: any) => {
-        this.languageList = res?.localeSetting[0]?.supportedLanguages;
+        this.languageList = res?.localeSetting[0]?.supportedLanguages
+          ? res?.localeSetting[0]?.supportedLanguages
+          : [];
+        if (this.languageList.length == 0)
+          this.snackbar.snackbarMessage(
+            "error-snackbar",
+            "No Language Found",
+            1
+          );
         if (this.editWebWidgetData) this.patchEditValues();
         this.spinner = false;
       },
