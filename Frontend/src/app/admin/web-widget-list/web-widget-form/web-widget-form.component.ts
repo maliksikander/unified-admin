@@ -104,7 +104,7 @@ export class WebWidgetFormComponent implements OnInit {
       );
       this.widgetConfigForm.patchValue(this.editWebWidgetData);
       this.widgetConfigForm.patchValue({
-        language: this.languageList[languageIndex],
+        language: languageIndex != -1 ? this.languageList[languageIndex] : null,
       });
       this.widgetConfigForm.controls["widgetIdentifier"].disable();
     } catch (e) {
