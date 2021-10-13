@@ -24,6 +24,7 @@ export class EndpointService {
   LICENSE_URL;
   BUSINESS_CALENDAR_URL;
   FILE_ENGINE_URL;
+  widgetThemes = [];
   token;
   tenant;
 
@@ -68,6 +69,7 @@ export class EndpointService {
       },
       agent: "agents",
     },
+    webWidget: "widget-configs",
     keycloakLogin: "keycloakLogin",
     keycloakUsers: "users",
   };
@@ -86,6 +88,7 @@ export class EndpointService {
     this.LICENSE_URL = e.LICENSE_MANAGER_URL;
     this.FILE_ENGINE_URL = e.FILE_ENGINE_URL;
     this.userRoles = e.BUSINESS_USER_ROLES;
+    this.widgetThemes = e.WIDGET_THEMES;
 
     if (isDevMode()) this.ADMIN_URL = "http://localhost:3000";
 
@@ -1112,6 +1115,56 @@ export class EndpointService {
   deletePullModeList(id): Observable<any> {
     return this.httpClient
       .delete<any>(`${this.ADMIN_URL}/${this.endpoints.pullMode}/${id}`, {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.token,
+        }),
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  //////// Web Widget Config ///////
+
+  createWebWidget(data): Observable<any> {
+    return this.httpClient
+      .post<any>(`${this.CCM_URL}/${this.endpoints.webWidget}`, data, {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.token,
+        }),
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  getWebWidgetList(): Observable<any> {
+    return this.httpClient
+      .get(`${this.CCM_URL}/${this.endpoints.webWidget}`, {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.token,
+        }),
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  updateWebWidgetConfig(data,identifier): Observable<any> {
+    return this.httpClient
+      .put<any>(
+        `${this.CCM_URL}/${this.endpoints.webWidget}/${identifier}`,
+        data,
+        {
+          headers: new HttpHeaders({
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + this.token,
+          }),
+        }
+      )
+      .pipe(catchError(this.handleError));
+  }
+
+  deleteWebWidget(id): Observable<any> {
+    return this.httpClient
+      .delete<any>(`${this.CCM_URL}/${this.endpoints.webWidget}/${id}`, {
         headers: new HttpHeaders({
           "Content-Type": "application/json",
           Authorization: "Bearer " + this.token,

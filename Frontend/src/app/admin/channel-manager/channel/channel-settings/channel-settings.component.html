@@ -97,7 +97,7 @@
           <mat-form-field appearance="outline">
             <mat-select formControlName="agentSelectionPolicy">
               <mat-option *ngFor="let policy of agentPolicy" [value]="policy">
-                {{policy | removeUnderscoreFilter}}</mat-option>
+                {{policy | removeCharacterFilter}}</mat-option>
             </mat-select>
             <mat-error class="form-error">
               {{formErrors?.agentSelectionPolicy}}

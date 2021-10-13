@@ -8,7 +8,7 @@ const localeSettingSchema = mongoose.Schema(
         {
           code: String,
           name: String,
-          flagUrl: String,
+          flag: String,
         },
       ],
       required: true,
@@ -18,7 +18,7 @@ const localeSettingSchema = mongoose.Schema(
       type: {
         code: String,
         name: String,
-        flagUrl: String,
+        flag: String,
       },
       required: true,
       // trim: true,

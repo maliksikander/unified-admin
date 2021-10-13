@@ -37,11 +37,13 @@ export class TopBarComponent implements OnInit {
     sessionStorage.removeItem("channelTypePage");
     sessionStorage.removeItem("currentReasonCodePage");
     sessionStorage.removeItem("currentPullModePage");
+    sessionStorage.removeItem("webWidgetPage");
     sessionStorage.removeItem("tenant");
     sessionStorage.removeItem("formsPage");
     localStorage.removeItem("username");
     localStorage.removeItem("tenant");
     localStorage.removeItem("token");
+    
     // sessionStorage.removeItem('permittedResources');
 
     this.router.navigate(["/login"]);
