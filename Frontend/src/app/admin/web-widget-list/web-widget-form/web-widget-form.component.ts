@@ -85,7 +85,7 @@ export class WebWidgetFormComponent implements OnInit {
       );
     });
 
-    this.getLocalSettings();
+    this.getLocaleSettings();
   }
 
   //lifecycle hook to reflect parent component changes in child component
@@ -120,7 +120,7 @@ export class WebWidgetFormComponent implements OnInit {
   //on save callback function
   onSave() {
     this.spinner = true;
-    let data: any = this.setChannelTypeRequestPayload();
+    let data: any = this.setWidgetRequestPayload();
     if (data.id) {
       this.updateWidgetConfig(data);
     } else {
@@ -130,7 +130,7 @@ export class WebWidgetFormComponent implements OnInit {
   }
 
   // to create request payload
-  setChannelTypeRequestPayload() {
+  setWidgetRequestPayload() {
     let data = JSON.parse(JSON.stringify(this.widgetConfigForm.value));
     if (this.editWebWidgetData) {
       if (!data.widgetIdentifier)
@@ -177,7 +177,7 @@ export class WebWidgetFormComponent implements OnInit {
       );
   }
 
-  getLocalSettings() {
+  getLocaleSettings() {
     //calling endpoint service method to get local settings
     this.endPointService.getLocaleSetting().subscribe(
       (res: any) => {
