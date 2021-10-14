@@ -12,7 +12,6 @@ import {
   FormGroup,
   Validators,
 } from "@angular/forms";
-import { MatDialog } from "@angular/material/dialog";
 import { CommonService } from "src/app/admin/services/common.service";
 import { EndpointService } from "src/app/admin/services/endpoint.service";
 import { SnackbarService } from "src/app/admin/services/snackbar.service";
@@ -24,26 +23,23 @@ import { SnackbarService } from "src/app/admin/services/snackbar.service";
 })
 export class ChannelConnectorSettingsComponent implements OnInit {
   @Input() parentChannelBool;
-  @Input() channelTypeData;
   @Input() connectorData;
   @Output() formCancelEvent = new EventEmitter<any>();
   @Output() formSaveData = new EventEmitter<any>();
   spinner = true;
   channelConnectorForm: FormGroup;
   formErrors: any = {
-    channelConnectorName: "",
-    interface: "",
-    interfaceAddress: "",
+    name: "",
+    channelProviderInterface: "",
   };
   validations;
-  interfaceList = ["JMS", "REST"];
+  // interfaceList = ["JMS", "REST"];
   formSchema;
   formValidation;
-  // reqEndpoint = 'channel-connectors';
+  channelProviderList = [];
 
   constructor(
     private commonService: CommonService,
-    private dialog: MatDialog,
     private endPointService: EndpointService,
     private formBuilder: FormBuilder,
     private snackbar: SnackbarService
@@ -56,20 +52,9 @@ export class ChannelConnectorSettingsComponent implements OnInit {
     this.validations = this.commonService.connectorFormErrorMessages;
 
     this.channelConnectorForm = this.formBuilder.group({
-      channelConnectorName: ["", [Validators.required]],
-      interface: ["", [Validators.required]],
-      interfaceAddress: [
-        "",
-        [
-          Validators.required,
-          Validators.pattern(
-            /((([A-Za-z]{2,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/
-          ),
-        ],
-      ],
+      name: ["", [Validators.required]],
+      channelProviderInterface: ["", [Validators.required]],
     });
-
-    this.getFormValidation();
 
     //setting up error messages on form validation failures
     this.channelConnectorForm.valueChanges.subscribe((data) => {
@@ -79,56 +64,12 @@ export class ChannelConnectorSettingsComponent implements OnInit {
         this.validations
       );
     });
+
+    this.getFormValidation();
   }
 
   //lifecycle to update all '@input' changes from parent component
   ngOnChanges(changes: SimpleChanges) {}
-
-  // to assign form schema from channel type data to local variable
-  assignFormSchema(data) {
-    this.formSchema = data;
-    if (this.formSchema && this.formSchema != null) {
-      this.addFormControls(
-        JSON.parse(JSON.stringify(this.formSchema?.attributes))
-      );
-      if (this.connectorData) {
-        this.patchFormValues(this.connectorData, this.formSchema?.attributes);
-      }
-    }
-    this.spinner = false;
-  }
-
-  //calling forms endpoint to fetch forms schema
-  getFormSchema() {
-    const id = this.channelTypeData.channelConfigSchema;
-
-    //calling endpoint service method to get forms schema, it accepts form id as `id` as parameter
-    this.endPointService.getFormByID(id).subscribe(
-      (res: any) => {
-        // this.spinner = false;
-        this.formSchema = res;
-        // console.log("form schema==>", this.formSchema);
-        try {
-          this.assignFormSchema(this.formSchema);
-        } catch (e) {
-          console.error("Error :", e);
-          this.spinner = false;
-        }
-        // this.addFormControls(
-        //   JSON.parse(JSON.stringify(this.formSchema?.attributes))
-        // );
-        // if (this.connectorData) {
-        //   this.patchFormValues(this.connectorData, this.formSchema?.attributes);
-        // }
-      },
-      (error: any) => {
-        this.spinner = false;
-        console.error("Error fetching:", error);
-        if (error && error.status == 0)
-          this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
-      }
-    );
-  }
 
   //calling forms validaition endpoint to fetch form validation definitions
   getFormValidation() {
@@ -137,8 +78,8 @@ export class ChannelConnectorSettingsComponent implements OnInit {
       (res: any) => {
         let temp = JSON.parse(JSON.stringify(res));
         this.formValidation = this.convertArrayToObject(temp, "type");
-        // this.getFormSchema();
-        this.spinner = false;
+        this.getChannelProvider();
+        // this.spinner = false;
         if (this.connectorData) {
           this.patchFormValues(this.connectorData, this.formSchema?.attributes);
         }
@@ -150,18 +91,6 @@ export class ChannelConnectorSettingsComponent implements OnInit {
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }
     );
-  }
-
-  // adding forms controls to existing form group using attributes in from schema as `attrSchema` parameter
-  addFormControls(attrSchema: Array<any>) {
-    attrSchema.forEach((item) => {
-      let validatorArray: any = this.addFormValidations(item);
-      this.addFormErrorMsg(item);
-      this.channelConnectorForm.addControl(
-        item.key,
-        new FormControl(item.valueType == "Boolean" ? true : "", validatorArray)
-      );
-    });
   }
 
   // creating validation definitions for form controls, using form schema attribute as parameter
@@ -211,7 +140,7 @@ export class ChannelConnectorSettingsComponent implements OnInit {
   // patching existing values to form for editing, using channel connector data from parent as `connectorData` parameter
   patchFormValues(connectorData, attrSchema) {
     let patchData: any = {
-      channelConnectorName: this.connectorData.channelConnectorName,
+      name: this.connectorData.name,
       interface: this.connectorData.channelConnectorInterface,
       interfaceAddress: this.connectorData.interfaceAddress,
     };
@@ -238,89 +167,10 @@ export class ChannelConnectorSettingsComponent implements OnInit {
             item.value = JSON.parse(item.value);
           }
         }
-        patchData[item.key] = this.checkValueExistenceInOptions(attr, item);
+        // patchData[item.key] = this.checkValueExistenceInOptions(attr, item);
       }
     });
     this.channelConnectorForm.patchValue(patchData);
-  }
-
-  // to check if the selected value exists in the form schema options, it uses the form schema attribute as `attr` and connector form data value as `item` parameters
-  checkValueExistenceInOptions(attr, item) {
-    let temp;
-    let categories = attr?.categoryOptions?.categories;
-    if (Array.isArray(item.value)) {
-      if (item.value.length > 1) {
-        temp = this.multiSelectValues(categories, item);
-      } else {
-        for (let i = 0; i < categories.length; i++) {
-          for (let j = 0; j < categories[i].values.length; j++) {
-            if (categories[i].values[j] == item.value) {
-              temp = item.value;
-              break;
-            }
-            temp = null;
-          }
-          if (temp != undefined || temp != null) break;
-        }
-      }
-    } else {
-      for (let i = 0; i < categories.length; i++) {
-        for (let j = 0; j < categories[i].values.length; j++) {
-          // console.log("==>", categories[i].values[j])
-
-          // if (Array.isArray(item.value)) {
-          //   // console.log("2==>", item.value.length)
-          //   if (item.value.length > 1) {
-
-          //     for (let k = 0; k < item.value.length; k++) {
-          //       if (categories[i].values[j] == item.value[k]) {
-          //         result.push(item.value[k])
-
-          //       }
-          //     }
-          //     console.log("result==>", result);
-          //     temp = result;
-          //     break;
-          //   }
-          //   // else {
-          //   //
-          //   // }
-          // }
-          // else {
-          if (categories[i].values[j] == item.value) {
-            temp = item.value;
-            break;
-            // }
-          }
-          temp = null;
-        }
-        if (temp != undefined || temp != null) break;
-      }
-    }
-    // console.log("temp==>", temp);
-    return temp;
-  }
-
-  multiSelectValues(categories, item) {
-    // let temp;
-    let result = [];
-    for (let i = 0; i < categories.length; i++) {
-      for (let j = 0; j < categories[i].values.length; j++) {
-        for (let k = 0; k < item.value.length; k++) {
-          if (categories[i].values[j] == item.value[k]) {
-            if (result.includes(item.value[k])) {
-            } else {
-              result.push(item.value[k]);
-            }
-          }
-          // if (result.length == 0) return null;
-
-          // break;
-        }
-      }
-    }
-    // console.log("result==>", result);
-    return result;
   }
 
   // to convert an array of objects to an object of objects
@@ -338,11 +188,10 @@ export class ChannelConnectorSettingsComponent implements OnInit {
   createRequestPayload() {
     let formData = this.createAndSetupFormDataObject();
     let data: any = {
-      channelConnectorName:
-        this.channelConnectorForm.value.channelConnectorName,
+      name: this.channelConnectorForm.value.name,
       channelConnectorInterface: this.channelConnectorForm.value.interface,
       interfaceAddress: this.channelConnectorForm.value.interfaceAddress,
-      channelType: { id: this.channelTypeData.id },
+      // channelType: { id: this.channelTypeData.id },
       connectorConfig: formData,
       tenant: {},
     };
@@ -379,9 +228,8 @@ export class ChannelConnectorSettingsComponent implements OnInit {
     let filledAttributes: any = JSON.parse(
       JSON.stringify(this.channelConnectorForm.value)
     );
-    delete filledAttributes.channelConnectorName;
-    delete filledAttributes.interface;
-    delete filledAttributes.interfaceAddress;
+    delete filledAttributes.name;
+    delete filledAttributes.channelProviderInterface;
     filledAttributes = Object.entries(filledAttributes).map((e) => ({
       [e[0]]: e[1],
     }));
@@ -466,4 +314,145 @@ export class ChannelConnectorSettingsComponent implements OnInit {
       }
     );
   }
+
+  // to fetch channel provider list
+  getChannelProvider() {
+    this.endPointService.getChannelProvider().subscribe(
+      (res: any) => {
+        this.spinner = false;
+        this.channelProviderList = res;
+      },
+      (error) => {
+        this.spinner = false;
+        console.error("Error fetching:", error);
+        if (error && error.status == 0)
+          this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
+      }
+    );
+  }
+
+  // callback for form schema selection change event
+  onProviderSelection(selectedVal) {
+    this.formSchema = selectedVal?.channelProviderConfigSchema;
+    // console.log("selectedValue==>", this.formSchema);
+
+    this.removeFormControls();
+    this.addFormControls(selectedVal?.channelProviderConfigSchema);
+  }
+
+  removeFormControls() {
+    let controls: Object = this.channelConnectorForm?.controls;
+    let controlArray: Array<any> = Object.keys(controls);
+    let constantFormControls = ["name", "channelProviderInterface"];
+    controlArray.forEach((item) => {
+      if (!constantFormControls.includes(item)) {
+        this.channelConnectorForm.removeControl(item);
+      }
+    });
+  }
+
+  // adding forms controls to existing form group using attributes in from schema as `attrSchema` parameter
+  addFormControls(attrSchema: Array<any>) {
+    attrSchema.forEach((item) => {
+      let validatorArray: any = this.addFormValidations(item);
+      this.addFormErrorMsg(item);
+      this.channelConnectorForm.addControl(
+        item.key,
+        new FormControl(item.valueType == "Boolean" ? true : "", validatorArray)
+      );
+    });
+  }
+
+  //  to assign form schema from channel type data to local variable
+  assignFormSchema(data) {
+    // this.formSchema = data;
+    // if (this.formSchema && this.formSchema != null) {
+    //   this.addFormControls(
+    //     JSON.parse(JSON.stringify(this.formSchema?.attributes))
+    //   );
+    //   if (this.connectorData) {
+    //     this.patchFormValues(this.connectorData, this.formSchema?.attributes);
+    //   }
+    // }
+    // this.spinner = false;
+  }
+
+  // to check if the selected value exists in the form schema options, it uses the form schema attribute as `attr` and connector form data value as `item` parameters
+  // checkValueExistenceInOptions(attr, item) {
+  //   let temp;
+  //   let categories = attr?.categoryOptions?.categories;
+  //   if (Array.isArray(item.value)) {
+  //     if (item.value.length > 1) {
+  //       temp = this.multiSelectValues(categories, item);
+  //     } else {
+  //       for (let i = 0; i < categories.length; i++) {
+  //         for (let j = 0; j < categories[i].values.length; j++) {
+  //           if (categories[i].values[j] == item.value) {
+  //             temp = item.value;
+  //             break;
+  //           }
+  //           temp = null;
+  //         }
+  //         if (temp != undefined || temp != null) break;
+  //       }
+  //     }
+  //   } else {
+  //     for (let i = 0; i < categories.length; i++) {
+  //       for (let j = 0; j < categories[i].values.length; j++) {
+  //         // console.log("==>", categories[i].values[j])
+
+  //         // if (Array.isArray(item.value)) {
+  //         //   // console.log("2==>", item.value.length)
+  //         //   if (item.value.length > 1) {
+
+  //         //     for (let k = 0; k < item.value.length; k++) {
+  //         //       if (categories[i].values[j] == item.value[k]) {
+  //         //         result.push(item.value[k])
+
+  //         //       }
+  //         //     }
+  //         //     console.log("result==>", result);
+  //         //     temp = result;
+  //         //     break;
+  //         //   }
+  //         //   // else {
+  //         //   //
+  //         //   // }
+  //         // }
+  //         // else {
+  //         if (categories[i].values[j] == item.value) {
+  //           temp = item.value;
+  //           break;
+  //           // }
+  //         }
+  //         temp = null;
+  //       }
+  //       if (temp != undefined || temp != null) break;
+  //     }
+  //   }
+  //   // console.log("temp==>", temp);
+  //   return temp;
+  // }
+
+  // multiSelectValues(categories, item) {
+  //   // let temp;
+  //   let result = [];
+  //   for (let i = 0; i < categories.length; i++) {
+  //     for (let j = 0; j < categories[i].values.length; j++) {
+  //       for (let k = 0; k < item.value.length; k++) {
+  //         if (categories[i].values[j] == item.value[k]) {
+  //           if (result.includes(item.value[k])) {
+  //           } else {
+  //             result.push(item.value[k]);
+  //           }
+  //         }
+  //         // if (result.length == 0) return null;
+
+  //         // break;
+  //       }
+  //     }
+  //   }
+  //   // console.log("result==>", result);
+  //   return result;
+  // }
 }

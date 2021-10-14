@@ -339,19 +339,14 @@ export class CommonService {
   };
 
   connectorFormErrorMessages = {
-    channelConnectorName: {
+    name: {
       required: "This field is required",
       minlength: "More characters required",
       maxlength: "Less characters required",
       pattern: 'Allowed special characters "[!@#$%^&*()-_=+~`"]+"',
     },
-    interfaceAddress: {
+    channelProviderInterface: {
       required: "This field is required",
-      pattern: "Enter valid url",
-    },
-    interface: {
-      required: "This field is required",
-      pattern: "Enter valid url",
     },
   };
 

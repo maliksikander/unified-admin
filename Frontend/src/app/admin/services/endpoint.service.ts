@@ -37,6 +37,7 @@ export class EndpointService {
       channelType: "channel-types",
       channelConnector: "channel-connectors",
       channel: "channels",
+      channelProvider:"channel-provider-interfaces",
       channelMapping: "channels/routing-id",
     },
     forms: "forms",
@@ -742,6 +743,62 @@ export class EndpointService {
           Authorization: "Bearer" + this.token,
         }),
       })
+      .pipe(catchError(this.handleError));
+  }
+
+  ////////////  Channel Provider CRUD ////////////////
+
+
+  createChannelProvider(data): Observable<any> {
+    return this.httpClient
+      .post<any>(`${this.CCM_URL}/${this.endpoints.ccm.channelProvider}`, data, {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json",
+          Authorization: "Bearer" + this.token,
+        }),
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  getChannelProvider(): Observable<any> {
+    return this.httpClient
+      .get(`${this.CCM_URL}/${this.endpoints.ccm.channelProvider}`, {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json",
+          Authorization: "Bearer" + this.token,
+        }),
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  
+
+  updateChannelProvider(data): Observable<any> {
+    return this.httpClient
+      .put<any>(
+        `${this.CCM_URL}/${this.endpoints.ccm.channelProvider}/${data?.id}`,
+        data,
+        {
+          headers: new HttpHeaders({
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + this.token,
+          }),
+        }
+      )
+      .pipe(catchError(this.handleError));
+  }
+
+  deleteChannelProvider(id): Observable<any> {
+    return this.httpClient
+      .delete<any>(
+        `${this.CCM_URL}/${this.endpoints.ccm.channelProvider}/${id}`,
+        {
+          headers: new HttpHeaders({
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + this.token,
+          }),
+        }
+      )
       .pipe(catchError(this.handleError));
   }
 

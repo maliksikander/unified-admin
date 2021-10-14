@@ -195,6 +195,10 @@ button:focus {
   line-height: 18px !important;
 }
 
+.mat-select-value-text span{
+  line-height: 16px;
+}
+
 .adjust-toggle {
   display: flex;
   justify-content: space-between;

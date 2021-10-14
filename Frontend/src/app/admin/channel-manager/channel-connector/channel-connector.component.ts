@@ -1,11 +1,8 @@
 import {
   HttpClient,
-  HttpHeaders,
-  HttpErrorResponse,
 } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
-import { DomSanitizer } from "@angular/platform-browser";
 import { ConfirmDialogComponent } from "src/app/shared/confirm-dialog/confirm-dialog.component";
 import { CommonService } from "../../services/common.service";
 import { EndpointService } from "../../services/endpoint.service";
@@ -21,12 +18,15 @@ export class ChannelConnectorComponent implements OnInit {
   customCollapsedHeight: string = "40px";
   customExpandedHeight: string = "40px";
   addChannelBool = false;
-  // connectorServiceReq = 'channel-connectors';
   pageTitle = "Channel Connectors";
-  channelTypes = [];
   channelConnectors = [];
-  channelType;
   editConnectorData;
+  searchTerm = "";
+  p: any = 1;
+  itemsPerPageList = [5, 10, 15];
+  itemsPerPage = 5;
+  selectedItem = this.itemsPerPageList[0];
+  
 
   constructor(
     private commonService: CommonService,
@@ -34,12 +34,14 @@ export class ChannelConnectorComponent implements OnInit {
     private endPointService: EndpointService,
     private snackbar: SnackbarService,
     private httpClient: HttpClient,
-    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit() {
     this.commonService.checkTokenExistenceInStorage();
-    this.getChannelType();
+    let pageNumber = sessionStorage.getItem("currentConnectorPage");
+    if (pageNumber) this.p = pageNumber;
+
+    this.getChannelConnector();
   }
 
   //to get logo/image from file engine, it accepts the file name as parameter and returns the url
@@ -48,18 +50,16 @@ export class ChannelConnectorComponent implements OnInit {
   }
 
   // expansion panel callback function,triggered on expanded event
-  panelOpenCallback(data) {
-    this.channelConnectors = [];
-    this.spinner = true;
-    this.getChannelConnector(data.id);
-  }
+  // panelOpenCallback(data) {
+  //   this.channelConnectors = [];
+  //   this.spinner = true;
+  //   this.getChannelConnector(data.id);
+  // }
 
   //to change view to settings and pass connector object to child component
   editChannelConnector(data) {
     this.addChannelBool = true;
-    this.pageTitle =
-      "Edit" + " " + data.channelType.typeName + " " + "Type Connector";
-    this.channelType = data.channelType;
+    this.pageTitle = `Edit Connector Settings`;
     this.editConnectorData = data;
   }
 
@@ -88,10 +88,9 @@ export class ChannelConnectorComponent implements OnInit {
   }
 
   // change UI to settings view from list view
-  changeViewToSetings(type) {
+  changeViewToSetings() {
     this.addChannelBool = true;
-    this.channelType = type;
-    this.pageTitle = "Set up" + " " + type.typeName + " " + "Type Connector";
+    this.pageTitle = `Channel Connector Settings`;
   }
 
   // reset UI to list view from settings view
@@ -107,33 +106,11 @@ export class ChannelConnectorComponent implements OnInit {
     this.snackbar.snackbarMessage("success-snackbar", msg, 1.5);
   }
 
-  // to fetch channel type list
-  getChannelType() {
-    //calling endpoint service method to get channel types list,it requires resource endpoint as parameter
-    this.endPointService.getChannelType().subscribe(
-      (res: any) => {
-        this.spinner = false;
-        this.channelTypes = res;
-        if (res.length == 0)
-          this.snackbar.snackbarMessage(
-            "error-snackbar",
-            "No Channel Type Found",
-            2
-          );
-      },
-      (error) => {
-        this.spinner = false;
-        console.error("Error fetching:", error);
-        if (error && error.status == 0)
-          this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
-      }
-    );
-  }
 
-  // to fetch connector list by using channel type, it uses channel type Id as `typeId` parameter
-  getChannelConnector(typeId) {
-    //calling endpoint service method to get connector list which accepts resource name as 'connectorServiceReq' and channnel type id as `typeId` object as parameter
-    this.endPointService.getConnectorByChannelType(typeId).subscribe(
+
+  // to fetch connector list
+  getChannelConnector() {
+    this.endPointService.getConnector().subscribe(
       (res: any) => {
         this.spinner = false;
         this.channelConnectors = res;
@@ -193,4 +170,20 @@ export class ChannelConnectorComponent implements OnInit {
     });
     this.spinner = false;
   }
+
+  //save page number storage for reload
+  pageChange(e) {
+    sessionStorage.setItem("currentConnectorPage", e);
+  }
+
+  //page bound change and saving for reload
+  pageBoundChange(e) {
+    this.p = e;
+    sessionStorage.setItem("currentConnectorPage", e);
+  }
+
+  selectPage() {
+    this.itemsPerPage = this.selectedItem;
+  }
+
 }
