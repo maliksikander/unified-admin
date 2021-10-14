@@ -356,7 +356,7 @@ export class CommonService {
   };
 
   channelFormErrorMessages = {
-    channelName: {
+    name: {
       required: "This field is required",
       minlength: "More characters required",
       maxlength: "Less characters required",

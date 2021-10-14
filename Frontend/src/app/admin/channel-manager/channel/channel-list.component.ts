@@ -20,8 +20,6 @@ export class ChannelListComponent implements OnInit {
   pageTitle = "Channels";
   editChannelData;
   channelType;
-  // typeServiceReq = 'channel-types';
-  // channelServiceReq = 'channels';
   channelTypes = [];
   channels = [];
 
@@ -29,9 +27,8 @@ export class ChannelListComponent implements OnInit {
     private commonService: CommonService,
     private dialog: MatDialog,
     private endPointService: EndpointService,
-    private formBuilder: FormBuilder,
     private snackbar: SnackbarService,
-    private sanitizer: DomSanitizer
+
   ) {}
 
   ngOnInit() {
@@ -60,11 +57,6 @@ export class ChannelListComponent implements OnInit {
       }
     );
   }
-
-  //to sanitize and bypass dom security warnings for channel type logo images
-  // transform(image) {
-  //   return this.sanitizer.bypassSecurityTrustResourceUrl(image);
-  // }
 
   //to get logo/image from file engine, it accepts the file name as parameter and returns the url
   getFileURL(filename) {
@@ -110,15 +102,9 @@ export class ChannelListComponent implements OnInit {
   //to edit channel and change the view to form page and load input fields and pass channel object as 'data' parameter
   editChannel(data) {
     this.addChannelBool = true;
-    this.pageTitle =
-      "Edit" +
-      " " +
-      data.channelConnector.channelType.typeName +
-      " " +
-      "Type Channel";
-    // console.log("datya-->",data)
+    this.pageTitle = `Edit Channel Settings`;
     this.editChannelData = data;
-    this.channelType = data.channelConnector.channelType;
+    this.channelType = data.channelType;
   }
 
   // to open delete confirmation dialog
@@ -149,14 +135,14 @@ export class ChannelListComponent implements OnInit {
   addChannel(type) {
     this.addChannelBool = true;
     this.channelType = type;
-    this.pageTitle = "Set up" + " " + type.typeName + " " + "Type Channel";
+    this.pageTitle = `Set up  ${type?.name} Channel`;
   }
 
   //to change the view from `form` to `list` page and load channel type list and it accepts boolean value as 'e' parameter from child component
   childToParentUIChange(e) {
     this.addChannelBool = e;
     if (this.addChannelBool == false) {
-      this.pageTitle = "Customer Channels";
+      this.pageTitle = "Channels";
       this.editChannelData = undefined;
     }
   }
@@ -170,9 +156,8 @@ export class ChannelListComponent implements OnInit {
 
   //to create/update a channel, it accepts channel object as 'data' paramter
   onSave(msg) {
-    // this.spinner = true;
     this.addChannelBool = false;
-    this.pageTitle = "Customer Channels";
+    this.pageTitle = "Channels";
     this.editChannelData = undefined;
     this.snackbar.snackbarMessage("success-snackbar", msg, 1);
   }

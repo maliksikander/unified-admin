@@ -17,7 +17,7 @@
                   [expandedHeight]="customExpandedHeight">
                   <mat-panel-title>
                     <img [src]="getFileURL(type?.channelLogo)">
-                    <span>{{type?.typeName ? type?.typeName : 'N/A'}}</span>
+                    <span>{{type?.name ? type?.name : 'N/A'}}</span>
                   </mat-panel-title>
                   <mat-panel-description>
                     <mat-icon *ngIf="arrow.expanded">arrow_drop_up</mat-icon>
@@ -42,12 +42,12 @@
                   </thead>
                   <tbody>
                     <tr *ngFor="let channel of channels">
-                      <td scope="row">{{channel?.channelName ? channel?.channelName : 'N/A'}}</td>
+                      <td scope="row">{{channel?.name ? channel?.name : 'N/A'}}</td>
                       <td>{{channel?.channelConfig?.channelMode ? channel?.channelConfig?.channelMode : 'N/A'}}</td>
                       <td>{{channel?.channelConfig?.routingPolicy?.routingMode ? channel?.channelConfig?.routingPolicy?.routingMode : 'N/A'}}</td>
                       <td class="list-action-area">
-                        <div class="data-overflow">{{channel?.channelConnector?.channelConnectorName ?
-                          channel?.channelConnector?.channelConnectorName : 'N/A'}}</div>
+                        <div class="data-overflow">{{channel?.channelConnector?.name ?
+                          channel?.channelConnector?.name : 'N/A'}}</div>
                         <span class="list-actions">
                           <button matTooltip="Edit" (click)="editChannel(channel)" mat-mini-fab>
                             <mat-icon>mode_edit</mat-icon>
@@ -74,7 +74,7 @@
 
   <ng-container *ngIf="addChannelBool">
     <app-channel-settings [parentChannelBool]="addChannelBool" [channelTypeData]="channelType"
-      [channelData]="editChannelData" (childChannelBool)='childToParentUIChange($event)'
+      [editChannelData]="editChannelData" (childChannelBool)='childToParentUIChange($event)'
       (formSaveData)='onSave($event)'>
     </app-channel-settings>
   </ng-container>
