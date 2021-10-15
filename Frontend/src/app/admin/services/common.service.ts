@@ -338,6 +338,25 @@ export class CommonService {
     },
   };
 
+  channelProviderFormErrorMessages = {
+    name: {
+      required: "This field is required",
+      minlength: "More characters required",
+      maxlength: "Maximum 50 characters allowed",
+      pattern: 'Allowed special characters "[!@#$%^&*()-_=+~`"]+"',
+    },
+    supportedChannelTypes: {
+      required: "This field is required",
+    },
+    providerWebhook: {
+      required: "This field is required",
+      pattern: "Invalid URL Pattern",
+    },
+    channelProviderConfigSchema: {
+      required: "This field is required",
+    },
+  };
+
   connectorFormErrorMessages = {
     name: {
       required: "This field is required",
@@ -430,7 +449,7 @@ export class CommonService {
   };
 
   channelTypeErrorMessages = {
-    typeName: {
+    name: {
       required: "This field is required",
       minlength: "More characters required",
       maxlength: "Less characters required",

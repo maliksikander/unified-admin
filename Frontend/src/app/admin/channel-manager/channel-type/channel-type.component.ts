@@ -22,14 +22,13 @@ export class ChannelTypeComponent implements OnInit {
   itemsPerPageList = [5, 10, 15];
   itemsPerPage = 5;
   selectedItem = this.itemsPerPageList[0];
-  // reqEndpoint = 'channel-types';
+  
 
   constructor(
     private commonService: CommonService,
     private dialog: MatDialog,
     private endPointService: EndpointService,
     private snackbar: SnackbarService,
-    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {

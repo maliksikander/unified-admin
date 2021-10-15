@@ -24,7 +24,7 @@ export class ChannelTypeFormComponent implements OnInit {
   @Output() formSaveData = new EventEmitter<any>();
   channelTypeForm: FormGroup;
   formErrors = {
-    typeName: "",
+    name: "",
     channelLogo: "",
     isInteractive: "",
     // channelConfigSchema: "",
@@ -57,7 +57,7 @@ export class ChannelTypeFormComponent implements OnInit {
     this.validations = this.commonService.channelTypeErrorMessages;
 
     this.channelTypeForm = this.formBuilder.group({
-      typeName: ["", [Validators.required]],
+      name: ["", [Validators.required,Validators.maxLength(50)]],
       channelLogo: [null, [Validators.required]],
       isInteractive: [true, [Validators.required]],
       // channelConfigSchema: ["", [Validators.required]],
@@ -116,27 +116,6 @@ export class ChannelTypeFormComponent implements OnInit {
     }
   }
 
-  //to get form list and set the local variable with the response
-  // getForms() {
-  //   this.endPointService.getForm().subscribe(
-  //     (res: any) => {
-  //       // this.spinner = false;
-  //       if (res.length == 0)
-  //         this.snackbar.snackbarMessage(
-  //           "error-snackbar",
-  //           "NO FORM DATA FOUND",
-  //           2
-  //         );
-  //       this.formsList = res;
-  //       this.getMRD();
-  //     },
-  //     (error) => {
-  //       this.spinner = false;
-  //       console.error("Error fetching:", error);
-  //     }
-  //   );
-  // }
-
   //to get MRD list and set the local variable with the response
   getMRD() {
     this.endPointService.getMrd().subscribe(
@@ -167,19 +146,14 @@ export class ChannelTypeFormComponent implements OnInit {
         const mrdIndex = this.mrdData.findIndex(
           (item) => item.id === this.editData.mediaRoutingDomain
         );
-        // const formIndex = this.formsList.findIndex(
-        //   (item: any) => item.id === this.editData?.channelConfigSchema
-        // );
         this.channelTypeForm.patchValue({
-          typeName: this.editData.typeName,
+          name: this.editData.name,
           isInteractive: this.editData.isInteractive,
-          // channelConfigSchema: this.formsList[formIndex],
           mediaRoutingDomain: this.mrdData[mrdIndex],
           channelLogo: " ",
         });
 
-        this.channelTypeForm.controls["typeName"].disable();
-        // this.getFileStats(this.editData.channelLogo);
+        this.channelTypeForm.controls["name"].disable();
         this.imageData = `${this.endPointService.FILE_ENGINE_URL}/${this.endPointService.endpoints.fileEngine.downloadFileStream}?filename=${this.editData?.channelLogo}`;
       }
     } catch (e) {
@@ -217,14 +191,12 @@ export class ChannelTypeFormComponent implements OnInit {
     // console.log("Fprm value==>",this.channelTypeForm.value)
     let data = JSON.parse(JSON.stringify(this.channelTypeForm.value));
 
-    // data.channelConfigSchema = data.channelConfigSchema.id;
     data.channelLogo = filename;
     data.mediaRoutingDomain = data.mediaRoutingDomain.id;
     if (this.editData) {
-      if (!data.typeName) data.typeName = this.editData.typeName;
+      if (!data.name) data.name = this.editData.name;
       data.id = this.editData.id;
     }
-    // console.log("data==>", data);
     if (data.id) {
       this.updateChannel(data);
     } else {

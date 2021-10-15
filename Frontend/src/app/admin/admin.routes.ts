@@ -22,6 +22,7 @@ import { ChannelTypeComponent } from "./channel-manager/channel-type/channel-typ
 import { ReasonCodesComponent } from "./reason-codes/reason-codes.component";
 import { PullModeRoutingComponent } from "./pull-mode-routing/pull-mode-routing.component";
 import { WebWidgetListComponent } from "./web-widget-list/web-widget-list.component";
+import { ChannelProviderComponent } from "./channel-manager/channel-provider/channel-provider.component";
 
 export const adminRoutes: Routes = [
   {
@@ -49,6 +50,7 @@ export const adminRoutes: Routes = [
         component: ChannelConnectorComponent,
       },
       { path: "channel/channel-manager", component: ChannelListComponent },
+      { path: "channel/channel-provider", component: ChannelProviderComponent },
       { path: "bot-settings", component: BotListComponent },
       { path: "form", component: FormsComponent },
       { path: "reason-code", component: ReasonCodesComponent },

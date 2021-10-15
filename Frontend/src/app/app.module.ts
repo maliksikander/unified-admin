@@ -14,6 +14,7 @@ import { APP_INITIALIZER } from "@angular/core";
 import { ConfigService } from "./admin/services/config.service";
 import { HashLocationStrategy, LocationStrategy } from "@angular/common";
 
+
 @NgModule({
   declarations: [MainComponent, LoginComponent],
   imports: [
