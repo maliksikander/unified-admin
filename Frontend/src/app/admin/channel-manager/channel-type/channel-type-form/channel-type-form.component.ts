@@ -19,7 +19,6 @@ import { SnackbarService } from "src/app/admin/services/snackbar.service";
 export class ChannelTypeFormComponent implements OnInit {
   @Input() parentBool;
   @Input() editData;
-  // @Input() botData;
   @Output() childBool = new EventEmitter<any>();
   @Output() formSaveData = new EventEmitter<any>();
   channelTypeForm: FormGroup;
@@ -27,7 +26,6 @@ export class ChannelTypeFormComponent implements OnInit {
     name: "",
     channelLogo: "",
     isInteractive: "",
-    // channelConfigSchema: "",
     mediaRoutingDomain: "",
   };
   validations;
@@ -38,9 +36,7 @@ export class ChannelTypeFormComponent implements OnInit {
   formsList: [];
   spinner = true;
   valid = false;
-  disclaimerText =
-    "• Please select an image with no background. \n • A maximum file size of 100KB is allowed.";
-
+  disclaimerText = `• Please select an image with no background. \n • A maximum file size of 100KB is allowed.`;
   uploadFilePayload;
 
   constructor(
@@ -57,7 +53,7 @@ export class ChannelTypeFormComponent implements OnInit {
     this.validations = this.commonService.channelTypeErrorMessages;
 
     this.channelTypeForm = this.formBuilder.group({
-      name: ["", [Validators.required,Validators.maxLength(50)]],
+      name: ["", [Validators.required, Validators.maxLength(50)]],
       channelLogo: [null, [Validators.required]],
       isInteractive: [true, [Validators.required]],
       // channelConfigSchema: ["", [Validators.required]],

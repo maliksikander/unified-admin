@@ -17,7 +17,7 @@
                             </mat-form-field>
                         </div>
 
-                        <button (click)="addChannelType()" mat-flat-button>
+                        <button (click)="addProvider()" mat-flat-button>
                             <mat-icon>add</mat-icon>
                             New Channel Provider
                         </button>
@@ -36,15 +36,13 @@
                                             {{data?.name ? data?.name : 'N/A'}}
                                         </div>
 
-                                        <div class="col-md-4">
-                                            
-                                            <img *ngFor="let type of data?.supportedChannelTypes" [src]="getFileURL(type?.channelLogo)" alt="logo">
-                                            Types
+                                        <div class="col-md-4 icon-section">
+                                            <img  *ngFor="let type of data?.supportedChannelTypes" matTooltip="{{type?.name}}" [src]="getFileURL(type?.channelLogo)" alt="type?.name">
                                         </div>
                                     </div>
                                     <div class="list-action-area">
                                         <span class="list-actions">
-                                            <button mat-mini-fab matTooltip="Edit" (click)="editChannelType(data)">
+                                            <button mat-mini-fab matTooltip="Edit" (click)="editChannelProvider(data)">
                                                 <mat-icon>mode_edit</mat-icon>
                                             </button>
                                             <button mat-mini-fab matTooltip="Delete" (click)="deleteConfirm(data)">
@@ -77,9 +75,9 @@
                 </div>
 
                 <ng-container *ngIf="addChannelProvider">
-                    <app-channel-type-form [parentBool]="addChannelProvider" [editData]="editProviderData"
+                    <app-channel-provider-settings [parentBool]="addChannelProvider" [editChannelProvider]="editProviderData"
                         (childBool)='childToParentUIChange($event)' (formSaveData)='onSave($event)'>
-                    </app-channel-type-form>
+                    </app-channel-provider-settings>
                 </ng-container>
 
 

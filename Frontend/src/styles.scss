@@ -195,7 +195,11 @@ button:focus {
   line-height: 18px !important;
 }
 
-.mat-select-value-text span{
+.mat-select-value-text span {
+  line-height: 16px;
+}
+
+.mat-select-placeholder {
   line-height: 16px;
 }
 
@@ -3421,7 +3425,7 @@ snack-bar-container {
     height: 22px !important;
   }
 
-  .mat-select{
+  .mat-select {
     line-height: 16px;
   }
 }
