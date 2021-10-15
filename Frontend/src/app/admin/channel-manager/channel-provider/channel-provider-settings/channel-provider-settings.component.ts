@@ -269,14 +269,6 @@ export class ChannelProviderSettingsComponent implements OnInit {
     this.createFormArrays(data);
   }
 
-  // extension of edit operations method it converts attribute list in a form object, it accepts form object as parameter
-  editObjectFormation(data) {
-    console.log("format==>", data);
-    let attr: Array<any> = data.channelProviderConfigSchema;
-
-    // return data;
-  }
-
   //create form definitions for attributes according to the object received and set value for editing, it accepts form object as parameter
   createFormArrays(data) {
     // console.log("data==>", data);
@@ -290,8 +282,20 @@ export class ChannelProviderSettingsComponent implements OnInit {
       // this.setValidation(attribute[i].attributeType, i);
     }
 
-    this.channelProviderForm.setValue(data);
-    console.log("form==>",this.channelProviderForm.value)
+    let temp = this.setSelectedChannelTypes(data?.supportedChannelTypes);
+    this.channelProviderForm.patchValue(data);
+    this.channelProviderForm.controls["supportedChannelTypes"].patchValue(temp);
+    // console.log("form==>", this.channelProviderForm.value);
     this.cd.detectChanges();
+  }
+
+  setSelectedChannelTypes(data) {
+    let temp = [];
+    this.channelTypeList.forEach((type) => {
+      data.forEach((item) => {
+        if (type.id == item.id) temp.push(type);
+      });
+    });
+    return temp;
   }
 }

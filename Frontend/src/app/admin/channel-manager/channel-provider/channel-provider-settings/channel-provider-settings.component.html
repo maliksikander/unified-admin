@@ -20,7 +20,7 @@
                 <mat-label>Supported Channel Types</mat-label>
                 <mat-form-field appearance="outline">
                     <mat-select multiple placeholder="Select Channel Type" formControlName="supportedChannelTypes">
-                        <mat-option *ngFor="let type of channelTypeList" [value]="type"><span><img
+                        <mat-option *ngFor="let type of channelTypeList" [value]="type"><span class="icon-section"><img
                                     [src]="getFileURL(type?.channelLogo)" alt="img"></span> {{type?.name}}</mat-option>
                     </mat-select>
                     <mat-error class="form-error">
