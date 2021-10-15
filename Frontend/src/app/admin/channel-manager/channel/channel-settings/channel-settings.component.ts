@@ -64,7 +64,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
     this.validations = this.commonService.channelFormErrorMessages;
 
     this.channelSettingForm = this.formBuilder.group({
-      name: ["", [Validators.required]],
+      name: ["", [Validators.required, Validators.maxLength(50)]],
       serviceIdentifier: ["", [Validators.required]],
       channelConnector: [, [Validators.required]],
       channelMode: ["BOT", [Validators.required]],

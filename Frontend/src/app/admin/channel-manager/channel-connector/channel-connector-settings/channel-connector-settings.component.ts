@@ -52,7 +52,7 @@ export class ChannelConnectorSettingsComponent implements OnInit {
     this.validations = this.commonService.connectorFormErrorMessages;
 
     this.channelConnectorForm = this.formBuilder.group({
-      name: ["", [Validators.required]],
+      name: ["", [Validators.required, Validators.maxLength(50)]],
       channelProviderInterface: ["", [Validators.required]],
     });
 
@@ -80,9 +80,6 @@ export class ChannelConnectorSettingsComponent implements OnInit {
         this.formValidation = this.convertArrayToObject(temp, "type");
         this.getChannelProvider();
         // this.spinner = false;
-        if (this.connectorData) {
-          this.patchFormValues(this.connectorData, this.formSchema?.attributes);
-        }
       },
       (error: any) => {
         this.spinner = false;
@@ -129,48 +126,51 @@ export class ChannelConnectorSettingsComponent implements OnInit {
 
   getAttrSchema(attrList, key) {
     let result;
+    // console.log("attrList==>",attrList)
+    // console.log("key==>",key)
     attrList.forEach((item) => {
       if (item.key == key) {
         result = item;
       }
     });
+    // console.log("resukt==>",result)
     return result;
   }
 
-  // patching existing values to form for editing, using channel connector data from parent as `connectorData` parameter
-  patchFormValues(connectorData, attrSchema) {
-    let patchData: any = {
-      name: this.connectorData.name,
-      interface: this.connectorData.channelConnectorInterface,
-      interfaceAddress: this.connectorData.interfaceAddress,
-    };
-    connectorData.connectorConfig?.attributes.forEach((item) => {
-      let schema = this.getAttrSchema(attrSchema, item.key);
-      patchData[item.key] = item.value;
-      let attr = this.formSchema?.attributes.filter(
-        (val) => val.key == item.key
+  // patching existing values to form for editing,
+  patchFormValues() {
+    try {
+      // console.log("editData==>", this.connectorData);
+      let providerIndex = this.channelProviderList.findIndex(
+        (item) => item.id == this.connectorData.channelProviderInterface.id
       );
-      attr = attr[0];
-      if (attr?.attributeType == "OPTIONS") {
-        if (item.value.includes("[")) {
-          if (schema?.categoryOptions.isMultipleChoice == false) {
-            item.value = null;
-          } else {
-            item.value = JSON.parse(item.value);
-          }
-        } else {
-          if (schema?.categoryOptions.isMultipleChoice == true) {
-            let parsedVal = [];
-            parsedVal.push(JSON.parse(item.value));
-            item.value = parsedVal;
-          } else {
-            item.value = JSON.parse(item.value);
-          }
-        }
-        // patchData[item.key] = this.checkValueExistenceInOptions(attr, item);
-      }
-    });
-    this.channelConnectorForm.patchValue(patchData);
+
+      this.formSchema =
+        providerIndex != -1
+          ? this.channelProviderList[providerIndex]?.channelProviderConfigSchema
+          : [];
+
+      this.addFormControls(this.formSchema);
+      // console.log("index==>", providerIndex);
+      let patchData: any = {
+        name: this.connectorData.name,
+        channelProviderInterface: this.channelProviderList[providerIndex],
+      };
+
+      this.connectorData?.channelProviderConfigs?.forEach((item) => {
+        // let schema = this.getAttrSchema(this.formSchema, item.key);
+        // console.log("schema==>", schema);
+        patchData[item.key] = item.value;
+
+        let attr = this.formSchema.filter((val) => val.key == item.key);
+        attr = attr[0];
+      });
+      // console.log("patchDAta==>", patchData);
+      this.channelConnectorForm.patchValue(patchData);
+    } catch (e) {
+      console.error("Connector Patching Error=>", e);
+    }
+    this.spinner = false;
   }
 
   // to convert an array of objects to an object of objects
@@ -189,10 +189,10 @@ export class ChannelConnectorSettingsComponent implements OnInit {
     let formData = this.createAndSetupFormDataObject();
     let data: any = {
       name: this.channelConnectorForm.value.name,
-      channelConnectorInterface: this.channelConnectorForm.value.interface,
-      interfaceAddress: this.channelConnectorForm.value.interfaceAddress,
-      // channelType: { id: this.channelTypeData.id },
-      connectorConfig: formData,
+      channelProviderInterface: {
+        id: this.channelConnectorForm.value.channelProviderInterface.id,
+      },
+      channelProviderConfigs: formData,
       tenant: {},
     };
     return data;
@@ -201,25 +201,10 @@ export class ChannelConnectorSettingsComponent implements OnInit {
   //create form data object
   createAndSetupFormDataObject() {
     // form data object declaration and initialization
-    let data: any = {
-      formId: "",
-      filledBy: "",
-      attributes: [],
-    };
+    let data: Array<any> = [];
     let filledValues: any = this.removeStaticFormAttributes();
 
-    //setting form Data values
-    let user = localStorage.getItem("username")
-      ? localStorage.getItem("username")
-      : sessionStorage.getItem("username");
-    data.formId = this.formSchema?.id;
-    data.filledBy = user;
-    if (!this.connectorData) {
-      data.createdOn = new Date().toISOString();
-    } else {
-      data.createdOn = this.connectorData?.connectorConfig?.createdOn;
-    }
-    data.attributes = this.createFormDataAttributes(filledValues);
+    data = this.createFormDataAttributes(filledValues); //setting form Data values
     return data;
   }
 
@@ -236,11 +221,11 @@ export class ChannelConnectorSettingsComponent implements OnInit {
     return filledAttributes;
   }
 
-  //creating attributes array by iterating over `form Schema attributes` and `filled form attributes`
+  //creating attributes array by iterating over `form Schema` and `filled form attributes`
   createFormDataAttributes(filledValues) {
     let attrTemp = []; // temp array variable
 
-    this.formSchema?.attributes.forEach((item) => {
+    this.formSchema.forEach((item) => {
       let obj: any = {};
       filledValues.forEach((val) => {
         let key = Object.keys(val)[0];
@@ -271,14 +256,15 @@ export class ChannelConnectorSettingsComponent implements OnInit {
 
   // save callback function
   onSave() {
-    this.spinner = true;
+    // this.spinner = true;
     let data: any = this.createRequestPayload();
     if (this.connectorData) {
       data.id = this.connectorData.id;
-      this.updateChannelConnector(data);
+      // this.updateChannelConnector(data);
     } else {
-      this.createChannelConnector(data);
+      // this.createChannelConnector(data);
     }
+    console.log("data==>", data);
   }
 
   //to create channel connector and it accepts `data` object as parameter containing channel connector properties
@@ -321,6 +307,9 @@ export class ChannelConnectorSettingsComponent implements OnInit {
       (res: any) => {
         this.spinner = false;
         this.channelProviderList = res;
+        if (this.connectorData) {
+          this.patchFormValues();
+        }
       },
       (error) => {
         this.spinner = false;

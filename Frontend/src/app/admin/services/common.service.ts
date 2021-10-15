@@ -342,7 +342,7 @@ export class CommonService {
     name: {
       required: "This field is required",
       minlength: "More characters required",
-      maxlength: "Less characters required",
+      maxlength: "Maximum 50 characters allowed",
       pattern: 'Allowed special characters "[!@#$%^&*()-_=+~`"]+"',
     },
     channelProviderInterface: {
@@ -354,7 +354,7 @@ export class CommonService {
     name: {
       required: "This field is required",
       minlength: "More characters required",
-      maxlength: "Less characters required",
+      maxlength: "Maximum 50 characters allowed",
       pattern: 'Allowed special characters "[!@#$%^&*()-_=+~`"]+"',
     },
     serviceIdentifier: {
