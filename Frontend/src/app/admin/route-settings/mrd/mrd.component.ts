@@ -120,8 +120,6 @@ export class MrdComponent implements OnInit {
       (res: any) => {
         this.spinner = false;
         this.mrdData = res;
-        // if (res.length == 0)
-        // this.snackbar.snackbarMessage("error-snackbar", "NO DATA FOUND", 2);
       },
       (error) => {
         this.spinner = false;
@@ -210,11 +208,37 @@ export class MrdComponent implements OnInit {
       .subscribe((res: any) => {
         this.spinner = true;
         if (res === "delete") {
-          this.deleteMRD(data, id);
+          // this.deleteMRD(data, id);
+          this.getMRDMappingToChannelType(data, id);
         } else {
           this.spinner = false;
         }
       });
+  }
+
+  //to get channel type list and it expects the relevant mrd id
+  getMRDMappingToChannelType(data, id) {
+    this.endPointService.getMRDMappedChannelType(id).subscribe(
+      (res: any) => {
+        let channelTypeList: Array<any> = res;
+        if (channelTypeList.length == 0) {
+          this.deleteMRD(data, id);
+        } else {
+          this.snackbar.snackbarMessage(
+            "error-snackbar",
+            "MRD being used in channel type",
+            2
+          );
+          this.spinner = false;
+        }
+      },
+      (error) => {
+        this.spinner = false;
+        console.error("Error Fetching MRD mapped channel type:", error);
+        if (error && error.status == 0)
+          this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
+      }
+    );
   }
 
   //to edit MRD,it accepts `templateRef' & `data` object as parameter,`data` object (name:string, description:string, interruptible:string)

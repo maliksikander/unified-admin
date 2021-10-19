@@ -1,7 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
-import { DomSanitizer } from "@angular/platform-browser";
 import { ConfirmDialogComponent } from "src/app/shared/confirm-dialog/confirm-dialog.component";
 import { CommonService } from "../../services/common.service";
 import { EndpointService } from "../../services/endpoint.service";
@@ -27,8 +25,7 @@ export class ChannelListComponent implements OnInit {
     private commonService: CommonService,
     private dialog: MatDialog,
     private endPointService: EndpointService,
-    private snackbar: SnackbarService,
-
+    private snackbar: SnackbarService
   ) {}
 
   ngOnInit() {
@@ -36,8 +33,8 @@ export class ChannelListComponent implements OnInit {
     this.getChannelType();
   }
 
+  //calling endpoint service method to get channel types list which accepts its request endpoint as parameter
   getChannelType() {
-    //calling endpoint service method to get channel types list which accepts its request endpoint as parameter
     this.endPointService.getChannelType().subscribe(
       (res: any) => {
         this.spinner = false;
@@ -51,7 +48,7 @@ export class ChannelListComponent implements OnInit {
       },
       (error) => {
         this.spinner = false;
-        console.error("Error fetching:", error);
+        console.error("Error Fetching Channel Type:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }
@@ -65,7 +62,6 @@ export class ChannelListComponent implements OnInit {
 
   //to get channels list, it accepts channel-type-id as `typeId` parameter for fetching type particular channels
   getChannels(typeId) {
-    //calling endpoint service method to get channel list which accepts resource name as 'channelServiceReq' and channnel type id as `typeId` object as parameter
     this.endPointService.getChannelByChannelType(typeId).subscribe(
       (res: any) => {
         this.spinner = false;
@@ -73,7 +69,7 @@ export class ChannelListComponent implements OnInit {
       },
       (error) => {
         this.spinner = false;
-        console.error("Error fetching:", error);
+        console.error("Error Fetching Channel:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }
@@ -83,28 +79,40 @@ export class ChannelListComponent implements OnInit {
   //to delete channel, it accepts `data` object as parameter containing channel  properties and
   //splices the particular object from local list variable if there is a success response.
   deleteChannel(data) {
-    //calling endpoint service method which accepts resource name as 'channelServiceReq' and channel id as `id` object as parameter
     this.endPointService.deleteChannel(data.serviceIdentifier).subscribe(
       (res: any) => {
         this.spinner = false;
-        this.channels = this.channels.filter((item) => item.id != data.id);
-        this.snackbar.snackbarMessage("success-snackbar", "Deleted", 1);
+        this.removeRecordFromLocalList(data);
       },
       (error: any) => {
         this.spinner = false;
-        console.error("Error fetching:", error);
+        console.error("Error Fetching Delete Channel:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }
     );
   }
 
+  // to remove the deleted channel connector from local list, it expects the data object of the record as paramter on success response
+  removeRecordFromLocalList(data) {
+    try {
+      this.channels = this.channels.filter((item) => item.id != data.id);
+      this.snackbar.snackbarMessage("success-snackbar", "Deleted", 1);
+    } catch (e) {
+      console.error("Error in removing record from local:", e);
+    }
+  }
+
   //to edit channel and change the view to form page and load input fields and pass channel object as 'data' parameter
   editChannel(data) {
-    this.addChannelBool = true;
-    this.pageTitle = `Edit Channel Settings`;
-    this.editChannelData = data;
-    this.channelType = data.channelType;
+    try {
+      this.addChannelBool = true;
+      this.pageTitle = `Edit Channel Settings`;
+      this.editChannelData = data;
+      this.channelType = data.channelType;
+    } catch (e) {
+      console.error("Error in edit channel :", e);
+    }
   }
 
   // to open delete confirmation dialog
@@ -133,32 +141,44 @@ export class ChannelListComponent implements OnInit {
 
   //to add channel and change the view to form page and load input fields and pass channel type object as 'type' parameter
   addChannel(type) {
-    this.addChannelBool = true;
-    this.channelType = type;
-    this.pageTitle = `Set up  ${type?.name} Channel`;
+    try {
+      this.addChannelBool = true;
+      this.channelType = type;
+      this.pageTitle = `New Channel`;
+    } catch (e) {
+      console.error("Error in add channel :", e);
+    }
   }
 
   //to change the view from `form` to `list` page and load channel type list and it accepts boolean value as 'e' parameter from child component
   childToParentUIChange(e) {
-    this.addChannelBool = e;
-    if (this.addChannelBool == false) {
-      this.pageTitle = "Channels";
-      this.editChannelData = undefined;
+    try {
+      this.addChannelBool = e;
+      if (this.addChannelBool == false) {
+        this.pageTitle = "Channels";
+        this.editChannelData = undefined;
+      }
+    } catch (e) {
+      console.error("Error in ui change :", e);
     }
   }
 
   //to get channel list by channel type id on expansion panel event, it accepts channel type object as 'data' paramter
-  panelOpenCallback(data) {
+  panelOpenCallback(channelType) {
     this.channels = [];
     this.spinner = true;
-    this.getChannels(data.id);
+    this.getChannels(channelType.id);
   }
 
   //to create/update a channel, it accepts channel object as 'data' paramter
   onSave(msg) {
-    this.addChannelBool = false;
-    this.pageTitle = "Channels";
-    this.editChannelData = undefined;
-    this.snackbar.snackbarMessage("success-snackbar", msg, 1);
+    try {
+      this.addChannelBool = false;
+      this.pageTitle = "Channels";
+      this.editChannelData = undefined;
+      this.snackbar.snackbarMessage("success-snackbar", msg, 1);
+    } catch (e) {
+      console.error("Error on save :", e);
+    }
   }
 }

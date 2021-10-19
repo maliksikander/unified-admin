@@ -266,7 +266,6 @@ export class UsersComponent implements OnInit {
         }
       });
     }
-    // console.log("data==>", data);
     if (data && data.id) {
       if (data.associatedRoutingAttributes.length == 0) {
         return this.deleteREUser(data.id);
@@ -331,8 +330,10 @@ export class UsersComponent implements OnInit {
     if (roleTip && roleTip.length > 5)
       this.rolesTooltip = roleTip.slice(5, roleTip.length);
     this.userForm.patchValue({
-      firstName: data.keycloakUser.firstName,
-      lastName: data.keycloakUser.lastName,
+      firstName: data.keycloakUser.firstName
+        ? data.keycloakUser.firstName
+        : "N/A",
+      lastName: data.keycloakUser.lastName ? data.keycloakUser.lastName : "N/A",
       roles: data.keycloakUser.roles,
     });
     let dialogRef = this.dialog.open(templateRef, {

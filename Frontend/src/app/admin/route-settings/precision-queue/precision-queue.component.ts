@@ -693,9 +693,6 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     let stepData = this.manipulateExpTerm(formData);
     let data = stepData;
     let queue = this.queueData[i];
-    const stepLength = queue?.steps?.length;
-    // const stepLength = 10;
-    // console.log("queue==>", stepLength);
     this.createStep(data, queue.id);
 
     this.resetStepForm();

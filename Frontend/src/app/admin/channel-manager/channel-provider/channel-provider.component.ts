@@ -46,7 +46,7 @@ export class ChannelProviderComponent implements OnInit {
       },
       (error: any) => {
         this.spinner = false;
-        console.error("Error fetching:", error);
+        console.error("Error Fetching Channel Providers :", error);
       }
     );
   }
@@ -58,36 +58,47 @@ export class ChannelProviderComponent implements OnInit {
 
   //to change form ui view to list view
   childToParentUIChange(e): void {
-    this.addChannelProvider = e;
-    if (this.addChannelProvider == false) {
-      this.pageTitle = "Channel Provider Interface";
+    try {
+      this.addChannelProvider = e;
+      if (this.addChannelProvider == false) {
+        this.pageTitle = "Channel Provider";
+      }
+      this.editProviderData = undefined;
+    } catch (e) {
+      console.error("Error in ui change method :", e);
     }
-    this.editProviderData = undefined;
   }
 
   //to enable channel provider form view and change page title
   addProvider() {
-    this.addChannelProvider = true;
-    this.pageTitle = "Channel Provider Settings";
+    try {
+      this.addChannelProvider = true;
+      this.pageTitle = "New Channel Provider";
+    } catch (e) {
+      console.error("Error in add provider :", e);
+    }
   }
 
   //to edit channel provider and enable form view and change page title an pass data to child component
   editChannelProvider(data) {
-    this.addChannelProvider = true;
-    this.pageTitle = "Edit Channel Provider Settings";
-    this.editProviderData = data;
+    try {
+      this.addChannelProvider = true;
+      this.pageTitle = "Edit Channel Provider Settings";
+      this.editProviderData = data;
+    } catch (e) {
+      console.error("Error in edit provider :", e);
+    }
   }
 
   //Confirmation dialog for delete operation , it accepts the provider object as `data` parameter
   deleteConfirm(data) {
-    let msg =
-      "Are you sure you want to delete this channel provider interface ?";
+    let msg = "Are you sure you want to delete this channel provider?";
     return this.dialog
       .open(ConfirmDialogComponent, {
         panelClass: "confirm-dialog-container",
         disableClose: true,
         data: {
-          heading: "Delete Channel Provider Interface",
+          heading: "Delete Channel Provider",
           message: msg,
           text: "confirm",
           data: data,
@@ -110,16 +121,38 @@ export class ChannelProviderComponent implements OnInit {
     this.endPointService.deleteChannelProvider(data.id).subscribe(
       (res: any) => {
         this.spinner = false;
-        this.channelProviderList = this.channelProviderList.filter(
-          (item) => item.id != data.id
-        );
-        this.snackbar.snackbarMessage("success-snackbar", "Deleted", 1);
+        this.removeRecordFromLocalList(data);
       },
       (error: any) => {
         this.spinner = false;
         console.error("Error fetching:", error);
       }
     );
+  }
+
+  // to remove the deleted channel provider from local list, it expects the data object of the record as paramter on success response
+  removeRecordFromLocalList(data) {
+    try {
+      this.channelProviderList = this.channelProviderList.filter(
+        (item) => item.id != data.id
+      );
+      this.snackbar.snackbarMessage("success-snackbar", "Deleted", 1);
+    } catch (e) {
+      console.error("Error in removing record from local:", e);
+    }
+  }
+
+  //on save callback function
+  onSave(msg) {
+    try {
+      this.pageTitle = "Channel Type";
+      this.addChannelProvider = false;
+      this.spinner = true;
+      this.snackbar.snackbarMessage("success-snackbar", msg, 1);
+      this.getChannelProviders();
+    } catch (e) {
+      console.error("Error on save callback:", e);
+    }
   }
 
   // ngx-pagination setting methods

@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
-import { DomSanitizer } from "@angular/platform-browser";
 import { ConfirmDialogComponent } from "src/app/shared/confirm-dialog/confirm-dialog.component";
 import { CommonService } from "../../services/common.service";
 import { EndpointService } from "../../services/endpoint.service";
@@ -22,13 +21,12 @@ export class ChannelTypeComponent implements OnInit {
   itemsPerPageList = [5, 10, 15];
   itemsPerPage = 5;
   selectedItem = this.itemsPerPageList[0];
-  
 
   constructor(
     private commonService: CommonService,
     private dialog: MatDialog,
     private endPointService: EndpointService,
-    private snackbar: SnackbarService,
+    private snackbar: SnackbarService
   ) {}
 
   ngOnInit(): void {
@@ -40,17 +38,14 @@ export class ChannelTypeComponent implements OnInit {
 
   //to get channel type list
   getChannelTypes() {
-    //calling endpoint service method to get channel list which accepts resource name as 'channelServiceReq' and channnel type id as `typeId` object as parameter
     this.endPointService.getChannelType().subscribe(
       (res: any) => {
-        this.spinner = false;
-        // console.log("res-->", res);
         this.typeList = res;
         this.spinner = false;
       },
       (error: any) => {
         this.spinner = false;
-        console.error("Error fetching:", error);
+        console.error("Error Fetching Type:", error);
       }
     );
   }
@@ -72,7 +67,7 @@ export class ChannelTypeComponent implements OnInit {
   //to enable channel type form view and change page title
   addChannelType() {
     this.addType = true;
-    this.pageTitle = "Channel Type Settings";
+    this.pageTitle = "New Channel Type";
   }
 
   //to edit channel type and enable form view and change page title an pass data to child component
@@ -115,23 +110,36 @@ export class ChannelTypeComponent implements OnInit {
     this.endPointService.deleteChannelType(data.id).subscribe(
       (res: any) => {
         this.spinner = false;
-        this.typeList = this.typeList.filter((item) => item.id != data.id);
-        this.snackbar.snackbarMessage("success-snackbar", "Deleted", 1);
+        this.removeRecordFromLocalList(data);
       },
       (error: any) => {
         this.spinner = false;
-        console.error("Error fetching:", error);
+        console.error("Error Deleting Type:", error);
       }
     );
   }
 
+  // to remove the deleted channel type from local list, it expects the data object of the record as paramter on success response
+  removeRecordFromLocalList(data) {
+    try {
+      this.typeList = this.typeList.filter((item) => item.id != data.id);
+      this.snackbar.snackbarMessage("success-snackbar", "Deleted", 1);
+    } catch (e) {
+      console.error("Error in removing record from local:", e);
+    }
+  }
+
   //on save callback function
   onSave(msg) {
-    this.pageTitle = "Channel Type";
-    this.addType = false;
-    this.spinner = true;
-    this.snackbar.snackbarMessage("success-snackbar", msg, 1);
-    this.getChannelTypes();
+    try {
+      this.pageTitle = "Channel Type";
+      this.addType = false;
+      this.spinner = true;
+      this.snackbar.snackbarMessage("success-snackbar", msg, 1);
+      this.getChannelTypes();
+    } catch (e) {
+      console.error("Error on save callback:", e);
+    }
   }
 
   // ngx-pagination setting methods

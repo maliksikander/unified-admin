@@ -343,7 +343,7 @@ export class CommonService {
       required: "This field is required",
       minlength: "More characters required",
       maxlength: "Maximum 50 characters allowed",
-      pattern: 'Allowed special characters "[!@#$%^&*()-_=+~`"]+"',
+      pattern: "Invalid Name Format",
     },
     supportedChannelTypes: {
       required: "This field is required",
@@ -362,7 +362,7 @@ export class CommonService {
       required: "This field is required",
       minlength: "More characters required",
       maxlength: "Maximum 50 characters allowed",
-      pattern: 'Allowed special characters "[!@#$%^&*()-_=+~`"]+"',
+      pattern: "Invalid Name Format",
     },
     channelProviderInterface: {
       required: "This field is required",
@@ -374,7 +374,7 @@ export class CommonService {
       required: "This field is required",
       minlength: "More characters required",
       maxlength: "Maximum 50 characters allowed",
-      pattern: 'Allowed special characters "[!@#$%^&*()-_=+~`"]+"',
+      pattern: "Invalid Name Format",
     },
     serviceIdentifier: {
       required: "This field is required",
@@ -452,8 +452,8 @@ export class CommonService {
     name: {
       required: "This field is required",
       minlength: "More characters required",
-      maxlength: "Less characters required",
-      pattern: 'Allowed special characters "[!@#$%^&*()-_=+~`"]+"',
+      maxlength: "Maximum 50 characters allowed",
+      pattern: "Invalid Name Format",
     },
     isInteractive: {
       required: "This field is required",

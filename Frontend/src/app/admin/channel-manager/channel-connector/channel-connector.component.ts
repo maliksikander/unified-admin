@@ -1,6 +1,3 @@
-import {
-  HttpClient,
-} from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ConfirmDialogComponent } from "src/app/shared/confirm-dialog/confirm-dialog.component";
@@ -26,14 +23,12 @@ export class ChannelConnectorComponent implements OnInit {
   itemsPerPageList = [5, 10, 15];
   itemsPerPage = 5;
   selectedItem = this.itemsPerPageList[0];
-  
 
   constructor(
     private commonService: CommonService,
     private dialog: MatDialog,
     private endPointService: EndpointService,
-    private snackbar: SnackbarService,
-    private httpClient: HttpClient,
+    private snackbar: SnackbarService
   ) {}
 
   ngOnInit() {
@@ -49,18 +44,15 @@ export class ChannelConnectorComponent implements OnInit {
     return `${this.endPointService.FILE_ENGINE_URL}/${this.endPointService.endpoints.fileEngine.downloadFileStream}?filename=${filename}`;
   }
 
-  // expansion panel callback function,triggered on expanded event
-  // panelOpenCallback(data) {
-  //   this.channelConnectors = [];
-  //   this.spinner = true;
-  //   this.getChannelConnector(data.id);
-  // }
-
   //to change view to settings and pass connector object to child component
   editChannelConnector(data) {
-    this.addChannelBool = true;
-    this.pageTitle = `Edit Connector Settings`;
-    this.editConnectorData = data;
+    try {
+      this.addChannelBool = true;
+      this.pageTitle = `Edit Connector Settings`;
+      this.editConnectorData = data;
+    } catch (e) {
+      console.error("Error in edit connector :", e);
+    }
   }
 
   // to open delete confirmation dialog
@@ -89,24 +81,34 @@ export class ChannelConnectorComponent implements OnInit {
 
   // change UI to settings view from list view
   changeViewToSetings() {
-    this.addChannelBool = true;
-    this.pageTitle = `Channel Connector Settings`;
+    try {
+      this.addChannelBool = true;
+      this.pageTitle = `New Channel Connector`;
+    } catch (e) {
+      console.error("Error in view setting method :", e);
+    }
   }
 
   // reset UI to list view from settings view
   resetUI() {
-    this.addChannelBool = false;
-    this.pageTitle = "Channel Connectors";
-    this.editConnectorData = undefined;
+    try {
+      this.addChannelBool = false;
+      this.pageTitle = "Channel Connectors";
+      this.editConnectorData = undefined;
+    } catch (e) {
+      console.error("Error in reset UI :", e);
+    }
   }
 
   // to reset view on save event received by the child component
   onSave(msg) {
-    this.resetUI();
-    this.snackbar.snackbarMessage("success-snackbar", msg, 1.5);
+    try {
+      this.resetUI();
+      this.snackbar.snackbarMessage("success-snackbar", msg, 1.5);
+    } catch (e) {
+      console.error("Error on save :", e);
+    }
   }
-
-
 
   // to fetch connector list
   getChannelConnector() {
@@ -114,11 +116,10 @@ export class ChannelConnectorComponent implements OnInit {
       (res: any) => {
         this.spinner = false;
         this.channelConnectors = res;
-        // this.getConnectorStatus(this.channelConnectors);
       },
       (error) => {
         this.spinner = false;
-        console.error("Error fetching:", error);
+        console.error("Error Fetching Connector List :", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }
@@ -127,16 +128,10 @@ export class ChannelConnectorComponent implements OnInit {
 
   //to update channel connector and it accepts `data` object as parameter containing channel connector properties
   deleteChannelConnector(data) {
-    //calling endpoint service method which accepts resource name as 'connectorServiceReq' and connector id as `id` object as parameter
     this.endPointService.deleteConnector(data.id).subscribe(
       (res: any) => {
         this.spinner = false;
-
-        this.channelConnectors = this.channelConnectors.filter(
-          (item) => item.id != data.id
-        );
-
-        this.snackbar.snackbarMessage("success-snackbar", "Deleted", 1);
+        this.removeRecordFromLocalList(data);
       },
       (error: any) => {
         this.spinner = false;
@@ -147,28 +142,16 @@ export class ChannelConnectorComponent implements OnInit {
     );
   }
 
-  //to hit channel connector health endpoint, it accetps the connectors list as parameter and takes the request URL from the `interface address` attribute
-  getConnectorStatus(list) {
-    list.forEach((item) => {
-      let url = item.interfaceAddress;
-      this.httpClient.get(`${url}/channel-connectors/health`).subscribe(
-        (res: any) => {
-          item["status"] = res.status.toLowerCase();
-        },
-        (error: any) => {
-          this.spinner = false;
-          item["status"] = "unhealthy";
-          console.error("Error fetching:", error);
-          if (error && error.status == 0)
-            this.snackbar.snackbarMessage(
-              "error-snackbar",
-              error.statusText,
-              1
-            );
-        }
+  // to remove the deleted channel connector from local list, it expects the data object of the record as paramter on success response
+  removeRecordFromLocalList(data) {
+    try {
+      this.channelConnectors = this.channelConnectors.filter(
+        (item) => item.id != data.id
       );
-    });
-    this.spinner = false;
+      this.snackbar.snackbarMessage("success-snackbar", "Deleted", 1);
+    } catch (e) {
+      console.error("Error in removing record from local:", e);
+    }
   }
 
   //save page number storage for reload
@@ -186,4 +169,27 @@ export class ChannelConnectorComponent implements OnInit {
     this.itemsPerPage = this.selectedItem;
   }
 
+  // //to hit channel connector health endpoint, it accetps the connectors list as parameter and takes the request URL from the `interface address` attribute
+  // getConnectorStatus(list) {
+  //   list.forEach((item) => {
+  //     let url = item.interfaceAddress;
+  //     this.httpClient.get(`${url}/channel-connectors/health`).subscribe(
+  //       (res: any) => {
+  //         item["status"] = res.status.toLowerCase();
+  //       },
+  //       (error: any) => {
+  //         this.spinner = false;
+  //         item["status"] = "unhealthy";
+  //         console.error("Error fetching:", error);
+  //         if (error && error.status == 0)
+  //           this.snackbar.snackbarMessage(
+  //             "error-snackbar",
+  //             error.statusText,
+  //             1
+  //           );
+  //       }
+  //     );
+  //   });
+  //   this.spinner = false;
+  // }
 }

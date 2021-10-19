@@ -126,7 +126,6 @@ export class WebWidgetFormComponent implements OnInit {
     } else {
       this.createWebWidget(data);
     }
-    // console.log("data==>", data);
   }
 
   // to create request payload

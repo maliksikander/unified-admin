@@ -64,7 +64,14 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
     this.validations = this.commonService.channelFormErrorMessages;
 
     this.channelSettingForm = this.formBuilder.group({
-      name: ["", [Validators.required, Validators.maxLength(50)]],
+      name: [
+        "",
+        [
+          Validators.required,
+          Validators.maxLength(50),
+          Validators.pattern(/^[a-zA-Z0-9_-]+(?:\040[a-zA-Z0-9_-]+)*$/),
+        ],
+      ],
       serviceIdentifier: ["", [Validators.required]],
       channelConnector: [, [Validators.required]],
       channelMode: ["BOT", [Validators.required]],
@@ -165,7 +172,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
       else if (list == "pull-mode") this.pullModeListData = data;
       else if (list == "queue") this.queueList = data;
     } catch (e) {
-      console.error("Error:", e);
+      console.error("Error in setting local list value :", e);
       this.spinner = false;
     }
   }
@@ -226,29 +233,36 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
       });
       this.onChannelModeSelection(this.channelSettingForm.value.channelMode);
     } catch (e) {
-      console.error("Error:", e);
+      console.error("Error in form value patch :", e);
     }
     this.spinner = false;
   }
 
   patchRoutingObjectValue(index, mode) {
-    if (mode == "PUSH") {
-      return this.queueList[index];
-    } else {
-      return this.pullModeListData[index];
+    try {
+      if (mode == "PUSH") {
+        return this.queueList[index];
+      } else {
+        return this.pullModeListData[index];
+      }
+    } catch (e) {
+      console.error("Error in patching routing attr :", e);
     }
   }
 
   //to create 'data' object and pass it to the parent component
   onSave() {
-    this.spinner = true;
-    let data = this.createRequestPayload();
-    if (data.id) {
-      this.updateChannel(data);
-    } else {
-      this.createChannel(data);
+    try {
+      this.spinner = true;
+      let data = this.createRequestPayload();
+      if (data.id) {
+        this.updateChannel(data);
+      } else {
+        this.createChannel(data);
+      }
+    } catch (e) {
+      console.error("Error on save :", e);
     }
-    // console.log("data==>", data);
   }
 
   // to send event msg and reset form after success response
@@ -258,7 +272,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
       this.formSaveData.emit(msg);
       this.channelSettingForm.reset();
     } catch (e) {
-      console.log("Error:", e);
+      console.error("Error in emitter :", e);
       this.spinner = false;
     }
   }
@@ -277,47 +291,59 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
   //to set/remove validations on channel mode selection on routing policy attributes, it accepts the channel mode value('BOT','AGENT','HYBRID') as val parameter
 
   onChannelModeSelection(val) {
-    if (val != "BOT") {
-      this.setRoutingPolicyAttrValidation();
-    } else {
-      this.resetAndRemoveRoutingPolicyAttrValidation();
+    try {
+      if (val != "BOT") {
+        this.setRoutingPolicyAttrValidation();
+      } else {
+        this.resetAndRemoveRoutingPolicyAttrValidation();
+      }
+      this.cd.detectChanges();
+    } catch (e) {
+      console.error("Error in selection callback :", e);
     }
-    this.cd.detectChanges();
   }
 
   // to set validations  on routing policy attributes
   setRoutingPolicyAttrValidation() {
-    this.channelSettingForm.controls["agentRequestTTL"].setValidators([
-      Validators.required,
-    ]);
-    this.channelSettingForm.controls["agentSelectionPolicy"].setValidators([
-      Validators.required,
-    ]);
-    this.channelSettingForm.controls["routeToLastAgent"].setValidators([
-      Validators.required,
-    ]);
-    this.channelSettingForm.controls["routingMode"].setValidators([
-      Validators.required,
-    ]);
-    this.channelSettingForm.controls["routingObjectID"].setValidators([
-      Validators.required,
-    ]);
+    try {
+      this.channelSettingForm.controls["agentRequestTTL"].setValidators([
+        Validators.required,
+      ]);
+      this.channelSettingForm.controls["agentSelectionPolicy"].setValidators([
+        Validators.required,
+      ]);
+      this.channelSettingForm.controls["routeToLastAgent"].setValidators([
+        Validators.required,
+      ]);
+      this.channelSettingForm.controls["routingMode"].setValidators([
+        Validators.required,
+      ]);
+      this.channelSettingForm.controls["routingObjectID"].setValidators([
+        Validators.required,
+      ]);
+    } catch (e) {
+      console.error("Error in set validation :", e);
+    }
   }
 
   //to reset form controls and remove validations on routing policy attributes
   resetAndRemoveRoutingPolicyAttrValidation() {
-    this.channelSettingForm.controls["agentRequestTTL"].setValidators(null);
-    this.channelSettingForm.controls["agentSelectionPolicy"].setValidators(
-      null
-    );
-    this.channelSettingForm.controls["routeToLastAgent"].setValidators(null);
-    this.channelSettingForm.controls["routingMode"].setValidators(null);
-    this.channelSettingForm.controls["routingObjectID"].setValidators(null);
+    try {
+      this.channelSettingForm.controls["agentRequestTTL"].setValidators(null);
+      this.channelSettingForm.controls["agentSelectionPolicy"].setValidators(
+        null
+      );
+      this.channelSettingForm.controls["routeToLastAgent"].setValidators(null);
+      this.channelSettingForm.controls["routingMode"].setValidators(null);
+      this.channelSettingForm.controls["routingObjectID"].setValidators(null);
 
-    this.channelSettingForm.controls["agentRequestTTL"].reset();
-    this.channelSettingForm.controls["agentSelectionPolicy"].reset();
-    this.channelSettingForm.controls["routingMode"].reset();
-    this.channelSettingForm.controls["routingObjectID"].reset();
+      this.channelSettingForm.controls["agentRequestTTL"].reset();
+      this.channelSettingForm.controls["agentSelectionPolicy"].reset();
+      this.channelSettingForm.controls["routingMode"].reset();
+      this.channelSettingForm.controls["routingObjectID"].reset();
+    } catch (e) {
+      console.error("Error in validation reset :", e);
+    }
   }
 
   // create request payload and return data object
@@ -358,7 +384,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
 
       return data;
     } catch (e) {
-      console.error("Error==>", e);
+      console.error("Error in request payload :", e);
     }
   }
 

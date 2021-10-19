@@ -664,6 +664,17 @@ export class EndpointService {
       .pipe(catchError(this.handleError));
   }
 
+  getMRDMappedChannelType(mrdID): Observable<any> {
+    return this.httpClient
+      .get(`${this.CCM_URL}/${this.endpoints.ccm.channelType}/media-routing-domains/${mrdID}`, {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json",
+          Authorization: "Bearer" + this.token,
+        }),
+      })
+      .pipe(catchError(this.handleError));
+  }
+
   ///////////////// Channel Connector CRUD //////////
 
   createConnector(data): Observable<any> {
