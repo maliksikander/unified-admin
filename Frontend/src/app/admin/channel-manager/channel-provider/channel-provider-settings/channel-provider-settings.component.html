@@ -3,43 +3,46 @@
 </div>
 
 <div class="panel-page-content">
+
     <form class="form-horizontal form-bordered" [formGroup]="channelProviderForm">
-        <div class="col-md-5">
+        <div class="content-padding">
+            <div class="col-md-5">
 
-            <div class="form-group">
-                <mat-label>Name</mat-label>
-                <mat-form-field appearance="outline">
-                    <input matInput formControlName="name">
-                    <mat-error class="form-error">
-                        {{formErrors?.name}}
-                    </mat-error>
-                </mat-form-field>
-            </div>
+                <div class="form-group">
+                    <mat-label>Name</mat-label>
+                    <mat-form-field appearance="outline">
+                        <input matInput formControlName="name">
+                        <mat-error class="form-error">
+                            {{formErrors?.name}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
 
-            <div class="form-group">
-                <mat-label>Supported Channel Types</mat-label>
-                <mat-form-field appearance="outline">
-                    <mat-select multiple placeholder="Select Channel Type" formControlName="supportedChannelTypes">
-                        <mat-option *ngFor="let type of channelTypeList" [value]="type"><span class="icon-section"><img
-                                    [src]="getFileURL(type?.channelLogo)" alt="img"></span> {{type?.name}}</mat-option>
-                    </mat-select>
-                    <mat-error class="form-error">
-                        {{formErrors?.supportedChannelTypes}}
-                    </mat-error>
-                </mat-form-field>
-            </div>
+                <div class="form-group">
+                    <mat-label>Supported Channel Types</mat-label>
+                    <mat-form-field appearance="outline">
+                        <mat-select multiple placeholder="Select Channel Type" formControlName="supportedChannelTypes">
+                            <mat-option *ngFor="let type of channelTypeList" [value]="type"><span
+                                    class="icon-section"><img [src]="getFileURL(type?.channelLogo)" alt="img"></span>
+                                {{type?.name}}</mat-option>
+                        </mat-select>
+                        <mat-error class="form-error">
+                            {{formErrors?.supportedChannelTypes}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
 
-            <div class="form-group">
-                <mat-label>Provider Webhook</mat-label>
-                <mat-form-field appearance="outline">
-                    <input matInput formControlName="providerWebhook">
-                    <mat-error class="form-error">
-                        {{formErrors?.providerWebhook}}
-                    </mat-error>
-                </mat-form-field>
+                <div class="form-group">
+                    <mat-label>Provider Webhook</mat-label>
+                    <mat-form-field appearance="outline">
+                        <input matInput formControlName="providerWebhook">
+                        <mat-error class="form-error">
+                            {{formErrors?.providerWebhook}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
             </div>
         </div>
-
         <hr class="title-section-hr" [ngStyle]="{'margin-bottom': expanded == true ? '0.5rem' :'0rem'}">
 
         <div class="form-attribute-section form-parent-div">
@@ -49,12 +52,11 @@
                     <ng-container formArrayName="channelProviderConfigSchema">
                         <ng-container
                             *ngFor="let attribute of getProviderAttribute(channelProviderForm); let i = index">
-
-
                             <mat-expansion-panel #panel [expanded]="true" cdkDrag [formGroupName]="i"
                                 (opened)="panelExpanded()" (closed)="panelExpanded()">
 
-                                <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight">
+                                <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                    [ngClass]="expanded == true ? 'channel-provider-expansion-header-collapsed' : 'channel-provider-expansion-header-expanded'">
                                     <div class="drag-handle" cdkDragHandle>
                                         <mat-icon>more_vert</mat-icon>
                                     </div>
@@ -102,15 +104,15 @@
                                                     <mat-select placeholder="Select Data Type"
                                                         formControlName="valueType">
                                                         <mat-option *ngFor="let type of valueTypeList" [value]="type">
-                                                            {{type}}</mat-option>
+                                                            {{type}}<span class="info-span"><img src="assets/images/info.svg" matTooltip="{{valueTypeDescription[type]}}"
+                                                                matTooltipClass="disclaimer-tooltip"></span> </mat-option>
                                                     </mat-select>
                                                 </mat-form-field>
                                             </div>
                                         </div>
 
                                         <div class="attribute-row">
-                                            <div class="form-group"
-                                                [ngClass]="attribute?.value?.attributeType == 'OPTIONS' ? 'col-md-9' : 'col-md-12'">
+                                            <div class="form-group col-md-12">
                                                 <mat-form-field appearance="outline">
                                                     <input matInput placeholder="Helping Text(Optional)"
                                                         formControlName="helpText">
@@ -144,24 +146,22 @@
                                 </div>
 
                             </mat-expansion-panel>
-
                             <hr *ngIf="!expanded" class="attribute-hr">
-
                         </ng-container>
                     </ng-container>
                 </mat-accordion>
             </div>
 
-            <div class="add-attribute-btn" [ngStyle]="{'padding': expanded == true ? '10px 7px 0 7px' :'10px 10px 0 10px'}">
+            <div class="add-attribute-btn">
                 <button mat-button (click)="addAttributeButton()">
                     <mat-icon>add</mat-icon>
-                    Add Attribute
+                    Add Custom Attribute
                 </button>
             </div>
         </div>
         <hr>
 
-        <div class="action-area btn-margin col-md-12">
+        <div class="action-area col-md-12">
             <button mat-raised-button (click)="onClose()" class="gray-btn">Cancel</button>
             <button [disabled]="!channelProviderForm.valid" mat-raised-button class="blue-btn service-trigger"
                 (click)="onSave()">Save</button>

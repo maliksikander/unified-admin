@@ -290,6 +290,10 @@ export class CommonService {
     enabled: {
       required: "This field is required",
     },
+    maxRequests: {
+      required: "This field is required",
+      min: "Min value of 1 is required",
+    },
   };
 
   queueFormErrorMessages = {

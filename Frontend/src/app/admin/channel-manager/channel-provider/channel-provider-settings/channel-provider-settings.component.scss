@@ -17,6 +17,9 @@ input::-webkit-inner-spin-button {
 }
 
 .panel-page-content {
+  padding-left: 0px !important;
+}
+.content-padding {
   padding-left: 18px !important;
 }
 
@@ -43,10 +46,9 @@ button {
   }
 }
 
-.btn-margin {
-  margin: 15px 0px;
-  // margin: 15px 0px 15px -5px;
-}
+// .btn-margin {
+//   margin: 15px 0px;
+// }
 
 .select-file-button {
   top: -3px;
@@ -75,23 +77,7 @@ button {
   }
 }
 
-.uploaded-logo {
-  position: relative;
-  width: 300px;
-  padding: 12px;
-  background: #ececec;
-  border-radius: 6px;
-  height: 68px;
-  border: 1px solid #c2c2c2;
 
-  .upload-logo {
-    background-repeat: no-repeat !important;
-    background-position: left !important;
-    margin: 0 !important;
-    height: 45px;
-    background-size: contain !important;
-  }
-}
 //////////////////////
 .form-action-div {
   text-align: right;
@@ -125,7 +111,7 @@ button {
 }
 
 .form-attribute-section {
-  padding: 0px 15px;
+  padding: 0px 33px;
 
   .form-accordion {
     padding: 0 0 5px 0;
@@ -140,9 +126,6 @@ button {
         .drag-handle {
           display: inline-block;
         }
-        // .panel-edit-btn {
-        //   display: inline-block;
-        // }
       }
     }
 
@@ -195,56 +178,9 @@ button {
             padding-right: 7px;
           }
         }
-
-        // .option-container {
-        //   display: flex;
-        //   .remove-option {
-        //     position: relative;
-        //     top: 13px;
-        //     flex-direction: row;
-        //     display: flex;
-
-        //     .remove-btn {
-        //       box-shadow: none;
-        //       background: transparent;
-
-        //       .mat-icon {
-        //         color: #afafaf;
-        //         font-size: 15px;
-        //       }
-        //     }
-
-        //     button {
-        //       background: #fff;
-        //       width: 20px;
-        //       height: 20px;
-        //       box-shadow: 0px 1px 1px -1px rgb(0 0 0 / 20%),
-        //         0px 1px 3px 0px rgb(0 0 0 / 14%),
-        //         0px 1px 4px 0px rgb(0 0 0 / 12%);
-        //       margin: 0 0px 0 10px;
-
-        //       .mat-icon {
-        //         font-size: 16px;
-        //         color: #adadad;
-        //         position: relative;
-        //         top: -7px;
-        //         right: 2px;
-        //       }
-
-        //       &:hover {
-        //         background: #efefefba;
-        //       }
-        //     }
-        //   }
-        // }
-
         .add-category-btn {
-          // position: relative;
-          // top: -6px;
           padding: 0;
-
           button {
-            // background: transparent;
             padding: 0;
 
             .mat-button-wrapper {
@@ -257,66 +193,6 @@ button {
             }
           }
         }
-
-        // .add-option-btn {
-        //   // position: relative;
-        //   top: -6px;
-        //   // padding: 0;
-
-        //   // button {
-        //   // background: transparent;
-        //   padding: 0;
-
-        //   mat-icon {
-        //     color: #25afcb;
-        //     font-size: 20px;
-        //   }
-        //   // }
-        // }
-
-        // .category-option-container {
-        //   display: flex;
-        //   flex-wrap: wrap;
-
-        //   .add-category-option {
-        //     position: relative;
-        //     top: 13px;
-        //     flex-direction: row;
-        //     display: flex;
-
-        //     .remove-btn {
-        //       box-shadow: none;
-        //       background: transparent;
-
-        //       .mat-icon {
-        //         color: #afafaf;
-        //         font-size: 15px;
-        //       }
-        //     }
-
-        //     button {
-        //       background: #fff;
-        //       width: 20px;
-        //       height: 20px;
-        //       box-shadow: 0px 1px 1px -1px rgb(0 0 0 / 20%),
-        //         0px 1px 3px 0px rgb(0 0 0 / 14%),
-        //         0px 1px 4px 0px rgb(0 0 0 / 12%);
-        //       margin: 0 0px 0 10px;
-
-        //       .mat-icon {
-        //         font-size: 16px;
-        //         color: #adadad;
-        //         position: relative;
-        //         top: -7px;
-        //         right: 2px;
-        //       }
-
-        //       &:hover {
-        //         background: #efefefba;
-        //       }
-        //     }
-        //   }
-        // }
       }
 
       .attribute-action-area {
@@ -378,10 +254,12 @@ button {
   }
 
   .attribute-hr {
-    margin: 0rem 1.5rem;
+    margin: 0rem 0.2rem;
   }
 
   .add-attribute-btn {
+    padding-top: 10px;
+
     button {
       padding-left: 5px !important;
       background: #f3f6f8;
@@ -391,6 +269,7 @@ button {
       height: 30px;
       line-height: 30px;
       width: fit-content;
+      margin-left: 0px;
 
       mat-icon {
         font-size: 18px;
@@ -476,4 +355,14 @@ button {
     max-width: 30px;
     max-height: 30px;
   }
+}
+
+.info-span{
+  display: inline-block;
+  position: absolute;
+  right: 7px;
+}
+
+.action-area{
+  padding-right: 33px;
 }

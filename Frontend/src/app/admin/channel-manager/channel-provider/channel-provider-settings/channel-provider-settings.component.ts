@@ -51,6 +51,22 @@ export class ChannelProviderSettingsComponent implements OnInit {
     // "StringList",
     "URL",
   ];
+  valueTypeDescription = {
+    Alphanum100: "Supports alphabets, digits and whitespaces up to 100 characters",
+    AlphanumSpecial200: "Supports alphabets, digits, allowed characters _ ( @ . , ; : ` ~ = * ' % $ ! ^ / # & + ( ) ? { } > & l  ; | - )  up to 200 characters",
+    Boolean: "Supports either true, false, 0 ,1 values",
+    // "Email",
+    // "IP",
+    Number: "Positive/Negative numbers are supported",
+    Password: "",
+    // "PhoneNumber",
+    PositiveNumber: "Supports positive number with/without '+'",
+    String50: "Any characters of a maximum of 50 characters",
+    String100: "Any characters of a maximum of 100 characters",
+    String2000: "Any characters of a maximum of 2000 characters",
+    // "StringList",
+    URL: "Any generic url string with valid format, allows ports as well e.g. https://www.expertflow.com",
+  };
   spinner = true;
   channelTypeList = [];
 

@@ -21,6 +21,7 @@ export class MrdComponent implements OnInit {
     name: "",
     description: "",
     enabled: "",
+    maxRequests: "",
   };
   validations;
   mrdForm: FormGroup;
@@ -28,7 +29,6 @@ export class MrdComponent implements OnInit {
   saveBtnText = "Create";
   mrdData = [];
   editData: any;
-  // reqServiceType = 'media-routing-domains';
 
   constructor(
     private commonService: CommonService,
@@ -54,6 +54,7 @@ export class MrdComponent implements OnInit {
       ],
       description: ["", [Validators.maxLength(500)]],
       enabled: [],
+      maxRequests: ["", [Validators.required, Validators.min(1)]],
     });
 
     let pageNumber = sessionStorage.getItem("currentMRDPage");
@@ -73,17 +74,21 @@ export class MrdComponent implements OnInit {
 
   //to open form dialog,this method accepts the `templateRef` as a parameter assigned to the form in html.
   openModal(templateRef) {
-    this.mrdForm.reset();
-    this.mrdForm.controls["enabled"].patchValue(true);
-    this.formHeading = "Add New MRD";
-    this.saveBtnText = "Create";
-    let dialogRef = this.dialog.open(templateRef, {
-      width: "500px",
-      height: "350px",
-      panelClass: "add-attribute",
-      disableClose: true,
-    });
-    dialogRef.afterClosed().subscribe((result) => {});
+    try {
+      this.mrdForm.reset();
+      this.mrdForm.controls["enabled"].patchValue(true);
+      this.formHeading = "Add New MRD";
+      this.saveBtnText = "Create";
+      let dialogRef = this.dialog.open(templateRef, {
+        width: "500px",
+        height: "350px",
+        panelClass: "add-attribute",
+        disableClose: true,
+      });
+      dialogRef.afterClosed().subscribe((result) => {});
+    } catch (e) {
+      console.error("Error on open modal :", e);
+    }
   }
 
   //resetting dialog
@@ -93,7 +98,7 @@ export class MrdComponent implements OnInit {
     this.editData = undefined;
   }
 
-  //to create MRD and it accepts `data` object as parameter with following properties (name:string, description:string, interruptible:string)
+  //to create MRD and it accepts `data` object as parameter with following properties (name:string, description:string, interruptible:string,maxRequests:number)
   //and update the local list
   createMRD(data) {
     this.endPointService.createMrd(data).subscribe(
@@ -107,7 +112,7 @@ export class MrdComponent implements OnInit {
       },
       (error: any) => {
         this.spinner = false;
-        console.error("Error fetching:", error);
+        console.error("Error Creating MRD:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }
@@ -123,7 +128,7 @@ export class MrdComponent implements OnInit {
       },
       (error) => {
         this.spinner = false;
-        console.error("Error fetching:", error);
+        console.error("Error Fetching MRD:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }
@@ -150,7 +155,7 @@ export class MrdComponent implements OnInit {
       },
       (error: any) => {
         this.spinner = false;
-        console.error("Error fetching:", error);
+        console.error("Error Updating MRD:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }
@@ -176,7 +181,7 @@ export class MrdComponent implements OnInit {
       },
       (error) => {
         this.spinner = false;
-        console.error("Error fetching:", error);
+        console.error("Error Deleting MRD:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
         else if (error && error.status == 409)
@@ -244,53 +249,72 @@ export class MrdComponent implements OnInit {
   //to edit MRD,it accepts `templateRef' & `data` object as parameter,`data` object (name:string, description:string, interruptible:string)
   //and patches the existing values with form controls and opens the form dialog
   editMrd(templateRef, data) {
-    this.editData = data;
-    this.mrdForm.patchValue({
-      name: data.name,
-      description: data.description,
-      enabled: data.interruptible,
-    });
+    try {
+      this.editData = data;
+      this.mrdForm.patchValue({
+        name: data.name,
+        description: data.description,
+        enabled: data.interruptible,
+        maxRequests: data.maxRequests,
+      });
 
-    this.formHeading = "Edit MRD";
-    this.saveBtnText = "Update";
-    let dialogRef = this.dialog.open(templateRef, {
-      width: "500px",
-      height: "350px",
-      panelClass: "add-attribute",
-      disableClose: true,
-      data: data,
-    });
+      this.formHeading = "Edit MRD";
+      this.saveBtnText = "Update";
+      let dialogRef = this.dialog.open(templateRef, {
+        width: "500px",
+        height: "350px",
+        panelClass: "add-attribute",
+        disableClose: true,
+        data: data,
+      });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      this.editData = undefined;
-    });
+      dialogRef.afterClosed().subscribe((result) => {
+        this.editData = undefined;
+      });
+    } catch (e) {
+      console.error("Error on edit mrd :", e);
+    }
   }
 
   // To change toggle value and updating MRD ,it accepts toggle value paramter as 'e' and mrd object parameter as data.
   onStatusChange(e, data) {
-    let payload = JSON.parse(JSON.stringify(data));
-    this.spinner = true;
-    if (payload.id) delete payload.id;
-    payload.interruptible = e.checked;
-    this.updateMRD(payload, data.id);
+    try {
+      let payload = JSON.parse(JSON.stringify(data));
+      this.spinner = true;
+      if (payload.id) delete payload.id;
+      payload.interruptible = e.checked;
+      this.updateMRD(payload, data.id);
+    } catch (e) {
+      console.error("Error on status change :", e);
+    }
   }
 
   // Object manipulation for request body
   onSaveObject() {
-    let data: any = {};
-    data.name = this.mrdForm.value.name;
-    data.description = this.mrdForm.value.description;
-    data.interruptible = this.mrdForm.value.enabled;
-    return data;
+    try {
+      let data: any = {};
+      data.name = this.mrdForm.value.name;
+      data.description = this.mrdForm.value.description;
+      data.interruptible = this.mrdForm.value.enabled;
+      data.maxRequests = this.mrdForm.value.maxRequests;
+      return data;
+    } catch (e) {
+      console.error("Error on save object :", e);
+    }
   }
 
   onSave() {
-    this.spinner = true;
-    let data: any = this.onSaveObject();
-    if (this.editData) {
-      this.updateMRD(data, this.editData.id);
-    } else {
-      this.createMRD(data);
+    try {
+      this.spinner = true;
+      let data: any = this.onSaveObject();
+      if (this.editData) {
+        // this.updateMRD(data, this.editData.id);
+      } else {
+        // this.createMRD(data);
+      }
+      console.log("save==>", data);
+    } catch (e) {
+      console.error("Error on save :", e);
     }
   }
 
