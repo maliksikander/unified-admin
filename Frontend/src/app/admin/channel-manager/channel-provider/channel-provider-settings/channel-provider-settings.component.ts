@@ -73,7 +73,6 @@ export class ChannelProviderSettingsComponent implements OnInit {
   constructor(
     private commonService: CommonService,
     private fb: FormBuilder,
-    private snackbar: SnackbarService,
     private endPointService: EndpointService,
     private cd: ChangeDetectorRef
   ) {}

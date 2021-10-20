@@ -13,7 +13,7 @@ import { SnackbarService } from "../../services/snackbar.service";
 export class ChannelProviderComponent implements OnInit {
   addChannelProvider: boolean = false;
   spinner: boolean = true;
-  pageTitle: String = "Channel Provider Interface";
+  pageTitle: String = "Channel Providers";
   editProviderData;
   channelProviderList = [];
   searchTerm: String = "";
@@ -61,7 +61,7 @@ export class ChannelProviderComponent implements OnInit {
     try {
       this.addChannelProvider = e;
       if (this.addChannelProvider == false) {
-        this.pageTitle = "Channel Provider";
+        this.pageTitle = "Channel Providers";
       }
       this.editProviderData = undefined;
     } catch (e) {
