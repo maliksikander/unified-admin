@@ -350,7 +350,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
           } else {
             this.snackbar.snackbarMessage(
               "error-snackbar",
-              "Queue is assigned to a channel,cannot be deleted",
+              "QUEUE IS MAPPED TO CHANNEL",
               2
             );
             this.spinner = false;

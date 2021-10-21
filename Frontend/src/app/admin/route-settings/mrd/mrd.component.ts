@@ -231,7 +231,7 @@ export class MrdComponent implements OnInit {
         } else {
           this.snackbar.snackbarMessage(
             "error-snackbar",
-            "MRD being used in channel type",
+            "MRD MAPPED TO CHANNEL TYPE",
             2
           );
           this.spinner = false;
@@ -308,11 +308,10 @@ export class MrdComponent implements OnInit {
       this.spinner = true;
       let data: any = this.onSaveObject();
       if (this.editData) {
-        // this.updateMRD(data, this.editData.id);
+        this.updateMRD(data, this.editData.id);
       } else {
-        // this.createMRD(data);
+        this.createMRD(data);
       }
-      console.log("save==>", data);
     } catch (e) {
       console.error("Error on save :", e);
     }

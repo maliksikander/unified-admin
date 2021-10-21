@@ -81,8 +81,9 @@ export class ChannelListComponent implements OnInit {
   deleteChannel(data) {
     this.endPointService.deleteChannel(data.serviceIdentifier).subscribe(
       (res: any) => {
-        this.spinner = false;
+
         this.removeRecordFromLocalList(data);
+        this.spinner = false;
       },
       (error: any) => {
         this.spinner = false;
@@ -99,6 +100,7 @@ export class ChannelListComponent implements OnInit {
       this.channels = this.channels.filter((item) => item.id != data.id);
       this.snackbar.snackbarMessage("success-snackbar", "Deleted", 1);
     } catch (e) {
+      this.spinner = false;
       console.error("Error in removing record from local:", e);
     }
   }

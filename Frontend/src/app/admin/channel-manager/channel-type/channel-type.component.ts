@@ -109,8 +109,8 @@ export class ChannelTypeComponent implements OnInit {
     //calling endpoint service method which accepts resource name as 'reqEndpoint' and channel type id as `id` object as parameter
     this.endPointService.deleteChannelType(data.id).subscribe(
       (res: any) => {
-        this.spinner = false;
         this.removeRecordFromLocalList(data);
+        this.spinner = false;
       },
       (error: any) => {
         this.spinner = false;
@@ -125,6 +125,7 @@ export class ChannelTypeComponent implements OnInit {
       this.typeList = this.typeList.filter((item) => item.id != data.id);
       this.snackbar.snackbarMessage("success-snackbar", "Deleted", 1);
     } catch (e) {
+      this.spinner = false;
       console.error("Error in removing record from local:", e);
     }
   }
@@ -132,7 +133,7 @@ export class ChannelTypeComponent implements OnInit {
   //on save callback function
   onSave(msg) {
     try {
-      this.pageTitle = "Channel Type";
+      this.pageTitle = "Channel Types";
       this.addType = false;
       this.spinner = true;
       this.snackbar.snackbarMessage("success-snackbar", msg, 1);

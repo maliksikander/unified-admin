@@ -120,8 +120,9 @@ export class ChannelProviderComponent implements OnInit {
   deleteChannelProvider(data) {
     this.endPointService.deleteChannelProvider(data.id).subscribe(
       (res: any) => {
-        this.spinner = false;
+     
         this.removeRecordFromLocalList(data);
+        this.spinner = false;
       },
       (error: any) => {
         this.spinner = false;
@@ -138,6 +139,7 @@ export class ChannelProviderComponent implements OnInit {
       );
       this.snackbar.snackbarMessage("success-snackbar", "Deleted", 1);
     } catch (e) {
+      this.spinner = false;
       console.error("Error in removing record from local:", e);
     }
   }

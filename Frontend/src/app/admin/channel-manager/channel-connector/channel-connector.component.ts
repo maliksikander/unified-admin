@@ -97,14 +97,17 @@ export class ChannelConnectorComponent implements OnInit {
       this.editConnectorData = undefined;
     } catch (e) {
       console.error("Error in reset UI :", e);
+      this.spinner = false;
     }
   }
 
   // to reset view on save event received by the child component
   onSave(msg) {
     try {
+      this.spinner = true;
       this.resetUI();
       this.snackbar.snackbarMessage("success-snackbar", msg, 1.5);
+      this.getChannelConnector();
     } catch (e) {
       console.error("Error on save :", e);
     }
@@ -130,8 +133,8 @@ export class ChannelConnectorComponent implements OnInit {
   deleteChannelConnector(data) {
     this.endPointService.deleteConnector(data.id).subscribe(
       (res: any) => {
-        this.spinner = false;
         this.removeRecordFromLocalList(data);
+        this.spinner = false;
       },
       (error: any) => {
         this.spinner = false;
@@ -150,6 +153,7 @@ export class ChannelConnectorComponent implements OnInit {
       );
       this.snackbar.snackbarMessage("success-snackbar", "Deleted", 1);
     } catch (e) {
+      this.spinner = false;
       console.error("Error in removing record from local:", e);
     }
   }

@@ -11,19 +11,23 @@ const login = async (req, res) => {
 
     try {
         const result = await keycloak.authenticateUserViaKeycloak(username, password, realm).then((res) => {
-            // console.log("RES==>", res);
             return res;
         });
         res.send(result);
     }
     catch (e) {
-        if (e && e.response && e.response.status) {
+
+        if (e && e.response && e.response.status == 401) {
+            let msg = "Invalid Credentials";
+            res.status(e.response.status).send(msg);
+        }
+
+        else if (e && e.response && e.response.status) {
             res.status(e.response.status).send(e.message);
         }
         else {
             res.status(500).send(e.message);
         }
-        // console.log("Error ==>", e);
         logger.error('Error:', e)
     }
 };
