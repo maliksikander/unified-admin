@@ -105,6 +105,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
     this.endPointService.getConnector().subscribe(
       (res: any) => {
         this.setLocalListValue("connector", res);
+        this.filterConnectorListByChanneltype();
         this.getQueue();
       },
       (error) => {
@@ -114,6 +115,24 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }
     );
+  }
+
+  filterConnectorListByChanneltype() {
+    try {
+      let test = [];
+      this.channelConnectorList.forEach((connector) => {
+        connector.channelProviderInterface.supportedChannelTypes.forEach(
+          (type) => {
+            if (type.id == this.channelTypeData.id) test.push(connector);
+          }
+        );
+      });
+
+      this.channelConnectorList = test;
+    } catch (e) {
+      console.error("Error in filtering connector list :", e);
+      this.spinner = false;
+    }
   }
 
   //to get queue list
