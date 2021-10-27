@@ -93,8 +93,8 @@ export class AmqComponent implements OnInit {
     this.endPointService.getAmqSetting().subscribe(
       (res: any) => {
         this.spinner = false;
-        if (res.status == 200 && res.amqSetting.length > 0) {
-          this.editData = res.amqSetting[0];
+        if (res.length > 0) {
+          this.editData = res[0];
           this.amqSettingForm.patchValue({
             amqHost: this.editData.amqHost,
             amqPort: JSON.parse(this.editData.amqPort),
@@ -102,7 +102,7 @@ export class AmqComponent implements OnInit {
             amqPwd: this.editData.amqPwd,
             amqUrl: this.editData.amqUrl,
           });
-        } else if (res.status == 200 && res.amqSetting.length == 0)
+        } else if (res.length == 0)
           this.snackbar.snackbarMessage("error-snackbar", "NO DATA FOUND", 2);
       },
       (error) => {
@@ -120,14 +120,13 @@ export class AmqComponent implements OnInit {
     this.endPointService.createAmqSetting(data).subscribe(
       (res: any) => {
         this.spinner = false;
-        if (res.status == 200) {
-          this.snackbar.snackbarMessage(
-            "success-snackbar",
-            "Settings Created",
-            1
-          );
-          this.editData = res.amqSetting;
-        }
+
+        this.snackbar.snackbarMessage(
+          "success-snackbar",
+          "Settings Created",
+          1
+        );
+        this.editData = res;
       },
       (error: any) => {
         this.spinner = false;
@@ -143,12 +142,11 @@ export class AmqComponent implements OnInit {
     this.endPointService.updateAmqSetting(data).subscribe(
       (res: any) => {
         this.spinner = false;
-        if (res.status == 200)
-          this.snackbar.snackbarMessage(
-            "success-snackbar",
-            "Settings Updated",
-            1
-          );
+        this.snackbar.snackbarMessage(
+          "success-snackbar",
+          "Settings Updated",
+          1
+        );
       },
       (error: any) => {
         this.spinner = false;
@@ -160,7 +158,7 @@ export class AmqComponent implements OnInit {
   }
 
   onSave() {
-    let data = this.amqSettingForm.value;
+    let data = JSON.parse(JSON.stringify(this.amqSettingForm.value));
     data.amqPort = JSON.stringify(this.amqSettingForm.value.amqPort);
     if (this.editData) {
       data.id = this.editData.id;

@@ -26,7 +26,6 @@ export class DatabaseComponent implements OnInit {
     ecmDBEngine: "",
   };
   validations;
-  // reqServiceType = 'database-setting';
   spinner: any = true;
   editData: any;
   hide1 = true;
@@ -109,8 +108,8 @@ export class DatabaseComponent implements OnInit {
     this.endPointService.getDatabaseSetting().subscribe(
       (res: any) => {
         this.spinner = false;
-        if (res.status == 200 && res.databaseSetting.length > 0) {
-          this.editData = res.databaseSetting[0];
+        if (res.length > 0) {
+          this.editData = res[0];
           this.databaseSettingForm.patchValue({
             mongoUrl: this.editData.mongoUrl,
             eabcDBUrl: this.editData.eabcDBUrl,
@@ -125,7 +124,7 @@ export class DatabaseComponent implements OnInit {
             ecmDBUser: this.editData.ecmDBUser,
             ecmDBEngine: this.editData.ecmDBEngine,
           });
-        } else if (res.status == 200 && res.databaseSetting.length == 0)
+        } else if (res.length == 0)
           this.snackbar.snackbarMessage("error-snackbar", "NO DATA FOUND", 2);
       },
       (error) => {
@@ -143,14 +142,12 @@ export class DatabaseComponent implements OnInit {
     this.endPointService.createDatabaseSetting(data).subscribe(
       (res: any) => {
         this.spinner = false;
-        if (res.status == 200) {
-          this.snackbar.snackbarMessage(
-            "success-snackbar",
-            "Settings Created",
-            1
-          );
-          this.editData = res.databaseSetting;
-        }
+        this.snackbar.snackbarMessage(
+          "success-snackbar",
+          "Settings Created",
+          1
+        );
+        this.editData = res;
       },
       (error: any) => {
         this.spinner = false;
@@ -166,12 +163,11 @@ export class DatabaseComponent implements OnInit {
     this.endPointService.updateDatabaseSetting(data).subscribe(
       (res: any) => {
         this.spinner = false;
-        if (res.status == 200)
-          this.snackbar.snackbarMessage(
-            "success-snackbar",
-            "Settings Updated",
-            1
-          );
+        this.snackbar.snackbarMessage(
+          "success-snackbar",
+          "Settings Updated",
+          1
+        );
       },
       (error: any) => {
         this.spinner = false;
@@ -183,7 +179,7 @@ export class DatabaseComponent implements OnInit {
   }
 
   onSave() {
-    let data = this.databaseSettingForm.value;
+    let data = JSON.parse(JSON.stringify(this.databaseSettingForm.value));
     if (this.editData) {
       data.id = this.editData.id;
       this.spinner = true;

@@ -180,8 +180,8 @@ export class WebWidgetFormComponent implements OnInit {
     //calling endpoint service method to get local settings
     this.endPointService.getLocaleSetting().subscribe(
       (res: any) => {
-        this.languageList = res?.localeSetting[0]?.supportedLanguages
-          ? res?.localeSetting[0]?.supportedLanguages
+        this.languageList = res[0]?.supportedLanguages
+          ? res[0]?.supportedLanguages
           : [];
         if (this.languageList.length == 0)
           this.snackbar.snackbarMessage(

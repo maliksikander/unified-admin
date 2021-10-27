@@ -33,7 +33,6 @@ export class SecurityComponent implements OnInit {
     stompSSLEnabled: "",
   };
   validations;
-  // reqServiceType = 'security-setting';
   spinner: any = true;
   editData: any;
   hide1 = true;
@@ -119,8 +118,8 @@ export class SecurityComponent implements OnInit {
     this.endPointService.getSecuritySetting().subscribe(
       (res: any) => {
         this.spinner = false;
-        if (res.status == 200 && res.securitySetting.length > 0) {
-          this.editData = res.securitySetting[0];
+        if (res.length > 0) {
+          this.editData = res[0];
           this.securitySettingForm.patchValue({
             certificatePath: this.editData.certificatePath,
             certificateKeypath: this.editData.certificateKeypath,
@@ -144,7 +143,7 @@ export class SecurityComponent implements OnInit {
             mongoSSL: this.editData.mongoSSL,
             stompSSLEnabled: this.editData.stompSSLEnabled,
           });
-        } else if (res.status == 200 && res.securitySetting.length == 0)
+        } else if (res.length == 0)
           this.snackbar.snackbarMessage("error-snackbar", "NO DATA FOUND", 2);
       },
       (error) => {
@@ -162,14 +161,13 @@ export class SecurityComponent implements OnInit {
     this.endPointService.createSecuritySetting(data).subscribe(
       (res: any) => {
         this.spinner = false;
-        if (res.status == 200) {
-          this.snackbar.snackbarMessage(
-            "success-snackbar",
-            "Settings Created",
-            1
-          );
-          this.editData = res.securitySetting;
-        }
+
+        this.snackbar.snackbarMessage(
+          "success-snackbar",
+          "Settings Created",
+          1
+        );
+        this.editData = res;
       },
       (error: any) => {
         this.spinner = false;
@@ -185,12 +183,11 @@ export class SecurityComponent implements OnInit {
     this.endPointService.updateSecuritySetting(data).subscribe(
       (res: any) => {
         this.spinner = false;
-        if (res.status == 200)
-          this.snackbar.snackbarMessage(
-            "success-snackbar",
-            "Settings Updated",
-            1
-          );
+        this.snackbar.snackbarMessage(
+          "success-snackbar",
+          "Settings Updated",
+          1
+        );
       },
       (error: any) => {
         this.spinner = false;
@@ -202,7 +199,7 @@ export class SecurityComponent implements OnInit {
   }
 
   onSave() {
-    let data = this.securitySettingForm.value;
+    let data = JSON.parse(JSON.stringify(this.securitySettingForm.value));
     if (this.editData) {
       data.id = this.editData.id;
       this.spinner = true;

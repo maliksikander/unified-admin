@@ -20,9 +20,9 @@ export class DisplayComponent implements OnInit {
   public imagePath;
   imageName = "";
   imgURL: any;
-  // reqServiceType = 'display-setting';
   spinner: any = true;
   editData: any;
+  disclaimerText = `• A maximum file size of 2MB is allowed.`;
 
   constructor(
     private snackbar: SnackbarService,
@@ -89,14 +89,14 @@ export class DisplayComponent implements OnInit {
     this.endPointService.getDisplaySetting().subscribe(
       (res: any) => {
         this.spinner = false;
-        if (res.status == 200 && res.displaySetting.length > 0) {
-          this.editData = res.displaySetting[0];
+        if (res.length > 0) {
+          this.editData = res[0];
           this.displaySettingForm.patchValue({
             agentAlias: this.editData.agentAlias,
             companyDisplayName: this.editData.companyDisplayName,
           });
           this.imgURL = this.editData.companyLogo;
-        } else if (res.status == 200 && res.displaySetting.length == 0)
+        } else if (res.length == 0)
           this.snackbar.snackbarMessage("error-snackbar", "NO DATA FOUND", 2);
       },
       (error) => {
@@ -114,14 +114,12 @@ export class DisplayComponent implements OnInit {
     this.endPointService.createDisplaySetting(data).subscribe(
       (res: any) => {
         this.spinner = false;
-        if (res.status == 200) {
-          this.snackbar.snackbarMessage(
-            "success-snackbar",
-            "Settings Created",
-            1
-          );
-          this.editData = res.displaySetting;
-        }
+        this.snackbar.snackbarMessage(
+          "success-snackbar",
+          "Settings Created",
+          1
+        );
+        this.editData = res;
       },
       (error: any) => {
         this.spinner = false;
@@ -137,12 +135,11 @@ export class DisplayComponent implements OnInit {
     this.endPointService.updateDisplaySetting(data).subscribe(
       (res: any) => {
         this.spinner = false;
-        if (res.status == 200)
-          this.snackbar.snackbarMessage(
-            "success-snackbar",
-            "Settings Updated",
-            1
-          );
+        this.snackbar.snackbarMessage(
+          "success-snackbar",
+          "Settings Updated",
+          1
+        );
       },
       (error: any) => {
         this.spinner = false;
@@ -154,7 +151,7 @@ export class DisplayComponent implements OnInit {
   }
 
   onSave() {
-    let data = this.displaySettingForm.value;
+    let data = JSON.parse(JSON.stringify(this.displaySettingForm.value));
     if (this.imgURL) {
       data.companyLogo = this.imgURL;
     } else {

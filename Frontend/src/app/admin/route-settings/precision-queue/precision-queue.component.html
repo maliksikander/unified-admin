@@ -76,11 +76,8 @@
                             <th scope="col">Timeout(sec)</th>
                           </tr>
                         </thead>
-                        <!-- <div class="test-class"> -->
                         <tbody>
-
                           <tr *ngFor="let stepData of data.steps;let i = index">
-                            <!-- {{stepData | json}} -->
                             <td scope="row" #tableData>
                               <!-- [style.width]="tableData.offsetWidth + 'px'" -->
                               <span class="step-table-span" [style.width]="tableData.offsetWidth + 'px'">
@@ -251,7 +248,7 @@
             <div class="form-group col-md-5">
               <mat-label>Step Timeout</mat-label>
               <mat-form-field appearance="outline">
-                <input type="number" min="0" matInput formControlName="timeout">
+                <input type="number" min="1" matInput formControlName="timeout">
                 <mat-error class="form-error">
                   {{stepFormErrors.timeout}}
                 </mat-error>

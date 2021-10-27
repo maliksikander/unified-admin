@@ -17,10 +17,11 @@ export class LoggingComponent implements OnInit {
     logFilePath: "",
   };
   validations;
-  // reqServiceType = 'log-setting';
   spinner: any = true;
   editData: any;
   logLevel = ["debug", "error", "fatal", "info", "off", "trace", "warn"];
+  disclaimerText = `• File size should be in MB's.`;
+
   constructor(
     private snackbar: SnackbarService,
     private fb: FormBuilder,
@@ -71,15 +72,15 @@ export class LoggingComponent implements OnInit {
     this.endPointService.getLogSetting().subscribe(
       (res: any) => {
         this.spinner = false;
-        if (res.status == 200 && res.logSetting.length > 0) {
-          this.editData = res.logSetting[0];
+        if (res.length > 0) {
+          this.editData = res[0];
           this.logSettingForm.patchValue({
             logLevel: this.editData.logLevel,
             agentLogsMaxFiles: this.editData.agentLogsMaxFiles,
             agentLogsFileSize: this.editData.agentLogsFileSize,
             logFilePath: this.editData.logFilePath,
           });
-        } else if (res.status == 200 && res.logSetting.length == 0)
+        } else if (res.length == 0)
           this.snackbar.snackbarMessage("error-snackbar", "NO DATA FOUND", 2);
       },
       (error) => {
@@ -97,14 +98,12 @@ export class LoggingComponent implements OnInit {
     this.endPointService.createLogSetting(data).subscribe(
       (res: any) => {
         this.spinner = false;
-        if (res.status == 200) {
-          this.snackbar.snackbarMessage(
-            "success-snackbar",
-            "Settings Created",
-            1
-          );
-          this.editData = res.logSetting;
-        }
+        this.snackbar.snackbarMessage(
+          "success-snackbar",
+          "Settings Created",
+          1
+        );
+        this.editData = res;
       },
       (error: any) => {
         this.spinner = false;
@@ -120,12 +119,11 @@ export class LoggingComponent implements OnInit {
     this.endPointService.updateLogSetting(data).subscribe(
       (res: any) => {
         this.spinner = false;
-        if (res.status == 200)
-          this.snackbar.snackbarMessage(
-            "success-snackbar",
-            "Settings Updated",
-            1
-          );
+        this.snackbar.snackbarMessage(
+          "success-snackbar",
+          "Settings Updated",
+          1
+        );
       },
       (error: any) => {
         this.spinner = false;
@@ -137,7 +135,7 @@ export class LoggingComponent implements OnInit {
   }
 
   onSave() {
-    let data = this.logSettingForm.value;
+    let data = JSON.parse(JSON.stringify(this.logSettingForm.value));
     if (this.editData) {
       data.id = this.editData.id;
       this.spinner = true;
