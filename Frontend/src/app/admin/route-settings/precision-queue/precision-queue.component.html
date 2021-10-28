@@ -101,9 +101,9 @@
                                 </ng-container>
                               </span>
                             </td>
-                            <td class="step-table-trigger"> 
-                              <span *ngIf="stepData?.timeout != 0">{{stepData?.timeout ? stepData?.timeout : 'N/A'}}</span>
-                              <span *ngIf="stepData?.timeout == 0">{{stepData.timeout}}</span>
+                            <td class="step-table-trigger">
+                              <span>{{stepData?.timeout ? stepData?.timeout : 'N/A'}}</span>
+                              <!-- <span *ngIf="stepData?.timeout == 0">{{stepData.timeout}}</span> -->
                               <span class="step-trigger-area">
                                 <button matTooltip="Edit" (click)="editStep(stepFormTemplate,stepData,j)" mat-mini-fab>
                                   <mat-icon>mode_edit</mat-icon>
