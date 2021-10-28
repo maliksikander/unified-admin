@@ -107,7 +107,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     });
 
     this.stepForm = this.fb.group({
-      timeout: ["", [Validators.required,Validators.min(0)]],
+      timeout: ["", [Validators.required, Validators.min(0)]],
       expressions: this.fb.array([this.addExpressionGroup()]),
     });
 
