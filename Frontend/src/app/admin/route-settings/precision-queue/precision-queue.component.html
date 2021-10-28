@@ -101,7 +101,7 @@
                                 </ng-container>
                               </span>
                             </td>
-                            <td class="step-table-trigger">{{stepData?.timeout ? stepData?.timeout : 'N/A'}}
+                            <td class="step-table-trigger">{{stepData.timeout ? stepData.timeout : 'N/A'}}
                               <span class="step-trigger-area">
                                 <button matTooltip="Edit" (click)="editStep(stepFormTemplate,stepData,j)" mat-mini-fab>
                                   <mat-icon>mode_edit</mat-icon>
@@ -248,7 +248,7 @@
             <div class="form-group col-md-5">
               <mat-label>Step Timeout</mat-label>
               <mat-form-field appearance="outline">
-                <input type="number" min="1" matInput formControlName="timeout">
+                <input type="number" min="0" matInput formControlName="timeout">
                 <mat-error class="form-error">
                   {{stepFormErrors.timeout}}
                 </mat-error>
