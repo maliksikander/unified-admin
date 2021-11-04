@@ -424,7 +424,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
 
   //to update channel, it accepts `data` object as parameter containing channel properties
   updateChannel(data) {
-    this.endPointService.updateChannel(data, data.serviceIdentifier).subscribe(
+    this.endPointService.updateChannel(data, data.id).subscribe(
       (res: any) => {
         this.emitMsgAndResetForm("Updated");
       },

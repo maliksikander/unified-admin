@@ -851,10 +851,10 @@ export class EndpointService {
       .pipe(catchError(this.handleError));
   }
 
-  updateChannel(data, serviceIdentifier): Observable<any> {
+  updateChannel(data, id): Observable<any> {
     return this.httpClient
       .put<any>(
-        `${this.CCM_URL}/${this.endpoints.ccm.channel}/${serviceIdentifier}`,
+        `${this.CCM_URL}/${this.endpoints.ccm.channel}/${id}`,
         data,
         {
           headers: new HttpHeaders({
@@ -866,10 +866,10 @@ export class EndpointService {
       .pipe(catchError(this.handleError));
   }
 
-  deleteChannel(serviceIdentifier): Observable<any> {
+  deleteChannel(id): Observable<any> {
     return this.httpClient
       .delete<any>(
-        `${this.CCM_URL}/${this.endpoints.ccm.channel}/${serviceIdentifier}`,
+        `${this.CCM_URL}/${this.endpoints.ccm.channel}/${id}`,
         {
           headers: new HttpHeaders({
             "Content-Type": "application/json",

@@ -79,7 +79,7 @@ export class ChannelListComponent implements OnInit {
   //to delete channel, it accepts `data` object as parameter containing channel  properties and
   //splices the particular object from local list variable if there is a success response.
   deleteChannel(data) {
-    this.endPointService.deleteChannel(data.serviceIdentifier).subscribe(
+    this.endPointService.deleteChannel(data.id).subscribe(
       (res: any) => {
 
         this.removeRecordFromLocalList(data);
