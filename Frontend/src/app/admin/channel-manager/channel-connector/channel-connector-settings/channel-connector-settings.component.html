@@ -5,42 +5,33 @@
   <form class="form-horizontal form-bordered channel-connector-form" [formGroup]="channelConnectorForm">
     <div class="col-md-5">
       <div class="form-group">
-        <mat-label>Channel Connector Name</mat-label>
+        <mat-label>Name</mat-label>
         <mat-form-field appearance="outline">
-          <input matInput formControlName="channelConnectorName">
+          <input matInput formControlName="name">
           <mat-error class="form-error">
-            {{formErrors.channelConnectorName}}
+            {{formErrors.name}}
           </mat-error>
         </mat-form-field>
       </div>
 
 
       <div class="form-group">
-        <mat-label>Interface</mat-label>
+        <mat-label>Channel Provider Interface</mat-label>
         <mat-form-field appearance="outline">
-          <mat-select formControlName="interface">
-            <mat-option *ngFor="let interface of interfaceList" [value]="interface">
-              {{interface}}</mat-option>
+          <mat-select (selectionChange)="onProviderSelection($event.value)" placeholder="Select Channel Provider"
+            formControlName="channelProviderInterface">
+            <mat-option *ngFor="let provider of channelProviderList" [value]="provider">{{provider?.name}}</mat-option>
           </mat-select>
           <mat-error class="form-error">
-            {{formErrors?.interface}}
+            {{formErrors?.channelProviderInterface}}
           </mat-error>
         </mat-form-field>
       </div>
 
 
-      <div class="form-group">
-        <mat-label>Interface Address</mat-label>
-        <mat-form-field appearance="outline">
-          <input matInput formControlName="interfaceAddress">
-          <mat-error class="form-error">
-            {{formErrors.interfaceAddress}}
-          </mat-error>
-        </mat-form-field>
-      </div>
 
-      <div *ngFor="let attrSchema of formSchema?.attributes">
 
+      <div *ngFor="let attrSchema of formSchema">
         <!-- INPUT -->
         <div *ngIf="attrSchema.attributeType == 'INPUT'">
           <div *ngIf="attrSchema?.valueType !='Boolean'" class="form-group">
@@ -62,7 +53,7 @@
         </div>
 
         <!--OPTIONS -->
-        <ng-container
+        <!-- <ng-container
           *ngIf="attrSchema.attributeType == 'OPTIONS' && attrSchema?.categoryOptions?.categories?.length > 0">
           <div class="form-group">
             <mat-label>{{attrSchema.label}}</mat-label>
@@ -89,8 +80,7 @@
               </mat-error>
             </mat-form-field>
           </div>
-        </ng-container>
-        <!-- </div> -->
+        </ng-container> -->
       </div>
     </div>
 

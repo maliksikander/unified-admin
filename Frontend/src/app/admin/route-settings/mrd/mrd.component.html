@@ -112,8 +112,15 @@
               </mat-error>
             </mat-form-field>
           </div>
-
-
+          <div class="form-group">
+            <mat-label>Max Task Request</mat-label>
+            <mat-form-field appearance="outline">
+              <input matInput type="number" formControlName="maxRequests">
+              <mat-error class="form-error">
+                {{formErrors.maxRequests}}
+              </mat-error>
+            </mat-form-field>
+          </div>
           <div class="form-group mrd-toggle mrd-padding-btn">
             <mat-label>Interruptible</mat-label>
             <mat-slide-toggle formControlName="enabled"></mat-slide-toggle>

@@ -290,6 +290,10 @@ export class CommonService {
     enabled: {
       required: "This field is required",
     },
+    maxRequests: {
+      required: "This field is required",
+      min: "Min value of 1 is required",
+    },
   };
 
   queueFormErrorMessages = {
@@ -338,29 +342,43 @@ export class CommonService {
     },
   };
 
-  connectorFormErrorMessages = {
-    channelConnectorName: {
+  channelProviderFormErrorMessages = {
+    name: {
       required: "This field is required",
       minlength: "More characters required",
-      maxlength: "Less characters required",
-      pattern: 'Allowed special characters "[!@#$%^&*()-_=+~`"]+"',
+      maxlength: "Maximum 50 characters allowed",
+      pattern: "Invalid Name Format",
     },
-    interfaceAddress: {
+    supportedChannelTypes: {
       required: "This field is required",
-      pattern: "Enter valid url",
     },
-    interface: {
+    providerWebhook: {
       required: "This field is required",
-      pattern: "Enter valid url",
+      pattern: "Invalid URL Pattern",
+    },
+    channelProviderConfigSchema: {
+      required: "This field is required",
+    },
+  };
+
+  connectorFormErrorMessages = {
+    name: {
+      required: "This field is required",
+      minlength: "More characters required",
+      maxlength: "Maximum 50 characters allowed",
+      pattern: "Invalid Name Format",
+    },
+    channelProviderInterface: {
+      required: "This field is required",
     },
   };
 
   channelFormErrorMessages = {
-    channelName: {
+    name: {
       required: "This field is required",
       minlength: "More characters required",
-      maxlength: "Less characters required",
-      pattern: 'Allowed special characters "[!@#$%^&*()-_=+~`"]+"',
+      maxlength: "Maximum 50 characters allowed",
+      pattern: "Invalid Name Format",
     },
     serviceIdentifier: {
       required: "This field is required",
@@ -435,11 +453,11 @@ export class CommonService {
   };
 
   channelTypeErrorMessages = {
-    typeName: {
+    name: {
       required: "This field is required",
       minlength: "More characters required",
-      maxlength: "Less characters required",
-      pattern: 'Allowed special characters "[!@#$%^&*()-_=+~`"]+"',
+      maxlength: "Maximum 50 characters allowed",
+      pattern: "Invalid Name Format",
     },
     isInteractive: {
       required: "This field is required",

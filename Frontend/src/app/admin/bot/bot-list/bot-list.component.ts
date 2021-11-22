@@ -51,17 +51,13 @@ export class BotListComponent implements OnInit {
     );
   }
 
-
-
   //to delete bot, it accepts `data` containing ('botName','botType'.'botUri') object as parameter  and
   //removes that particular object from local list variable if there is a success response
   deleteBotSetting(data): void {
-    //calling bot setting endpoint, it accepts bot setting object id as `data.botId` parameter
     this.endPointService.deleteBotSetting(data.botId).subscribe(
       (res: any) => {
-        this.botList = this.botList.filter((item) => item.botId != data.botId);
+        this.removeRecordFromLocalList(data);
         this.spinner = false;
-        this.snackbar.snackbarMessage("success-snackbar", "Deleted", 1);
       },
       (error: any) => {
         this.spinner = false;
@@ -70,6 +66,17 @@ export class BotListComponent implements OnInit {
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }
     );
+  }
+
+  // to remove the deleted channel connector from local list, it expects the data object of the record as paramter on success response
+  removeRecordFromLocalList(data) {
+    try {
+      this.botList = this.botList.filter((item) => item.botId != data.botId);
+      this.snackbar.snackbarMessage("success-snackbar", "Deleted", 1);
+    } catch (e) {
+      console.error("Error in removing record from local:", e);
+      this.spinner = false;
+    }
   }
 
   //to edit bot settings and change the view to form page,it accepts  bot setting object as 'data' ('botName','botType'.'botUri') and bot type as 'type' parameter
@@ -97,11 +104,36 @@ export class BotListComponent implements OnInit {
       .subscribe((res: any) => {
         this.spinner = true;
         if (res === "delete") {
-          this.deleteBotSetting(data);
+          this.getBotMappedChannel(data);
         } else {
           this.spinner = false;
         }
       });
+  }
+
+  //to get channel type list and it expects the relevant mrd id
+  getBotMappedChannel(data) {
+    this.endPointService.getBotMappedChannel(data.botId).subscribe(
+      (res: any) => {
+        let channelList: Array<any> = res;
+        if (channelList.length == 0) {
+          this.deleteBotSetting(data);
+        } else {
+          this.snackbar.snackbarMessage(
+            "error-snackbar",
+            "Bot MAPPED TO CHANNEL",
+            2
+          );
+          this.spinner = false;
+        }
+      },
+      (error) => {
+        this.spinner = false;
+        console.error("Error Fetching MRD mapped channel type:", error);
+        if (error && error.status == 0)
+          this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
+      }
+    );
   }
 
   //to add bot and change the view to form page  and pass bot type as 'type' parameter

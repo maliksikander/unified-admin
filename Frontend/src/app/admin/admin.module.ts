@@ -44,6 +44,8 @@ import { ReasonCodesComponent } from "./reason-codes/reason-codes.component";
 import { PullModeRoutingComponent } from "./pull-mode-routing/pull-mode-routing.component";
 import { WebWidgetListComponent } from './web-widget-list/web-widget-list.component';
 import { WebWidgetFormComponent } from './web-widget-list/web-widget-form/web-widget-form.component';
+import { ChannelProviderComponent } from './channel-manager/channel-provider/channel-provider.component';
+import { ChannelProviderSettingsComponent } from './channel-manager/channel-provider/channel-provider-settings/channel-provider-settings.component';
 
 @NgModule({
   imports: [
@@ -92,6 +94,8 @@ import { WebWidgetFormComponent } from './web-widget-list/web-widget-form/web-wi
     PullModeRoutingComponent,
     WebWidgetListComponent,
     WebWidgetFormComponent,
+    ChannelProviderComponent,
+    ChannelProviderSettingsComponent,
   ],
   providers: [
     HttpClientModule,

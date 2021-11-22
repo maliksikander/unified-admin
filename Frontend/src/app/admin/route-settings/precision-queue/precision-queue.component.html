@@ -76,11 +76,8 @@
                             <th scope="col">Timeout(sec)</th>
                           </tr>
                         </thead>
-                        <!-- <div class="test-class"> -->
                         <tbody>
-
                           <tr *ngFor="let stepData of data.steps;let i = index">
-                            <!-- {{stepData | json}} -->
                             <td scope="row" #tableData>
                               <!-- [style.width]="tableData.offsetWidth + 'px'" -->
                               <span class="step-table-span" [style.width]="tableData.offsetWidth + 'px'">
@@ -104,7 +101,9 @@
                                 </ng-container>
                               </span>
                             </td>
-                            <td class="step-table-trigger">{{stepData?.timeout ? stepData?.timeout : 'N/A'}}
+                            <td class="step-table-trigger">
+                              <ng-container *ngIf="stepData?.timeout != 0">{{stepData?.timeout ? stepData?.timeout : 'N/A'}}</ng-container>
+                              <ng-container *ngIf="stepData?.timeout == 0">{{stepData.timeout}}</ng-container>
                               <span class="step-trigger-area">
                                 <button matTooltip="Edit" (click)="editStep(stepFormTemplate,stepData,j)" mat-mini-fab>
                                   <mat-icon>mode_edit</mat-icon>

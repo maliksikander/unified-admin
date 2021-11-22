@@ -8,16 +8,22 @@ let { NodeAdapter } = require("ef-keycloak-connect");
 let keycloak = new NodeAdapter(config);
 let resource = config.resource;
 
-router.get('/', keycloak.enforcer(['general-settings:manage'], {
-    resource_server_id: resource
-}), databaseSettingController.getSettings);
+// router.get('/', keycloak.enforcer(['general-settings:manage'], {
+//     resource_server_id: resource
+// }), databaseSettingController.getSettings);
 
-router.put('/', keycloak.enforcer(['general-settings:manage'], {
-    resource_server_id: resource
-}), validate(databaseValidation.updateSetting), databaseSettingController.updateSettings);
+// router.put('/', keycloak.enforcer(['general-settings:manage'], {
+//     resource_server_id: resource
+// }), validate(databaseValidation.updateSetting), databaseSettingController.updateSettings);
 
-router.post('/', keycloak.enforcer(['general-settings:manage'], {
-    resource_server_id: resource
-}), validate(databaseValidation.createSetting), databaseSettingController.createSettings);
+// router.post('/', keycloak.enforcer(['general-settings:manage'], {
+//     resource_server_id: resource
+// }), validate(databaseValidation.createSetting), databaseSettingController.createSettings);
+
+router.get('/', databaseSettingController.getSettings);
+
+router.put('/', validate(databaseValidation.updateSetting), databaseSettingController.updateSettings);
+
+router.post('/', validate(databaseValidation.createSetting), databaseSettingController.createSettings);
 
 module.exports = router;

@@ -19,15 +19,13 @@ import { SnackbarService } from "src/app/admin/services/snackbar.service";
 export class ChannelTypeFormComponent implements OnInit {
   @Input() parentBool;
   @Input() editData;
-  // @Input() botData;
   @Output() childBool = new EventEmitter<any>();
   @Output() formSaveData = new EventEmitter<any>();
   channelTypeForm: FormGroup;
   formErrors = {
-    typeName: "",
+    name: "",
     channelLogo: "",
     isInteractive: "",
-    // channelConfigSchema: "",
     mediaRoutingDomain: "",
   };
   validations;
@@ -38,9 +36,7 @@ export class ChannelTypeFormComponent implements OnInit {
   formsList: [];
   spinner = true;
   valid = false;
-  disclaimerText =
-    "• Please select an image with no background. \n • A maximum file size of 100KB is allowed.";
-
+  disclaimerText = `• Please select an image with no background. \n • A maximum file size of 100KB is allowed.`;
   uploadFilePayload;
 
   constructor(
@@ -57,10 +53,16 @@ export class ChannelTypeFormComponent implements OnInit {
     this.validations = this.commonService.channelTypeErrorMessages;
 
     this.channelTypeForm = this.formBuilder.group({
-      typeName: ["", [Validators.required]],
+      name: [
+        "",
+        [
+          Validators.required,
+          Validators.maxLength(50),
+          Validators.pattern(/^[a-zA-Z0-9_-]+(?:\040[a-zA-Z0-9_-]+)*$/),
+        ],
+      ],
       channelLogo: [null, [Validators.required]],
       isInteractive: [true, [Validators.required]],
-      // channelConfigSchema: ["", [Validators.required]],
       mediaRoutingDomain: ["", [Validators.required]],
     });
 
@@ -88,54 +90,37 @@ export class ChannelTypeFormComponent implements OnInit {
 
   //to set selected file name and set file name on UI and it accepts file properties as 'files' and change event as 'e'
   fileUpload(file, e) {
-    let reader = new FileReader();
-    if (file.length != 0) {
-      if (file[0].size > 100000)
-        return this.snackbar.snackbarMessage(
-          "error-snackbar",
-          "Image Size greater than 100KB",
-          3
+    try {
+      let reader = new FileReader();
+      if (file.length != 0) {
+        if (file[0].size > 100000)
+          return this.snackbar.snackbarMessage(
+            "error-snackbar",
+            "Image Size greater than 100KB",
+            3
+          );
+        reader.readAsDataURL(file[0]);
+        reader.onload = (_event) => {
+          this.imageData = reader.result;
+          this.imageName = e.target.files[0].name;
+          this.channelTypeForm.controls["channelLogo"].setValue(this.imageName);
+        };
+      }
+
+      let fd = new FormData();
+      if (file[0]) {
+        fd.append("file", file[0]);
+        fd.append(
+          "conversationId",
+          `${Math.floor(Math.random() * 90000) + 10000}`
         );
-      reader.readAsDataURL(file[0]);
-      reader.onload = (_event) => {
-        this.imageData = reader.result;
-        this.imageName = e.target.files[0].name;
-        this.channelTypeForm.controls["channelLogo"].setValue(this.imageName);
-      };
-    }
 
-    let fd = new FormData();
-    if (file[0]) {
-      fd.append("file", file[0]);
-      fd.append(
-        "conversationId",
-        `${Math.floor(Math.random() * 90000) + 10000}`
-      );
-
-      this.uploadFilePayload = fd;
+        this.uploadFilePayload = fd;
+      }
+    } catch (e) {
+      console.error("Error in File Upload :", e);
     }
   }
-
-  //to get form list and set the local variable with the response
-  // getForms() {
-  //   this.endPointService.getForm().subscribe(
-  //     (res: any) => {
-  //       // this.spinner = false;
-  //       if (res.length == 0)
-  //         this.snackbar.snackbarMessage(
-  //           "error-snackbar",
-  //           "NO FORM DATA FOUND",
-  //           2
-  //         );
-  //       this.formsList = res;
-  //       this.getMRD();
-  //     },
-  //     (error) => {
-  //       this.spinner = false;
-  //       console.error("Error fetching:", error);
-  //     }
-  //   );
-  // }
 
   //to get MRD list and set the local variable with the response
   getMRD() {
@@ -148,42 +133,35 @@ export class ChannelTypeFormComponent implements OnInit {
             "NO MRD DATA FOUND",
             2
           );
-        this.patchEditValues();
+        if (this.editData) this.patchEditValues();
         this.spinner = false;
       },
       (error) => {
         this.spinner = false;
-        console.error("Error fetching:", error);
+        console.error("Error fetching MRD:", error);
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }
     );
   }
 
-  //patch value to form to be edited
+  //patch value to form for editing
   patchEditValues() {
     try {
-      if (this.editData) {
-        const mrdIndex = this.mrdData.findIndex(
-          (item) => item.id === this.editData.mediaRoutingDomain
-        );
-        // const formIndex = this.formsList.findIndex(
-        //   (item: any) => item.id === this.editData?.channelConfigSchema
-        // );
-        this.channelTypeForm.patchValue({
-          typeName: this.editData.typeName,
-          isInteractive: this.editData.isInteractive,
-          // channelConfigSchema: this.formsList[formIndex],
-          mediaRoutingDomain: this.mrdData[mrdIndex],
-          channelLogo: " ",
-        });
+      const mrdIndex = this.mrdData.findIndex(
+        (item) => item.id === this.editData.mediaRoutingDomain
+      );
+      this.channelTypeForm.patchValue({
+        name: this.editData.name,
+        isInteractive: this.editData.isInteractive,
+        mediaRoutingDomain: this.mrdData[mrdIndex],
+        channelLogo: " ",
+      });
 
-        this.channelTypeForm.controls["typeName"].disable();
-        // this.getFileStats(this.editData.channelLogo);
-        this.imageData = `${this.endPointService.FILE_ENGINE_URL}/${this.endPointService.endpoints.fileEngine.downloadFileStream}?filename=${this.editData?.channelLogo}`;
-      }
+      this.channelTypeForm.controls["name"].disable();
+      this.imageData = `${this.endPointService.FILE_ENGINE_URL}/${this.endPointService.endpoints.fileEngine.downloadFileStream}?filename=${this.editData?.channelLogo}`;
     } catch (e) {
-      console.error("Error==>", e);
+      console.error("Error Patching:", e);
       this.spinner = false;
     }
   }
@@ -197,7 +175,7 @@ export class ChannelTypeFormComponent implements OnInit {
       },
       (error: any) => {
         this.spinner = false;
-        console.error("Error while uploading:", error);
+        console.error("Error Uploading File:", error);
       }
     );
   }
@@ -214,55 +192,57 @@ export class ChannelTypeFormComponent implements OnInit {
 
   // to create request payload, it receives selected file for logo as filename parameter
   setChannelTypeRequestPayload(filename) {
-    // console.log("Fprm value==>",this.channelTypeForm.value)
-    let data = JSON.parse(JSON.stringify(this.channelTypeForm.value));
-
-    // data.channelConfigSchema = data.channelConfigSchema.id;
-    data.channelLogo = filename;
-    data.mediaRoutingDomain = data.mediaRoutingDomain.id;
-    if (this.editData) {
-      if (!data.typeName) data.typeName = this.editData.typeName;
-      data.id = this.editData.id;
-    }
-    // console.log("data==>", data);
-    if (data.id) {
-      this.updateChannel(data);
-    } else {
-      this.createChannelType(data);
+    try {
+      let data = JSON.parse(JSON.stringify(this.channelTypeForm.value));
+      data.channelLogo = filename;
+      data.mediaRoutingDomain = data.mediaRoutingDomain.id;
+      if (this.editData) {
+        if (!data.name) data.name = this.editData.name;
+        data.id = this.editData.id;
+      }
+      if (data.id) {
+        this.updateChannel(data);
+      } else {
+        this.createChannelType(data);
+      }
+    } catch (e) {
+      console.error("Error", e);
     }
   }
 
   // to send event msg and reset form after success response
   emitMsgAndResetForm(status) {
-    let msg = `${status} Successfully`;
-    this.formSaveData.emit(msg);
-    this.channelTypeForm.reset();
+    try {
+      let msg = `${status} Successfully`;
+      this.formSaveData.emit(msg);
+      this.channelTypeForm.reset();
+    } catch (e) {
+      console.error("Type Event Emitter Error", e);
+    }
   }
 
   //to create channel, it accepts `data` object as parameter containing channel type properties
   createChannelType(data) {
-    //calling endpoint service method which accepts resource name as 'reqEndpoint' and `data` object as parameter
     this.endPointService.createChannelType(data).subscribe(
       (res: any) => {
         this.emitMsgAndResetForm("Created");
       },
       (error: any) => {
         this.spinner = false;
-        console.error("Error fetching:", error);
+        console.error("Error Creating Type:", error);
       }
     );
   }
 
   //to update channel type, it accepts `data` object as parameter containing channel type properties
   updateChannel(data) {
-    //calling endpoint service method which accepts resource endpoint as 'reqEndpoint' and `data` object as parameter
     this.endPointService.updateChannelType(data, data.id).subscribe(
       (res: any) => {
         this.emitMsgAndResetForm("Updated");
       },
       (error: any) => {
         this.spinner = false;
-        console.error("Error fetching:", error);
+        console.error("Error Updating Type:", error);
       }
     );
   }

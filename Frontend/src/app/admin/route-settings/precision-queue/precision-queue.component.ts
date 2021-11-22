@@ -57,6 +57,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     timeout: {
       required: "This field is required",
       minlength: "More characters required",
+      min: "Min value of 0 is allowed",
       maxlength: "Max 40 characters allowed",
       pattern: 'Allowed special characters "[!@#$%^&*()-_=+~`"]+"',
     },
@@ -106,7 +107,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     });
 
     this.stepForm = this.fb.group({
-      timeout: ["", [Validators.required]],
+      timeout: ["", [Validators.required, Validators.min(0)]],
       expressions: this.fb.array([this.addExpressionGroup()]),
     });
 
@@ -350,7 +351,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
           } else {
             this.snackbar.snackbarMessage(
               "error-snackbar",
-              "Queue is assigned to a channel,cannot be deleted",
+              "QUEUE IS MAPPED TO CHANNEL",
               2
             );
             this.spinner = false;
@@ -693,9 +694,6 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     let stepData = this.manipulateExpTerm(formData);
     let data = stepData;
     let queue = this.queueData[i];
-    const stepLength = queue?.steps?.length;
-    // const stepLength = 10;
-    // console.log("queue==>", stepLength);
     this.createStep(data, queue.id);
 
     this.resetStepForm();

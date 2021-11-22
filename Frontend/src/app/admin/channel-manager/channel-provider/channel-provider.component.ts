@@ -6,16 +6,16 @@ import { EndpointService } from "../../services/endpoint.service";
 import { SnackbarService } from "../../services/snackbar.service";
 
 @Component({
-  selector: "app-channel-type",
-  templateUrl: "./channel-type.component.html",
-  styleUrls: ["./channel-type.component.scss"],
+  selector: "app-channel-provider",
+  templateUrl: "./channel-provider.component.html",
+  styleUrls: ["./channel-provider.component.scss"],
 })
-export class ChannelTypeComponent implements OnInit {
-  addType: boolean = false;
+export class ChannelProviderComponent implements OnInit {
+  addChannelProvider: boolean = false;
   spinner: boolean = true;
-  pageTitle: String = "Channel Types";
-  editTypeData;
-  typeList = [];
+  pageTitle: String = "Channel Providers";
+  editProviderData;
+  channelProviderList = [];
   searchTerm: String = "";
   p: any = 1;
   itemsPerPageList = [5, 10, 15];
@@ -31,21 +31,22 @@ export class ChannelTypeComponent implements OnInit {
 
   ngOnInit(): void {
     this.commonService.checkTokenExistenceInStorage();
-    let pageNumber = sessionStorage.getItem("channelTypePage");
+    let pageNumber = sessionStorage.getItem("currentProviderPage");
     if (pageNumber) this.p = pageNumber;
-    this.getChannelTypes();
+
+    this.getChannelProviders();
   }
 
-  //to get channel type list
-  getChannelTypes() {
-    this.endPointService.getChannelType().subscribe(
+  //to get channel provider list
+  getChannelProviders() {
+    this.endPointService.getChannelProvider().subscribe(
       (res: any) => {
-        this.typeList = res;
         this.spinner = false;
+        this.channelProviderList = res;
       },
       (error: any) => {
         this.spinner = false;
-        console.error("Error Fetching Type:", error);
+        console.error("Error Fetching Channel Providers :", error);
       }
     );
   }
@@ -57,36 +58,47 @@ export class ChannelTypeComponent implements OnInit {
 
   //to change form ui view to list view
   childToParentUIChange(e): void {
-    this.addType = e;
-    if (this.addType == false) {
-      this.pageTitle = "Channel Type";
+    try {
+      this.addChannelProvider = e;
+      if (this.addChannelProvider == false) {
+        this.pageTitle = "Channel Providers";
+      }
+      this.editProviderData = undefined;
+    } catch (e) {
+      console.error("Error in ui change method :", e);
     }
-    this.editTypeData = undefined;
   }
 
-  //to enable channel type form view and change page title
-  addChannelType() {
-    this.addType = true;
-    this.pageTitle = "New Channel Type";
+  //to enable channel provider form view and change page title
+  addProvider() {
+    try {
+      this.addChannelProvider = true;
+      this.pageTitle = "New Channel Provider";
+    } catch (e) {
+      console.error("Error in add provider :", e);
+    }
   }
 
-  //to edit channel type and enable form view and change page title an pass data to child component
-  editChannelType(data) {
-    this.addType = true;
-    this.pageTitle = "Edit Channel Type Settings";
-    this.editTypeData = data;
+  //to edit channel provider and enable form view and change page title an pass data to child component
+  editChannelProvider(data) {
+    try {
+      this.addChannelProvider = true;
+      this.pageTitle = "Edit Channel Provider Settings";
+      this.editProviderData = data;
+    } catch (e) {
+      console.error("Error in edit provider :", e);
+    }
   }
 
-  //Confirmation dialog for delete operation , it accepts the attribute object as `data` parameter
+  //Confirmation dialog for delete operation , it accepts the provider object as `data` parameter
   deleteConfirm(data) {
-    // let id = data.id;
-    let msg = "Are you sure you want to delete this channel type ?";
+    let msg = "Are you sure you want to delete this channel provider?";
     return this.dialog
       .open(ConfirmDialogComponent, {
         panelClass: "confirm-dialog-container",
         disableClose: true,
         data: {
-          heading: "Delete Channel Type",
+          heading: "Delete Channel Provider",
           message: msg,
           text: "confirm",
           data: data,
@@ -96,33 +108,35 @@ export class ChannelTypeComponent implements OnInit {
       .subscribe((res: any) => {
         this.spinner = true;
         if (res === "delete") {
-          this.deleteChannelType(data);
+          this.deleteChannelProvider(data);
         } else {
           this.spinner = false;
         }
       });
   }
 
-  //to delete channel type, it accepts `data` as parameter containing channel type properties and
+  //to delete channel provider, it accepts `data` as parameter containing channel provider properties and
   //filters that particular object from local list variable if there is a success response.
-  deleteChannelType(data) {
-    //calling endpoint service method which accepts resource name as 'reqEndpoint' and channel type id as `id` object as parameter
-    this.endPointService.deleteChannelType(data.id).subscribe(
+  deleteChannelProvider(data) {
+    this.endPointService.deleteChannelProvider(data.id).subscribe(
       (res: any) => {
+     
         this.removeRecordFromLocalList(data);
         this.spinner = false;
       },
       (error: any) => {
         this.spinner = false;
-        console.error("Error Deleting Type:", error);
+        console.error("Error fetching:", error);
       }
     );
   }
 
-  // to remove the deleted channel type from local list, it expects the data object of the record as paramter on success response
+  // to remove the deleted channel provider from local list, it expects the data object of the record as paramter on success response
   removeRecordFromLocalList(data) {
     try {
-      this.typeList = this.typeList.filter((item) => item.id != data.id);
+      this.channelProviderList = this.channelProviderList.filter(
+        (item) => item.id != data.id
+      );
       this.snackbar.snackbarMessage("success-snackbar", "Deleted", 1);
     } catch (e) {
       this.spinner = false;
@@ -133,11 +147,11 @@ export class ChannelTypeComponent implements OnInit {
   //on save callback function
   onSave(msg) {
     try {
-      this.pageTitle = "Channel Types";
-      this.addType = false;
+      this.pageTitle = "Channel Type";
+      this.addChannelProvider = false;
       this.spinner = true;
       this.snackbar.snackbarMessage("success-snackbar", msg, 1);
-      this.getChannelTypes();
+      this.getChannelProviders();
     } catch (e) {
       console.error("Error on save callback:", e);
     }

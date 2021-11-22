@@ -9,16 +9,22 @@ const keycloak = new NodeAdapter(config);
 let resource = config.resource;
 
 
-router.get('/', keycloak.enforcer(['general-settings:manage'], {
-    resource_server_id: resource
-}), logSettingController.getSettings);
+// router.get('/', keycloak.enforcer(['general-settings:manage'], {
+//     resource_server_id: resource
+// }), logSettingController.getSettings);
 
-router.put('/', keycloak.enforcer(['general-settings:manage'], {
-    resource_server_id: resource
-}), validate(logValidation.updateSetting), logSettingController.updateSettings);
+// router.put('/', keycloak.enforcer(['general-settings:manage'], {
+//     resource_server_id: resource
+// }), validate(logValidation.updateSetting), logSettingController.updateSettings);
 
-router.post('/', keycloak.enforcer(['general-settings:manage'], {
-    resource_server_id: resource
-}), validate(logValidation.createSetting), logSettingController.createSettings);
+// router.post('/', keycloak.enforcer(['general-settings:manage'], {
+//     resource_server_id: resource
+// }), validate(logValidation.createSetting), logSettingController.createSettings);
+
+router.get('/', logSettingController.getSettings);
+
+router.put('/', validate(logValidation.updateSetting), logSettingController.updateSettings);
+
+router.post('/', validate(logValidation.createSetting), logSettingController.createSettings);
 
 module.exports = router;

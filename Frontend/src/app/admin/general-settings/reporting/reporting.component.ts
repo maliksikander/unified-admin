@@ -17,7 +17,6 @@ export class ReportingComponent implements OnInit {
     rcDBUrl: "",
   };
   validations;
-  // reqServiceType = 'report-setting';
   spinner: any = true;
   editData: any;
   hide = true;
@@ -73,8 +72,8 @@ export class ReportingComponent implements OnInit {
     this.endPointService.getReportSetting().subscribe(
       (res: any) => {
         this.spinner = false;
-        if (res.status == 200 && res.reportSetting.length > 0) {
-          this.editData = res.reportSetting[0];
+        if (res.length > 0) {
+          this.editData = res[0];
           this.setValidation(this.editData.reportingEnabled);
           this.reportSettingForm.patchValue({
             rcDBName: this.editData.rcDBName,
@@ -83,7 +82,7 @@ export class ReportingComponent implements OnInit {
             rcDBUrl: this.editData.rcDBUrl,
             reportingEnabled: this.editData.reportingEnabled,
           });
-        } else if (res.status == 200 && res.reportSetting.length == 0)
+        } else if (res.length == 0)
           this.snackbar.snackbarMessage("error-snackbar", "NO DATA FOUND", 2);
       },
       (error) => {
@@ -107,14 +106,13 @@ export class ReportingComponent implements OnInit {
     this.endPointService.createReportSetting(data).subscribe(
       (res: any) => {
         this.resetForm();
-        if (res.status == 200) {
-          this.snackbar.snackbarMessage(
-            "success-snackbar",
-            "Settings Created",
-            1
-          );
-          this.getReportSetting();
-        }
+
+        this.snackbar.snackbarMessage(
+          "success-snackbar",
+          "Settings Created",
+          1
+        );
+        this.getReportSetting();
       },
       (error: any) => {
         this.spinner = false;
@@ -136,12 +134,11 @@ export class ReportingComponent implements OnInit {
     this.endPointService.updateReportSetting(data).subscribe(
       (res: any) => {
         this.resetForm();
-        if (res.status == 200)
-          this.snackbar.snackbarMessage(
-            "success-snackbar",
-            "Settings Updated",
-            1
-          );
+        this.snackbar.snackbarMessage(
+          "success-snackbar",
+          "Settings Updated",
+          1
+        );
         this.getReportSetting();
       },
       (error: any) => {
@@ -154,7 +151,7 @@ export class ReportingComponent implements OnInit {
   }
 
   onSave() {
-    let data = this.reportSettingForm.value;
+    let data = JSON.parse(JSON.stringify(this.reportSettingForm.value));
     if (this.editData) {
       data.id = this.editData.id;
       this.spinner = true;
