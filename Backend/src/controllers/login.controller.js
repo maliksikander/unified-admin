@@ -28,7 +28,7 @@ const login = async (req, res) => {
         else {
             res.status(500).send(e.message);
         }
-        logger.error('Error:', e)
+        logger.error('[Login Error]:', e)
     }
 };
 

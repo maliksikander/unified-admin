@@ -58,7 +58,7 @@ export class ChannelProviderSettingsComponent implements OnInit {
     // "Email",
     // "IP",
     Number: "Positive/Negative numbers are supported",
-    Password: "",
+    Password: "Supports string of min 8 characters and upto 256 characters",
     // "PhoneNumber",
     PositiveNumber: "Supports positive number with/without '+'",
     String50: "Any characters of a maximum of 50 characters",

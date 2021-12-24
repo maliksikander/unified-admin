@@ -15,7 +15,7 @@ import { SnackbarService } from "../../services/snackbar.service";
   styleUrls: ["./license-manager.component.scss"],
 })
 export class LicenseManagerComponent implements OnInit {
-  spinner = false;
+  spinner = true;
   fileName = "";
   fileToBeUploaded = new FormData();
   licenseKey = new FormControl("", [Validators.required]);
@@ -36,6 +36,8 @@ export class LicenseManagerComponent implements OnInit {
       this.spinner = res;
       this.changeDetector.markForCheck();
     });
+
+    this.getMasterKey();
   }
 
   //to select file and save in local variable, it accepts selected file as 'file' parameter
@@ -49,6 +51,25 @@ export class LicenseManagerComponent implements OnInit {
       fd.append("file", file[0]);
       this.fileToBeUploaded = fd;
     }
+  }
+
+  //to get save master key and disable the master key field
+  getMasterKey() {
+    this.endPointService.getMasterKey().subscribe(
+      (res: any) => {
+        if (res && res.masterKey) this.patchMasterKeyValue(res.masterKey);
+        this.spinner = false;
+      },
+      (error) => {
+        this.spinner = false;
+        console.error("[License Master Key] Error :", error);
+      }
+    );
+  }
+
+  patchMasterKeyValue(value) {
+    this.licenseKey.patchValue(value);
+    this.licenseKey.disable();
   }
 
   //to upload offline verification file
@@ -65,10 +86,32 @@ export class LicenseManagerComponent implements OnInit {
       },
       (error) => {
         this.spinner = false;
-        console.error("Error fetching:", error);
+        console.error("[License File Upload] Error:", error);
       }
     );
   }
 
-  onSave() {}
+  onSave() {
+    this.spinner = true;
+    let key = this.licenseKey.value;
+    this.saveMasterKey(key);
+  }
+
+  saveMasterKey(key) {
+    this.endPointService.saveMasterKey(key).subscribe(
+      (res: any) => {
+        this.spinner = false;
+        if (res.ProductsList) {
+          this.snackbar.snackbarMessage("success-snackbar", "File Uploaded", 2);
+          this.getMasterKey();
+        } else {
+          this.snackbar.snackbarMessage("error-snackbar", res.message, 2);
+        }
+      },
+      (error) => {
+        this.spinner = false;
+        console.error("[Save Master Key] Error:", error);
+      }
+    );
+  }
 }
