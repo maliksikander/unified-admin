@@ -58,8 +58,8 @@ export class EndpointService {
     },
     license: {
       fileUpload: "license/attachment",
-      saveMasterKey: "/licenses",
-      getMasterKey: "/masterKey",
+      saveMasterKey: "licenses",
+      getMasterKey: "masterKey",
     },
     pullMode: "pull-mode-list",
     reason: "reasons",
