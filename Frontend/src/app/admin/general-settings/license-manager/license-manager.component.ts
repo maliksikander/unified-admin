@@ -102,7 +102,7 @@ export class LicenseManagerComponent implements OnInit {
       (res: any) => {
         this.spinner = false;
         if (res.ProductsList) {
-          this.snackbar.snackbarMessage("success-snackbar", "File Uploaded", 2);
+          this.snackbar.snackbarMessage("success-snackbar", "Saved Successfully", 2);
           this.getMasterKey();
         } else {
           this.snackbar.snackbarMessage("error-snackbar", res.message, 2);
