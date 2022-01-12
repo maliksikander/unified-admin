@@ -82,6 +82,7 @@ export class LoginComponent implements OnInit {
   }
 
   storeValues(res, data) {
+    console.log("Res==>", res);
     if (data.rememberMe == true) {
       localStorage.setItem("username", res.keycloak_User.username);
       localStorage.setItem("tenant", res.keycloak_User.realm);
@@ -91,7 +92,71 @@ export class LoginComponent implements OnInit {
     sessionStorage.setItem("username", res.keycloak_User.username);
     sessionStorage.setItem("tenant", res.keycloak_User.realm);
     sessionStorage.setItem("token", res.token);
+    let resources: Array<any> = res.keycloak_User.permittedResources.Resources;
+    sessionStorage.setItem("resources", JSON.stringify(resources));
+
     this.endPointService.token = res.token;
-    this.router.navigate(["/bot-settings"]);
+    this.navigateToResource(resources)
+    // this.router.navigate(["/bot-settings"]);
+  }
+
+  navigateToResource(resources: Array<any>) {
+    let item = resources[0];
+
+    if (item.rsname.includes("general")) {
+      let scopes: Array<any> = item?.scopes;
+      scopes.forEach((scope: any) => {
+        if (scope == "view") this.router.navigate(["/general/license-manager"]);
+      });
+    }
+
+    if (item.rsname.includes("bot")) {
+      let scopes: Array<any> = item?.scopes;
+      scopes.forEach((scope: any) => {
+        if (scope == "view") this.router.navigate(["/bot-settings"]);
+      });
+    }
+
+    if (item.rsname.includes("form")) {
+      let scopes: Array<any> = item?.scopes;
+      scopes.forEach((scope: any) => {
+        if (scope == "view") this.router.navigate(["/form"]);
+      });
+    }
+
+    if (item.rsname.includes("reason")) {
+      let scopes: Array<any> = item?.scopes;
+      scopes.forEach((scope: any) => {
+        if (scope == "view") this.router.navigate(["/reason-code"]);
+      });
+    }
+
+    if (item.rsname.includes("pull")) {
+      let scopes: Array<any> = item?.scopes;
+      scopes.forEach((scope: any) => {
+        if (scope == "view") this.router.navigate(["/pull-mode-list"]);
+      });
+    }
+
+    if (item.rsname.includes("web")) {
+      let scopes: Array<any> = item?.scopes;
+      scopes.forEach((scope: any) => {
+        if (scope == "view") this.router.navigate(["/web-widget"]);
+      });
+    }
+
+    if (item.rsname.includes("channel")) {
+      let scopes: Array<any> = item?.scopes;
+      scopes.forEach((scope: any) => {
+        if (scope == "view") this.router.navigate(["/channel/channel-type"]);
+      });
+    }
+
+    if (item.rsname.includes("routing")) {
+      let scopes: Array<any> = item?.scopes;
+      scopes.forEach((scope: any) => {
+        if (scope == "view") this.router.navigate(["/routing/attributes"]);
+      });
+    }
   }
 }

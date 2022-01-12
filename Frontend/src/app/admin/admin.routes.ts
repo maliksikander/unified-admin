@@ -31,19 +31,20 @@ export const adminRoutes: Routes = [
     children: [
       { path: "", redirectTo: "/login", pathMatch: "full" },
       // { path: '', redirectTo: 'general/amq-settings', pathMatch: 'full' },
-      { path: "business-calendar", component: CalendarComponent },
-      { path: "general/display-settings", component: DisplayComponent },
+      // { path: "business-calendar", component: CalendarComponent },
+      // { path: "general/display-settings", component: DisplayComponent },
       { path: "general/locale-settings", component: LocaleComponent },
-      { path: "general/database-settings", component: DatabaseComponent },
+      // { path: "general/database-settings", component: DatabaseComponent },
       { path: "general/license-manager", component: LicenseManagerComponent },
-      { path: "general/logging-settings", component: LoggingComponent },
-      { path: "general/reporting-settings", component: ReportingComponent },
-      { path: "general/amq-settings", component: AmqComponent },
-      { path: "general/security-settings", component: SecurityComponent },
+      // { path: "general/logging-settings", component: LoggingComponent },
+      // { path: "general/reporting-settings", component: ReportingComponent },
+      // { path: "general/amq-settings", component: AmqComponent },
+      // { path: "general/security-settings", component: SecurityComponent },
       { path: "routing/attributes", component: AttributeComponent },
       { path: "routing/media-routing-domain", component: MrdComponent },
       { path: "routing/precision-queue", component: PrecisionQueueComponent },
       { path: "routing/agents", component: UsersComponent },
+
       { path: "channel/channel-type", component: ChannelTypeComponent },
       {
         path: "channel/channel-connector",
@@ -51,6 +52,8 @@ export const adminRoutes: Routes = [
       },
       { path: "channel/channel-manager", component: ChannelListComponent },
       { path: "channel/channel-provider", component: ChannelProviderComponent },
+
+
       { path: "bot-settings", component: BotListComponent },
       { path: "form", component: FormsComponent },
       { path: "reason-code", component: ReasonCodesComponent },

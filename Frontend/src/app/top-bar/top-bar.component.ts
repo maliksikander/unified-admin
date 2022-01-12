@@ -42,6 +42,7 @@ export class TopBarComponent implements OnInit {
     sessionStorage.removeItem("webWidgetPage");
     sessionStorage.removeItem("tenant");
     sessionStorage.removeItem("formsPage");
+    sessionStorage.removeItem("resources")
     localStorage.removeItem("username");
     localStorage.removeItem("tenant");
     localStorage.removeItem("token");

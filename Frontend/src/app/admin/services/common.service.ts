@@ -671,6 +671,10 @@ export class CommonService {
     return this.router.navigate(["/login"]);
   }
 
+
+  
+
+
   // verify permission from keycloak
 
   // getPermissionResourcesList() {
