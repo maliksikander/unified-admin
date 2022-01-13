@@ -84,7 +84,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit() {
-    this.commonService.checkTokenExistenceInStorage();
+    // this.commonService.checkTokenExistenceInStorage();
 
     //setting local form validation messages
     this.validations = this.commonService.queueFormErrorMessages;

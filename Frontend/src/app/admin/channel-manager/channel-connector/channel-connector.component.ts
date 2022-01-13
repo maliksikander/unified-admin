@@ -32,7 +32,7 @@ export class ChannelConnectorComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.commonService.checkTokenExistenceInStorage();
+    // this.commonService.checkTokenExistenceInStorage();
     let pageNumber = sessionStorage.getItem("currentConnectorPage");
     if (pageNumber) this.p = pageNumber;
 

@@ -42,11 +42,12 @@ export class TopBarComponent implements OnInit {
     sessionStorage.removeItem("webWidgetPage");
     sessionStorage.removeItem("tenant");
     sessionStorage.removeItem("formsPage");
-    sessionStorage.removeItem("resources")
+    sessionStorage.removeItem("resources");
+    localStorage.removeItem("resources");
     localStorage.removeItem("username");
     localStorage.removeItem("tenant");
     localStorage.removeItem("token");
-    
+
     // sessionStorage.removeItem('permittedResources');
 
     this.router.navigate(["/login"]);

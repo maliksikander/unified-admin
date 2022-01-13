@@ -40,7 +40,7 @@ export class DatabaseComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.commonService.checkTokenExistenceInStorage();
+    // this.commonService.checkTokenExistenceInStorage();
 
     //setting local form validation messages
     this.validations = this.commonService.databaseSettingErrorMessages;

@@ -49,23 +49,7 @@ export class AdminMainComponent implements OnInit {
     private router: Router,
     private changeDetector: ChangeDetectorRef,
     private configService: ConfigService
-  ) {
-    // this.commonService._generalSubject.subscribe((res: any) => {
-    //   console.log("triggered", res);
-    //   this.generalBool = res;
-    // });
-    // this.subscription = this.commonService.getMessage().subscribe(message => {
-    //   console.log("triggered");
-    //   console.log("message-->", message)
-    //   if (message) {
-    //     // this.messages.push(message);
-    //   } else {
-    //     // clear messages when empty message received
-    //     // this.messages = [];
-    //   }
-    // });
-    // console.log("bool 2", this.generalBool)
-  }
+  ) {}
 
   ngOnInit() {
     this.configService.onReadConfig.subscribe((e) => {
@@ -89,7 +73,7 @@ export class AdminMainComponent implements OnInit {
       // console.log(data);
       this.changeTheme();
     });
-    let resources: Array<any> = JSON.parse(sessionStorage.getItem("resources"));
+    let resources: Array<any> = JSON.parse(localStorage.getItem("resources"));
 
     this.enableResource(resources);
   }

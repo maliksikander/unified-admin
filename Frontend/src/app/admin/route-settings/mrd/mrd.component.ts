@@ -39,7 +39,7 @@ export class MrdComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.commonService.checkTokenExistenceInStorage();
+    // this.commonService.checkTokenExistenceInStorage();
     this.validations = this.commonService.mrdFormErrorMessages;
 
     //setting local form validation messages

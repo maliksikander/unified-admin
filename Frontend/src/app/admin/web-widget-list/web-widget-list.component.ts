@@ -30,7 +30,7 @@ export class WebWidgetListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.commonService.checkTokenExistenceInStorage();
+    // this.commonService.checkTokenExistenceInStorage();
     let pageNumber = sessionStorage.getItem("webWidgetPage");
     if (pageNumber) this.p = pageNumber;
     this.getWebWidgets();

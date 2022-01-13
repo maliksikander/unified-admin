@@ -30,7 +30,7 @@ export class ChannelTypeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.commonService.checkTokenExistenceInStorage();
+    // this.commonService.checkTokenExistenceInStorage();
     let pageNumber = sessionStorage.getItem("channelTypePage");
     if (pageNumber) this.p = pageNumber;
     this.getChannelTypes();

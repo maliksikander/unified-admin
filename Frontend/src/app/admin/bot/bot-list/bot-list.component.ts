@@ -28,7 +28,7 @@ export class BotListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.commonService.checkTokenExistenceInStorage();
+    // this.commonService.checkTokenExistenceInStorage();
     this.endPointService.getStorageValues();
   }
 

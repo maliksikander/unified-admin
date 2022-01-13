@@ -30,7 +30,7 @@ export class ChannelProviderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.commonService.checkTokenExistenceInStorage();
+    // this.commonService.checkTokenExistenceInStorage();
     let pageNumber = sessionStorage.getItem("currentProviderPage");
     if (pageNumber) this.p = pageNumber;
 

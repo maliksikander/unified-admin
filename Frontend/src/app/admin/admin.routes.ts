@@ -23,6 +23,8 @@ import { ReasonCodesComponent } from "./reason-codes/reason-codes.component";
 import { PullModeRoutingComponent } from "./pull-mode-routing/pull-mode-routing.component";
 import { WebWidgetListComponent } from "./web-widget-list/web-widget-list.component";
 import { ChannelProviderComponent } from "./channel-manager/channel-provider/channel-provider.component";
+import { AuthGuard } from "./services/auth.guard";
+import { NotFoundComponent } from "../authentication/not-found/not-found.component";
 
 export const adminRoutes: Routes = [
   {
@@ -30,35 +32,93 @@ export const adminRoutes: Routes = [
     component: AdminMainComponent,
     children: [
       { path: "", redirectTo: "/login", pathMatch: "full" },
+
       // { path: '', redirectTo: 'general/amq-settings', pathMatch: 'full' },
       // { path: "business-calendar", component: CalendarComponent },
       // { path: "general/display-settings", component: DisplayComponent },
-      { path: "general/locale-settings", component: LocaleComponent },
+      {
+        path: "general/locale-settings",
+        component: LocaleComponent,
+        canActivate: [AuthGuard],
+      },
       // { path: "general/database-settings", component: DatabaseComponent },
-      { path: "general/license-manager", component: LicenseManagerComponent },
+      {
+        path: "general/license-manager",
+        component: LicenseManagerComponent,
+        canActivate: [AuthGuard],
+      },
       // { path: "general/logging-settings", component: LoggingComponent },
       // { path: "general/reporting-settings", component: ReportingComponent },
       // { path: "general/amq-settings", component: AmqComponent },
       // { path: "general/security-settings", component: SecurityComponent },
-      { path: "routing/attributes", component: AttributeComponent },
-      { path: "routing/media-routing-domain", component: MrdComponent },
-      { path: "routing/precision-queue", component: PrecisionQueueComponent },
-      { path: "routing/agents", component: UsersComponent },
+      {
+        path: "routing/attributes",
+        component: AttributeComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: "routing/media-routing-domain",
+        component: MrdComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: "routing/precision-queue",
+        component: PrecisionQueueComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: "routing/agents",
+        component: UsersComponent,
+        canActivate: [AuthGuard],
+      },
 
-      { path: "channel/channel-type", component: ChannelTypeComponent },
+      {
+        path: "channel/channel-type",
+        component: ChannelTypeComponent,
+        canActivate: [AuthGuard],
+      },
       {
         path: "channel/channel-connector",
         component: ChannelConnectorComponent,
+        canActivate: [AuthGuard],
       },
-      { path: "channel/channel-manager", component: ChannelListComponent },
-      { path: "channel/channel-provider", component: ChannelProviderComponent },
+      {
+        path: "channel/channel-manager",
+        component: ChannelListComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: "channel/channel-provider",
+        component: ChannelProviderComponent,
+        canActivate: [AuthGuard],
+      },
 
-
-      { path: "bot-settings", component: BotListComponent },
-      { path: "form", component: FormsComponent },
-      { path: "reason-code", component: ReasonCodesComponent },
-      { path: "pull-mode-list", component: PullModeRoutingComponent },
-      { path: "web-widget", component: WebWidgetListComponent },
+      {
+        path: "bot-settings",
+        component: BotListComponent,
+        canActivate: [AuthGuard],
+      },
+      { path: "form", component: FormsComponent, canActivate: [AuthGuard] },
+      {
+        path: "reason-code",
+        component: ReasonCodesComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: "pull-mode-list",
+        component: PullModeRoutingComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: "web-widget",
+        component: WebWidgetListComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: "not-found",
+        component: NotFoundComponent,
+      },
+      { path: "**", redirectTo: "/not-found", pathMatch: "full" },
     ],
   },
 ];

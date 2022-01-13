@@ -82,22 +82,22 @@ export class LoginComponent implements OnInit {
   }
 
   storeValues(res, data) {
-    console.log("Res==>", res);
+    // console.log("Res==>", res);
+    let resources: Array<any> = res.keycloak_User.permittedResources.Resources;
     if (data.rememberMe == true) {
       localStorage.setItem("username", res.keycloak_User.username);
       localStorage.setItem("tenant", res.keycloak_User.realm);
       localStorage.setItem("token", res.token);
-      // sessionStorage.setItem('permittedResources', JSON.stringify(res.keycloak_User.permittedResources.Resources));
+      
     }
     sessionStorage.setItem("username", res.keycloak_User.username);
     sessionStorage.setItem("tenant", res.keycloak_User.realm);
     sessionStorage.setItem("token", res.token);
-    let resources: Array<any> = res.keycloak_User.permittedResources.Resources;
-    sessionStorage.setItem("resources", JSON.stringify(resources));
+    localStorage.setItem("resources", JSON.stringify(resources));
+    // sessionStorage.setItem("resources", JSON.stringify(resources));
 
     this.endPointService.token = res.token;
-    this.navigateToResource(resources)
-    // this.router.navigate(["/bot-settings"]);
+    this.navigateToResource(resources);
   }
 
   navigateToResource(resources: Array<any>) {

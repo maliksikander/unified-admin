@@ -49,7 +49,7 @@ export class WebWidgetFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.commonService.checkTokenExistenceInStorage();
+    // this.commonService.checkTokenExistenceInStorage();
 
     //setting local form validation messages
     this.validations = this.commonService.webWidgetFormErrorMessages;

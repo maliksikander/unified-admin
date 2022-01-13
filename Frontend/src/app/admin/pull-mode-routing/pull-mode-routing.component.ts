@@ -39,7 +39,7 @@ export class PullModeRoutingComponent implements OnInit {
 
   ngOnInit(): void {
     //to check if token exits in local/session storage
-    this.commonService.checkTokenExistenceInStorage();
+    // this.commonService.checkTokenExistenceInStorage();
 
     //setting local form validation messages
     this.validations = this.commonService.pullModeListFormErrorMessages;

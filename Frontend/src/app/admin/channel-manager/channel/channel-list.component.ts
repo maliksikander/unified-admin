@@ -29,7 +29,7 @@ export class ChannelListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.commonService.checkTokenExistenceInStorage();
+    // this.commonService.checkTokenExistenceInStorage();
     this.getChannelType();
   }
 
