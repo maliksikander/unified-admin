@@ -238,8 +238,8 @@
           <div class="col-md-12">
             <div class="user-form-action-area">
               <button mat-raised-button (click)="onClose()" class="gray-btn">Cancel</button>
-              <button mat-raised-button [disabled]="!userAttributeForm.valid" [mat-dialog-close]="save"
-                class="dark-blue-btn service-trigger">Save</button>
+              <button *ngIf="managePermission" mat-raised-button [disabled]="!userAttributeForm.valid"
+                [mat-dialog-close]="save" class="dark-blue-btn service-trigger">Save</button>
             </div>
           </div>
         </div>

@@ -17,7 +17,7 @@
               </mat-form-field>
             </div>
 
-            <button mat-flat-button (click)="openQueueModal(newQueue)">
+            <button *ngIf="managePermission" mat-flat-button (click)="openQueueModal(newQueue)">
               <!-- <button mat-flat-button (click)="openStepModal(stepFormTemplate)"> -->
               <mat-icon>add</mat-icon>
               Create Queue
@@ -53,7 +53,7 @@
                     <mat-panel-title>
                       <p class="group-name">{{data.serviceLevelThreshold}}</p>
                       <div class="table-trigger">
-                        <span class="list-trigger-area">
+                        <span *ngIf="managePermission" class="list-trigger-area">
                           <button mat-mini-fab matTooltip="Edit" (click)="editQueue(newQueue,data)">
                             <!-- <i class="fa fa-pencil" aria-hidden="true"></i> -->
                             <mat-icon>mode_edit</mat-icon>
@@ -102,9 +102,10 @@
                               </span>
                             </td>
                             <td class="step-table-trigger">
-                              <ng-container *ngIf="stepData?.timeout != 0">{{stepData?.timeout ? stepData?.timeout : 'N/A'}}</ng-container>
+                              <ng-container *ngIf="stepData?.timeout != 0">{{stepData?.timeout ? stepData?.timeout :
+                                'N/A'}}</ng-container>
                               <ng-container *ngIf="stepData?.timeout == 0">{{stepData.timeout}}</ng-container>
-                              <span class="step-trigger-area">
+                              <span *ngIf="managePermission" class="step-trigger-area">
                                 <button matTooltip="Edit" (click)="editStep(stepFormTemplate,stepData,j)" mat-mini-fab>
                                   <mat-icon>mode_edit</mat-icon>
                                 </button>
@@ -119,7 +120,7 @@
                       </table>
                     </div>
                     <div *ngIf="data?.Steps?.length != 10" class="step-section">
-                      <button mat-flat-button (click)="checkStepsLength(stepFormTemplate,j)">
+                      <button *ngIf="managePermission" mat-flat-button (click)="checkStepsLength(stepFormTemplate,j)">
                         Add Step
                       </button>
                     </div>

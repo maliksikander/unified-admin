@@ -17,7 +17,7 @@
                             </mat-form-field>
                         </div>
 
-                        <button mat-flat-button (click)="openPullModeModal(pullModeForm)">
+                        <button *ngIf="managePermission" mat-flat-button (click)="openPullModeModal(pullModeForm)">
                             <mat-icon>add</mat-icon>
                             Create List
                         </button>
@@ -35,7 +35,7 @@
                                 <span class="group-name">{{data?.name ? data.name : 'N/A'}}</span>
                                 <span class="group-name">
                                     {{data?.description ? data.description :'N/A'}}
-                                    <span class="list-trigger-area">
+                                    <span *ngIf="managePermission" class="list-trigger-area">
                                         <button mat-mini-fab matTooltip="Edit"
                                             (click)="openEditPullModeModal(pullModeForm,data)">
                                             <mat-icon>mode_edit</mat-icon>

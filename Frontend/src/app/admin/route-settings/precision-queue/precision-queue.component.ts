@@ -73,6 +73,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
   };
   queueForm: FormGroup;
   stepForm: FormGroup;
+  managePermission:boolean = false;
 
   constructor(
     private commonService: CommonService,
@@ -130,6 +131,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     });
 
     this.getQueue();
+    this.managePermission = this.commonService.checkManageScope("routing");
   }
 
   ngAfterViewInit() {

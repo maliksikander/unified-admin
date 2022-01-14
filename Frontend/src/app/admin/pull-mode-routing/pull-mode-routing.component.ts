@@ -28,6 +28,7 @@ export class PullModeRoutingComponent implements OnInit {
   saveBtnText = "Create";
   pullModeListData = [];
   editPullModeListData;
+  managePermission:boolean = false;
 
   constructor(
     private commonService: CommonService,
@@ -62,6 +63,7 @@ export class PullModeRoutingComponent implements OnInit {
     });
 
     this.getPullModeList();
+    this.managePermission = this.commonService.checkManageScope("pull");
   }
 
   //to get pull mode list and set the local variable with response

@@ -19,6 +19,7 @@ export class BotListComponent implements OnInit {
   editBotData;
   botList = [];
   botType;
+  managePermission:boolean = false
 
   constructor(
     private commonService: CommonService,
@@ -30,6 +31,7 @@ export class BotListComponent implements OnInit {
   ngOnInit() {
     // this.commonService.checkTokenExistenceInStorage();
     this.endPointService.getStorageValues();
+    this.managePermission = this.commonService.checkManageScope("bot");
   }
 
   //to get bot settings list, it accepts bot type as `type` parameter

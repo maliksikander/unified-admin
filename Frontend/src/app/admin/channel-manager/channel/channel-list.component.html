@@ -48,7 +48,7 @@
                       <td class="list-action-area">
                         <div class="data-overflow">{{channel?.channelConnector?.name ?
                           channel?.channelConnector?.name : 'N/A'}}</div>
-                        <span class="list-actions">
+                        <span *ngIf="managePermission" class="list-actions">
                           <button matTooltip="Edit" (click)="editChannel(channel)" mat-mini-fab>
                             <mat-icon>mode_edit</mat-icon>
                           </button>
@@ -61,7 +61,7 @@
                     </tr>
                   </tbody>
                 </table>
-                <button class="add-channel-btn" mat-flat-button (click)="addChannel(type)">
+                <button *ngIf="managePermission" class="add-channel-btn" mat-flat-button (click)="addChannel(type)">
                   Add New Channel
                 </button>
               </mat-expansion-panel>

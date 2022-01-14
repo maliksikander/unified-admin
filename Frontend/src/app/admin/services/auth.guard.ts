@@ -22,15 +22,12 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    // console.log("router==>", route?.routeConfig?.path);
     let path: String = route?.routeConfig?.path;
     let resources: Array<any> = JSON.parse(localStorage.getItem("resources"));
     let local: String = localStorage.getItem("token");
     let session: String = sessionStorage.getItem("token");
     this.checkTokenExistenceInStorage(local, session);
-    // console.log("path-->", path);
     let accessRoute: boolean = this.checkRouteAccess(path, resources);
-    console.log("val==>", accessRoute);
     return accessRoute;
   }
 
@@ -40,8 +37,20 @@ export class AuthGuard implements CanActivate {
       resPath = "general";
     } else if (path.includes("bot")) {
       resPath = "bot";
+    } else if (path.includes("form")) {
+      resPath = "form";
+    } else if (path.includes("reason")) {
+      resPath = "reason";
+    } else if (path.includes("pull")) {
+      resPath = "pull";
+    } else if (path.includes("web")) {
+      resPath = "web";
+    } else if (path.includes("channel")) {
+      resPath = "channel";
+    } else if (path.includes("routing")) {
+      resPath = "routing";
     }
-    // console.log("res path-->", resPath);
+
     let value = this.checkResource(resPath, resources);
     return value;
   }

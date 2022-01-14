@@ -56,7 +56,7 @@
                     </tr>
                   </tbody>
                 </table>
-                <button class="add-bot-btn" mat-flat-button (click)="addBotSettings('RASA')">
+                <button *ngIf="managePermission" class="add-bot-btn" mat-flat-button (click)="addBotSettings('RASA')">
                   Add Bot
                 </button>
               </mat-expansion-panel>
@@ -94,7 +94,7 @@
                       <td class="list-action-area">
                         <div class="data-overflow">{{bot?.botUri?.metaData?.name ? bot?.botUri?.metaData?.name : 'N/A'}}
                         </div>
-                        <span class="list-actions">
+                        <span *ngIf="managePermission" class="list-actions">
                           <button matTooltip="Edit" (click)="editBotSettings(bot,'DIALOGFLOW')" mat-mini-fab>
                             <mat-icon>mode_edit</mat-icon>
                           </button>

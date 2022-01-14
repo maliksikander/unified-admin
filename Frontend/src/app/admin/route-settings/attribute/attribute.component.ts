@@ -31,6 +31,7 @@ export class AttributeComponent implements OnInit {
   editData;
   // reqServiceType = 'routing-attributes';
   editFlag: boolean = false;
+  managePermission:boolean = false;
 
   constructor(
     private commonService: CommonService,
@@ -74,6 +75,7 @@ export class AttributeComponent implements OnInit {
     });
 
     this.getAttribute();
+    this.managePermission = this.commonService.checkManageScope("routing");
   }
 
   //to open form dialog,this method accepts the `template variable` as a parameter assigned to the form in html.

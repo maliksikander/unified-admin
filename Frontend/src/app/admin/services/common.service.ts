@@ -659,15 +659,21 @@ export class CommonService {
     return result;
   }
 
-  // //to verify token existence in local/session storage
-  // checkTokenExistenceInStorage() {
-  //   let local = localStorage.getItem("token");
-  //   let session = sessionStorage.getItem("token");
-  //   if (local == null && session == null) this.navigateToLogin();
-  // }
-
-  // //to navigate to login page
-  // navigateToLogin() {
-  //   return this.router.navigate(["/login"]);
-  // }
+  //to verify manage scope in permitted resource
+  checkManageScope(resource) {
+    let permittedResources: Array<any> = JSON.parse(
+      localStorage.getItem("resources")
+    );
+    // console.log("length ==>", permittedResources.length);
+    for (let i = 0; i < permittedResources.length; i++) {
+      console.log(`resources ${i}==>`, permittedResources[i]);
+      if (permittedResources[i].rsname.includes(resource)) {
+        let resourceScopes: Array<any> = permittedResources[i].scopes;
+        for (let j = 0; j <= resourceScopes.length; j++) {
+          if (resourceScopes[j] === "manage") return true;
+        }
+      }
+    }
+    return false;
+  }
 }

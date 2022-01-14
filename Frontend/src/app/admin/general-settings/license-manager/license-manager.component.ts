@@ -20,6 +20,7 @@ export class LicenseManagerComponent implements OnInit {
   fileToBeUploaded = new FormData();
   licenseKey = new FormControl("", [Validators.required]);
   licenseFile = new FormControl("", [Validators.required]);
+  managePermission: boolean = false;
 
   constructor(
     private snackbar: SnackbarService,
@@ -38,6 +39,7 @@ export class LicenseManagerComponent implements OnInit {
     });
 
     this.getMasterKey();
+    this.managePermission = this.commonService.checkManageScope("general");
   }
 
   //to select file and save in local variable, it accepts selected file as 'file' parameter
@@ -102,7 +104,11 @@ export class LicenseManagerComponent implements OnInit {
       (res: any) => {
         this.spinner = false;
         if (res.ProductsList) {
-          this.snackbar.snackbarMessage("success-snackbar", "Saved Successfully", 2);
+          this.snackbar.snackbarMessage(
+            "success-snackbar",
+            "Saved Successfully",
+            2
+          );
           this.getMasterKey();
         } else {
           this.snackbar.snackbarMessage("error-snackbar", res.message, 2);

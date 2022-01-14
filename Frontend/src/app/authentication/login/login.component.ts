@@ -71,6 +71,7 @@ export class LoginComponent implements OnInit {
     delete reqBody.rememberMe;
     this.endPointService.login(reqBody).subscribe(
       (res: any) => {
+        // console.log("value==>", res);
         this.storeValues(res, data);
         this.spinner = false;
       },
@@ -88,7 +89,6 @@ export class LoginComponent implements OnInit {
       localStorage.setItem("username", res.keycloak_User.username);
       localStorage.setItem("tenant", res.keycloak_User.realm);
       localStorage.setItem("token", res.token);
-      
     }
     sessionStorage.setItem("username", res.keycloak_User.username);
     sessionStorage.setItem("tenant", res.keycloak_User.realm);
@@ -108,55 +108,43 @@ export class LoginComponent implements OnInit {
       scopes.forEach((scope: any) => {
         if (scope == "view") this.router.navigate(["/general/license-manager"]);
       });
-    }
-
-    if (item.rsname.includes("bot")) {
+    } else if (item.rsname.includes("bot")) {
       let scopes: Array<any> = item?.scopes;
       scopes.forEach((scope: any) => {
         if (scope == "view") this.router.navigate(["/bot-settings"]);
       });
-    }
-
-    if (item.rsname.includes("form")) {
+    } else if (item.rsname.includes("form")) {
       let scopes: Array<any> = item?.scopes;
       scopes.forEach((scope: any) => {
         if (scope == "view") this.router.navigate(["/form"]);
       });
-    }
-
-    if (item.rsname.includes("reason")) {
+    } else if (item.rsname.includes("reason")) {
       let scopes: Array<any> = item?.scopes;
       scopes.forEach((scope: any) => {
         if (scope == "view") this.router.navigate(["/reason-code"]);
       });
-    }
-
-    if (item.rsname.includes("pull")) {
+    } else if (item.rsname.includes("pull")) {
       let scopes: Array<any> = item?.scopes;
       scopes.forEach((scope: any) => {
         if (scope == "view") this.router.navigate(["/pull-mode-list"]);
       });
-    }
-
-    if (item.rsname.includes("web")) {
+    } else if (item.rsname.includes("web")) {
       let scopes: Array<any> = item?.scopes;
       scopes.forEach((scope: any) => {
         if (scope == "view") this.router.navigate(["/web-widget"]);
       });
-    }
-
-    if (item.rsname.includes("channel")) {
+    } else if (item.rsname.includes("channel")) {
       let scopes: Array<any> = item?.scopes;
       scopes.forEach((scope: any) => {
         if (scope == "view") this.router.navigate(["/channel/channel-type"]);
       });
-    }
-
-    if (item.rsname.includes("routing")) {
+    } else if (item.rsname.includes("routing")) {
       let scopes: Array<any> = item?.scopes;
       scopes.forEach((scope: any) => {
         if (scope == "view") this.router.navigate(["/routing/attributes"]);
       });
+    } else {
+      this.snackbar.snackbarMessage("error-snackbar", "Not Authorized to Access Resources", 2);
     }
   }
 }

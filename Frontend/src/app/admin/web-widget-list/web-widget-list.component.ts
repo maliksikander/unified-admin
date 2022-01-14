@@ -21,6 +21,7 @@ export class WebWidgetListComponent implements OnInit {
   itemsPerPageList = [5, 10, 15];
   itemsPerPage = 5;
   selectedItem = this.itemsPerPageList[0];
+  managePermission:boolean = false;
 
   constructor(
     private commonService: CommonService,
@@ -34,6 +35,7 @@ export class WebWidgetListComponent implements OnInit {
     let pageNumber = sessionStorage.getItem("webWidgetPage");
     if (pageNumber) this.p = pageNumber;
     this.getWebWidgets();
+    this.managePermission = this.commonService.checkManageScope("web");
   }
 
   //to get web widget list

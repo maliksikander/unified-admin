@@ -118,7 +118,7 @@ export const adminRoutes: Routes = [
         path: "not-found",
         component: NotFoundComponent,
       },
-      { path: "**", redirectTo: "/not-found", pathMatch: "full" },
+      // { path: "**", redirectTo: "/not-found", pathMatch: "full" },
     ],
   },
 ];
