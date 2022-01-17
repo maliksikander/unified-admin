@@ -79,63 +79,67 @@ export class AdminMainComponent implements OnInit {
   }
 
   enableResource(resources: Array<any>) {
-    resources.forEach((item: any) => {
-      if (item.rsname.includes("general")) {
-        let scopes: Array<any> = item?.scopes;
-        scopes.forEach((scope: any) => {
-          if (scope == "view") this.generalBool = true;
-        });
-      }
+    try {
+      resources.forEach((item: any) => {
+        if (item.rsname.includes("general")) {
+          let scopes: Array<any> = item?.scopes;
+          scopes.forEach((scope: any) => {
+            if (scope == "view") this.generalBool = true;
+          });
+        }
 
-      if (item.rsname.includes("bot")) {
-        let scopes: Array<any> = item?.scopes;
-        scopes.forEach((scope: any) => {
-          if (scope == "view") this.botBool = true;
-        });
-      }
+        if (item.rsname.includes("bot")) {
+          let scopes: Array<any> = item?.scopes;
+          scopes.forEach((scope: any) => {
+            if (scope == "view") this.botBool = true;
+          });
+        }
 
-      if (item.rsname.includes("form")) {
-        let scopes: Array<any> = item?.scopes;
-        scopes.forEach((scope: any) => {
-          if (scope == "view") this.formBool = true;
-        });
-      }
+        if (item.rsname.includes("form")) {
+          let scopes: Array<any> = item?.scopes;
+          scopes.forEach((scope: any) => {
+            if (scope == "view") this.formBool = true;
+          });
+        }
 
-      if (item.rsname.includes("reason")) {
-        let scopes: Array<any> = item?.scopes;
-        scopes.forEach((scope: any) => {
-          if (scope == "view") this.reasonCodeBool = true;
-        });
-      }
+        if (item.rsname.includes("reason")) {
+          let scopes: Array<any> = item?.scopes;
+          scopes.forEach((scope: any) => {
+            if (scope == "view") this.reasonCodeBool = true;
+          });
+        }
 
-      if (item.rsname.includes("pull")) {
-        let scopes: Array<any> = item?.scopes;
-        scopes.forEach((scope: any) => {
-          if (scope == "view") this.pullModeBool = true;
-        });
-      }
+        if (item.rsname.includes("pull")) {
+          let scopes: Array<any> = item?.scopes;
+          scopes.forEach((scope: any) => {
+            if (scope == "view") this.pullModeBool = true;
+          });
+        }
 
-      if (item.rsname.includes("web")) {
-        let scopes: Array<any> = item?.scopes;
-        scopes.forEach((scope: any) => {
-          if (scope == "view") this.webWidgetBool = true;
-        });
-      }
+        if (item.rsname.includes("web")) {
+          let scopes: Array<any> = item?.scopes;
+          scopes.forEach((scope: any) => {
+            if (scope == "view") this.webWidgetBool = true;
+          });
+        }
 
-      if (item.rsname.includes("channel") && this.channelBool == false) {
-        let scopes: Array<any> = item?.scopes;
-        scopes.forEach((scope: any) => {
-          if (scope == "view") this.channelBool = true;
-        });
-      }
+        if (item.rsname.includes("channel") && this.channelBool == false) {
+          let scopes: Array<any> = item?.scopes;
+          scopes.forEach((scope: any) => {
+            if (scope == "view") this.channelBool = true;
+          });
+        }
 
-      if (item.rsname.includes("routing") && this.routingBool == false) {
-        let scopes: Array<any> = item?.scopes;
-        scopes.forEach((scope: any) => {
-          if (scope == "view") this.routingBool = true;
-        });
-      }
-    });
+        if (item.rsname.includes("routing") && this.routingBool == false) {
+          let scopes: Array<any> = item?.scopes;
+          scopes.forEach((scope: any) => {
+            if (scope == "view") this.routingBool = true;
+          });
+        }
+      });
+    } catch (e) {
+      console.log("[Enable Resource Error] :", e);
+    }
   }
 
   clickEvent() {

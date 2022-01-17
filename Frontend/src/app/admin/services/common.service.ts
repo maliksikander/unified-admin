@@ -661,19 +661,22 @@ export class CommonService {
 
   //to verify manage scope in permitted resource
   checkManageScope(resource) {
-    let permittedResources: Array<any> = JSON.parse(
-      localStorage.getItem("resources")
-    );
-    // console.log("length ==>", permittedResources.length);
-    for (let i = 0; i < permittedResources.length; i++) {
-      console.log(`resources ${i}==>`, permittedResources[i]);
-      if (permittedResources[i].rsname.includes(resource)) {
-        let resourceScopes: Array<any> = permittedResources[i].scopes;
-        for (let j = 0; j <= resourceScopes.length; j++) {
-          if (resourceScopes[j] === "manage") return true;
+    try {
+      let permittedResources: Array<any> = JSON.parse(
+        localStorage.getItem("resources")
+      );
+
+      for (let i = 0; i < permittedResources.length; i++) {
+        if (permittedResources[i].rsname.includes(resource)) {
+          let resourceScopes: Array<any> = permittedResources[i].scopes;
+          for (let j = 0; j <= resourceScopes.length; j++) {
+            if (resourceScopes[j] === "manage") return true;
+          }
         }
       }
+      return false;
+    } catch (e) {
+      console.log("[Scope Check Error] :", e);
     }
-    return false;
   }
 }
