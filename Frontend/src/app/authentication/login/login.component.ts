@@ -145,6 +145,11 @@ export class LoginComponent implements OnInit {
         scopes.forEach((scope: any) => {
           if (scope == "view") this.router.navigate(["/routing/attributes"]);
         });
+      } else if (item.rsname.includes("calendar")) {
+        let scopes: Array<any> = item?.scopes;
+        scopes.forEach((scope: any) => {
+          if (scope == "view") this.router.navigate(["/business-calendar"]);
+        });
       } else {
         this.snackbar.snackbarMessage(
           "error-snackbar",

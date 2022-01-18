@@ -41,6 +41,7 @@ export class AdminMainComponent implements OnInit {
   webWidgetBool: boolean = false;
   channelBool: boolean = false;
   routingBool: boolean = false;
+  calendarBool: boolean = false;
   subscription: Subscription;
 
   constructor(
@@ -120,6 +121,13 @@ export class AdminMainComponent implements OnInit {
           let scopes: Array<any> = item?.scopes;
           scopes.forEach((scope: any) => {
             if (scope == "view") this.webWidgetBool = true;
+          });
+        }
+
+        if (item.rsname.includes("calendar")) {
+          let scopes: Array<any> = item?.scopes;
+          scopes.forEach((scope: any) => {
+            if (scope == "view") this.calendarBool = true;
           });
         }
 
