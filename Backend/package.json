@@ -103,6 +103,7 @@
     "testEnvironment": "node",
     "testResultsProcessor": "jest-sonar-reporter"
   },
+  
   "jestSonar": {
     "reportPath": "coverage",
     "reportFile": "test-report.xml",
