@@ -3,6 +3,8 @@ var config = require('../../config.json');
 var { NodeAdapter } = require("ef-keycloak-connect");
 const keycloak = new NodeAdapter(config);
 const logger = require('../config/logger');
+var CryptoJS = require("crypto-js");
+var AES = require("crypto-js/aes")
 
 const login = async (req, res) => {
     const username = req.body.username;
@@ -10,7 +12,9 @@ const login = async (req, res) => {
     const realm = config.realm
 
     try {
-        const result = await keycloak.authenticateUserViaKeycloak(username, password, realm).then((res) => {
+        let decryptedUsername = CryptoJS.AES.decrypt(username, "undlusia").toString(CryptoJS.enc.Utf8);
+        let decryptedPassword = CryptoJS.AES.decrypt(password, "undlusia").toString(CryptoJS.enc.Utf8);
+        const result = await keycloak.authenticateUserViaKeycloak(decryptedUsername, decryptedPassword, realm).then((res) => {
             return res;
         });
         res.send(result);

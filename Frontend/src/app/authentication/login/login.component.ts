@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { CommonService } from "src/app/admin/services/common.service";
 import { EndpointService } from "src/app/admin/services/endpoint.service";
 import { SnackbarService } from "src/app/admin/services/snackbar.service";
+import * as CryptoJS from "crypto-js";
 
 @Component({
   selector: "app-login",
@@ -69,6 +70,9 @@ export class LoginComponent implements OnInit {
     let data = this.loginForm.value;
     let reqBody = JSON.parse(JSON.stringify(data));
     delete reqBody.rememberMe;
+    reqBody.username = CryptoJS.AES.encrypt(data.username, "undlusia").toString();
+    reqBody.password = CryptoJS.AES.encrypt(data.password, "undlusia").toString();
+
     this.endPointService.login(reqBody).subscribe(
       (res: any) => {
         // console.log("value==>", res);
@@ -83,7 +87,6 @@ export class LoginComponent implements OnInit {
   }
 
   storeValues(res, data) {
-    // console.log("Res==>", res);
     let resources: Array<any> = res.keycloak_User.permittedResources.Resources;
     if (data.rememberMe == true) {
       localStorage.setItem("username", res.keycloak_User.username);
