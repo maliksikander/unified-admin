@@ -40,6 +40,7 @@ export class WebWidgetFormComponent implements OnInit {
   spinner = true;
   themeList = [];
   languageList = [];
+  toggle = false;
 
   constructor(
     private commonService: CommonService,
@@ -64,7 +65,7 @@ export class WebWidgetFormComponent implements OnInit {
       enableFontResize: [true, [Validators.required]],
       language: ["", [Validators.required]],
       subTitle: ["", [Validators.required]],
-      theme: ["", [Validators.required]],
+      theme: ["#2889e9", [Validators.required]],
       title: ["", [Validators.required]],
       widgetIdentifier: [
         "",
