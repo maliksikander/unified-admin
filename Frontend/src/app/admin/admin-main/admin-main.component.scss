@@ -42,6 +42,9 @@ mat-sidenav-container.main-sidebar {
     overflow: hidden !important;
     background: #f3f6f8;
     color: #ffffff;
+    padding-bottom: 30px;
+    visibility: visible !important;
+    transform: translate3d(0, 0, 0);
   }
 
   .main-outlet {
