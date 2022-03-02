@@ -1,7 +1,7 @@
 const catchAsync = require('../utils/catchAsync');
 var config = require('../../config.json');
-// var { NodeAdapter } = require("ef-keycloak-connect");
-var {NodeAdapter} = require("keycloak-nodejs-connect");
+var { NodeAdapter } = require("ef-keycloak-connect");
+// var {NodeAdapter} = require("keycloak-nodejs-connect");
 const keycloak = new NodeAdapter(config);
 const logger = require('../config/logger');
 var CryptoJS = require("crypto-js");
