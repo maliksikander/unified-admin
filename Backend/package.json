@@ -65,7 +65,6 @@
     "http-status": "^1.4.0",
     "jest-sonar-reporter": "^2.0.0",
     "jsonwebtoken": "^8.5.1",
-    "keycloak-nodejs-connect": "^1.0.7",
     "moment": "^2.24.0",
     "mongoose": "^5.12.7",
     "mongoose-auto-increment": "^5.0.1",
