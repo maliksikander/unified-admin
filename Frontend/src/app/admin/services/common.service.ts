@@ -621,8 +621,8 @@ export class CommonService {
     title: {
       required: "This field is required",
       minlength: "Min 3 characters required",
-      maxlength: "Max 100 characters allowed",
-      pattern: "Not a valid pattern",
+      maxlength: "Max 50 characters allowed",
+      pattern: "Not a valid format",
       validName: "Already exists",
     },
     widgetIdentifier: {

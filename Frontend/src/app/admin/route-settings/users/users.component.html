@@ -33,10 +33,10 @@
                 *ngFor="let data of userData | filter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
                 <div class="row">
                   <div class="col-sm-3 col-md-3">
-                    <!-- {{data?.keycloakUser.firstName ? data?.keycloakUser.firstName : -->
-                    <!-- data?.keycloakUser?.username}} -->
-                    <span>{{data?.keycloakUser?.username ? data?.keycloakUser.username :
-                      'N/A'}}</span>
+                    <span>{{data?.keycloakUser.firstName ? data?.keycloakUser.firstName :
+                      data?.keycloakUser?.username}}</span>
+                    <!-- <span>{{data?.keycloakUser?.username ? data?.keycloakUser.username : -->
+                    <!-- 'N/A'}}</span> -->
                   </div>
                   <div class="list-view col-sm-9 col-md-9">
                     <mat-chip-list>

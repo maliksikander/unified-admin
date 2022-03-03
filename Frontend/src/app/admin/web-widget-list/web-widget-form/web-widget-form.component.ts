@@ -64,9 +64,17 @@ export class WebWidgetFormComponent implements OnInit {
       enableFileTransfer: [true, [Validators.required]],
       enableFontResize: [true, [Validators.required]],
       language: ["", [Validators.required]],
-      subTitle: ["", [Validators.required]],
-      theme: ["#2889e9", [Validators.required]],
-      title: ["", [Validators.required]],
+      subTitle: ["", [Validators.required, Validators.maxLength(100)]],
+      // theme: ["#2889e9", [Validators.required]],
+      theme: ["", [Validators.required]],
+      title: [
+        "",
+        [
+          Validators.required,
+          Validators.maxLength(50),
+          Validators.pattern("^[a-zA-Z0-9_-]+(?: [a-zA-Z0-9_-]+)*$"),
+        ],
+      ],
       widgetIdentifier: [
         "",
         [
