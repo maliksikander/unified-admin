@@ -147,6 +147,8 @@ node_artifacts_backend:
    script:
    - cd Backend
    - npm install --legacy-peer-deps
+   - npm uninstall ef-keycloak-connect
+   - npm install ef-keycloak-connect@1.0.0
    #- export TIME_TOKEN=$(env TZ=GMT-5 date +%d_%m_%Y-%H_%M_%S)
    #- echo "${TIME_TOKEN}"
    allow_failure: false

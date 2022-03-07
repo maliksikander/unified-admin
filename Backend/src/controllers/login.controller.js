@@ -16,12 +16,14 @@ const login = async (req, res) => {
         let decryptedUsername = CryptoJS.AES.decrypt(username, "undlusia").toString(CryptoJS.enc.Utf8);
         let decryptedPassword = CryptoJS.AES.decrypt(password, "undlusia").toString(CryptoJS.enc.Utf8);
         const result = await keycloak.authenticateUserViaKeycloak(username, password, realm).then((res) => {
+            // console.log("res==>", res)
             return res;
         });
         res.send(result);
     }
     catch (e) {
-
+        console.log("[Login Error]:", e)
+        logger.error('[Login Error]:', e)
         if (e && e.response && e.response.status == 401) {
             let msg = "Invalid Credentials";
             res.status(e.response.status).send(msg);
@@ -33,7 +35,7 @@ const login = async (req, res) => {
         else {
             res.status(500).send(e.message);
         }
-        logger.error('[Login Error]:', e)
+
     }
 };
 
