@@ -69,7 +69,7 @@ export class LoginComponent implements OnInit {
     this.spinner = true;
     let data = this.loginForm.value;
     let reqBody = JSON.parse(JSON.stringify(data));
-    delete reqBody.rememberMe;
+    delete reqBody.rememberMe; 
     // reqBody.username = CryptoJS.AES.encrypt(data.username, "undlusia").toString();
     // reqBody.password = CryptoJS.AES.encrypt(data.password, "undlusia").toString();
 
