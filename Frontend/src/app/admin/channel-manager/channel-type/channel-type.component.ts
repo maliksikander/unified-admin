@@ -21,6 +21,7 @@ export class ChannelTypeComponent implements OnInit {
   itemsPerPageList = [5, 10, 15];
   itemsPerPage = 5;
   selectedItem = this.itemsPerPageList[0];
+  managePermission: boolean = false;
 
   constructor(
     private commonService: CommonService,
@@ -30,10 +31,11 @@ export class ChannelTypeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.commonService.checkTokenExistenceInStorage();
+    // this.commonService.checkTokenExistenceInStorage();
     let pageNumber = sessionStorage.getItem("channelTypePage");
     if (pageNumber) this.p = pageNumber;
     this.getChannelTypes();
+    this.managePermission = this.commonService.checkManageScope("channel");
   }
 
   //to get channel type list

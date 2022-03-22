@@ -67,6 +67,7 @@ export class UsersComponent implements OnInit {
   save = "save";
   editREUserData: any;
   newREUserData: any;
+  managePermission:boolean = false;
 
   constructor(
     private commonService: CommonService,
@@ -77,7 +78,7 @@ export class UsersComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.commonService.checkTokenExistenceInStorage();
+    // this.commonService.checkTokenExistenceInStorage();
 
     //setting local form validation messages
     this.validations = this.commonService.userFormErrorMessages;
@@ -105,6 +106,7 @@ export class UsersComponent implements OnInit {
     // });
 
     this.getUsers();
+    this.managePermission = this.commonService.checkManageScope("routing");
   }
 
   //resetting dialog

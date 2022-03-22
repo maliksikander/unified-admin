@@ -36,6 +36,7 @@ module.exports = {
   Port: envVars.PORT,
   isSSL: envVars.isSSL,
   logLevel: envVars.LOG_LEVEL,
+  mongoDB_URL : envVars.MONGODB_URL,
   httpsKeyPath: envVars.HTTPS_KEY_PATH,
   httpsCertPath: envVars.HTTPS_CERTIFICATE_PATH,
   httpsCertPassphrase: envVars.HTTPS_CERTIFICATE_PASSPHRASE,

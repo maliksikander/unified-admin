@@ -621,8 +621,8 @@ export class CommonService {
     title: {
       required: "This field is required",
       minlength: "Min 3 characters required",
-      maxlength: "Max 100 characters allowed",
-      pattern: "Not a valid pattern",
+      maxlength: "Max 50 characters allowed",
+      pattern: "Not a valid format",
       validName: "Already exists",
     },
     widgetIdentifier: {
@@ -659,36 +659,24 @@ export class CommonService {
     return result;
   }
 
-  //to verify token existence in local/session storage
-  checkTokenExistenceInStorage() {
-    let local = localStorage.getItem("token");
-    let session = sessionStorage.getItem("token");
-    if (local == null && session == null) this.navigateToLogin();
+  //to verify manage scope in permitted resource
+  checkManageScope(resource) {
+    try {
+      let permittedResources: Array<any> = JSON.parse(
+        localStorage.getItem("resources")
+      );
+
+      for (let i = 0; i < permittedResources.length; i++) {
+        if (permittedResources[i].rsname.includes(resource)) {
+          let resourceScopes: Array<any> = permittedResources[i].scopes;
+          for (let j = 0; j <= resourceScopes.length; j++) {
+            if (resourceScopes[j] === "manage") return true;
+          }
+        }
+      }
+      return false;
+    } catch (e) {
+      console.log("[Scope Check Error] :", e);
+    }
   }
-
-  //to navigate to login page
-  navigateToLogin() {
-    return this.router.navigate(["/login"]);
-  }
-
-  // verify permission from keycloak
-
-  // getPermissionResourcesList() {
-  //   try {
-  //     let permissions = sessionStorage.getItem('permittedResources');
-  //     let permList: Array<any> = JSON.parse(JSON.stringify(JSON.parse(permissions)));
-  //     let resourceList: Array<any> = [];
-  //     console.log("permissions-->", permList);
-  //     permList.forEach((item: any) => {
-  //       resourceList.push(item.rsname);
-  //     });
-  //     // if (resourceList.includes('general-settings')) { this.router.navigate(['/general/amq-settings']) }
-  //     // else if (resourceList.includes('RE_Configuration')) { this.router.navigate(['/routing/attributes']) }
-  //     return resourceList;
-  //   }
-  //   catch (e) {
-  //     this.router.navigate(['/login']);
-  //     console.log("Error", e);
-  //   }
-  // }
 }

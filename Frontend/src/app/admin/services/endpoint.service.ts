@@ -37,7 +37,7 @@ export class EndpointService {
       channelType: "channel-types",
       channelConnector: "channel-connectors",
       channel: "channels",
-      channelProvider:"channel-provider-interfaces",
+      channelProvider: "channel-provider-interfaces",
       channelMapping: "channels/routing-id",
     },
     forms: "forms",
@@ -57,7 +57,9 @@ export class EndpointService {
       security: "security-setting",
     },
     license: {
-      fileUpload: "license-manager/license/attachment",
+      fileUpload: "license/attachment",
+      saveMasterKey: "licenses",
+      getMasterKey: "masterKey",
     },
     pullMode: "pull-mode-list",
     reason: "reasons",
@@ -666,12 +668,15 @@ export class EndpointService {
 
   getMRDMappedChannelType(mrdID): Observable<any> {
     return this.httpClient
-      .get(`${this.CCM_URL}/${this.endpoints.ccm.channelType}/media-routing-domains/${mrdID}`, {
-        headers: new HttpHeaders({
-          "Content-Type": "application/json",
-          Authorization: "Bearer" + this.token,
-        }),
-      })
+      .get(
+        `${this.CCM_URL}/${this.endpoints.ccm.channelType}/media-routing-domains/${mrdID}`,
+        {
+          headers: new HttpHeaders({
+            "Content-Type": "application/json",
+            Authorization: "Bearer" + this.token,
+          }),
+        }
+      )
       .pipe(catchError(this.handleError));
   }
 
@@ -759,15 +764,18 @@ export class EndpointService {
 
   ////////////  Channel Provider CRUD ////////////////
 
-
   createChannelProvider(data): Observable<any> {
     return this.httpClient
-      .post<any>(`${this.CCM_URL}/${this.endpoints.ccm.channelProvider}`, data, {
-        headers: new HttpHeaders({
-          "Content-Type": "application/json",
-          Authorization: "Bearer" + this.token,
-        }),
-      })
+      .post<any>(
+        `${this.CCM_URL}/${this.endpoints.ccm.channelProvider}`,
+        data,
+        {
+          headers: new HttpHeaders({
+            "Content-Type": "application/json",
+            Authorization: "Bearer" + this.token,
+          }),
+        }
+      )
       .pipe(catchError(this.handleError));
   }
 
@@ -781,8 +789,6 @@ export class EndpointService {
       })
       .pipe(catchError(this.handleError));
   }
-
-  
 
   updateChannelProvider(data): Observable<any> {
     return this.httpClient
@@ -853,30 +859,23 @@ export class EndpointService {
 
   updateChannel(data, id): Observable<any> {
     return this.httpClient
-      .put<any>(
-        `${this.CCM_URL}/${this.endpoints.ccm.channel}/${id}`,
-        data,
-        {
-          headers: new HttpHeaders({
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + this.token,
-          }),
-        }
-      )
+      .put<any>(`${this.CCM_URL}/${this.endpoints.ccm.channel}/${id}`, data, {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.token,
+        }),
+      })
       .pipe(catchError(this.handleError));
   }
 
   deleteChannel(id): Observable<any> {
     return this.httpClient
-      .delete<any>(
-        `${this.CCM_URL}/${this.endpoints.ccm.channel}/${id}`,
-        {
-          headers: new HttpHeaders({
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + this.token,
-          }),
-        }
-      )
+      .delete<any>(`${this.CCM_URL}/${this.endpoints.ccm.channel}/${id}`, {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.token,
+        }),
+      })
       .pipe(catchError(this.handleError));
   }
 
@@ -1226,7 +1225,7 @@ export class EndpointService {
       .pipe(catchError(this.handleError));
   }
 
-  updateWebWidgetConfig(data,identifier): Observable<any> {
+  updateWebWidgetConfig(data, identifier): Observable<any> {
     return this.httpClient
       .put<any>(
         `${this.CCM_URL}/${this.endpoints.webWidget}/${identifier}`,
@@ -1253,6 +1252,34 @@ export class EndpointService {
   }
 
   //////////// License Manager /////////////
+
+  //////////////// save master key //////////////
+
+  saveMasterKey(key): Observable<any> {
+    return this.httpClient
+      .post<any>(
+        `${this.LICENSE_URL}/${this.endpoints.license.saveMasterKey}/${key}`,
+        {
+          headers: new HttpHeaders({
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + this.token,
+          }),
+        }
+      )
+      .pipe(catchError(this.handleError));
+  }
+
+  ////////////  Get Master Key ////////////////
+  getMasterKey(): Observable<any> {
+    return this.httpClient
+      .get(`${this.LICENSE_URL}/${this.endpoints.license.getMasterKey}`, {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.token,
+        }),
+      })
+      .pipe(catchError(this.handleError));
+  }
 
   //////////////// file upload //////////////
   fileUpload(data): Observable<any> {

@@ -17,7 +17,7 @@
                             </mat-form-field>
                         </div>
 
-                        <button mat-flat-button (click)="openCreateReasonModal(reasonCodeForm)">
+                        <button *ngIf="managePermission" mat-flat-button (click)="openCreateReasonModal(reasonCodeForm)">
                             <mat-icon>add</mat-icon>
                             Create Reason Code
                         </button>
@@ -41,7 +41,7 @@
                                         [ngStyle]="{'background-color':data?.type == 'LOG_OUT' ? '#ffab00' : '#b4b4b4' }"
                                         class="reason-type-style">{{data?.type | removeCharacterFilter |
                                         titlecase}}</span>
-                                    <span class="list-trigger-area">
+                                    <span *ngIf="managePermission" class="list-trigger-area">
                                         <button mat-mini-fab matTooltip="Edit"
                                             (click)="editReasonCode(reasonCodeForm,data)">
                                             <mat-icon>mode_edit</mat-icon>

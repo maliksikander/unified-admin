@@ -36,16 +36,17 @@ import { BotListComponent } from "./bot/bot-list/bot-list.component";
 import { BotSettingsComponent } from "./bot/bot-list/bot-settings/bot-settings.component";
 import { ColorSketchModule } from "ngx-color/sketch";
 import { ColorCircleModule } from "ngx-color/circle";
+import { ColorPickerModule } from "ngx-color-picker";
 import { FormsComponent } from "./forms/forms.component";
 import { NewFormComponent } from "./forms/new-form/new-form.component";
 import { ChannelTypeComponent } from "./channel-manager/channel-type/channel-type.component";
 import { ChannelTypeFormComponent } from "./channel-manager/channel-type/channel-type-form/channel-type-form.component";
 import { ReasonCodesComponent } from "./reason-codes/reason-codes.component";
 import { PullModeRoutingComponent } from "./pull-mode-routing/pull-mode-routing.component";
-import { WebWidgetListComponent } from './web-widget-list/web-widget-list.component';
-import { WebWidgetFormComponent } from './web-widget-list/web-widget-form/web-widget-form.component';
-import { ChannelProviderComponent } from './channel-manager/channel-provider/channel-provider.component';
-import { ChannelProviderSettingsComponent } from './channel-manager/channel-provider/channel-provider-settings/channel-provider-settings.component';
+import { WebWidgetListComponent } from "./web-widget-list/web-widget-list.component";
+import { WebWidgetFormComponent } from "./web-widget-list/web-widget-form/web-widget-form.component";
+import { ChannelProviderComponent } from "./channel-manager/channel-provider/channel-provider.component";
+import { ChannelProviderSettingsComponent } from "./channel-manager/channel-provider/channel-provider-settings/channel-provider-settings.component";
 
 @NgModule({
   imports: [
@@ -62,6 +63,7 @@ import { ChannelProviderSettingsComponent } from './channel-manager/channel-prov
     }),
     ColorSketchModule,
     ColorCircleModule,
+    ColorPickerModule,
   ],
   declarations: [
     AdminMainComponent,
@@ -103,7 +105,7 @@ import { ChannelProviderSettingsComponent } from './channel-manager/channel-prov
     EndpointService,
     HttpInterceptorService,
   ],
-  exports: [CalendarHeaderComponent],
+  exports: [CalendarHeaderComponent, ColorPickerModule],
 
   entryComponents: [],
 })

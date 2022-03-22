@@ -30,6 +30,7 @@ export class ReasonCodesComponent implements OnInit {
   reasonCodeData = [];
   reasonType = ["LOG_OUT", "NOT_READY"];
   editReasonData;
+  managePermission:boolean = false;
 
   constructor(
     private commonService: CommonService,
@@ -40,7 +41,7 @@ export class ReasonCodesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.commonService.checkTokenExistenceInStorage();
+    // this.commonService.checkTokenExistenceInStorage();
 
     //setting local form validation messages
     this.validations = this.commonService.reasonFormErrorMessages;
@@ -64,6 +65,7 @@ export class ReasonCodesComponent implements OnInit {
     });
 
     this.getReasonCode();
+    this.managePermission = this.commonService.checkManageScope("reason");
   }
 
   //to get reason code list and set the local variable with response

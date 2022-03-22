@@ -73,6 +73,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
   };
   queueForm: FormGroup;
   stepForm: FormGroup;
+  managePermission:boolean = false;
 
   constructor(
     private commonService: CommonService,
@@ -84,7 +85,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit() {
-    this.commonService.checkTokenExistenceInStorage();
+    // this.commonService.checkTokenExistenceInStorage();
 
     //setting local form validation messages
     this.validations = this.commonService.queueFormErrorMessages;
@@ -130,6 +131,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     });
 
     this.getQueue();
+    this.managePermission = this.commonService.checkManageScope("routing");
   }
 
   ngAfterViewInit() {

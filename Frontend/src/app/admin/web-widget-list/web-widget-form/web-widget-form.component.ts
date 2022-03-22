@@ -40,6 +40,7 @@ export class WebWidgetFormComponent implements OnInit {
   spinner = true;
   themeList = [];
   languageList = [];
+  toggle = false;
 
   constructor(
     private commonService: CommonService,
@@ -49,7 +50,7 @@ export class WebWidgetFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.commonService.checkTokenExistenceInStorage();
+    // this.commonService.checkTokenExistenceInStorage();
 
     //setting local form validation messages
     this.validations = this.commonService.webWidgetFormErrorMessages;
@@ -63,9 +64,17 @@ export class WebWidgetFormComponent implements OnInit {
       enableFileTransfer: [true, [Validators.required]],
       enableFontResize: [true, [Validators.required]],
       language: ["", [Validators.required]],
-      subTitle: ["", [Validators.required]],
+      subTitle: ["", [Validators.required, Validators.maxLength(100)]],
+      // theme: ["#2889e9", [Validators.required]],
       theme: ["", [Validators.required]],
-      title: ["", [Validators.required]],
+      title: [
+        "",
+        [
+          Validators.required,
+          Validators.maxLength(50),
+          Validators.pattern("^[a-zA-Z0-9_-]+(?: [a-zA-Z0-9_-]+)*$"),
+        ],
+      ],
       widgetIdentifier: [
         "",
         [

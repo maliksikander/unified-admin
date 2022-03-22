@@ -1,5 +1,5 @@
-FROM gitlab.expertflow.com:9242/general/node:12-alpine-3.12
-
+# FROM gitlab.expertflow.com:9242/general/node:12-alpine-3.12
+FROM node:14.16.1-alpine3.13
 RUN apk update && apk upgrade
 
 RUN apk add tzdata gettext

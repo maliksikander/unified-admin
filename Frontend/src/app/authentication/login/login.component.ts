@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { CommonService } from "src/app/admin/services/common.service";
 import { EndpointService } from "src/app/admin/services/endpoint.service";
 import { SnackbarService } from "src/app/admin/services/snackbar.service";
+import * as CryptoJS from "crypto-js";
 
 @Component({
   selector: "app-login",
@@ -68,9 +69,13 @@ export class LoginComponent implements OnInit {
     this.spinner = true;
     let data = this.loginForm.value;
     let reqBody = JSON.parse(JSON.stringify(data));
-    delete reqBody.rememberMe;
+    delete reqBody.rememberMe; 
+    // reqBody.username = CryptoJS.AES.encrypt(data.username, "undlusia").toString();
+    // reqBody.password = CryptoJS.AES.encrypt(data.password, "undlusia").toString();
+
     this.endPointService.login(reqBody).subscribe(
       (res: any) => {
+        // console.log("value==>", res);
         this.storeValues(res, data);
         this.spinner = false;
       },
@@ -82,16 +87,81 @@ export class LoginComponent implements OnInit {
   }
 
   storeValues(res, data) {
+    let resources: Array<any> = res.keycloak_User.permittedResources.Resources;
     if (data.rememberMe == true) {
       localStorage.setItem("username", res.keycloak_User.username);
       localStorage.setItem("tenant", res.keycloak_User.realm);
       localStorage.setItem("token", res.token);
-      // sessionStorage.setItem('permittedResources', JSON.stringify(res.keycloak_User.permittedResources.Resources));
     }
     sessionStorage.setItem("username", res.keycloak_User.username);
     sessionStorage.setItem("tenant", res.keycloak_User.realm);
     sessionStorage.setItem("token", res.token);
+    localStorage.setItem("resources", JSON.stringify(resources));
+    // sessionStorage.setItem("resources", JSON.stringify(resources));
+
     this.endPointService.token = res.token;
-    this.router.navigate(["/bot-settings"]);
+    this.navigateToResource(resources);
+  }
+
+  navigateToResource(resources: Array<any>) {
+    try {
+      let item = resources[0];
+
+      if (item.rsname.includes("general")) {
+        let scopes: Array<any> = item?.scopes;
+        scopes.forEach((scope: any) => {
+          if (scope == "view")
+            this.router.navigate(["/general/license-manager"]);
+        });
+      } else if (item.rsname.includes("bot")) {
+        let scopes: Array<any> = item?.scopes;
+        scopes.forEach((scope: any) => {
+          if (scope == "view") this.router.navigate(["/bot-settings"]);
+        });
+      } else if (item.rsname.includes("form")) {
+        let scopes: Array<any> = item?.scopes;
+        scopes.forEach((scope: any) => {
+          if (scope == "view") this.router.navigate(["/form"]);
+        });
+      } else if (item.rsname.includes("reason")) {
+        let scopes: Array<any> = item?.scopes;
+        scopes.forEach((scope: any) => {
+          if (scope == "view") this.router.navigate(["/reason-code"]);
+        });
+      } else if (item.rsname.includes("pull")) {
+        let scopes: Array<any> = item?.scopes;
+        scopes.forEach((scope: any) => {
+          if (scope == "view") this.router.navigate(["/pull-mode-list"]);
+        });
+      } else if (item.rsname.includes("web")) {
+        let scopes: Array<any> = item?.scopes;
+        scopes.forEach((scope: any) => {
+          if (scope == "view") this.router.navigate(["/web-widget"]);
+        });
+      } else if (item.rsname.includes("channel")) {
+        let scopes: Array<any> = item?.scopes;
+        scopes.forEach((scope: any) => {
+          if (scope == "view") this.router.navigate(["/channel/channel-type"]);
+        });
+      } else if (item.rsname.includes("routing")) {
+        let scopes: Array<any> = item?.scopes;
+        scopes.forEach((scope: any) => {
+          if (scope == "view") this.router.navigate(["/routing/attributes"]);
+        });
+      } else if (item.rsname.includes("calendar")) {
+        let scopes: Array<any> = item?.scopes;
+        scopes.forEach((scope: any) => {
+          if (scope == "view") this.router.navigate(["/business-calendar"]);
+        });
+      } else {
+        this.snackbar.snackbarMessage(
+          "error-snackbar",
+          "Not Authorized to Access Resources",
+          2
+        );
+      }
+    } catch (e) {
+      console.log("[Navigation Error in Login] :", e);
+    }
   }
 }

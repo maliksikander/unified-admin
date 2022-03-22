@@ -21,7 +21,8 @@ export class WebWidgetListComponent implements OnInit {
   itemsPerPageList = [5, 10, 15];
   itemsPerPage = 5;
   selectedItem = this.itemsPerPageList[0];
-
+  managePermission: boolean = false;
+  languageList: Array<any>;
   constructor(
     private commonService: CommonService,
     private dialog: MatDialog,
@@ -30,10 +31,11 @@ export class WebWidgetListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.commonService.checkTokenExistenceInStorage();
+    // this.commonService.checkTokenExistenceInStorage();
     let pageNumber = sessionStorage.getItem("webWidgetPage");
     if (pageNumber) this.p = pageNumber;
     this.getWebWidgets();
+    this.managePermission = this.commonService.checkManageScope("web");
   }
 
   //to get web widget list
@@ -41,12 +43,51 @@ export class WebWidgetListComponent implements OnInit {
     //calling endpoint service method to get web widget list
     this.endPointService.getWebWidgetList().subscribe(
       (res: any) => {
-        this.webWidgetList = res;
-        this.spinner = false;
+        // this.webWidgetList = res;
+        this.getLocaleSettings(res);
+        // this.spinner = false;
       },
       (error: any) => {
         this.spinner = false;
         console.error("Error fetching web widget list:", error);
+      }
+    );
+  }
+
+  getLocaleSettings(widgetList) {
+    let widgetListTemp: Array<any> = widgetList;
+    //calling endpoint service method to get local settings
+    this.endPointService.getLocaleSetting().subscribe(
+      (res: any) => {
+        this.languageList = res[0]?.supportedLanguages
+          ? res[0]?.supportedLanguages
+          : [];
+
+        // assigning lang object according to selected lang code in each widget
+        widgetListTemp.forEach((widget) => {
+          let languageIndex = this.languageList.findIndex(
+            (lang) => lang.code == widget.language.code
+          );
+          if (languageIndex != -1) {
+            widget.language = {
+              ...widget.language,
+              ...this.languageList[languageIndex],
+            };
+          }
+        });
+
+        if (this.languageList.length == 0)
+          this.snackbar.snackbarMessage(
+            "error-snackbar",
+            "No Language Found",
+            1
+          );
+        this.webWidgetList = widgetListTemp;
+        this.spinner = false;
+      },
+      (error: any) => {
+        this.spinner = false;
+        console.error("Error fetching locale settings:", error);
       }
     );
   }

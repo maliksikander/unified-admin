@@ -16,14 +16,17 @@ const path = require('path');
 const ApiError = require('./utils/ApiError');
 const app = express();
 var session = require('express-session');
-var memoryStore = new session.MemoryStore();
+// var memoryStore = new session.MemoryStore();
+const MongoStore = require('connect-mongo');
 
 
 app.use(session({
   secret: 'secret1',
   resave: false,
   saveUninitialized: true,
-  store: memoryStore
+  store: MongoStore.create({
+    mongoUrl: config.mongoDB_URL
+  })
 }));
 
 // process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0

@@ -21,6 +21,7 @@ export class FormsComponent implements OnInit {
   itemsPerPageList = [5, 10, 15];
   itemsPerPage = 5;
   selectedItem = this.itemsPerPageList[0];
+  managePermission:boolean = false;
 
   constructor(
     private commonService: CommonService,
@@ -30,10 +31,11 @@ export class FormsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.commonService.checkTokenExistenceInStorage();
+    // this.commonService.checkTokenExistenceInStorage();
     let pageNumber = sessionStorage.getItem("formsPage");
     if (pageNumber) this.p = pageNumber;
     this.getForms();
+    this.managePermission = this.commonService.checkManageScope("form");
   }
 
   // change the UI to form view and change page title

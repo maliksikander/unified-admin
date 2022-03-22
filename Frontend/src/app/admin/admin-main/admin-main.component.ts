@@ -33,8 +33,15 @@ export class AdminMainComponent implements OnInit {
   isCustomTheme;
   isRightBarActive;
   isBarIconView;
-  // generalBool: boolean = true;
-  // routingBool: boolean = true;
+  generalBool: boolean = false;
+  botBool: boolean = false;
+  formBool: boolean = false;
+  reasonCodeBool: boolean = false;
+  pullModeBool: boolean = false;
+  webWidgetBool: boolean = false;
+  channelBool: boolean = false;
+  routingBool: boolean = false;
+  calendarBool: boolean = false;
   subscription: Subscription;
 
   constructor(
@@ -43,23 +50,7 @@ export class AdminMainComponent implements OnInit {
     private router: Router,
     private changeDetector: ChangeDetectorRef,
     private configService: ConfigService
-  ) {
-    // this.commonService._generalSubject.subscribe((res: any) => {
-    //   console.log("triggered", res);
-    //   this.generalBool = res;
-    // });
-    // this.subscription = this.commonService.getMessage().subscribe(message => {
-    //   console.log("triggered");
-    //   console.log("message-->", message)
-    //   if (message) {
-    //     // this.messages.push(message);
-    //   } else {
-    //     // clear messages when empty message received
-    //     // this.messages = [];
-    //   }
-    // });
-    // console.log("bool 2", this.generalBool)
-  }
+  ) {}
 
   ngOnInit() {
     this.configService.onReadConfig.subscribe((e) => {
@@ -78,15 +69,85 @@ export class AdminMainComponent implements OnInit {
       }
     });
 
-    // let permittedResources: Array<any> = this.commonService.getPermissionResourcesList();
-    // if (permittedResources.includes('general-settings')) this.generalBool = true;
-    // else if (permittedResources.includes('RE_Configuration')) this.routingBool = true;
-
     this.elem = document.documentElement;
     this.commonService.themeVersion.subscribe((data) => {
       // console.log(data);
       this.changeTheme();
     });
+    let resources: Array<any> = JSON.parse(localStorage.getItem("resources"));
+
+    this.enableResource(resources);
+  }
+
+  enableResource(resources: Array<any>) {
+    try {
+      resources.forEach((item: any) => {
+        if (item.rsname.includes("general")) {
+          let scopes: Array<any> = item?.scopes;
+          scopes.forEach((scope: any) => {
+            if (scope == "view") this.generalBool = true;
+          });
+        }
+
+        if (item.rsname.includes("bot")) {
+          let scopes: Array<any> = item?.scopes;
+          scopes.forEach((scope: any) => {
+            if (scope == "view") this.botBool = true;
+          });
+        }
+
+        if (item.rsname.includes("form")) {
+          let scopes: Array<any> = item?.scopes;
+          scopes.forEach((scope: any) => {
+            if (scope == "view") this.formBool = true;
+          });
+        }
+
+        if (item.rsname.includes("reason")) {
+          let scopes: Array<any> = item?.scopes;
+          scopes.forEach((scope: any) => {
+            if (scope == "view") this.reasonCodeBool = true;
+          });
+        }
+
+        if (item.rsname.includes("pull")) {
+          let scopes: Array<any> = item?.scopes;
+          scopes.forEach((scope: any) => {
+            if (scope == "view") this.pullModeBool = true;
+          });
+        }
+
+        if (item.rsname.includes("web")) {
+          let scopes: Array<any> = item?.scopes;
+          scopes.forEach((scope: any) => {
+            if (scope == "view") this.webWidgetBool = true;
+          });
+        }
+
+        if (item.rsname.includes("calendar")) {
+          let scopes: Array<any> = item?.scopes;
+          scopes.forEach((scope: any) => {
+            if (scope == "view") this.calendarBool = true;
+          });
+        }
+
+        if (item.rsname.includes("channel") && this.channelBool == false) {
+          let scopes: Array<any> = item?.scopes;
+          scopes.forEach((scope: any) => {
+            if (scope == "view") this.channelBool = true;
+          });
+        }
+
+        if (item.rsname.includes("routing") && this.routingBool == false) {
+          let scopes: Array<any> = item?.scopes;
+          scopes.forEach((scope: any) => {
+            if (scope == "view") this.routingBool = true;
+          });
+        }
+      });
+    } catch (e) {
+      console.log("[Enable Resource Error] :", e);
+    }
   }
 
   clickEvent() {

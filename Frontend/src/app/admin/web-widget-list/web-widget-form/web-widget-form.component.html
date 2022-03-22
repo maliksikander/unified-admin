@@ -70,30 +70,42 @@
                     </mat-error>
                 </mat-form-field>
             </div>
+            <!-- <div class="form-group custom-theme-field">
+                <mat-label>Choose Theme Color</mat-label>
+                <mat-form-field appearance="outline">
+                    <input #ignoredInput matInput [value]="widgetConfigForm.value.theme" formControlName="theme"
+                        [cpIgnoredElements]="[ignoredButton, ignoredInput]" [(cpToggle)]="toggle"
+                        [(colorPicker)]="widgetConfigForm.value.theme" />
+
+                </mat-form-field>
+                <button #ignoredButton [style.background]="widgetConfigForm.value.theme"
+                    (click)="toggle=!toggle;"></button>
+            </div> -->
+
 
         </div>
 
-        <div class="form-group adjust-toggle col-md-5" style="padding-top: 15px">
+        <div class="form-group adjust-toggle widget-toggle col-md-5" style="padding-top: 15px">
             <mat-label>Enable Download Transcript</mat-label>
             <mat-slide-toggle formControlName="enableDownloadTranscript"></mat-slide-toggle>
         </div>
 
-        <div class="form-group adjust-toggle col-md-5" style="padding-top: 15px">
+        <div class="form-group adjust-toggle widget-toggle col-md-5" style="padding-top: 15px">
             <mat-label>Enable Dynamic Link</mat-label>
             <mat-slide-toggle formControlName="enableDynamicLink"></mat-slide-toggle>
         </div>
 
-        <div class="form-group adjust-toggle col-md-5" style="padding-top: 15px">
+        <div class="form-group adjust-toggle widget-toggle col-md-5" style="padding-top: 15px">
             <mat-label>Enable Emoji</mat-label>
             <mat-slide-toggle formControlName="enableEmoji"></mat-slide-toggle>
         </div>
 
-        <div class="form-group adjust-toggle col-md-5" style="padding-top: 15px">
+        <div class="form-group adjust-toggle widget-toggle col-md-5" style="padding-top: 15px">
             <mat-label>Enable File Transfer</mat-label>
             <mat-slide-toggle formControlName="enableFileTransfer"></mat-slide-toggle>
         </div>
 
-        <div class="form-group adjust-toggle col-md-5" style="padding-top: 15px">
+        <div class="form-group adjust-toggle widget-toggle col-md-5" style="padding-top: 15px">
             <mat-label>Enable Font Resize</mat-label>
             <mat-slide-toggle formControlName="enableFontResize"></mat-slide-toggle>
         </div>

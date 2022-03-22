@@ -26,7 +26,7 @@ stages:
 node_artifacts_frontend:
    stage: artifacts-frontend
    #when: on_success
-   image: node:latest
+   image: node:14.16.1-alpine3.13
    script:
    - cd Frontend
    - rm -rf node_modules
@@ -51,7 +51,7 @@ node_artifacts_frontend:
 
 # node-test-frontend:
 #    stage: test_frontend
-#    image: node:latest
+#    image: node:14.16.1-alpine3.13
 #    script:
 #      - cd Frontend
 #      #- npm run test
@@ -111,7 +111,7 @@ node_artifacts_frontend:
 
 #==================================================================
 angular_build:
-   image: node:latest
+   image: node:14.16.1-alpine3.13
    stage: build-frontend
    when: on_success
 #   only:
@@ -143,10 +143,12 @@ angular_build:
 node_artifacts_backend:
    stage: artifacts-backend
    #when: on_success
-   image: node:latest
+   image: node:14.16.1-alpine3.13
    script:
    - cd Backend
    - npm install --legacy-peer-deps
+   - npm uninstall ef-keycloak-connect
+   - npm install ef-keycloak-connect@1.0.0
    #- export TIME_TOKEN=$(env TZ=GMT-5 date +%d_%m_%Y-%H_%M_%S)
    #- echo "${TIME_TOKEN}"
    allow_failure: false
@@ -171,7 +173,7 @@ node_artifacts_backend:
 
 node-test-backend:
    stage: test_backend
-   image: node:latest
+   image: node:14.16.1-alpine3.13
    script:
      - cd Backend
      - npm run test
@@ -235,7 +237,7 @@ sonarqube-backend:
 
 #==================================================================
 node_build:
-   image: node:latest
+   image: node:14.16.1-alpine3.13
    stage: build-backend
    when: on_success
 #   only:

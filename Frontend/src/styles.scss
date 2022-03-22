@@ -3431,9 +3431,15 @@ snack-bar-container {
 }
 
 .channel-provider-expansion-header-expanded {
-    padding: 0 5px !important;
+  padding: 0 5px !important;
 }
 
 .channel-provider-expansion-header-collapsed {
-    padding: 0 30px !important;
+  padding: 0 30px !important;
+}
+
+.widget-toggle {
+  .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+    top: 4px;
+  }
 }

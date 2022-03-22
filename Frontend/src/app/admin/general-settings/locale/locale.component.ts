@@ -53,6 +53,7 @@ export class LocaleComponent implements OnInit {
   selectedLanguages = [];
   spinner: any = true;
   editData: any;
+  managePermission: boolean = false;
 
   constructor(
     private snackbar: SnackbarService,
@@ -63,7 +64,7 @@ export class LocaleComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.commonService.checkTokenExistenceInStorage();
+    // this.commonService.checkTokenExistenceInStorage();
 
     //setting local form validation messages
     this.validations = this.commonService.localeSettingErrorMessages;
@@ -93,6 +94,8 @@ export class LocaleComponent implements OnInit {
       this.spinner = res;
       this.changeDetector.markForCheck();
     });
+
+    this.managePermission = this.commonService.checkManageScope("general");
   }
 
   //callback for language removed event

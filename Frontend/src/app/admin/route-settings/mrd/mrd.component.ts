@@ -29,6 +29,7 @@ export class MrdComponent implements OnInit {
   saveBtnText = "Create";
   mrdData = [];
   editData: any;
+  managePermission:boolean = false;
 
   constructor(
     private commonService: CommonService,
@@ -39,7 +40,7 @@ export class MrdComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.commonService.checkTokenExistenceInStorage();
+    // this.commonService.checkTokenExistenceInStorage();
     this.validations = this.commonService.mrdFormErrorMessages;
 
     //setting local form validation messages
@@ -70,6 +71,7 @@ export class MrdComponent implements OnInit {
     });
 
     this.getMRD();
+    this.managePermission = this.commonService.checkManageScope("routing");
   }
 
   //to open form dialog,this method accepts the `templateRef` as a parameter assigned to the form in html.

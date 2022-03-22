@@ -20,6 +20,7 @@ export class ChannelListComponent implements OnInit {
   channelType;
   channelTypes = [];
   channels = [];
+  managePermission:boolean =false;
 
   constructor(
     private commonService: CommonService,
@@ -29,8 +30,9 @@ export class ChannelListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.commonService.checkTokenExistenceInStorage();
+    // this.commonService.checkTokenExistenceInStorage();
     this.getChannelType();
+    this.managePermission = this.commonService.checkManageScope("channel");
   }
 
   //calling endpoint service method to get channel types list which accepts its request endpoint as parameter

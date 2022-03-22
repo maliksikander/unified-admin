@@ -13,6 +13,7 @@ import { LoginComponent } from "./authentication/login/login.component";
 import { APP_INITIALIZER } from "@angular/core";
 import { ConfigService } from "./admin/services/config.service";
 import { HashLocationStrategy, LocationStrategy } from "@angular/common";
+// import { NotFoundComponent } from './app/authentication/not-found/not-found.component';
 
 
 @NgModule({

@@ -23,6 +23,7 @@ export class ChannelConnectorComponent implements OnInit {
   itemsPerPageList = [5, 10, 15];
   itemsPerPage = 5;
   selectedItem = this.itemsPerPageList[0];
+  managePermission:boolean = false;
 
   constructor(
     private commonService: CommonService,
@@ -32,11 +33,12 @@ export class ChannelConnectorComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.commonService.checkTokenExistenceInStorage();
+    // this.commonService.checkTokenExistenceInStorage();
     let pageNumber = sessionStorage.getItem("currentConnectorPage");
     if (pageNumber) this.p = pageNumber;
 
     this.getChannelConnector();
+    this.managePermission = this.commonService.checkManageScope("channel");
   }
 
   //to get logo/image from file engine, it accepts the file name as parameter and returns the url

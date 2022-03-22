@@ -21,6 +21,7 @@ export class ChannelProviderComponent implements OnInit {
   itemsPerPageList = [5, 10, 15];
   itemsPerPage = 5;
   selectedItem = this.itemsPerPageList[0];
+  managePermission: boolean = false;
 
   constructor(
     private commonService: CommonService,
@@ -30,11 +31,12 @@ export class ChannelProviderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.commonService.checkTokenExistenceInStorage();
+    // this.commonService.checkTokenExistenceInStorage();
     let pageNumber = sessionStorage.getItem("currentProviderPage");
     if (pageNumber) this.p = pageNumber;
 
     this.getChannelProviders();
+    this.managePermission = this.commonService.checkManageScope("channel");
   }
 
   //to get channel provider list
@@ -120,7 +122,6 @@ export class ChannelProviderComponent implements OnInit {
   deleteChannelProvider(data) {
     this.endPointService.deleteChannelProvider(data.id).subscribe(
       (res: any) => {
-     
         this.removeRecordFromLocalList(data);
         this.spinner = false;
       },

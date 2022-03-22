@@ -44,21 +44,21 @@
             </mat-expansion-panel> -->
 
             <!-- BOT SETTINGS -->
-            <a class="single-menu-link" mat-list-item [routerLinkActive]="['active-link']"
+            <a *ngIf="botBool" class="single-menu-link" mat-list-item [routerLinkActive]="['active-link']"
               [routerLink]="['/bot-settings']">
               <img src="assets/images/bot.svg" alt="bot">
               <span class="sidebar-text">Bot</span>
             </a>
 
             <!-- Business Calendar -->
-            <a class="single-menu-link" mat-list-item [routerLinkActive]="['active-link']"
+            <a *ngIf="calendarBool" class="single-menu-link" mat-list-item [routerLinkActive]="['active-link']"
               [routerLink]="['/business-calendar']">
               <img src="assets/images/calendar.svg" alt="calendar">
               <span class="sidebar-text">Business Calendar</span>
             </a>
 
             <!-- CCM -->
-            <mat-expansion-panel>
+            <mat-expansion-panel *ngIf="channelBool">
               <mat-expansion-panel-header class='ccm-header-image-icon'>
                 <img src="assets/images/customer-channels.svg" alt="channel manager">
                 <span class="sidebar-text">Channel Manager</span>
@@ -87,14 +87,14 @@
             </mat-expansion-panel>
 
 
-
-            <a class="single-menu-link" mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/form']">
+            <!-- Forms -->
+            <a *ngIf="formBool" class="single-menu-link" mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/form']">
               <img src="assets/images/forms.svg" alt="forms">
               <span class="sidebar-text">Forms</span>
             </a>
 
             <!-- General Settings -->
-            <mat-expansion-panel>
+            <mat-expansion-panel *ngIf="generalBool">
               <mat-expansion-panel-header>
                 <i class="material-icons">settings</i>
                 <span class="sidebar-text">General</span>
@@ -150,21 +150,21 @@
             </mat-expansion-panel>
 
             <!-- Pull Mode List-->
-            <a class="single-menu-link" mat-list-item [routerLinkActive]="['active-link']"
+            <a *ngIf="pullModeBool" class="single-menu-link" mat-list-item [routerLinkActive]="['active-link']"
               [routerLink]="['/pull-mode-list']">
               <img src="assets/images/list.svg" class="img-size-adjustment" alt="pull_mode">
               <span class="sidebar-text">Pull Mode List</span>
             </a>
 
             <!-- Reason Code -->
-            <a class="single-menu-link" mat-list-item [routerLinkActive]="['active-link']"
+            <a *ngIf="reasonCodeBool" class="single-menu-link" mat-list-item [routerLinkActive]="['active-link']"
               [routerLink]="['/reason-code']">
               <img src="assets/images/reason-code.svg" class="img-size-adjustment" alt="reason_code">
               <span class="sidebar-text">Reason Code</span>
             </a>
 
             <!-- Routing Configuration -->
-            <mat-expansion-panel>
+            <mat-expansion-panel *ngIf="routingBool">
               <mat-expansion-panel-header class='route-header-image-icon'>
                 <!-- <i style="font-size: 21px;" class="material-icons">compare_arrows</i> -->
                 <img src="assets/images/routing.svg" alt="">
@@ -189,7 +189,7 @@
             </mat-expansion-panel>
 
             <!-- Web Widget -->
-            <a class="single-menu-link" mat-list-item [routerLinkActive]="['active-link']"
+            <a  *ngIf="webWidgetBool" class="single-menu-link" mat-list-item [routerLinkActive]="['active-link']"
               [routerLink]="['/web-widget']">
               <img  style="padding-left: 2px;" src="assets/images/web-widget.svg" class="img-size-adjustment" alt="web_widget">
               <span  class="sidebar-text">Web Widget</span>

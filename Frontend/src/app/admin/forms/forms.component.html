@@ -17,7 +17,7 @@
                             </mat-form-field>
                         </div>
 
-                        <button (click)="addNewForm()" mat-flat-button>
+                        <button *ngIf="managePermission" (click)="addNewForm()" mat-flat-button>
                             <mat-icon>add</mat-icon>
                             New Form
                         </button>
@@ -44,7 +44,7 @@
                                             {{stringAsDate(data?.createdAt) | date:'fullDate'}}
                                         </div>
                                     </div>
-                                    <div class="list-action-area">
+                                    <div *ngIf="managePermission" class="list-action-area">
                                         <span class="list-actions">
                                             <button mat-mini-fab matTooltip="Edit" (click)="editForm(data)">
                                                 <mat-icon>mode_edit</mat-icon>
