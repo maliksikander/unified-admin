@@ -1,25 +1,27 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ChangeDetectorRef } from "@angular/core";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { FormBuilder } from "@angular/forms";
+import { MatDialog } from "@angular/material/dialog";
 
-import { ChannelProviderSettingsComponent } from './channel-provider-settings.component';
+import { ChannelProviderSettingsComponent } from "./channel-provider-settings.component";
 
-describe('ChannelProviderSettingsComponent', () => {
+describe("ChannelProviderSettingsComponent", () => {
   let component: ChannelProviderSettingsComponent;
-  let fixture: ComponentFixture<ChannelProviderSettingsComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ ChannelProviderSettingsComponent ]
-    })
-    .compileComponents();
-  });
+  let endPointService: any;
+  let cd: ChangeDetectorRef;
+  let commonService: any;
+  let fb: FormBuilder;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ChannelProviderSettingsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    component = new ChannelProviderSettingsComponent(
+      commonService,
+      fb,
+      endPointService,
+      cd
+    );
   });
 
-  it('should create', () => {
+  it("should create channel provider settings component", () => {
     expect(component).toBeTruthy();
   });
 });

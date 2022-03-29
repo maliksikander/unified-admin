@@ -1,24 +1,25 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { MatDialog } from "@angular/material/dialog";
 
 import { ChannelTypeComponent } from "./channel-type.component";
 
 describe("ChannelTypeComponent", () => {
   let component: ChannelTypeComponent;
-  let fixture: ComponentFixture<ChannelTypeComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ChannelTypeComponent],
-    }).compileComponents();
-  });
+  let endPointService: any;
+  let snackbarService: any;
+  let commonService: any;
+  let dialog: MatDialog;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ChannelTypeComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    component = new ChannelTypeComponent(
+      commonService,
+      dialog,
+      endPointService,
+      snackbarService
+    );
   });
 
-  it("should create", () => {
+  it("should create channel type component", () => {
     expect(component).toBeTruthy();
   });
 });

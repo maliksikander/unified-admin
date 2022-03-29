@@ -1,25 +1,25 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { MatDialog } from "@angular/material/dialog";
 
-import { ChannelProviderComponent } from './channel-provider.component';
+import { ChannelProviderComponent } from "./channel-provider.component";
 
-describe('ChannelProviderComponent', () => {
+describe("ChannelProviderComponent", () => {
   let component: ChannelProviderComponent;
-  let fixture: ComponentFixture<ChannelProviderComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ ChannelProviderComponent ]
-    })
-    .compileComponents();
-  });
+  let endPointService: any;
+  let snackbarService: any;
+  let commonService: any;
+  let dialog: MatDialog;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ChannelProviderComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    component = new ChannelProviderComponent(
+      commonService,
+      dialog,
+      endPointService,
+      snackbarService
+    );
   });
 
-  it('should create', () => {
+  it("should create channel provider list component", () => {
     expect(component).toBeTruthy();
   });
 });

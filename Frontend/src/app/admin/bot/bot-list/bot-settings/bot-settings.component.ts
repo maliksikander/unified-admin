@@ -8,9 +8,9 @@ import {
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
-import { CommonService } from "src/app/admin/services/common.service";
-import { EndpointService } from "src/app/admin/services/endpoint.service";
-import { SnackbarService } from "src/app/admin/services/snackbar.service";
+import { CommonService } from "../../../../admin/services/common.service";
+import { EndpointService } from "../../../../admin/services/endpoint.service";
+import { SnackbarService } from "../../../../admin/services/snackbar.service";
 
 @Component({
   selector: "app-bot-settings",
@@ -40,19 +40,19 @@ export class BotSettingsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private snackbar: SnackbarService,
     private endPointService: EndpointService
-  ) {}
+  ) {
+    this.botSettingForm = this.formBuilder.group({
+      botName: ["", [Validators.required]],
+      botURL: [""],
+      botFile: [{ value: null, disabled: true }],
+    });
+  }
 
   ngOnInit() {
     // this.commonService.checkTokenExistenceInStorage();
 
     //setting local form validation messages
     this.validations = this.commonService.botFormErrorMessages;
-
-    this.botSettingForm = this.formBuilder.group({
-      botName: ["", [Validators.required]],
-      botURL: [""],
-      botFile: [{ value: null, disabled: true }],
-    });
 
     this.setValidation(this.botTypeData);
 

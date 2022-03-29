@@ -1,26 +1,28 @@
+import { ChangeDetectorRef } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { FormBuilder } from "@angular/forms";
 
 import { DisplayComponent } from "./display.component";
 
 describe("DisplayComponent", () => {
   let component: DisplayComponent;
-  let fixture: ComponentFixture<DisplayComponent>;
-
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [DisplayComponent],
-      }).compileComponents();
-    })
-  );
+  let endPointService: any;
+  let snackbarService: any;
+  let commonService: any;
+  let fb: FormBuilder;
+  let cd: ChangeDetectorRef;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DisplayComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    component = new DisplayComponent(
+      snackbarService,
+      fb,
+      commonService,
+      endPointService,
+      cd
+    );
   });
 
-  it("should create", () => {
+  it("should create display component", () => {
     expect(component).toBeTruthy();
   });
 });

@@ -1,26 +1,28 @@
+import { ChangeDetectorRef } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { FormBuilder } from "@angular/forms";
 
 import { LoggingComponent } from "./logging.component";
 
 describe("LoggingComponent", () => {
   let component: LoggingComponent;
-  let fixture: ComponentFixture<LoggingComponent>;
-
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [LoggingComponent],
-      }).compileComponents();
-    })
-  );
+  let endPointService: any;
+  let snackbarService: any;
+  let commonService: any;
+  let fb: FormBuilder;
+  let cd: ChangeDetectorRef;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoggingComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    component = new LoggingComponent(
+      snackbarService,
+      fb,
+      commonService,
+      endPointService,
+      cd
+    );
   });
 
-  it("should create", () => {
+  it("should create logging component", () => {
     expect(component).toBeTruthy();
   });
 });

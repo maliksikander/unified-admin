@@ -1,26 +1,27 @@
+import { ChangeDetectorRef } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-
+import { FormBuilder } from "@angular/forms";
 import { AmqComponent } from "./amq.component";
 
 describe("AmqComponent", () => {
   let component: AmqComponent;
-  let fixture: ComponentFixture<AmqComponent>;
-
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [AmqComponent],
-      }).compileComponents();
-    })
-  );
+  let endPointService: any;
+  let snackbarService: any;
+  let commonService: any;
+  let fb: FormBuilder;
+  let cd: ChangeDetectorRef;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AmqComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    component = new AmqComponent(
+      snackbarService,
+      fb,
+      commonService,
+      endPointService,
+      cd
+    );
   });
 
-  it("should create", () => {
+  it("should create amq component", () => {
     expect(component).toBeTruthy();
   });
 });

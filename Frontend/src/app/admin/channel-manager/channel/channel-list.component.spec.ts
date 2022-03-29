@@ -1,26 +1,25 @@
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { MatDialog } from "@angular/material/dialog";
 
 import { ChannelListComponent } from "./channel-list.component";
 
-describe("ChannelManagerSettingsComponent", () => {
+describe("ChannelListComponent", () => {
   let component: ChannelListComponent;
-  let fixture: ComponentFixture<ChannelListComponent>;
-
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [ChannelListComponent],
-      }).compileComponents();
-    })
-  );
+  let endPointService: any;
+  let snackbarService: any;
+  let commonService: any;
+  let dialog: MatDialog;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ChannelListComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    component = new ChannelListComponent(
+      commonService,
+      dialog,
+      endPointService,
+      snackbarService
+    );
   });
 
-  it("should create", () => {
+  it("should create channel list component", () => {
     expect(component).toBeTruthy();
   });
 });

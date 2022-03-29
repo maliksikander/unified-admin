@@ -1,26 +1,28 @@
+import { ChangeDetectorRef } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { FormBuilder } from "@angular/forms";
 
 import { DatabaseComponent } from "./database.component";
 
 describe("DatabaseComponent", () => {
   let component: DatabaseComponent;
-  let fixture: ComponentFixture<DatabaseComponent>;
-
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [DatabaseComponent],
-      }).compileComponents();
-    })
-  );
+  let endPointService: any;
+  let snackbarService: any;
+  let commonService: any;
+  let fb: FormBuilder;
+  let cd: ChangeDetectorRef;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DatabaseComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    component = new DatabaseComponent(
+      snackbarService,
+      fb,
+      commonService,
+      endPointService,
+      cd
+    );
   });
 
-  it("should create", () => {
+  it("should create database component", () => {
     expect(component).toBeTruthy();
   });
 });

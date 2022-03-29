@@ -1,26 +1,29 @@
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-
+import { ChangeDetectorRef } from "@angular/core";
+import { FormBuilder } from "@angular/forms";
+import { MatDialog } from "@angular/material/dialog";
 import { PrecisionQueueComponent } from "./precision-queue.component";
 
 describe("PrecisionQueueComponent", () => {
   let component: PrecisionQueueComponent;
-  let fixture: ComponentFixture<PrecisionQueueComponent>;
-
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [PrecisionQueueComponent],
-      }).compileComponents();
-    })
-  );
+  let endPointService: any;
+  let snackbarService: any;
+  let commonService: any;
+  let fb: FormBuilder;
+  let cd: ChangeDetectorRef;
+  let dialog: MatDialog;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PrecisionQueueComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    component = new PrecisionQueueComponent(
+      commonService,
+      dialog,
+      endPointService,
+      fb,
+      snackbarService,
+      cd
+    );
   });
 
-  it("should create", () => {
+  it("should create precision component", () => {
     expect(component).toBeTruthy();
   });
 });

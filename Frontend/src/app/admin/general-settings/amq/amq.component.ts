@@ -1,6 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
 import { CommonService } from "../../services/common.service";
 import { EndpointService } from "../../services/endpoint.service";
 import { SnackbarService } from "../../services/snackbar.service";
@@ -32,7 +31,6 @@ export class AmqComponent implements OnInit {
     private commonService: CommonService,
     private endPointService: EndpointService,
     private changeDetector: ChangeDetectorRef,
-    private router: Router
   ) {}
 
   ngOnInit() {

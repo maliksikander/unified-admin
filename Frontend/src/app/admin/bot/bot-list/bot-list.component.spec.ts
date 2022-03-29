@@ -1,26 +1,24 @@
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-
+import { EndpointService } from "../../services/endpoint.service";
+import { MatDialog } from "@angular/material/dialog";
 import { BotListComponent } from "./bot-list.component";
 
 describe("BotListComponent", () => {
+  let dialog: MatDialog;
   let component: BotListComponent;
-  let fixture: ComponentFixture<BotListComponent>;
-
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [BotListComponent],
-      }).compileComponents();
-    })
-  );
+  let endPointService: EndpointService;
+  let snackbarService: any;
+  let commonService: any;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BotListComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    component = new BotListComponent(
+      commonService,
+      dialog,
+      endPointService,
+      snackbarService
+    );
   });
 
-  it("should create", () => {
+  it("should create bot list component", () => {
     expect(component).toBeTruthy();
   });
 });

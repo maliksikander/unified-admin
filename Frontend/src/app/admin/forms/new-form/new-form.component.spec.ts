@@ -1,24 +1,27 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-
+import { ChangeDetectorRef } from "@angular/core";
+import { FormBuilder } from "@angular/forms";
+import { EndpointService } from "../../services/endpoint.service";
 import { NewFormComponent } from "./new-form.component";
 
 describe("NewFormComponent", () => {
   let component: NewFormComponent;
-  let fixture: ComponentFixture<NewFormComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [NewFormComponent],
-    }).compileComponents();
-  });
+  let endPointService: any;
+  let snackbarService: any;
+  let commonService: any;
+  let fb: FormBuilder;
+  let cd: ChangeDetectorRef;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NewFormComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    component = new NewFormComponent(
+      commonService,
+      fb,
+      snackbarService,
+      cd,
+      endPointService
+    );
   });
 
-  it("should create", () => {
+  it("should create new form component", () => {
     expect(component).toBeTruthy();
   });
 });

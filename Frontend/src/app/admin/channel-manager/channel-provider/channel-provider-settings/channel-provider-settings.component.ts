@@ -8,9 +8,8 @@ import {
   SimpleChanges,
 } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { CommonService } from "src/app/admin/services/common.service";
-import { EndpointService } from "src/app/admin/services/endpoint.service";
-import { SnackbarService } from "src/app/admin/services/snackbar.service";
+import { CommonService } from "../../../../admin/services/common.service";
+import { EndpointService } from "../../../../admin/services/endpoint.service";
 import { RxwebValidators } from "@rxweb/reactive-form-validators";
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 

@@ -1,26 +1,27 @@
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-
+import { FormBuilder } from "@angular/forms";
+import { MatDialog } from "@angular/material/dialog";
 import { UsersComponent } from "./users.component";
 
 describe("UsersComponent", () => {
   let component: UsersComponent;
-  let fixture: ComponentFixture<UsersComponent>;
-
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [UsersComponent],
-      }).compileComponents();
-    })
-  );
+  let endPointService: any;
+  let snackbarService: any;
+  let commonService: any;
+  let fb: FormBuilder;
+  let dialog: MatDialog;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UsersComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    component = new UsersComponent(
+      commonService,
+      dialog,
+      endPointService,
+      fb,
+      snackbarService
+    );
   });
 
-  it("should create", () => {
+  it("should create users component", () => {
     expect(component).toBeTruthy();
   });
 });

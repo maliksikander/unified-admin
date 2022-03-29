@@ -1,26 +1,25 @@
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { FormBuilder } from "@angular/forms";
 
 import { ChannelConnectorSettingsComponent } from "./channel-connector-settings.component";
 
 describe("ChannelConnectorSettingsComponent", () => {
   let component: ChannelConnectorSettingsComponent;
-  let fixture: ComponentFixture<ChannelConnectorSettingsComponent>;
-
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [ChannelConnectorSettingsComponent],
-      }).compileComponents();
-    })
-  );
+  let endPointService: any;
+  let snackbarService: any;
+  let commonService: any;
+  let fb: FormBuilder;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ChannelConnectorSettingsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    component = new ChannelConnectorSettingsComponent(
+      commonService,
+      endPointService,
+      fb,
+      snackbarService
+    );
   });
 
-  it("should create", () => {
+  it("should create channel connector settings component", () => {
     expect(component).toBeTruthy();
   });
 });

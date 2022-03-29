@@ -1,24 +1,25 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { MatDialog } from "@angular/material/dialog";
 
 import { FormsComponent } from "./forms.component";
 
 describe("FormsComponent", () => {
   let component: FormsComponent;
-  let fixture: ComponentFixture<FormsComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [FormsComponent],
-    }).compileComponents();
-  });
+  let endPointService: any;
+  let snackbarService: any;
+  let commonService: any;
+  let dialog: MatDialog;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FormsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    component = new FormsComponent(
+      commonService,
+      dialog,
+      endPointService,
+      snackbarService
+    );
   });
 
-  it("should create", () => {
+  it("should create new form component", () => {
     expect(component).toBeTruthy();
   });
 });

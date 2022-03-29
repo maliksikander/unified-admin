@@ -1,26 +1,28 @@
+import { ChangeDetectorRef } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { FormBuilder } from "@angular/forms";
 
 import { ReportingComponent } from "./reporting.component";
 
 describe("ReportingComponent", () => {
   let component: ReportingComponent;
-  let fixture: ComponentFixture<ReportingComponent>;
-
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [ReportingComponent],
-      }).compileComponents();
-    })
-  );
+  let endPointService: any;
+  let snackbarService: any;
+  let commonService: any;
+  let fb: FormBuilder;
+  let cd: ChangeDetectorRef;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ReportingComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    component = new ReportingComponent(
+      snackbarService,
+      fb,
+      commonService,
+      endPointService,
+      cd
+    );
   });
 
-  it("should create", () => {
+  it("should create reporting component", () => {
     expect(component).toBeTruthy();
   });
 });

@@ -1,24 +1,28 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { FormBuilder } from "@angular/forms";
+import { MatDialog } from "@angular/material/dialog";
 
 import { ReasonCodesComponent } from "./reason-codes.component";
 
 describe("ReasonCodesComponent", () => {
   let component: ReasonCodesComponent;
-  let fixture: ComponentFixture<ReasonCodesComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ReasonCodesComponent],
-    }).compileComponents();
-  });
+  let endPointService: any;
+  let snackbarService: any;
+  let commonService: any;
+  let fb: FormBuilder;
+  let dialog: MatDialog;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ReasonCodesComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    component = new ReasonCodesComponent(
+      commonService,
+      dialog,
+      endPointService,
+      fb,
+      snackbarService
+    );
   });
 
-  it("should create", () => {
+  it("should create reason code component", () => {
     expect(component).toBeTruthy();
   });
 });

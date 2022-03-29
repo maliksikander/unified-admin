@@ -1,26 +1,27 @@
+import { ChangeDetectorRef } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-
+import { FormBuilder } from "@angular/forms";
 import { LicenseManagerComponent } from "./license-manager.component";
 
 describe("LicenseManagerComponent", () => {
   let component: LicenseManagerComponent;
-  let fixture: ComponentFixture<LicenseManagerComponent>;
-
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [LicenseManagerComponent],
-      }).compileComponents();
-    })
-  );
+  let endPointService: any;
+  let snackbarService: any;
+  let commonService: any;
+  let fb: FormBuilder;
+  let cd: ChangeDetectorRef;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LicenseManagerComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    component = new LicenseManagerComponent(
+      snackbarService,
+      fb,
+      commonService,
+      endPointService,
+      cd
+    );
   });
 
-  it("should create", () => {
+  it("should create license manager component", () => {
     expect(component).toBeTruthy();
   });
 });

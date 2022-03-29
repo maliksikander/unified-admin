@@ -1,26 +1,28 @@
+import { ChangeDetectorRef } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { FormBuilder } from "@angular/forms";
 
 import { ChannelSettingsComponent } from "./channel-settings.component";
 
-describe("ChannelTypeSettingsComponent", () => {
+describe("ChannelSettingsComponent", () => {
   let component: ChannelSettingsComponent;
-  let fixture: ComponentFixture<ChannelSettingsComponent>;
-
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [ChannelSettingsComponent],
-      }).compileComponents();
-    })
-  );
+  let endPointService: any;
+  let snackbarService: any;
+  let commonService: any;
+  let fb: FormBuilder;
+  let cd: ChangeDetectorRef;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ChannelSettingsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    component = new ChannelSettingsComponent(
+      commonService,
+      endPointService,
+      fb,
+      snackbarService,
+      cd
+    );
   });
 
-  it("should create", () => {
+  it("should create channel settings component", () => {
     expect(component).toBeTruthy();
   });
 });

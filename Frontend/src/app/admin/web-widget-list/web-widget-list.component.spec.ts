@@ -1,25 +1,25 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { MatDialog } from "@angular/material/dialog";
 
-import { WebWidgetListComponent } from './web-widget-list.component';
+import { WebWidgetListComponent } from "./web-widget-list.component";
 
-describe('WebWidgetListComponent', () => {
+describe("WebWidgetListComponent", () => {
   let component: WebWidgetListComponent;
-  let fixture: ComponentFixture<WebWidgetListComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ WebWidgetListComponent ]
-    })
-    .compileComponents();
-  });
+  let endPointService: any;
+  let snackbarService: any;
+  let commonService: any;
+  let dialog: MatDialog;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(WebWidgetListComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    component = new WebWidgetListComponent(
+      commonService,
+      dialog,
+      endPointService,
+      snackbarService
+    );
   });
 
-  it('should create', () => {
+  it("should create web widget list component", () => {
     expect(component).toBeTruthy();
   });
 });

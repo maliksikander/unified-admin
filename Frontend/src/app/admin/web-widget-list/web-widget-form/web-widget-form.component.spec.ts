@@ -1,25 +1,25 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { FormBuilder } from "@angular/forms";
 
-import { WebWidgetFormComponent } from './web-widget-form.component';
+import { WebWidgetFormComponent } from "./web-widget-form.component";
 
-describe('WebWidgetFormComponent', () => {
+describe("WebWidgetFormComponent", () => {
   let component: WebWidgetFormComponent;
-  let fixture: ComponentFixture<WebWidgetFormComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ WebWidgetFormComponent ]
-    })
-    .compileComponents();
-  });
+  let endPointService: any;
+  let snackbarService: any;
+  let commonService: any;
+  let fb: FormBuilder;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(WebWidgetFormComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    component = new WebWidgetFormComponent(
+      commonService,
+      fb,
+      endPointService,
+      snackbarService
+    );
   });
 
-  it('should create', () => {
+  it("should create web widget form component", () => {
     expect(component).toBeTruthy();
   });
 });
