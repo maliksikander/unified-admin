@@ -57,7 +57,7 @@ export class EndpointService {
       security: "security-setting",
     },
     license: {
-      fileUpload: "license/attachment",
+      fileUpload: "licenses/attachment",
       saveMasterKey: "licenses",
       getMasterKey: "masterKey",
     },
