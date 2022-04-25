@@ -6,5 +6,6 @@ module.exports = {
   restoreMocks: true,
   coveragePathIgnorePatterns: ['node_modules'],
   coverageReporters: ['text', 'lcov', 'clover', 'html'],
-  testResultsProcessor: "jest-sonar-reporter"
+  testResultsProcessor: "jest-sonar-reporter",
+  testTimeout: 50000
 };

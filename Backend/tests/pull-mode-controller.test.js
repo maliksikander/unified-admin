@@ -1,5 +1,5 @@
 
-// const { app } = require("../src/app")
+// const app = require("../src/app")
 // const supertest = require("supertest");
 // const pullModeListService = require('../../src/services');
 const mongoose = require('mongoose');
@@ -12,7 +12,7 @@ describe('get pull mode list test cases =>', () => {
 
   it('should get pull mode list by id', () => {
     let req = {
-      params: { listID: 1 }
+      params: { listID: "1" }
     }
 
     let getPullModeListByID = jest.fn().mockReturnValue({});
@@ -38,138 +38,84 @@ describe('get pull mode list test cases =>', () => {
 });
 
 
-// describe('delete schema attribute test cases =>', () => {
+describe('delete pull mode list test cases =>', () => {
 
-//     it('should delete schema attribute', () => {
-//         let req = {
-//             params: {
-//                 id: "61c2b22725dadf1a1050c582"
-//             },
-//             body: {
-//                 key: "firstName",
-//                 channelTypes: [],
-//                 defaultValue: "Jane Doe",
-//                 description: "",
-//                 isChannelIdentifier: false,
-//                 isDeleteAble: false,
-//                 isPii: false,
-//                 isRequired: true,
-//                 label: "First Name",
-//                 length: 50,
-//                 sortOrder: 1,
-//                 type: "string"
-//             }
-//         };
-//         let res = {};
+  it('should delete pull mode list', () => {
+    let req = {
+      params: {
+        listID: "61c2b22725dadf1a1050c582"
+      }
+    };
 
+    let deletePullModeList = jest.fn().mockReturnValue({
+      _id: "61c2b22725dadf1a1050c582"
+    });
+    pullModeListController.deletePullModeList = (req) => {
+      if (req.params.listID) {
+        deletePullModeList(req.params.listID);
+        return;
+      }
+    };
+    const result = pullModeListController.deletePullModeList(req);
+    expect(deletePullModeList).toHaveBeenCalled();
+  });
+});
 
-//         let deleteSchema = jest.fn().mockReturnValue({
-//             code: "Deleted",
-//             msg: "Customer Schema Attribute Deleted Successfully"
-//         });
-//         schemaController.delete = (req) => {
-//             return deleteSchema();
+describe('update pull-mode-list test cases =>', () => {
 
-//         }
-//         const result = schemaController.delete(req, res);
-//         // result.then((res) => {
-//         //     console.log("res==>", res);
-//         //     expect(res).toMatchObject({ code: "Deleted" });
-//         // });
-//         // console.log("delete==>", result);
-//         expect(deleteSchema).toHaveBeenCalled();
-//         // expect(result).toMatchObject({ code: "Deleted" });
-//         expect(result).toEqual({
-//             code: "Deleted",
-//             msg: "Customer Schema Attribute Deleted Successfully"
-//         });
+  it('should update list Obj', () => {
+    let req = {
+      params: {
+        listID: "61c2b22725dadf1a1050c582"
+      },
+      body: {
+        name: "test",
+        description: "Sample",
 
-//     });
-// });
-
-// describe('update schema attribute test cases =>', () => {
-
-//     it('should update schema attribute Obj', () => {
-//         let req = {
-//             params: {
-//                 id: "61c2b22725dadf1a1050c582"
-//             },
-//             body: {
-//                 key: "firstName",
-//                 channelTypes: [],
-//                 defaultValue: "Jane Doem",
-//                 description: "",
-//                 isChannelIdentifier: false,
-//                 isDeleteAble: false,
-//                 isPii: false,
-//                 isRequired: true,
-//                 label: "First Name",
-//                 length: 50,
-//                 sortOrder: 1,
-//                 type: "string"
-//             }
-//         };
-//         let res = {};
+      }
+    };
+    let res = {};
 
 
-//         let updateSchema = jest.fn().mockReturnValue({
-//             _id: "61c2b22725dadf1a1050c582",
-//             key: "firstName",
-//             channelTypes: [],
-//             defaultValue: "Jane Doem",
-//             description: "",
-//             isChannelIdentifier: false,
-//             isDeleteAble: false,
-//             isPii: false,
-//             isRequired: true,
-//             label: "First Name",
-//             length: 50,
-//             sortOrder: 1,
-//             type: "string"
-//         });
+    let updatePullModeList = jest.fn().mockReturnValue({
+      _id: "61c2b22725dadf1a1050c582",
+      name: "test",
+      description: "Sample",
+    });
 
-//         schemaController.update = (req) => {
-//             return updateSchema();
+    pullModeListController.updatePullModeList = (req) => {
+      if (req.params.listID) {
+        updatePullModeList({ name: "test", description: "Sample" }, req.params.listID);
+        return;
+      }
+    };
+    const result = pullModeListController.updatePullModeList(req);
+    expect(updatePullModeList).toHaveBeenCalled()
+  });
+});
 
-//         }
-//         const result = schemaController.update(req, res);
+describe('save new pull mode list test cases =>', () => {
 
-//         // result.then((res) => {
-//         //     console.log("res==>", res);
-//         //     expect(res).toMatchObject({ code: "Deleted" });
-//         // });
-//         // console.log("delete==>", result);
+  it('should create new list', async () => {
+    let req = {
+      body: {
+        name: "test",
+        description: "Sample",
+      }
+    };
 
-//         expect(updateSchema).toHaveBeenCalled();
-//     });
-// });
 
-// describe('get attribute type test cases =>', () => {
+    let createPullModeList = jest.fn().mockReturnValue({ _id: "123456", ...req.body });
+    pullModeListController.createPullModeList = (req) => {
+      createPullModeList();
+      return;
+    }
+    const result = pullModeListController.createPullModeList(req, {});
+    expect(createPullModeList).toHaveBeenCalled();
+  });
+});
 
-//     it('should return attribute types list', () => {
-//         let req = {};
-//         let res = {};
 
-//         let getTypes = jest.fn().mockReturnValue([
-//             { "type": "alphaNumeric", "regex": "^$|^[A-Za-z0-9][A-Za-z0-9_-]{0,49}$" },
-//             { "type": "boolean", "regex": "^(true|false|1|0)$" }
-//         ]);
-
-//         schemaController.getAttributesTypes = (req) => {
-//             return getTypes();
-
-//         }
-//         const result = schemaController.getAttributesTypes(req, res);
-
-//         // result.then((res) => {
-//         //     console.log("res==>", res);
-//         //     expect(res).toMatchObject({ code: "Deleted" });
-//         // });
-//         // console.log("delete==>", result);
-
-//         // expect(updateSchema).toHaveBeenCalled();
-//     });
-// });
 afterAll(async () => {
   await mongoose.disconnect();
 });
