@@ -1,46 +1,42 @@
 
-// const { app } = require("../../src/app")
+// const { app } = require("../src/app")
 // const supertest = require("supertest");
 // const pullModeListService = require('../../src/services');
-const pullModeListController = require('../../src/controllers/pull-mode-list.controller');
+const mongoose = require('mongoose');
+
+const pullModeListController = require('../src/controllers/pull-mode-list.controller');
 
 
 
-// describe('get pull mode list test cases =>', () => {
+describe('get pull mode list test cases =>', () => {
 
-//     // it('should get pull mode lists', () => {
+  it('should get pull mode list by id', () => {
+    let req = {
+      params: { listID: 1 }
+    }
 
+    let getPullModeListByID = jest.fn().mockReturnValue({});
+    pullModeListController.getPullModeListByID = (req) => {
+      if (req.params.listID) {
+        getPullModeListByID();
+        return;
+      }
+    }
+    const result = pullModeListController.getPullModeListByID(req);
+    expect(getPullModeListByID).toHaveBeenCalled();
+  });
 
-//     // let result = jest.fn().mockReturnValue([]);
-//     // schemaController.get = (req) => {
-//     //     if (req.params.id) {
-//     //         findbyID();
-//     //         return;
-//     //     }
-//     // }
-//     // const result = schemaController.get(req);
-//     // expect(findbyID).toHaveBeenCalled();
-//     // });
+  it('should get pull mode lists', async () => {
+    let req = {};
+    let getPullModeList = jest.fn().mockReturnValue([]);
+    pullModeListController.getPullModeLists = (req) => {
+      getPullModeList();
+    }
+    const result = pullModeListController.getPullModeLists(req);
+    expect(getPullModeList).toHaveBeenCalled();
+  });
+});
 
-//     it('should get pull mode lists', async () => {
-//         // let req = {};
-//         // let getPullModeList = jest.fn().mockReturnValue([]);
-//         // pullModeListController.getPullModeLists = (req) => {
-//         //     getPullModeList();
-//         // }
-//         // const result = pullModeListController.getPullModeLists(req);
-//         // expect(getPullModeList).toHaveBeenCalled();
-//         // const response = await supertest(app).get("/pull-mode-list");
-//         // expect(response.status).toBe(200);
-//     });
-// });
-
-
-describe('Sample Test', () => {
-    it('should test that true === true', () => {
-      expect(true).toBe(true)
-    })
-  })
 
 // describe('delete schema attribute test cases =>', () => {
 
@@ -174,3 +170,6 @@ describe('Sample Test', () => {
 //         // expect(updateSchema).toHaveBeenCalled();
 //     });
 // });
+afterAll(async () => {
+  await mongoose.disconnect();
+});
