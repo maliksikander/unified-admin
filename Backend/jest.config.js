@@ -7,5 +7,5 @@ module.exports = {
   coveragePathIgnorePatterns: ['node_modules'],
   coverageReporters: ['text', 'lcov', 'clover', 'html'],
   testResultsProcessor: "jest-sonar-reporter",
-  testTimeout: 50000
+  testTimeout: 5000000
 };
