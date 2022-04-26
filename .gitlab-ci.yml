@@ -176,7 +176,7 @@ node-test-backend:
    image: node:14.16.1-alpine3.13
    script:
      - cd Backend
-     - npm run test
+     #- npm run test
      - npm run coverage
    only:
      - /^CIM-.*$/
