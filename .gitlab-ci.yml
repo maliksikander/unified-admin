@@ -55,7 +55,7 @@ node-test-frontend:
    script:
      - cd Frontend
      #- npm run test
-     - npm run coverage
+     - npm run coverage --u
    only:
      - /^CIM-.*$/
      - /^.+_b-.+$/
