@@ -181,8 +181,7 @@ node-test-backend:
    script:
      - cd Backend
      #- npm run test
-    #  - npm run coverage
-    - ./node_modules/.bin/jest
+     - npm run coverage --u
    only:
      - /^CIM-.*$/
      - /^.+_b-.+$/
