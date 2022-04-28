@@ -181,7 +181,7 @@ node-test-backend:
    script:
      - cd Backend
      #- npm run test
-     - npm run coverage —–u
+     - npm run coverage
    only:
      - /^CIM-.*$/
      - /^.+_b-.+$/
