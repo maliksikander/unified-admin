@@ -32,7 +32,7 @@ node_artifacts_frontend:
    - rm -rf node_modules
    - npm install --legacy-peer-deps
    - npm uninstall jest
-   - npm install jest@27.5.1
+   - npm install jest@27.4.1
    #- export TIME_TOKEN=$(env TZ=GMT-5 date +%d_%m_%Y-%H_%M_%S)
    #- echo "${TIME_TOKEN}"
    allow_failure: false
@@ -152,7 +152,7 @@ node_artifacts_backend:
    - npm uninstall ef-keycloak-connect
    - npm install ef-keycloak-connect@1.0.0
    - npm uninstall jest
-   - npm install jest@27.5.1
+   - npm install jest@27.4.1
    #- export TIME_TOKEN=$(env TZ=GMT-5 date +%d_%m_%Y-%H_%M_%S)
    #- echo "${TIME_TOKEN}"
    allow_failure: false
