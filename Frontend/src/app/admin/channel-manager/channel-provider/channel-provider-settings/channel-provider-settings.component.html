@@ -17,11 +17,11 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
-
+            
                 <div class="form-group">
                     <mat-label>Supported Channel Types</mat-label>
                     <mat-form-field appearance="outline">
-                        <mat-select multiple placeholder="Select Channel Type" formControlName="supportedChannelTypes">
+                        <mat-select (selectionChange)="onChannelTypeChange($event.value)" multiple placeholder="Select Channel Type" formControlName="supportedChannelTypes">
                             <mat-option *ngFor="let type of channelTypeList" [value]="type"><span
                                     class="icon-section"><img [src]="getFileURL(type?.channelLogo)" alt="img"></span>
                                 {{type?.name}}</mat-option>
@@ -32,7 +32,7 @@
                     </mat-form-field>
                 </div>
 
-                <div class="form-group">
+                <div *ngIf="!checkVoiceChannel" class="form-group">
                     <mat-label>Provider Webhook</mat-label>
                     <mat-form-field appearance="outline">
                         <input matInput formControlName="providerWebhook">

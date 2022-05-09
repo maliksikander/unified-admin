@@ -95,6 +95,18 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
     });
 
     this.getChannelConnector();
+    console.log("channel type==>", this.channelTypeData);
+    if (this.channelTypeData.name == "VOICE") {
+      this.setVoiceTypeValues();
+    }
+  }
+
+  setVoiceTypeValues() {
+    this.channelSettingForm.patchValue({
+      responseSla: "dummy",
+      customerActivityTimeout: "dummy",
+    });
+    // console.log("Value==>", this.channelSettingForm);
   }
 
   //lifecycle hook to reflect parent component changes in child component
@@ -371,7 +383,10 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
       let routingPolicyData = {
         agentSelectionPolicy:
           this.channelSettingForm.value.agentSelectionPolicy,
-        routeToLastAgent: this.channelSettingForm.value.routeToLastAgent,
+        routeToLastAgent:
+          this.channelTypeData.name == "VOICE"
+            ? null
+            : this.channelSettingForm.value.routeToLastAgent,
         routingObjectId: this.channelSettingForm.value.routingObjectID?.id,
         routingMode: this.channelSettingForm.value.routingMode,
         agentRequestTtl: this.channelSettingForm.value.agentRequestTTL,
@@ -382,8 +397,13 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
         channelMode: this.channelSettingForm.value.channelMode,
         conversationBot: "",
         customerActivityTimeout:
-          this.channelSettingForm.value.customerActivityTimeout,
-        responseSla: this.channelSettingForm.value.responseSla,
+          this.channelTypeData.name == "VOICE"
+            ? null
+            : this.channelSettingForm.value.customerActivityTimeout,
+        responseSla:
+          this.channelTypeData.name == "VOICE"
+            ? null
+            : this.channelSettingForm.value.responseSla,
         routingPolicy:
           this.channelSettingForm.value.channelMode != "BOT"
             ? routingPolicyData

@@ -51,8 +51,10 @@ export class ChannelProviderSettingsComponent implements OnInit {
     "URL",
   ];
   valueTypeDescription = {
-    Alphanum100: "Supports alphabets, digits and whitespaces up to 100 characters",
-    AlphanumSpecial200: "Supports alphabets, digits, allowed characters _ ( @ . , ; : ` ~ = * ' % $ ! ^ / # & + ( ) ? { } > & l  ; | - )  up to 200 characters",
+    Alphanum100:
+      "Supports alphabets, digits and whitespaces up to 100 characters",
+    AlphanumSpecial200:
+      "Supports alphabets, digits, allowed characters _ ( @ . , ; : ` ~ = * ' % $ ! ^ / # & + ( ) ? { } > & l  ; | - )  up to 200 characters",
     Boolean: "Supports either true, false, 0 ,1 values",
     // "Email",
     // "IP",
@@ -68,6 +70,7 @@ export class ChannelProviderSettingsComponent implements OnInit {
   };
   spinner = true;
   channelTypeList = [];
+  checkVoiceChannel: boolean = false;
 
   constructor(
     private commonService: CommonService,
@@ -278,7 +281,15 @@ export class ChannelProviderSettingsComponent implements OnInit {
     this.spinner = true;
     try {
       let data = this.channelProviderForm.value;
+
       let channelTypes = data?.supportedChannelTypes;
+      let voiceChannelIndex = channelTypes.findIndex(
+        (item) => item.name == "VOICE"
+      );
+      data.providerWebhook =
+        voiceChannelIndex != -1
+          ? "null"
+          : this.channelProviderForm.value.providerWebhook;
       let channelTypeIDArray = [];
       channelTypes?.forEach((item) => {
         let obj = { id: "" };
@@ -328,10 +339,14 @@ export class ChannelProviderSettingsComponent implements OnInit {
         attributeArray.push(this.providerAttributes);
       }
       let temp = this.setSelectedChannelTypes(data?.supportedChannelTypes);
+      // console.log("temp==>", temp);
+
       this.channelProviderForm.patchValue(data);
       this.channelProviderForm.controls["supportedChannelTypes"].patchValue(
         temp
       );
+      let voiceChannelIndex = temp.findIndex((item) => item.name == "VOICE");
+      this.setValueAndHideWebhookField(voiceChannelIndex);
       this.cd.detectChanges();
     } catch (e) {
       console.error("Error in create form array :", e);
@@ -388,4 +403,43 @@ export class ChannelProviderSettingsComponent implements OnInit {
       }
     );
   }
+
+  onChannelTypeChange(channelTypes: Array<any>) {
+    let voiceChannelIndex = channelTypes.findIndex(
+      (item) => item.name == "VOICE"
+    );
+    this.setValueAndHideWebhookField(voiceChannelIndex);
+    // console.log("Channel Type==>", voiceChannelIndex);
+
+    // console.log("value==>",this.channelProviderForm)
+    // this.setValidation(voiceChannelIndex);
+  }
+
+  setValueAndHideWebhookField(voiceChannelIndex) {
+    if (voiceChannelIndex != -1) {
+      this.checkVoiceChannel = true;
+      this.channelProviderForm.controls["providerWebhook"].setValue(
+        "http://expertflo.com"
+      );
+    } else {
+      this.channelProviderForm.controls["providerWebhook"].setValue("");
+      this.checkVoiceChannel = false;
+    }
+  }
+  // setValidation(val) {
+
+  //   if (val != -1) {
+  //     console.log("called1")
+  //     this.channelProviderForm.controls["providerWebhook"].setValidators(null);
+  //   } else {
+  //     console.log("called2")
+  //     this.channelProviderForm.controls["providerWebhook"].setValidators([
+  //       Validators.required,
+  //       Validators.pattern(
+  //         /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/
+  //       ),
+  //     ]);
+  //   }
+  //   console.log("value==>",this.channelProviderForm)
+  // }
 }
