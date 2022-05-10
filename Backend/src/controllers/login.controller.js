@@ -1,7 +1,6 @@
 const catchAsync = require('../utils/catchAsync');
 var config = require('../../config.json');
 var { NodeAdapter } = require("ef-keycloak-connect");
-// var {NodeAdapter} = require("keycloak-nodejs-connect");
 const keycloak = new NodeAdapter(config);
 const logger = require('../config/logger');
 // var CryptoJS = require("crypto-js");
@@ -16,7 +15,6 @@ const login = async (req, res) => {
         // let decryptedUsername = CryptoJS.AES.decrypt(username, "undlusia").toString(CryptoJS.enc.Utf8);
         // let decryptedPassword = CryptoJS.AES.decrypt(password, "undlusia").toString(CryptoJS.enc.Utf8);
         const result = await keycloak.authenticateUserViaKeycloak(username, password, realm).then((response) => {
-            // console.log("res==>", res)
             return response;
         });
         res.send(result);

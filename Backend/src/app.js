@@ -81,13 +81,7 @@ app.get('*', (req, res) => {
   let indexPath = path.resolve('src', 'public', 'index.html');
   res.sendFile(indexPath);
 });
-// app.use('/general', angularRoutes);
 
-// login route
-// app.get('/login', (req, res) => {
-//   const indexPath = path.resolve('src', 'public', 'index.html');
-//   res.sendFile(indexPath);
-// });
 
 // send back a 404 error for any unknown api request
 app.use((req, res, next) => {
