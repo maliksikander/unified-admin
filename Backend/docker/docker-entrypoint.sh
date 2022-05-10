@@ -13,4 +13,4 @@ echo "Printing scripts.bundle.js"
 cat src/public/assets/config/config.json
 echo "Starting Unified Admin"
 
-exec yarn start "$@" 
+exec npm start "$@" 
