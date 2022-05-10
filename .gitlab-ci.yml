@@ -208,7 +208,7 @@ node-test-backend:
 
 #==============SPACE FOR  CODE SCAN JOB============================
 
-sonarqube-backend:
+# sonarqube-backend:
   stage: node-scan-backend
   image: adoptopenjdk/openjdk11:alpine-jre
   script:

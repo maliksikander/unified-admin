@@ -4,7 +4,7 @@ module.exports = {
     NODE_ENV: 'test',
   },
   restoreMocks: true,
-  coveragePathIgnorePatterns: ['node_modules','route.js'],
+  coveragePathIgnorePatterns: ['node_modules'],
   coverageReporters: ['text', 'lcov', 'clover', 'html'],
   testResultsProcessor: "jest-sonar-reporter",
   testTimeout: 500000
