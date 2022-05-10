@@ -1,7 +1,7 @@
 
 const mongoose = require('mongoose');
 const amqSettingController = require('../src/controllers/amqSetting.controller');
-// const { amqSettingService } = require('../../ services');
+
 
 describe('get amq setting test cases =>', () => {
 
@@ -10,25 +10,12 @@ describe('get amq setting test cases =>', () => {
   it('should get amq setting obj', async () => {
     let req = {};
     let getSettings = jest.fn().mockReturnValue([{}]);
-    amqSettingController.getSettings = (req) => {
+    amqSettingController.getSettings= (req) => {
       getSettings();
     }
     const result = amqSettingController.getSettings(req);
     expect(getSettings).toHaveBeenCalled();
   });
-
-  // it('should get AMQ', async () => {
-  //   let req = {};
-  //   // amqSettingService.getSettings = jest.fn().mockReturnValue([{}]);
-  //   amqSettingController.getSettings = async (req) => {
-  //    let result = await amqSettingService.getSettings();
-  //    return result;
-  //   }
-  //   const result = await amqSettingController.getSettings(req);
-  //   console.log("result====>",result)
-  //   // expect(amqSettingService.getSettings).toHaveBeenCalled();
-  // });
-
 });
 
 
