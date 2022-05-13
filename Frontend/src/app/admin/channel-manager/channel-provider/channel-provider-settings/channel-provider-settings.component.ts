@@ -346,7 +346,7 @@ export class ChannelProviderSettingsComponent implements OnInit {
         temp
       );
       let voiceChannelIndex = temp.findIndex((item) => item.name == "VOICE");
-      this.setValueAndHideWebhookField(voiceChannelIndex);
+      if (voiceChannelIndex != -1) this.setValueAndHideWebhookField(voiceChannelIndex);
       this.cd.detectChanges();
     } catch (e) {
       console.error("Error in create form array :", e);
