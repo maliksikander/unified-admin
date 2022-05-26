@@ -47,6 +47,7 @@ import { WebWidgetListComponent } from "./web-widget-list/web-widget-list.compon
 import { WebWidgetFormComponent } from "./web-widget-list/web-widget-form/web-widget-form.component";
 import { ChannelProviderComponent } from "./channel-manager/channel-provider/channel-provider.component";
 import { ChannelProviderSettingsComponent } from "./channel-manager/channel-provider/channel-provider-settings/channel-provider-settings.component";
+import { MrdTasksComponent } from './route-settings/mrd-tasks/mrd-tasks.component';
 
 @NgModule({
   imports: [
@@ -98,6 +99,7 @@ import { ChannelProviderSettingsComponent } from "./channel-manager/channel-prov
     WebWidgetFormComponent,
     ChannelProviderComponent,
     ChannelProviderSettingsComponent,
+    MrdTasksComponent,
   ],
   providers: [
     HttpClientModule,

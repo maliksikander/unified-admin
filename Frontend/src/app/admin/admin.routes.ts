@@ -25,6 +25,7 @@ import { WebWidgetListComponent } from "./web-widget-list/web-widget-list.compon
 import { ChannelProviderComponent } from "./channel-manager/channel-provider/channel-provider.component";
 import { AuthGuard } from "./services/auth.guard";
 import { NotFoundComponent } from "../authentication/not-found/not-found.component";
+import {MrdTasksComponent} from "./route-settings/mrd-tasks/mrd-tasks.component";
 
 export const adminRoutes: Routes = [
   {
@@ -69,6 +70,11 @@ export const adminRoutes: Routes = [
       {
         path: "routing/agents",
         component: UsersComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: "routing/mrd-tasks",
+        component: MrdTasksComponent,
         canActivate: [AuthGuard],
       },
 
