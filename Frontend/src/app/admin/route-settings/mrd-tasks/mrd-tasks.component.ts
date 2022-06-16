@@ -87,13 +87,9 @@ export class MrdTasksComponent implements OnInit {
         if (usersListLength > 0 && routingEngineUsersLength > 0) {
           for (let i = 0; i < this.userData.length; i++) {
             for (let j = 0; j < this.routingEngineUsers.length; j++) {
-              if (
-                this.userData[i].keycloakUser.id ==
-                this.routingEngineUsers[j].keycloakUser.id
-              ) {
-                this.userData[i].id = this.routingEngineUsers[j].id;
-                this.userData[i].associatedRoutingAttributes =
-                  this.routingEngineUsers[j].associatedRoutingAttributes;
+              if (this.userData[i].keycloakUser.id == this.routingEngineUsers[j].keycloakUser.id) {
+                  this.userData[i].id = this.routingEngineUsers[j].id;
+                  this.userData[i].associatedRoutingAttributes = this.routingEngineUsers[j].associatedRoutingAttributes;
               }
             }
           }
@@ -168,8 +164,11 @@ export class MrdTasksComponent implements OnInit {
         attr.maxAgentTasks = parseInt(e);
         let index = mrdData.indexOf(attr);
         mrdData[index] = attr;
-
         data.associatedMrds = mrdData;
+        if (data.keycloakUser.firstName == null) {
+          data.keycloakUser.firstName = "";
+          data.keycloakUser.lastName = "";
+        }
         this.updateAgent(data, data.id);
     } catch (e) {
       console.error("Error on status change :", e);
@@ -179,7 +178,6 @@ export class MrdTasksComponent implements OnInit {
   getMaxAgentTasks(mrdId,associatedMrdList:any){
     try {
       const associateMrdObj = associatedMrdList.find(
-        
         item=>{
           return item.mrdId == mrdId;
         });
