@@ -169,10 +169,11 @@ export class MrdTasksComponent implements OnInit {
           data.keycloakUser.firstName = "";
           data.keycloakUser.lastName = "";
         }
-        this.updateAgent(data, data.id);
+        this.updateAgent(data, data.id);  
     } catch (e) {
       console.error("Error on status change :", e);
     }
+    this.ngOnInit();
   }
 
   getMaxAgentTasks(mrdId,associatedMrdList:any){
