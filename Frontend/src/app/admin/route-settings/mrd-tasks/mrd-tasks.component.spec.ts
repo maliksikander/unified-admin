@@ -14,9 +14,9 @@ describe("MrdTasksComponent", () => {
     component = new MrdTasksComponent(
       // commonService,
       // dialog,
-      // endPointService,
+      endPointService,
       // fb,
-      // snackbarService
+      snackbarService
     );
   });
 
