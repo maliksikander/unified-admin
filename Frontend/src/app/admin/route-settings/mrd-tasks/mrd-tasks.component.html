@@ -23,34 +23,28 @@
                             <thead>
                             <tr>
                                 <th scope="col">Name</th>
-                                <th scope="col">Voice Call</th>
-                                <th scope="col">Video Call</th>
-                                <th scope="col">Chat</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Social Media</th>
+                                <th scope="col" *ngFor="let mrdData of mrdTasksData">{{mrdData.name}}</th>
                             </tr>
                             </thead>
-                            <tbody *ngIf="mrdTasksData && mrdTasksData.length != 0">
-                                <tr
-                                        *ngFor="let data of mrdTasksData | filter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
-                                    <td scope="row">{{data.name}}</td>
-                                    <td scope="row" *ngFor="let mrdData of data.MrdTask">
-                                        <select>
-                                            <option *ngFor ="let a of taskArray(mrdData.maxValue); let i = index" [selected]="i == mrdData.defaultValue" [value]="i" >{{i}}</option>
-
+                            <tbody *ngIf="routingEngineUsers && routingEngineUsers.length != 0 && !warningBool">
+                                <tr *ngFor="let data of routingEngineUsers | filter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
+                                    <td scope="row">{{data.keycloakUser.username}}</td>
+                                    <td scope="row" *ngFor="let mrdData of mrdTasksData">
+                                        <select #reqSelect (change)='onMrdSelect(reqSelect.value, data, mrdData.id)'>
+                                            <option *ngFor ="let a of taskArray(mrdData.maxRequests); let i = index" [selected]="i == getMaxAgentTasks(mrdData.id,data.associatedMrds)" [value]="i" >
+                                                {{i}}
+                                            </option>
                                         </select>
                                     </td>
-                                </tr>
-
+                                </tr>   
                             </tbody>
 
-                            <div *ngIf="mrdTasksData && mrdTasksData.length == 0" class="no-data-warning">
+                            <div *ngIf="routingEngineUsers && routingEngineUsers.length == 0" class="no-data-warning">
                                 <i class="material-icons">warning_amber</i>
                                 <span>No Data Found</span>
                             </div>
-
                         </table>
-                        <div *ngIf="mrdTasksData && mrdTasksData.length >= 2" class="pagination-section">
+                        <div *ngIf="routingEngineUsers && routingEngineUsers.length >= 2" class="pagination-section">
               <span class="page-span">
                 <span>Entries Per Page</span>
                 <select (change)="selectPage()" [(ngModel)]="selectedItem">
