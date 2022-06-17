@@ -118,49 +118,74 @@ export class LoginComponent implements OnInit {
         if (item.rsname.includes("general")) {
           let scopes: Array<any> = item?.scopes;
           scopes.forEach((scope: any) => {
-            if (scope == "view")
+            if (scope == "view") {
+              routeCheck = true;
               this.router.navigate(["/general/license-manager"]);
+            }
           });
         } else if (item.rsname.includes("bot")) {
           let scopes: Array<any> = item?.scopes;
           scopes.forEach((scope: any) => {
-            if (scope == "view") this.router.navigate(["/bot-settings"]);
+            if (scope == "view") {
+              routeCheck = true;
+              this.router.navigate(["/bot-settings"]);
+            }
           });
         } else if (item.rsname.includes("form")) {
           let scopes: Array<any> = item?.scopes;
           scopes.forEach((scope: any) => {
-            if (scope == "view") this.router.navigate(["/form"]);
+            if (scope == "view") {
+              routeCheck = true;
+              this.router.navigate(["/form"]);
+            }
           });
         } else if (item.rsname.includes("reason")) {
           let scopes: Array<any> = item?.scopes;
           scopes.forEach((scope: any) => {
-            if (scope == "view") this.router.navigate(["/reason-code"]);
+            if (scope == "view") {
+              routeCheck = true;
+              this.router.navigate(["/reason-code"]);
+            }
           });
         } else if (item.rsname.includes("pull")) {
           let scopes: Array<any> = item?.scopes;
           scopes.forEach((scope: any) => {
-            if (scope == "view") this.router.navigate(["/pull-mode-list"]);
+            if (scope == "view") {
+              routeCheck = true;
+              this.router.navigate(["/pull-mode-list"]);
+            }
           });
         } else if (item.rsname.includes("web")) {
           let scopes: Array<any> = item?.scopes;
           scopes.forEach((scope: any) => {
-            if (scope == "view") this.router.navigate(["/web-widget"]);
+            if (scope == "view") {
+              routeCheck = true;
+              this.router.navigate(["/web-widget"]);
+            }
           });
         } else if (item.rsname.includes("channel")) {
           let scopes: Array<any> = item?.scopes;
           scopes.forEach((scope: any) => {
-            if (scope == "view")
+            if (scope == "view") {
+              routeCheck = true;
               this.router.navigate(["/channel/channel-type"]);
+            }
           });
         } else if (item.rsname.includes("routing")) {
           let scopes: Array<any> = item?.scopes;
           scopes.forEach((scope: any) => {
-            if (scope == "view") this.router.navigate(["/routing/attributes"]);
+            if (scope == "view") {
+              routeCheck = true;
+              this.router.navigate(["/routing/attributes"]);
+            }
           });
         } else if (item.rsname.includes("calendar")) {
           let scopes: Array<any> = item?.scopes;
           scopes.forEach((scope: any) => {
-            if (scope == "view") this.router.navigate(["/business-calendar"]);
+            if (scope == "view") {
+              routeCheck = true;
+              this.router.navigate(["/business-calendar"]);
+            }
           });
         }
         // else {
