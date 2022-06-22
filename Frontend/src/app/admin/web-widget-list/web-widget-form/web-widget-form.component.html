@@ -58,23 +58,11 @@
                 </mat-form-field>
             </div>
 
-            <!-- <div class="form-group">
-                <mat-label>Theme</mat-label>
-                <mat-form-field appearance="outline">
-                    <mat-select placeholder="Select Theme" formControlName="theme">
-                        <mat-option *ngFor="let theme of themeList" [value]="theme">{{theme | removeCharacterFilter |
-                            titlecase}}</mat-option>
-                    </mat-select>
-                    <mat-error class="form-error">
-                        {{formErrors?.theme}}
-                    </mat-error>
-                </mat-form-field>
-            </div> -->
             <div class="form-group custom-theme-field">
                 <mat-label>Choose Theme Color</mat-label>
                 <mat-form-field appearance="outline">
                     <input #ignoredInput matInput [value]="widgetConfigForm.value.theme" formControlName="theme"
-                        [cpIgnoredElements]="[ignoredButton, ignoredInput]" [(cpToggle)]="toggle"
+                        [cpIgnoredElements]="[ignoredButton, ignoredInput]" [cpDisableInput]="true" [(cpToggle)]="toggle"
                         [(colorPicker)]="widgetConfigForm.value.theme" />
 
                 </mat-form-field>

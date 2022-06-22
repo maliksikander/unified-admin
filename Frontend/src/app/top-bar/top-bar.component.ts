@@ -31,6 +31,7 @@ export class TopBarComponent implements OnInit {
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("username");
     sessionStorage.removeItem("currentAttributePage");
+    sessionStorage.removeItem("currentMrdTaskPage");
     sessionStorage.removeItem("currentMRDPage");
     sessionStorage.removeItem("currentQueuePage");
     sessionStorage.removeItem("currentUsersPage");

@@ -28,7 +28,7 @@ export class MrdTasksComponent implements OnInit {
 
     ngOnInit(): void {
         console.log(this.mrdTasksData.length)
-        let pageNumber = sessionStorage.getItem("currentAttributePage");
+        let pageNumber = sessionStorage.getItem("currentMrdTaskPage");
         if (pageNumber) this.p = pageNumber;
         this.getMrdTaskList();
         this.getUsers();
@@ -41,13 +41,13 @@ export class MrdTasksComponent implements OnInit {
 
     //save page number storage for reload
     pageChange(e) {
-        sessionStorage.setItem("currentAttributePage", e);
+        sessionStorage.setItem("currentMrdTaskPage", e);
     }
 
     //page bound change and saving for reload
     pageBoundChange(e) {
         this.p = e;
-        sessionStorage.setItem("currentAttributePage", e);
+        sessionStorage.setItem("currentMrdTaskPage", e);
     }
 
     selectPage() {
@@ -109,20 +109,24 @@ export class MrdTasksComponent implements OnInit {
 
   // get MRD Task List
   getMrdTaskList(){
-    this.endPointService.getMrd().subscribe(
-      (res: any) => {
-         this.mrdTasksData = JSON.parse(JSON.stringify(res));
-         const mrdTasksDataLength = this.mrdTasksData.length;
-         if (mrdTasksDataLength > 0) {
-          console.log("mrdTasksDataLength: ", this.mrdTasksData);
-         } 
-      },
-      (error) => {
-        console.error("Error fetching:", error);
-        if (error && error.status == 0)
-          this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
-        }
-    );
+    try {
+      this.endPointService.getMrd().subscribe(
+        (res: any) => {
+           this.mrdTasksData = JSON.parse(JSON.stringify(res));
+           const mrdTasksDataLength = this.mrdTasksData.length;
+           if (mrdTasksDataLength > 0) {
+            console.log("mrdTasksDataLength: ", this.mrdTasksData);
+           } 
+        },
+        (error) => {
+          console.error("Error fetching:", error);
+          if (error && error.status == 0)
+            this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
+          }
+      ); 
+    } catch (error) {
+      console.error("Error on get Mrd Task List :", error);
+    }
   }
 
   //get keycloak users
@@ -132,28 +136,33 @@ export class MrdTasksComponent implements OnInit {
     this.getKeycloakUsers();
   }
 
-  //to update AGENTand it accepts `data` object & `id` as parameter
+  //to update AGENT and it accepts `data` object & `id` as parameter , `data` object (data.associatedMrds: array)
   //and updating the local list with the success response object
+
   updateAgent(data, id) {
-    this.endPointService.updateAgent(data, id).subscribe(
-      (res: any) => {
-        if (res.id) {
-          this.snackbar.snackbarMessage(
-            "success-snackbar",
-            "AssociatedMrd List Updated Successfully",
-            1
-          );
+    try {
+      this.endPointService.updateAgent(data, id).subscribe(
+        (res: any) => {
+          if (res.id) {
+            this.snackbar.snackbarMessage(
+              "success-snackbar",
+              "AssociatedMrd List Updated Successfully",
+              1
+            );
+          }
+          this.spinner = false;
+          console.log("Response of APIs: ",res);
+        },
+        (error: any) => {
+          this.spinner = false;
+          console.error("Error Updating MRD:", error);
+          if (error && error.status == 0)
+            this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
         }
-        this.spinner = false;
-        console.log("Response of APIs: ",res);
-      },
-      (error: any) => {
-        this.spinner = false;
-        console.error("Error Updating MRD:", error);
-        if (error && error.status == 0)
-          this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
-      }
-    );
+      );      
+    } catch (error) {
+      console.error("Error on the Agent Update :", error);
+    }
   }
 
   onMrdSelect(e, data, mrd) {
@@ -164,11 +173,9 @@ export class MrdTasksComponent implements OnInit {
         attr.maxAgentTasks = parseInt(e);
         let index = mrdData.indexOf(attr);
         mrdData[index] = attr;
-        data.associatedMrds = mrdData;
-        if (data.keycloakUser.firstName == null) {
-          data.keycloakUser.firstName = "";
-          data.keycloakUser.lastName = "";
-        }
+        data.associatedMrds = mrdData;        
+        if (data.keycloakUser.firstName == null) data.keycloakUser.firstName = "";
+        if (data.keycloakUser.lastName == null) data.keycloakUser.lastName = "";
         this.updateAgent(data, data.id);  
     } catch (e) {
       console.error("Error on status change :", e);
