@@ -1,17 +1,17 @@
 {
-  "realm": "university",
+  "realm": "expertflow",
   "auth-server-url": "https://cim.expertflow.com/auth/",
   "ssl-required": "external",
-  "resource": "Agent_Manager",
+  "resource": "cim",
   "verify-token-audience": false,
   "credentials": {
-    "secret": "eb8564ea-cd23-4cf0-94e9-e4a936beab90"
+    "secret": "ef61df80-061c-4c29-b9ac-387e6bf67052"
   },
   "use-resource-role-mappings": true,
   "confidential-port": 0,
   "policy-enforcer": {},
-  "CLIENT_ID": "Agent_Manager",
-  "CLIENT_DB_ID": "eb8564ea-cd23-4cf0-94e9-e4a936beab90",
+  "CLIENT_ID": "cim",
+  "CLIENT_DB_ID": "ef61df80-061c-4c29-b9ac-387e6bf67052",
   "GRANT_TYPE": "password",
   "GRANT_TYPE_PAT": "client_credentials",
   "USERNAME_ADMIN": "admin",
