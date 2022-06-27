@@ -93,7 +93,7 @@ export class EndpointService {
     this.userRoles = e.BUSINESS_USER_ROLES;
     this.widgetThemes = e.WIDGET_THEMES;
 
-    if (isDevMode()) this.ADMIN_URL = "http://localhost:3000";
+    // if (isDevMode()) this.ADMIN_URL = "http://localhost:3000";
 
     this.getStorageValues();
   }
@@ -1258,7 +1258,7 @@ export class EndpointService {
   saveMasterKey(key): Observable<any> {
     return this.httpClient
       .post<any>(
-        `${this.LICENSE_URL}/${this.endpoints.license.saveMasterKey}/${key}`,
+        `${this.LICENSE_URL}/${this.endpoints.license.saveMasterKey}?license-key=${key}`,
         {
           headers: new HttpHeaders({
             "Content-Type": "application/json",
