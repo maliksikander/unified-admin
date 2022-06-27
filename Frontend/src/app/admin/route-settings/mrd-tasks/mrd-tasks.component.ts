@@ -26,17 +26,20 @@ export class MrdTasksComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // console.log(this.mrdTasksData.length);
     let pageNumber = sessionStorage.getItem("currentMrdTaskPage");
     if (pageNumber) this.p = pageNumber;
-    // this.spinner = true;
     this.getMrdTaskList();
     this.getUsers();
   }
 
-  taskArray(n) {
-    n = ++n;
-    return new Array(n);
+  taskArray(mrd) {
+    let maxRequests = mrd.maxRequests;
+    if (mrd.id == "6298b744b777de61844f616b") {
+      maxRequests = 1;
+    } else {
+      maxRequests = ++maxRequests;
+    }
+    return new Array(maxRequests);
   }
 
   //save page number storage for reload

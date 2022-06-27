@@ -542,10 +542,10 @@ export class CalendarComponent implements OnInit {
     let startDate = "Wed Sep 10 2021 12:00:00 GMT+0500";
     let endDate = "Wed Sep 21 2021 16:00:00 GMT+0500";
 
-    console.log(
-      "day diff==>",
-      Math.abs(this.calculateDiff(startDate, endDate))
-    );
+    // console.log(
+    //   "day diff==>",
+    //   Math.abs(this.calculateDiff(startDate, endDate))
+    // );
 
     let data = {
       color: { primary: this.selectedColor, secondary: this.selectedColor },
@@ -872,7 +872,7 @@ export class CalendarComponent implements OnInit {
         const { title, color, end, start } = event;
 
         rule.all().forEach((date, index) => {
-          console.log("index==>", index);
+          // console.log("index==>", index);
           calendar.push({
             title,
             color,
@@ -883,7 +883,7 @@ export class CalendarComponent implements OnInit {
       });
 
       this.calendarEvents = [...this.events, ...calendar];
-      console.log("calendar==>", this.calendarEvents);
+      // console.log("calendar==>", this.calendarEvents);
       this.cd.detectChanges();
     }
   }
