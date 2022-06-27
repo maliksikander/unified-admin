@@ -93,7 +93,7 @@ export class EndpointService {
     this.userRoles = e.BUSINESS_USER_ROLES;
     this.widgetThemes = e.WIDGET_THEMES;
 
-    // if (isDevMode()) this.ADMIN_URL = "http://localhost:3000";
+    if (isDevMode()) this.ADMIN_URL = "http://localhost:3000";
 
     this.getStorageValues();
   }
