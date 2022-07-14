@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+// const { toJSON } = require('./plugins');
 const app = require('./app');
 const config = require('./config/config');
 const logger = require('./config/logger');
@@ -6,7 +7,7 @@ const error = require('./middlewares/error');
 const https = require('https');
 const fs = require('fs');
 
-const { FormValidationModel } = require('./models');
+const {FormsModel, FormValidationModel } = require('./models');
 
 let server;
 const keyPath = config.httpsKeyPath ? config.httpsKeyPath : "httpsFiles/server.key";
@@ -24,6 +25,7 @@ mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
   logger.info('Connected to MongoDB');
 
   addFormValidations();
+  addWrapUpForm();
 
   if (config.isSSL == true) {
     server = https.createServer(httpsCredentials, app).listen(config.Port, () => {
@@ -166,5 +168,57 @@ async function addFormValidations() {
 
   catch (e) {
     logger.error(`Default Form Validation Error:" ${e}`)
+  }
+}
+
+async function addWrapUpForm() {
+
+  try {
+    const wrapUp = await FormsModel.bulkWrite([
+      {
+        updateOne: {
+          filter: { _id: "0900Wrap78601Up" },
+          update: { 
+                "formTitle": "WrapUp",
+                "formDescription": "Static Wrap Up Form",
+                "attributes": [
+                    {
+                        "attributeType": "OPTIONS",
+                        "helpText": "",
+                        "isRequired": true,
+                        "key": "New_Attribute",
+                        "label": "New Attribute",
+                        "valueType": "StringList",
+                        "categoryOptions": {
+                            "isMultipleChoice": true,
+                            "categories": [
+                                {
+                                    "categoryName": "Category1",
+                                    "values": [
+                                        "Option1",
+                                        "Option2"
+                                    ]
+                                },
+                                {
+                                    "categoryName": "Category2",
+                                    "values": [
+                                        "Option1",
+                                        "COption2"
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ],
+          },
+          upsert: false
+        }
+      },
+    ]);
+    logger.info(`Wrap Up Form Document Added: ${wrapUp.upsertedCount}`);
+    logger.info(`Wrap Up Form Document Modified: ${wrapUp.modifiedCount}`);
+  }
+  catch (e) {
+    logger.error(`Default Wrap Up Form Validation Error:" ${e}`)
   }
 }
