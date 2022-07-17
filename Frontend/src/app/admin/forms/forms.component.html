@@ -49,7 +49,7 @@
                                             <button mat-mini-fab matTooltip="Edit" (click)="editForm(data)">
                                                 <mat-icon>mode_edit</mat-icon>
                                             </button>
-                                            <button mat-mini-fab matTooltip="Delete" (click)="deleteConfirm(data)">
+                                            <button *ngIf="data?.id != '62d07f4f0980a50a91210bef'" mat-mini-fab matTooltip="Delete" (click)="deleteConfirm(data)">
                                                 <mat-icon>delete</mat-icon>
                                             </button>
                                         </span>

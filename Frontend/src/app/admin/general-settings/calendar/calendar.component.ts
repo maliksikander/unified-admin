@@ -43,7 +43,7 @@ import { CustomDateFormatter } from "./custom-date-formatter.provider";
 import { Subject } from "rxjs";
 import { DatePipe, Time } from "@angular/common";
 import { ConfirmDialogComponent } from "../../../shared/confirm-dialog/confirm-dialog.component";
-import RRule from "rrule";
+import { RRule } from "rrule";
 import * as moment from "moment-timezone";
 import { ViewPeriod } from "calendar-utils";
 
@@ -867,7 +867,7 @@ export class CalendarComponent implements OnInit {
           ...event.rrule,
           dtstart: event?.start,
           until: event?.end,
-          interval: 1
+          interval: 1,
         });
         const { title, color, end, start } = event;
 

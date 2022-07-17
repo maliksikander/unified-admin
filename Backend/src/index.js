@@ -1,13 +1,11 @@
 const mongoose = require('mongoose');
-// const { toJSON } = require('./plugins');
 const app = require('./app');
 const config = require('./config/config');
 const logger = require('./config/logger');
-const error = require('./middlewares/error');
 const https = require('https');
 const fs = require('fs');
 
-const {FormsModel, FormValidationModel } = require('./models');
+const { FormsModel, FormValidationModel } = require('./models');
 
 let server;
 const keyPath = config.httpsKeyPath ? config.httpsKeyPath : "httpsFiles/server.key";
@@ -24,8 +22,8 @@ const httpsCredentials = {
 mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
   logger.info('Connected to MongoDB');
 
-  addFormValidations();
-  addWrapUpForm();
+
+  onAppInitializtion();
 
   if (config.isSSL == true) {
     server = https.createServer(httpsCredentials, app).listen(config.Port, () => {
@@ -65,6 +63,11 @@ process.on('SIGTERM', () => {
   logger.info('SIGTERM received');
   if (server) { server.close(); }
 });
+
+function onAppInitializtion() {
+  addFormValidations();
+  addWrapUpForm();
+}
 
 async function addFormValidations() {
 
@@ -174,49 +177,36 @@ async function addFormValidations() {
 async function addWrapUpForm() {
 
   try {
-    const wrapUp = await FormsModel.bulkWrite([
-      {
-        updateOne: {
-          filter: { _id: "0900Wrap78601Up" },
-          update: { 
-                "formTitle": "WrapUp",
-                "formDescription": "Static Wrap Up Form",
-                "attributes": [
-                    {
-                        "attributeType": "OPTIONS",
-                        "helpText": "",
-                        "isRequired": true,
-                        "key": "New_Attribute",
-                        "label": "New Attribute",
-                        "valueType": "StringList",
-                        "categoryOptions": {
-                            "isMultipleChoice": true,
-                            "categories": [
-                                {
-                                    "categoryName": "Category1",
-                                    "values": [
-                                        "Option1",
-                                        "Option2"
-                                    ]
-                                },
-                                {
-                                    "categoryName": "Category2",
-                                    "values": [
-                                        "Option1",
-                                        "COption2"
-                                    ]
-                                }
-                            ]
-                        }
-                    }
-                ],
-          },
-          upsert: false
+
+    let reqBody = {
+      _id: mongoose.Types.ObjectId("62d07f4f0980a50a91210bef"),
+      formTitle: "WrapUp",
+      formDescription: "Wrap Up Form",
+      attributes: [
+        {
+          attributeType: "OPTIONS",
+          helpText: "",
+          isRequired: true,
+          key: "New_Attribute",
+          label: "New Attribute",
+          valueType: "StringList",
+          categoryOptions: {
+            isMultipleChoice: true,
+            categories: [
+              {
+                categoryName: "Category1",
+                values: [
+                  "Option1"
+                ]
+              }
+            ]
+          }
         }
-      },
-    ]);
-    logger.info(`Wrap Up Form Document Added: ${wrapUp.upsertedCount}`);
-    logger.info(`Wrap Up Form Document Modified: ${wrapUp.modifiedCount}`);
+      ],
+    }
+
+    const form = await FormsModel.findById("62d07f4f0980a50a91210bef");
+    if (form == null) await FormsModel.create(reqBody);
   }
   catch (e) {
     logger.error(`Default Wrap Up Form Validation Error:" ${e}`)

@@ -204,7 +204,12 @@ export class NewFormComponent implements OnInit, AfterViewInit {
     )
       .at(j)
       .get("values") as FormArray;
+
     control.push(this.addCategoryOptionGroup());
+    let index = control.length - 1;
+    control.controls[index]
+      .get("options")
+      .setValidators([Validators.required, RxwebValidators.unique()]);
   }
 
   // to remove category option definition from existing category option list, it accepts attribute,category and option index (i,j,k) respectively as parameter

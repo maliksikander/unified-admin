@@ -1,5 +1,6 @@
 const httpStatus = require('http-status');
 const { FormsModel } = require('../models');
+const mongoose = require('mongoose');
 const ApiError = require('../utils/ApiError');
 
 const getForms = async () => {
@@ -20,6 +21,7 @@ const getForm = async (id) => {
 };
 
 const createForm = async (reqBody) => {
+    reqBody["_id"] = new mongoose.Types.ObjectId();
     const result = await FormsModel.create(reqBody);
     return result;
 };

@@ -75,8 +75,8 @@
 
                                             <div class="form-group col-md-3">
                                                 <mat-form-field appearance="outline">
-                                                    <mat-select placeholder="Select Type"
-                                                        formControlName="attributeType"
+                                                    <mat-select [disabled]="formData?.id == '62d07f4f0980a50a91210bef'"
+                                                        placeholder="Select Type" formControlName="attributeType"
                                                         (selectionChange)="typeSelectChange($event.value,i)">
                                                         <mat-option *ngFor="let type of attributeTypeList"
                                                             [value]="type">
@@ -149,6 +149,13 @@
                                                                     <mat-form-field appearance="outline">
                                                                         <input matInput placeholder="Option"
                                                                             formControlName="options">
+
+                                                                        <mat-error
+                                                                            *ngIf="option?.get('options').errors?.unique"
+                                                                            class="option-error">
+
+                                                                            *Option should be unique
+                                                                        </mat-error>
                                                                     </mat-form-field>
 
                                                                     <div class="add-category-option form-group">
@@ -184,9 +191,10 @@
                                         </ng-container>
                                     </div>
 
-                                    <hr class="main-attribute-hr">
+                                    <hr *ngIf="formData?.id != '62d07f4f0980a50a91210bef'" class="main-attribute-hr">
 
-                                    <div class="attribute-row attribute-action-area">
+                                    <div *ngIf="formData?.id != '62d07f4f0980a50a91210bef'"
+                                        class="attribute-row attribute-action-area">
                                         <div class="icon-btn-section">
                                             <span>
                                                 <button mat-mini-fab matTooltip="Copy"
@@ -214,7 +222,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </mat-expansion-panel>
 
                             <hr *ngIf="!expanded" class="attribute-hr">
@@ -225,7 +232,7 @@
             </div>
 
             <div class="add-attribute-btn" [ngStyle]="{'padding': expanded == true ? '10px 0 0 0' :'10px 20px 0 20px'}">
-                <button mat-button (click)="addAttributeButton()">
+                <button *ngIf="formData?.id != '62d07f4f0980a50a91210bef'" mat-button (click)="addAttributeButton()">
                     <mat-icon>add</mat-icon>
                     Add Attribute
                 </button>

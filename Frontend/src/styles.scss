@@ -3134,6 +3134,9 @@ snack-bar-container {
       mat-form-field {
         max-width: calc(100% - 60px);
       }
+      .mat-form-field-appearance-outline .mat-form-field-wrapper mat-error, .mat-form-field-appearance-outline .mat-form-field-wrapper mat-error strong {
+        font-size: 10px;
+    }
     }
     .attribute-action-area .save-btn-section button {
       span {

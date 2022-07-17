@@ -16,17 +16,17 @@ const getFormByID = catchAsync(async (req, res) => {
 
     result = await formsService.getForm(id);
 
-    if (resType == "html") {
-        validations = await formValidationService.getFormValidation();
-        validations.forEach((item) => { item.regex = decodeURI(item.regex) });
-        validations = convertArrayToObject(validations, 'type')
-        let htmlResponse = createFormHTML(result, validations);
-        if (htmlResponse == '') htmlResponse = "No Attributes Added";
-        res.send(htmlResponse);
-    }
-    else {
+    // if (resType == "html") {
+    //     validations = await formValidationService.getFormValidation();
+    //     validations.forEach((item) => { item.regex = decodeURI(item.regex) });
+    //     validations = convertArrayToObject(validations, 'type')
+    //     let htmlResponse = createFormHTML(result, validations);
+    //     if (htmlResponse == '') htmlResponse = "No Attributes Added";
+    //     res.send(htmlResponse);
+    // }
+    // else {
         res.send(result);
-    }
+    // }
 });
 
 
@@ -102,6 +102,10 @@ const deleteForm = catchAsync(async (req, res) => {
         message: "Deleted Successfully",
     };
     const id = req.params.formID;
+    if(id == "62d07f4f0980a50a91210bef") return res.status(405).send({
+        code: "Not Allowed",
+        message: "Cannot delete this record",
+    })
     const result = await formsService.deleteForm(id);
     if (result._id) {
         res.send(response);
