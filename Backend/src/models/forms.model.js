@@ -28,8 +28,7 @@ const formSchema = mongoose.Schema(
         ],
     },
     {
-        timestamps: true,
-        _id: false,
+        timestamps: true
     }
 );
 
