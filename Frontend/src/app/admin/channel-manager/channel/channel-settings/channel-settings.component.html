@@ -145,11 +145,17 @@
         </div>
 
         <div *ngIf="channelSettingForm.value?.routingMode == 'PUSH'" class="form-group adjust-toggle"
-          style="padding-bottom: 10px;">
+          style="padding-bottom: 15px;">
           <mat-label>Route To Last Agent</mat-label>
           <mat-slide-toggle formControlName="routeToLastAgent"></mat-slide-toggle>
         </div>
       </ng-container>
+
+      <div class="form-group adjust-toggle" style="padding-bottom: 10px;">
+        <mat-label>Default Outbound Channel</mat-label>
+        <mat-slide-toggle [disabled]="channelTypeData.name == 'WEB'" (change)="onOutboundChange($event.checked)"
+          formControlName="defaultOutbound"></mat-slide-toggle>
+      </div>
     </div>
 
 

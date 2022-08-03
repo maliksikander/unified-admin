@@ -5,7 +5,7 @@
     "agent",
     "supervisor"
   ],
-  "CCM_URL": "https://cim.expertflow.com/ccm",
+  "CCM_URL": "https://defd1c0d-0be2-4799-9d8a-0a4ab0802443.mock.pstmn.io",
   "BOT_FRAMEWORK_URL": "https://cim.expertflow.com/bot-framework",
   "LICENSE_MANAGER_URL":"https://cim.expertflow.com/license-manager",
   "BUSINESS_CALENDAR_URL":"https://77051bc4-c351-4b9d-af9e-21c42ab1c9f6.mock.pstmn.io",

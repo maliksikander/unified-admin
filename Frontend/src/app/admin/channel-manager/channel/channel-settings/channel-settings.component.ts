@@ -9,6 +9,8 @@ import {
   SimpleChanges,
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MatDialog } from "@angular/material/dialog";
+import { ConfirmDialogComponent } from "src/app/shared/confirm-dialog/confirm-dialog.component";
 import { CommonService } from "../../../services/common.service";
 import { EndpointService } from "../../../services/endpoint.service";
 import { SnackbarService } from "../../../services/snackbar.service";
@@ -22,8 +24,10 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
   @Input() parentChannelBool;
   @Input() channelTypeData;
   @Input() editChannelData;
+  @Input() channelList;
   @Output() childChannelBool = new EventEmitter<any>();
   @Output() formSaveData = new EventEmitter<any>();
+
   spinner = true;
   channelSettingForm: FormGroup;
   modeVal = ["BOT", "AGENT", "HYBRID"];
@@ -54,7 +58,8 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
     private endPointService: EndpointService,
     private formBuilder: FormBuilder,
     private snackbar: SnackbarService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -83,6 +88,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
       routingObjectID: [""],
       agentRequestTTL: [""],
       botID: ["", [Validators.required]],
+      defaultOutbound: [false],
     });
 
     //setting form validation messages
@@ -95,7 +101,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
     });
 
     this.getChannelConnector();
-    console.log("channel type==>", this.channelTypeData);
+    console.log("channels==>", this.channelTypeData);
     if (this.channelTypeData.name == "VOICE") {
       this.setVoiceTypeValues();
     }
@@ -261,6 +267,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
             : null,
         agentRequestTTL:
           this.editChannelData.channelConfig.routingPolicy.agentRequestTtl,
+        defaultOutbound: this.editChannelData.defaultOutbound,
       });
       this.onChannelModeSelection(this.channelSettingForm.value.channelMode);
     } catch (e) {
@@ -443,10 +450,15 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
   }
 
   //to update channel, it accepts `data` object as parameter containing channel properties
-  updateChannel(data) {
+  updateChannel(data, stateFlag?) {
     this.endPointService.updateChannel(data, data.id).subscribe(
       (res: any) => {
-        this.emitMsgAndResetForm("Updated");
+        if (stateFlag != "overwrite") {
+          this.emitMsgAndResetForm("Updated");
+        } else {
+          this.spinner = false;
+          // this.snackbar.snackbarMessage("success-snackbar", "Default Channel", 1);
+        }
       },
       (error: any) => {
         this.spinner = false;
@@ -455,5 +467,86 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }
     );
+  }
+
+  // getChannels() {
+  //   this.endPointService
+  //     .getChannelByChannelType(this.channelTypeData.id)
+  //     .subscribe(
+  //       (res: any) => {
+  //         this.spinner = false;
+  //         this.channelList = res;
+  //       },
+  //       (error) => {
+  //         this.spinner = false;
+  //         console.error("Error Fetching Channel:", error);
+  //         if (error && error.status == 0)
+  //           this.snackbar.snackbarMessage(
+  //             "error-snackbar",
+  //             error.statusText,
+  //             1
+  //           );
+  //       }
+  //     );
+
+  // }
+
+  onOutboundChange(event) {
+    console.log("event==>", event);
+    if (event == true) {
+      let defaultOutboundChannel = this.channelList.find(
+        (item) => item.defaultOutbound == true
+      );
+      console.log("def==>", defaultOutboundChannel);
+      if (defaultOutboundChannel) {
+        if (
+          this.editChannelData &&
+          defaultOutboundChannel.id == this.editChannelData.id
+        ) {
+        } else {
+          this.updateOuboundChannelConfirmationDialog(defaultOutboundChannel);
+        }
+      }
+    }
+  }
+
+  updateOuboundChannelConfirmationDialog(channel) {
+    let msg = `'${channel.name}' is marked as default outbound channel. Are you sure you want to update this setting ?`;
+    return this.dialog
+      .open(ConfirmDialogComponent, {
+        panelClass: "confirm-dialog-container",
+        disableClose: true,
+        data: {
+          heading: "Update Outbound Channel",
+          message: msg,
+          text: "yes",
+        },
+      })
+      .afterClosed()
+      .subscribe((res: any) => {
+        this.spinner = true;
+        if (res === undefined) {
+          console.log("res==>", res);
+          this.overwritePreviousDefaultOutboundChannel(channel);
+        } else {
+          this.spinner = false;
+          this.channelSettingForm.controls["defaultOutbound"].setValue(false);
+        }
+      });
+  }
+
+  overwritePreviousDefaultOutboundChannel(channel) {
+    console.log("data1-->", channel);
+
+    let data = JSON.parse(JSON.stringify(channel));
+    data.channelConnector = {
+      id: channel.channelConnector.id,
+    };
+
+    data.channelType = {
+      id: channel.channelType.id,
+    };
+    console.log("data2-->", data);
+    this.updateChannel(data, "overwrite");
   }
 }
