@@ -101,7 +101,6 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
     });
 
     this.getChannelConnector();
-    console.log("channels==>", this.channelTypeData);
     if (this.channelTypeData.name == "VOICE") {
       this.setVoiceTypeValues();
     }
@@ -112,7 +111,6 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
       responseSla: "dummy",
       customerActivityTimeout: "dummy",
     });
-    // console.log("Value==>", this.channelSettingForm);
   }
 
   //lifecycle hook to reflect parent component changes in child component
@@ -425,6 +423,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
         tenant: {},
         channelConfig: channelConfigData,
         channelType: { id: this.channelTypeData?.id },
+        defaultOutbound: this.channelSettingForm.value.defaultOutbound,
       };
       if (this.editChannelData) data.id = this.editChannelData.id;
 
@@ -469,35 +468,11 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
     );
   }
 
-  // getChannels() {
-  //   this.endPointService
-  //     .getChannelByChannelType(this.channelTypeData.id)
-  //     .subscribe(
-  //       (res: any) => {
-  //         this.spinner = false;
-  //         this.channelList = res;
-  //       },
-  //       (error) => {
-  //         this.spinner = false;
-  //         console.error("Error Fetching Channel:", error);
-  //         if (error && error.status == 0)
-  //           this.snackbar.snackbarMessage(
-  //             "error-snackbar",
-  //             error.statusText,
-  //             1
-  //           );
-  //       }
-  //     );
-
-  // }
-
   onOutboundChange(event) {
-    console.log("event==>", event);
     if (event == true) {
       let defaultOutboundChannel = this.channelList.find(
         (item) => item.defaultOutbound == true
       );
-      console.log("def==>", defaultOutboundChannel);
       if (defaultOutboundChannel) {
         if (
           this.editChannelData &&
@@ -526,7 +501,6 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
       .subscribe((res: any) => {
         this.spinner = true;
         if (res === undefined) {
-          console.log("res==>", res);
           this.overwritePreviousDefaultOutboundChannel(channel);
         } else {
           this.spinner = false;
@@ -536,7 +510,6 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
   }
 
   overwritePreviousDefaultOutboundChannel(channel) {
-    console.log("data1-->", channel);
 
     let data = JSON.parse(JSON.stringify(channel));
     data.channelConnector = {
@@ -546,7 +519,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
     data.channelType = {
       id: channel.channelType.id,
     };
-    console.log("data2-->", data);
+    data.defaultOutbound = false;
     this.updateChannel(data, "overwrite");
   }
 }

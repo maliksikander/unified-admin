@@ -967,7 +967,7 @@ export class EndpointService {
         headers: new HttpHeaders({
           "Content-Type": "application/json",
           Authorization: "Bearer" + this.token,
-          Tenant: this.tenant,
+          Tenant: "",
         }),
       })
       .pipe(catchError(this.handleError));
