@@ -1,6 +1,7 @@
 import { ChangeDetectorRef } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { FormBuilder } from "@angular/forms";
+import { MatDialog } from "@angular/material/dialog";
 
 import { ChannelSettingsComponent } from "./channel-settings.component";
 
@@ -11,6 +12,7 @@ describe("ChannelSettingsComponent", () => {
   let commonService: any;
   let fb: FormBuilder;
   let cd: ChangeDetectorRef;
+  let dialog: MatDialog
 
   beforeEach(() => {
     component = new ChannelSettingsComponent(
@@ -18,7 +20,8 @@ describe("ChannelSettingsComponent", () => {
       endPointService,
       fb,
       snackbarService,
-      cd
+      cd,
+      dialog
     );
   });
 
