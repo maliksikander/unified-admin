@@ -1,8 +1,6 @@
 import { ChangeDetectorRef } from "@angular/core";
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { FormBuilder } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
-
 import { ChannelSettingsComponent } from "./channel-settings.component";
 
 describe("ChannelSettingsComponent", () => {

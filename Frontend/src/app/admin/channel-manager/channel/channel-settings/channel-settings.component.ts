@@ -10,7 +10,8 @@ import {
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
-import { ConfirmDialogComponent } from "src/app/shared/confirm-dialog/confirm-dialog.component";
+// import { ConfirmDialogComponent } from "src/app/shared/confirm-dialog/confirm-dialog.component";
+import { ConfirmDialogComponent } from "../../../../shared/confirm-dialog/confirm-dialog.component";
 import { CommonService } from "../../../services/common.service";
 import { EndpointService } from "../../../services/endpoint.service";
 import { SnackbarService } from "../../../services/snackbar.service";
