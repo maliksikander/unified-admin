@@ -1,5 +1,6 @@
 const catchAsync = require('../utils/catchAsync');
 const { reasonService } = require('../services');
+const httpStatus = require('http-status');
 // const logger = require('../config/logger');
 // const httpStatus = require('http-status');
 // const ApiError = require('../utils/ApiError');
@@ -20,9 +21,7 @@ const getReasonByID = catchAsync(async (req, res) => {
 });
 
 const createReason = catchAsync(async (req, res) => {
-
-    const result = await reasonService.createReason(req.body);
-    res.send(result);
+    await reasonService.createReason(req.body, res);
 });
 
 const updateReason = catchAsync(async (req, res) => {
@@ -30,23 +29,29 @@ const updateReason = catchAsync(async (req, res) => {
     const id = req.params.reasonID;
     const { description, label, type } = req.body;
     let body = { description, label, type };
-    const result = await reasonService.updateReason(body, id);
-    res.send(result);
+    await reasonService.updateReason(body, id, res);
+    // res.send(result);
 });
 
 const deleteReason = catchAsync(async (req, res) => {
+
 
     const response = {
         code: "Deleted",
         message: "Deleted Successfully",
     };
     const id = req.params.reasonID;
-    const result = await reasonService.deleteReason(id);
-    if (result._id) {
-        res.send(response);
+    if (id == '62ffc95cf12b6ccf1594d781' || id == '62ffc9e9f12b6ccf1594d88b') {
+        res.status(httpStatus.METHOD_NOT_ALLOWED).send({ error: "NOT_ALLOWED", message: "Default reason code cannot be deleted" });
     }
     else {
-        res.send(result);
+        const result = await reasonService.deleteReason(id);
+        if (result._id) {
+            res.send(response);
+        }
+        else {
+            res.send(result);
+        }
     }
 });
 

@@ -528,10 +528,10 @@ export class CommonService {
   reasonFormErrorMessages = {
     label: {
       required: "This field is required",
-      minlength: "Min 3 characters required",
-      maxlength: "Max 100 characters allowed",
+      minlength: "Min 1 characters required",
+      maxlength: "Max 30 characters allowed",
       pattern: "Not a valid pattern",
-      validName: "Already exists",
+      validName: "Label already exists",
     },
     description: {
       required: "This field is required",

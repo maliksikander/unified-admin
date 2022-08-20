@@ -1,6 +1,13 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ValidatorFn,
+} from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
+import { map } from "rxjs/operators";
 import { ConfirmDialogComponent } from "../../shared/confirm-dialog/confirm-dialog.component";
 import { CommonService } from "../services/common.service";
 import { EndpointService } from "../services/endpoint.service";
@@ -30,7 +37,7 @@ export class ReasonCodesComponent implements OnInit {
   reasonCodeData = [];
   reasonType = ["LOG_OUT", "NOT_READY"];
   editReasonData;
-  managePermission:boolean = false;
+  managePermission: boolean = false;
 
   constructor(
     private commonService: CommonService,
@@ -47,7 +54,15 @@ export class ReasonCodesComponent implements OnInit {
     this.validations = this.commonService.reasonFormErrorMessages;
 
     this.reasonForm = this.formBuilder.group({
-      label: ["", [Validators.required, Validators.maxLength(100)]],
+      label: [
+        "",
+        [
+          Validators.required,
+          Validators.maxLength(30),
+          Validators.pattern("^$|^[a-zA-Z0-9_-]+(?: [a-zA-Z0-9_-]+)*$"),
+        ],
+        ,
+      ],
       description: ["", [Validators.maxLength(500)]],
       type: ["", [Validators.required]],
     });
@@ -248,4 +263,57 @@ export class ReasonCodesComponent implements OnInit {
   selectPage() {
     this.itemsPerPage = this.selectedItem;
   }
+
+  checkLabelValue() {
+    if (
+      this.reasonCodeData.find((e) => {
+        if (this.reasonForm.controls["type"]?.value == e.type)
+          return (
+            e.label.toLowerCase() ==
+            this.reasonForm.controls["label"]?.value?.toLowerCase()
+          );
+      })
+    ) {
+      this.reasonForm.controls["label"].setErrors({ validName: true });
+    } else {
+      let control = this.reasonForm.controls["label"];
+      this.removeFormControlError(control, "validName");
+    }
+  }
+
+  removeFormControlError(control: AbstractControl, errorName: string) {
+    if (control?.errors && control?.errors[errorName]) {
+      delete control.errors[errorName];
+      if (Object.keys(control.errors).length === 0) {
+        control.setErrors(null);
+      }
+    }
+  }
+
+  // ValidateNameDuplication(control: AbstractControl) {
+  //   // return this.endPointService.getReasonCode().pipe(
+  //   //   map((res) => {
+  //   // const reasonCodeList = res;
+  //   if (
+  //     this.reasonCodeData.find((e) => {
+  //       if (this.reasonForm.controls["type"].value == e.type) {
+  //         console.log(
+  //           "test==>",
+  //           e.label.toLowerCase() == control.value.toLowerCase()
+  //         );
+  //         return e.label.toLowerCase() == control.value.toLowerCase();
+  //       } else {
+  //         console.log("chl paj ja");
+  //       }
+  //     })
+  //   ) {
+  //     console.log("test1==>");
+  //     return { validName: true };
+  //   } else {
+  //     console.log("test2==>");
+  //     return null;
+  //   }
+  //   // })
+  //   // );
+  // }
 }

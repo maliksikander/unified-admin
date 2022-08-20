@@ -17,7 +17,8 @@
                             </mat-form-field>
                         </div>
 
-                        <button *ngIf="managePermission" mat-flat-button (click)="openCreateReasonModal(reasonCodeForm)">
+                        <button *ngIf="managePermission" mat-flat-button
+                            (click)="openCreateReasonModal(reasonCodeForm)">
                             <mat-icon>add</mat-icon>
                             Create Reason Code
                         </button>
@@ -46,7 +47,7 @@
                                             (click)="editReasonCode(reasonCodeForm,data)">
                                             <mat-icon>mode_edit</mat-icon>
                                         </button>
-                                        <button matTooltip="Delete" (click)="deleteConfirm(data)" mat-mini-fab>
+                                        <button *ngIf="data.id != '62ffc95cf12b6ccf1594d781' && data.id != '62ffc9e9f12b6ccf1594d88b'" matTooltip="Delete" (click)="deleteConfirm(data)" mat-mini-fab>
                                             <mat-icon>delete</mat-icon>
                                         </button>
                                     </span>
@@ -90,9 +91,15 @@
                     <div class="form-group">
                         <mat-label>Label</mat-label>
                         <mat-form-field appearance="outline">
-                            <input matInput formControlName="label">
+                            <input (keyup)="checkLabelValue()" matInput formControlName="label">
                             <mat-error class="form-error">
-                                {{formErrors?.label}}
+                                <mat-error class="form-error">
+                                    <ng-container *ngIf="!reasonForm.get('label')?.errors?.validName">
+                                        {{formErrors?.label}}</ng-container>
+                                    <ng-container *ngIf="reasonForm.get('label')?.errors?.validName"> Label Already
+                                        Exists
+                                    </ng-container>
+                                </mat-error>
                             </mat-error>
                         </mat-form-field>
                     </div>
@@ -100,7 +107,7 @@
                     <div class="form-group">
                         <mat-label>Type</mat-label>
                         <mat-form-field appearance="outline">
-                            <mat-select formControlName="type">
+                            <mat-select [disabled]="editReasonData.id == '62ffc95cf12b6ccf1594d781' || editReasonData.id == '62ffc9e9f12b6ccf1594d88b'" (selectionChange)="checkLabelValue()" formControlName="type">
                                 <mat-option *ngFor="let val of reasonType" [value]="val">{{val |
                                     removeCharacterFilter | titlecase}}
                                 </mat-option>

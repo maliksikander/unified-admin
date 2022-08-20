@@ -2,12 +2,15 @@ const mongoose = require('mongoose');
 const { toJSON } = require('./plugins');
 var autoIncrement = require('mongoose-auto-increment');
 const config = require('../config/config');
-
 var connection = mongoose.createConnection(config.mongoose.url);
 autoIncrement.initialize(connection);
 
 const reasonCodeSchema = mongoose.Schema(
     {
+        _id: {
+            type: mongoose.Types.ObjectId,
+            required: true,
+        },
         label: {
             type: String,
             required: true,
@@ -20,7 +23,7 @@ const reasonCodeSchema = mongoose.Schema(
             type: String,
             required: true,
             enum: ['LOG_OUT', 'NOT_READY']
-        },
+        }
     },
     {
         timestamps: false,
