@@ -29,7 +29,7 @@ const getReason = async (id) => {
 
 const createReason = async (reqBody, res) => {
     reqBody["_id"] = new mongoose.Types.ObjectId();
-    ReasonCodeModel.find({ name: reqBody?.name, type: reqBody?.type }, async (err, reasonCode) => {
+    ReasonCodeModel.find({ name: reqBody.name, type: reqBody.type }, async (err, reasonCode) => {
         if (err) {
             throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, err);
         }
@@ -47,7 +47,7 @@ const createReason = async (reqBody, res) => {
 
 const updateReason = async (reqBody, id, res) => {
     // const id = reqBody.id;
-    ReasonCodeModel.find({ name: reqBody?.name, type: reqBody?.type }, async (err, reasonCode) => {
+    ReasonCodeModel.find({ name: reqBody.name, type: reqBody.type }, async (err, reasonCode) => {
         if (err) {
             throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, err);
         }
