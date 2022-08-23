@@ -25,10 +25,9 @@ const createReason = catchAsync(async (req, res) => {
 });
 
 const updateReason = catchAsync(async (req, res) => {
-
     const id = req.params.reasonID;
-    const { description, label, type } = req.body;
-    let body = { description, label, type };
+    const { description, name, type } = req.body;
+    let body = { description, name, type };
     await reasonService.updateReason(body, id, res);
     // res.send(result);
 });

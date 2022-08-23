@@ -29,7 +29,7 @@ const getReason = async (id) => {
 
 const createReason = async (reqBody, res) => {
     reqBody["_id"] = new mongoose.Types.ObjectId();
-    ReasonCodeModel.find({ label: reqBody?.label, type: reqBody?.type }, async (err, reasonCode) => {
+    ReasonCodeModel.find({ name: reqBody?.name, type: reqBody?.type }, async (err, reasonCode) => {
         if (err) {
             throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, err);
         }
@@ -38,7 +38,7 @@ const createReason = async (reqBody, res) => {
             res.send(result);
         }
         else {
-            res.status(httpStatus.CONFLICT).send({ error: "LABEL_NAME_CONFLICT", message: "Label Already Exists" })
+            res.status(httpStatus.CONFLICT).send({ error: "REASON_NAME_CONFLICT", message: "Name Already Exists" })
         }
     });
 
@@ -46,9 +46,8 @@ const createReason = async (reqBody, res) => {
 };
 
 const updateReason = async (reqBody, id, res) => {
-
     // const id = reqBody.id;
-    ReasonCodeModel.find({ label: reqBody?.label, type: reqBody?.type }, async (err, reasonCode) => {
+    ReasonCodeModel.find({ name: reqBody?.name, type: reqBody?.type }, async (err, reasonCode) => {
         if (err) {
             throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, err);
         }
@@ -66,7 +65,7 @@ const updateReason = async (reqBody, id, res) => {
 
         }
         else {
-            res.status(httpStatus.CONFLICT).send({ error: "LABEL_NAME_CONFLICT", message: "Label Already Exists" })
+            res.status(httpStatus.CONFLICT).send({ error: "REASON_NAME_CONFLICT", message: "Name Already Exists" })
         }
     });
 

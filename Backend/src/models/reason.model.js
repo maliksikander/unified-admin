@@ -11,7 +11,7 @@ const reasonCodeSchema = mongoose.Schema(
             type: mongoose.Types.ObjectId,
             required: true,
         },
-        label: {
+        name: {
             type: String,
             required: true,
         },

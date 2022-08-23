@@ -27,7 +27,7 @@
                     <div class="reason-code-list">
 
                         <ul class="top-heading reason-code-labels">
-                            <li>Label</li>
+                            <li>Name</li>
                             <li>Description</li>
                             <li>Type</li>
 
@@ -35,7 +35,7 @@
                         <ng-container *ngIf="reasonCodeData && reasonCodeData.length != 0">
                             <div class="reason-code-data"
                                 *ngFor="let data of reasonCodeData | filter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
-                                <span class="group-name">{{data?.label ? data.label : 'N/A'}}</span>
+                                <span class="group-name">{{data?.name ? data.name : 'N/A'}}</span>
                                 <span class="group-name">{{data?.description ? data.description : 'N/A'}}</span>
                                 <span class="group-name">
                                     <span
@@ -89,14 +89,14 @@
             <div class="dialog-content">
                 <form class="form-horizontal form-bordered" [formGroup]="reasonForm">
                     <div class="form-group">
-                        <mat-label>Label</mat-label>
+                        <mat-label>Name</mat-label>
                         <mat-form-field appearance="outline">
-                            <input (keyup)="checkLabelValue()" matInput formControlName="label">
+                            <input (keyup)="checkLabelValue()" matInput formControlName="name">
                             <mat-error class="form-error">
                                 <mat-error class="form-error">
-                                    <ng-container *ngIf="!reasonForm.get('label')?.errors?.validName">
-                                        {{formErrors?.label}}</ng-container>
-                                    <ng-container *ngIf="reasonForm.get('label')?.errors?.validName"> Label Already
+                                    <ng-container *ngIf="!reasonForm.get('name')?.errors?.validName">
+                                        {{formErrors?.name}}</ng-container>
+                                    <ng-container *ngIf="reasonForm.get('name')?.errors?.validName"> Label Already
                                         Exists
                                     </ng-container>
                                 </mat-error>
@@ -107,7 +107,7 @@
                     <div class="form-group">
                         <mat-label>Type</mat-label>
                         <mat-form-field appearance="outline">
-                            <mat-select [disabled]="editReasonData.id == '62ffc95cf12b6ccf1594d781' || editReasonData.id == '62ffc9e9f12b6ccf1594d88b'" (selectionChange)="checkLabelValue()" formControlName="type">
+                            <mat-select [disabled]="editReasonData?.id == '62ffc95cf12b6ccf1594d781' || editReasonData?.id == '62ffc9e9f12b6ccf1594d88b'" (selectionChange)="checkLabelValue()" formControlName="type">
                                 <mat-option *ngFor="let val of reasonType" [value]="val">{{val |
                                     removeCharacterFilter | titlecase}}
                                 </mat-option>

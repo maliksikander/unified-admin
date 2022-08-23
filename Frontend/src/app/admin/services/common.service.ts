@@ -526,7 +526,7 @@ export class CommonService {
   };
 
   reasonFormErrorMessages = {
-    label: {
+    name: {
       required: "This field is required",
       minlength: "Min 1 characters required",
       maxlength: "Max 30 characters allowed",

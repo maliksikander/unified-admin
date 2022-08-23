@@ -26,7 +26,7 @@ export class ReasonCodesComponent implements OnInit {
   spinner: any = true;
   searchTerm = "";
   formErrors = {
-    label: "",
+    name: "",
     description: "",
     type: "",
   };
@@ -54,7 +54,7 @@ export class ReasonCodesComponent implements OnInit {
     this.validations = this.commonService.reasonFormErrorMessages;
 
     this.reasonForm = this.formBuilder.group({
-      label: [
+      name: [
         "",
         [
           Validators.required,
@@ -200,7 +200,7 @@ export class ReasonCodesComponent implements OnInit {
     }
   }
 
-  //to update reason object, it accepts reason object (label:string, description:string, type:string, code:number) as `data` parameter
+  //to update reason object, it accepts reason object (name:string, description:string, type:string, code:number) as `data` parameter
   //and update the local list on success response
   updateReasonCode(data) {
     this.endPointService.updateReasonCode(data).subscribe(
@@ -227,7 +227,7 @@ export class ReasonCodesComponent implements OnInit {
     );
   }
 
-  //to create reason object, it accepts reason object (label:string, description:string, type:string) as `data` parameter
+  //to create reason object, it accepts reason object (name:string, description:string, type:string) as `data` parameter
   //and update the local list on success response
   createReasonCode(data) {
     this.endPointService.createReasonCode(data).subscribe(
@@ -269,14 +269,14 @@ export class ReasonCodesComponent implements OnInit {
       this.reasonCodeData.find((e) => {
         if (this.reasonForm.controls["type"]?.value == e.type)
           return (
-            e.label.toLowerCase() ==
-            this.reasonForm.controls["label"]?.value?.toLowerCase()
+            e.name.toLowerCase() ==
+            this.reasonForm.controls["name"]?.value?.toLowerCase()
           );
       })
     ) {
-      this.reasonForm.controls["label"].setErrors({ validName: true });
+      this.reasonForm.controls["name"].setErrors({ validName: true });
     } else {
-      let control = this.reasonForm.controls["label"];
+      let control = this.reasonForm.controls["name"];
       this.removeFormControlError(control, "validName");
     }
   }
@@ -299,9 +299,9 @@ export class ReasonCodesComponent implements OnInit {
   //       if (this.reasonForm.controls["type"].value == e.type) {
   //         console.log(
   //           "test==>",
-  //           e.label.toLowerCase() == control.value.toLowerCase()
+  //           e.name.toLowerCase() == control.value.toLowerCase()
   //         );
-  //         return e.label.toLowerCase() == control.value.toLowerCase();
+  //         return e.name.toLowerCase() == control.value.toLowerCase();
   //       } else {
   //         console.log("chl paj ja");
   //       }
