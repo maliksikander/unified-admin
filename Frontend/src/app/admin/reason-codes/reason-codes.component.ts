@@ -35,7 +35,7 @@ export class ReasonCodesComponent implements OnInit {
   formHeading = "Add New Reason";
   saveBtnText = "Create";
   reasonCodeData = [];
-  reasonType = ["LOG_OUT", "NOT_READY"];
+  reasonType = ["LOGOUT", "NOT_READY"];
   editReasonData;
   managePermission: boolean = false;
 

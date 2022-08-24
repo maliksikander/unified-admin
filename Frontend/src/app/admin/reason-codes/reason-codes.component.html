@@ -39,7 +39,7 @@
                                 <span class="group-name">{{data?.description ? data.description : 'N/A'}}</span>
                                 <span class="group-name">
                                     <span
-                                        [ngStyle]="{'background-color':data?.type == 'LOG_OUT' ? '#ffab00' : '#b4b4b4' }"
+                                        [ngStyle]="{'background-color':data?.type == 'LOGOUT' ? '#ffab00' : '#b4b4b4' }"
                                         class="reason-type-style">{{data?.type | removeCharacterFilter |
                                         titlecase}}</span>
                                     <span *ngIf="managePermission" class="list-trigger-area">

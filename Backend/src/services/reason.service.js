@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const getReasons = async (type) => {
 
 
-    if (type == 'LOG_OUT' || type == 'NOT_READY') {
+    if (type == 'LOGOUT' || type == 'NOT_READY') {
         const filtered = await ReasonCodeModel.find({ 'type': { $lte: type } });
         return filtered;
     }

@@ -22,7 +22,7 @@ const reasonCodeSchema = mongoose.Schema(
         type: {
             type: String,
             required: true,
-            enum: ['LOG_OUT', 'NOT_READY']
+            enum: ['LOGOUT', 'NOT_READY']
         }
     },
     {

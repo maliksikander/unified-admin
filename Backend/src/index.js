@@ -226,7 +226,7 @@ async function addDefaultReasonCode() {
         _id: mongoose.Types.ObjectId("62ffc95cf12b6ccf1594d781"),
         description: "A default log out reason code",
         name: "Out Of Office",
-        type: "LOG_OUT",
+        type: "LOGOUT",
       },
       {
         _id: mongoose.Types.ObjectId("62ffc9e9f12b6ccf1594d88b"),

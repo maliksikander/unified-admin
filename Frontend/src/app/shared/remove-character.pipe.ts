@@ -13,6 +13,9 @@ export class RemoveCharacterFilterPipe implements PipeTransform {
       } else if (value.length > 0 && value?.includes("-")) {
         return value.replace(/[-]/g, " ");
       }
+      else if (value.length > 0 && value == "LOGOUT") {
+        return "LOG OUT";
+      }
     }
   }
 }
