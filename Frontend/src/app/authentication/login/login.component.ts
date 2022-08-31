@@ -163,6 +163,14 @@ export class LoginComponent implements OnInit {
               this.router.navigate(["/web-widget"]);
             }
           });
+        } else if (item.rsname.includes("agent")) {
+          let scopes: Array<any> = item?.scopes;
+          scopes.forEach((scope: any) => {
+            if (scope == "view") {
+              routeCheck = true;
+              this.router.navigate(["/agent-desk"]);
+            }
+          });
         } else if (item.rsname.includes("channel")) {
           let scopes: Array<any> = item?.scopes;
           scopes.forEach((scope: any) => {

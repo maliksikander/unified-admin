@@ -52,6 +52,8 @@ export class AuthGuard implements CanActivate {
         resPath = "routing";
       } else if (path.includes("calendar")) {
         resPath = "calendar";
+      } else if (path.includes("agent")) {
+        resPath = "agent";
       }
 
       let value = this.checkResource(resPath, resources);
