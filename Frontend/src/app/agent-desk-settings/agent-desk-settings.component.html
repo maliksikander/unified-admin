@@ -10,67 +10,72 @@
                 </div>
 
                 <div class="panel-page-content web-widget-class agent-desk-controls ">
-                    <form class="form-horizontal form-bordered" [formGroup]="AgentDeskConfigForm">
+                    <div class="form-main-area col-md-5">
+                        <form class="form-horizontal form-bordered" [formGroup]="AgentDeskConfigForm">
 
-                        <div class="form-group adjust-toggle widget-toggle col-md-5" >
-                            <mat-label>Message Formatting
-                                <small>Turn on for agents to send formatted messages</small>
-                            </mat-label>
-                            <mat-slide-toggle></mat-slide-toggle>
-                        </div>
+                            <div class="form-group adjust-toggle widget-toggle">
+                                <mat-label>Message Formatting
+                                    <small>Turn on for agents to send formatted messages</small>
+                                </mat-label>
+                                <mat-slide-toggle></mat-slide-toggle>
+                            </div>
 
-                        <div class="form-group adjust-toggle widget-toggle col-md-5" >
-                            <mat-label>File Sharing
-                                <small>Turn on for agents to share and receive attachments</small>
-                            </mat-label>
-                            <mat-slide-toggle></mat-slide-toggle>
-                        </div>
+                            <div class="form-group adjust-toggle widget-toggle">
+                                <mat-label>File Sharing
+                                    <small>Turn on for agents to share and receive attachments</small>
+                                </mat-label>
+                                <mat-slide-toggle></mat-slide-toggle>
+                            </div>
 
-                        <div class="form-group adjust-toggle widget-toggle col-md-5" >
-                            <mat-label>Emojis
-                                <small>Turn on for agents to send and receive emojis</small>
-                            </mat-label>
-                            <mat-slide-toggle></mat-slide-toggle>
-                        </div>
+                            <div class="form-group adjust-toggle widget-toggle">
+                                <mat-label>Emojis
+                                    <small>Turn on for agents to send and receive emojis</small>
+                                </mat-label>
+                                <mat-slide-toggle></mat-slide-toggle>
+                            </div>
 
-                        <div class="form-group adjust-toggle widget-toggle col-md-5" >
-                            <mat-label>Conversation Participants
-                                <small>Turn on for agents to see conversation participants list for a conversation</small>
-                            </mat-label>
-                            <mat-slide-toggle></mat-slide-toggle>
-
-                        </div>
-
-                        <div class="form-group adjust-toggle widget-toggle col-md-5" >
-                            <mat-label>Wrap-up Time
-                                <small>Turn on for agents to add a wrap-up until the specified time</small>
-                            </mat-label>
-                            <mat-slide-toggle formControlName="enableWrapup" [(ngModel)]="isEnableWrapup"></mat-slide-toggle>
-                        </div>
-
-                        <div class="form-group custom-wrap-field col-md-5 p-0" *ngIf="isEnableWrapup">
-                            <mat-label>Wrap-up Timer</mat-label>
-                            <mat-form-field appearance="outline" mat>
-                                <input type="number" matInput formControlName="displaywrapup">
-                                <span class="suffix" matSuffix>Seconds</span>
-                                <mat-error class="form-error">
-                                    {{formErrors?.displaywrapup}}
-                                </mat-error>
-                            </mat-form-field>
-
-                            <div class="wrap-caption">
-                                <small>Enter value between 15-1800.</small>
-                                <small>(This is the time for agents to apply Wrap-up once a conversation goes into "Wrap-up" state)</small>
+                            <div class="form-group adjust-toggle widget-toggle">
+                                <mat-label>Conversation Participants
+                                    <small>Turn on for agents to see conversation participants list for a
+                                        conversation</small>
+                                </mat-label>
+                                <mat-slide-toggle></mat-slide-toggle>
 
                             </div>
 
-                        </div>
+                            <div class="form-group adjust-toggle widget-toggle">
+                                <mat-label>Wrap-up Time
+                                    <small>Turn on for agents to add a wrap-up until the specified time</small>
+                                </mat-label>
+                                <mat-slide-toggle formControlName="enableWrapup"
+                                                  [(ngModel)]="isEnableWrapup"></mat-slide-toggle>
+                            </div>
 
-                        <div class="action-area btn-margin col-md-5">
-                            <button mat-raised-button class="blue-btn service-trigger">Save</button>
-                        </div>
+                            <div class="form-group custom-wrap-field p-0" *ngIf="isEnableWrapup">
+                                <mat-label>Wrap-up Timer</mat-label>
+                                <mat-form-field appearance="outline" mat>
+                                    <input type="number" matInput formControlName="displaywrapup">
+                                    <span class="suffix" matSuffix>Seconds</span>
+                                    <mat-error class="form-error">
+                                        {{formErrors?.displaywrapup}}
+                                    </mat-error>
+                                </mat-form-field>
 
-                    </form>
+                                <div class="wrap-caption">
+                                    <small>Enter value between 15-1800.</small>
+                                    <small>(This is the time for agents to apply Wrap-up once a conversation goes into
+                                        "Wrap-up" state)</small>
+
+                                </div>
+
+                            </div>
+
+                            <div class="action-area btn-margin pr-0">
+                                <button mat-raised-button class="blue-btn service-trigger">Save</button>
+                            </div>
+
+                        </form>
+                    </div>
                 </div>
 
             </div>
