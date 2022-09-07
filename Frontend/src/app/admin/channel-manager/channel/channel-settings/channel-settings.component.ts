@@ -31,7 +31,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
 
   spinner = true;
   channelSettingForm: FormGroup;
-  modeVal = ["BOT", "AGENT", "HYBRID"];
+  modeVal = ["HYBRID"];
   formErrors = {
     name: "",
     serviceIdentifier: "",
@@ -48,7 +48,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
   };
   validations;
   channelConnectorList = [];
-  agentPolicy = ["LEAST_SKILLED", "MOST_SKILLED", "LONGEST_AVAILABLE"];
+  agentPolicy = ["LONGEST_AVAILABLE"];
   routingModeList = ["PULL", "PUSH"];
   queueList = [];
   botList = [];
@@ -81,7 +81,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
       serviceIdentifier: ["", [Validators.required]],
       channelConnector: [, [Validators.required]],
       channelMode: ["BOT", [Validators.required]],
-      responseSla: ["", [Validators.required]],
+      responseSla: ["30"],
       customerActivityTimeout: ["", [Validators.required]],
       agentSelectionPolicy: [""],
       routeToLastAgent: [true],

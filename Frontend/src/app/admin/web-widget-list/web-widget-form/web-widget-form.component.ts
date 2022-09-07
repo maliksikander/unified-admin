@@ -23,7 +23,7 @@ export class WebWidgetFormComponent implements OnInit {
   @Output() formSaveData = new EventEmitter<any>();
   widgetConfigForm: FormGroup;
   formErrors = {
-    customerReconnectTime: "",
+    // customerReconnectTime: "",
     enableDynamicLink: "",
     enableDownloadTranscript: "",
     enableEmoji: "",
@@ -56,7 +56,7 @@ export class WebWidgetFormComponent implements OnInit {
     this.validations = this.commonService.webWidgetFormErrorMessages;
     this.themeList = this.endPointService.widgetThemes;
     this.widgetConfigForm = this.formBuilder.group({
-      customerReconnectTime: ["", [Validators.required]],
+      // customerReconnectTime: ["", [Validators.required]],
       enableDynamicLink: [true, [Validators.required]],
       enableDownloadTranscript: [true, [Validators.required]],
       enableEmoji: [true, [Validators.required]],

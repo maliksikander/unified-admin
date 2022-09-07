@@ -187,15 +187,16 @@ export class LoginComponent implements OnInit {
               this.router.navigate(["/routing/attributes"]);
             }
           });
-        } else if (item.rsname.includes("calendar")) {
-          let scopes: Array<any> = item?.scopes;
-          scopes.forEach((scope: any) => {
-            if (scope == "view") {
-              routeCheck = true;
-              this.router.navigate(["/business-calendar"]);
-            }
-          });
         }
+        //  else if (item.rsname.includes("calendar")) {
+        //   let scopes: Array<any> = item?.scopes;
+        //   scopes.forEach((scope: any) => {
+        //     if (scope == "view") {
+        //       routeCheck = true;
+        //       this.router.navigate(["/business-calendar"]);
+        //     }
+        //   });
+        // }
         // else {
         //   this.snackbar.snackbarMessage(
         //     "error-snackbar",
