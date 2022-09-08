@@ -1,30 +1,95 @@
-import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { validateEvents } from "angular-calendar/modules/common/util";
+import { EndpointService } from "../admin/services/endpoint.service";
+import { SnackbarService } from "../admin/services/snackbar.service";
 
 @Component({
-  selector: 'app-agent-desk-settings',
-  templateUrl: './agent-desk-settings.component.html',
-  styleUrls: ['./agent-desk-settings.component.scss']
+  selector: "app-agent-desk-settings",
+  templateUrl: "./agent-desk-settings.component.html",
+  styleUrls: ["./agent-desk-settings.component.scss"],
 })
 export class AgentDeskSettingsComponent implements OnInit {
   pageTitle = "Agent Desk Settings";
   spinner = false;
   AgentDeskConfigForm: FormGroup;
-  isEnableWrapup = false;
+  agentDeskSettings:any;
   formErrors = {
     enableWrapup: "",
     displaywrapup: "please enter valid value between 15-1800",
-  }
-  constructor(private formBuilder: FormBuilder) { }
+  };
+  constructor(
+    private formBuilder: FormBuilder,
+    private endPointService: EndpointService,
+    private snackbar: SnackbarService
+  ) {}
 
   ngOnInit(): void {
-
     this.AgentDeskConfigForm = this.formBuilder.group({
-      enableWrapup: [true],
-      displaywrapup: [15 , [ Validators.max(1800), Validators.min(15), Validators.pattern("^[0-9*_-]*$"),
-      ]],
+      isConversationParticipantsEnabled:[false],
+      isFileSharingEnabled:[false],
+      isEmojisEnabled:[false],
+      isMessageFormattingEnabled:[false],
+      isWrapUpEnabled: [false],
+      wrapUpTime: [
+        15,
+        [ Validators.required,
+          Validators.max(1800),
+          Validators.min(15),
+          Validators.pattern("^[0-9*_-]*$"),
+        ],
+      ],
     });
+    this.getAgentDeskSettings();
+    this.AgentDeskConfigForm.get('isWrapUpEnabled').valueChanges.subscribe(() => {
+      if (!this.AgentDeskConfigForm.get('isWrapUpEnabled').value) {
+        this.AgentDeskConfigForm.patchValue({'wrapUpTime':15})
+      }
+    })
   }
+  
 
-
+  getAgentDeskSettings() {
+    this.endPointService.getAgentDeskSettings().subscribe(
+      (res: any) => {
+        this.spinner = false;
+        this.agentDeskSettings=res[0];
+        this.AgentDeskConfigForm.patchValue(this.agentDeskSettings);
+        
+      },
+      (error: any) => {
+        this.spinner = false;
+        console.error("Error getting agent desk settings", error);
+        if (error && error.status == 0)
+          this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
+      }
+    );
+  }
+  updateAgentDeskSettings(data) {
+    this.endPointService.updateAgentDeskSettings(data).subscribe(
+      (res: any) => {
+        this.spinner = false;
+        this.agentDeskSettings=res;
+        this.snackbar.snackbarMessage("success-snackbar","Settings Saved Successfully" , 1);
+        this.AgentDeskConfigForm.markAsPristine();
+      },
+      (error: any) => {
+        console.error("Error updating agent desk settings", error);
+        if (error && error.status == 0)
+          this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
+      }
+    );
+  }
+  onSave()
+  {
+    if(this.agentDeskSettings && this.agentDeskSettings['id'])
+    {
+      this.AgentDeskConfigForm.value.id=this.agentDeskSettings['id'];
+      this.updateAgentDeskSettings(this.AgentDeskConfigForm.value);
+    }
+    else
+    {
+      this.snackbar.snackbarMessage("error-snackbar",'Unable to Save Agent Desk Settings', 1);
+    }
+  }
 }

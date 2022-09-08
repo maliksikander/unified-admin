@@ -14,6 +14,9 @@ const userRoute = require('./user.route');
 const formValidationRoute = require('./formValidation.route');
 const reasonRoute = require('./reason.route');
 const pullModeRoute = require('./pull-mode-list.route');
+const agentDeskSettingsRoute = require('./agentDeskSettings.route');
+
+
 const router = express.Router();
 
 // router.use('/auth', authRoute);
@@ -31,5 +34,6 @@ router.use('/keycloakLogin', loginRoute);
 router.use('/users', userRoute);
 router.use('/reasons', reasonRoute);
 router.use('/pull-mode-list', pullModeRoute);
+router.use('/agent-desk-settings', agentDeskSettingsRoute);
 
 module.exports = router;
