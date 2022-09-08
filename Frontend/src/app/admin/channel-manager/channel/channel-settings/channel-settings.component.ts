@@ -404,7 +404,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
         conversationBot: "",
         customerActivityTimeout:
           this.channelTypeData.name == "VOICE"
-            ? null
+            ? 3600
             : this.channelSettingForm.value.customerActivityTimeout,
         responseSla:
           this.channelTypeData.name == "VOICE"
@@ -415,6 +415,16 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
             ? routingPolicyData
             : {},
       };
+
+      if (this.channelTypeData.name == "VOICE")
+        channelConfigData.routingPolicy = {
+          agentSelectionPolicy: null,
+          routeToLastAgent: false,
+          routingObjectId: null,
+          routingMode: "EXTERNAL",
+          agentRequestTtl: 0,
+        };
+
       let data: any = {
         name: this.channelSettingForm.value.name,
         serviceIdentifier: this.channelSettingForm.value.serviceIdentifier,
@@ -511,7 +521,6 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
   }
 
   overwritePreviousDefaultOutboundChannel(channel) {
-
     let data = JSON.parse(JSON.stringify(channel));
     data.channelConnector = {
       id: channel.channelConnector.id,
