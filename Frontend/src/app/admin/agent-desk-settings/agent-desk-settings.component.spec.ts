@@ -16,6 +16,8 @@ describe("AgentDeskSettingsComponent", () => {
   let SnackbarService: SnackbarService;
   let formBuilder: FormBuilder;
   let endPointService: any;
+  let commonService: any;
+
   describe("testing",()=>
   {
   beforeEach(async () => {
@@ -79,7 +81,8 @@ describe("AgentDeskSettingsComponent", () => {
     fixture = new AgentDeskSettingsComponent(
       formBuilder,
       endPointService,
-      SnackbarService
+      SnackbarService,
+      commonService
     );
     //   await TestBed.configureTestingModule({
     //     declarations: [ AgentDeskSettingsComponent ],
