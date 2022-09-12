@@ -1,8 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { validateEvents } from "angular-calendar/modules/common/util";
-import { EndpointService } from "../admin/services/endpoint.service";
-import { SnackbarService } from "../admin/services/snackbar.service";
+import { CommonService } from "../services/common.service";
+import { EndpointService } from "../services/endpoint.service";
+import { SnackbarService } from "../services/snackbar.service";
 
 @Component({
   selector: "app-agent-desk-settings",
@@ -18,10 +19,14 @@ export class AgentDeskSettingsComponent implements OnInit {
     enableWrapup: "",
     displaywrapup: "please enter valid value between 15-1800",
   };
+  managePermission: boolean = false;
+
+
   constructor(
     private formBuilder: FormBuilder,
     private endPointService: EndpointService,
-    private snackbar: SnackbarService
+    private snackbar: SnackbarService,
+    private commonService: CommonService,
   ) {}
 
   ngOnInit(): void {
@@ -45,7 +50,9 @@ export class AgentDeskSettingsComponent implements OnInit {
       if (!this.AgentDeskConfigForm.get('isWrapUpEnabled').value) {
         this.AgentDeskConfigForm.patchValue({'wrapUpTime':15})
       }
-    })
+    });
+
+    this.managePermission = this.commonService.checkManageScope("agent-desk");
   }
   
 
@@ -92,4 +99,5 @@ export class AgentDeskSettingsComponent implements OnInit {
       this.snackbar.snackbarMessage("error-snackbar",'Unable to Save Agent Desk Settings', 1);
     }
   }
+
 }

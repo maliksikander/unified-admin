@@ -88,7 +88,8 @@
 
 
             <!-- Forms -->
-            <a *ngIf="formBool" class="single-menu-link" mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/form']">
+            <a *ngIf="formBool" class="single-menu-link" mat-list-item [routerLinkActive]="['active-link']"
+              [routerLink]="['/form']">
               <img src="assets/images/forms.svg" alt="forms">
               <span class="sidebar-text">Forms</span>
             </a>
@@ -193,16 +194,19 @@
             </mat-expansion-panel>
 
             <!-- Web Widget -->
-            <a  *ngIf="webWidgetBool" class="single-menu-link" mat-list-item [routerLinkActive]="['active-link']"
+            <a *ngIf="webWidgetBool" class="single-menu-link" mat-list-item [routerLinkActive]="['active-link']"
               [routerLink]="['/web-widget']">
-              <img  style="padding-left: 2px;" src="assets/images/web-widget.svg" class="img-size-adjustment" alt="web_widget">
-              <span  class="sidebar-text">Web Widget</span>
+              <img style="padding-left: 2px;" src="assets/images/web-widget.svg" class="img-size-adjustment"
+                alt="web_widget">
+              <span class="sidebar-text">Web Widget</span>
             </a>
+            
             <!-- Agent desk -->
-            <a  class="single-menu-link" mat-list-item [routerLinkActive]="['active-link']"
+            <a *ngIf="agentDeskBool" class="single-menu-link" mat-list-item [routerLinkActive]="['active-link']"
               [routerLink]="['/agent-desk']">
-              <img  style="padding-left: 2px;" src="assets/images/agent-desk.svg" class="img-size-adjustment" alt="web_widget">
-              <span  class="sidebar-text">Agent Desk</span>
+              <img style="padding-left: 2px;" src="assets/images/agent-desk.svg" class="img-size-adjustment"
+                alt="web_widget">
+              <span class="sidebar-text">Agent Desk</span>
             </a>
           </mat-accordion>
 

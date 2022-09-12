@@ -8,7 +8,7 @@ import { of } from "rxjs";
 // import { EndpointService } from "../admin/services/endpoint.service";
 import { AgentDeskSettingsComponent } from "./agent-desk-settings.component";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { SnackbarService } from "../admin/services/snackbar.service";
+import { SnackbarService } from "../services/snackbar.service";
 
 describe("AgentDeskSettingsComponent", () => {
   // let component: AgentDeskSettingsComponent;
