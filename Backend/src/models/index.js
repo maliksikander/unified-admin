@@ -11,3 +11,4 @@ module.exports.FormsModel = require('./forms.model');
 module.exports.FormValidationModel = require('./formValidation.model');
 module.exports.ReasonCodeModel = require('./reason.model');
 module.exports.PullModeListModel = require('./pull-mode-list.model');
+module.exports.AgentDeskSettings = require('./agentDeskSettings.model');

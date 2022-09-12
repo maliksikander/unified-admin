@@ -75,6 +75,7 @@ export class EndpointService {
     webWidget: "widget-configs",
     keycloakLogin: "keycloakLogin",
     keycloakUsers: "users",
+    agentDeskSettings:"agent-desk-settings"
   };
 
   constructor(
@@ -1402,6 +1403,26 @@ export class EndpointService {
         headers: new HttpHeaders({
           "Content-Type": "application/json",
           Authorization: "Bearer" + this.token,
+        }),
+      })
+      .pipe(catchError(this.handleError));
+  }
+  getAgentDeskSettings(): Observable<any> {
+    return this.httpClient
+      .get<any>(`${this.ADMIN_URL}/${this.endpoints.agentDeskSettings}`, {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.token,
+        }),
+      })
+      .pipe(catchError(this.handleError));
+  }
+  updateAgentDeskSettings(data): Observable<void> {
+    return this.httpClient
+      .put<void>(`${this.ADMIN_URL}/${this.endpoints.agentDeskSettings}`, data, {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.token,
         }),
       })
       .pipe(catchError(this.handleError));

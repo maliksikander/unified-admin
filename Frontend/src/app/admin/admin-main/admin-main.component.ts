@@ -42,6 +42,7 @@ export class AdminMainComponent implements OnInit {
   channelBool: boolean = false;
   routingBool: boolean = false;
   calendarBool: boolean = false;
+  agentDeskBool: boolean = false;
   subscription: Subscription;
 
   constructor(
@@ -135,6 +136,13 @@ export class AdminMainComponent implements OnInit {
           let scopes: Array<any> = item?.scopes;
           scopes.forEach((scope: any) => {
             if (scope == "view") this.channelBool = true;
+          });
+        }
+
+        if (item.rsname.includes("agent-desk") && this.agentDeskBool == false) {
+          let scopes: Array<any> = item?.scopes;
+          scopes.forEach((scope: any) => {
+            if (scope == "view") this.agentDeskBool = true;
           });
         }
 

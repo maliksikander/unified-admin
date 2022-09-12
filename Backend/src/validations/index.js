@@ -10,3 +10,4 @@ module.exports.securityValidation = require('./securitySetting.validation');
 module.exports.formsValidation = require('./forms.validation');
 module.exports.reasonValidation = require('./reason.validation');
 module.exports.pullModeListValidation = require('./pull-mode-list.validation');
+module.exports.agentDeskSettingsValidation = require('./agentDeskSettings.validation');
