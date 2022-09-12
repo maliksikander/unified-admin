@@ -73,7 +73,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
   };
   queueForm: FormGroup;
   stepForm: FormGroup;
-  managePermission:boolean = false;
+  managePermission: boolean = false;
 
   constructor(
     private commonService: CommonService,
@@ -103,7 +103,10 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
         ],
       ],
       mrd: ["", [Validators.required]],
-      serviceLevelType: [1, [Validators.required, Validators.min(1)]],
+      serviceLevelType: [
+        1,
+        [Validators.required, Validators.min(1), Validators.max(3)],
+      ],
       serviceLevelThreshold: [1, [Validators.required, Validators.min(0)]],
     });
 

@@ -314,7 +314,7 @@ export class CommonService {
     serviceLevelType: {
       required: "This field is required",
       min: "Min 1 required",
-      max: "Max 10 seconds allowed",
+      max: "Max allowed value is 3",
     },
     serviceLevelThreshold: {
       required: "This field is required",
