@@ -103,7 +103,7 @@ export class ReasonCodesComponent implements OnInit {
   //to open form dialog,this method accepts the `template variable` as a parameter assigned to the form in html.
   openCreateReasonModal(templateRef) {
     this.reasonForm.reset();
-    this.formHeading = "Add Reason Code";
+    this.formHeading = "Add Reason";
     this.saveBtnText = "Create";
     let dialogRef = this.dialog.open(templateRef, {
       width: "550px",
@@ -122,13 +122,13 @@ export class ReasonCodesComponent implements OnInit {
   //Confirmation dialog for delete, it accepts the reason object as `data` parameter
   deleteConfirm(data) {
     let id = data.id;
-    let msg = "Are you sure you want to delete this reason code ?";
+    let msg = "Are you sure you want to delete this reason?";
     return this.dialog
       .open(ConfirmDialogComponent, {
         panelClass: "confirm-dialog-container",
         disableClose: true,
         data: {
-          heading: "Delete Reason Code",
+          heading: "Delete Reason",
           message: msg,
           text: "confirm",
           data: data,
@@ -149,7 +149,7 @@ export class ReasonCodesComponent implements OnInit {
   editReasonCode(templateRef, data) {
     this.editReasonData = data;
     this.reasonForm.patchValue(data);
-    this.formHeading = "Edit Reason Code";
+    this.formHeading = "Edit Reason";
     this.saveBtnText = "Update";
     let dialogRef = this.dialog.open(templateRef, {
       width: "550px",
