@@ -22,6 +22,7 @@ export class MrdComponent implements OnInit {
     description: "",
     enabled: "",
     maxRequests: "",
+    managedByRe:""
   };
   validations;
   mrdForm: FormGroup;
@@ -29,7 +30,7 @@ export class MrdComponent implements OnInit {
   saveBtnText = "Create";
   mrdData = [];
   editData: any;
-  managePermission:boolean = false;
+  managePermission: boolean = false;
 
   constructor(
     private commonService: CommonService,
@@ -56,6 +57,7 @@ export class MrdComponent implements OnInit {
       description: ["", [Validators.maxLength(500)]],
       enabled: [],
       maxRequests: ["", [Validators.required, Validators.min(1)]],
+      managedByRe: [],
     });
 
     let pageNumber = sessionStorage.getItem("currentMRDPage");
@@ -79,6 +81,7 @@ export class MrdComponent implements OnInit {
     try {
       this.mrdForm.reset();
       this.mrdForm.controls["enabled"].patchValue(true);
+      this.mrdForm.controls["managedByRe"].patchValue(true);
       this.formHeading = "Add New MRD";
       this.saveBtnText = "Create";
       let dialogRef = this.dialog.open(templateRef, {
@@ -258,6 +261,7 @@ export class MrdComponent implements OnInit {
         description: data.description,
         enabled: data.interruptible,
         maxRequests: data.maxRequests,
+        managedByRe: data.managedByRe,
       });
 
       this.formHeading = "Edit MRD";
@@ -299,6 +303,7 @@ export class MrdComponent implements OnInit {
       data.description = this.mrdForm.value.description;
       data.interruptible = this.mrdForm.value.enabled;
       data.maxRequests = this.mrdForm.value.maxRequests;
+      data.managedByRe = this.mrdForm.value.managedByRe;
       return data;
     } catch (e) {
       console.error("Error on save object :", e);

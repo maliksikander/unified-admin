@@ -294,6 +294,9 @@ export class CommonService {
       required: "This field is required",
       min: "Min value of 1 is required",
     },
+    managedByRe: {
+      required: "This field is required",
+    },
   };
 
   queueFormErrorMessages = {
