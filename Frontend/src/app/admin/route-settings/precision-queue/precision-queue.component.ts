@@ -458,10 +458,9 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
 
   ///////////////////  Step Functions  /////////////
 
-  //to check existing step length in a precision queue,this method accepts the `templateRef` as a parameter assigned to the form in html and index of the PQ in the list as 'i'.
-  checkStepsLength(templateRef, i) {
-    const stepLength = this.queueData[i].steps?.length;
-
+  //to check existing step length in a precision queue,this method accepts the `templateRef` as a parameter assigned to the form in html and the PQ'.
+  checkStepsLength(templateRef, queueData) {
+    const stepLength = queueData.steps?.length;
     try {
       if (stepLength && stepLength >= 10) {
         this.snackbar.snackbarMessage(
@@ -470,15 +469,15 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
           2
         );
       } else {
-        this.openStepModal(templateRef, i);
+        this.openStepModal(templateRef, queueData);
       }
     } catch (e) {
       console.error("Error PQ:", e);
     }
   }
 
-  //to open step form dialog,this method accepts the `templateRef` as a parameter assigned to the form in html and index of the PQ in the list as 'i'.
-  openStepModal(templateRef, i) {
+  //to open step form dialog,this method accepts the `templateRef` as a parameter assigned to the form in html and selected PQ .
+  openStepModal(templateRef, selectedQueue) {
     this.stepFormHeading = "Add Step";
     this.stepSaveBtnText = "Add";
     let dialogRef = this.dialog.open(templateRef, {
@@ -488,7 +487,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     });
     dialogRef.afterClosed().subscribe((res) => {
       if (res == "save") {
-        this.createNewStep(i);
+        this.createNewStep(selectedQueue);
       } else {
         this.resetStepForm();
         this.stepForm.reset();
@@ -566,8 +565,8 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     );
   }
 
-  //to delete PQ step and it accepts queue list index as 'i', queue ID & step ID as parameter
-  deleteStep(i, queueId, stepId) {
+  //to delete PQ step and it accepts  queue ID & step ID as parameter
+  deleteStep(queueId, stepId) {
     this.endPointService.deleteStep(queueId, stepId).subscribe(
       (res: any) => {
         this.getQueue();
@@ -588,7 +587,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
   }
 
   //delete confirmation dialog with mrd object as `data` parameter
-  deleteStepConfirm(stepData, queueData, i) {
+  deleteStepConfirm(stepData, queueData) {
     let msg = "Are you sure you want to delete this Step ?";
     return this.dialog
       .open(ConfirmDialogComponent, {
@@ -606,7 +605,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
       .subscribe((res: any) => {
         this.spinner = true;
         if (res === "delete") {
-          this.deleteStep(i, queueData.id, stepData.id);
+          this.deleteStep(queueData.id, stepData.id);
         } else {
           this.spinner = false;
         }
@@ -661,9 +660,9 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     this.stepForm.setValue(data);
   }
 
-  //to edit PQ,it accepts template reference as 'templateRef', step object as `data` & queue object index as 'i' as parameter
+  //to edit PQ,it accepts template reference as 'templateRef', step object as `data` & selected queue object as parameter
   //and patches the existing values with form controls and opens the form dialog
-  editStep(templateRef, data, i) {
+  editStep(templateRef, data, selectedQueue) {
     this.stepFormHeading = "Edit Step";
     this.stepSaveBtnText = "Update";
     let temp = JSON.parse(JSON.stringify(data));
@@ -685,34 +684,32 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe((res) => {
       if (res == "save") {
-        this.saveEditStep(i, data.id);
+        this.saveEditStep(data.id, selectedQueue);
       } else {
         this.resetStepForm();
       }
     });
   }
 
-  //to save new queue step, it accepts index of PQ object index as 'i' parameter
-  createNewStep(i) {
+  //to save new queue step, it accepts selected PQ object as parameter
+  createNewStep(selectedQueue) {
     this.spinner = true;
     const formData = JSON.parse(JSON.stringify(this.stepForm.value));
     let stepData = this.manipulateExpTerm(formData);
     let data = stepData;
-    let queue = this.queueData[i];
-    this.createStep(data, queue.id);
+    this.createStep(data, selectedQueue.id);
 
     this.resetStepForm();
   }
 
-  //to save updated step, it accepts index of PQ object index as 'i' & step ID as parameter
-  saveEditStep(i, stepId) {
+  //to save updated step, it accepts selected PQ object & step ID as parameter
+  saveEditStep(stepId, selectedQueue) {
     this.spinner = true;
     const formData = JSON.parse(JSON.stringify(this.stepForm.value));
     let stepData = this.manipulateExpTerm(formData);
     let data = stepData;
     data.id = stepId;
-    const queueId = this.queueData[i].id;
-    this.updateStep(data, queueId, stepId);
+    this.updateStep(data, selectedQueue.id, stepId);
     this.resetStepForm();
   }
 

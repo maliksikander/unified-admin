@@ -106,7 +106,7 @@
                                 'N/A'}}</ng-container>
                               <ng-container *ngIf="stepData?.timeout == 0">{{stepData.timeout}}</ng-container>
                               <span *ngIf="managePermission" class="step-trigger-area">
-                                <button matTooltip="Edit" (click)="editStep(stepFormTemplate,stepData,j)" mat-mini-fab>
+                                <button matTooltip="Edit" (click)="editStep(stepFormTemplate,stepData,data)" mat-mini-fab>
                                   <mat-icon>mode_edit</mat-icon>
                                 </button>
                                 <button matTooltip="Delete" (click)="deleteStepConfirm(stepData,data)" mat-mini-fab>
@@ -120,7 +120,7 @@
                       </table>
                     </div>
                     <div *ngIf="data?.Steps?.length != 10" class="step-section">
-                      <button *ngIf="managePermission" mat-flat-button (click)="checkStepsLength(stepFormTemplate,j)">
+                      <button *ngIf="managePermission" mat-flat-button (click)="checkStepsLength(stepFormTemplate,data)">
                         Add Step
                       </button>
                     </div>
