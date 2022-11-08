@@ -15,6 +15,9 @@ const formValidationRoute = require('./formValidation.route');
 const reasonRoute = require('./reason.route');
 const pullModeRoute = require('./pull-mode-list.route');
 const agentDeskSettingsRoute = require('./agentDeskSettings.route');
+const prometheusRoute = require('./prometheus.route');
+
+
 
 
 const router = express.Router();
@@ -35,5 +38,7 @@ router.use('/users', userRoute);
 router.use('/reasons', reasonRoute);
 router.use('/pull-mode-list', pullModeRoute);
 router.use('/agent-desk-settings', agentDeskSettingsRoute);
+router.use('/metrics', prometheusRoute);
+
 
 module.exports = router;

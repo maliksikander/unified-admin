@@ -13,3 +13,4 @@ module.exports.formValidationController = require('./formValidation.controller')
 module.exports.reasonController = require('./reason.controller');
 module.exports.pullModeListController = require('./pull-mode-list.controller');
 module.exports.agentDeskSettingsController = require('./agentDeskSettings.controller');
+module.exports.prometheusController = require('./prometheus.controller');
