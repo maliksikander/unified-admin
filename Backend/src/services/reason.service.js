@@ -51,7 +51,7 @@ const updateReason = async (reqBody, id, res) => {
         if (err) {
             throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, err);
         }
-        if (reasonCode.length == 0) {
+        if (reasonCode.length == 0 || (reasonCode.length >= 0 && checkForUniqueness(reqBody, id, reasonCode))) {
             if (id.match(/^[0-9a-fA-F]{24}$/)) {   //check for id format
                 const result = await ReasonCodeModel.findById(id);
                 if (!result) throw new ApiError(httpStatus.NOT_FOUND, 'Not found');
@@ -71,6 +71,18 @@ const updateReason = async (reqBody, id, res) => {
 
 
 };
+
+
+function checkForUniqueness(reqBody, id, reasonCodes) {
+    try {
+        for (let i = 0; i < reasonCodes.length; i++) {
+            if (reasonCodes[i]._id == id || (reasonCodes[i].description != reqBody.description)) return true;
+        }
+        return false;
+    } catch (e) {
+        throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, e);
+    }
+}
 
 const deleteReason = async (id) => {
 

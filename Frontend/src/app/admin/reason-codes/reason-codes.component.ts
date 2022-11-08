@@ -267,11 +267,14 @@ export class ReasonCodesComponent implements OnInit {
   checkLabelValue() {
     if (
       this.reasonCodeData.find((e) => {
-        if (this.reasonForm.controls["type"]?.value == e.type)
+        if (this.reasonForm.controls["type"]?.value == e.type) {
+          if (this.editReasonData && this.editReasonData.id == e.id)
+            return false;
           return (
             e.name.toLowerCase() ==
             this.reasonForm.controls["name"]?.value?.toLowerCase()
           );
+        }
       })
     ) {
       this.reasonForm.controls["name"].setErrors({ validName: true });
