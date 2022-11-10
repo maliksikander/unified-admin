@@ -5,6 +5,7 @@ const catchAsync = require('../utils/catchAsync');
 var config = require('../../config.json');
 var { NodeAdapter } = require("ef-keycloak-connect");
 const keycloak = new NodeAdapter(config);
+const logger = require('../config/logger');
 // const { userService } = require('../services');
 
 // const createUser = catchAsync(async (req, res) => {
@@ -42,8 +43,11 @@ const getUsers = catchAsync(async (req, res) => {
   let role = [];
   if (temp.roles) { role = temp.roles };
   keycloak.getUsersByRole(role).then((result) => {
+    logger.info(`Get keycloak users by role`, { className: "user.controller", methodName: "getUsers" });
+    logger.debug(`[REQUEST] : %o` + result, { className: "user.controller", methodName: "getUsers" });
     res.send(result);
   }).catch((err) => {
+    logger.error(`[ERROR] on get user %o` + err, { className: "user.controller", methodName: "getUsers"});
     if (err.message == "Request failed with status code 401") return res.status(401).send(err);
     res.status(500).send(err);
   });

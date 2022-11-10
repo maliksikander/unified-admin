@@ -2,19 +2,33 @@ const catchAsync = require('../utils/catchAsync');
 const { formsService } = require('../services');
 const { formValidationService } = require('../services');
 const logger = require('../config/logger');
+const { v4: uuidv4 } = require("uuid");
 
 const getForms = catchAsync(async (req, res) => {
-    let result = await formsService.getForms();
-    res.send(result);
+    const coId = req.header("correlationId".toLowerCase()) ? req.header("correlationId".toLowerCase()) : uuidv4();
+    res.setHeader("correlationId", coId);
+    try {
+        logger.info(`Get forms`, { className: "forms.controller", methodName: "getForms", CID: coId });
+
+        let result = await formsService.getForms(coId);
+        res.send(result);
+    } catch (error) {
+        logger.error(`[ERROR] on get forms api: %o` + error, { className: "forms.controller", methodName: "getForms", CID: coId });
+    }
 });
 
 const getFormByID = catchAsync(async (req, res) => {
+    const coId = req.header("correlationId".toLowerCase()) ? req.header("correlationId".toLowerCase()) : uuidv4();
+    res.setHeader("correlationId", coId);
+    try {
+        logger.info(`Get form by id`, { className: "forms.controller", methodName: "getFormByID", CID: coId });
+        logger.debug(`[REQUEST] %o` + req, { className: "forms.controller", methodName: "getFormByID", CID: coId });
 
     const id = req.params.formID;
     let resType = req.query.responseType;
     if (resType) resType = resType.toLowerCase();
 
-    result = await formsService.getForm(id);
+    result = await formsService.getForm(id, coId);
 
     // if (resType == "html") {
     //     validations = await formValidationService.getFormValidation();
@@ -27,6 +41,9 @@ const getFormByID = catchAsync(async (req, res) => {
     // else {
         res.send(result);
     // }
+    } catch (error) {
+        logger.error(`[ERROR] on get form by id api: %o` + error, { className: "forms.controller", methodName: "getFormByID", CID: coId });
+    }
 });
 
 
@@ -42,9 +59,11 @@ function convertArrayToObject(array, key) {
 
 
 function createFormHTML(result, validations) {
-
     let formHtml = '';
     try {
+        logger.info(`Create form HTML`, { className: "forms.controller", methodName: "createFormHTML"});
+        logger.debug(`[REQUEST] : %o` + req, { className: "forms.controller", methodName: "createFormHTML"});
+
         result.attributes.forEach((item) => {
             formHtml = formHtml + `<label for="${item.key}">${item.label}</label>\n`;
             let input = `<input type="text" id="${item.key}" name="${item.key}" data-value-type="${item.valueType}" pattern="${validations[item.valueType].regex}">\n`;
@@ -78,7 +97,7 @@ function createFormHTML(result, validations) {
         });
     }
     catch (e) {
-        logger.info(e);
+        logger.error(`[ERROR] on get form by id api: %o` + e, { className: "forms.controller", methodName: "createFormHTML"});
     }
 
     return formHtml;
@@ -86,17 +105,36 @@ function createFormHTML(result, validations) {
 
 
 const createForm = catchAsync(async (req, res) => {
-    const result = await formsService.createForm(req.body);
-    res.send(result);
+    const coId = req.header("correlationId".toLowerCase()) ? req.header("correlationId".toLowerCase()) : uuidv4();
+    res.setHeader("correlationId", coId);
+    try {
+        logger.info(`Create form`, { className: "forms.controller", methodName: "createForm", CID: coId });
+        logger.debug(`[REQUEST] : %o` + req, { className: "forms.controller", methodName: "createForm", CID: coId });
+
+        const result = await formsService.createForm(req.body, coId);
+        res.send(result);
+    } catch (error) {
+        logger.error(`[ERROR] on create form: %o` + error , { className: "forms.controller", methodName: "createForm", CID: coId });
+    }
 });
 
 const updateForm = catchAsync(async (req, res) => {
-    const result = await formsService.updateForm(req.body);
-    res.send(result);
+    const coId = req.header("correlationId".toLowerCase()) ? req.header("correlationId".toLowerCase()) : uuidv4();
+    res.setHeader("correlationId", coId);
+    try {
+        logger.info(`Update form`, { className: "forms.controller", methodName: "updateForm", CID: coId });
+        logger.debug(`[REQUEST] : %o` + req.body, { className: "forms.controller", methodName: "updateForm", CID: coId });
+
+        const result = await formsService.updateForm(req.body, coId);
+        res.send(result);
+    } catch (error) {
+        logger.error(`[ERROR] on update form: %o` + error, { className: "forms.controller", methodName: "updateForm", CID: coId });
+    }
 });
 
 const deleteForm = catchAsync(async (req, res) => {
-
+    const coId = req.header("correlationId".toLowerCase()) ? req.header("correlationId".toLowerCase()) : uuidv4();
+    res.setHeader("correlationId", coId);
     const response = {
         code: "Deleted",
         message: "Deleted Successfully",
@@ -106,11 +144,15 @@ const deleteForm = catchAsync(async (req, res) => {
         code: "Not Allowed",
         message: "Cannot delete this record",
     })
-    const result = await formsService.deleteForm(id);
+    const result = await formsService.deleteForm(id,coId);
     if (result._id) {
+        logger.info(`${response.message}`, { className: "forms.controller", methodName: "deleteForm", CID: coId });
+        logger.debug(`[REQUEST] : %o` + response, { className: "forms.controller", methodName: "deleteForm", CID: coId });
         res.send(response);
     }
     else {
+        logger.info(`${response.message}`, { className: "forms.controller", methodName: "deleteForm", CID: coId });
+        logger.debug(`[REQUEST] : %o` + response, { className: "forms.controller", methodName: "deleteForm", CID: coId });
         res.send(result);
     }
 });

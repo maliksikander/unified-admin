@@ -5,6 +5,7 @@ const config = require('../config/config');
 const userService = require('./user.service');
 const { Token } = require('../models');
 const ApiError = require('../utils/ApiError');
+const logger = require('../config/logger');
 
 /**
  * Generate token
@@ -13,12 +14,14 @@ const ApiError = require('../utils/ApiError');
  * @param {string} [secret]
  * @returns {string}
  */
-const generateToken = (userId, expires, secret = config.jwt.secret) => {
+const generateToken = (userId, expires,coId, secret = config.jwt.secret) => {
   const payload = {
     sub: userId,
     iat: moment().unix(),
     exp: expires.unix(),
   };
+  logger.info(`Generated Token`, { className: "token.service", methodName: "generateToken" , CID: coId });
+  logger.debug(`[DATA] %o` + payload,  { className: "token.service", methodName: "generateToken", CID: coId });
   return jwt.sign(payload, secret);
 };
 
@@ -31,7 +34,7 @@ const generateToken = (userId, expires, secret = config.jwt.secret) => {
  * @param {boolean} [blacklisted]
  * @returns {Promise<Token>}
  */
-const saveToken = async (token, userId, expires, type, blacklisted = false) => {
+const  saveToken = async (token, userId, expires, type,coId, blacklisted = false) => {
   const tokenDoc = await Token.create({
     token,
     user: userId,
@@ -39,6 +42,8 @@ const saveToken = async (token, userId, expires, type, blacklisted = false) => {
     type,
     blacklisted,
   });
+  logger.info(`Token Saved`, { className: "token.service", methodName: "saveToken" , CID: coId });
+  logger.debug(`[DATA] %o` + tokenDoc,  { className: "token.service", methodName: "saveToken", CID: coId });
   return tokenDoc;
 };
 
@@ -48,12 +53,15 @@ const saveToken = async (token, userId, expires, type, blacklisted = false) => {
  * @param {string} type
  * @returns {Promise<Token>}
  */
-const verifyToken = async (token, type) => {
+const verifyToken = async (token, type, coId) => {
   const payload = jwt.verify(token, config.jwt.secret);
   const tokenDoc = await Token.findOne({ token, type, user: payload.sub, blacklisted: false });
   if (!tokenDoc) {
+    logger.error(`Token not found`, { className: "token.service", methodName: "verifyToken", CID: coId });
     throw new Error('Token not found');
   }
+  logger.info(`Token Verified`, { className: "token.service", methodName: "verifyToken" , CID: coId });
+  logger.debug(`[DATA] %o` + payload,  { className: "token.service", methodName: "verifyToken", CID: coId });
   return tokenDoc;
 };
 
@@ -62,14 +70,15 @@ const verifyToken = async (token, type) => {
  * @param {User} user
  * @returns {Promise<Object>}
  */
-const generateAuthTokens = async (user) => {
+const generateAuthTokens = async (user,coId) => {
   const accessTokenExpires = moment().add(config.jwt.accessExpirationMinutes, 'minutes');
   const accessToken = generateToken(user.id, accessTokenExpires);
 
   const refreshTokenExpires = moment().add(config.jwt.refreshExpirationDays, 'days');
   const refreshToken = generateToken(user.id, refreshTokenExpires);
   await saveToken(refreshToken, user.id, refreshTokenExpires, 'refresh');
-
+  logger.info(`Generate Auth Tokens`, { className: "token.service", methodName: "generateAuthTokens" , CID: coId });
+  logger.debug(`[DATA] %o` + refreshToken,  { className: "token.service", methodName: "generateAuthTokens", CID: coId });
   return {
     access: {
       token: accessToken,
@@ -87,14 +96,17 @@ const generateAuthTokens = async (user) => {
  * @param {string} email
  * @returns {Promise<string>}
  */
-const generateResetPasswordToken = async (email) => {
+const generateResetPasswordToken = async (email,coId) => {
   const user = await userService.getUserByEmail(email);
   if (!user) {
+    logger.error(`[NOT FOUND] No users found with this email`, { className: "token.service", methodName: "generateResetPasswordToken", CID: coId });
     throw new ApiError(httpStatus.NOT_FOUND, 'No users found with this email');
   }
   const expires = moment().add(config.jwt.resetPasswordExpirationMinutes, 'minutes');
   const resetPasswordToken = generateToken(user.id, expires);
   await saveToken(resetPasswordToken, user.id, expires, 'resetPassword');
+  logger.info(`Generate Reset Password Token`, { className: "token.service", methodName: "generateResetPasswordToken" , CID: coId });
+  logger.debug(`[DATA] %o` + user,  { className: "token.service", methodName: "generateResetPasswordToken", CID: coId });
   return resetPasswordToken;
 };
 

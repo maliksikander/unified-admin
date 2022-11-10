@@ -20,29 +20,28 @@ const httpsCredentials = {
 };
 
 mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
-  logger.info('Connected to MongoDB');
-
+  logger.info(`Connected to MongoDB on ${config.mongoose.url}`, { className: "index.js", methodName: "mongoose.connect" });
 
   onAppInitializtion();
 
   if (config.isSSL == true) {
     server = https.createServer(httpsCredentials, app).listen(config.Port, () => {
-      logger.info(`Listening to port ${config.Port} on https`);
+      logger.info(`Listening to port ${config.Port}`, { className: "index.js", methodName: "https.createServer" });
     });
   }
   else {
     server = app.listen(config.Port, () => {
-      logger.info(`Listening to port ${config.Port} on http`);
+      logger.info(`Listening to port ${config.Port}`, { className: "index.js", methodName: "app.listen" });
     });
   }
 
 
-}).catch(error => logger.error('DB connection Error:', error));
+}).catch(error => logger.error(`${error}`, { className: "index.js", methodName: "mongoose.connect" }));
 
 const exitHandler = () => {
   if (server) {
     server.close(() => {
-      logger.info('Server closed');
+      logger.info('Server closed', { className: "index.js", methodName: "exitHandler" });
       process.exit(1);
     });
   }
@@ -52,7 +51,7 @@ const exitHandler = () => {
 };
 
 const unexpectedErrorHandler = (error) => {
-  logger.error(error);
+  logger.error(`${error}`, { className: "index.js", methodName: "unexpectedErrorHandler" })
   exitHandler();
 };
 
@@ -60,7 +59,7 @@ process.on('uncaughtException', unexpectedErrorHandler);
 process.on('unhandledRejection', unexpectedErrorHandler);
 
 process.on('SIGTERM', () => {
-  logger.info('SIGTERM received');
+  logger.info('SIGTERM received', { className: "index.js", methodName: "ON SIGTERM" });
   if (server) { server.close(); }
 });
 
@@ -167,12 +166,13 @@ async function addFormValidations() {
         }
       },
     ]);
-    logger.info(`Form Validation Document Added: ${res.upsertedCount}`);
-    logger.info(`Form Validation Document Modified: ${res.modifiedCount}`);
+    logger.info(`Form Validation Document Added: ${res.upsertedCount}`, { className: "index.js", methodName: "addFormValidations" });
+    logger.info(`Form Validation Document Modified: ${res.modifiedCount}`, { className: "index.js", methodName: "addFormValidations" });
+    logger.debug(`[DATA] Form Validation Document %o` + res,  { className: "index.js", methodName: "addFormValidations"});
   }
 
   catch (e) {
-    logger.error(`Default Form Validation Error:" ${e}`)
+    logger.error(`${e}`, { className: "index.js", methodName: "addFormValidations" })
   }
 }
 
@@ -210,11 +210,13 @@ async function addWrapUpForm() {
     const form = await FormsModel.findById("62d07f4f0980a50a91210bef");
     if (form == null) {
       await FormsModel.create(reqBody);
-      logger.info(`Default Wrap Up Form Added`)
+      logger.info(`Default Wrap Up Form Added`, { className: "index.js", methodName: "addWrapUpForm" });
     }
+    logger.info(`Wrap Up Form by Id: 62d07f4f0980a50a91210bef`, { className: "index.js", methodName: "addWrapUpForm" });
+    logger.debug(`[DATA] %o` + form,  { className: "index.js", methodName: "addWrapUpForm"});
   }
   catch (e) {
-    logger.error(`Default Wrap Up Form Validation Error:" ${e}`)
+    logger.error(`${e}`, { className: "index.js", methodName: "addWrapUpForm" })
   }
 }
 
@@ -240,15 +242,16 @@ async function addDefaultReasonCode() {
       const reasonCode = await ReasonCodeModel.findById(item._id);
       if (reasonCode == null) {
         await ReasonCodeModel.create(item);
-        logger.info(`Default Reason Code Added`);
-
+        logger.info(`Default Reason Code Added`, { className: "index.js", methodName: "ReasonCodeModel.create" });
       }
+      logger.info(`Add Default Reason Code`, { className: "index.js", methodName: "ReasonCodeModel.create" });
+      logger.debug(`[DATA] %o` + reasonCode,  { className: "index.js", methodName: "ReasonCodeModel.create" });
     });
 
   }
 
   catch (e) {
-    logger.error(`Default Reason Code Error:" ${e}`)
+    logger.error(`${e}`, { className: "index.js", methodName: "ReasonCodeModel.create" })
   }
 }
 
@@ -280,10 +283,12 @@ async function addDefaultLocaleSetting() {
     const localeSetting = await LocaleSetting.find();
     if (localeSetting && localeSetting.length == 0) {
       await LocaleSetting.create(reqBody);
-      logger.info(`Default Locale Setting Added`);
+      logger.info(`Default Locale Setting Added`, { className: "index.js", methodName: "LocaleSetting.create" });
     }
+    logger.info(`Default Locale Setting Added`, { className: "index.js", methodName: "LocaleSetting.create" });
+    logger.debug(`[DATA] %o` + localeSetting,  { className: "index.js", methodName: "LocaleSetting.create"});
   }
   catch (e) {
-    logger.error(`Default Locale Setting Error:" ${e}`)
+    logger.error(`${e}`, { className: "index.js", methodName: "LocaleSetting.create" })
   }
 }

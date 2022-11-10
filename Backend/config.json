@@ -1,6 +1,6 @@
 {
   "realm": "expertflow",
-  "auth-server-url": "https://cim.expertflow.com/auth/",
+  "auth-server-url": "https://cim-dev.expertflow.com/auth/",
   "ssl-required": "external",
   "resource": "cim",
   "verify-token-audience": false,

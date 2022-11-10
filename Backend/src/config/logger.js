@@ -1,6 +1,5 @@
 const winston = require('winston');
 const config = require('./config');
-// const config = require('../../adminPanel.env');
 
 const enumerateErrorFormat = winston.format((info) => {
   if (info instanceof Error) {
@@ -11,19 +10,29 @@ const enumerateErrorFormat = winston.format((info) => {
 
 
 const logger = winston.createLogger({
-  level: config.logLevel.toLowerCase() ? config.logLevel.toLowerCase() : 'info',
-  // level: config.logLevel,
+  level: config.log_level,
   format: winston.format.combine(
     enumerateErrorFormat(),
-    config.env === 'development' ? winston.format.colorize() : winston.format.uncolorize(),
+    winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
     winston.format.splat(),
-    winston.format.printf(({ level, message }) => `${level}: ${message}`)
+    winston.format.printf(({ level, message, timestamp }) => `${timestamp}: ${level}: ${message}`)
   ),
   transports: [
+    //  new winston.transports.File({ filename: 'logs/error.log', level: 'error' }),
+    //  new winston.transports.File({ filename: 'logs/combined.log' }),
     new winston.transports.Console({
-      stderrLevels: ['error'],
-    }),
-  ],
+      format: winston.format.combine(
+        enumerateErrorFormat(),
+        winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
+        winston.format.splat(),
+        winston.format.colorize(),
+        winston.format.printf(
+          ({ level, message, timestamp, className = "", methodName = "", CID = "", topicId = "", threadId = "", lineNumber = "" }) =>
+            ` ${timestamp} | ${level} | ${className} | ${methodName} | ${lineNumber} | ${message} | ${CID} | ${topicId} | ${threadId}`
+        )
+      )
+    })
+  ]
 });
 
 module.exports = logger;

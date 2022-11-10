@@ -10,7 +10,7 @@ const envVarsSchema = Joi.object()
     PORT: Joi.number().default(3000).description('Port'),
     isSSL: Joi.boolean().default(false).required().description('HTTPS Flag'),
     MONGODB_URL: Joi.string().required().description('Mongo DB url'),
-    LOG_LEVEL: Joi.string().required().description('LOG LEVEL'),
+    LOG_LEVEL: Joi.string().valid("error", "warn", "info", "http", "verbose", "debug", "silly").required(),
     HTTPS_KEY_PATH: Joi.string().description('HTTPs Key Path'),
     HTTPS_CERTIFICATE_PATH: Joi.string().description('HTTPs Cartificate Path'),
     HTTPS_CERTIFICATE_PASSPHRASE: Joi.string().allow("").description('HTTPs Passphrase'),
