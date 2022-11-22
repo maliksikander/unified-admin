@@ -110,7 +110,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
   setVoiceTypeValues() {
     this.channelSettingForm.patchValue({
       responseSla: "dummy",
-      customerActivityTimeout: "dummy",
+      // customerActivityTimeout: "dummy",
     });
   }
 
@@ -402,10 +402,12 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
         botId: this.channelSettingForm.value.botID.botId,
         channelMode: this.channelSettingForm.value.channelMode,
         conversationBot: "",
+        // customerActivityTimeout:
+        //   this.channelTypeData.name == "VOICE"
+        //     ? 3600
+        //     : this.channelSettingForm.value.customerActivityTimeout,
         customerActivityTimeout:
-          this.channelTypeData.name == "VOICE"
-            ? 3600
-            : this.channelSettingForm.value.customerActivityTimeout,
+          this.channelSettingForm.value.customerActivityTimeout,
         responseSla:
           this.channelTypeData.name == "VOICE"
             ? null
