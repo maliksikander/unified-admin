@@ -534,7 +534,7 @@ export class CommonService {
       minlength: "Min 1 characters required",
       maxlength: "Max 30 characters allowed",
       pattern: "Not a valid pattern",
-      validName: "Label already exists",
+      validName: "Reason Code already exists",
     },
     description: {
       required: "This field is required",
