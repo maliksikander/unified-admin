@@ -20,7 +20,7 @@ const login = async (req, res) => {
 
         // let decryptedUsername = CryptoJS.AES.decrypt(username, "undlusia").toString(CryptoJS.enc.Utf8);
         // let decryptedPassword = CryptoJS.AES.decrypt(password, "undlusia").toString(CryptoJS.enc.Utf8);
-        const result = await keycloak.authenticateUserViaKeycloak(username, password, realm).then((response) => {
+        const result = await keycloak.authenticateUserViaKeycloak(username, password, realm,'', [],'').then((response) => {
         return response;
         });
         res.send(result);

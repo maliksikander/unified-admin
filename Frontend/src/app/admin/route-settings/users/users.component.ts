@@ -31,7 +31,7 @@ import {
 export class UsersComponent implements OnInit {
   p: any = 1;
   warningBool: boolean = true;
-  itemsPerPageList = [5, 10, 15];
+  itemsPerPageList = [5, 10, 15, 30, 50];
   itemsPerPage = 5;
   selectedItem = this.itemsPerPageList[0];
   spinner: any = true;
@@ -67,7 +67,7 @@ export class UsersComponent implements OnInit {
   save = "save";
   editREUserData: any;
   newREUserData: any;
-  managePermission:boolean = false;
+  managePermission: boolean = false;
 
   constructor(
     private commonService: CommonService,

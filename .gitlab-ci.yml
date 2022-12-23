@@ -150,7 +150,7 @@ node_artifacts_backend:
    - cd Backend
    - npm install --legacy-peer-deps
    - npm uninstall ef-keycloak-connect
-   - npm install ef-keycloak-connect@1.0.0
+   - npm install ef-keycloak-connect@1.2.3
    - npm uninstall jest
    - npm install jest@27.4.1
    #- export TIME_TOKEN=$(env TZ=GMT-5 date +%d_%m_%Y-%H_%M_%S)
