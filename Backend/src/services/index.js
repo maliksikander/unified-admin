@@ -14,3 +14,4 @@ module.exports.formValidationService = require('./formValidation.service')
 module.exports.reasonService = require('./reason.service')
 module.exports.pullModeListService = require('./pull-mode-list.service')
 module.exports.agentDeskSettingsService = require('./agentDeskSettings.service');
+module.exports.healthCheckService = require('./healthCheck.service');

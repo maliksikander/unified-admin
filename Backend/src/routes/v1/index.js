@@ -17,6 +17,8 @@ const pullModeRoute = require('./pull-mode-list.route');
 const agentDeskSettingsRoute = require('./agentDeskSettings.route');
 const logLevelRoute = require('./logLevel.route');
 const prometheusRoute = require('./prometheus.route');
+const healthCheckRoute = require('./healthCheck.route');
+
 
 
 
@@ -41,6 +43,7 @@ router.use('/pull-mode-list', pullModeRoute);
 router.use('/agent-desk-settings', agentDeskSettingsRoute);
 router.use('/log-level', logLevelRoute);
 router.use('/metrics', prometheusRoute);
+router.use('/health', healthCheckRoute);
 
 
 module.exports = router;

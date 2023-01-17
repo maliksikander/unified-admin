@@ -15,3 +15,4 @@ module.exports.pullModeListController = require('./pull-mode-list.controller');
 module.exports.agentDeskSettingsController = require('./agentDeskSettings.controller');
 module.exports.logLevelController = require('./logLevel.controller');
 module.exports.prometheusController = require('./prometheus.controller');
+module.exports.healthCheckController = require('./healthCheck.controller');
