@@ -46,8 +46,8 @@ node_artifacts_frontend:
        - /^.+_b-.+$/
        - /^.+_f-.+$/
        - merge_requests
-     changes:
-       - Frontend/package.json
+    #  changes:
+    #    - Frontend/package.json
 
 #+==================Runs on Every Commit and merge requests========================+
 
@@ -145,12 +145,12 @@ angular_build:
 node_artifacts_backend:
    stage: artifacts-backend
    #when: on_success
-   image: node:14.16.1-alpine3.13
+   image: gitlab.expertflow.com:9242/general/node:CSN-3623
    script:
    - cd Backend
    - npm install --legacy-peer-deps
    - npm uninstall ef-keycloak-connect
-   - npm install ef-keycloak-connect@1.2.3
+   - npm install ef-keycloak-connect@1.0.0
    - npm uninstall jest
    - npm install jest@27.4.1
    #- export TIME_TOKEN=$(env TZ=GMT-5 date +%d_%m_%Y-%H_%M_%S)
@@ -170,8 +170,8 @@ node_artifacts_backend:
        - /^.+_b-.+$/
        - /^.+_f-.+$/
        - merge_requests
-     changes:
-       - Backend/package.json
+    #  changes:
+    #    - Backend/package.json
 
 #+==================Runs on Every Commit and merge requests========================+
 
@@ -241,7 +241,7 @@ node-test-backend:
 
 #==================================================================
 node_build:
-   image: node:14.16.1-alpine3.13
+   image: gitlab.expertflow.com:9242/general/node:CSN-3623
    stage: build-backend
    when: on_success
 #   only:
@@ -492,4 +492,3 @@ container_publish_branche:
 #  #  only:
 #  #    - master
 #    allow_failure: false
-
