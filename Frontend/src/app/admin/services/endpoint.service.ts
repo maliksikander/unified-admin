@@ -367,8 +367,8 @@ export class EndpointService {
     return this.httpClient
       .post<any>(`${this.MRE_URL}/${this.endpoints.routing.attribute}`, data, {
         headers: new HttpHeaders({
-          "Content-Type": "application/json",
-          Authorization: "Bearer" + this.token,
+          "Content-Type": "application/json"
+          // Authorization: "Bearer" + this.token,
         }),
       })
       .pipe(catchError(this.handleError));
@@ -378,8 +378,8 @@ export class EndpointService {
     return this.httpClient
       .get(`${this.MRE_URL}/${this.endpoints.routing.attribute}`, {
         headers: new HttpHeaders({
-          "Content-Type": "application/json",
-          Authorization: "Bearer" + this.token,
+          "Content-Type": "application/json"
+          // Authorization: "Bearer" + this.token,
         }),
       })
       .pipe(catchError(this.handleError));
@@ -392,8 +392,8 @@ export class EndpointService {
         data,
         {
           headers: new HttpHeaders({
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + this.token,
+            "Content-Type": "application/json"
+            // Authorization: "Bearer " + this.token,
           }),
         }
       )
@@ -406,8 +406,8 @@ export class EndpointService {
         `${this.MRE_URL}/${this.endpoints.routing.attribute}/${id}`,
         {
           headers: new HttpHeaders({
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + this.token,
+            "Content-Type": "application/json"
+            // Authorization: "Bearer " + this.token,
           }),
         }
       )
@@ -420,8 +420,8 @@ export class EndpointService {
     return this.httpClient
       .post<any>(`${this.MRE_URL}/${this.endpoints.routing.mrd}`, data, {
         headers: new HttpHeaders({
-          "Content-Type": "application/json",
-          Authorization: "Bearer" + this.token,
+          "Content-Type": "application/json"
+          // Authorization: "Bearer" + this.token,
         }),
       })
       .pipe(catchError(this.handleError));
@@ -431,8 +431,8 @@ export class EndpointService {
     return this.httpClient
       .get(`${this.MRE_URL}/${this.endpoints.routing.mrd}`, {
         headers: new HttpHeaders({
-          "Content-Type": "application/json",
-          Authorization: "Bearer" + this.token,
+          "Content-Type": "application/json"
+          // Authorization: "Bearer" + this.token,
         }),
       })
       .pipe(catchError(this.handleError));
@@ -442,8 +442,8 @@ export class EndpointService {
     return this.httpClient
       .put<any>(`${this.MRE_URL}/${this.endpoints.routing.mrd}/${id}`, data, {
         headers: new HttpHeaders({
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + this.token,
+          "Content-Type": "application/json"
+          // Authorization: "Bearer " + this.token,
         }),
       })
       .pipe(catchError(this.handleError));
@@ -453,8 +453,8 @@ export class EndpointService {
     return this.httpClient
       .delete<any>(`${this.MRE_URL}/${this.endpoints.routing.mrd}/${id}`, {
         headers: new HttpHeaders({
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + this.token,
+          "Content-Type": "application/json"
+          // Authorization: "Bearer " + this.token,
         }),
       })
       .pipe(catchError(this.handleError));
@@ -468,8 +468,8 @@ export class EndpointService {
     return this.httpClient
       .post<any>(`${this.MRE_URL}/${this.endpoints.routing.pq.queue}`, data, {
         headers: new HttpHeaders({
-          "Content-Type": "application/json",
-          Authorization: "Bearer" + this.token,
+          "Content-Type": "application/json"
+          // Authorization: "Bearer" + this.token,
         }),
       })
       .pipe(catchError(this.handleError));
@@ -479,8 +479,8 @@ export class EndpointService {
     return this.httpClient
       .get(`${this.MRE_URL}/${this.endpoints.routing.pq.queue}`, {
         headers: new HttpHeaders({
-          "Content-Type": "application/json",
-          Authorization: "Bearer" + this.token,
+          "Content-Type": "application/json"
+          // Authorization: "Bearer" + this.token,
         }),
       })
       .pipe(catchError(this.handleError));
@@ -493,8 +493,8 @@ export class EndpointService {
         data,
         {
           headers: new HttpHeaders({
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + this.token,
+            "Content-Type": "application/json"
+            // Authorization: "Bearer " + this.token,
           }),
         }
       )
@@ -505,8 +505,8 @@ export class EndpointService {
     return this.httpClient
       .delete<any>(`${this.MRE_URL}/${this.endpoints.routing.pq.queue}/${id}`, {
         headers: new HttpHeaders({
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + this.token,
+          "Content-Type": "application/json"
+          // Authorization: "Bearer " + this.token,
         }),
       })
       .pipe(catchError(this.handleError));
@@ -521,8 +521,8 @@ export class EndpointService {
         data,
         {
           headers: new HttpHeaders({
-            "Content-Type": "application/json",
-            Authorization: "Bearer" + this.token,
+            "Content-Type": "application/json"
+            // Authorization: "Bearer" + this.token,
           }),
         }
       )
@@ -547,8 +547,8 @@ export class EndpointService {
         data,
         {
           headers: new HttpHeaders({
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + this.token,
+            "Content-Type": "application/json"
+            // Authorization: "Bearer " + this.token,
           }),
         }
       )
@@ -562,7 +562,7 @@ export class EndpointService {
         {
           headers: new HttpHeaders({
             "Content-Type": "application/json",
-            Authorization: "Bearer " + this.token,
+            // Authorization: "Bearer " + this.token,
           }),
         }
       )
@@ -575,8 +575,8 @@ export class EndpointService {
     return this.httpClient
       .post<any>(`${this.MRE_URL}/${this.endpoints.routing.agent}`, data, {
         headers: new HttpHeaders({
-          "Content-Type": "application/json",
-          Authorization: "Bearer" + this.token,
+          "Content-Type": "application/json"
+          // Authorization: "Bearer" + this.token,
         }),
       })
       .pipe(catchError(this.handleError));
@@ -586,8 +586,8 @@ export class EndpointService {
     return this.httpClient
       .get(`${this.MRE_URL}/${this.endpoints.routing.agent}`, {
         headers: new HttpHeaders({
-          "Content-Type": "application/json",
-          Authorization: "Bearer" + this.token,
+          "Content-Type": "application/json"
+          // Authorization: "Bearer" + this.token,
         }),
       })
       .pipe(catchError(this.handleError));
@@ -597,8 +597,8 @@ export class EndpointService {
     return this.httpClient
       .put<any>(`${this.MRE_URL}/${this.endpoints.routing.agent}/${id}`, data, {
         headers: new HttpHeaders({
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + this.token,
+          "Content-Type": "application/json"
+          // Authorization: "Bearer " + this.token,
         }),
       })
       .pipe(catchError(this.handleError));
@@ -608,8 +608,8 @@ export class EndpointService {
     return this.httpClient
       .delete<any>(`${this.MRE_URL}/${this.endpoints.routing.agent}/${id}`, {
         headers: new HttpHeaders({
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + this.token,
+          "Content-Type": "application/json"
+          // Authorization: "Bearer " + this.token,
         }),
       })
       .pipe(catchError(this.handleError));
