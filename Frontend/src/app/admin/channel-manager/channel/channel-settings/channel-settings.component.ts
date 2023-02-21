@@ -345,6 +345,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
     try {
       this.channelSettingForm.controls["agentRequestTTL"].setValidators([
         Validators.required,
+        Validators.max(2147483647)
       ]);
       this.channelSettingForm.controls["agentSelectionPolicy"].setValidators([
         Validators.required,

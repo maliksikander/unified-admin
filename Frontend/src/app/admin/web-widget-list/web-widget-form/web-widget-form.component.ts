@@ -38,7 +38,6 @@ export class WebWidgetFormComponent implements OnInit {
   validations;
 
   spinner = true;
-  themeList = [];
   languageList = [];
   toggle = false;
 
@@ -54,7 +53,6 @@ export class WebWidgetFormComponent implements OnInit {
 
     //setting local form validation messages
     this.validations = this.commonService.webWidgetFormErrorMessages;
-    this.themeList = this.endPointService.widgetThemes;
     this.widgetConfigForm = this.formBuilder.group({
       // customerReconnectTime: ["", [Validators.required]],
       enableDynamicLink: [true, [Validators.required]],
@@ -65,7 +63,6 @@ export class WebWidgetFormComponent implements OnInit {
       language: ["", [Validators.required]],
       subTitle: ["", [Validators.required, Validators.maxLength(100)]],
       theme: ["#2889e9", [Validators.required]],
-      // theme: ["", [Validators.required]],
       title: [
         "",
         [

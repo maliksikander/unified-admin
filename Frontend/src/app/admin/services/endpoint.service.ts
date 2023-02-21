@@ -92,9 +92,8 @@ export class EndpointService {
     this.LICENSE_URL = e.LICENSE_MANAGER_URL;
     this.FILE_ENGINE_URL = e.FILE_ENGINE_URL;
     this.userRoles = e.BUSINESS_USER_ROLES;
-    this.widgetThemes = e.WIDGET_THEMES;
 
-    if (isDevMode()) this.ADMIN_URL = "http://localhost:3000";
+    // if (isDevMode()) this.ADMIN_URL = "http://localhost:3000";
 
     this.getStorageValues();
   }
