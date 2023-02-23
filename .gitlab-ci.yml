@@ -92,31 +92,31 @@ node-test-frontend:
 # #==============SPACE FOR  CODE SCAN JOB============================
 ##============UNCOMMENT ONCE FRONTEND TESTS ARE ADDED##==============
 
-# sonarqube-test:
-#   stage: node-scan-frontend
-#   image: adoptopenjdk/openjdk11:alpine-jre
-#   script:
-#     - apk add --no-cache git python3 py-pip bash shellcheck 'nodejs>14' 'npm>7'
-#     - npm install -g typescript@3.7.5
-#     - pip install --no-cache-dir --upgrade pip
-#     - pip install --no-cache-dir pylint
-#     #- npm install
-#     #- npm run test
-#     #- npm run coverage
-#     - cd Frontend
-#     - npm run sonar
-#   only:
-#     - /^CIM-.*$/
-#     - /^.+_b-.+$/
-#     - /^.+_f-.+$/
-#     - merge_requests
-#   allow_failure: false
-#   cache:
-#     key: unified-admin-frontend
-#     paths:
-#       - Frontend/node_modules
-#       - Frontend/coverage
-#     policy: pull
+sonarqube-test:
+  stage: node-scan-frontend
+  image: adoptopenjdk/openjdk11:alpine-jre
+  script:
+    - apk add --no-cache git python3 py-pip bash shellcheck 'nodejs>14' 'npm>7'
+    - npm install -g typescript@3.7.5
+    - pip install --no-cache-dir --upgrade pip
+    - pip install --no-cache-dir pylint
+    #- npm install
+    #- npm run test
+    #- npm run coverage
+    - cd Frontend
+    - npm run sonar
+  only:
+    - /^CIM-.*$/
+    - /^.+_b-.+$/
+    - /^.+_f-.+$/
+    - merge_requests
+  allow_failure: false
+  cache:
+    key: unified-admin-frontend
+    paths:
+      - Frontend/node_modules
+      - Frontend/coverage
+    policy: pull
 
 
 #==================================================================
