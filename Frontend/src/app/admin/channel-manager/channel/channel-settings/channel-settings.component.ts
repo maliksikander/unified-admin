@@ -37,7 +37,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
     serviceIdentifier: "",
     channelConnector: "",
     channelMode: "",
-    responseSla: "",
+    // responseSla: "",
     customerActivityTimeout: "",
     botID: "",
     agentSelectionPolicy: "",
@@ -49,7 +49,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
   validations;
   channelConnectorList = [];
   agentPolicy = ["LONGEST_AVAILABLE"];
-  routingModeList = ["PULL", "PUSH"];
+  routingModeList = ["PULL", "PUSH", "EXTERNAL"];
   queueList = [];
   botList = [];
   pullModeListData = [];
@@ -80,12 +80,15 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
       ],
       serviceIdentifier: ["", [Validators.required]],
       channelConnector: [, [Validators.required]],
-      channelMode: ["BOT", [Validators.required]],
-      responseSla: ["30"],
-      customerActivityTimeout: ["", [Validators.required]],
+      channelMode: ["HYBRID", [Validators.required]],
+      // responseSla: ["30"],
+      customerActivityTimeout: [
+        "",
+        [Validators.required, Validators.max(2147483647)],
+      ],
       agentSelectionPolicy: [""],
       routeToLastAgent: [true],
-      routingMode: ["PUSH"],
+      routingMode: ["PUSH", [Validators.required]],
       routingObjectID: [""],
       agentRequestTTL: [""],
       botID: ["", [Validators.required]],
@@ -102,16 +105,16 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
     });
 
     this.getChannelConnector();
-    if (this.channelTypeData.name == "VOICE") {
-      this.setVoiceTypeValues();
-    }
+    this.setRoutingModeValues();
+    this.setRoutingPolicyAttrValidation();
   }
 
-  setVoiceTypeValues() {
-    this.channelSettingForm.patchValue({
-      responseSla: "dummy",
-      // customerActivityTimeout: "dummy",
-    });
+  setRoutingModeValues() {
+    if (this.channelTypeData.name == "VOICE") {
+      this.routingModeList.splice(0, 1);
+    } else {
+      this.routingModeList.splice(2, 1);
+    }
   }
 
   //lifecycle hook to reflect parent component changes in child component
@@ -216,6 +219,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
   // patch form values to edit current values
   patchFormValues() {
     try {
+      // console.log("edit data==>", this.editChannelData);
       let routingIndex;
       let connectorIndex = this.channelConnectorList.findIndex(
         (item) => item.id == this.editChannelData.channelConnector.id
@@ -239,11 +243,12 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
         (item) => item.botId == this.editChannelData.channelConfig.botId
       );
 
+      // console.log("routing index==>", routingIndex);
       this.channelSettingForm.patchValue({
         name: this.editChannelData.name,
         serviceIdentifier: this.editChannelData.serviceIdentifier,
         channelMode: this.editChannelData.channelConfig.channelMode,
-        responseSla: this.editChannelData.channelConfig.responseSla,
+        // responseSla: this.editChannelData.channelConfig.responseSla,
         customerActivityTimeout:
           this.editChannelData.channelConfig.customerActivityTimeout,
         botID: botIndex != -1 ? this.botList[botIndex] : null,
@@ -268,7 +273,9 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
           this.editChannelData.channelConfig.routingPolicy.agentRequestTtl,
         defaultOutbound: this.editChannelData.defaultOutbound,
       });
-      this.onChannelModeSelection(this.channelSettingForm.value.channelMode);
+      if (this.channelSettingForm.value.routingMode != "EXTERNAL")
+        this.setRoutingPolicyAttrValidation();
+      this.cd.detectChanges();
     } catch (e) {
       console.error("Error in form value patch :", e);
     }
@@ -290,12 +297,13 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
   //to create 'data' object and pass it to the parent component
   onSave() {
     try {
-      this.spinner = true;
+      // this.spinner = true;
       let data = this.createRequestPayload();
+      console.log("data==>", data);
       if (data.id) {
-        this.updateChannel(data);
+        // this.updateChannel(data);
       } else {
-        this.createChannel(data);
+        // this.createChannel(data);
       }
     } catch (e) {
       console.error("Error on save :", e);
@@ -321,8 +329,14 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
   }
 
   // to reset routing object id form control on routing mode selection change
-  resetRoutingObjecIdFormControl() {
+  onRoutingModeSelection(val) {
     this.channelSettingForm.controls["routingObjectID"].reset();
+    // console.log("val==>", val);
+    if (val == "EXTERNAL") {
+      this.resetAndRemoveRoutingPolicyAttrValidation();
+    } else {
+      this.setRoutingPolicyAttrValidation();
+    }
   }
 
   //to set/remove validations on channel mode selection on routing policy attributes, it accepts the channel mode value('BOT','AGENT','HYBRID') as val parameter
@@ -330,9 +344,9 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
   onChannelModeSelection(val) {
     try {
       if (val != "BOT") {
-        this.setRoutingPolicyAttrValidation();
+        // this.setRoutingPolicyAttrValidation();
       } else {
-        this.resetAndRemoveRoutingPolicyAttrValidation();
+        // this.resetAndRemoveRoutingPolicyAttrValidation();
       }
       this.cd.detectChanges();
     } catch (e) {
@@ -345,7 +359,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
     try {
       this.channelSettingForm.controls["agentRequestTTL"].setValidators([
         Validators.required,
-        Validators.max(2147483647)
+        Validators.max(2147483647),
       ]);
       this.channelSettingForm.controls["agentSelectionPolicy"].setValidators([
         Validators.required,
@@ -353,9 +367,9 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
       this.channelSettingForm.controls["routeToLastAgent"].setValidators([
         Validators.required,
       ]);
-      this.channelSettingForm.controls["routingMode"].setValidators([
-        Validators.required,
-      ]);
+      // this.channelSettingForm.controls["routingMode"].setValidators([
+      //   Validators.required,
+      // ]);
       this.channelSettingForm.controls["routingObjectID"].setValidators([
         Validators.required,
       ]);
@@ -372,12 +386,12 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
         null
       );
       this.channelSettingForm.controls["routeToLastAgent"].setValidators(null);
-      this.channelSettingForm.controls["routingMode"].setValidators(null);
+      // this.channelSettingForm.controls["routingMode"].setValidators(null);
       this.channelSettingForm.controls["routingObjectID"].setValidators(null);
 
       this.channelSettingForm.controls["agentRequestTTL"].reset();
       this.channelSettingForm.controls["agentSelectionPolicy"].reset();
-      this.channelSettingForm.controls["routingMode"].reset();
+      // this.channelSettingForm.controls["routingMode"].reset();
       this.channelSettingForm.controls["routingObjectID"].reset();
     } catch (e) {
       console.error("Error in validation reset :", e);
@@ -390,10 +404,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
       let routingPolicyData = {
         agentSelectionPolicy:
           this.channelSettingForm.value.agentSelectionPolicy,
-        routeToLastAgent:
-          this.channelTypeData.name == "VOICE"
-            ? null
-            : this.channelSettingForm.value.routeToLastAgent,
+        routeToLastAgent: this.channelSettingForm.value.routeToLastAgent,
         routingObjectId: this.channelSettingForm.value.routingObjectID?.id,
         routingMode: this.channelSettingForm.value.routingMode,
         agentRequestTtl: this.channelSettingForm.value.agentRequestTTL,
@@ -403,30 +414,27 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
         botId: this.channelSettingForm.value.botID.botId,
         channelMode: this.channelSettingForm.value.channelMode,
         conversationBot: "",
-        // customerActivityTimeout:
-        //   this.channelTypeData.name == "VOICE"
-        //     ? 3600
-        //     : this.channelSettingForm.value.customerActivityTimeout,
         customerActivityTimeout:
           this.channelSettingForm.value.customerActivityTimeout,
-        responseSla:
-          this.channelTypeData.name == "VOICE"
-            ? null
-            : this.channelSettingForm.value.responseSla,
+        // responseSla:
+        //   this.channelTypeData.name == "VOICE"
+        //     ? null
+        //     : this.channelSettingForm.value.responseSla,
         routingPolicy:
           this.channelSettingForm.value.channelMode != "BOT"
             ? routingPolicyData
             : {},
       };
 
-      if (this.channelTypeData.name == "VOICE")
-        channelConfigData.routingPolicy = {
-          agentSelectionPolicy: null,
-          routeToLastAgent: false,
-          routingObjectId: null,
-          routingMode: "EXTERNAL",
-          agentRequestTtl: 0,
-        };
+      // if (this.channelTypeData.name == "VOICE")
+      //   channelConfigData.routingPolicy = {
+      //     // agentSelectionPolicy: null,
+      //     // routeToLastAgent: false,
+      //     // routingObjectId: null,
+      //     // routingMode: this.channelSettingForm.value.routingMode,
+      //     // routingMode: "EXTERNAL",
+      //     // agentRequestTtl: 0,
+      //   };
 
       let data: any = {
         name: this.channelSettingForm.value.name,

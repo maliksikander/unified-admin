@@ -20,7 +20,7 @@ export class ChannelListComponent implements OnInit {
   channelType;
   channelTypes = [];
   channels = [];
-  managePermission:boolean =false;
+  managePermission: boolean = false;
 
   constructor(
     private commonService: CommonService,
@@ -83,7 +83,6 @@ export class ChannelListComponent implements OnInit {
   deleteChannel(data) {
     this.endPointService.deleteChannel(data.id).subscribe(
       (res: any) => {
-
         this.removeRecordFromLocalList(data);
         this.spinner = false;
       },
@@ -111,7 +110,13 @@ export class ChannelListComponent implements OnInit {
   editChannel(data) {
     try {
       this.addChannelBool = true;
-      this.pageTitle = `Edit Channel Settings`;
+      let typeName = JSON.parse(
+        JSON.stringify(data.channelType.name.toLocaleLowerCase())
+      );
+      typeName = typeName.replace(/\b\w/g, (first) =>
+        first.toLocaleUpperCase()
+      );
+      this.pageTitle = `Edit ${typeName} Channel Settings`;
       this.editChannelData = data;
       this.channelType = data.channelType;
     } catch (e) {
@@ -148,7 +153,11 @@ export class ChannelListComponent implements OnInit {
     try {
       this.addChannelBool = true;
       this.channelType = type;
-      this.pageTitle = `New Channel`;
+      let typeName = JSON.parse(JSON.stringify(type.name.toLocaleLowerCase()));
+      typeName = typeName.replace(/\b\w/g, (first) =>
+        first.toLocaleUpperCase()
+      );
+      this.pageTitle = `New ${typeName} Channel`;
     } catch (e) {
       console.error("Error in add channel :", e);
     }

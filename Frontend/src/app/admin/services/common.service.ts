@@ -407,6 +407,7 @@ export class CommonService {
     },
     customerActivityTimeout: {
       required: "This field is required",
+      max: "Max. allowed limit is 2147483647",
       minlength: "More characters required",
       maxlength: "Less characters required",
       pattern: 'Allowed special characters "[!@#$%^&*()-_=+~`"]+"',
