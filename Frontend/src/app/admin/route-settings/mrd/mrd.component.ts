@@ -56,7 +56,7 @@ export class MrdComponent implements OnInit {
       ],
       description: ["", [Validators.maxLength(500)]],
       enabled: [],
-      maxRequests: ["", [Validators.required, Validators.min(1)]],
+      maxRequests: ["", [Validators.required, Validators.min(1),Validators.max(2147483647)]],
       managedByRe: [],
     });
 

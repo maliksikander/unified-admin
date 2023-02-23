@@ -58,6 +58,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
       required: "This field is required",
       minlength: "More characters required",
       min: "Min value of 0 is allowed",
+      max: "Max allowed value is 2147483647",
       maxlength: "Max 40 characters allowed",
       pattern: 'Allowed special characters "[!@#$%^&*()-_=+~`"]+"',
     },
@@ -111,7 +112,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     });
 
     this.stepForm = this.fb.group({
-      timeout: ["", [Validators.required, Validators.min(0)]],
+      timeout: ["", [Validators.required, Validators.min(0),Validators.max(2147483647)]],
       expressions: this.fb.array([this.addExpressionGroup()]),
     });
 

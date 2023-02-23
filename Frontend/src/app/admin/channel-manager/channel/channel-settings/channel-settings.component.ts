@@ -106,7 +106,8 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
 
     this.getChannelConnector();
     this.setRoutingModeValues();
-    this.setRoutingPolicyAttrValidation();
+
+    if (!this.editChannelData) this.setRoutingPolicyAttrValidation();
   }
 
   setRoutingModeValues() {
@@ -219,7 +220,6 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
   // patch form values to edit current values
   patchFormValues() {
     try {
-      // console.log("edit data==>", this.editChannelData);
       let routingIndex;
       let connectorIndex = this.channelConnectorList.findIndex(
         (item) => item.id == this.editChannelData.channelConnector.id
@@ -243,7 +243,6 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
         (item) => item.botId == this.editChannelData.channelConfig.botId
       );
 
-      // console.log("routing index==>", routingIndex);
       this.channelSettingForm.patchValue({
         name: this.editChannelData.name,
         serviceIdentifier: this.editChannelData.serviceIdentifier,
@@ -273,6 +272,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
           this.editChannelData.channelConfig.routingPolicy.agentRequestTtl,
         defaultOutbound: this.editChannelData.defaultOutbound,
       });
+
       if (this.channelSettingForm.value.routingMode != "EXTERNAL")
         this.setRoutingPolicyAttrValidation();
       this.cd.detectChanges();
@@ -297,13 +297,12 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
   //to create 'data' object and pass it to the parent component
   onSave() {
     try {
-      // this.spinner = true;
+      this.spinner = true;
       let data = this.createRequestPayload();
-      console.log("data==>", data);
       if (data.id) {
-        // this.updateChannel(data);
+        this.updateChannel(data);
       } else {
-        // this.createChannel(data);
+        this.createChannel(data);
       }
     } catch (e) {
       console.error("Error on save :", e);
@@ -331,7 +330,6 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
   // to reset routing object id form control on routing mode selection change
   onRoutingModeSelection(val) {
     this.channelSettingForm.controls["routingObjectID"].reset();
-    // console.log("val==>", val);
     if (val == "EXTERNAL") {
       this.resetAndRemoveRoutingPolicyAttrValidation();
     } else {
@@ -341,18 +339,18 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
 
   //to set/remove validations on channel mode selection on routing policy attributes, it accepts the channel mode value('BOT','AGENT','HYBRID') as val parameter
 
-  onChannelModeSelection(val) {
-    try {
-      if (val != "BOT") {
-        // this.setRoutingPolicyAttrValidation();
-      } else {
-        // this.resetAndRemoveRoutingPolicyAttrValidation();
-      }
-      this.cd.detectChanges();
-    } catch (e) {
-      console.error("Error in selection callback :", e);
-    }
-  }
+  // onChannelModeSelection(val) {
+  // try {
+  //   if (val != "BOT") {
+  //     // this.setRoutingPolicyAttrValidation();
+  //   } else {
+  //     // this.resetAndRemoveRoutingPolicyAttrValidation();
+  //   }
+  //   this.cd.detectChanges();
+  // } catch (e) {
+  //   console.error("Error in selection callback :", e);
+  // }
+  // }
 
   // to set validations  on routing policy attributes
   setRoutingPolicyAttrValidation() {
@@ -405,7 +403,9 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
         agentSelectionPolicy:
           this.channelSettingForm.value.agentSelectionPolicy,
         routeToLastAgent: this.channelSettingForm.value.routeToLastAgent,
-        routingObjectId: this.channelSettingForm.value.routingObjectID?.id,
+        routingObjectId: this.channelSettingForm.value.routingObjectID?.id
+          ? this.channelSettingForm.value.routingObjectID?.id
+          : null,
         routingMode: this.channelSettingForm.value.routingMode,
         agentRequestTtl: this.channelSettingForm.value.agentRequestTTL,
       };

@@ -76,7 +76,7 @@
       <div class="form-group">
         <mat-label>Channel Mode</mat-label>
         <mat-form-field appearance="outline">
-          <mat-select (selectionChange)="onChannelModeSelection($event.value)" formControlName="channelMode">
+          <mat-select formControlName="channelMode">
             <mat-option *ngFor="let mode of modeVal" [value]="mode">{{mode | uppercase}}
             </mat-option>
           </mat-select>

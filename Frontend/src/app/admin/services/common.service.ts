@@ -293,6 +293,7 @@ export class CommonService {
     maxRequests: {
       required: "This field is required",
       min: "Min value of 1 is required",
+      max:"Max value allowed is 2147483647"
     },
     managedByRe: {
       required: "This field is required",
