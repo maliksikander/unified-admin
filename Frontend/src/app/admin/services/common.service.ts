@@ -409,6 +409,7 @@ export class CommonService {
     customerActivityTimeout: {
       required: "This field is required",
       max: "Max. allowed limit is 2147483647",
+      min:"Min. allowed value is 0",
       minlength: "More characters required",
       maxlength: "Less characters required",
       pattern: 'Allowed special characters "[!@#$%^&*()-_=+~`"]+"',
@@ -428,6 +429,7 @@ export class CommonService {
     agentRequestTTL: {
       required: "This field is required",
       max: "Max. allowed limit is 2147483647",
+      min:"Min. allowed value is 0",
       minlength: "More characters required",
       maxlength: "Less characters required",
       pattern: 'Allowed special characters "[!@#$%^&*()-_=+~`"]+"',

@@ -84,7 +84,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
       // responseSla: ["30"],
       customerActivityTimeout: [
         "",
-        [Validators.required, Validators.max(2147483647)],
+        [Validators.required, Validators.max(2147483647), Validators.min(0)],
       ],
       agentSelectionPolicy: [""],
       routeToLastAgent: [true],
@@ -358,6 +358,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
       this.channelSettingForm.controls["agentRequestTTL"].setValidators([
         Validators.required,
         Validators.max(2147483647),
+        Validators.min(0)
       ]);
       this.channelSettingForm.controls["agentSelectionPolicy"].setValidators([
         Validators.required,
