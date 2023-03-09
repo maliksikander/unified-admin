@@ -1,5 +1,7 @@
+@import "~src/assets/themes/blue-theme";
+
 .service-trigger {
-  background: #25afcb;
+  background: $blue-text-color;
   color: #ffffff;
   height: 30px;
   line-height: 30px;

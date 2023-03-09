@@ -1,3 +1,5 @@
+@import "~src/assets/themes/blue-theme";
+
 /* Firefox */
 input[type="number"] {
   -moz-appearance: textfield;
@@ -10,13 +12,13 @@ input::-webkit-inner-spin-button {
 }
 
 .panel-page-content {
-  padding-top: 50px !important;
-  padding-left: 46px !important;
+  //padding-top: 50px !important;
+  //padding-left: 46px !important;
 
   .channel-accordion {
     padding: 0px 40px 10px 0px;
     .add-channel-btn {
-      background: #25afcb;
+      background: $blue-text-color;
       color: #ffffff;
       height: 20px;
       line-height: 20px;
@@ -31,7 +33,7 @@ input::-webkit-inner-spin-button {
       margin-bottom: 10px;
       .mat-expansion-panel-header {
         padding: 0px 18px !important;
-        background: #fafafa;
+        background: $fill-color;
         border-radius: 0;
 
         .mat-expansion-panel-header-title {
@@ -135,18 +137,18 @@ input::-webkit-inner-spin-button {
           }
         }
         .list-actions {
-          display: none;
-          transition: all 0.3s;
-          position: absolute;
-          right: 5px;
-          top: 27%;
-          z-index: 2;
-
-          mat-icon {
-            position: relative;
-            top: -6px;
-            font-size: 17px;
-          }
+          //display: none;
+          //transition: all 0.3s;
+          //position: absolute;
+          //right: 5px;
+          //top: 27%;
+          //z-index: 2;
+          //
+          //mat-icon {
+          //  position: relative;
+          //  top: -6px;
+          //  font-size: 17px;
+          //}
 
           b {
             font-weight: normal;
@@ -164,13 +166,13 @@ input::-webkit-inner-spin-button {
   }
 }
 
-.outbound-div{
-  text-align: center;
-  span{
-    display: block;
-    text-align: center
-  }
-}
+//.outbound-div{
+//  text-align: center;
+//  span{
+//    display: block;
+//    text-align: center
+//  }
+//}
 
 .data-overflow {
   // max-width: calc(100% - 100px);

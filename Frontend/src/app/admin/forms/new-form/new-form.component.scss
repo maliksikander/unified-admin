@@ -1,6 +1,8 @@
-.panel-page-content {
-  padding: 20px 0px 0px 0px;
-}
+@import "~src/assets/themes/blue-theme";
+
+//.panel-page-content {
+//  padding: 20px 0px 0px 0px;
+//}
 
 .col-md-12 {
   padding: 0;
@@ -47,7 +49,7 @@ input::-webkit-inner-spin-button {
     }
 
     &.save-btn {
-      background: #25afcb;
+      background: $blue-text-color;
     }
 
     &:disabled {
@@ -188,7 +190,7 @@ input::-webkit-inner-spin-button {
             }
 
             mat-icon {
-              color: #25afcb;
+              color: $blue-text-color;
               font-size: 20px;
             }
           }
@@ -204,7 +206,7 @@ input::-webkit-inner-spin-button {
           padding: 0;
 
           mat-icon {
-            color: #25afcb;
+            color: $blue-text-color;
             font-size: 20px;
           }
           // }

@@ -1,3 +1,4 @@
+@import "~src/assets/themes/blue-theme";
 input[type="number"] {
   -moz-appearance: textfield;
 }
@@ -9,16 +10,16 @@ input::-webkit-inner-spin-button {
 }
 
 .service-trigger {
-  background: #25afcb;
+  background: $blue-text-color;
   color: #ffffff;
   height: 30px;
   line-height: 30px;
   width: 90px;
 }
 
-.panel-page-content {
-  padding-left: 18px !important;
-}
+//.panel-page-content {
+//  padding-left: 18px !important;
+//}
 
 .interative-toggle {
   margin: 0.25rem 0;

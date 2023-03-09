@@ -1,3 +1,5 @@
+@import "~src/assets/themes/blue-theme";
+
 //for WallBoard
 .header {
   width: 100%;
@@ -64,7 +66,7 @@ button.mat-menu-item {
       img {
         margin-right: 3px;
         position: relative;
-        border: 1px solid #25afcb;
+        border: 1px solid $blue-text-color;
         width: 30px !important;
         height: 30px !important;
       }
@@ -98,7 +100,7 @@ button.mat-menu-item {
     margin-left: 3px;
     position: relative;
     top: -2px;
-    color: #25afcb;
+    color: #1A50A3;
     font-weight: 600;
     max-width: 80px;
     overflow: hidden;

@@ -1,3 +1,5 @@
+@import "~src/assets/themes/blue-theme";
+
 input[type="number"] {
   -moz-appearance: textfield;
 }
@@ -9,16 +11,16 @@ input::-webkit-inner-spin-button {
 }
 
 .service-trigger {
-  background: #25afcb;
+  background: $blue-text-color;
   color: #ffffff;
   height: 30px;
   line-height: 30px;
   width: 90px;
 }
 
-.panel-page-content {
-  padding-left: 0px !important;
-}
+//.panel-page-content {
+//  padding-left: 0px !important;
+//}
 .content-padding {
   padding-left: 18px !important;
 }
@@ -97,7 +99,7 @@ button {
     }
 
     &.save-btn {
-      background: #25afcb;
+      background: $blue-text-color;
     }
 
     &:disabled {
@@ -188,7 +190,7 @@ button {
             }
 
             mat-icon {
-              color: #25afcb;
+              color: $blue-text-color;
               font-size: 20px;
             }
           }

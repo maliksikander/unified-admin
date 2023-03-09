@@ -1,5 +1,7 @@
+@import "~src/assets/themes/blue-theme";
+
 .service-trigger {
-  background: #25afcb;
+  background: $blue-text-color;
   color: #ffffff;
   height: 30px;
   line-height: 30px;
@@ -272,11 +274,11 @@
     //  top: -54px;
     //
       .shift-btn {
-        border: 1px solid #25afcb;
+        border: 1px solid $blue-text-color;
         height: 24px;
         box-shadow: none;
         line-height: 20px;
-        color: #25afcb;
+        color: $blue-text-color;
 
         span {
           font-size: 11px;
@@ -364,12 +366,12 @@
       cursor: pointer;
       &:hover {
         color: #fff;
-        background: #25afcb;
+        background: $blue-text-color;
       }
     }
     .selected-day {
       color: #fff;
-      background: #25afcb;
+      background: $blue-text-color;
     }
 
 

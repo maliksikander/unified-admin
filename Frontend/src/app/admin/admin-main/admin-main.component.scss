@@ -1,3 +1,5 @@
+@import "~src/assets/themes/blue-theme";
+
 .main-nav {
   background-color: #ffffff;
   z-index: 1000;
@@ -25,6 +27,9 @@ mat-sidenav-container.main-sidebar {
 
   mat-sidenav {
     box-shadow: none;
+    .action-area{
+      padding-top: 0;
+    }
   }
 
   .mat-list-item-content {
@@ -40,8 +45,8 @@ mat-sidenav-container.main-sidebar {
   mat-sidenav.mat-drawer {
     width: 208px;
     overflow: hidden !important;
-    background: #f3f6f8;
-    color: #ffffff;
+    background: #ffffff;
+    //color: #ffffff;
     padding-bottom: 30px;
     visibility: visible !important;
     transform: translate3d(0, 0, 0);
@@ -82,7 +87,7 @@ mat-sidenav-container.main-sidebar {
     line-height: 18px;
     font-size: 18px;
     text-align: center;
-    color: #939393;
+    color: #9c9c9c;
   }
   span.sidebar-text {
     margin-left: 6px;
@@ -125,7 +130,13 @@ button.menu-trigger.right-btn.mat-raised-button {
 .mat-nav-list .mat-list-item:focus,
 .mat-action-list .mat-list-item:hover,
 .mat-action-list .mat-list-item:focus {
-  background: #ebebeb;
+  background: $fill-color;
+
+  .mat-content{
+    img {
+      filter: brightness(1) grayscale(0);
+    }
+  }
 }
 
 .mat-expansion-panel:not(.mat-expanded)
@@ -134,7 +145,7 @@ button.menu-trigger.right-btn.mat-raised-button {
   .mat-expansion-panel-header:not([aria-disabled="true"]).cdk-program-focused,
 .mat-expansion-panel:not(.mat-expanded)
   .mat-expansion-panel-header:not([aria-disabled="true"]):hover {
-  background: #ebebeb;
+  background: $fill-color;
 }
 
 .img-size-adjustment {

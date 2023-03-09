@@ -177,7 +177,7 @@ export class CalendarComponent implements OnInit {
   selectedTimeFrom = this.selectTime[0].value;
   editView = false;
   underLineColor: ThemePalette = "accent";
-  defColor = "#25afcb";
+  defColor = "#1a50a3";
   color = [
     "#CB2572",
     "#CB2525",
