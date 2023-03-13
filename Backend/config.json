@@ -1,0 +1,21 @@
+{
+  "realm": "expertflow",
+  "auth-server-url": "https://qateam.expertflow.com/auth/",
+  "ssl-required": "external",
+  "resource": "cim",
+  "verify-token-audience": false,
+  "credentials": {
+    "secret": "ef61df80-061c-4c29-b9ac-387e6bf67052"
+  },
+  "use-resource-role-mappings": true,
+  "confidential-port": 0,
+  "policy-enforcer": {},
+  "CLIENT_ID": "cim",
+  "CLIENT_DB_ID": "ef61df80-061c-4c29-b9ac-387e6bf67052",
+  "GRANT_TYPE": "password",
+  "GRANT_TYPE_PAT": "client_credentials",
+  "USERNAME_ADMIN": "admin",
+  "PASSWORD_ADMIN": "admin",
+  "SCOPE_NAME": "Any default scope",
+  "bearer-only": true
+}

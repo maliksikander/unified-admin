@@ -1,0 +1,175 @@
+<div class="loading-area" *ngIf="spinner">
+  <mat-spinner></mat-spinner>
+</div>
+<div class="container main-custom-container">
+  <div class="row">
+    <div class="col-sm-12 p-0">
+      <div class="panel-body">
+        <div class="sub-heading">
+          <h2>License Info</h2>
+        </div>
+        <div class="panel-page-content">
+          <!-- <form class="form-horizontal form-bordered" [formGroup]="licenseForm">
+            <div class="key-section">
+              <div class="form-group col-md-5">
+                <mat-label>Master API Key</mat-label>
+                <mat-form-field appearance="outline">
+                  <input matInput formControlName="licenseKey">
+                  <mat-error class="form-error">
+                    *Enter Master Key
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="key-btn">
+                <button *ngIf="licenseForm.valid" mat-flat-button class="blue-btn service-trigger"
+                  (click)="onSave()">Save</button>
+              </div>
+            </div>
+          </form> -->
+
+          <!-- <div class="form-group license-table">
+            <mat-label>Purchased Products </mat-label>
+            <span class="refresh-span">Refresh</span>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Product</th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="product-info">
+                  <td scope="row">
+                    <h6>Status</h6>
+                    Data
+                  </td>
+                  <td scope="row">
+                    <h6>Status</h6>
+                    Data
+                  </td>
+                  <td scope="row">
+                    <h6>Status</h6>
+                    Data
+                  </td>
+                  <td scope="row">
+                    <h6>Status</h6>
+                    Data
+                  </td>
+                  <td scope="row">
+                    <h6>Status</h6>
+                    Data
+                  </td>
+                   <td class="table-trigger">{{data.value ? data.value : 'N/A'}}
+                      <span class="list-trigger-area">
+                        <button matTooltip="Edit" (click)="editAttribute(newAttribute,data)" mat-mini-fab><i
+                            class="fa fa-pencil" aria-hidden="true"></i>
+                        </button>
+                        <button matTooltip="Delete" (click)="deleteConfirm(data)" mat-mini-fab><i class="fa fa-trash-o"
+                            aria-hidden="true"></i>
+                        </button>
+                      </span>
+                    </td>
+                </tr>
+              </tbody>
+            </table>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Product 2</th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+       
+                <tr class="product-info not-active">
+                  <td scope="row">
+                    <h6>Status</h6>
+                    Data
+                  </td>
+                  <td scope="row">
+                    <ng-container *ngIf="spinner">
+                      <h6>Status</h6>
+                      Data
+                    </ng-container>
+                  </td>
+                  <td scope="row">
+                    <ng-container *ngIf="spinner">
+                      <h6>Status</h6>
+                      Data
+                    </ng-container>
+                  </td>
+                  <td scope="row">
+                    <ng-container *ngIf="spinner">
+                      <h6>Status</h6>
+                      Data
+                    </ng-container>
+                  </td>
+                  <td scope="row">
+                    <ng-container *ngIf="spinner">
+                      <h6>Status</h6>
+                      Data
+                    </ng-container>
+                  </td>
+                </tr>
+              </tbody>
+              <mat-error class="form-error-table">
+                *Error Text
+              </mat-error>
+            </table>
+        
+          </div> -->
+          <p>Please select option and enter the detail to activate your license</p>
+          <div class="activation-area">
+            <mat-tab-group>
+              <mat-tab label="Activate Online">
+                <div class="key-section">
+                  <div class="form-group col-md-5 col-sm-12">
+                    <mat-label>Master API Key</mat-label>
+                    <mat-form-field appearance="outline">
+                      <input matInput placeholder="Enter Master Key" [formControl]="licenseKey" required>
+                      <mat-error *ngIf="licenseKey.invalid">
+                        <span *ngIf="licenseKey.errors?.required">Field is required</span>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <span *ngIf="managePermission" class="key-btn">
+                    <button *ngIf="licenseKey.valid" mat-flat-button class="blue-btn service-trigger"
+                      (click)="onSave()">Save</button>
+                  </span>
+                </div>
+              </mat-tab>
+              <mat-tab label="Activate Offline">
+                <div class="key-section">
+                  <div class="form-group col-md-5 col-sm-12">
+                    <mat-label>Upload File</mat-label>
+                    <mat-form-field appearance="outline">
+                      <input readonly style="display: none;" #file type="file" accept='.private'
+                        (change)="fileUpload(file.files)" />
+                      <input [readonly]="true" matInput [formControl]="licenseFile" [value]="fileName">
+                      <button class="select-file-button" mat-icon-button matSuffix (click)="file.click()">
+                        <img src="assets/images/upload.svg" alt="upload">
+                      </button>
+                      <mat-error *ngIf="licenseFile.invalid">
+                        <span *ngIf="licenseFile.errors?.required">Field is required</span>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div *ngIf="managePermission"  class="key-btn">
+                    <button *ngIf="licenseFile.valid" mat-flat-button class="blue-btn service-trigger"
+                      (click)="onUpload()">Upload</button>
+                  </div>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

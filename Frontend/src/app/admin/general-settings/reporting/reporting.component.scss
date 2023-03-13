@@ -1,0 +1,26 @@
+.service-trigger {
+  background: #25afcb;
+  color: #ffffff;
+  height: 30px;
+  line-height: 30px;
+  width: 90px;
+}
+
+mat-slide-toggle {
+  // float: right;
+  position: relative;
+  top: 5px;
+  padding-left: 10px;
+}
+
+.report-padding-btn {
+  padding: 0px 15px 30px 15px;
+}
+
+.bottom-padding {
+  padding-bottom: 30px !important;
+}
+
+.btn-margin {
+  margin-top: 10px !important;
+}

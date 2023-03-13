@@ -1,0 +1,95 @@
+<div class="loading-area" *ngIf="spinner">
+  <mat-spinner></mat-spinner>
+</div>
+<div class="panel-page-content">
+  <form class="form-horizontal form-bordered channel-connector-form" [formGroup]="channelConnectorForm">
+    <div class="col-md-5">
+      <div class="form-group">
+        <mat-label>Name</mat-label>
+        <mat-form-field appearance="outline">
+          <input matInput formControlName="name">
+          <mat-error class="form-error">
+            {{formErrors.name}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+
+      <div class="form-group">
+        <mat-label>Channel Provider Interface</mat-label>
+        <mat-form-field appearance="outline">
+          <mat-select (selectionChange)="onProviderSelection($event.value)" placeholder="Select Channel Provider"
+            formControlName="channelProviderInterface">
+            <mat-option *ngFor="let provider of channelProviderList" [value]="provider">{{provider?.name}}</mat-option>
+          </mat-select>
+          <mat-error class="form-error">
+            {{formErrors?.channelProviderInterface}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+
+
+
+      <div *ngFor="let attrSchema of formSchema">
+        <!-- INPUT -->
+        <div *ngIf="attrSchema.attributeType == 'INPUT'">
+          <div *ngIf="attrSchema?.valueType !='Boolean'" class="form-group">
+            <mat-label>{{attrSchema.label}}</mat-label>
+            <mat-form-field appearance="outline">
+              <input matInput formControlName="{{attrSchema.key}}">
+              <mat-error class="form-error">
+                {{formErrors[attrSchema.key]}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div *ngIf="attrSchema?.valueType =='Boolean'" class="form-group adjust-toggle" style="padding-bottom:15px;">
+            <mat-label>{{attrSchema.label}}</mat-label>
+            <mat-slide-toggle *ngIf="attrSchema?.valueType =='Boolean'" formControlName="{{attrSchema.key}}">
+            </mat-slide-toggle>
+          </div>
+
+        </div>
+
+        <!--OPTIONS -->
+        <!-- <ng-container
+          *ngIf="attrSchema.attributeType == 'OPTIONS' && attrSchema?.categoryOptions?.categories?.length > 0">
+          <div class="form-group">
+            <mat-label>{{attrSchema.label}}</mat-label>
+            <mat-form-field *ngIf="attrSchema?.categoryOptions?.isMultipleChoice == false" appearance="outline">
+              <mat-select formControlName="{{attrSchema.key}}">
+                <ng-container *ngFor="let category of attrSchema?.categoryOptions?.categories">
+                  <mat-option *ngFor="let option of category?.values" [value]="option">
+                    {{option}}</mat-option>
+                </ng-container>
+              </mat-select>
+
+              <mat-error class="form-error">
+                {{formErrors[attrSchema.key]}}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" *ngIf="attrSchema?.categoryOptions?.isMultipleChoice" multiple>
+              <mat-select multiple formControlName="{{attrSchema.key}}">
+                <mat-option *ngFor="let option of attrSchema?.categoryOptions?.categories[0]?.values" [value]="option">
+                  {{option}}</mat-option>
+              </mat-select>
+              <mat-error class="form-error">
+                {{formErrors[attrSchema.key]}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </ng-container> -->
+      </div>
+    </div>
+
+
+    <div class="action-area col-md-5">
+      <button mat-raised-button (click)="onClose()" class="gray-btn">Cancel</button>
+      <button [disabled]="!channelConnectorForm.valid" mat-raised-button class="blue-btn service-trigger"
+        (click)="onSave()">Save</button>
+    </div>
+
+  </form>
+</div>

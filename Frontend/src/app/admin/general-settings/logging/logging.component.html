@@ -1,0 +1,72 @@
+<div class="loading-area" *ngIf="spinner">
+  <mat-spinner></mat-spinner>
+</div>
+<div class="container main-custom-container">
+  <div class="row">
+    <div class="col-sm-12 p-0">
+      <div class="panel-body">
+        <div class="sub-heading">
+          <h2>Log Settings</h2>
+        </div>
+        <div class="panel-page-content">
+          <form class="form-horizontal form-bordered" [formGroup]="logSettingForm">
+            <div class="form-group col-md-5">
+              <mat-label>Log Level</mat-label>
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="logLevel">
+                  <mat-option *ngFor="let logVal of logLevel" [value]="logVal">{{logVal | uppercase}}
+                  </mat-option>
+                </mat-select>
+                <mat-error class="form-error">
+                  {{formErrors.logLevel}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-group col-md-5">
+              <mat-label>Logs File Path</mat-label>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="logFilePath">
+                <mat-error class="form-error">
+                  {{formErrors.logFilePath}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="form-group col-md-5">
+              <mat-label>Agent Logs Max Files</mat-label>
+              <mat-form-field appearance="outline">
+                <input type="number" min="0" matInput formControlName="agentLogsMaxFiles">
+                <mat-error class="form-error">
+                  {{formErrors.agentLogsMaxFiles}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="disclaimer-info">
+              <div class="form-group col-md-5">
+                <mat-label>Agent Logs File Size</mat-label>
+                <mat-form-field appearance="outline">
+                  <input type="number" min="0" matInput formControlName="agentLogsFileSize">
+                  <mat-error class="form-error">
+                    {{formErrors.agentLogsFileSize}}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-group col-md-4" style="padding: 0;">
+                <span class="logo-msg-span">
+                  <img src="assets/images/info.png" matTooltip="{{disclaimerText}}"
+                    matTooltipClass="disclaimer-tooltip">
+                </span>
+              </div>
+            </div>
+
+            <div class="action-area col-md-5">
+              <button [disabled]="!logSettingForm.valid" mat-raised-button class="blue-btn service-trigger"
+                (click)="onSave()">Save</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

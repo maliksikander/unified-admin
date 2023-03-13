@@ -1,0 +1,20 @@
+{
+  "realm": "${KEYCLOAK_REALM}",
+  "auth-server-url": "${KEYCLOAK_HOST}",
+  "ssl-required": "${KEYCLOAK_SSL_REQUIRED}",
+  "resource": "${KEYCLOAK_RESOURCE}",
+  "verify-token-audience": ${KEYCLOAK_VERIFY_TOKEN_AUDIENCE},
+  "credentials":${KEYCLOAK_CREDENTIALS},
+  "use-resource-role-mappings": ${KEYCLOAK_USE_RESOURCE_ROLE_MAPPINGS},
+  "confidential-port": ${KEYCLOAK_CONFIDENTIAL_PORT},
+  "policy-enforcer": ${KEYCLOAK_POLICY_ENFORCER},
+  "CLIENT_ID": "${KEYCLOAK_CLIENT_ID}",
+  "CLIENT_DB_ID": "${KEYCLOAK_CLIENT_DB_ID}",
+  "GRANT_TYPE": "${KEYCLOAK_GRANT_TYPE}",
+  "GRANT_TYPE_PAT": "${KEYCLOAK_GRANT_TYPE_PAT}",
+  "USERNAME_ADMIN": "${KEYCLOAK_USERNAME_ADMIN}",
+  "PASSWORD_ADMIN": "${KEYCLOAK_PASSWORD_ADMIN}",
+  "SCOPE_NAME": "${KEYCLOAK_SCOPE_NAME}",
+  "bearer-only": ${KEYCLOAK_BEARER_ONLY}
+
+}

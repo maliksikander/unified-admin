@@ -1,0 +1,135 @@
+<div class="loading-area" *ngIf="spinner">
+  <mat-spinner></mat-spinner>
+</div>
+<div class="container main-custom-container">
+  <div class="row">
+    <div class="col-sm-12 p-0">
+      <div class="panel-body">
+        <div class="sub-heading">
+          <h2>Database Settings</h2>
+        </div>
+        <div class="panel-page-content">
+          <form class="form-horizontal form-bordered" [formGroup]="databaseSettingForm">
+            <div class="col-md-5">
+              <div class="form-group">
+                <mat-label>Mongo URL</mat-label>
+                <mat-form-field appearance="outline">
+                  <input matInput formControlName="mongoUrl">
+                  <mat-error class="form-error">
+                    {{formErrors.mongoUrl}}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-group">
+                <mat-label>EABC DB URL</mat-label>
+                <mat-form-field appearance="outline">
+                  <input matInput formControlName="eabcDBUrl">
+                  <mat-error class="form-error">
+                    {{formErrors.eabcDBUrl}}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-group">
+                <mat-label>EABC DB Driver</mat-label>
+                <mat-form-field appearance="outline">
+                  <input matInput formControlName="eabcDBDriver">
+                  <mat-error class="form-error">
+                    {{formErrors.eabcDBDriver}}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-group">
+                <mat-label>EABC DB Dialect</mat-label>
+                <mat-form-field appearance="outline">
+                  <input matInput formControlName="eabcDBDialect">
+                  <mat-error class="form-error">
+                    {{formErrors.eabcDBDialect}}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-group">
+                <mat-label>EABC DB User</mat-label>
+                <mat-form-field appearance="outline">
+                  <input matInput formControlName="eabcDBUser">
+                  <mat-error class="form-error">
+                    {{formErrors.eabcDBUser}}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-group password-privacy-icon">
+                <mat-label>EABC DB Password</mat-label>
+                <mat-form-field appearance="outline">
+                  <input [type]="hide1 ? 'password' : 'text'" matInput formControlName="eabcDBPwd">
+                  <mat-icon matSuffix (click)="hide1 = !hide1">{{hide1 ? 'visibility_off' : 'visibility'}}</mat-icon>
+                  <mat-error class="form-error">
+                    {{formErrors.eabcDBPwd}}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-group">
+                <mat-label>ECM DB URL</mat-label>
+                <mat-form-field appearance="outline">
+                  <input matInput formControlName="ecmDBUrl">
+                  <mat-error class="form-error">
+                    {{formErrors.ecmDBUrl}}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-group">
+                <mat-label>ECM DB Driver</mat-label>
+                <mat-form-field appearance="outline">
+                  <input matInput formControlName="ecmDBDriver">
+                  <mat-error class="form-error">
+                    {{formErrors.ecmDBDriver}}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-group">
+                <mat-label>ECM DB Dialect</mat-label>
+                <mat-form-field appearance="outline">
+                  <input matInput formControlName="ecmDBDialect">
+                  <mat-error class="form-error">
+                    {{formErrors.ecmDBDialect}}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-group">
+                <mat-label>ECM DB User</mat-label>
+                <mat-form-field appearance="outline">
+                  <input matInput formControlName="ecmDBUser">
+                  <mat-error class="form-error">
+                    {{formErrors.ecmDBUser}}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-group password-privacy-icon">
+                <mat-label>ECM DB Password</mat-label>
+                <mat-form-field appearance="outline">
+                  <input [type]="hide2 ? 'password' : 'text'" matInput formControlName="ecmDBPwd">
+                  <mat-icon matSuffix (click)="hide2 = !hide2">{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
+                  <mat-error class="form-error">
+                    {{formErrors.ecmDBPwd}}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-group">
+                <mat-label>ECM DB Engine</mat-label>
+                <mat-form-field appearance="outline">
+                  <input matInput formControlName="ecmDBEngine">
+                  <mat-error class="form-error">
+                    {{formErrors.ecmDBEngine}}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="action-area col-md-5">
+              <button [disabled]="!databaseSettingForm.valid" mat-raised-button class="blue-btn service-trigger"
+                (click)="onSave()">Save</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

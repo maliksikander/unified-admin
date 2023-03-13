@@ -1,0 +1,58 @@
+.service-trigger {
+  background: #25afcb;
+  color: #ffffff;
+  height: 30px;
+  line-height: 30px;
+  width: 90px;
+}
+
+.select-file-button {
+  /* position: relative; */
+  top: -3px;
+  font-size: -25px;
+  right: -9px;
+  background: transparent;
+  // color: darkorange;
+  box-shadow: none;
+  // border-left: 1px solid #f0f0f0;
+  height: 39px;
+  line-height: 39px;
+  i.material-icons {
+    font-size: 22px;
+  }
+}
+
+.component-logo {
+  display: flex;
+  flex-wrap: wrap;
+  .logo-msg-span {
+    position: absolute;
+    top: 45px;
+    color: #717171;
+    font-size: 11px;
+    width: 100%;
+  }
+  .mat-input-element:disabled,
+  .mat-form-field-type-mat-native-select.mat-form-field-disabled
+    .mat-form-field-infix::after {
+    color: #8b8b8b;
+  }
+}
+
+.uploaded-logo {
+  position: relative;
+  width: 300px;
+  padding: 12px;
+  background: #ececec;
+  border-radius: 6px;
+  height: 68px;
+  border: 1px solid #c2c2c2;
+
+  .upload-logo {
+    background-repeat: no-repeat !important;
+    background-position: left !important;
+    margin: 0 !important;
+    height: 45px;
+    background-size: contain !important;
+  }
+}

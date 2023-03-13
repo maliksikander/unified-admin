@@ -1,0 +1,73 @@
+<div class="loading-area" *ngIf="spinner">
+    <mat-spinner></mat-spinner>
+</div>
+<div class="container main-custom-container">
+    <div class="row">
+        <div class="col-sm-12 p-0">
+            <div class="panel-body">
+                <div class="sub-heading">
+                    <h2>Agent MRDs</h2>
+                </div>
+                <div class="routing-content">
+                    <div class="filter-section">
+                        <div class="form-group search-field">
+                            <mat-form-field appearance="outline">
+                                <input matInput [(ngModel)]="searchTerm" placeholder="Search">
+                                <mat-icon>search</mat-icon>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="routing-table">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col" *ngFor="let mrdData of mrdTasksData">{{mrdData.name}}</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="routingEngineUsers && routingEngineUsers.length != 0 && !warningBool">
+                                <tr
+                                    *ngFor="let data of routingEngineUsers | filter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
+                                    <td scope="row">{{data.keycloakUser.username}}</td>
+                                    <td scope="row" *ngFor="let mrdData of mrdTasksData">
+                                        <select #reqSelect (change)='onMrdSelect(reqSelect.value, data, mrdData.id)'>
+                                            <ng-container *ngFor="let a of taskArray(mrdData); let i = index">
+                                                <option *ngIf="mrdData.id != '6298b744b777de61844f616b'"
+                                                    [selected]="i == getMaxAgentTasks(mrdData.id,data.associatedMrds)"
+                                                    [value]="i">
+                                                    {{i}}
+                                                </option>
+                                                <option *ngIf="mrdData.id == '6298b744b777de61844f616b'" [selected]="1"
+                                                    [value]="1">
+                                                    1
+                                                </option>
+                                            </ng-container>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                            <div *ngIf="routingEngineUsers && routingEngineUsers.length == 0" class="no-data-warning">
+                                <i class="material-icons">warning_amber</i>
+                                <span>No Data Found</span>
+                            </div>
+                        </table>
+                        <div *ngIf="routingEngineUsers && routingEngineUsers.length >= 2" class="pagination-section">
+                            <span class="page-span">
+                                <span>Entries Per Page</span>
+                                <select (change)="selectPage()" [(ngModel)]="selectedItem">
+                                    <option *ngFor="let item of itemsPerPageList" [value]="item">{{ item }}
+                                    </option>
+                                </select>
+                            </span>
+                            <pagination-controls (pageBoundsCorrection)="pageBoundChange($event)"
+                                (pageChange)="p = $event;pageChange($event)" previousLabel="" nextLabel="">
+                            </pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

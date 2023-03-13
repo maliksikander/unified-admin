@@ -1,0 +1,145 @@
+<div class="loading-area" *ngIf="spinner">
+  <mat-spinner></mat-spinner>
+</div>
+<div class="container main-custom-container">
+  <div class="row">
+    <div class="col-sm-12 p-0">
+      <div class="panel-body">
+        <div class="sub-heading">
+          <h2>Media Routing Domain Settings</h2>
+        </div>
+        <div class="routing-content">
+          <div class="filter-section">
+            <div class="form-group search-field">
+              <mat-form-field appearance="outline">
+                <input matInput [(ngModel)]="searchTerm" placeholder="Search">
+                <mat-icon>search</mat-icon>
+              </mat-form-field>
+            </div>
+
+            <button *ngIf="managePermission" mat-flat-button (click)="openModal(newMrd)">
+              <mat-icon>add</mat-icon>
+              Create MRD
+            </button>
+          </div>
+
+          <div class="routing-table">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Interruptible</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="mrdData && mrdData.length != 0">
+                <ng-container>
+                  <tr
+                    *ngFor="let data of mrdData | filter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
+                    <td scope="row">{{data.name ? data.name : 'N/A'}}</td>
+                    <td>{{data.description ? data.description : 'N/A'}}</td>
+                    <td class="table-trigger">
+                      <mat-slide-toggle (change)="onStatusChange($event,data)" [checked]="data.interruptible">
+                      </mat-slide-toggle>
+
+                      <span *ngIf="managePermission" class="list-trigger-area">
+                        <button matTooltip="Edit" (click)="editMrd(newMrd,data)" mat-mini-fab>
+                          <!-- <i class="fa fa-pencil" aria-hidden="true"></i> -->
+                          <mat-icon>mode_edit</mat-icon>
+                        </button>
+                        <button matTooltip="Delete" (click)="deleteConfirm(data)" mat-mini-fab>
+                          <!-- <i class="fa fa-trash-o" aria-hidden="true"></i> -->
+                          <mat-icon>delete</mat-icon>
+                        </button>
+                      </span>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+
+              <div *ngIf="mrdData && mrdData.length == 0" class="no-data-warning">
+                <i class="material-icons">warning_amber</i>
+                <span>No Data Found</span>
+              </div>
+            </table>
+            <div *ngIf="mrdData && mrdData.length >= 6" class="pagination-section">
+              <span class="page-span">
+                <span>Entries Per Page</span>
+                <select (change)="selectPage()" [(ngModel)]="selectedItem">
+                  <option *ngFor="let item of itemsPerPageList" [value]="item">{{ item }}
+                  </option>
+                </select>
+              </span>
+              <pagination-controls (pageBoundsCorrection)="pageBoundChange($event)"
+                (pageChange)="p = $event;pageChange($event)" previousLabel="" nextLabel="">
+              </pagination-controls>
+            </div>
+            <!-- <pagination-controls *ngIf="dataBool" (pageChange)="p = $event;pageChange($event)" previousLabel=""
+              nextLabel="" maxSize='7'></pagination-controls>
+            <h3 *ngIf="!dataBool" class="noData" translate>No_data</h3> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #newMrd>
+    <div class="dialog-container">
+      <div class="mat-card-header">
+        <mat-icon (click)="onClose()">close</mat-icon>
+        <h4 class="content-span full-width">{{formHeading}}</h4>
+      </div>
+      <div class="dialog-content">
+        <form class="form-horizontal form-bordered" [formGroup]="mrdForm">
+          <div class="form-group">
+            <mat-label>Name</mat-label>
+            <mat-form-field appearance="outline">
+              <input matInput formControlName="name">
+              <mat-error class="form-error">
+                {{formErrors.name}}
+              </mat-error>
+              <mat-error *ngIf="mrdForm.controls['name'].hasError('validName')">
+                This name already exists
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-label>Description</mat-label>
+            <mat-form-field appearance="outline">
+              <input matInput formControlName="description">
+              <mat-error class="form-error">
+                {{formErrors.description}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-label>Max Task Request</mat-label>
+            <mat-form-field appearance="outline">
+              <input matInput type="number" formControlName="maxRequests">
+              <mat-error class="form-error">
+                {{formErrors.maxRequests}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="form-group mrd-toggle mrd-padding-btn">
+            <mat-label>Interruptible</mat-label>
+            <mat-slide-toggle style="right:-91px" formControlName="enabled"></mat-slide-toggle>
+          </div>
+          <div class="form-group mrd-toggle mrd-padding-btn">
+            <mat-label>Managed By Routing Engine</mat-label>
+            <mat-slide-toggle formControlName="managedByRe"></mat-slide-toggle>
+          </div>
+
+          <div class="template-action row">
+            <div class="col-md-12">
+              <div class="form-action-area">
+                <button mat-raised-button (click)="onClose()" class="gray-btn">Cancel</button>
+                <button mat-raised-button [disabled]="!mrdForm.valid" (click)="onSave()" [mat-dialog-close]="true"
+                  class="dark-blue-btn service-trigger">{{saveBtnText}}</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-template>

@@ -1,0 +1,78 @@
+<div class="loading-area" *ngIf="spinner">
+    <mat-spinner></mat-spinner>
+</div>
+<div class="container main-custom-container">
+    <div class="row">
+        <div class="col-sm-12 p-0">
+            <div class="panel-body">
+                <div class="sub-heading">
+                    <h2>{{pageTitle}}</h2>
+                </div>
+
+                <div class="panel-page-content web-widget-class agent-desk-controls ">
+                    <form class="form-horizontal col-md-5" [formGroup]="AgentDeskConfigForm" (ngSubmit)="onSave()">
+
+                        <div class="form-group adjust-toggle widget-toggle" >
+                            <mat-label>Message Formatting
+                                <small>Turn on for agents to send formatted messages</small>
+                            </mat-label>
+                            <mat-slide-toggle formControlName="isMessageFormattingEnabled"></mat-slide-toggle>
+                        </div>
+
+                        <div class="form-group adjust-toggle widget-toggle" >
+                            <mat-label>File Sharing
+                                <small>Turn on for agents to share and receive attachments</small>
+                            </mat-label>
+                            <mat-slide-toggle formControlName="isFileSharingEnabled"></mat-slide-toggle>
+                        </div>
+
+                        <div class="form-group adjust-toggle widget-toggle" >
+                            <mat-label>Emojis
+                                <small>Turn on for agents to send and receive emojis</small>
+                            </mat-label>
+                            <mat-slide-toggle formControlName="isEmojisEnabled"></mat-slide-toggle>
+                        </div>
+
+                        <div class="form-group adjust-toggle widget-toggle" >
+                            <mat-label>Conversation Participants
+                                <small>Turn on for agents to see conversation participants list for a conversation</small>
+                            </mat-label>
+                            <mat-slide-toggle formControlName="isConversationParticipantsEnabled"></mat-slide-toggle>
+
+                        </div>
+
+                        <div class="form-group adjust-toggle widget-toggle" >
+                            <mat-label>Wrap-up Time
+                                <small>Turn on for agents to add a wrap-up until the specified time</small>
+                            </mat-label>
+                            <mat-slide-toggle formControlName="isWrapUpEnabled"></mat-slide-toggle>
+                        </div>
+
+                        <div class="form-group custom-wrap-field p-0" *ngIf="AgentDeskConfigForm.get('isWrapUpEnabled').value">
+                            <mat-label>Wrap-up Timer</mat-label>
+                            <mat-form-field appearance="outline" mat>
+                                <input type="number" matInput formControlName="wrapUpTime">
+                                <span class="suffix" matSuffix>Seconds</span>
+                                <mat-error class="form-error">
+                                    {{formErrors?.wrapUpTime}}
+                                </mat-error>
+                            </mat-form-field>
+
+                            <div class="wrap-caption">
+                                <small>Enter value between 15-1800.</small>
+                                <small>(This is the time for agents to apply Wrap-up once a conversation goes into "Wrap-up" state)</small>
+
+                            </div>
+
+                        </div>
+
+                        <div *ngIf="managePermission" class="action-area btn-margin pr-0">
+                            <button mat-raised-button class="blue-btn service-trigger" type="submit" [disabled]="!AgentDeskConfigForm.valid" *ngIf="AgentDeskConfigForm.dirty">Save</button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>

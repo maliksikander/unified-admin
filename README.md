@@ -1,27 +1,47 @@
-# BaseTemplate
+### Change file endings for build.sh, dockerfile, docker-entrypoint.sh & docker-compose.prod.yml to LF from CRLF  ###
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.8.
+#### Form Data Object Sample ###
 
-## Development server
+### Sample Function for Attribute List  ###
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+ <!-- `formSchema` is the form schema object -->
+ <!-- `array2` is the filled form attribute list -->
 
-## Code scaffolding
+function createFormdata(formSchema,array2) 
+{
+  let data;
+  data.formID = formSchema.id; // form schema id
+  data.filledBy = "user"; // the user name
+  data.createdOn = new Date().toISOString(); // current data converted to UTC
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+  let attrTemp = []; // temp array variable
+  let array1 = formSchema.attributes;
 
-## Build
+        array1.attributes.forEach((schemaAttr) => {
+          let obj: any = {};
+          array2.forEach((filledAttr) => {
+            let key = Object.keys(filledAttr)[0];
+            if (key == schemaAttr.key) {
+              obj.key = key;
+              obj.type = schemaAttr.valueType;
+              obj.value = Object.values(filledAttr)[0];
+              attrTemp.push(obj);
+            }
+          });
+        });
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+        data.attributes = attrTemp;
+        return data;
 
-## Running unit tests
+}
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+#### Output ####
 
-## Running end-to-end tests
+{
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+attributes: [{key: "key1", type: "String2000", value: "value1"},{key: "key2", type: "String100", value: "value2"}],
+createdOn: "2021-07-02T09:19:32.880Z",
+filledBy: "user",
+formID: "60d75a0dce0c11421571881d",
+}
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).

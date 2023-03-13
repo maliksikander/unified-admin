@@ -1,0 +1,142 @@
+<div class="loading-area" *ngIf="spinner">
+    <mat-spinner></mat-spinner>
+</div>
+<div class="container main-custom-container">
+    <div class="row">
+        <div class="col-sm-12 p-0">
+            <div class="panel-body">
+                <div class="sub-heading">
+                    <h2>Not Ready/Logout Reasons</h2>
+                </div>
+                <div class="reason-code-content">
+                    <div class="filter-section">
+                        <div class="form-group search-field">
+                            <mat-form-field appearance="outline">
+                                <input matInput [(ngModel)]="searchTerm" placeholder="Search">
+                                <mat-icon>search</mat-icon>
+                            </mat-form-field>
+                        </div>
+
+                        <button *ngIf="managePermission" mat-flat-button
+                            (click)="openCreateReasonModal(reasonCodeForm)">
+                            <mat-icon>add</mat-icon>
+                            Create Reason
+                        </button>
+                    </div>
+
+                    <div class="reason-code-list">
+
+                        <ul class="top-heading reason-code-labels">
+                            <li>Name</li>
+                            <li>Description</li>
+                            <li>Type</li>
+
+                        </ul>
+                        <ng-container *ngIf="reasonCodeData && reasonCodeData.length != 0">
+                            <div class="reason-code-data"
+                                *ngFor="let data of reasonCodeData | filter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
+                                <span class="group-name">{{data?.name ? data.name : 'N/A'}}</span>
+                                <span class="group-name">{{data?.description ? data.description : 'N/A'}}</span>
+                                <span class="group-name">
+                                    <span
+                                        [ngStyle]="{'background-color':data?.type == 'LOGOUT' ? '#ffab00' : '#b4b4b4' }"
+                                        class="reason-type-style">{{data?.type | removeCharacterFilter |
+                                        titlecase}}</span>
+                                    <span *ngIf="managePermission" class="list-trigger-area">
+                                        <button mat-mini-fab matTooltip="Edit"
+                                            (click)="editReasonCode(reasonCodeForm,data)">
+                                            <mat-icon>mode_edit</mat-icon>
+                                        </button>
+                                        <button *ngIf="data.id != '62ffc95cf12b6ccf1594d781' && data.id != '62ffc9e9f12b6ccf1594d88b'" matTooltip="Delete" (click)="deleteConfirm(data)" mat-mini-fab>
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+                                    </span>
+                                </span>
+
+                            </div>
+                        </ng-container>
+
+
+                        <div *ngIf="reasonCodeData && reasonCodeData.length == 0" class="no-data-warning">
+                            <i class="material-icons">warning_amber</i>
+                            <span>No Data Found</span>
+                        </div>
+
+                        <div *ngIf="reasonCodeData && reasonCodeData.length >= 6" class="pagination-section">
+                            <span class="page-span">
+                                <span>Entries Per Page</span>
+                                <select (change)="selectPage()" [(ngModel)]="selectedItem">
+                                    <option *ngFor="let item of itemsPerPageList" [value]="item">{{ item }}
+                                    </option>
+                                </select>
+                            </span>
+                            <pagination-controls (pageBoundsCorrection)="pageBoundChange($event)"
+                                (pageChange)="p = $event;pageChange($event)" previousLabel="" nextLabel="">
+                            </pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ng-template #reasonCodeForm>
+        <div class="dialog-container">
+            <div class="mat-card-header">
+                <mat-icon (click)="onClose()">close</mat-icon>
+                <h4 class="content-span full-width">{{formHeading}}</h4>
+            </div>
+            <div class="dialog-content">
+                <form class="form-horizontal form-bordered" [formGroup]="reasonForm">
+                    <div class="form-group">
+                        <mat-label>Name</mat-label>
+                        <mat-form-field appearance="outline">
+                            <input (keyup)="checkLabelValue()" matInput formControlName="name">
+                            <mat-error class="form-error">
+                                <mat-error class="form-error">
+                                    <ng-container *ngIf="!reasonForm.get('name')?.errors?.validName">
+                                        {{formErrors?.name}}</ng-container>
+                                    <ng-container *ngIf="reasonForm.get('name')?.errors?.validName"> Reason Code already
+                                        exists
+                                    </ng-container>
+                                </mat-error>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="form-group">
+                        <mat-label>Type</mat-label>
+                        <mat-form-field appearance="outline">
+                            <mat-select [disabled]="editReasonData?.id == '62ffc95cf12b6ccf1594d781' || editReasonData?.id == '62ffc9e9f12b6ccf1594d88b'" (selectionChange)="checkLabelValue()" formControlName="type">
+                                <mat-option *ngFor="let val of reasonType" [value]="val">{{val |
+                                    removeCharacterFilter | titlecase}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error class="form-error">
+                                {{formErrors?.type}}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="form-group">
+                        <mat-label>Description</mat-label>
+                        <mat-form-field appearance="outline">
+                            <textarea type="text" matInput formControlName="description"></textarea>
+                            <mat-error class="form-error">
+                                {{formErrors?.description}}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="template-action row">
+                        <div class="col-md-12">
+                            <div class="form-action-area">
+                                <button mat-raised-button [mat-dialog-close]="true" class="gray-btn">Cancel</button>
+                                <button mat-raised-button [disabled]="!reasonForm.valid" (click)="onSave()"
+                                    [mat-dialog-close]="save" class="blue-btn service-trigger">{{saveBtnText}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </ng-template>

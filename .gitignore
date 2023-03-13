@@ -1,9 +1,31 @@
+# Dependencies
+node_modules
+
+# package-lock.json (use yarn.lock instead)
+package-lock.json
+
+# package-lock.json (use yarn.lock instead)
+/Backend/server.cert
+/Backend/server.key
+
+# yarn error logs
+yarn-error.log
+
+# Environment varibales
+.env*
+!.env*.example
+
+# Code coverage
+coverage
+
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
 /dist
 /tmp
 /out-tsc
+# /backend/src/public
+/frontend/dist
 # Only exists if Bazel was run
 /bazel-out
 
@@ -15,6 +37,7 @@ chrome-profiler-events.json
 speed-measure-plugin.json
 
 # IDEs and editors
+/.vscode
 /.idea
 .project
 .classpath

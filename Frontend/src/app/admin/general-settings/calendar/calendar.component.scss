@@ -1,0 +1,461 @@
+.service-trigger {
+  background: #25afcb;
+  color: #ffffff;
+  height: 30px;
+  line-height: 30px;
+  width: 90px;
+}
+
+.top-section {
+  position: absolute;
+  padding: 10px 0px;
+  width: 100%;
+
+  .month-info {
+    color: #929292;
+    .mat-icon-button {
+      width: 30px !important;
+      height: 30px !important;
+      line-height: 30px !important;
+    }
+  }
+
+  .layout-dropdown {
+    border-radius: 5px;
+    border: 1px solid #f2f2f2;
+    padding: 5px;
+    width: 7%;
+    position: absolute;
+    right: 10px;
+    top: 15%;
+  }
+}
+
+.content-section {
+  width: calc(100% - 1px);
+  border-top: 1px solid #e2e2e2;
+  height: 100%;
+  min-height: calc(100vh - 145px);
+  position: relative;
+  top: 50px;
+
+  .side-section {
+    color: #7b7b7b;
+    background: #fdfdfd;
+    overflow: auto;
+    position: absolute;
+    height: 100%;
+
+    .add-event-btn {
+      height: 30px;
+      border-radius: 20px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: #7b7b7b;
+      position: absolute;
+      top: 1.25rem;
+      padding: 0 1rem 0 0.7rem;
+
+      mat-icon {
+        font-size: 20px;
+        text-align: left;
+      }
+    }
+    .my-calendar-section {
+      position: absolute;
+      left: 0;
+      top: 70px;
+      width: 100%;
+      // padding: 0 17px;
+      font-weight: 600;
+
+      .heading {
+        span {
+          padding: 0 10px 0 18px;
+        }
+        mat-icon {
+          width: 25px;
+          height: 25px;
+          position: absolute;
+          right: 7px;
+          cursor: pointer;
+        }
+      }
+
+      .calendar-content {
+        padding: 10px 0px;
+        // overflow: auto;
+        .content-span {
+          // background-color: rgba(248, 248, 0, 0.596);
+          display: inline-block;
+          width: 100%;
+          padding: 2px 17px 3px 17px;
+          // height: 40px;
+          // background: #ec1d1d;
+
+          .input-span {
+            transition: border-color 90ms cubic-bezier(0, 0, 0.2, 0.1);
+            border-width: 1px;
+            border-style: solid;
+            display: inline-block;
+            max-height: 15px;
+            max-width: 16px;
+            border-radius: 3px;
+            position: relative;
+            top: 4px;
+            margin: 0 3px 0 0;
+
+            mat-checkbox {
+              position: relative;
+              top: -2px;
+              left: -1px;
+
+              .mat-checkbox-frame {
+                border: none;
+              }
+              .mat-checkbox-background {
+                background: transparent;
+              }
+            }
+          }
+
+          .menu-btn {
+            max-width: 17px;
+            max-height: 20px;
+            float: right;
+            // background: aliceblue;
+            padding: 0px 0;
+            position: relative;
+            right: 6px;
+            top: -5px;
+            button {
+              display: none;
+              // position: absolute;
+              // top: 25px;
+              // right: 0;
+              // max-width: 10%;
+              // height: 30px;
+              // max-height: 30px;
+              // padding: 0;
+
+              mat-icon {
+                line-height: 21px;
+              }
+            }
+            &:focus,
+            &:active,
+            &:focus-within {
+              display: inline-block;
+            }
+          }
+          &:hover {
+            background: #f4f4f4;
+
+            button {
+              display: inline-block;
+              transition: all 0.3s;
+            }
+          }
+        }
+      }
+    }
+  }
+  .calendar-layout {
+    padding: 0;
+    overflow: auto;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    min-width: calc(100% - 286px);
+    min-height: calc(100vh - 146px);
+  }
+}
+
+.text-area {
+  textarea {
+    resize: none;
+    height: 85px;
+  }
+}
+.month-event-title {
+  width: calc(100% - 8px);
+  border-radius: 3px;
+  margin: 0.5px 0.3rem;
+  padding: 0 5px;
+  overflow: hidden;
+  text-overflow: clip;
+  max-height: 12%;
+  min-height: 15px;
+  align-items: center;
+  color: white;
+  font-size: 11px;
+}
+.event-dialog {
+  padding: 10px 20px !important;
+  max-height: 550px !important;
+  overflow: auto;
+
+  mat-icon{
+    color: #818181;
+    font-size: 17px;
+    padding: 0px 15px 0 0;
+    position: relative;
+    top: 5px;
+    width: 17px;
+    height: 17px;
+  }
+}
+
+.event-header {
+  .mat-tab-label.mat-tab-label-active {
+    background: #f3f6f8;
+    border-radius: 3px;
+  }
+
+  .mat-card-header {
+    padding: 0 20px !important;
+  }
+
+  .title-section {
+    padding: 0 0 0 30px;
+  }
+
+  .shift-section {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    max-height: 100px;
+    padding: 0 0 0 30px;
+
+    mat-icon.time-icon {
+      position: absolute;
+      left: 0;
+      top: 2px;
+    }
+
+    .datepicker-section, .date-range-section {
+      position: relative;
+      //top: -13px;
+      //padding: 0 0 0 4px;
+      mat-form-field{
+        height: 20px;
+      }
+    }
+
+    .shift-info {
+      position: relative;
+      //top: -13px;
+      //padding: 0 26px;
+      /* margin-left: -6px; */
+      overflow: auto;
+      //mat-form-field{
+      //  height: 20px;
+      //}
+
+      .remove-btn {
+        //padding: 0px !important;
+        //margin: 0 !important;
+        //min-width: 0 !important;
+        .mat-icon {
+          font-size: 15px;
+          color: #b1b1b1;
+          position: static;
+          line-height: 17px;
+
+        }
+      }
+    }
+    //.add-shift {
+    //  position: relative;
+    //  right: -20px;
+    //  top: -54px;
+    //
+      .shift-btn {
+        border: 1px solid #25afcb;
+        height: 24px;
+        box-shadow: none;
+        line-height: 20px;
+        color: #25afcb;
+
+        span {
+          font-size: 11px;
+        }
+      }
+    //}
+  }
+
+  .time-section {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+
+    i {
+      color: #818181;
+      font-size: 17px;
+      padding: 0px 15px 0 0;
+      position: relative;
+      top: 5px;
+      width: 17px;
+      height: 17px;
+    }
+  }
+}
+
+.select-calendar-section {
+  // position: relative;
+  width: calc(100% - 20px);
+  margin-left: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  height: 3.125rem;
+  position: relative;
+
+  img {
+    position: relative;
+    top: -2px;
+  }
+}
+
+.color-div {
+  width: 100%;
+  padding: 5px 3px 0px 10px;
+  // height: 100%;
+}
+.time-selection{
+  mat-form-field{
+    width: 85px;
+    height: 30px;
+  }
+}
+.recurrence-section, .end-date-section, .select-calendar-section, .event-fields {
+  position: relative;
+  padding-left: 30px;
+  //top: -15px;
+  mat-icon{
+    position: absolute;
+    left: 0;
+    top: 10px;
+  }
+  //mat-form-field{
+  //  height: 38px;
+  //}
+
+}
+
+.repeat-day {
+  padding: 0 14px;
+  .day-selection {
+    display: flex;
+    flex-direction: row;
+    padding: 5px 10px;
+    div {
+      width: 20px;
+      height: 20px;
+      background: #f5f5f5;
+      border-radius: 50%;
+      font-size: 10px;
+      padding: 3px 0px;
+      font-weight: 700;
+      text-align: center;
+      color: #adadad;
+      margin-right: 10px;
+      cursor: pointer;
+      &:hover {
+        color: #fff;
+        background: #25afcb;
+      }
+    }
+    .selected-day {
+      color: #fff;
+      background: #25afcb;
+    }
+
+
+  }
+}
+
+.note-section {
+  padding-left: 25px;
+  small {
+    font-size: 10px;
+    color: #818181;
+  }
+
+  // strong {
+  //   font-size: 10px;
+  // }
+}
+
+.form-group{
+
+  &.name-field{
+    width: calc(100% - 60px);
+    display: inline-block;
+  }
+  &.selection-color{
+    width: 50px;
+    margin-left: 5px;
+    display: inline-block;
+
+    mat-form-field{
+      margin: 0 !important;
+    }
+  }
+}
+.shift-main {
+  width: 100%;
+  position: relative;
+
+  .shift-btn{
+    position: absolute;
+    right: 0;
+    top: 8px;
+  }
+}
+
+span.circle-event {
+  width: 15px;
+  height: 15px;
+  background: transparent;
+  display: inline-block;
+  border-radius: 100%;
+  transform: rotate(45deg);
+  position: relative;
+  top: 2px;
+  margin-right: 8px;
+}
+.preview-dialog{
+  p{
+    padding: 3px 0;
+    margin: 0;
+    color: #717171;
+    font-size: 13px;
+  }
+
+  .mat-card-header{
+    h4{
+      display: inline-block;
+    }
+    span{
+      float: right;
+      mat-icon{
+        border-width: 0;
+        position: relative;
+        top: 8px;
+        right: 0;
+        font-size: 20px;
+        width: 25px;
+        height: 25px;
+        line-height: 24px;
+        &:last-child{
+          border-width: 1px;
+        }
+      }
+      &.circle-event{
+        float: none;
+      }
+    }
+  }
+}

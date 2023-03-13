@@ -1,0 +1,376 @@
+<div class="loading-area" *ngIf="spinner">
+  <mat-spinner></mat-spinner>
+</div>
+<div class="container main-custom-container">
+  <div class="row">
+    <div class="col-sm-12 p-0">
+      <div class="panel-body">
+        <div class="sub-heading">
+          <h2>Queue Settings</h2>
+        </div>
+        <div class="routing-content">
+          <div class="filter-section">
+            <div class="form-group search-field">
+              <mat-form-field appearance="outline">
+                <input matInput [(ngModel)]="searchTerm" placeholder="Search">
+                <mat-icon>search</mat-icon>
+              </mat-form-field>
+            </div>
+
+            <button *ngIf="managePermission" mat-flat-button (click)="openQueueModal(newQueue)">
+              <!-- <button mat-flat-button (click)="openStepModal(stepFormTemplate)"> -->
+              <mat-icon>add</mat-icon>
+              Create Queue
+            </button>
+          </div>
+
+          <div class="routing-accordion pq-accordion">
+            <mat-accordion>
+              <ul class="top-heading routing-group-list">
+                <li>Name</li>
+                <li>Associated MRD</li>
+                <li>Service Level Threshold</li>
+              </ul>
+              <ng-container *ngIf="queueData && queueData.length != 0">
+                <mat-expansion-panel
+                  *ngFor="let j = index;let data of queueData | filter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
+                  <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                    [expandedHeight]="customExpandedHeight">
+                    <mat-panel-title>
+                      <p class="group-name">{{data.name? data.name : 'N/A'}}</p>
+                    </mat-panel-title>
+                    <mat-panel-title>
+                      <p class="group-name">
+                        <!-- <ng-container *ngIf="data?.agentSelectionCriteria == 'LEAST_SKILLED'">Least Skilled
+                        </ng-container>
+                        <ng-container *ngIf="data?.agentSelectionCriteria == 'MOST_SKILLED'">Most Skilled</ng-container>
+                        <ng-container *ngIf="data?.agentSelectionCriteria == 'LONGEST_AVAILABLE'">Longest Available
+                        </ng-container> -->
+                        {{data?.mrd?.name? data?.mrd?.name : 'N/A'}}
+
+                      </p>
+                    </mat-panel-title>
+                    <mat-panel-title>
+                      <p class="group-name">{{data.serviceLevelThreshold}}</p>
+                      <div class="table-trigger">
+                        <span *ngIf="managePermission" class="list-trigger-area">
+                          <button mat-mini-fab matTooltip="Edit" (click)="editQueue(newQueue,data)">
+                            <!-- <i class="fa fa-pencil" aria-hidden="true"></i> -->
+                            <mat-icon>mode_edit</mat-icon>
+                          </button>
+                          <button matTooltip="Delete" (click)="deleteConfirm(data)" mat-mini-fab>
+                            <!-- <i class="fa fa-trash-o" aria-hidden="true"></i> -->
+                            <mat-icon>delete</mat-icon>
+                          </button>
+                        </span>
+                      </div>
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <div class="manage-step">
+                    <p>{{ data.steps?.length > 0 ? 'Steps' : 'No Steps Added'}}</p>
+                    <div *ngIf="data.steps?.length > 0" class="routing-table">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">Criteria</th>
+                            <th scope="col">Timeout(sec)</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let stepData of data.steps;let i = index">
+                            <td scope="row" #tableData>
+                              <!-- [style.width]="tableData.offsetWidth + 'px'" -->
+                              <span class="step-table-span" [style.width]="tableData.offsetWidth + 'px'">
+                                <ng-container *ngFor="let j = index;let exp of stepData?.expressions">
+                                  <span *ngIf="exp?.preExpressionCondition != null"> {{exp?.preExpressionCondition}}
+                                  </span>
+                                  <ng-container
+                                    *ngFor="let k =index;let first = first;let last= last;let data of exp?.terms">
+                                    <span *ngIf="first">(</span>
+                                    <span *ngIf="data?.preTermCondition != null">{{data?.preTermCondition}} </span>
+                                    <span>{{data?.routingAttribute?.name}} {{data?.relationalOperator}}
+                                      <ng-container *ngIf="data?.routingAttribute?.type == 'BOOLEAN'">{{data?.value ==
+                                        '1' ? 'true' :'false'}} </ng-container>
+                                      <ng-container *ngIf="data?.routingAttribute?.type != 'BOOLEAN'">
+                                        {{data?.value}}
+                                      </ng-container>
+
+                                      <span *ngIf="last">)</span>
+                                    </span>
+                                  </ng-container>
+                                </ng-container>
+                              </span>
+                            </td>
+                            <td class="step-table-trigger">
+                              <ng-container *ngIf="stepData?.timeout != 0">{{stepData?.timeout ? stepData?.timeout :
+                                'N/A'}}</ng-container>
+                              <ng-container *ngIf="stepData?.timeout == 0">{{stepData.timeout}}</ng-container>
+                              <span *ngIf="managePermission" class="step-trigger-area">
+                                <button matTooltip="Edit" (click)="editStep(stepFormTemplate,stepData,data)" mat-mini-fab>
+                                  <mat-icon>mode_edit</mat-icon>
+                                </button>
+                                <button matTooltip="Delete" (click)="deleteStepConfirm(stepData,data)" mat-mini-fab>
+                                  <mat-icon>delete</mat-icon>
+                                </button>
+                              </span>
+                            </td>
+                          </tr>
+                        </tbody>
+                        <!-- </div> -->
+                      </table>
+                    </div>
+                    <div *ngIf="data?.Steps?.length != 10" class="step-section">
+                      <button *ngIf="managePermission" mat-flat-button (click)="checkStepsLength(stepFormTemplate,data)">
+                        Add Step
+                      </button>
+                    </div>
+                  </div>
+                </mat-expansion-panel>
+              </ng-container>
+            </mat-accordion>
+
+            <div *ngIf="queueData && queueData.length == 0" class="no-data-warning">
+              <i class="material-icons">warning_amber</i>
+              <span>No Data Found</span>
+            </div>
+
+            <div *ngIf="queueData && queueData.length >= 6" class="pagination-section">
+              <span class="page-span">
+                <span>Entries Per Page</span>
+                <select (change)="selectPage()" [(ngModel)]="selectedItem">
+                  <option *ngFor="let item of itemsPerPageList" [value]="item">{{ item }}
+                  </option>
+                </select>
+              </span>
+              <pagination-controls (pageBoundsCorrection)="pageBoundChange($event)"
+                (pageChange)="p = $event;pageChange($event)" previousLabel="" nextLabel="">
+              </pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #newQueue>
+    <div class="dialog-container">
+      <div class="mat-card-header">
+        <mat-icon (click)="onClose('queue')">close</mat-icon>
+        <h4 class="content-span full-width">{{formHeading}}</h4>
+      </div>
+      <div class="dialog-content">
+        <form class="form-horizontal form-bordered queue-arrow" [formGroup]="queueForm">
+          <div class="form-group">
+            <mat-label>Name</mat-label>
+            <mat-form-field appearance="outline">
+              <input matInput formControlName="name">
+              <mat-error class="form-error">
+                {{formErrors.name}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="form-group">
+            <mat-label>Associated MRD</mat-label>
+            <mat-form-field appearance="outline">
+              <mat-select formControlName="mrd">
+                <mat-option *ngFor="let mrdVal of mrdData" [value]="mrdVal">{{mrdVal.name | titlecase}}
+                </mat-option>
+              </mat-select>
+              <mat-error class="form-error">
+                {{formErrors.mrd}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <!-- <div class="form-group">
+            <mat-label>Agent Selection Criteria</mat-label>
+            <mat-form-field appearance="outline">
+              <mat-select formControlName="agentCriteria">
+           
+                <mat-option [value]="'LEAST_SKILLED'">Least Skilled</mat-option>
+                <mat-option [value]="'MOST_SKILLED'">Most Skilled</mat-option>
+                <mat-option [value]="'LONGEST_AVAILABLE'">Longest Available</mat-option>
+              </mat-select>
+              <mat-error class="form-error">
+                {{formErrors.agentCriteria}}
+              </mat-error>
+            </mat-form-field>
+          </div> -->
+
+          <div class="form-group">
+            <mat-label>Service Level Type</mat-label>
+            <mat-form-field appearance="outline">
+              <input type="number" min="1" max="3" matInput formControlName="serviceLevelType">
+              <!-- <mat-select formControlName="serviceLevelType">
+                <mat-option [value]="'IGNORE_ABANDONED_CHATS'">Ignore Abandoned Chats</mat-option>
+                <mat-option [value]="'ABANDONED_CHATS_HAVE_A_NEGATIVE_IMPACT'">Abandoned chats have a negative impact
+                </mat-option>
+                <mat-option [value]="'ABANDONED_CHATS_HAVE_A_POSITIVE_IMPACT'">Abandoned chats have a positive impact
+                </mat-option>
+              </mat-select> -->
+              <mat-error class="form-error">
+                {{formErrors.serviceLevelType}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-label>Service Level Threshold</mat-label>
+            <mat-form-field appearance="outline">
+              <input type="number" min="1" matInput formControlName="serviceLevelThreshold">
+              <mat-error class="form-error">
+                {{formErrors.serviceLevelThreshold}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="template-action row">
+            <div class="col-md-12">
+              <div class="form-action-area">
+                <button mat-raised-button [mat-dialog-close]="true" class="gray-btn">Cancel</button>
+                <button mat-raised-button [disabled]="!queueForm.valid" (click)="onQueueSave()"
+                  [mat-dialog-close]="save" class="blue-btn service-trigger">{{saveBtnText}}</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-template>
+
+
+  <ng-template #stepFormTemplate>
+    <div class="step-dialog-container">
+      <div class="mat-card-header">
+        <mat-icon (click)="onClose('step')">close</mat-icon>
+        <h4 class="content-span full-width">{{stepFormHeading}}</h4>
+      </div>
+      <div class="dialog-content">
+        <form class="form-horizontal form-bordered queue-arrow" [formGroup]="stepForm">
+
+          <div class="timeout-info">
+            <div class="form-group col-md-5">
+              <mat-label>Step Timeout</mat-label>
+              <mat-form-field appearance="outline">
+                <input type="number" min="0" matInput formControlName="timeout">
+                <mat-error class="form-error">
+                  {{stepFormErrors.timeout}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-group col-md-4">
+              <span class="msg-span">(sec)</span>
+            </div>
+          </div>
+          <div class="expression-parent-div">
+            <div class="expression-section" formArrayName="expressions">
+              <div class="expression-section-body" *ngFor="let expression of getExpressions(stepForm); let i = index">
+                <div class="expression-content" [formGroupName]="i">
+                  <div class="heading-section">
+                    <mat-label>Expression {{i + 1}}</mat-label>
+
+                    <div class="right-flank">
+
+                      <mat-select *ngIf="i > 0" formControlName="preExpressionCondition">
+                        <mat-option *ngFor="let data of conditionList" [value]="data">{{data}}
+                        </mat-option>
+                      </mat-select>
+                      <button class="expression-btn" [ngClass]="{'top-exp': i == 0}"
+                        *ngIf="i == getExpressions(stepForm).length -1 " mat-flat-button
+                        (click)="addExpressionButton()">
+                        Add Expression
+                      </button>
+                      <button *ngIf="getExpressions(stepForm).length > 1 " (click)="removeExpression(i)"
+                        class="exp-remove-btn" mat-flat-button>
+                        <mat-icon>close</mat-icon>
+                      </button>
+                    </div>
+
+                  </div>
+                  <div class="term-section" formArrayName="terms">
+                    <div [ngClass]="{'top-term': j == 0}" class="expression-content-body"
+                      *ngFor="let term of getTerms(expression); let j = index">
+
+                      <ng-container [formGroupName]="j">
+                        <div class="form-group col-md-2">
+                          <mat-form-field *ngIf="j != 0" appearance="outline">
+                            <mat-select formControlName="preTermCondition">
+                              <mat-option *ngFor="let data of conditionList" [value]="data">{{data}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+
+                        <div class="form-group col-md-4 exp-selection">
+                          <mat-form-field appearance="outline">
+                            <mat-select formControlName="routingAttribute">
+                              <mat-option *ngFor="let data of attrData" [value]="data">{{data.name | titlecase}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+
+                        <div class="form-group col-md-2">
+                          <mat-form-field appearance="outline">
+                            <mat-select formControlName="relationalOperator">
+                              <ng-container *ngIf="term?.value.routingAttribute?.type == 'PROFICIENCY_LEVEL'">
+                                <mat-option *ngFor="let data of operatorList" [value]="data">{{data}}
+                                </mat-option>
+                              </ng-container>
+                              <ng-container *ngIf="term.value?.routingAttribute?.type == 'BOOLEAN'">
+                                <mat-option *ngFor="let data of boolOperatorList" [value]="data">{{data}}
+                                </mat-option>
+                              </ng-container>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+
+                        <div class="form-group col-md-3">
+                          <mat-slider *ngIf="term.value?.routingAttribute?.type == 'PROFICIENCY_LEVEL'"
+                            formControlName="profVal" thumbLabel [displayWith]="formatLabel" tickInterval="1" min="0"
+                            max="10">
+                          </mat-slider>
+
+
+                          <mat-radio-group *ngIf="term.value?.routingAttribute?.type == 'BOOLEAN'"
+                            formControlName="boolVal" aria-label="Select an option">
+                            <mat-radio-button value="1">True</mat-radio-button>
+                            <mat-radio-button value="0">False</mat-radio-button>
+                          </mat-radio-group>
+                        </div>
+
+                        <div class="form-group term-btn">
+                          <button (click)="removeTerm(i,j)" *ngIf="getTerms(expression)?.length > 1" class="remove-btn"
+                            mat-flat-button>
+                            <mat-icon>close</mat-icon>
+                          </button>
+                          <button *ngIf="j == getTerms(expression)?.length - 1" mat-flat-button class="add-btn"
+                            (click)="addExpressionTermButton(i,j)">
+                            <mat-icon class="add-icon">add</mat-icon>
+                          </button>
+                        </div>
+
+
+                      </ng-container>
+                    </div>
+                    <div [id]="'term-end' + i"></div>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+            <div id="expression-end"></div>
+          </div>
+          <div class="template-action row padding-class">
+            <div class="col-md-12">
+              <div class="form-action-area">
+                <button mat-raised-button class="gray-btn" [mat-dialog-close]="false">Cancel</button>
+                <button mat-raised-button [disabled]="!stepForm.valid" [mat-dialog-close]="save"
+                  class="dark-blue-btn service-trigger">{{stepSaveBtnText}}</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-template>

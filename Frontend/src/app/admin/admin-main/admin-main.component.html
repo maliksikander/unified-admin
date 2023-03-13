@@ -1,0 +1,286 @@
+<div class="container-fluid main-section-area {{defaultTheme}}" [class.dark-theme]="otherTheme"
+  [class.rtl-language]="defaultLanguage == 'ar'" [class.right-sidebar]="sidebarPosition == 'right'"
+  [class.secondary-sidebar]="isRightBarActive" [class.custom-theme]="isCustomTheme" [ngClass]="defaultLanguage">
+  <div class="them-selector" [style.background-color]="appColor"></div>
+  <div class="row">
+    <div class="col-sm-12 main-nav" [style.background-color]="appColor">
+      <!-- <button class="menu-trigger" mat-raised-button (click)="opened = !opened"><i class="material-icons">menu</i>
+      </button> -->
+      <button *ngIf="isRightBarActive" class="menu-trigger right-btn" mat-raised-button
+        (click)="rightBarOpened = !rightBarOpened"><i class="material-icons">menu</i>
+      </button>
+      <app-top-bar></app-top-bar>
+    </div>
+
+    <mat-sidenav-container class="main-sidebar" hasBackdrop="false"
+      [ngClass]="barStatus ? 'mat-drawer-container mat-sidenav-container mat-drawer-transition mat-drawer-opened expand' : 'mat-drawer-container mat-sidenav-container mat-drawer-transition mat-drawer-opened collapse'"
+      [class.right-sidebar]="sidebarPosition == 'right'">
+      <mat-sidenav [position]="sidebarPosition == 'right' ? 'end': 'start'" #sidenav mode="over" [(opened)]="opened"
+        (opened)="events.push('open!')" [style.background-color]="appColor">
+
+        <mat-nav-list class="action-area">
+          <mat-accordion>
+            <!-- <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <i class="material-icons">assignment</i>
+                <span class="sidebar-text">{{defaultLanguage == 'ar' ? 'الصفحات' : 'pages'}}</span>
+              </mat-expansion-panel-header>
+              <a mat-list-item>
+                <span class="sidebar-text">{{defaultLanguage == 'ar' ? 'صفحة أخرى' : 'Contacts'}}</span>
+              </a>
+              <a mat-list-item>
+                <span class="sidebar-text">{{defaultLanguage == 'ar' ? 'قائمة وهمية' : 'Login'}}</span>
+              </a>
+            </mat-expansion-panel> -->
+
+            <!-- <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <i class="material-icons">assignment</i>
+                <span class="sidebar-text">{{defaultLanguage == 'ar' ? 'قائمة وهمية' : 'Dummy list'}}</span>
+              </mat-expansion-panel-header>
+              <a mat-list-item>
+                <span class="sidebar-text">{{defaultLanguage == 'ar' ? 'الإكمال التلقائي' : 'Autocomplete'}}</span>
+              </a>
+            </mat-expansion-panel> -->
+
+            <!-- BOT SETTINGS -->
+            <a *ngIf="botBool" class="single-menu-link" mat-list-item [routerLinkActive]="['active-link']"
+              [routerLink]="['/bot-settings']">
+              <img src="assets/images/bot.svg" alt="bot">
+              <span class="sidebar-text">Bot</span>
+            </a>
+
+            <!-- Business Calendar -->
+            <!-- <a *ngIf="calendarBool" class="single-menu-link" mat-list-item [routerLinkActive]="['active-link']"
+              [routerLink]="['/business-calendar']">
+              <img src="assets/images/calendar.svg" alt="calendar">
+              <span class="sidebar-text">Business Calendar</span>
+            </a> -->
+
+            <!-- CCM -->
+            <mat-expansion-panel *ngIf="channelBool">
+              <mat-expansion-panel-header class='ccm-header-image-icon'>
+                <img src="assets/images/customer-channels.svg" alt="channel manager">
+                <span class="sidebar-text">Channel Manager</span>
+              </mat-expansion-panel-header>
+
+              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/channel/channel-type']">
+                <img src="assets/images/channel-type.svg" alt="channel_type">
+                <span class="sidebar-text">Channel Type</span>
+              </a>
+
+              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/channel/channel-provider']">
+                <img src="assets/images/channel-provider.svg" alt="channel_provider">
+                <span class="sidebar-text">Channel Provider</span>
+              </a>
+
+              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/channel/channel-connector']">
+                <img src="assets/images/channel-connector.svg" alt="channel_connector">
+                <span class="sidebar-text">Channel Connector</span>
+              </a>
+
+              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/channel/channel-manager']">
+                <img src="assets/images/channel-2.svg" alt="channel">
+                <span class="sidebar-text">Channel</span>
+              </a>
+
+            </mat-expansion-panel>
+
+
+            <!-- Forms -->
+            <a *ngIf="formBool" class="single-menu-link" mat-list-item [routerLinkActive]="['active-link']"
+              [routerLink]="['/form']">
+              <img src="assets/images/forms.svg" alt="forms">
+              <span class="sidebar-text">Forms</span>
+            </a>
+
+            <!-- General Settings -->
+            <mat-expansion-panel *ngIf="generalBool">
+              <mat-expansion-panel-header>
+                <i class="material-icons">settings</i>
+                <span class="sidebar-text">General</span>
+              </mat-expansion-panel-header>
+
+              <!-- <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/general/amq-settings']">
+                <img src="assets/images/AMQ.svg" alt="amq">
+                <span class="sidebar-text">AMQ</span>
+              </a> -->
+
+              <!-- <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/general/business-calendar']">
+                <img src="assets/images/calendar.svg" alt="calendar">
+                <span class="sidebar-text">Business Calendar</span>
+              </a> -->
+
+              <!-- <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/general/database-settings']">
+                <img src="assets/images/database.svg" alt="database">
+                <span class="sidebar-text">Database</span>
+              </a> -->
+
+              <!-- <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/general/display-settings']">
+                <img src="assets/images/display.svg" alt="display">
+                <span class="sidebar-text">Display</span>
+              </a> -->
+
+              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/general/license-manager']">
+                <img src="assets/images/license.svg" alt="license">
+                <span class="sidebar-text">License Info</span>
+              </a>
+
+              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/general/locale-settings']">
+                <img src="assets/images/globe.svg" alt="locale">
+                <span class="sidebar-text">Locale</span>
+              </a>
+
+              <!-- <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/general/logging-settings']">
+                <img src="assets/images/logging.svg" alt="log">
+                <span class="sidebar-text">Logging</span>
+              </a> -->
+
+              <!-- <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/general/reporting-settings']">
+                <img src="assets/images/reporting.svg" alt="reporting">
+                <span class="sidebar-text">Reporting</span>
+              </a> -->
+
+              <!-- <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/general/security-settings']">
+                <img src="assets/images/security.svg" alt="security">
+                <span class="sidebar-text">Security</span>
+              </a> -->
+
+
+
+            </mat-expansion-panel>
+
+            <!-- Pull Mode List-->
+            <a *ngIf="pullModeBool" class="single-menu-link" mat-list-item [routerLinkActive]="['active-link']"
+              [routerLink]="['/pull-mode-list']">
+              <img src="assets/images/list.svg" class="img-size-adjustment" alt="pull_mode">
+              <span class="sidebar-text">Pull Mode List</span>
+            </a>
+
+            <!-- Reason Code -->
+            <a *ngIf="reasonCodeBool" class="single-menu-link" mat-list-item [routerLinkActive]="['active-link']"
+              [routerLink]="['/reason-code']">
+              <img src="assets/images/reason-code.svg" class="img-size-adjustment" alt="reasons">
+              <span class="sidebar-text">Reasons</span>
+            </a>
+
+            <!-- Routing Configuration -->
+            <mat-expansion-panel *ngIf="routingBool">
+              <mat-expansion-panel-header class='route-header-image-icon'>
+                <!-- <i style="font-size: 21px;" class="material-icons">compare_arrows</i> -->
+                <img src="assets/images/routing.svg" alt="">
+                <span class="sidebar-text">Routing Engine</span>
+              </mat-expansion-panel-header>
+              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/routing/attributes']">
+                <img src="assets/images/attribute.svg" alt="attribute">
+                <span class="sidebar-text">Routing Attribute</span>
+              </a>
+              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/routing/media-routing-domain']">
+                <img src="assets/images/mrd.svg" alt="mrd">
+                <span class="sidebar-text">MRD</span>
+              </a>
+              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/routing/mrd-tasks']">
+                <img src="assets/images/users.svg" alt="agents">
+                <span class="sidebar-text">Agent MRDs</span>
+              </a>
+              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/routing/precision-queue']">
+                <img src="assets/images/precision_queue.svg" alt="queue">
+                <span class="sidebar-text">Queue</span>
+              </a>
+              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/routing/agents']">
+                <img src="assets/images/users.svg" alt="agents">
+                <span class="sidebar-text">Agent Attributes</span>
+              </a>
+            </mat-expansion-panel>
+
+            <!-- Web Widget -->
+            <a *ngIf="webWidgetBool" class="single-menu-link" mat-list-item [routerLinkActive]="['active-link']"
+              [routerLink]="['/web-widget']">
+              <img style="padding-left: 2px;" src="assets/images/web-widget.svg" class="img-size-adjustment"
+                alt="web_widget">
+              <span class="sidebar-text">Web Widget</span>
+            </a>
+            
+            <!-- Agent desk -->
+            <a *ngIf="agentDeskBool" class="single-menu-link" mat-list-item [routerLinkActive]="['active-link']"
+              [routerLink]="['/agent-desk']">
+              <img style="padding-left: 2px;" src="assets/images/agent-desk.svg" class="img-size-adjustment"
+                alt="web_widget">
+              <span class="sidebar-text">Agent Desk</span>
+            </a>
+          </mat-accordion>
+
+
+          <!-- <a mat-list-item>
+            <mat-slide-toggle (click)="changeTheme()" [checked]="true">
+              {{defaultLanguage == 'ar' ? 'غير الخلفية' : 'Change Theme'}}
+            </mat-slide-toggle>
+          </a> -->
+          <a mat-list-item (click)="clickEvent()" matTooltip="{{barStatus ? 'expand icons' : 'collapse icons'}}"
+            class="bottom-trigger">
+            <i class="fa" [ngClass]="barStatus ? 'fa-indent' : 'fa-outdent'"></i>
+          </a>
+        </mat-nav-list>
+      </mat-sidenav>
+      <mat-sidenav-content>
+
+        <router-outlet></router-outlet>
+
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+    <!--Right Sidebar-->
+    <!-- <div class="secondary-sidebar-main">
+
+
+      <mat-sidenav-container *ngIf="isRightBarActive" class="main-sidebar secondary-sidebar" hasBackdrop="false">
+        <mat-sidenav [position]="sidebarPosition == 'right' ? 'start': 'end'" #sidenav
+                     [(opened)]="rightBarOpened" (opened)="events.push('open!')">
+
+          <mat-nav-list class="action-area">
+            <mat-accordion>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <i class="material-icons">assignment</i>
+                  <span class="sidebar-text">{{defaultLanguage == 'ar' ? 'الصفحات' : 'pages'}}</span>
+                </mat-expansion-panel-header>
+                <a mat-list-item>
+                  <span class="sidebar-text">{{defaultLanguage == 'ar' ? 'صفحة أخرى' : 'Contacts'}}</span>
+                </a>
+                <a mat-list-item>
+                  <span class="sidebar-text">{{defaultLanguage == 'ar' ? 'قائمة وهمية' : 'Login'}}</span>
+                </a>
+              </mat-expansion-panel>
+
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <i class="material-icons">assignment</i>
+                  <span class="sidebar-text">{{defaultLanguage == 'ar' ? 'قائمة وهمية' : 'Dummy list'}}</span>
+                </mat-expansion-panel-header>
+                <a mat-list-item>
+                  <span class="sidebar-text">{{defaultLanguage == 'ar' ? 'الإكمال التلقائي' : 'Autocomplete'}}</span>
+                </a>
+              </mat-expansion-panel>
+
+            </mat-accordion>
+            <a mat-list-item>
+              <mat-slide-toggle (click)="changeTheme()" [checked]="true">
+                {{defaultLanguage == 'ar' ? 'غير الخلفية' : 'Change Theme'}}
+              </mat-slide-toggle>
+            </a>
+            <a mat-list-item (click)="clickEvent()"
+               matTooltip="{{barStatus ? 'expand icons' : 'collapse icons'}}" class="bottom-trigger">
+              <i class="fa" [ngClass]="barStatus ? 'fa-indent' : 'fa-outdent'"></i>
+            </a>
+          </mat-nav-list>
+        </mat-sidenav>
+
+        <mat-sidenav-content>
+
+        </mat-sidenav-content>
+
+      </mat-sidenav-container>
+
+    </div> -->
+
+  </div>
+</div>

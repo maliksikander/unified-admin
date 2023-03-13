@@ -1,0 +1,117 @@
+<div class="loading-area" *ngIf="spinner">
+    <mat-spinner></mat-spinner>
+</div>
+<div class="container main-custom-container">
+    <div class="row">
+        <div class="col-sm-12 p-0">
+            <div class="panel-body">
+                <div class="sub-heading">
+                    <h2>Pull Mode List</h2>
+                </div>
+                <div class="pull-mode-content">
+                    <div class="filter-section">
+                        <div class="form-group search-field">
+                            <mat-form-field appearance="outline">
+                                <input matInput [(ngModel)]="searchTerm" placeholder="Search">
+                                <mat-icon>search</mat-icon>
+                            </mat-form-field>
+                        </div>
+
+                        <button *ngIf="managePermission" mat-flat-button (click)="openPullModeModal(pullModeForm)">
+                            <mat-icon>add</mat-icon>
+                            Create List
+                        </button>
+                    </div>
+
+                    <div class="pull-mode-list">
+
+                        <ul class="top-heading list-heading-section">
+                            <li>Name</li>
+                            <li>Description</li>
+                        </ul>
+                        <ng-container *ngIf="pullModeListData && pullModeListData.length != 0">
+                            <div class="pull-mode-data"
+                                *ngFor="let data of pullModeListData | filter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
+                                <span class="group-name">{{data?.name ? data.name : 'N/A'}}</span>
+                                <span class="group-name">
+                                    {{data?.description ? data.description :'N/A'}}
+                                    <span *ngIf="managePermission" class="list-trigger-area">
+                                        <button mat-mini-fab matTooltip="Edit"
+                                            (click)="openEditPullModeModal(pullModeForm,data)">
+                                            <mat-icon>mode_edit</mat-icon>
+                                        </button>
+                                        <button matTooltip="Delete" (click)="deleteConfirm(data)" mat-mini-fab>
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+                                    </span>
+                                </span>
+
+                            </div>
+                        </ng-container>
+
+
+                        <div *ngIf="pullModeListData && pullModeListData.length == 0" class="no-data-warning">
+                            <i class="material-icons">warning_amber</i>
+                            <span>No Data Found</span>
+                        </div>
+
+                        <div *ngIf="pullModeListData && pullModeListData.length >= 5" class="pagination-section">
+                            <span class="page-span">
+                                <span>Entries Per Page</span>
+                                <select (change)="selectPage()" [(ngModel)]="selectedItem">
+                                    <option *ngFor="let item of itemsPerPageList" [value]="item">{{ item }}
+                                    </option>
+                                </select>
+                            </span>
+                            <pagination-controls (pageBoundsCorrection)="pageBoundChange($event)"
+                                (pageChange)="p = $event;pageChange($event)" previousLabel="" nextLabel="">
+                            </pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pull Mode Form -->
+    <ng-template #pullModeForm>
+        <div class="dialog-container">
+            <div class="mat-card-header">
+                <mat-icon (click)="onClose()">close</mat-icon>
+                <h4 class="content-span full-width">{{formHeading}}</h4>
+            </div>
+            <div class="dialog-content">
+                <form class="form-horizontal form-bordered" [formGroup]="pullModeListForm">
+                    <div class="form-group">
+                        <mat-label>Name</mat-label>
+                        <mat-form-field appearance="outline">
+                            <input matInput formControlName="name">
+                            <mat-error class="form-error">
+                                {{formErrors?.name}}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="form-group">
+                        <mat-label>Description</mat-label>
+                        <mat-form-field appearance="outline">
+                            <textarea type="text" matInput formControlName="description"></textarea>
+                            <mat-error class="form-error">
+                                {{formErrors?.description}}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="template-action row">
+                        <div class="col-md-12">
+                            <div class="form-action-area">
+                                <button mat-raised-button [mat-dialog-close]="true" class="gray-btn">Cancel</button>
+                                <button mat-raised-button [disabled]="!pullModeListForm.valid" (click)="onSave()"
+                                    [mat-dialog-close]="save" class="blue-btn service-trigger">{{saveBtnText}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </ng-template>

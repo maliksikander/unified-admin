@@ -1,0 +1,87 @@
+<div class="loading-area" *ngIf="spinner">
+    <mat-spinner></mat-spinner>
+</div>
+<div class="container main-custom-container">
+    <div class="row">
+        <div class="col-sm-12 p-0">
+            <div class="panel-body">
+                <div class="sub-heading">
+                    <h2>{{pageTitle}}</h2>
+                </div>
+                <div *ngIf="!addType" class="panel-page-content">
+                    <div class="filter-section">
+                        <div class="form-group search-field">
+                            <mat-form-field appearance="outline">
+                                <input matInput [(ngModel)]="searchTerm" placeholder="Search">
+                                <mat-icon>search</mat-icon>
+                            </mat-form-field>
+                        </div>
+
+                        <button *ngIf="managePermission" (click)="addChannelType()" mat-flat-button>
+                            <mat-icon>add</mat-icon>
+                            New Channel Type
+                        </button>
+                    </div>
+                    <div class="types-list">
+                        <ul class="top-heading">
+                            <li class="col-md-8">Name</li>
+                            <li class="col-md-2">Icon</li>
+                        </ul>
+                        <ng-container *ngIf="typeList && typeList.length > 0">
+                            <ul class="type-list-data">
+                                <li
+                                    *ngFor="let data of typeList | filter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            {{data?.name ? data?.name : 'N/A'}}
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <img [src]="getFileURL(data?.channelLogo)" alt="type_logo">
+                                        </div>
+                                    </div>
+                                    <div *ngIf="managePermission" class="list-action-area">
+                                        <span class="list-actions">
+                                            <button mat-mini-fab matTooltip="Edit" (click)="editChannelType(data)">
+                                                <mat-icon>mode_edit</mat-icon>
+                                            </button>
+                                            <button mat-mini-fab matTooltip="Delete" (click)="deleteConfirm(data)">
+                                                <mat-icon>delete</mat-icon>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </ng-container>
+
+                        <div *ngIf="typeList && typeList.length == 0" class="no-data-warning">
+                            <mat-icon>warning_amber</mat-icon>
+                            <span>No Data Found</span>
+                        </div>
+
+                        <div *ngIf="typeList && typeList.length >= 6" class="pagination-section">
+                            <span class="page-span">
+                                <span>Entries Per Page</span>
+                                <select (change)="selectPage()" [(ngModel)]="selectedItem">
+                                    <option *ngFor="let item of itemsPerPageList" [value]="item">{{ item }}
+                                    </option>
+                                </select>
+                            </span>
+                            <pagination-controls (pageBoundsCorrection)="pageBoundChange($event)"
+                                (pageChange)="p = $event;pageChange($event)" previousLabel="" nextLabel="">
+                            </pagination-controls>
+                        </div>
+                    </div>
+                </div>
+
+                <ng-container *ngIf="addType">
+                    <app-channel-type-form [parentBool]="addType" [editData]="editTypeData"
+                        (childBool)='childToParentUIChange($event)' (formSaveData)='onSave($event)'>
+                    </app-channel-type-form>
+                </ng-container>
+
+
+            </div>
+        </div>
+    </div>
+</div>

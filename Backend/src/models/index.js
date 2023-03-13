@@ -1,0 +1,14 @@
+// module.exports.Token = require('./token.model');
+// module.exports.User = require('./user.model');
+module.exports.AmqSetting = require('./amqSettings.model');
+module.exports.DatabaseSetting = require('./databaseSettings.model');
+module.exports.DisplaySetting = require('./displaySettings.model');
+module.exports.LocaleSetting = require('./localeSettings.model');
+module.exports.LogSetting = require('./logSettings.model');
+module.exports.ReportSetting = require('./reportSettings.model');
+module.exports.SecuritySetting = require('./securitySettings.model');
+module.exports.FormsModel = require('./forms.model');
+module.exports.FormValidationModel = require('./formValidation.model');
+module.exports.ReasonCodeModel = require('./reason.model');
+module.exports.PullModeListModel = require('./pull-mode-list.model');
+module.exports.AgentDeskSettings = require('./agentDeskSettings.model');
