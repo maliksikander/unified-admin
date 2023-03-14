@@ -1,38 +1,5 @@
 .routing-content {
-  //.filter-section {
-  //  padding: 10px 25px;
-  //  display: flex;
-  //  justify-content: flex-end;
-  //
-  //  .form-group {
-  //    width: 260px;
-  //    min-height: 48px;
-  //
-  //    .mat-form-field {
-  //      //width: 100%;
-  //      //position: relative;
-  //
-  //      mat-icon {
-  //        position: absolute;
-  //        right: -11px;
-  //        top: -2px;
-  //        color: #d5d5d5;
-  //        height: 35px;
-  //        line-height: 35px;
-  //        width: 40px;
-  //        text-align: center;
-  //        cursor: pointer;
-  //        z-index: 99;
-  //
-  //        &:hover {
-  //          cursor: pointer;
-  //          background: #cccccc40;
-  //          color: #999999;
-  //        }
-  //      }
-  //    }
-  //  }
-  //}
+
 
   .routing-table {
     //padding: 0px 25px;
@@ -62,14 +29,6 @@
       }
     }
     td {
-      //font-size: 13px;
-      //color: #686868;
-      //height: 40px;
-      //line-height: 39px;
-      //padding: 0 15px;
-      //overflow: hidden;
-      //text-overflow: ellipsis;
-      //white-space: nowrap;
       text-align: center;
       &:first-child{
         text-align: left;

@@ -1,62 +1,6 @@
 @import "~src/assets/themes/blue-theme";
 
 .routing-content {
-  //.filter-section {
-  //  text-align: right;
-  //  width: 100%;
-  //  padding: 10px 25px 15px 0px;
-  //
-  //  .form-group {
-  //    max-width: 260px;
-  //    width: 100%;
-  //    display: inline-block;
-  //    margin: 0;
-  //
-  //    .mat-form-field {
-  //      width: 100%;
-  //      position: relative;
-  //
-  //      mat-icon {
-  //        position: absolute;
-  //        right: -11px;
-  //        top: -2px;
-  //        color: #d5d5d5;
-  //        height: 35px;
-  //        line-height: 35px;
-  //        width: 40px;
-  //        text-align: center;
-  //        cursor: pointer;
-  //        z-index: 99;
-  //
-  //        &:hover {
-  //          cursor: pointer;
-  //          background: #cccccc40;
-  //          color: #999999;
-  //        }
-  //      }
-  //    }
-  //  }
-  //
-  //  button {
-  //    margin-left: 10px;
-  //    padding-left: 5px !important;
-  //    background: #f3f6f8;
-  //    color: #686868;
-  //    font-weight: 600;
-  //    font-size: 13px !important;
-  //    height: 35px;
-  //
-  //    mat-icon {
-  //      font-size: 20px;
-  //      position: relative;
-  //      top: 1px;
-  //    }
-  //
-  //    span {
-  //      font-size: 12px;
-  //    }
-  //  }
-  //}
 
   .routing-accordion {
     //padding: 0px 25px;
@@ -130,14 +74,6 @@
     }
 
     .routing-group-list {
-      //display: block;
-      //overflow: hidden;
-      //border: 1px solid #e2e2e2;
-      //background: #f5f5f5;
-      //height: 40px;
-      //padding: 0;
-      //width: 100%;
-      //margin: 0;
 
       li {
         display: inline-block;
@@ -166,43 +102,11 @@
     .table-trigger {
       position: absolute;
       right: 40px;
-      //button {
-      //  box-shadow: none;
-      //  height: 23px;
-      //  margin: 0 5px;
-      //  width: 23px;
-      //  line-height: 23px;
-      //  background: #919191;
-      //
-      //  &:hover {
-      //    background: #a9a9a9;
-      //  }
-      //  span {
-      //    font-size: 13px;
-      //  }
-      //
-      //  .mat-button-wrapper {
-      //    padding: 0;
-      //  }
-      //}
+
       .list-trigger-area {
         display: none;
         transition: all 0.3s;
         z-index: 2;
-
-        //b {
-        //  font-weight: normal;
-        //}
-        //i {
-        //  position: relative;
-        //  top: -9px;
-        //}
-
-        //mat-icon {
-        //  position: relative;
-        //  top: -6px;
-        //  font-size: 17px;
-        //}
       }
     }
     .step-table-trigger {
@@ -232,20 +136,6 @@
         position: absolute;
         right: 100px;
         z-index: 2;
-
-        //b {
-        //  font-weight: normal;
-        //}
-        //i {
-        //  position: relative;
-        //  top: -9px;
-        //}
-
-        //mat-icon {
-        //  position: relative;
-        //  top: -6px;
-        //  font-size: 17px;
-        //}
       }
 
       .step-trigger-area {
@@ -254,20 +144,6 @@
         position: absolute;
         right: 60px;
         z-index: 2;
-
-        //b {
-        //  font-weight: normal;
-        //}
-        //i {
-        //  position: relative;
-        //  top: -9px;
-        //}
-
-        //mat-icon {
-        //  position: relative;
-        //  top: -6px;
-        //  font-size: 17px;
-        //}
       }
     }
   }
@@ -282,17 +158,6 @@
 .form-group.mrd-toggle.mrd-padding-btn {
   padding: 15px 0px !important;
 }
-
-/* Firefox */
-//input[type="number"] {
-//  -moz-appearance: textfield;
-//}
-///* Chrome, Safari, Edge, Opera */
-//input::-webkit-outer-spin-button,
-//input::-webkit-inner-spin-button {
-//  -webkit-appearance: none;
-//  margin: 0;
-//}
 
 .manage-step {
   margin-top: 5px;
@@ -391,35 +256,6 @@
   mat-dialog-container {
     padding: 0;
   }
-
-  //.mat-card-header {
-  //  background: #ececec;
-  //  padding: 0 10px;
-  //  position: relative;
-  //  height: 40px;
-  //
-  //  mat-icon {
-  //    position: absolute;
-  //    right: 10px;
-  //    width: 30px;
-  //    height: 30px;
-  //    text-align: center;
-  //    line-height: 30px;
-  //    top: 5px;
-  //    border: 1px solid #a4a4a4;
-  //    border-radius: 50%;
-  //    color: #a4a4a4;
-  //    cursor: pointer;
-  //  }
-  //
-  //  h4 {
-  //    color: #5b5b5b;
-  //    font-size: 14px;
-  //    margin: 0;
-  //    line-height: 14px;
-  //    padding: 13px 0;
-  //  }
-  //}
 
   .dialog-content {
     padding: 15px 20px;

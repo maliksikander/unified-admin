@@ -1,15 +1,5 @@
 @import "~src/assets/themes/blue-theme";
 
-//input[type="number"] {
-//  -moz-appearance: textfield;
-//}
-///* Chrome, Safari, Edge, Opera */
-//input::-webkit-outer-spin-button,
-//input::-webkit-inner-spin-button {
-//  -webkit-appearance: none;
-//  margin: 0;
-//}
-
 .service-trigger {
   background: $blue-text-color;
   color: #ffffff;
@@ -17,16 +7,6 @@
   line-height: 30px;
   width: 90px;
 }
-
-//.panel-page-content {
-//  padding-left: 18px !important;
-//}
-
-// mat-slide-toggle {
-//   padding: 0px 20px;
-//   position: relative;
-//   top: 6px;
-// }
 
 button {
   color: #ffffff;
