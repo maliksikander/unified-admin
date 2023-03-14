@@ -1,28 +1,11 @@
 @import "~src/assets/themes/blue-theme";
 
-input[type="number"] {
-  -moz-appearance: textfield;
-}
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
 .service-trigger {
   background: $blue-text-color;
   color: #ffffff;
   height: 30px;
   line-height: 30px;
   width: 90px;
-}
-
-//.panel-page-content {
-//  padding-left: 0px !important;
-//}
-.content-padding {
-  padding-left: 18px !important;
 }
 
 .interative-toggle {
@@ -124,7 +107,6 @@ button {
       padding: 10px 0;
 
       &:hover {
-        background: #f8f8f8;
         .drag-handle {
           display: inline-block;
         }
@@ -132,7 +114,7 @@ button {
     }
 
     .mat-expanded {
-      background: #f8f8f8;
+      background: $fill-color;
 
       .drag-handle {
         display: inline-block;

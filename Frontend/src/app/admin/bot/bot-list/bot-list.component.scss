@@ -1,22 +1,8 @@
 @import "~src/assets/themes/blue-theme";
 
-/* Firefox */
-input[type="number"] {
-  -moz-appearance: textfield;
-}
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
 .panel-page-content {
-  //padding-top: 20px !important;
-  //padding-left: 46px !important;
 
   .bot-accordion {
-    //padding: 0px 40px 10px 0px;
     .add-bot-btn {
       background: $button-color;
       color: #ffffff;
@@ -67,7 +53,6 @@ input::-webkit-inner-spin-button {
     }
     .bot-table {
       width: 100%;
-      //   margin-bottom: 10px;
       thead {
         tr {
           min-height: 40px;
@@ -122,63 +107,6 @@ input::-webkit-inner-spin-button {
           }
         }
       }
-      //   }
-
-      //.list-action-area {
-      //  position: relative;
-      //
-      //  .data-overflow {
-      //    max-width: calc(100% - 100px);
-      //    overflow: hidden;
-      //    text-overflow: ellipsis;
-      //    white-space: nowrap;
-      //  }
-      //
-      //  button {
-      //    box-shadow: none;
-      //    span {
-      //      font-size: 13px;
-      //    }
-      //    height: 24px;
-      //    margin: 0 3px;
-      //    width: 24px;
-      //    line-height: 24px;
-      //    background: $blue-text-color;
-      //
-      //    &:hover {
-      //      background: lighten($blue-text-color, 10%);
-      //    }
-      //    .mat-button-wrapper {
-      //      padding: 0;
-      //    }
-      //  }
-      //  .list-actions {
-      //    display: none;
-      //    transition: all 0.3s;
-      //    position: absolute;
-      //    right: 5px;
-      //    top: 0;
-      //    z-index: 2;
-      //
-      //    mat-icon {
-      //      position: relative;
-      //      //top: -6px;
-      //      font-size: 17px;
-      //      line-height: 24px;
-      //    }
-      //
-      //    b {
-      //      font-weight: normal;
-      //    }
-      //    i {
-      //      position: relative;
-      //      top: -9px;
-      //    }
-      //    i.material-icons {
-      //      font-size: 18px;
-      //    }
-      //  }
-      //}
     }
   }
 }

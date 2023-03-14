@@ -9,15 +9,15 @@
 }
 
 /* Firefox */
-input[type="number"] {
-  -moz-appearance: textfield;
-}
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
+//input[type="number"] {
+//  -moz-appearance: textfield;
+//}
+///* Chrome, Safari, Edge, Opera */
+//input::-webkit-outer-spin-button,
+//input::-webkit-inner-spin-button {
+//  -webkit-appearance: none;
+//  margin: 0;
+//}
 
 //.panel-page-content {
 //  padding: 10px 0px 0px 0px !important;
@@ -171,7 +171,7 @@ input::-webkit-inner-spin-button {
       }
     }
   }
-  .list-action-area {
+  //.list-action-area {
     //button {
     //  box-shadow: none;
     //  span {
@@ -204,7 +204,7 @@ input::-webkit-inner-spin-button {
         //font-size: 17px;
       //}
     //}
-  }
+  //}
 }
 
 .no-data-warning {
@@ -226,6 +226,3 @@ input::-webkit-inner-spin-button {
   }
 }
 
-.pagination-section {
-  right: 29px;
-}

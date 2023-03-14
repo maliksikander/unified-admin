@@ -17,19 +17,19 @@
     // background: bisque;
   }
   &:hover {
-    background: #f8f8f8;
+    background: $fill-color;
   }
 }
 
-input[type="number"] {
-  -moz-appearance: textfield;
-}
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
+//input[type="number"] {
+//  -moz-appearance: textfield;
+//}
+///* Chrome, Safari, Edge, Opera */
+//input::-webkit-outer-spin-button,
+//input::-webkit-inner-spin-button {
+//  -webkit-appearance: none;
+//  margin: 0;
+//}
 
 .form-action-div {
   text-align: right;
@@ -74,7 +74,7 @@ input::-webkit-inner-spin-button {
       padding: 10px 0;
 
       &:hover {
-        background: #f8f8f8;
+        background: $fill-color;
         .drag-handle {
           display: inline-block;
         }
@@ -85,7 +85,7 @@ input::-webkit-inner-spin-button {
     }
 
     .mat-expanded {
-      background: #f8f8f8;
+      background: $fill-color;
 
       .drag-handle {
         display: inline-block;

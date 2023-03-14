@@ -8,7 +8,7 @@
         <div class="sub-heading">
           <h2>Agent Attributes</h2>
         </div>
-        <div class="routing-content">
+        <div class="routing-content panel-page-content">
           <div class="filter-section">
             <div class="form-group search-field">
               <mat-form-field appearance="outline">
@@ -61,10 +61,10 @@
                   <span class="list-actions">
                     <button mat-mini-fab matTooltip="Add/Edit Attribute"
                       (click)="editUserAttributes(assignAttributeForm,data)">
-                      <i class="material-icons">add</i>
+                      <mat-icon>add</mat-icon>
                     </button>
                     <button mat-mini-fab matTooltip="View Profile" (click)="viewUserProfile(userProfileForm,data)">
-                      <i class="material-icons">person</i>
+                      <mat-icon>person</mat-icon>
                     </button>
                   </span>
                 </div>
@@ -112,7 +112,7 @@
 </mat-menu>
 
 <ng-template #userProfileForm>
-  <div class="user-dialog-container">
+  <div class="user-dialog-container dialog-container">
     <div class="mat-card-header">
       <mat-icon (click)="onClose()">close</mat-icon>
       <h4 class="content-span full-width">{{formHeading}}</h4>
@@ -163,7 +163,7 @@
 
 
 <ng-template #assignAttributeForm>
-  <div class="user-dialog-container">
+  <div class="user-dialog-container dialog-container">
     <div class="mat-card-header">
       <mat-icon (click)="onClose()">close</mat-icon>
       <h4 class="content-span full-width">Add Attributes</h4>

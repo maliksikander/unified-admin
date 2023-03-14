@@ -86,7 +86,7 @@ export class MrdComponent implements OnInit {
       this.saveBtnText = "Create";
       let dialogRef = this.dialog.open(templateRef, {
         width: "500px",
-        height: "350px",
+        height: "auto",
         panelClass: "add-attribute",
         disableClose: true,
       });
@@ -268,7 +268,7 @@ export class MrdComponent implements OnInit {
       this.saveBtnText = "Update";
       let dialogRef = this.dialog.open(templateRef, {
         width: "500px",
-        height: "350px",
+        height: "auto",
         panelClass: "add-attribute",
         disableClose: true,
         data: data,

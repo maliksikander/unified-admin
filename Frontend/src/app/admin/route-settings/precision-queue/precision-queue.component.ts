@@ -206,7 +206,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     this.queueForm.reset();
     let dialogRef = this.dialog.open(templateRef, {
       width: "550px",
-      height: "400px",
+      height: "445px",
       panelClass: "add-attribute",
       disableClose: true,
     });
@@ -336,7 +336,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     this.saveBtnText = "Update";
     let dialogRef = this.dialog.open(templateRef, {
       width: "550px",
-      height: "400px",
+      height: "445px",
       panelClass: "add-attribute",
       disableClose: true,
       data: data,
