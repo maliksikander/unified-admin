@@ -9,7 +9,7 @@
 }
 
 .form-group.mrd-toggle.mrd-padding-btn {
-  padding: 5px 0px 0px 0px !important;
+  padding: 10px 5px !important;
 }
 
 .routing-content {
@@ -51,28 +51,6 @@
     position: relative !important;
     top: 7px !important;
   }
-
-  button {
-    box-shadow: none;
-    span {
-      font-size: 12px;
-    }
-
-    height: 23px;
-    margin: 0 5px;
-    width: 23px;
-    line-height: 23px;
-    background: #919191;
-
-    &:hover {
-      background: #a9a9a9;
-    }
-
-    .mat-button-wrapper {
-      padding: 0;
-    }
-  }
-
   .list-trigger-area {
     display: none;
     float: right;
