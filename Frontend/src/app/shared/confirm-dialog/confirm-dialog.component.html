@@ -6,6 +6,7 @@
   <div class="dialog-content">
     <p class="content-span full-width">{{data.message}}</p>
     <div class="clearfix"></div>
+    <div class="action-area">
     <button mat-flat-button class="gray-btn" color="accent" *ngIf="data.text !== 'notification'"
       [mat-dialog-close]="true">Cancel</button>
     <button mat-flat-button color="warn" *ngIf="data.text == 'confirm'" [mat-dialog-close]="delete">Delete</button>
@@ -15,5 +16,6 @@
       [mat-dialog-close]>Save</button>
       <button mat-flat-button style="background: #25CB8D" color="warn" *ngIf="data.text == 'yes'"
       [mat-dialog-close]="yesff">Yes</button>
+    </div>
   </div>
 </div>

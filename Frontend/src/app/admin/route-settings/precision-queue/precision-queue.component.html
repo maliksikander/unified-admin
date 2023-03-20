@@ -302,7 +302,7 @@
 
                         <div class="form-group col-md-4 exp-selection">
                           <mat-form-field appearance="outline">
-                            <mat-select formControlName="routingAttribute">
+                            <mat-select formControlName="routingAttribute" placeholder="Select Attribute">
                               <mat-option *ngFor="let data of attrData" [value]="data">{{data.name | titlecase}}
                               </mat-option>
                             </mat-select>
@@ -311,7 +311,7 @@
 
                         <div class="form-group col-md-2">
                           <mat-form-field appearance="outline">
-                            <mat-select formControlName="relationalOperator">
+                            <mat-select formControlName="relationalOperator" placeholder="Operators">
                               <ng-container *ngIf="term?.value.routingAttribute?.type == 'PROFICIENCY_LEVEL'">
                                 <mat-option *ngFor="let data of operatorList" [value]="data">{{data}}
                                 </mat-option>

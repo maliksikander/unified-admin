@@ -288,6 +288,19 @@ button:focus {
 
   .mat-radio-button {
     margin: 5px 5px 0 0;
+
+  &.mat-accent.mat-radio-checked .mat-radio-outer-circle{
+    border-color: $blue-text-color;
+  }
+
+    &.mat-accent .mat-radio-inner-circle,
+    .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple),
+    &.mat-radio-checked .mat-radio-persistent-ripple,
+    &.mat-accent:active .mat-radio-persistent-ripple{
+      background-color:$blue-text-color;
+    }
+
+
   }
 
   .mat-radio-label-content {
@@ -1527,10 +1540,10 @@ snack-bar-container {
     button {
       color: #ffffff;
       margin-left: 10px;
-
-      &.gray-btn {
-        background: #919191;
-      }
+      //
+      //&.gray-btn {
+      //  background: #919191;
+      //}
 
       &.green-btn {
         background: #25cb8d;
@@ -1555,9 +1568,9 @@ snack-bar-container {
       height: 30px;
       line-height: 30px;
 
-      &.gray-btn {
-        background: #919191;
-      }
+      //&.gray-btn {
+      //  background: #919191;
+      //}
 
       &.green-btn {
         background: #25cb8d;
@@ -1582,9 +1595,9 @@ snack-bar-container {
       color: #ffffff;
       margin-left: 10px;
 
-      &.gray-btn {
-        background: #919191;
-      }
+      //&.gray-btn {
+      //  background: #919191;
+      //}
 
       &.green-btn {
         background: #25cb8d;
@@ -1646,14 +1659,14 @@ snack-bar-container {
       //margin-left: 10px;
       //min-width: 82px;
 
-      &.gray-btn {
-        background: #919191;
-        color: #ffffff;
-
-        &:hover {
-          background: #7e7e7e;
-        }
-      }
+      //&.gray-btn {
+      //  background: #919191;
+      //  color: #ffffff;
+      //
+      //  &:hover {
+      //    background: #7e7e7e;
+      //  }
+      //}
     }
 
     .queue-arrow {
@@ -1692,14 +1705,14 @@ snack-bar-container {
       margin-left: 10px;
       min-width: 82px;
 
-      &.gray-btn {
-        background: #919191;
-        color: #ffffff;
-
-        &:hover {
-          background: #7e7e7e;
-        }
-      }
+      //&.gray-btn {
+      //  background: #919191;
+      //  color: #ffffff;
+      //
+      //  &:hover {
+      //    background: #7e7e7e;
+      //  }
+      //}
     }
     .form-group .mat-form-field-appearance-outline .mat-select-arrow-wrapper {
       right: -10px !important;
@@ -1811,14 +1824,14 @@ snack-bar-container {
       margin-left: 10px;
       min-width: 82px;
 
-      &.gray-btn {
-        background: #919191;
-        color: #ffffff;
-
-        &:hover {
-          background: #7e7e7e;
-        }
-      }
+      //&.gray-btn {
+      //  background: #919191;
+      //  color: #ffffff;
+      //
+      //  &:hover {
+      //    background: #7e7e7e;
+      //  }
+      //}
     }
   }
 
@@ -2040,14 +2053,14 @@ snack-bar-container {
       margin-left: 10px;
       min-width: 82px;
 
-      &.gray-btn {
-        background: #919191;
-        color: #ffffff;
-
-        &:hover {
-          background: #7e7e7e;
-        }
-      }
+      //&.gray-btn {
+      //  background: #919191;
+      //  color: #ffffff;
+      //
+      //  &:hover {
+      //    background: #7e7e7e;
+      //  }
+      //}
     }
 
     .queue-arrow {
@@ -2086,14 +2099,14 @@ snack-bar-container {
       margin-left: 10px;
       min-width: 82px;
 
-      &.gray-btn {
-        background: #919191;
-        color: #ffffff;
-
-        &:hover {
-          background: #7e7e7e;
-        }
-      }
+      //&.gray-btn {
+      //  background: #919191;
+      //  color: #ffffff;
+      //
+      //  &:hover {
+      //    background: #7e7e7e;
+      //  }
+      //}
     }
     .form-group .mat-form-field-appearance-outline .mat-select-arrow-wrapper {
       right: -10px !important;
@@ -3514,5 +3527,33 @@ snack-bar-container {
     span {
       font-size: 12px;
     }
+  }
+}
+
+
+//action button
+.action-area, .form-action-area, .form-action-div, .user-form-action-area, .dialog-content {
+  button.gray-btn {
+    border: 1px solid #cdcdcd ;
+    color: #8d8d8d;
+    box-shadow: none;
+    line-height: 28px;
+
+    &:hover{
+      background: #f1f1f1;
+    }
+  }
+  button.blue-btn{
+    &.mat-button-disabled{
+      background: rgb(0 0 0 / 17%);
+      color: #777;
+    }
+  }
+}
+//
+
+.exp-selection{
+  .mat-select-placeholder{
+    line-height: 20px;
   }
 }
