@@ -1553,9 +1553,9 @@ snack-bar-container {
         background: $blue-text-color;
       }
 
-      &.dark-blue-btn {
-        background: $blue-text-color;
-      }
+      //&.dark-blue-btn {
+      //  background: $blue-text-color;
+      //}
     }
   }
 
@@ -1580,9 +1580,9 @@ snack-bar-container {
         background: $blue-text-color;
       }
 
-      &.dark-blue-btn {
-        background: $blue-text-color;
-      }
+      //&.dark-blue-btn {
+      //  background: $blue-text-color;
+      //}
     }
   }
 
@@ -1607,9 +1607,9 @@ snack-bar-container {
         background: $blue-text-color;
       }
 
-      &.dark-blue-btn {
-        background: $blue-text-color;
-      }
+      //&.dark-blue-btn {
+      //  background: $blue-text-color;
+      //}
     }
   }
 }
@@ -1778,6 +1778,14 @@ snack-bar-container {
   padding: 0 !important;
   width: 100%;
   max-width: 600px !important;
+  &.delete-confirmation{
+    .mat-card-header {
+      background: #CE0000;
+    }
+    .delete-action{
+      background: #CE0000;
+    }
+  }
 
   mat-dialog-container {
     padding: 0;
@@ -3420,7 +3428,7 @@ snack-bar-container {
   }
 
   button {
-    box-shadow: none;
+    box-shadow: none !important;
     height: 24px;
     margin: 0 3px;
     width: 24px;
@@ -3433,7 +3441,7 @@ snack-bar-container {
     mat-icon {
       position: relative;
       font-size: 17px;
-      line-height: 24px;
+      line-height: 22px;
     }
     span {
       font-size: 13px;
@@ -3533,21 +3541,31 @@ snack-bar-container {
 
 //action button
 .action-area, .form-action-area, .form-action-div, .user-form-action-area, .dialog-content {
-  button.gray-btn {
-    border: 1px solid #cdcdcd ;
-    color: #8d8d8d;
-    box-shadow: none;
-    line-height: 28px;
+  button{
+    line-height: 28px !important;
+    box-shadow: none !important;
 
-    &:hover{
-      background: #f1f1f1;
+    &.gray-btn {
+      border: 1px solid #cdcdcd ;
+      color: #8d8d8d;
+      background: #fff;
+
+      &:hover{
+        background: #f1f1f1;
+      }
     }
-  }
-  button.blue-btn{
-    &.mat-button-disabled{
-      background: rgb(0 0 0 / 17%);
-      color: #777;
+
+    &.blue-btn{
+      background: $blue-text-color;
+      border: 1px solid $blue-text-color;
+      color: #fff;
+      &.mat-button-disabled{
+        background: rgb(0 0 0 / 17%);
+        border: 1px solid  rgb(0 0 0 / 19%);
+        color: #777;
+      }
     }
+
   }
 }
 //

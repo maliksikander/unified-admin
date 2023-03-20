@@ -410,7 +410,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     let msg = "Are you sure you want to delete this Queue ?";
     return this.dialog
       .open(ConfirmDialogComponent, {
-        panelClass: "confirm-dialog-container",
+        panelClass: ['confirm-dialog-container' , 'delete-confirmation'],
         disableClose: true,
         data: {
           heading: "Delete Queue",
@@ -592,7 +592,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     let msg = "Are you sure you want to delete this Step ?";
     return this.dialog
       .open(ConfirmDialogComponent, {
-        panelClass: "confirm-dialog-container",
+        panelClass: ['confirm-dialog-container' , 'delete-confirmation'],
         disableClose: true,
         data: {
           heading: "Delete Step",
