@@ -102,7 +102,7 @@ export class NewFormComponent implements OnInit, AfterViewInit {
       categories: new FormArray([this.addCategoryGroup()]),
       helpText: [""],
       isRequired: [true],
-      key: ["New_Attribute"],
+      key: ["new_attribute"],
       label: ["New Attribute", [Validators.required, RxwebValidators.unique()]],
       valueType: ["String100"],
       isMultipleChoice: [false],
@@ -255,7 +255,7 @@ export class NewFormComponent implements OnInit, AfterViewInit {
 
   // generate key using user typed attribute label
   attrKeyGenerator(attr: string, i: number) {
-    let key = attr.replace(" ", "_");
+    let key = attr.toLowerCase().replace(/ /g, "_");
     (<FormArray>this.newForm.controls["attributes"])
       .at(i)
       .get("key")
