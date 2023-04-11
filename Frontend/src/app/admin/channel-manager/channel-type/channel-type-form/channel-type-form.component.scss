@@ -36,7 +36,7 @@ button {
 }
 
 .select-file-button {
-  top: -3px;
+  top: -20px;
   right: -10px;
   box-shadow: none;
   text-align: right;
@@ -50,7 +50,7 @@ button {
   flex-wrap: wrap;
   .logo-msg-span {
     position: absolute;
-    top: 45px;
+    top: 48px;
     color: #717171;
     font-size: 11px;
     width: 100%;
@@ -63,13 +63,14 @@ button {
 }
 
 .uploaded-logo {
-  position: relative;
-  width: 300px;
+  position: absolute;
+  width: 100px;
   padding: 12px;
-  background: #ececec;
+  // background: #ececec;
   border-radius: 6px;
   height: 68px;
-  border: 1px solid #c2c2c2;
+  // border: 1px solid #c2c2c2;
+  top: 22px;
 
   .upload-logo {
     background-repeat: no-repeat !important;
@@ -77,5 +78,14 @@ button {
     margin: 0 !important;
     height: 45px;
     background-size: contain !important;
+  }
+}
+.form-group.channel-logo-preview{
+  input {
+    padding: 12px 0;
+  }
+  .channel-logo {
+    margin-left: 80px;
+    width: calc(100% - 70px);
   }
 }

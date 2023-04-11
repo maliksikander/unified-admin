@@ -1,5 +1,24 @@
 @import "~src/assets/themes/blue-theme";
 
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+mat-label {
+  small {
+    display: block;
+    color: #adaaaa;
+    font-size: 10px;
+  }
+}
+
 .service-trigger {
   background: $blue-text-color;
   color: #ffffff;
@@ -8,10 +27,15 @@
   width: 90px;
 }
 
+.panel-page-content {
+  padding-left: 18px !important;
+}
+
 .widget-interactive-toggle {
   margin: 0.25rem 0;
   padding-bottom: 10px;
   padding-top: 10px;
+
   mat-slide-toggle {
     padding: 0px 20px;
     position: relative;
@@ -39,9 +63,11 @@ button {
   mat-label {
     display: block;
   }
+
   mat-form-field {
     max-width: 200px;
   }
+
   button {
     border: 0;
     border-radius: 5px;
@@ -50,4 +76,9 @@ button {
     vertical-align: middle;
     width: 42px;
   }
+}
+
+.token-remove {
+  cursor: pointer;
+  margin-left: 8px;
 }
