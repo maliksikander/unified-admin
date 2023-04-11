@@ -9,13 +9,15 @@ describe("WebWidgetFormComponent", () => {
   let snackbarService: any;
   let commonService: any;
   let fb: FormBuilder;
+  let changeDetector: any
 
   beforeEach(() => {
     component = new WebWidgetFormComponent(
       commonService,
       fb,
       endPointService,
-      snackbarService
+      snackbarService,
+      changeDetector
     );
   });
 
