@@ -12,6 +12,7 @@
   position: absolute;
   padding: 10px 0px;
   width: 100%;
+  background: #fff;
 
   .month-info {
     color: #929292;
@@ -254,7 +255,7 @@
         border: 1px solid $blue-text-color;
         height: 24px;
         box-shadow: none;
-        line-height: 20px;
+        line-height: 20px !important;
         color: $blue-text-color;
 
         span {
@@ -311,11 +312,19 @@
 .recurrence-section, .end-date-section, .select-calendar-section, .event-fields {
   position: relative;
   padding-left: 30px;
+  margin-bottom: 5px;
   //top: -15px;
   mat-icon{
     position: absolute;
     left: 0;
-    top: 10px;
+    top: 2px;
+  }
+  mat-label{
+    display: block;
+    color: #9B9B9B;
+    font-size: 12px;
+    font-weight: 600;
+    width: 100%;
   }
   //mat-form-field{
   //  height: 38px;
@@ -386,11 +395,15 @@
 .shift-main {
   width: 100%;
   position: relative;
+  margin-top: 8px;
 
   .shift-btn{
     position: absolute;
     right: 0;
     top: 8px;
+  }
+  .remove-btn{
+    height: auto;
   }
 }
 

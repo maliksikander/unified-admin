@@ -29,35 +29,15 @@ $viber-color: #8e24aa;
 $call-color: #F50000;
 
 
-$ef-blue: (
-        50 : #EFF2F7, //$main-color-background
-        100 : #E7EDF6, //$bubble-background
-        200 : #a3b9da,
-        300 : #212136,
-        400 : #2E2E42,
-        500 : #1E1E34, //$main-color
-        600 : #406bae,
-        700 : #283F6A, //$customer-bubble: #E8F5D6;
-        800 : #16162C,
-        900 : #3E63A8,
-        A100 : #c9d9ff,
-        A200 : #96b5ff,
-        A400 : #6391ff,
-        A700 : #11306C,
-        contrast: (
-                50 : #ffffff,
-                100 : #000000,
-                200 : #000000,
-                300 : #ffffff,
-                400 : #000000,
-                500 : #D0D0D4,
-                600 : #D3D3D3,
-                700 : #D3D3D3,
-                800 : #ffffff,
-                900 : #ffffff,
-                A100 : #ffffff,
-                A200 : #ffffff,
-                A400 : #ffffff,
-                A700 : #ffffff,
-        )
-);
+//@use '~@angular/material' as mat;
+
+//@import "~@angular/material/theming";
+@import "custom-color-palettes";
+//
+//
+//@include mat-core();
+//$primary: mat-palette($ef-blue);
+//$accent: mat-palette($ef-blue, A200, A100, A400);
+//$warn: mat-palette($ef-red);
+//$theme: mat-light-theme($primary, $accent, $warn);
+//@include angular-material-theme($theme);
