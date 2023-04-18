@@ -45,6 +45,17 @@
                     </mat-error>
                 </mat-form-field>
             </div> -->
+            <div class="form-group">
+                <mat-label>Select Form</mat-label>
+                <mat-form-field appearance="outline">
+                    <mat-select placeholder="Select Form" formControlName="form">
+                        <mat-option *ngFor="let form of formsList"  [value]="form?.formTitle">{{form?.formTitle ? form?.formTitle: 'N/A'}}</mat-option>
+                    </mat-select>
+                    <mat-error class="form-error">
+                        {{formErrors?.form}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
 
             <div class="form-group">
                 <mat-label>Language</mat-label>

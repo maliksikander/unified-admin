@@ -120,7 +120,7 @@ export class WebWidgetListComponent implements OnInit {
     let msg = "Are you sure you want to delete this widget config ?";
     return this.dialog
       .open(ConfirmDialogComponent, {
-        panelClass: ['confirm-dialog-container' , 'delete-confirmation'],
+        panelClass: "confirm-dialog-container",
         disableClose: true,
         data: {
           heading: "Delete Web Widget",

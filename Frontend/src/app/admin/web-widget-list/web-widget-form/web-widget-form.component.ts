@@ -34,9 +34,10 @@ export class WebWidgetFormComponent implements OnInit {
     theme: "",
     title: "",
     widgetIdentifier: "",
+    form: ""
   };
   validations;
-
+  formsList = [];
   spinner = true;
   languageList = [];
   toggle = false;
@@ -63,6 +64,7 @@ export class WebWidgetFormComponent implements OnInit {
       language: ["", [Validators.required]],
       subTitle: ["", [Validators.required, Validators.maxLength(100)]],
       theme: ["#2889e9", [Validators.required]],
+      form: [""],
       title: [
         "",
         [
@@ -91,6 +93,7 @@ export class WebWidgetFormComponent implements OnInit {
     });
 
     this.getLocaleSettings();
+    this.getForms();
   }
 
   //lifecycle hook to reflect parent component changes in child component
@@ -201,6 +204,19 @@ export class WebWidgetFormComponent implements OnInit {
         this.spinner = false;
         console.error("Error fetching locale settings:", error);
       }
+    );
+  }
+  //to get form list and set the local variable with the response
+  getForms() {
+    this.endPointService.getForm().subscribe(
+        (res: any) => {
+          this.formsList = res;
+          this.spinner = false;
+        },
+        (error) => {
+          this.spinner = false;
+          console.error("Error fetching:", error);
+        }
     );
   }
 }

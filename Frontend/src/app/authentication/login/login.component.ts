@@ -188,22 +188,22 @@ export class LoginComponent implements OnInit {
             }
           });
         }
-        //  else if (item.rsname.includes("calendar")) {
-        //   let scopes: Array<any> = item?.scopes;
-        //   scopes.forEach((scope: any) => {
-        //     if (scope == "view") {
-        //       routeCheck = true;
-        //       this.router.navigate(["/business-calendar"]);
-        //     }
-        //   });
-        // }
-        // else {
-        //   this.snackbar.snackbarMessage(
-        //     "error-snackbar",
-        //     "Not Authorized to Access Resources",
-        //     2
-        //   );
-        // }
+         else if (item.rsname.includes("calendar")) {
+          let scopes: Array<any> = item?.scopes;
+          scopes.forEach((scope: any) => {
+            if (scope == "view") {
+              routeCheck = true;
+              this.router.navigate(["/business-calendar"]);
+            }
+          });
+        }
+        else {
+          this.snackbar.snackbarMessage(
+            "error-snackbar",
+            "Not Authorized to Access Resources",
+            2
+          );
+        }
       });
       if (routeCheck == false)
         this.snackbar.snackbarMessage(

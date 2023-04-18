@@ -36,7 +36,7 @@ export const adminRoutes: Routes = [
       { path: "", redirectTo: "/login", pathMatch: "full" },
 
       // { path: '', redirectTo: 'general/amq-settings', pathMatch: 'full' },
-      // { path: "business-calendar", component: CalendarComponent },
+      { path: "business-calendar", component: CalendarComponent },
       // { path: "general/display-settings", component: DisplayComponent },
       {
         path: "general/locale-settings",
