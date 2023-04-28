@@ -144,7 +144,7 @@
             <div class="form-action-area">
               <button mat-raised-button (click)="onClose()" class="gray-btn">Cancel</button>
               <button mat-raised-button [disabled]="!calendarForm.valid" (click)="onCalendarSave()"
-                [mat-dialog-close]="true" class="blue-btn service-trigger">{{saveBtnText}}</button>
+                [mat-dialog-close]="true" class="dark-blue-btn service-trigger">{{saveBtnText}}</button>
             </div>
           </div>
         </div>
@@ -176,18 +176,15 @@
                 <mat-icon class="time-icon">access_time</mat-icon>
 
                 <div class="datepicker-section">
-                  <mat-label>Select Date</mat-label>
                   <mat-form-field [color]="underLineColor">
-<!--                     <mat-label>Choose a date</mat-label>-->
+                    <!-- <mat-label>Choose a date</mat-label> -->
                     <input formControlName="datePicker" matInput [matDatepicker]="picker" (click)="picker.open()">
                     <mat-datepicker #picker></mat-datepicker>
                   </mat-form-field>
                 </div>
                 <div class="shift-main">
                   <div class="shift-info">
-                    <mat-label>Shifts</mat-label>
                     <mat-form-field [color]="underLineColor">
-<!--                      <mat-label>Shift</mat-label>-->
                       <input matInput formControlName="shift">
                     </mat-form-field>
                     <!-- #timeMenuTrigger="matMenuTrigger" [matMenuTriggerFor]="timePicker" -->
@@ -202,9 +199,7 @@
 
               <div class="recurrence-section event-fields">
                 <mat-icon>replay</mat-icon>
-                <mat-label>Repeat</mat-label>
                 <mat-form-field appearance="fill">
-<!--                  <mat-label>Choose a date</mat-label>-->
                   <mat-select (selectionChange)="recurrence($event, customRecurrence)"
                     formControlName="recurrenceCriteria">
                     <mat-option *ngFor="let option of recurrenceOptions" [value]="option">
@@ -215,7 +210,6 @@
 
               <div class="end-date-section event-fields">
                 <mat-icon>check_circle_outline</mat-icon>
-                <mat-label>End Date</mat-label>
                 <mat-form-field appearance="fill">
                   <mat-select formControlName="endDateCriteria">
                     <mat-option value="never">Never</mat-option>
@@ -238,7 +232,6 @@
 
               <div class="datepicker-section time-selection event-fields">
                 <mat-icon>access_time</mat-icon>
-                <mat-label>Date & time</mat-label>
                 <mat-form-field [color]="underLineColor">
                   <!-- <mat-label>Choose a date</mat-label> -->
                   <input formControlName="datePicker" matInput [matDatepicker]="picker5" (click)="picker5.open()">
@@ -285,7 +278,6 @@
               <div class="recurrence-section event-fields">
                 <!--                  <img src="/assets/images/reload.svg" alt="done">-->
                 <mat-icon>replay</mat-icon>
-                <mat-label class="p-0">Repeat</mat-label>
                 <mat-form-field appearance="fill">
                   <mat-select (selectionChange)="recurrence($event, customRecurrence)"
                     formControlName="recurrenceCriteria">
