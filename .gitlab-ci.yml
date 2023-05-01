@@ -11,7 +11,6 @@ include:
       - build_time.yml
 # uncomment if need to publish to dockerhub
 #      - dockerhub-publish.yaml
-      - gitlab-publish.yaml
 stages:
   - artifacts-frontend
   - test_frontend
@@ -27,7 +26,6 @@ stages:
   - build-backend
   - build-gitlab
   - scan
-  - publish_gitlab
   - publish_dockerhub
 
 
@@ -397,12 +395,6 @@ grype_scan_merge:
   artifacts:
     paths:
       - .ci_status/
-#+==================Runs on tag requests only========================+
-# gitlab_publish:
-#   stage: publish_gitlab
-#   extends: .gitlab_publish
-#   only:
-#     - tags
   
 # #+==================Runs on tag requests only========================+
 # uncomment if need to publish to dockerhub
