@@ -114,7 +114,7 @@ sonarqube-test:
     #SONAR_HOST_URL: "http://124.29.220.135:9000"
     SONAR_HOST_URL: "http://sonarqube.expertflow.com:9000"
     #SONAR_HOST_URL: "http://192.168.1.109:9000"
-    SONAR_TOKEN: "sqa_16fe136fb118e04cd6c07a22628f4b951e903c5f"
+    SONAR_TOKEN: "${SONAR_PASS}"
 
   cache:
     key: "${CI_JOB_NAME}"
