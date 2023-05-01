@@ -3,7 +3,7 @@ variables:
   IMAGE_NAME_BRANCH: "${CI_REGISTRY_IMAGE}/build:${CI_COMMIT_BRANCH}-${CI_COMMIT_SHA}"
 
 include:
-  - project: '$CI_PROJECT_ROOT_NAMESPACE/ci-templates'
+  - project: 'cim/ci-templates'
     ref: 'main'
     file: 
       - trivy.yaml
@@ -53,7 +53,7 @@ node_artifacts_frontend:
        - /^.+_f-.+$/
        - merge_requests
 
-#+==================Runs on Every Commit and merge requests========================+
+# #+==================Runs on Every Commit and merge requests========================+
 
 node-test-frontend:
    stage: test_frontend
@@ -147,9 +147,9 @@ sonarqube-test:
     GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
     #SONAR_HOST_URL: "http://122.129.75.138:9000"
     #SONAR_HOST_URL: "http://124.29.220.135:9000"
-    #SONAR_HOST_URL: "https://sonarqube.expertflow.com"
-    SONAR_HOST_URL: "http://192.168.1.109:9000"
-    SONAR_TOKEN: "b4ed0447192a300ebae555140551db499685090a"
+    SONAR_HOST_URL: "http://sonarqube.expertflow.com:9000"
+    #SONAR_HOST_URL: "http://192.168.1.109:9000"
+    SONAR_TOKEN: "sqa_16fe136fb118e04cd6c07a22628f4b951e903c5f"
 
   cache:
     key: "${CI_JOB_NAME}"
@@ -163,6 +163,7 @@ sonarqube-test:
     - /^.+_b-.+$/
     - /^.+_f-.+$/
     - merge_requests
+    - tags
 
 
 #==================================================================
@@ -175,6 +176,7 @@ angular_build_frontend:
     - /^.+_b-.+$/
     - /^.+_f-.+$/
     - merge_requests
+    - tags
   when: on_success
   cache:
     key: $CI_PROJECT_TITLE-frontend
@@ -218,6 +220,7 @@ node-artifacts-backend:
       - /^.+_b-.+$/
       - /^.+_f-.+$/
       - merge_requests
+      - tags
 
 #+==================Runs on Every Commit and merge requests========================+
 #commented
@@ -309,10 +312,7 @@ node_build_backend:
   script:
     - export TIME_TOKEN="$(cat .ci_status/ci_time)"
     - echo "${TIME_TOKEN}"
-    - ls -ltrh Frontend/
-    - ls -ltrh Backend/
     - cp -rf Frontend/dist/base-template/* Backend/src/public/
-    - ls -ltrh
   artifacts:
     name: "$CI_PROJECT_TITLE-$TIME_TOKEN"
     paths:
@@ -323,6 +323,7 @@ node_build_backend:
     - /^.+_b-.+$/
     - /^.+_f-.+$/
     - merge_requests
+    - tags
 
 #+==================Runs on merge requests only========================+
 gitlab_build_branch:
@@ -338,18 +339,21 @@ gitlab_build_branch:
  script:
    - echo ${BUILD_TIME} ${BUILD_NUMBER}
    - cd Backend
-   - ls -ltrh
-   - ls -ltrh src/public/
    - cp -r $(ls -A | grep -v -E "docker|coverage|.sonar") ./docker/
    - cd docker
-   - ls -ltrh
-   - ls -ltrh src/public/
-   - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" .
-   - docker tag "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" "$IMAGE_NAME_BRANCH"
-   - docker push "$IMAGE_NAME_BRANCH"
+   - |-
+       if [ $CI_COMMIT_BRANCH != '' ]; then 
+         docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" .;
+         docker tag "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" "$IMAGE_NAME_BRANCH";
+         docker push "$IMAGE_NAME_BRANCH";
+       elif [ $CI_COMMIT_TAG != '' ]; then
+         docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_TAG" .;
+         docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_TAG";
+       fi
  only:
    - /^.+_b-.+$/
    - /^.+_f-.+$/
+   - tags
  allow_failure: false
 
 
@@ -470,11 +474,11 @@ grype_scan_merge:
     paths:
       - .ci_status/
 #+==================Runs on tag requests only========================+
-gitlab_publish:
-  stage: publish_gitlab
-  extends: .gitlab_publish
-  only:
-    - tags
+# gitlab_publish:
+#   stage: publish_gitlab
+#   extends: .gitlab_publish
+#   only:
+#     - tags
   
 # #+==================Runs on tag requests only========================+
 # uncomment if need to publish to dockerhub
