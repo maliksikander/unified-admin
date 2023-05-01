@@ -331,7 +331,7 @@ trivy_scanning_branch:
   when: on_success
   needs: 
     - job: gitlab_build_branch
-  allow_failure: true
+  allow_failure: false
   stage: scan
   variables:
     FULL_IMAGE_NAME: ${CI_REGISTRY_IMAGE}/build:${CI_COMMIT_BRANCH}-${CI_COMMIT_SHA}
@@ -351,7 +351,7 @@ trivy_scanning_merge:
     - job: gitlab_build_merge
   variables:
     FULL_IMAGE_NAME: ${CI_REGISTRY_IMAGE}/build:${CI_MERGE_REQUEST_SOURCE_BRANCH_NAME}-${TIME_TOKEN}
-  allow_failure: true
+  allow_failure: false
   only:
     - merge_requests
   artifacts:
@@ -366,7 +366,7 @@ grype_scan_branch:
   needs:
     - job: gitlab_build_branch
   when: on_success
-  allow_failure: true
+  allow_failure: false
   variables: 
     SCAN_IMAGE: $CI_REGISTRY_IMAGE/build:$CI_COMMIT_BRANCH-$CI_COMMIT_SHA
   only:
@@ -381,7 +381,7 @@ grype_scan_merge:
   needs:
     - job: gitlab_build_merge  
   when: on_success
-  allow_failure: true
+  allow_failure: false
   variables:
     SCAN_IMAGE: ${CI_REGISTRY_IMAGE}/build:${CI_MERGE_REQUEST_SOURCE_BRANCH_NAME}-${TIME_TOKEN}
   script:
