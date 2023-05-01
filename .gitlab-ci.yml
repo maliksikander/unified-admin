@@ -102,39 +102,6 @@ node-test-frontend:
 
 
 
-
-# # #==============SPACE FOR  CODE SCAN JOB============================
-
-
-# sonarqube-test-frontend:
-#   stage: node-scan-frontend
-#   image: adoptopenjdk/openjdk11:alpine-jre
-#   #commented
-#   # needs:
-#   #   - job: node-format-frontend
-#   script:
-#     - apk add --no-cache git python3 py-pip bash shellcheck 'nodejs>14' 'npm>7'
-#     - npm install -g typescript@3.7.5
-#     - pip install --no-cache-dir --upgrade pip
-#     - pip install --no-cache-dir pylint
-#     #- npm install
-#     #- npm run test
-#     #- npm run coverage
-#     - cd Frontend
-#     - npm run sonar
-#   only:
-#     - /^.+_b-.+$/
-#     - /^.+_f-.+$/
-#     - merge_requests
-#   allow_failure: false
-#   cache:
-#     key: $CI_PROJECT_TITLE-frontend
-#     paths:
-#       - Frontend/node_modules
-#       - Frontend/coverage
-#     policy: pull
-
-
 #==========SONARQUBE SCAN for complete project (FRONTEND + BACKEND)==========
 
 sonarqube-test:
@@ -246,46 +213,7 @@ node-artifacts-backend:
 
 
 
-#==============SPACE FOR CODE FORMAT JOB============================
-
-
-
 #==================================================================
-
-
-#==============SPACE FOR  CODE SCAN JOB============================
-
-# sonarqube-backend:
-#   stage: node-scan-backend
-#   image: adoptopenjdk/openjdk11:alpine-jre
-#   script:
-#     - apk add --no-cache git python3 py-pip bash shellcheck 'nodejs>14' 'npm>7'
-#     - npm install -g typescript@3.7.5
-#     - pip install --no-cache-dir --upgrade pip
-#     - pip install --no-cache-dir pylint
-#     #- npm install
-#     #- npm run test
-#     #- npm run coverage
-#     - cd Backend
-#     - npm run sonar
-#   only:
-# 
-#     - /^.+_b-.+$/
-#     - /^.+_f-.+$/
-#     - merge_requests
-#   allow_failure: false
-#   cache:
-#        key: $CI_PROJECT_TITLE-backend
-#        paths:
-#            - Backend/node_modules/
-#            #- dist/
-#            #- ${CI_PROJECT_DIR}/.npm/
-#        policy: pull
-#   #=artifacts:
-#     #paths:
-#         #- coverage
-
-
 
 time_build:
   extends: .build_time
@@ -355,10 +283,6 @@ gitlab_build_branch:
    - /^.+_f-.+$/
    - tags
  allow_failure: false
-
-
-
-#================================================
 
 
 #+==================Runs on merge requests only========================+
@@ -435,7 +359,7 @@ trivy_scanning_merge:
   artifacts:
     paths:
       - .ci_status/
-#================================================
+
 
 #+==================Runs on if docker build in branch========================+
 grype_scan_branch:
