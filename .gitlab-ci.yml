@@ -403,7 +403,5 @@ grype_scan_merge:
 #   extends: .publish_dockerhub
 #   stage: publish_dockerhub
 #   when: on_success
-#   needs:
-#     - job: gitlab_publish
 #   only:
 #     - tags
