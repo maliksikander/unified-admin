@@ -71,7 +71,7 @@ export class ChannelProviderSettingsComponent implements OnInit {
   spinner = true;
   channelTypeList = [];
   checkVoiceChannel: boolean = false;
-
+  urlPattern = '^((http|https)?:\\/\\/)?([\\da-z\\.-]+)\\.([a-z\\.]{2,6})([\\/\\w\\.-]*)*\\/?$';
   constructor(
     private commonService: CommonService,
     private fb: FormBuilder,
@@ -346,7 +346,8 @@ export class ChannelProviderSettingsComponent implements OnInit {
         temp
       );
       let voiceChannelIndex = temp.findIndex((item) => item.name == "VOICE");
-      if (voiceChannelIndex != -1) this.setValueAndHideWebhookField(voiceChannelIndex);
+      // if (voiceChannelIndex != -1) this.setValueAndHideWebhookField(voiceChannelIndex);
+      if (voiceChannelIndex != -1) this.disableEnableValidation(voiceChannelIndex);
       this.cd.detectChanges();
     } catch (e) {
       console.error("Error in create form array :", e);
@@ -408,23 +409,23 @@ export class ChannelProviderSettingsComponent implements OnInit {
     let voiceChannelIndex = channelTypes.findIndex(
       (item) => item.name == "VOICE"
     );
-    this.setValueAndHideWebhookField(voiceChannelIndex);
-    // console.log("Channel Type==>", voiceChannelIndex);
-
-    // console.log("value==>",this.channelProviderForm)
-    // this.setValidation(voiceChannelIndex);
+    this.disableEnableValidation(voiceChannelIndex);
   }
-
-  setValueAndHideWebhookField(voiceChannelIndex) {
+  // Check if the channelType == Voice than disable the validations on the webhook provider otherwise enable the URL validations
+  disableEnableValidation(voiceChannelIndex) {
+    let providerWebhookControl = this.channelProviderForm.controls["providerWebhook"];
     if (voiceChannelIndex != -1) {
       this.checkVoiceChannel = true;
-      this.channelProviderForm.controls["providerWebhook"].setValue(
-        "http://expertflo.com"
-      );
+      providerWebhookControl.clearValidators();
+      providerWebhookControl.setErrors(null);
     } else {
-      this.channelProviderForm.controls["providerWebhook"].setValue("");
       this.checkVoiceChannel = false;
+      providerWebhookControl.setValidators([
+        Validators.required,
+        Validators.pattern(this.urlPattern),
+      ]);
     }
+    providerWebhookControl.updateValueAndValidity();
   }
   // setValidation(val) {
 
