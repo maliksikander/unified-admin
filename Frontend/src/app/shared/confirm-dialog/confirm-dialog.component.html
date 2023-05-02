@@ -1,4 +1,4 @@
-<div class="content-container">
+<div class="content-container dialog-container">
   <div class="mat-card-header">
     <mat-icon id="close-icon" (click)="dialogRef.close(true)">close</mat-icon>
     <h4 class="content-span full-width">{{data.heading}}</h4>
@@ -6,14 +6,16 @@
   <div class="dialog-content">
     <p class="content-span full-width">{{data.message}}</p>
     <div class="clearfix"></div>
+    <div class="action-area">
     <button mat-flat-button class="gray-btn" color="accent" *ngIf="data.text !== 'notification'"
       [mat-dialog-close]="true">Cancel</button>
-    <button mat-flat-button color="warn" *ngIf="data.text == 'confirm'" [mat-dialog-close]="delete">Delete</button>
-    <button mat-flat-button style="background: #25AFCB" color="warn" *ngIf="data.text == 'notification'"
+    <button class="delete-action" mat-flat-button color="warn" *ngIf="data.text == 'confirm'" [mat-dialog-close]="delete">Delete</button>
+    <button mat-flat-button style="background: #1a50a3" color="warn" *ngIf="data.text == 'notification'"
       [mat-dialog-close]="true">Dismiss</button>
     <button mat-flat-button style="background: #25CB8D" color="warn" *ngIf="data.text == 'savedata'"
       [mat-dialog-close]>Save</button>
       <button mat-flat-button style="background: #25CB8D" color="warn" *ngIf="data.text == 'yes'"
       [mat-dialog-close]="yesff">Yes</button>
+    </div>
   </div>
 </div>

@@ -1,18 +1,9 @@
+@import "~src/assets/themes/blue-theme";
+
 .service-trigger {
-  background: #25afcb;
+  background: $blue-text-color;
   color: #ffffff;
   height: 30px;
   line-height: 30px;
   width: 90px;
-}
-
-/* Firefox */
-input[type="number"] {
-  -moz-appearance: textfield;
-}
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
 }

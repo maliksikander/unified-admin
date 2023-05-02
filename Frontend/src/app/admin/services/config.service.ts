@@ -11,7 +11,7 @@ export class ConfigService {
   DefaultLanguage = "en";
   Theme = "dark-theme";
   sidebarPosition = "left";
-  appThemeColor = "black";
+  appThemeColor = "dark-theme";
   isCustomTheme;
   isRightBarActive;
   isBarIconMode;

@@ -41,12 +41,12 @@
             </div>
         </div>
         <div class="component-logo">
-            <div class="form-group col-md-5">
+            <div class="form-group col-md-5 channel-logo-preview">
                 <mat-label>Channel Type Logo</mat-label>
                 <mat-form-field appearance="outline">
                     <input style="display: none;" #file type="file" accept='.png, .svg'
                         (change)="fileUpload(file.files,$event)" />
-                    <input [readonly]="true" matInput formControlName="channelLogo" [value]="imageName">
+                        <input class="channel-logo" [readonly]="true" matInput formControlName="channelLogo" [value]="imageName">
                     <button class="select-file-button" mat-icon-button matSuffix (click)="file.click()">
                         <img src="assets/images/upload.svg" alt="image">
                     </button>

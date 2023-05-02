@@ -1,6 +1,9 @@
+@import "~src/assets/themes/blue-theme";
+
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -8,8 +11,16 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
+mat-label {
+  small {
+    display: block;
+    color: #adaaaa;
+    font-size: 10px;
+  }
+}
+
 .service-trigger {
-  background: #25afcb;
+  background: $blue-text-color;
   color: #ffffff;
   height: 30px;
   line-height: 30px;
@@ -24,6 +35,7 @@ input::-webkit-inner-spin-button {
   margin: 0.25rem 0;
   padding-bottom: 10px;
   padding-top: 10px;
+
   mat-slide-toggle {
     padding: 0px 20px;
     position: relative;
@@ -38,9 +50,9 @@ button {
   line-height: 30px;
   width: 90px;
 
-  &.gray-btn {
-    background: #919191;
-  }
+  //&.gray-btn {
+  //  background: #919191;
+  //}
 }
 
 .btn-margin {
@@ -51,9 +63,11 @@ button {
   mat-label {
     display: block;
   }
+
   mat-form-field {
     max-width: 200px;
   }
+
   button {
     border: 0;
     border-radius: 5px;
@@ -64,7 +78,7 @@ button {
   }
 }
 
-// img.info-label {
-//   position: absolute;
-//   right: -35px;
-// }
+.token-remove {
+  cursor: pointer;
+  margin-left: 8px;
+}

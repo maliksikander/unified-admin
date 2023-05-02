@@ -1,15 +1,7 @@
-input[type="number"] {
-  -moz-appearance: textfield;
-}
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
+@import "~src/assets/themes/blue-theme";
 
 .service-trigger {
-  background: #25afcb;
+  background: $blue-text-color;
   color: #ffffff;
   height: 30px;
   line-height: 30px;
@@ -17,7 +9,7 @@ input::-webkit-inner-spin-button {
 }
 
 .panel-page-content {
-  padding-left: 18px !important;
+  width: 100%;
 }
 
 mat-slide-toggle {
@@ -33,9 +25,9 @@ button {
   line-height: 30px;
   width: 90px;
 
-  &.gray-btn {
-    background: #919191;
-  }
+  //&.gray-btn {
+  //  background: #919191;
+  //}
 }
 
 .btn-margin {

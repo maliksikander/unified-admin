@@ -125,7 +125,7 @@ export class ReasonCodesComponent implements OnInit {
     let msg = "Are you sure you want to delete this reason?";
     return this.dialog
       .open(ConfirmDialogComponent, {
-        panelClass: "confirm-dialog-container",
+        panelClass: ['confirm-dialog-container' , 'delete-confirmation'],
         disableClose: true,
         data: {
           heading: "Delete Reason",

@@ -1,19 +1,29 @@
+@import "~src/assets/themes/blue-theme";
+
 .service-trigger {
-  background: #25afcb;
+  background: $blue-text-color;
   color: #ffffff;
   height: 30px;
   line-height: 30px;
   width: 90px;
 }
 .mat-chip.mat-standard-chip {
-  background-color: #8b8b8b;
-  color: #fff;
+  background-color: $header-background;
+  color: #000;
+  padding: 5px 10px;
+  height: 28px;
+  min-height: 28px;
+  margin: 6px 5px;
+
+  .mat-chip-remove {
+    opacity: 0.8;
+    color: #606060;
+    font-size: 17px;
+    right: -3px;
+    position: relative;
+  }
 }
 
-.mat-chip.mat-standard-chip .mat-chip-remove {
-  opacity: 0.97;
-  color: #fff;
-}
 
 .search-filter {
   margin: 10px auto;

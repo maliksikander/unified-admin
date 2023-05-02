@@ -1,23 +1,11 @@
-input[type="number"] {
-  -moz-appearance: textfield;
-}
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
+@import "~src/assets/themes/blue-theme";
 
 .service-trigger {
-  background: #25afcb;
+  background: $blue-text-color;
   color: #ffffff;
   height: 30px;
   line-height: 30px;
   width: 90px;
-}
-
-.panel-page-content {
-  padding-left: 18px !important;
 }
 
 .interative-toggle {
@@ -38,9 +26,9 @@ button {
   line-height: 30px;
   width: 90px;
 
-  &.gray-btn {
-    background: #919191;
-  }
+  //&.gray-btn {
+  //  background: #919191;
+  //}
 }
 
 .btn-margin {
@@ -48,7 +36,7 @@ button {
 }
 
 .select-file-button {
-  top: -3px;
+  top: -20px;
   right: -10px;
   box-shadow: none;
   text-align: right;
@@ -62,7 +50,7 @@ button {
   flex-wrap: wrap;
   .logo-msg-span {
     position: absolute;
-    top: 45px;
+    top: 48px;
     color: #717171;
     font-size: 11px;
     width: 100%;
@@ -75,13 +63,14 @@ button {
 }
 
 .uploaded-logo {
-  position: relative;
-  width: 300px;
+  position: absolute;
+  width: 100px;
   padding: 12px;
-  background: #ececec;
+  // background: #ececec;
   border-radius: 6px;
   height: 68px;
-  border: 1px solid #c2c2c2;
+  // border: 1px solid #c2c2c2;
+  top: 22px;
 
   .upload-logo {
     background-repeat: no-repeat !important;
@@ -91,7 +80,12 @@ button {
     background-size: contain !important;
   }
 }
-// img.info-label {
-//   position: absolute;
-//   right: -35px;
-// }
+.form-group.channel-logo-preview{
+  input {
+    padding: 12px 0;
+  }
+  .channel-logo {
+    margin-left: 80px;
+    width: calc(100% - 70px);
+  }
+}

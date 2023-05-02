@@ -86,7 +86,7 @@ export class MrdComponent implements OnInit {
       this.saveBtnText = "Create";
       let dialogRef = this.dialog.open(templateRef, {
         width: "500px",
-        height: "350px",
+        height: "auto",
         panelClass: "add-attribute",
         disableClose: true,
       });
@@ -205,7 +205,7 @@ export class MrdComponent implements OnInit {
     let msg = "Are you sure you want to delete this MRD ?";
     return this.dialog
       .open(ConfirmDialogComponent, {
-        panelClass: "confirm-dialog-container",
+        panelClass: ['confirm-dialog-container' , 'delete-confirmation'],
         disableClose: true,
         data: {
           heading: "Delete Media Routing Domain",
@@ -268,7 +268,7 @@ export class MrdComponent implements OnInit {
       this.saveBtnText = "Update";
       let dialogRef = this.dialog.open(templateRef, {
         width: "500px",
-        height: "350px",
+        height: "auto",
         panelClass: "add-attribute",
         disableClose: true,
         data: data,

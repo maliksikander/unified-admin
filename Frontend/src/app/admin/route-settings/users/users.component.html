@@ -8,7 +8,7 @@
         <div class="sub-heading">
           <h2>Agent Attributes</h2>
         </div>
-        <div class="routing-content">
+        <div class="routing-content panel-page-content">
           <div class="filter-section">
             <div class="form-group search-field">
               <mat-form-field appearance="outline">
@@ -61,10 +61,10 @@
                   <span class="list-actions">
                     <button mat-mini-fab matTooltip="Add/Edit Attribute"
                       (click)="editUserAttributes(assignAttributeForm,data)">
-                      <i class="material-icons">add</i>
+                      <mat-icon>add</mat-icon>
                     </button>
                     <button mat-mini-fab matTooltip="View Profile" (click)="viewUserProfile(userProfileForm,data)">
-                      <i class="material-icons">person</i>
+                      <mat-icon>person</mat-icon>
                     </button>
                   </span>
                 </div>
@@ -103,7 +103,7 @@
     <select [(ngModel)]="attrValue" (click)="$event.stopPropagation()" (change)="onAttrChange($event.target.value)">
       <option *ngFor="let data of attrValueList" [value]="data">{{data}}</option>
     </select>
-    <button (click)="removeAttribute()" *ngIf="attrType !== 'BOOLEAN'" mat-flat-button class="dark-blue-btn">Remove
+    <button (click)="removeAttribute()" *ngIf="attrType !== 'BOOLEAN'" mat-flat-button class="blue-btn">Remove
       Attribute</button>
     <div class="close-attr-btn">
       <mat-icon>close</mat-icon>
@@ -112,7 +112,7 @@
 </mat-menu>
 
 <ng-template #userProfileForm>
-  <div class="user-dialog-container">
+  <div class="user-dialog-container dialog-container">
     <div class="mat-card-header">
       <mat-icon (click)="onClose()">close</mat-icon>
       <h4 class="content-span full-width">{{formHeading}}</h4>
@@ -163,7 +163,7 @@
 
 
 <ng-template #assignAttributeForm>
-  <div class="user-dialog-container">
+  <div class="user-dialog-container dialog-container">
     <div class="mat-card-header">
       <mat-icon (click)="onClose()">close</mat-icon>
       <h4 class="content-span full-width">Add Attributes</h4>
@@ -239,7 +239,7 @@
             <div class="user-form-action-area">
               <button mat-raised-button (click)="onClose()" class="gray-btn">Cancel</button>
               <button *ngIf="managePermission" mat-raised-button [disabled]="!userAttributeForm.valid"
-                [mat-dialog-close]="save" class="dark-blue-btn service-trigger">Save</button>
+                [mat-dialog-close]="save" class="blue-btn service-trigger">Save</button>
             </div>
           </div>
         </div>

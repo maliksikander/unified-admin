@@ -1,22 +1,13 @@
-/* Firefox */
-input[type="number"] {
-  -moz-appearance: textfield;
-}
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
+@import "~src/assets/themes/blue-theme";
 
 .panel-page-content {
-  padding-top: 50px !important;
-  padding-left: 46px !important;
+  //padding-top: 50px !important;
+  //padding-left: 46px !important;
 
   .channel-accordion {
-    padding: 0px 40px 10px 0px;
+    //padding: 0px 40px 10px 0px;
     .add-channel-btn {
-      background: #25afcb;
+      background: $blue-text-color;
       color: #ffffff;
       height: 20px;
       line-height: 20px;
@@ -31,7 +22,7 @@ input::-webkit-inner-spin-button {
       margin-bottom: 10px;
       .mat-expansion-panel-header {
         padding: 0px 18px !important;
-        background: #fafafa;
+        background: $fill-color;
         border-radius: 0;
 
         .mat-expansion-panel-header-title {
@@ -57,7 +48,7 @@ input::-webkit-inner-spin-button {
         }
         th {
           color: #777777;
-          font-weight: 400;
+          font-weight: 700;
           padding-left: 43px;
           font-size: 13px;
 
@@ -110,67 +101,10 @@ input::-webkit-inner-spin-button {
           }
         }
       }
-      //   }
-
-      .list-action-area {
-        position: relative;
-
-      
-        button {
-          box-shadow: none;
-          span {
-            font-size: 13px;
-          }
-          height: 23px;
-          margin: 0 3px;
-          width: 23px;
-          line-height: 23px;
-          background: #919191;
-
-          &:hover {
-            background: #a9a9a9;
-          }
-          .mat-button-wrapper {
-            padding: 0;
-          }
-        }
-        .list-actions {
-          display: none;
-          transition: all 0.3s;
-          position: absolute;
-          right: 5px;
-          top: 27%;
-          z-index: 2;
-
-          mat-icon {
-            position: relative;
-            top: -6px;
-            font-size: 17px;
-          }
-
-          b {
-            font-weight: normal;
-          }
-          i {
-            position: relative;
-            top: -9px;
-          }
-          i.material-icons {
-            font-size: 18px;
-          }
-        }
-      }
     }
   }
 }
 
-.outbound-div{
-  text-align: center;
-  span{
-    display: block;
-    text-align: center
-  }
-}
 
 .data-overflow {
   // max-width: calc(100% - 100px);

@@ -1,5 +1,7 @@
+@import "~src/assets/themes/blue-theme";
+
 .service-trigger {
-  background: #25afcb;
+  background: $blue-text-color;
   color: #ffffff;
   height: 30px;
   line-height: 30px;
@@ -130,13 +132,6 @@
             top: -5px;
             button {
               display: none;
-              // position: absolute;
-              // top: 25px;
-              // right: 0;
-              // max-width: 10%;
-              // height: 30px;
-              // max-height: 30px;
-              // padding: 0;
 
               mat-icon {
                 line-height: 21px;
@@ -236,8 +231,6 @@
 
     .datepicker-section, .date-range-section {
       position: relative;
-      //top: -13px;
-      //padding: 0 0 0 4px;
       mat-form-field{
         height: 20px;
       }
@@ -245,18 +238,9 @@
 
     .shift-info {
       position: relative;
-      //top: -13px;
-      //padding: 0 26px;
-      /* margin-left: -6px; */
       overflow: auto;
-      //mat-form-field{
-      //  height: 20px;
-      //}
 
       .remove-btn {
-        //padding: 0px !important;
-        //margin: 0 !important;
-        //min-width: 0 !important;
         .mat-icon {
           font-size: 15px;
           color: #b1b1b1;
@@ -266,17 +250,12 @@
         }
       }
     }
-    //.add-shift {
-    //  position: relative;
-    //  right: -20px;
-    //  top: -54px;
-    //
       .shift-btn {
-        border: 1px solid #25afcb;
+        border: 1px solid $blue-text-color;
         height: 24px;
         box-shadow: none;
         line-height: 20px;
-        color: #25afcb;
+        color: $blue-text-color;
 
         span {
           font-size: 11px;
@@ -364,12 +343,12 @@
       cursor: pointer;
       &:hover {
         color: #fff;
-        background: #25afcb;
+        background: $blue-text-color;
       }
     }
     .selected-day {
       color: #fff;
-      background: #25afcb;
+      background: $blue-text-color;
     }
 
 

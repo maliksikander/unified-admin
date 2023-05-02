@@ -62,7 +62,7 @@ export class ChannelConnectorComponent implements OnInit {
     let msg = "Are you sure you want to delete this Channel Connector?";
     return this.dialog
       .open(ConfirmDialogComponent, {
-        panelClass: "confirm-dialog-container",
+        panelClass: ['confirm-dialog-container' , 'delete-confirmation'],
         disableClose: true,
         data: {
           heading: "Delete Channel Connector",

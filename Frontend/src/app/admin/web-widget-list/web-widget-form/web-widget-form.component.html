@@ -47,6 +47,18 @@
             </div> -->
 
             <div class="form-group">
+                <mat-label>Select Form</mat-label>
+                <mat-form-field appearance="outline">
+                    <mat-select placeholder="Select Form" formControlName="form">
+                        <mat-option *ngFor="let form of formsList" [value]="form?.id">{{form?.formTitle ?
+                            form?.formTitle: 'N/A'}}</mat-option>
+                    </mat-select>
+                    <mat-error class="form-error">
+                        {{formErrors?.form}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="form-group">
                 <mat-label>Language</mat-label>
                 <mat-form-field appearance="outline">
                     <mat-select placeholder="Select Language" formControlName="language">
@@ -57,52 +69,157 @@
                     </mat-error>
                 </mat-form-field>
             </div>
-
             <div class="form-group custom-theme-field">
                 <mat-label>Choose Theme Color</mat-label>
                 <mat-form-field appearance="outline">
                     <input #ignoredInput matInput [value]="widgetConfigForm.value.theme" formControlName="theme"
-                        [cpIgnoredElements]="[ignoredButton, ignoredInput]" [cpDisableInput]="true" [(cpToggle)]="toggle"
-                        [(colorPicker)]="widgetConfigForm.value.theme" />
+                        [cpIgnoredElements]="[ignoredButton, ignoredInput]" [cpDisableInput]="true"
+                        [(cpToggle)]="toggle" [(colorPicker)]="widgetConfigForm.value.theme" />
 
                 </mat-form-field>
                 <button #ignoredButton [style.background]="widgetConfigForm.value.theme"
                     (click)="toggle=!toggle;"></button>
             </div>
-
-
         </div>
-
-        <div class="form-group adjust-toggle widget-toggle col-md-5" style="padding-top: 15px">
+        <div class="form-group adjust-toggle widget-toggle col-md-5 pt-3">
             <mat-label>Enable Download Transcript</mat-label>
             <mat-slide-toggle formControlName="enableDownloadTranscript"></mat-slide-toggle>
         </div>
-
-        <div class="form-group adjust-toggle widget-toggle col-md-5" style="padding-top: 15px">
+        <div class="form-group adjust-toggle widget-toggle col-md-5 pt-3">
             <mat-label>Enable Dynamic Link</mat-label>
             <mat-slide-toggle formControlName="enableDynamicLink"></mat-slide-toggle>
         </div>
-
-        <div class="form-group adjust-toggle widget-toggle col-md-5" style="padding-top: 15px">
+        <div class="form-group adjust-toggle widget-toggle col-md-5 pt-3">
             <mat-label>Enable Emoji</mat-label>
             <mat-slide-toggle formControlName="enableEmoji"></mat-slide-toggle>
         </div>
-
-        <div class="form-group adjust-toggle widget-toggle col-md-5" style="padding-top: 15px">
+        <div class="form-group adjust-toggle widget-toggle col-md-5 pt-3">
             <mat-label>Enable File Transfer</mat-label>
             <mat-slide-toggle formControlName="enableFileTransfer"></mat-slide-toggle>
         </div>
-
-        <div class="form-group adjust-toggle widget-toggle col-md-5" style="padding-top: 15px">
+        <div class="form-group adjust-toggle widget-toggle col-md-5 pt-3">
             <mat-label>Enable Font Resize</mat-label>
             <mat-slide-toggle formControlName="enableFontResize"></mat-slide-toggle>
         </div>
+        <!--  Web RTC Config-->
+        <div class="form-group adjust-toggle widget-toggle col-md-5 pt-3">
+            <mat-label>Enable Web-RTC
+                <small>Turn on to enable video calling and screen sharing options</small>
+            </mat-label>
 
+            <mat-slide-toggle formControlName="enableWebRtc"></mat-slide-toggle>
+        </div>
+        <div class="form-group col-md-5 pt-3" *ngIf="widgetConfigForm.get('enableWebRtc').value">
+            <!-- <div class="form-group adjust-toggle widget-toggle">
+                <mat-label>Enable Screen Sharing</mat-label>
+                <mat-slide-toggle formControlName="enableScreenSharing"></mat-slide-toggle>
+            </div> -->
+            <div class="form-group adjust-toggle widget-toggle">
+                <mat-label>Enable Sip Logs</mat-label>
+                <mat-slide-toggle formControlName="enabledSipLogs"></mat-slide-toggle>
+            </div>
+            <div class="group-fields">
+                <div class="form-group">
+                    <mat-label>WSS Server IP 
+                        <small>String value of EFswitch IP or FQDN</small>
+                    </mat-label>
+                    <mat-form-field appearance="outline">
+                        <input matInput formControlName="wssServerIp">
+                        <mat-error class="form-error">
+                            {{formErrors?.wssServerIp}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="form-group">
+                    <mat-label>WSS Server Port
+                        <small>String value of EFswitch webrtc port</small>
+                    </mat-label>
+                    <mat-form-field appearance="outline">
+                        <input matInput formControlName="wssServerPort">
+                        <mat-error class="form-error">
+                            {{formErrors?.wssServerPort}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="form-group">
+                <mat-label>Dialling URI
+                    <small>EF Switch DN</small>
+                </mat-label>
+                <mat-form-field appearance="outline">
+                    <input matInput formControlName="diallingUri">
+                    <mat-error class="form-error">
+                        {{formErrors?.diallingUri}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="form-group">
+                <mat-label>SIP Extension
+                    <small>Extension dedicated for dialling</small>
+                </mat-label>
+                <mat-form-field appearance="outline">
+                    <input matInput formControlName="sipExtension">
+                    <mat-error class="form-error">
+                        {{formErrors?.sipExtension}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="form-group">
+                <mat-label>Extension Password
+                    <small>Extension password for registration</small>
+                </mat-label>
+                <mat-form-field appearance="outline">
+                    <input matInput formControlName="extensionPassword">
+                    <mat-error class="form-error">
+                        {{formErrors?.extensionPassword}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="form-group">
+                <mat-label>Channel
+                    <small>Device Channel Type</small>
+                </mat-label>
+                <mat-form-field appearance="outline">
+                    <input matInput formControlName="channel">
+                    <mat-error class="form-error">
+                        {{formErrors?.channel}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="form-group">
+                <mat-label>Web Socket
+                    <small>websocket</small>
+                </mat-label>
+                <mat-form-field appearance="outline">
+                    <input matInput formControlName="websocket">
+                    <mat-error class="form-error">
+                        {{formErrors?.websocket}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="form-group">
+                <mat-label>Ice Servers
+                    <small>ice server urls</small>
+                </mat-label>
+                <mat-form-field appearance="outline">
+                    <input matInput type="text" [(ngModel)]="inputValue" (keydown.enter)="addToken()"
+                        (keydown.comma)="addToken()" formControlName="iceServers">
+                    <mat-chip-list>
+                        <mat-chip *ngFor="let token of tokens" [selectable]="false">
+                            {{ token }}
+                            <mat-icon class="token-remove" (click)="removeToken(token)">cancel</mat-icon>
+                        </mat-chip>
+                    </mat-chip-list>
+                    <!-- <mat-error class="form-error">
+                        {{formErrors?.iceServers}}
+                    </mat-error> -->
+                </mat-form-field>
+            </div>
+        </div>
         <div class="action-area btn-margin col-md-5">
             <button mat-raised-button (click)="onClose()" class="gray-btn">Cancel</button>
             <button [disabled]="!widgetConfigForm.valid" mat-raised-button class="blue-btn service-trigger"
                 (click)="onSave()">Save</button>
         </div>
-
     </form>
 </div>

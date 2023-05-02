@@ -8,7 +8,7 @@
         <div class="sub-heading">
           <h2>Queue Settings</h2>
         </div>
-        <div class="routing-content">
+        <div class="routing-content panel-page-content">
           <div class="filter-section">
             <div class="form-group search-field">
               <mat-form-field appearance="outline">
@@ -101,7 +101,7 @@
                                 </ng-container>
                               </span>
                             </td>
-                            <td class="step-table-trigger">
+                            <td class="step-table-trigger list-trigger-area ">
                               <ng-container *ngIf="stepData?.timeout != 0">{{stepData?.timeout ? stepData?.timeout :
                                 'N/A'}}</ng-container>
                               <ng-container *ngIf="stepData?.timeout == 0">{{stepData.timeout}}</ng-container>
@@ -239,7 +239,7 @@
 
 
   <ng-template #stepFormTemplate>
-    <div class="step-dialog-container">
+    <div class="step-dialog-container dialog-container">
       <div class="mat-card-header">
         <mat-icon (click)="onClose('step')">close</mat-icon>
         <h4 class="content-span full-width">{{stepFormHeading}}</h4>
@@ -302,7 +302,7 @@
 
                         <div class="form-group col-md-4 exp-selection">
                           <mat-form-field appearance="outline">
-                            <mat-select formControlName="routingAttribute">
+                            <mat-select formControlName="routingAttribute" placeholder="Select Attribute">
                               <mat-option *ngFor="let data of attrData" [value]="data">{{data.name | titlecase}}
                               </mat-option>
                             </mat-select>
@@ -311,7 +311,7 @@
 
                         <div class="form-group col-md-2">
                           <mat-form-field appearance="outline">
-                            <mat-select formControlName="relationalOperator">
+                            <mat-select formControlName="relationalOperator" placeholder="Operators">
                               <ng-container *ngIf="term?.value.routingAttribute?.type == 'PROFICIENCY_LEVEL'">
                                 <mat-option *ngFor="let data of operatorList" [value]="data">{{data}}
                                 </mat-option>
@@ -366,7 +366,7 @@
               <div class="form-action-area">
                 <button mat-raised-button class="gray-btn" [mat-dialog-close]="false">Cancel</button>
                 <button mat-raised-button [disabled]="!stepForm.valid" [mat-dialog-close]="save"
-                  class="dark-blue-btn service-trigger">{{stepSaveBtnText}}</button>
+                  class="blue-btn service-trigger">{{stepSaveBtnText}}</button>
               </div>
             </div>
           </div>
@@ -374,3 +374,4 @@
       </div>
     </div>
   </ng-template>
+</div>

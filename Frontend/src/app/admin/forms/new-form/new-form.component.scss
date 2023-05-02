@@ -1,6 +1,4 @@
-.panel-page-content {
-  padding: 20px 0px 0px 0px;
-}
+@import "~src/assets/themes/blue-theme";
 
 .col-md-12 {
   padding: 0;
@@ -15,18 +13,8 @@
     // background: bisque;
   }
   &:hover {
-    background: #f8f8f8;
+    background: $fill-color;
   }
-}
-
-input[type="number"] {
-  -moz-appearance: textfield;
-}
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
 }
 
 .form-action-div {
@@ -34,25 +22,25 @@ input::-webkit-inner-spin-button {
   padding: 0 30px;
 
   button {
-    color: #ffffff;
+    //color: #ffffff;
     margin-left: 10px;
     height: 34px;
-    line-height: 34px;
+    //line-height: 34px;
     width: 95px;
-    box-shadow: none;
-    border-radius: 3px;
+    //box-shadow: none;
+    //border-radius: 3px;
 
-    &.gray-btn {
-      background: #919191;
-    }
+    //&.gray-btn {
+    //  background: #919191;
+    //}
 
-    &.save-btn {
-      background: #25afcb;
-    }
-
-    &:disabled {
-      color: rgba(0, 0, 0, 0.26);
-    }
+    //&.blue-btn {
+    //  background: $blue-text-color;
+    //}
+    //
+    //&:disabled {
+    //  color: rgba(0, 0, 0, 0.26);
+    //}
   }
 }
 
@@ -72,18 +60,15 @@ input::-webkit-inner-spin-button {
       padding: 10px 0;
 
       &:hover {
-        background: #f8f8f8;
+        background: $fill-color;
         .drag-handle {
           display: inline-block;
         }
-        // .panel-edit-btn {
-        //   display: inline-block;
-        // }
       }
     }
 
     .mat-expanded {
-      background: #f8f8f8;
+      background: $fill-color;
 
       .drag-handle {
         display: inline-block;
@@ -188,7 +173,7 @@ input::-webkit-inner-spin-button {
             }
 
             mat-icon {
-              color: #25afcb;
+              color: $blue-text-color;
               font-size: 20px;
             }
           }
@@ -204,7 +189,7 @@ input::-webkit-inner-spin-button {
           padding: 0;
 
           mat-icon {
-            color: #25afcb;
+            color: $blue-text-color;
             font-size: 20px;
           }
           // }

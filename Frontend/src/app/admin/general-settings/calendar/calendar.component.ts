@@ -177,7 +177,7 @@ export class CalendarComponent implements OnInit {
   selectedTimeFrom = this.selectTime[0].value;
   editView = false;
   underLineColor: ThemePalette = "accent";
-  defColor = "#25afcb";
+  defColor = "#1a50a3";
   color = [
     "#CB2572",
     "#CB2525",
@@ -647,7 +647,7 @@ export class CalendarComponent implements OnInit {
   deleteSaveEvent(e) {
     let msg = "Are you sure you want to delete " + e.title + "?";
     return this.dialog.open(ConfirmDialogComponent, {
-      panelClass: "confirm-dialog-container",
+      panelClass: ['confirm-dialog-container' , 'delete-confirmation'],
       disableClose: true,
       width: "450px",
       data: {
@@ -824,7 +824,7 @@ export class CalendarComponent implements OnInit {
     let msg = "Are you sure you want to delete this calendar ?";
     return this.dialog
       .open(ConfirmDialogComponent, {
-        panelClass: "confirm-dialog-container",
+        panelClass: ['confirm-dialog-container' , 'delete-confirmation'],
         disableClose: true,
         data: {
           heading: "Delete Calendar",

@@ -293,7 +293,7 @@ export class CommonService {
     maxRequests: {
       required: "This field is required",
       min: "Min value of 1 is required",
-      max:"Max value allowed is 2147483647"
+      max: "Max value allowed is 2147483647"
     },
     managedByRe: {
       required: "This field is required",
@@ -409,7 +409,7 @@ export class CommonService {
     customerActivityTimeout: {
       required: "This field is required",
       max: "Max. allowed limit is 2147483647",
-      min:"Min. allowed value is 0",
+      min: "Min. allowed value is 0",
       minlength: "More characters required",
       maxlength: "Less characters required",
       pattern: 'Allowed special characters "[!@#$%^&*()-_=+~`"]+"',
@@ -429,7 +429,7 @@ export class CommonService {
     agentRequestTTL: {
       required: "This field is required",
       max: "Max. allowed limit is 2147483647",
-      min:"Min. allowed value is 0",
+      min: "Min. allowed value is 0",
       minlength: "More characters required",
       maxlength: "Less characters required",
       pattern: 'Allowed special characters "[!@#$%^&*()-_=+~`"]+"',
@@ -567,13 +567,13 @@ export class CommonService {
   };
 
   webWidgetFormErrorMessages = {
-    customerReconnectTime: {
-      required: "This field is required",
-      minlength: "Min 3 characters required",
-      maxlength: "Max 100 characters allowed",
-      pattern: "Not a valid pattern",
-      validName: "Already exists",
-    },
+    // customerReconnectTime: {
+    //   required: "This field is required",
+    //   minlength: "Min 3 characters required",
+    //   maxlength: "Max 100 characters allowed",
+    //   pattern: "Not a valid pattern",
+    //   validName: "Already exists",
+    // },
     enableDynamicLink: {
       required: "This field is required",
       maxlength: "Max 500 characters allowed",
@@ -599,6 +599,13 @@ export class CommonService {
       validName: "Already exists",
     },
     enableFontResize: {
+      required: "This field is required",
+      minlength: "Min 3 characters required",
+      maxlength: "Max 100 characters allowed",
+      pattern: "Not a valid pattern",
+      validName: "Already exists",
+    },
+    form: {
       required: "This field is required",
       minlength: "Min 3 characters required",
       maxlength: "Max 100 characters allowed",
@@ -639,9 +646,40 @@ export class CommonService {
       maxlength: "Max 50 characters allowed",
       pattern: "Only alphanumeric and ( _ * - ) characters allowed",
     },
+    wssServerIp: {
+      required: "This field is required",
+      maxlength: "Max 500 characters allowed",
+      pattern: 'Allowed special characters "[!@#$%^&*()-_=+~`"]+"',
+    },
+    diallingUri: {
+      required: "This field is required",
+      maxlength: "Max 500 characters allowed",
+      pattern: 'Allowed special characters "[!@#$%^&*()-_=+~`"]+"',
+    },
+    sipExtension: {
+      required: "This field is required",
+      maxlength: "Max 500 characters allowed",
+      pattern: 'Allowed special characters "[!@#$%^&*()-_=+~`"]+"',
+    },
+    extensionPassword: {
+      required: "This field is required",
+      maxlength: "Max 500 characters allowed",
+      pattern: 'Allowed special characters "[!@#$%^&*()-_=+~`"]+"',
+    },
+    channel: {
+      required: "This field is required",
+      maxlength: "Max 500 characters allowed",
+      pattern: 'Allowed special characters "[!@#$%^&*()-_=+~`"]+"',
+    },
+    websocket: {
+      required: "This field is required",
+      maxlength: "Max 500 characters allowed",
+      pattern: 'Allowed special characters "[!@#$%^&*()-_=+~`"]+"',
+    },
+   
   };
 
-  constructor(private snackbar: SnackbarService, private router: Router) {}
+  constructor(private snackbar: SnackbarService, private router: Router) { }
 
   //assign form validation errors dynamically
   logValidationErrors(group: FormGroup, formErrors, validations) {

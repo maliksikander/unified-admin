@@ -1,79 +1,4 @@
-.routing-content {
-  .filter-section {
-    text-align: right;
-    width: 100%;
-    padding: 7px 25px 20px 0px;
-
-    .form-group {
-      max-width: 260px;
-      width: 100%;
-      display: inline-block;
-      margin: 0;
-
-      .mat-form-field {
-        width: 100%;
-        position: relative;
-
-        mat-icon {
-          position: absolute;
-          right: -11px;
-          top: -2px;
-          color: #d5d5d5;
-          height: 35px;
-          line-height: 35px;
-          width: 40px;
-          text-align: center;
-          cursor: pointer;
-          z-index: 99;
-
-          &:hover {
-            cursor: pointer;
-            background: #cccccc40;
-            color: #999999;
-          }
-        }
-      }
-    }
-
-    button {
-      margin-left: 10px;
-      padding-left: 5px !important;
-      background: #f3f6f8;
-      color: #686868;
-      font-weight: 600;
-      font-size: 13px !important;
-      height: 35px;
-
-      mat-icon {
-        font-size: 20px;
-        position: relative;
-        top: 1px;
-      }
-
-      span {
-        font-size: 12px;
-      }
-    }
-
-    button.sync-btn.mat-flat-button {
-      padding: 0px !important;
-      mat-icon {
-        font-size: 24px;
-      }
-    }
-  }
-}
-
-/* Firefox */
-input[type="number"] {
-  -moz-appearance: textfield;
-}
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
+@import "~src/assets/themes/blue-theme";
 
 .form-expansion-panel {
   .mat-expansion-panel-spacing {
@@ -135,7 +60,6 @@ input::-webkit-inner-spin-button {
       font-size: 12px;
       height: 27px;
       width: 100%;
-      border-radius: 3px;
       border: 1px solid #d9d9d9;
       border-radius: 20px;
       outline: none;
@@ -176,7 +100,7 @@ input::-webkit-inner-spin-button {
       &:after {
         top: 4px !important;
         padding-left: 1.2px;
-        color: #25afcb;
+        color: $blue-text-color;
         font-size: 13px;
       }
     }
@@ -292,7 +216,7 @@ input::-webkit-inner-spin-button {
 }
 
 .users-list {
-  padding: 0px 25px;
+  //padding: 0px 25px;
   .mat-chip.mat-standard-chip {
     background-color: #fff;
     color: #5b5b5b;
@@ -306,19 +230,19 @@ input::-webkit-inner-spin-button {
     border: 1px solid;
   }
   .top-heading {
-    padding: 10px 0px;
-    display: block;
-    overflow: hidden;
-    border: 1px solid #e2e2e2;
-    background: #f5f5f5;
-    height: 40px;
-    padding: 0;
-    margin: 0;
+    //padding: 10px 0px;
+    //display: block;
+    //overflow: hidden;
+    //border: 1px solid #e2e2e2;
+    //background: #f5f5f5;
+    //height: 40px;
+    //padding: 0;
+    //margin: 0;
     li {
-      color: #686868;
-      display: inline-block;
-      list-style: none;
-      padding: 10px 25px;
+      //color: #686868;
+      //display: inline-block;
+      //list-style: none;
+      //padding: 10px 25px;
       &:first-child {
         width: 25%;
       }
@@ -333,8 +257,8 @@ input::-webkit-inner-spin-button {
     overflow: hidden;
     border-left: 1px solid #e2e2e2;
     border-right: 1px solid #e2e2e2;
-    background: #f5f5f5;
-    height: 40px;
+    //background: #f5f5f5;
+    //height: 40px;
     padding: 0;
     width: 100%;
     margin: 0;
@@ -346,10 +270,11 @@ input::-webkit-inner-spin-button {
       border-bottom: 1px solid #e2e2e2;
       background: white !important;
       width: 100%;
-      padding: 8px 25px;
-      min-height: 45px;
+      padding: 0 25px;
+      min-height: 40px;
       position: relative;
-      list-style: none;
+      line-height: 40px;
+      //list-style: none;
       &:hover {
         background: #f3f6f8 !important;
         .list-action-area {
@@ -369,6 +294,7 @@ input::-webkit-inner-spin-button {
         min-height: 30px;
         overflow-y: auto;
         overflow-x: hidden;
+        align-self: center;
 
         mat-chip-list {
           position: relative;
@@ -382,45 +308,7 @@ input::-webkit-inner-spin-button {
       }
     }
   }
-  .list-action-area {
-    button {
-      box-shadow: none;
-      span {
-        font-size: 13px;
-      }
-      height: 23px;
-      margin: 0 3px;
-      width: 23px;
-      line-height: 23px;
-      background: #919191;
 
-      &:hover {
-        background: #a9a9a9;
-      }
-      .mat-button-wrapper {
-        padding: 0;
-      }
-    }
-    .list-actions {
-      display: none;
-      transition: all 0.3s;
-      position: absolute;
-      right: 25px;
-      top: 30%;
-      z-index: 2;
-
-      b {
-        font-weight: normal;
-      }
-      i {
-        position: relative;
-        top: -10px;
-      }
-      i.material-icons {
-        font-size: 18px;
-      }
-    }
-  }
 }
 
 .attribute-dialog {
@@ -445,7 +333,7 @@ input::-webkit-inner-spin-button {
   }
 
   button {
-    color: #25afcb;
+    color: $blue-text-color;
     height: 25px;
     line-height: 25px;
     /* width: 35%; */
