@@ -38,8 +38,8 @@ node_artifacts_frontend:
    - cd Frontend
    - rm -rf node_modules
    - npm install --legacy-peer-deps
-   - npm uninstall jest
-   - npm install jest@27.4.1
+  #  - npm uninstall jest
+  #  - npm install jest@27.4.1
    allow_failure: false
    cache:
        key: $CI_PROJECT_TITLE-frontend
@@ -168,10 +168,10 @@ node-artifacts-backend:
   script:
     - cd Backend
     - npm install --legacy-peer-deps
-    - npm uninstall ef-keycloak-connect
-    - npm install ef-keycloak-connect@1.0.0
-    - npm uninstall jest
-    - npm install jest@27.4.1
+    # - npm uninstall ef-keycloak-connect
+    # - npm install ef-keycloak-connect@1.0.0
+    # - npm uninstall jest
+    # - npm install jest@27.4.1
   allow_failure: false
   cache:
     key: $CI_PROJECT_TITLE-backend
