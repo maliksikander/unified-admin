@@ -3598,3 +3598,36 @@ snack-bar-container {
     line-height: 20px;
   }
 }
+
+.shift-info{
+  mat-form-field{
+    display: flex;
+    float: left;
+  }
+  .mat-form-field-infix {
+    display: flex;
+    width: auto;
+  }
+  .shift-value{
+    margin-right: 10px;
+  }
+  .time-select-value{
+    min-width: 70px;
+    display: inline-block;
+  }
+  .mat-select-arrow-wrapper{
+    opacity: 0;
+    display: none;
+  }
+  .remove-btn{
+    height: auto;
+    display: inline-flex;
+    .mat-button-wrapper{
+      height: 15px;
+      mat-icon{
+        padding: 0;
+        vertical-align: super;
+      }
+    }
+  }
+}

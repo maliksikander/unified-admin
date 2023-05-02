@@ -174,6 +174,7 @@ export class CalendarComponent implements OnInit {
     { value: "11:45 PM", viewValue: "11:45 PM" },
   ];
   calendarPreviewData = {};
+  selectedTimeTo = this.selectTime[0].value;
   selectedTimeFrom = this.selectTime[0].value;
   editView = false;
   underLineColor: ThemePalette = "accent";

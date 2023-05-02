@@ -188,7 +188,24 @@
                     <mat-label>Shifts</mat-label>
                     <mat-form-field [color]="underLineColor">
 <!--                      <mat-label>Shift</mat-label>-->
-                      <input matInput formControlName="shift">
+<!--                      <input matInput formControlName="shift">-->
+<!--                    </mat-form-field>-->
+                      <span class="shift-value">Morning</span>
+                    <span class="time-select-value time-from">
+                      <mat-select [(value)]="selectedTimeTo">
+                        <mat-option *ngFor="let timeFrom of selectTime" [value]="timeFrom.value">
+                          {{timeFrom.viewValue}}
+                        </mat-option>
+                      </mat-select>
+                    </span>
+
+                    <span  class="time-select-value">
+                      <mat-select [(value)]="selectedTimeFrom">
+                        <mat-option *ngFor="let timeTo of selectTime" [value]="timeTo.value">
+                          {{timeTo.viewValue}}
+                        </mat-option>
+                      </mat-select>
+                    </span>
                     </mat-form-field>
                     <!-- #timeMenuTrigger="matMenuTrigger" [matMenuTriggerFor]="timePicker" -->
                     <button class="remove-btn" mat-icon-button>
