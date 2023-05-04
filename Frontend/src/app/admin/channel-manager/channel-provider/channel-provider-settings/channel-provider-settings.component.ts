@@ -286,10 +286,7 @@ export class ChannelProviderSettingsComponent implements OnInit {
       let voiceChannelIndex = channelTypes.findIndex(
         (item) => item.name == "VOICE"
       );
-      data.providerWebhook =
-        voiceChannelIndex != -1
-          ? "null"
-          : this.channelProviderForm.value.providerWebhook;
+      data.providerWebhook = this.channelProviderForm.value.providerWebhook;
       let channelTypeIDArray = [];
       channelTypes?.forEach((item) => {
         let obj = { id: "" };
@@ -345,9 +342,10 @@ export class ChannelProviderSettingsComponent implements OnInit {
       this.channelProviderForm.controls["supportedChannelTypes"].patchValue(
         temp
       );
-      let voiceChannelIndex = temp.findIndex((item) => item.name == "VOICE");
+      // let voiceChannelIndex = temp.findIndex((item) => item.name == "VOICE");
       // if (voiceChannelIndex != -1) this.setValueAndHideWebhookField(voiceChannelIndex);
-      if (voiceChannelIndex != -1) this.disableEnableValidation(voiceChannelIndex);
+      // if (voiceChannelIndex != -1) 
+      this.disableEnableValidation();
       this.cd.detectChanges();
     } catch (e) {
       console.error("Error in create form array :", e);
@@ -406,25 +404,25 @@ export class ChannelProviderSettingsComponent implements OnInit {
   }
 
   onChannelTypeChange(channelTypes: Array<any>) {
-    let voiceChannelIndex = channelTypes.findIndex(
-      (item) => item.name == "VOICE"
-    );
-    this.disableEnableValidation(voiceChannelIndex);
+    // let voiceChannelIndex = channelTypes.findIndex(
+    //   (item) => item.name == "VOICE"
+    // );
+    this.disableEnableValidation();
   }
-  // Check if the channelType == Voice than disable the validations on the webhook provider otherwise enable the URL validations
-  disableEnableValidation(voiceChannelIndex) {
+  // Check if the channelType is selected than disable the validations on the webhook provider except for the URL validations
+  disableEnableValidation() {
     let providerWebhookControl = this.channelProviderForm.controls["providerWebhook"];
-    if (voiceChannelIndex != -1) {
-      this.checkVoiceChannel = true;
+    // if (voiceChannelIndex != -1) {
+      // this.checkVoiceChannel = true;
       providerWebhookControl.clearValidators();
       providerWebhookControl.setErrors(null);
-    } else {
-      this.checkVoiceChannel = false;
+    // } else {
+      // this.checkVoiceChannel = false;
       providerWebhookControl.setValidators([
-        Validators.required,
+        // Validators.required,
         Validators.pattern(this.urlPattern),
       ]);
-    }
+    // }
     providerWebhookControl.updateValueAndValidity();
   }
   // setValidation(val) {
