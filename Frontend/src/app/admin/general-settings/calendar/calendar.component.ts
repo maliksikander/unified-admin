@@ -218,6 +218,8 @@ export class CalendarComponent implements OnInit {
   endDateForm: FormGroup;
   formHeading = "Create New Attribute";
   saveBtnText = "Save";
+  repeatOption = 'does not repeat';
+  allDayEvent: false;
   @ViewChild("colorMenuTrigger") colorMenuTrigger: MatMenuTrigger;
   recurrenceOptions = ["does not repeat", "daily", "custom"];
 
@@ -347,11 +349,13 @@ export class CalendarComponent implements OnInit {
       title: ["Title", [Validators.required]],
       datePicker: [""],
       shift: ["Shift"],
+
       calendars: ["", [Validators.required]],
       color: [""],
       endDateCriteria: ["never"],
       recurrenceCriteria: ["does not repeat"],
       timeMessage: [""],
+      allDayEvent: false,
       // dateRange: this.fb.group({
       dateRangeStart: [""],
       dateRangeEnd: [""],

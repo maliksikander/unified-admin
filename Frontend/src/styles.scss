@@ -3256,6 +3256,12 @@ snack-bar-container {
       }
     }
   }
+  .mat-form-field-disabled  .mat-form-field-flex{
+    background: transparent;
+    span{
+      color: #c1c1c1;
+    }
+  }
 }
 .date-range-section {
   .mat-form-field-flex {
@@ -3614,6 +3620,9 @@ snack-bar-container {
   .time-select-value{
     min-width: 70px;
     display: inline-block;
+    .mat-select-min-line{
+      top: 2px;
+    }
   }
   .mat-select-arrow-wrapper{
     opacity: 0;

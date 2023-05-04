@@ -246,7 +246,7 @@
           font-size: 15px;
           color: #b1b1b1;
           position: static;
-          line-height: 17px;
+          line-height: 22px;
 
         }
       }
@@ -404,6 +404,9 @@
   }
   .remove-btn{
     height: auto;
+  }
+  .shift-title{
+    max-width: 80px;
   }
 }
 

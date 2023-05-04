@@ -186,27 +186,34 @@
                 <div class="shift-main">
                   <div class="shift-info">
                     <mat-label>Shifts</mat-label>
-                    <mat-form-field [color]="underLineColor">
+                    <mat-form-field class="shift-title" [color]="underLineColor">
 <!--                      <mat-label>Shift</mat-label>-->
 <!--                      <input matInput formControlName="shift">-->
 <!--                    </mat-form-field>-->
-                      <span class="shift-value">Morning</span>
+                      <input matInput type="text" class="shift-value" value="Morning">
+
+                    </mat-form-field>
+
+                    <mat-form-field [color]="underLineColor">
                     <span class="time-select-value time-from">
-                      <mat-select [(value)]="selectedTimeTo">
+                      <mat-select [(value)]="selectedTimeFrom">
                         <mat-option *ngFor="let timeFrom of selectTime" [value]="timeFrom.value">
                           {{timeFrom.viewValue}}
                         </mat-option>
                       </mat-select>
                     </span>
 
-                    <span  class="time-select-value">
-                      <mat-select [(value)]="selectedTimeFrom">
+                        <span  class="time-select-value ">
+                      <mat-select [(value)]="selectedTimeTo">
                         <mat-option *ngFor="let timeTo of selectTime" [value]="timeTo.value">
                           {{timeTo.viewValue}}
                         </mat-option>
                       </mat-select>
                     </span>
+
                     </mat-form-field>
+
+
                     <!-- #timeMenuTrigger="matMenuTrigger" [matMenuTriggerFor]="timePicker" -->
                     <button class="remove-btn" mat-icon-button>
                       <mat-icon>close</mat-icon>
@@ -219,18 +226,18 @@
 
               <div class="recurrence-section event-fields">
                 <mat-icon>replay</mat-icon>
-                <mat-label>Repeat</mat-label>
+                <mat-label>Repeat 555</mat-label>
                 <mat-form-field appearance="fill">
 <!--                  <mat-label>Choose a date</mat-label>-->
                   <mat-select (selectionChange)="recurrence($event, customRecurrence)"
-                    formControlName="recurrenceCriteria">
-                    <mat-option *ngFor="let option of recurrenceOptions" [value]="option">
+                    formControlName="recurrenceCriteria" [(ngModel)]="repeatOption">
+                    <mat-option *ngFor="let option of recurrenceOptions"  [value]="option">
                       {{option | titlecase}}</mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
 
-              <div class="end-date-section event-fields">
+              <div class="end-date-section event-fields" *ngIf="repeatOption !== 'does not repeat'">
                 <mat-icon>check_circle_outline</mat-icon>
                 <mat-label>End Date</mat-label>
                 <mat-form-field appearance="fill">
@@ -263,7 +270,7 @@
                 </mat-form-field>
 
                 <mat-form-field appearance="fill" class="time-select-value time-from">
-                  <mat-select [(value)]="selectedTimeFrom">
+                  <mat-select [(value)]="selectedTimeFrom" [disabled]="allDayEvent">
                     <mat-option *ngFor="let timeFrom of selectTime" [value]="timeFrom.value">
                       {{timeFrom.viewValue}}
                     </mat-option>
@@ -271,7 +278,7 @@
                 </mat-form-field>
 
                 <mat-form-field appearance="fill" class="time-select-value">
-                  <mat-select [(value)]="selectedTimeFrom">
+                  <mat-select [(value)]="selectedTimeFrom"  [disabled]="allDayEvent == true">
                     <mat-option *ngFor="let timeTo of selectTime" [value]="timeTo.value">
                       {{timeTo.viewValue}}
                     </mat-option>
@@ -283,7 +290,7 @@
                   <mat-datepicker #picker6></mat-datepicker>
                 </mat-form-field>
                 <div class="clearfix"></div>
-                <mat-checkbox>All Day</mat-checkbox>
+                <mat-checkbox formControlName="allDayEvent" [(ngModel)]="allDayEvent">All Day</mat-checkbox>
 
               </div>
               <div class="message-section event-fields">
