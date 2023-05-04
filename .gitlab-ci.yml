@@ -1,79 +1,72 @@
 variables:
-  #IMAGE_NAME: ${CI_REGISTRY_IMAGE}/build:${CI_MERGE_REQUEST_SOURCE_BRANCH_NAME}-${CI_COMMIT_SHA}
-  IMAGE_NAME: ${CI_REGISTRY_IMAGE}/build:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHA}
-  
+  IMAGE_NAME: "${CI_REGISTRY_IMAGE}/build:${CI_MERGE_REQUEST_SOURCE_BRANCH_NAME}-${TIME_TOKEN}"
+  IMAGE_NAME_BRANCH: "${CI_REGISTRY_IMAGE}/build:${CI_COMMIT_BRANCH}-${CI_COMMIT_SHA}"
+
 include:
-  - project: '$CI_PROJECT_ROOT_NAMESPACE/ci-templates'
+  - project: 'cim/ci-templates'
     ref: 'main'
     file: 
       - trivy.yaml
       - grype.yaml
-
+      - trivy-merge.yaml
+      - grype-merge.yaml
+      - build_time.yml
+# uncomment if need to publish to dockerhub
+#      - dockerhub-publish.yaml
 stages:
-  #- validate
-  #- compile
   - artifacts-frontend
   - test_frontend
-  #- code_format_frontend
-  - node-scan-frontend
+  - code_format_frontend
+  - sonarqube-scan
   - build-frontend
   - artifacts-backend
   - test_backend
   - code_format_backend
-  - node-scan-backend
-  - build-backend
   - init
-  - build
-  - docker_build
+  - build-backend
+  - build-gitlab
   - scan
-  - publish_branch
-  - publish_merge
+  - publish_dockerhub
+
 
 
 
 node_artifacts_frontend:
    stage: artifacts-frontend
-   #when: on_success
    image: node:14.16.1-alpine3.13
    script:
    - cd Frontend
    - rm -rf node_modules
    - npm install --legacy-peer-deps
-   - npm uninstall jest
-   - npm install jest@27.4.1
-   #- export TIME_TOKEN=$(env TZ=GMT-5 date +%d_%m_%Y-%H_%M_%S)
-   #- echo "${TIME_TOKEN}"
+  #  - npm uninstall jest
+  #  - npm install jest@27.4.1
    allow_failure: false
    cache:
-       key: unified-admin-frontend
+       key: $CI_PROJECT_TITLE-frontend
        paths:
            - Frontend/node_modules
    only:
      refs:
-       - /^CIM-.*$/
        - /^.+_b-.+$/
        - /^.+_f-.+$/
        - merge_requests
-    #  changes:
-    #    - Frontend/package.json
+       - tags
 
-#+==================Runs on Every Commit and merge requests========================+
+# #+==================Runs on Every Commit and merge requests========================+
 
 node-test-frontend:
    stage: test_frontend
    image: node:14.16.1-alpine3.13
    script:
      - cd Frontend
-     #- npm run test
      - npm run coverage --u
    only:
-     - /^CIM-.*$/
      - /^.+_b-.+$/
      - /^.+_f-.+$/
      - merge_requests
    allow_failure: false
    cache:
-        key: unified-admin-frontend
+        key: $CI_PROJECT_TITLE-frontend
         paths:
             - Frontend/node_modules/
         policy: pull
@@ -86,408 +79,319 @@ node-test-frontend:
 
 
 
-#==================================================================
 
-
-# #==============SPACE FOR  CODE SCAN JOB============================
-##============UNCOMMENT ONCE FRONTEND TESTS ARE ADDED##==============
-
-# sonarqube-test:
-#   stage: node-scan-frontend
-#   image: adoptopenjdk/openjdk11:alpine-jre
+# node-format-frontend:
+#   stage: code_format_frontend
+#   when: on_success
+#   image: gitlab.expertflow.com:9242/general/node:CSN-3623
+#   needs:
+#     - job: node-test-frontend
 #   script:
-#     - apk add --no-cache git python3 py-pip bash shellcheck 'nodejs>14' 'npm>7'
-#     - npm install -g typescript@3.7.5
-#     - pip install --no-cache-dir --upgrade pip
-#     - pip install --no-cache-dir pylint
-#     #- npm install
-#     #- npm run test
-#     #- npm run coverage
 #     - cd Frontend
-#     - npm run sonar
-#   only:
-#     - /^CIM-.*$/
-#     - /^.+_b-.+$/
-#     - /^.+_f-.+$/
-#     - merge_requests
+#     - npm run format:check
 #   allow_failure: false
+#   only:
+#     - /^.+_f-.+$/
+#     - /^.+_b-.+$/
+#     - merge_requests
 #   cache:
-#     key: unified-admin-frontend
+#     key: $CI_PROJECT_TITLE-frontend
 #     paths:
-#       - Frontend/node_modules
-#       - Frontend/coverage
+#       - node_modules
 #     policy: pull
 
 
+
+#==========SONARQUBE SCAN for complete project (FRONTEND + BACKEND)==========
+
+sonarqube-test:
+  image: 
+    name: sonarsource/sonar-scanner-cli:latest
+    entrypoint: [""]
+  stage: sonarqube-scan
+  variables:
+    SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
+    GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
+    SONAR_HOST_URL: "http://sonarqube.expertflow.com:9000"
+    SONAR_TOKEN: "${SONAR_PASS}"
+
+  cache:
+    key: "${CI_JOB_NAME}"
+    paths:
+      - .sonar/cache
+  script: 
+    - sonar-scanner -X -Dsonar.sources=. -Dsonar.qualitygate.wait=true -Dsonar.projectKey=cim_unified-admin_AYZ5lrsd6ssE7IAn_v9_ -Dsonar.projectName=${CI_PROJECT_NAME}
+  # change this to false 
+  allow_failure: true 
+  only:
+    - /^.+_b-.+$/
+    - /^.+_f-.+$/
+    - merge_requests
+
+
 #==================================================================
-angular_build:
-   image: node:14.16.1-alpine3.13
-   stage: build-frontend
-   when: on_success
-#   only:
-#    - ef-ci
-   cache:
-       key: unified-admin-frontend
-       paths:
-           - Frontend/node_modules/
-           #- dist/
-           #- ${CI_PROJECT_DIR}/.npm/
-       policy: pull
-   script:
-   #- Frontend/node_modules/@angular/cli/bin/ng build --prod --build-optimizer --progress=false
-   #- ng build --prod --build-optimizer
-   - cd Frontend
-   - npm run build
-   artifacts:
-       paths:
-           - Frontend/dist
-   allow_failure: false
+angular_build_frontend:
+  image: node:14.16.1-alpine3.13
+  stage: build-frontend
+
+  only:
+    - /^.+_b-.+$/
+    - /^.+_f-.+$/
+    - merge_requests
+    - tags
+  when: on_success
+  cache:
+    key: $CI_PROJECT_TITLE-frontend
+    paths:
+      - Frontend/node_modules/
+    policy: pull
+  script:
+    - cd Frontend
+    - npm run build
+  artifacts:
+    paths:
+    - Frontend/dist
+  allow_failure: false
 
 
-
-
-
-
+#=========================================================#
 #=====================Jobs for Backend====================#
 #=========================================================#
-node_artifacts_backend:
-   stage: artifacts-backend
-   #when: on_success
-   image: gitlab.expertflow.com:9242/general/node:CSN-3623
-   script:
-   - cd Backend
-   - npm install --legacy-peer-deps
-   - npm uninstall ef-keycloak-connect
-   - npm install ef-keycloak-connect@1.0.0
-   - npm uninstall jest
-   - npm install jest@27.4.1
-   #- export TIME_TOKEN=$(env TZ=GMT-5 date +%d_%m_%Y-%H_%M_%S)
-   #- echo "${TIME_TOKEN}"
-   allow_failure: false
-   cache:
-       key: unified-admin-backend
-       paths:
-           - Backend/node_modules
-           
-   artifacts:
-       paths:
-           - Backend/node_modules
-   only:
-     refs:
-       - /^CIM-.*$/
-       - /^.+_b-.+$/
-       - /^.+_f-.+$/
-       - merge_requests
-    #  changes:
-    #    - Backend/package.json
+node-artifacts-backend:
+  stage: artifacts-backend
+  image: gitlab.expertflow.com:9242/general/node:CSN-3623
+  needs:
+    - job: angular_build_frontend
+      artifacts: true
+  script:
+    - cd Backend
+    - npm install --legacy-peer-deps
+    #  - npm uninstall ef-keycloak-connect
+    #  - npm install ef-keycloak-connect@1.0.0
+    # - npm uninstall jest
+    # - npm install jest@27.4.1
+
+  allow_failure: false
+  cache:
+    key: $CI_PROJECT_TITLE-backend
+    paths:
+      - Backend/node_modules
+  artifacts:
+    paths:
+      - Backend/node_modules
+  only:
+    refs:
+      - /^.+_b-.+$/
+      - /^.+_f-.+$/
+      - merge_requests
+      - tags
 
 #+==================Runs on Every Commit and merge requests========================+
 
 node-test-backend:
-   stage: test_backend
-   image: node:14.16.1-alpine3.13
-   script:
-     - cd Backend
-     #- npm run test
-     - npm run coverage --u
-   only:
-     - /^CIM-.*$/
-     - /^.+_b-.+$/
-     - /^.+_f-.+$/
-     - merge_requests
-   allow_failure: false
-   cache:
-        key: unified-admin-backend
-        paths:
-            - Backend/node_modules/
-        policy: pull
-   artifacts:
-     paths:
-         - Backend/coverage
- #        - Backend/node_modules/
-
-
-#==============SPACE FOR CODE FORMAT JOB============================
+  stage: test_backend
+  image: node:14.16.1-alpine3.13
+  script:
+    - cd Backend
+    - npm run coverage --u
+  only:
+    - /^.+_b-.+$/
+    - /^.+_f-.+$/
+    - merge_requests
+  allow_failure: false
+  cache:
+    key: $CI_PROJECT_TITLE-backend
+    paths:
+      - Backend/node_modules/
+    policy: pull
+  artifacts:
+    paths:
+      - Backend/coverage
 
 
 
 #==================================================================
 
-
-#==============SPACE FOR  CODE SCAN JOB============================
-
-# sonarqube-backend:
-#   stage: node-scan-backend
-#   image: adoptopenjdk/openjdk11:alpine-jre
-#   script:
-#     - apk add --no-cache git python3 py-pip bash shellcheck 'nodejs>14' 'npm>7'
-#     - npm install -g typescript@3.7.5
-#     - pip install --no-cache-dir --upgrade pip
-#     - pip install --no-cache-dir pylint
-#     #- npm install
-#     #- npm run test
-#     #- npm run coverage
-#     - cd Backend
-#     - npm run sonar
-#   only:
-#     - /^CIM-.*$/
-#     - /^.+_b-.+$/
-#     - /^.+_f-.+$/
-#     - merge_requests
-#   allow_failure: false
-#   cache:
-#        key: unified-admin-backend
-#        paths:
-#            - Backend/node_modules/
-#            #- dist/
-#            #- ${CI_PROJECT_DIR}/.npm/
-#        policy: pull
-#   #=artifacts:
-#     #paths:
-#         #- coverage
-
-
-#==================================================================
-node_build:
-   image: gitlab.expertflow.com:9242/general/node:CSN-3623
-   stage: build-backend
-   when: on_success
-#   only:
-#    - ef-ci
-   cache:
-       key: unified-admin-backend
-       paths:
-           - Backend/node_modules/
-           #- dist/
-           #- ${CI_PROJECT_DIR}/.npm/
-       policy: pull
-   script:
-   #- Frontend/node_modules/@angular/cli/bin/ng build --prod --build-optimizer --progress=false
-   #- ng build --prod --build-optimizer
-   - export TIME_TOKEN=$(env TZ=GMT-5 date +%d_%m_%Y-%H_%M_%S)
-   - echo "${TIME_TOKEN}"
-   - ls -ltrh Frontend/
-   - ls -ltrh Backend/
-   - cp -rf Frontend/dist/base-template/* Backend/src/public/
-   - ls -ltrh
-   #- npm run build
-   artifacts:
-       name: "$CI_PROJECT_TITLE-$TIME_TOKEN"
-       paths:
-           - Backend
-   allow_failure: false
-
-
-##================Auto_increment_Start================
-
-
-auto_increment:
-  image: docker:latest
+time_build:
+  extends: .build_time
   stage: init
   when: on_success
-  variables:
-    VAR_NAME: BUILD_NUMBER
-    TIME_VAR: BUILD_TIME
-    TOKEN: ${CI_PIPELINE_IID_TOKEN}
-    GITLAB_URL: "https://gitlab.expertflow.com"
-  before_script:
-  - apk add --update curl jq
-  script:
-  - export TIME_TOKEN=$(env TZ=GMT-5 date +%d_%m_%Y-%H_%M_%S)
-  - "VAR=$(curl -s -f  --header \"PRIVATE-TOKEN: ${TOKEN}\" \"${GITLAB_URL}/api/v4/projects/${CI_PROJECT_ID}/variables/${VAR_NAME}\" | jq  -r '.value' ) "
-  - let VAR=VAR+1
-  - "curl -s -f --request PUT --header \"PRIVATE-TOKEN: ${TOKEN}\" \"${GITLAB_URL}/api/v4/projects/${CI_PROJECT_ID}/variables/${VAR_NAME}\" --form \"value=${VAR}\" "
-  - "curl -s -f --request PUT --header \"PRIVATE-TOKEN: ${TOKEN}\" \"${GITLAB_URL}/api/v4/projects/${CI_PROJECT_ID}/variables/${TIME_VAR}\" --form \"value=${TIME_TOKEN}\" "
-  - echo "${TIME_TOKEN} ${VAR} ${TIME_VAR}"
   only:
-  - merge_requests
+      - /^.+_f-.+$/
+      - /^.+_b-.+$/
+      - merge_requests
+      - tags
 
-# ===================Auto_increment_END===================
+
+
+
+#==================================================================
+node_build_backend:
+  image: gitlab.expertflow.com:9242/general/node:CSN-3623
+  stage: build-backend
+  needs:
+    #commented
+    #- node-test-backend
+    - job: angular_build_frontend
+      artifacts: true
+    - job: node-artifacts-backend
+      artifacts: true
+  cache:
+    key: $CI_PROJECT_TITLE-backend
+    paths:
+      - Backend/node_modules/
+    policy: pull
+  script:
+    - export TIME_TOKEN="$(cat .ci_status/ci_time)"
+    - echo "${TIME_TOKEN}"
+    - ls -lah Frontend/dist/base-template
+    - ls -lah Backend/
+    - cp -rf Frontend/dist/base-template/* Backend/src/public/
+  artifacts:
+    name: "$CI_PROJECT_TITLE-$TIME_TOKEN"
+    paths:
+      - Backend
+      - .ci_status/
+  allow_failure: false
+  only:
+    - /^.+_b-.+$/
+    - /^.+_f-.+$/
+    - merge_requests
+    - tags
 
 #+==================Runs on merge requests only========================+
-build_image:
+gitlab_build_branch:
  image: docker:latest
- stage: docker_build
+ stage: build-gitlab
  when: manual
  services:
    - docker:dind
  before_script:
    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
  dependencies:
-   - node_build
+   - node_build_backend
  script:
    - echo ${BUILD_TIME} ${BUILD_NUMBER}
-   #- cp -r ./target/bot-framework-"${BUILD_TIME}_build-${BUILD_NUMBER}".jar ./docker/bot-framework.jar
    - cd Backend
-   - ls -ltrh
-   - ls -ltrh src/public/
    - cp -r $(ls -A | grep -v -E "docker|coverage|.sonar") ./docker/
-   #- docker pull "${CI_REGISTRY_IMAGE}:${CI_COMMIT_BRANCH}" || true
-   #- docker build --cache-from "${CI_REGISTRY_IMAGE}:${CI_COMMIT_BRANCH}" -t "$IMAGE_NAME" .
-   #- docker push "$IMAGE_NAME"
    - cd docker
-   - ls -ltrh
-   - ls -ltrh src/public/
-   - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" .
-   - docker tag "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" "$IMAGE_NAME"
-   - docker push "$IMAGE_NAME"
+   - |-
+       if [ $CI_COMMIT_BRANCH != '' ]; then 
+         docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" .;
+         docker tag "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" "${CI_REGISTRY_IMAGE}/build:${CI_COMMIT_BRANCH}-${CI_COMMIT_SHA}";
+         docker push "${CI_REGISTRY_IMAGE}/build:${CI_COMMIT_BRANCH}-${CI_COMMIT_SHA}";
+       elif [ $CI_COMMIT_TAG != '' ]; then
+         docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_TAG" .;
+         docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_TAG";
+       fi
  only:
-   - merge_requests
-   - /^CIM-.*$/
    - /^.+_b-.+$/
    - /^.+_f-.+$/
+   - tags
  allow_failure: false
 
 
+#+==================Runs on merge requests only========================+
+gitlab_build_merge:
+  image: docker:latest
+  stage: build-gitlab
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - apk add --update curl jq
+  dependencies:
+    - node_build_backend
+    - time_build
+  variables:
+    BRANCH: MERGE_BRANCH
+    TIME_VAR: BUILD_TIME
+    TOKEN: ${CI_PIPELINE_IID_TOKEN}
+    GITLAB_URL: "https://gitlab.expertflow.com"
+  script:
+    - export TIME_TOKEN="$(cat .ci_status/ci_time)"
+    - echo $TIME_TOKEN
+    - "curl -s -f --request PUT --header \"PRIVATE-TOKEN: ${TOKEN}\" \"${GITLAB_URL}/api/v4/projects/${CI_PROJECT_ID}/variables/${TIME_VAR}\" --form \"value=${TIME_TOKEN}\" "
+    - "curl -s -f --request PUT --header \"PRIVATE-TOKEN: ${TOKEN}\" \"${GITLAB_URL}/api/v4/projects/${CI_PROJECT_ID}/variables/${BRANCH}\" --form \"value=${CI_MERGE_REQUEST_SOURCE_BRANCH_NAME}\" "
+    - cd Backend
+    - ls -ltrh
+    - ls -ltrh src/public/
+    - cp -r $(ls -A | grep -v -E "docker|coverage|.sonar") ./docker/
+    - cd docker
+    - ls -ltrh
+    - ls -ltrh src/public/
+    - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" .
+    - docker tag "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" "${CI_REGISTRY_IMAGE}/build:${CI_MERGE_REQUEST_SOURCE_BRANCH_NAME}-${TIME_TOKEN}"
+    - docker push "${CI_REGISTRY_IMAGE}/build:${CI_MERGE_REQUEST_SOURCE_BRANCH_NAME}-${TIME_TOKEN}"
 
-#================================================
+  only:
+      - merge_requests
+  allow_failure: false
+  artifacts:
+    paths:
+      - .ci_status/
+
+##==================Trivy scan branch========================##
+trivy_scanning_branch:
+  extends: .trivy_scan_template
+  when: on_success
+  needs: 
+    - job: gitlab_build_branch
+  allow_failure: false
+  stage: scan
+  variables:
+    FULL_IMAGE_NAME: ${CI_REGISTRY_IMAGE}/build:${CI_COMMIT_BRANCH}-${CI_COMMIT_SHA}
+  only:
+    - /^.+_f-.+$/
+    - /^.+_b-.+$/
+
 
 ##==================Trivy scan merge========================##
 trivy_scanning_merge:
-  when: on_success
   stage: scan
-  extends: .trivy_scan_template
+  extends: .trivy_scan_merge
   needs: 
-    - job: build_image
-  variables:
-    FULL_IMAGE_NAME: ${CI_REGISTRY_IMAGE}/build:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHA}
-  allow_failure: false
+    - job: gitlab_build_merge
+    - job: time_build 
+      artifacts: true 
   only:
     - merge_requests
+
+
+#+==================Runs on if docker build in branch========================+
+grype_scan_branch:
+  extends: .grype_template
+  stage: scan
+  needs:
+    - job: gitlab_build_branch
+  when: on_success
+  allow_failure: false
+  variables: 
+    SCAN_IMAGE: $CI_REGISTRY_IMAGE/build:$CI_COMMIT_BRANCH-$CI_COMMIT_SHA
+  only:
     - /^.+_f-.+$/
     - /^.+_b-.+$/
-#================================================
+
 
 #+==================Runs on merge requests only========================+
 grype_scan_merge:
   stage: scan
-  extends: .grype_template
+  extends: .grype_template_merge
   needs:
-    - job: build_image  
-  when: on_success
-  allow_failure: false
-  variables:
-    SCAN_IMAGE: ${CI_REGISTRY_IMAGE}/build:${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHA}
-  only:
-    - merge_requests
-    - /^.+_f-.+$/
-    - /^.+_b-.+$/
+    - job: gitlab_build_merge
+    - job: time_build 
+      artifacts: true 
 
-
-
-
-#+==================Runs on merge requests only========================+
-container_publish_merge:
-  stage: publish_merge
-  image: docker:latest
-  when: manual
-  services:
-    - docker:dind
-
-  variables:
-    #DOCKER_DRIVER: overlay2
-    GIT_STRATEGY: none
-
-  script:
-    - export TIME_TOKEN=$(env TZ=GMT-5 date +%d_%m_%Y-%H_%M_%S)
-    - echo "${TIME_TOKEN} ${BUILD_NUMBER}"
-    - docker login -u gitlab-ci-token -p "$CI_JOB_TOKEN" "${CI_REGISTRY}"
-    - docker pull "$IMAGE_NAME"
-    - docker tag "$IMAGE_NAME" "${CI_REGISTRY_IMAGE}:${CI_MERGE_REQUEST_SOURCE_BRANCH_NAME}-${BUILD_TIME}_build-${BUILD_NUMBER}"
-    - docker push "${CI_REGISTRY_IMAGE}:${CI_MERGE_REQUEST_SOURCE_BRANCH_NAME}-${BUILD_TIME}_build-${BUILD_NUMBER}"
-    #- |
-    #    if [ "$CI_MERGE_REQUEST_TARGET_BRANCH_NAME" == "master" ]; then
-    #      docker tag "$IMAGE_NAME" "${CI_REGISTRY_IMAGE}:latest"
-    #      docker push "${CI_REGISTRY_IMAGE}:latest"
-    #    fi
   only:
     - merge_requests
 
-container_publish_branch:
-  stage: publish_branch
-  image: docker:latest
-  when: manual
-  services:
-    - docker:dind
+  
+# #+==================Runs on tag requests only========================+
+# uncomment if need to publish to dockerhub
 
-  variables:
-    #DOCKER_DRIVER: overlay2
-    GIT_STRATEGY: none
-
-  script:
-    - export TIME_TOKEN=$(env TZ=GMT-5 date +%d_%m_%Y-%H_%M_%S)
-    - echo "${TIME_TOKEN} ${BUILD_NUMBER}"
-    - docker login -u gitlab-ci-token -p "$CI_JOB_TOKEN" "${CI_REGISTRY}"
-    - docker pull "$IMAGE_NAME"
-    - docker tag "$IMAGE_NAME" "${CI_REGISTRY_IMAGE}:${CI_COMMIT_BRANCH}"
-    - docker push "${CI_REGISTRY_IMAGE}:${CI_COMMIT_BRANCH}"
-    #- |
-    #    if [ "$CI_MERGE_REQUEST_TARGET_BRANCH_NAME" == "master" ]; then
-    #      docker tag "$IMAGE_NAME" "${CI_REGISTRY_IMAGE}:latest"
-    #      docker push "${CI_REGISTRY_IMAGE}:latest"
-    #    fi
-  only:
-    - /^CIM-.*$/
-    - /^.+_b-.+$/
-    - /^.+_f-.+$/
-
-
-
-
-
-# #============Code Quality /Static Testing===========
-
-
-    
-# sonarqube-test:
-#    stage: static-test
-#    when: manual
-#    #tags: [old-runner]
-#    image: sonarsource/sonar-scanner-cli:latest
-#    variables:
-#      SONAR_TOKEN: "b4ed0447192a300ebae555140551db499685090a"
-#      SONAR_HOST_URL: "http://192.168.1.109:9000"
-#      SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar" 
-#      GIT_DEPTH: 1
-
-#    script:
-#      - sonar-scanner 
-#       -Dsonar.qualitygate.wait=true 
-#       -Dsonar.qualitygate.timeout=300
-#    allow_failure: false
-
-    
-# stage:artifact:
-#     image: node:10
-#     stage: artifact
-#     when: manual
-#     script:
-#     - cd Frontend
-#     - npm install -g @angular/cli
-#     - npm i
-#     - ng build --prod
-    
-#     artifacts:
-#         paths:
-#             - Frontend/dist
-#     allow_failure: false
-    
-
-# build:image:
-#    image: docker:latest
-#    stage: build
-#    when: manual
-#    services:
-#      - docker:dind
-#    before_script:
-#      - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-#    script:
-   
-#      - mkdir Backend/src/public/
-#      - cp -rf Frontend/dist/base-template/* Backend/src/public/
-#      - cd Backend
-#      - docker build --pull -t "$CI_REGISTRY_IMAGE":"$CI_COMMIT_BRANCH" .
-#      - docker push "$CI_REGISTRY_IMAGE":"$CI_COMMIT_BRANCH"
-#  #  only:
-#  #    - master
-#    allow_failure: false
+# dockerhub_publish:
+#   extends: .publish_dockerhub
+#   stage: publish_dockerhub
+#   when: on_success
+#   only:
+#     - tags
