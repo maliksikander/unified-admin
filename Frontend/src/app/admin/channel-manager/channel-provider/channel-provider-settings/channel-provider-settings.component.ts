@@ -71,7 +71,7 @@ export class ChannelProviderSettingsComponent implements OnInit {
   spinner = true;
   channelTypeList = [];
   checkVoiceChannel: boolean = false;
-  urlPattern = '^((http|https)?:\\/\\/)?([\\da-z\\.-]+)\\.([a-z\\.]{2,6})([\\/\\w\\.-]*)*\\/?$';
+  urlPattern = '^((http|https)?:\/\/)?([\da-z\.-]+)(\.com)?|([\d]{1,3}\.[\d]{1,3}\.[\d]{1,3}\.[\d]{1,3})(:[\d]{1,5})?([\/\w\.-]*)*\/?$';
   constructor(
     private commonService: CommonService,
     private fb: FormBuilder,
@@ -284,7 +284,7 @@ export class ChannelProviderSettingsComponent implements OnInit {
 
       let channelTypes = data?.supportedChannelTypes;
       let voiceChannelIndex = channelTypes.findIndex(
-        (item) => item.name == "VOICE"
+        (item) => item.name == "CISCO_CC"
       );
       data.providerWebhook = this.channelProviderForm.value.providerWebhook;
       let channelTypeIDArray = [];

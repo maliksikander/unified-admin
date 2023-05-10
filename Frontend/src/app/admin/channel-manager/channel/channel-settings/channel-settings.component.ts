@@ -111,7 +111,7 @@ export class ChannelSettingsComponent implements OnInit, OnChanges {
   }
 
   setRoutingModeValues() {
-    if (this.channelTypeData.name == "VOICE") {
+    if (this.channelTypeData.name == "CISCO_CC") {
       this.routingModeList.splice(0, 1);
     } else {
       this.routingModeList.splice(2, 1);
