@@ -8,6 +8,8 @@ include:
     file: 
       - trivy.yaml
       - grype.yaml
+      - trivy-merge.yaml
+      - grype-merge.yaml
       - build_time.yml
 # uncomment if need to publish to dockerhub
 #      - dockerhub-publish.yaml
@@ -15,13 +17,11 @@ stages:
   - artifacts-frontend
   - test_frontend
   - code_format_frontend
-  # - node-scan-frontend
   - sonarqube-scan
   - build-frontend
   - artifacts-backend
   - test_backend
   - code_format_backend
-  #- node-scan-backend
   - init
   - build-backend
   - build-gitlab
@@ -50,6 +50,7 @@ node_artifacts_frontend:
        - /^.+_b-.+$/
        - /^.+_f-.+$/
        - merge_requests
+       - tags
 
 # #+==================Runs on Every Commit and merge requests========================+
 
@@ -78,7 +79,7 @@ node-test-frontend:
 
 
 
-#commented
+
 # node-format-frontend:
 #   stage: code_format_frontend
 #   when: on_success
@@ -86,6 +87,7 @@ node-test-frontend:
 #   needs:
 #     - job: node-test-frontend
 #   script:
+#     - cd Frontend
 #     - npm run format:check
 #   allow_failure: false
 #   only:
@@ -110,10 +112,7 @@ sonarqube-test:
   variables:
     SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
     GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
-    #SONAR_HOST_URL: "http://122.129.75.138:9000"
-    #SONAR_HOST_URL: "http://124.29.220.135:9000"
     SONAR_HOST_URL: "http://sonarqube.expertflow.com:9000"
-    #SONAR_HOST_URL: "http://192.168.1.109:9000"
     SONAR_TOKEN: "${SONAR_PASS}"
 
   cache:
@@ -128,15 +127,13 @@ sonarqube-test:
     - /^.+_b-.+$/
     - /^.+_f-.+$/
     - merge_requests
-    - tags
 
 
 #==================================================================
 angular_build_frontend:
   image: node:14.16.1-alpine3.13
   stage: build-frontend
-  needs:
-    - job: sonarqube-test
+
   only:
     - /^.+_b-.+$/
     - /^.+_f-.+$/
@@ -165,13 +162,15 @@ node-artifacts-backend:
   image: gitlab.expertflow.com:9242/general/node:CSN-3623
   needs:
     - job: angular_build_frontend
+      artifacts: true
   script:
     - cd Backend
     - npm install --legacy-peer-deps
-    # - npm uninstall ef-keycloak-connect
-    # - npm install ef-keycloak-connect@1.0.0
+    #  - npm uninstall ef-keycloak-connect
+    #  - npm install ef-keycloak-connect@1.0.0
     # - npm uninstall jest
     # - npm install jest@27.4.1
+
   allow_failure: false
   cache:
     key: $CI_PROJECT_TITLE-backend
@@ -188,26 +187,26 @@ node-artifacts-backend:
       - tags
 
 #+==================Runs on Every Commit and merge requests========================+
-#commented
-# node-test-backend:
-#   stage: test_backend
-#   image: node:14.16.1-alpine3.13
-#   script:
-#     - cd Backend
-#     - npm run coverage --u
-#   only:
-#     - /^.+_b-.+$/
-#     - /^.+_f-.+$/
-#     - merge_requests
-#   allow_failure: false
-#   cache:
-#     key: $CI_PROJECT_TITLE-backend
-#     paths:
-#       - Backend/node_modules/
-#     policy: pull
-#   artifacts:
-#     paths:
-#       - Backend/coverage
+
+node-test-backend:
+  stage: test_backend
+  image: node:14.16.1-alpine3.13
+  script:
+    - cd Backend
+    - npm run coverage --u
+  only:
+    - /^.+_b-.+$/
+    - /^.+_f-.+$/
+    - merge_requests
+  allow_failure: false
+  cache:
+    key: $CI_PROJECT_TITLE-backend
+    paths:
+      - Backend/node_modules/
+    policy: pull
+  artifacts:
+    paths:
+      - Backend/coverage
 
 
 
@@ -218,7 +217,12 @@ time_build:
   stage: init
   when: on_success
   only:
-    - merge_requests
+      - /^.+_f-.+$/
+      - /^.+_b-.+$/
+      - merge_requests
+      - tags
+
+
 
 
 #==================================================================
@@ -228,16 +232,20 @@ node_build_backend:
   needs:
     #commented
     #- node-test-backend
-    - angular_build_frontend
+    - job: angular_build_frontend
+      artifacts: true
+    - job: node-artifacts-backend
+      artifacts: true
   cache:
     key: $CI_PROJECT_TITLE-backend
     paths:
       - Backend/node_modules/
-
     policy: pull
   script:
     - export TIME_TOKEN="$(cat .ci_status/ci_time)"
     - echo "${TIME_TOKEN}"
+    - ls -lah Frontend/dist/base-template
+    - ls -lah Backend/
     - cp -rf Frontend/dist/base-template/* Backend/src/public/
   artifacts:
     name: "$CI_PROJECT_TITLE-$TIME_TOKEN"
@@ -340,21 +348,14 @@ trivy_scanning_branch:
 
 ##==================Trivy scan merge========================##
 trivy_scanning_merge:
-  when: on_success
   stage: scan
-  extends: .trivy_scan_template
-  before_script:
-    - export TIME_TOKEN="$(cat .ci_status/ci_time)"
+  extends: .trivy_scan_merge
   needs: 
     - job: gitlab_build_merge
-  variables:
-    FULL_IMAGE_NAME: ${CI_REGISTRY_IMAGE}/build:${CI_MERGE_REQUEST_SOURCE_BRANCH_NAME}-${TIME_TOKEN}
-  allow_failure: false
+    - job: time_build 
+      artifacts: true 
   only:
     - merge_requests
-  artifacts:
-    paths:
-      - .ci_status/
 
 
 #+==================Runs on if docker build in branch========================+
@@ -375,24 +376,15 @@ grype_scan_branch:
 #+==================Runs on merge requests only========================+
 grype_scan_merge:
   stage: scan
-  extends: .grype_template
+  extends: .grype_template_merge
   needs:
-    - job: gitlab_build_merge  
-  when: on_success
-  allow_failure: false
-  variables:
-    SCAN_IMAGE: ${CI_REGISTRY_IMAGE}/build:${CI_MERGE_REQUEST_SOURCE_BRANCH_NAME}-${TIME_TOKEN}
-  script:
-    - export TIME_TOKEN="$(cat .ci_status/ci_time)"
-    - docker pull ${SCAN_IMAGE}
-    - apk add curl
-    - curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
-    - grype $SCAN_IMAGE --scope all-layers --fail-on critical > ${CI_PROJECT_TITLE}-vulnerabilities-grype.txt 
+    - job: gitlab_build_merge
+    - job: time_build 
+      artifacts: true 
+
   only:
     - merge_requests
-  artifacts:
-    paths:
-      - .ci_status/
+
   
 # #+==================Runs on tag requests only========================+
 # uncomment if need to publish to dockerhub
