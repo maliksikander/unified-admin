@@ -176,6 +176,8 @@ export class CalendarComponent implements OnInit {
   calendarPreviewData = {};
   selectedTimeTo = this.selectTime[0].value;
   selectedTimeFrom = this.selectTime[0].value;
+  allDayCheck:boolean = false;
+  checkEventTab = 0;
   editView = false;
   underLineColor: ThemePalette = "accent";
   defColor = "#1a50a3";
@@ -219,9 +221,13 @@ export class CalendarComponent implements OnInit {
   formHeading = "Create New Attribute";
   saveBtnText = "Save";
   repeatOption = 'does not repeat';
+  selected: 'never';
+  repeatType: 'week';
   allDayEvent: false;
+  endDate : Date = new Date();
   @ViewChild("colorMenuTrigger") colorMenuTrigger: MatMenuTrigger;
-  recurrenceOptions = ["does not repeat", "daily", "custom"];
+  recurrenceOptions = ["does not repeat", "custom"];
+  recurrenceOptionsForBusiness = ["does not repeat", "daily", "custom"];
 
   view: CalendarView = CalendarView.Month;
   CalendarView = CalendarView;
@@ -231,8 +237,8 @@ export class CalendarComponent implements OnInit {
 
   events: CalendarEvent[] = [
     {
-      start: subDays(new Date("Wed Sep 06 2021 12:00:00 GMT+0500"), 0),
-      end: new Date("Wed Sep 06 2021 16:00:00 GMT+0500"),
+      start: subDays(new Date("Mon Jun 06 2022 12:00:00 GMT+0500"), 0),
+      end: new Date("Wed Jun 09 2022 16:00:00 GMT+0500"),
       title: "A 3 day event",
       color: { primary: "#25AFCB", secondary: "#25AFCB" },
       // allDay: true,
@@ -288,13 +294,13 @@ export class CalendarComponent implements OnInit {
     {
       title: "Reoccurs Weekly",
       color: { primary: "#ff2700", secondary: "#ff2700" },
-      start: new Date("Mon Sep 06 2021 16:00:00 GMT+0500"),
-      end: new Date("Mon Sep 06 2021 19:00:00 GMT+0500"),
+      start: new Date("Mon Jun 06 2022 16:00:00 GMT+0500"),
+      end: new Date("Mon Jun 06 2022 19:00:00 GMT+0500"),
       rrule: {
         freq: RRule.WEEKLY,
         byweekday: [RRule.MO, RRule.TU, RRule.WE, RRule.TH, RRule.FR],
-        dtstart: new Date(Date.UTC(2021, 8, 1, 10, 0, 0)),
-        until: new Date(Date.UTC(2021, 8, 10, 19, 0, 0)),
+        dtstart: new Date(Date.UTC(2022, 8, 1, 10, 0, 0)),
+        until: new Date(Date.UTC(2022, 8, 10, 19, 0, 0)),
         interval: 1,
       },
     },
@@ -320,8 +326,11 @@ export class CalendarComponent implements OnInit {
   friday = false;
   saturday = false;
   sunday = false;
+  weekDays = [];
   selectedColor = "#25abcf";
   editCalendarData;
+  selectedCalendar = '';
+  yesterday = new Date();
 
   spinner = true;
 
@@ -336,7 +345,7 @@ export class CalendarComponent implements OnInit {
 
   ngOnInit() {
     // this.commonService.tokenVerification();
-
+    this.getCalendarList();
     this.currentDay = this.dateFormation("month");
 
     this.calendarForm = this.fb.group({
@@ -348,8 +357,8 @@ export class CalendarComponent implements OnInit {
     this.eventForm = this.fb.group({
       title: ["Title", [Validators.required]],
       datePicker: [""],
-      shift: ["Shift"],
-
+      endDate: [""],
+      shift: ["Shift", [Validators.required]],
       calendars: ["", [Validators.required]],
       color: [""],
       endDateCriteria: ["never"],
@@ -364,7 +373,7 @@ export class CalendarComponent implements OnInit {
     });
 
     this.recurrenceForm = this.fb.group({
-      viewType: ["day"],
+      viewType: ["week"],
     });
     this.endDateForm = this.fb.group({
       endDate: [""],
@@ -395,7 +404,6 @@ export class CalendarComponent implements OnInit {
     // });
 
     this.recurrenceListFormation();
-    this.getCalendarList();
     // this.updateCalendar();
     this.cd.detectChanges();
   }
@@ -450,6 +458,11 @@ export class CalendarComponent implements OnInit {
   openEndDateModal(templateRef) {
     // this.formHeading = 'Create Event';
     // this.saveBtnText = 'Save'
+    // this.endDateForm.controls['endDate'].setValue(this.eventForm.controls['datePicker'].value);
+// this.endDate = this.eventForm.controls["datePicker"]
+this.endDate = new Date(this.eventForm.controls["datePicker"].value)
+    // console.log(    this.endDateForm.controls['endDate'].setValue(this.eventForm.controls['datePicker'].value), 'eeeeeeeeeeeee')
+
     let dialogRef = this.dialog.open(templateRef, {
       width: "450px",
       // height: '350px',
@@ -613,6 +626,43 @@ export class CalendarComponent implements OnInit {
       this.setCurrentDay(d.getDay());
     }
   }
+  saveWeekDays(){
+    // if (this.monday == false &&
+    //     this.tuesday == false &&
+    //     this.wednesday == false &&
+    //     this.thursday == false &&
+    //     this.friday == false &&
+    //     this.saturday == false &&
+    //     this.sunday == false) {
+    //
+    // }
+    // this.weekDays = ['monday': this.monday, 'tuesday': this.tuesday]
+     const array3 = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+
+    const array1 = [this.monday, this.tuesday, this.wednesday, this.thursday, this.friday, this.saturday, this.sunday];
+    const array2 = [];
+this.weekDays = [];
+    for (let i = 0; i < array1.length; i++) {
+      if (array1[i] === true) {
+        // if(i[0] )
+
+        this.weekDays.push(array3[i]);
+      }
+    }
+
+    const text = this.weekDays.join();
+
+    // if(text == 'monday,tuesday,wednesday,thursday,friday'){
+    //   this.weekDays = ['weekday']
+    // } else
+      if (text == 'monday,tuesday,wednesday,thursday,friday,saturday,sunday'){
+      this.weekDays = ['all days']
+
+    }
+
+
+    console.log(this.weekDays, 'selected week days');
+  }
 
   setCurrentDay(val) {
     if (val == 1) this.monday = !this.monday;
@@ -684,6 +734,7 @@ export class CalendarComponent implements OnInit {
       (res: any) => {
         this.spinner = false;
         this.calendarList = res;
+        this.selectedCalendar = res[0].name;
         this.cd.detectChanges();
       },
       (error) => {

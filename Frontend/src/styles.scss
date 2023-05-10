@@ -2827,6 +2827,11 @@ snack-bar-container {
       max-width: 0;
     }
   }
+
+  .shift-section .shift-title .mat-form-field-underline {
+    display: block !important;
+    opacity: 1;
+  }
 }
 .color-select {
   width: 16px !important;
@@ -3271,6 +3276,9 @@ snack-bar-container {
     position: absolute;
     right: 0;
     top: -9px;
+  }
+ .mat-date-range-input-start-wrapper {
+    min-width: 70px;
   }
 }
 

@@ -179,7 +179,7 @@
                   <mat-label>Select Date</mat-label>
                   <mat-form-field [color]="underLineColor">
 <!--                     <mat-label>Choose a date</mat-label>-->
-                    <input formControlName="datePicker" matInput [matDatepicker]="picker" (click)="picker.open()">
+                    <input formControlName="datePicker" matInput [matDatepicker]="picker" [min]="yesterday" (click)="picker.open()">
                     <mat-datepicker #picker></mat-datepicker>
                   </mat-form-field>
                 </div>
@@ -190,7 +190,7 @@
 <!--                      <mat-label>Shift</mat-label>-->
 <!--                      <input matInput formControlName="shift">-->
 <!--                    </mat-form-field>-->
-                      <input matInput type="text" class="shift-value" value="Morning">
+                      <input matInput type="text" class="shift-value" formControlName="shift" value="Morning">
 
                     </mat-form-field>
 
@@ -203,18 +203,19 @@
                       </mat-select>
                     </span>
 
-                        <span  class="time-select-value ">
+                    </mat-form-field>
+
+                    <mat-form-field [color]="underLineColor">
+
+                      <span  class="time-select-value ">
                       <mat-select [(value)]="selectedTimeTo">
                         <mat-option *ngFor="let timeTo of selectTime" [value]="timeTo.value">
                           {{timeTo.viewValue}}
                         </mat-option>
                       </mat-select>
                     </span>
-
                     </mat-form-field>
 
-
-                    <!-- #timeMenuTrigger="matMenuTrigger" [matMenuTriggerFor]="timePicker" -->
                     <button class="remove-btn" mat-icon-button>
                       <mat-icon>close</mat-icon>
                     </button>
@@ -224,28 +225,37 @@
                 </div>
               </div>
 
-              <div class="recurrence-section event-fields">
+              <div class="recurrence-section event-fields {{repeatOption == 'custom' ? 'repeat-custom-option':''}}">
                 <mat-icon>replay</mat-icon>
-                <mat-label>Repeat 555</mat-label>
+                <mat-label>Repeat 5551</mat-label>
                 <mat-form-field appearance="fill">
-<!--                  <mat-label>Choose a date</mat-label>-->
-                  <mat-select (selectionChange)="recurrence($event, customRecurrence)"
-                    formControlName="recurrenceCriteria" [(ngModel)]="repeatOption">
-                    <mat-option *ngFor="let option of recurrenceOptions"  [value]="option">
+                  <!--                  <mat-label>Choose a date</mat-label>-->
+                  <mat-select #selectRepeat (selectionChange)="recurrence($event, customRecurrence)"
+                              formControlName="recurrenceCriteria" [(ngModel)]="repeatOption">
+                    <mat-option *ngFor="let option of recurrenceOptionsForBusiness" [value]="option">
                       {{option | titlecase}}</mat-option>
                   </mat-select>
                 </mat-form-field>
+
+                <span class="repeat-custom-value" *ngIf="repeatOption == 'custom'" (click)=selectRepeat.open()> {{repeatType == 'week' ? 'Weekly on' : repeatType}}
+                  <span class="week-values" *ngIf="repeatType == 'week'"><span *ngFor="let day of weekDays"> {{day}} </span>
+                  </span>
+                </span>
               </div>
 
-              <div class="end-date-section event-fields" *ngIf="repeatOption !== 'does not repeat'">
+
+              <div class="end-date-section event-fields {{eventForm.controls['endDateCriteria'].value === 'custom' ? 'repeat-custom-option':''}}" *ngIf="repeatOption !== 'does not repeat'">
                 <mat-icon>check_circle_outline</mat-icon>
                 <mat-label>End Date</mat-label>
                 <mat-form-field appearance="fill">
-                  <mat-select formControlName="endDateCriteria">
+                  <mat-select #selectEndDate  formControlName="endDateCriteria" [(value)]="selected">
                     <mat-option value="never">Never</mat-option>
                     <mat-option value="custom" (click)="openEndDateModal(endDateReference)">Custom</mat-option>
                   </mat-select>
                 </mat-form-field>
+
+                <span class="repeat-custom-value" *ngIf="eventForm.controls['endDateCriteria'].value === 'custom'" (click)=selectEndDate.open()> {{endDate | date}}
+                  </span>
               </div>
             </div>
 
@@ -265,11 +275,11 @@
                 <mat-label>Date & time</mat-label>
                 <mat-form-field [color]="underLineColor">
                   <!-- <mat-label>Choose a date</mat-label> -->
-                  <input formControlName="datePicker" matInput [matDatepicker]="picker5" (click)="picker5.open()">
+                  <input formControlName="datePicker" matInput [matDatepicker]="picker5" [min]="yesterday" (click)="picker5.open()">
                   <mat-datepicker #picker5></mat-datepicker>
                 </mat-form-field>
 
-                <mat-form-field appearance="fill" class="time-select-value time-from">
+                <mat-form-field appearance="fill" class="time-select-value time-from" *ngIf="!allDayEvent">
                   <mat-select [(value)]="selectedTimeFrom" [disabled]="allDayEvent">
                     <mat-option *ngFor="let timeFrom of selectTime" [value]="timeFrom.value">
                       {{timeFrom.viewValue}}
@@ -277,16 +287,16 @@
                   </mat-select>
                 </mat-form-field>
 
-                <mat-form-field appearance="fill" class="time-select-value">
-                  <mat-select [(value)]="selectedTimeFrom"  [disabled]="allDayEvent == true">
+                <mat-form-field appearance="fill" class="time-select-value" *ngIf="!allDayEvent">
+                  <mat-select [(value)]="selectedTimeFrom">
                     <mat-option *ngFor="let timeTo of selectTime" [value]="timeTo.value">
                       {{timeTo.viewValue}}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
-                <mat-form-field [color]="underLineColor" class="pl-2">
+                <mat-form-field [color]="underLineColor" class="pl-2 time-to" *ngIf="allDayEvent">
                   <!-- <mat-label>Choose a date</mat-label> -->
-                  <input formControlName="datePicker" matInput [matDatepicker]="picker6" (click)="picker6.open()">
+                  <input formControlName="datePicker" matInput [matDatepicker]="picker6" [min]="eventForm.controls['datePicker'].value" (click)="picker6.open()">
                   <mat-datepicker #picker6></mat-datepicker>
                 </mat-form-field>
                 <div class="clearfix"></div>
@@ -319,9 +329,10 @@
                 </mat-form-field>
               </div>
 
-              <div class="date-range-section event-fields">
+              <div class="date-range-section event-fields" *ngIf="eventForm.controls['recurrenceCriteria'].value === 'does not repeat' ">
                 <!--                  <img src="/assets/images/check_outline.svg" alt="done">-->
                 <mat-icon>check_circle_outline</mat-icon>
+                <mat-label class="p-0">Select Date 2233</mat-label>
 
                 <mat-form-field appearance="fill">
                   <mat-date-range-input [rangePicker]="picker1">
@@ -368,6 +379,25 @@
                 </mat-form-field>
               </div>
 
+
+              <div class="recurrence-section event-fields {{repeatOption == 'custom' ? 'repeat-custom-option':''}}">
+                <mat-icon>replay</mat-icon>
+                <mat-label>Repeat 5533</mat-label>
+                <mat-form-field appearance="fill">
+                  <!--                  <mat-label>Choose a date</mat-label>-->
+                  <mat-select #selectRepeat (selectionChange)="recurrence($event, customRecurrence)"
+                              formControlName="recurrenceCriteria" [(ngModel)]="repeatOption">
+                    <mat-option *ngFor="let option of recurrenceOptions" [value]="option">
+                      {{option | titlecase}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <span class="repeat-custom-value" *ngIf="repeatOption == 'custom'" (click)=selectRepeat.open()> {{repeatType == 'week' ? 'Weekly on' : repeatType}}
+                  <span class="week-values" *ngIf="repeatType == 'week'"><span *ngFor="let day of weekDays"> {{day}} </span>
+                  </span>
+                </span>
+              </div>
+
               <!-- <div class="recurrence-section event-fields">
                   <img src="/assets/images/reload.svg" alt="done">
                   <mat-form-field appearance="fill">
@@ -405,8 +435,8 @@
           <mat-label>Select Calender</mat-label>
           <mat-form-field appearance="fill">
 
-            <mat-select formControlName="calendars" placeholder="Select Calender">
-              <mat-option *ngFor="let calendar of calendarList" [value]="calendar">
+            <mat-select formControlName="calendars" [(ngModel)]="selectedCalendar" [(value)]="selectedCalendar">
+              <mat-option *ngFor="let calendar of calendarList"  [value]="calendar.name" >
                 {{calendar?.name}}</mat-option>
             </mat-select>
           </mat-form-field>
@@ -565,10 +595,10 @@
           <!--            <img src="/assets/images/calendar.svg" alt="cal">-->
           <mat-icon>today</mat-icon>
           <!-- <div class=""> -->
-          <mat-label>Select Calender</mat-label>
+          <mat-label>Select Calender == {{calendarList[0]}}</mat-label>
           <mat-form-field appearance="fill">
 
-            <mat-select formControlName="calendars" placeholder="Select Calender">
+            <mat-select formControlName="calendars" placeholder="Select Calender"  [(value)]="calendarList[0].value">
               <mat-option *ngFor="let calendar of calendarList" [value]="calendar">
                 {{calendar?.name}}</mat-option>
             </mat-select>
@@ -620,16 +650,17 @@
           <mat-icon>replay</mat-icon>
           <mat-label>Repeat every</mat-label>
           <mat-form-field appearance="fill" [color]="underLineColor">
-            <mat-select formControlName="viewType">
-              <mat-option value="day">Day</mat-option>
+            <mat-select formControlName="viewType" [(ngModel)]="repeatType">
+<!--              <mat-option value="day">Day</mat-option>-->
               <mat-option value="week">Week</mat-option>
-              <mat-option value="month">Month</mat-option>
+<!--              <mat-option value="month">Month</mat-option>-->
+              <mat-option value="year">Year</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
 
 
-        <div *ngIf="this.recurrenceForm.value.viewType =='week'" class="repeat-day form-group">
+        <div *ngIf="recurrenceForm.value.viewType =='week'" class="repeat-day form-group">
           <mat-label>Repeat On</mat-label>
           <div class="day-selection">
             <div [ngClass]="{'selected-day': monday == true}" (click)="daySelection('mon')">M</div>
@@ -642,7 +673,7 @@
           </div>
         </div>
 
-        <div *ngIf="this.recurrenceForm.value.viewType =='month'" class="note-section form-group">
+        <div *ngIf="recurrenceForm.value.viewType =='month'" class="note-section form-group">
           <small>Note: This event will repeat</small>
         </div>
 
@@ -651,7 +682,8 @@
             <div class="form-action-area">
               <button mat-raised-button (click)="onClose()" class="gray-btn">Cancel</button>
               <button mat-raised-button [disabled]="!recurrenceForm.valid" [mat-dialog-close]="true"
-                class="blue-btn service-trigger">Done</button>
+                      class="blue-btn service-trigger" (click)="saveWeekDays()">Done
+              </button>
             </div>
           </div>
         </div>
@@ -674,7 +706,7 @@
           <mat-label>Ends On</mat-label>
           <mat-form-field [color]="underLineColor">
             <!-- <mat-label>Choose a date</mat-label> -->
-            <input formControlName="endDate" matInput [matDatepicker]="picker" (click)="picker.open()">
+            <input formControlName="endDate" [(ngModel)]="endDate" matInput  [min]="eventForm.controls['datePicker'].value" [matDatepicker]="picker" (click)="picker.open()">
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
         </div>

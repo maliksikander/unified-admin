@@ -400,13 +400,13 @@
   .shift-btn{
     position: absolute;
     right: 0;
-    top: 8px;
+    top: 15px;
   }
   .remove-btn{
     height: auto;
   }
   .shift-title{
-    max-width: 80px;
+    max-width: 175px;
   }
 }
 
@@ -453,4 +453,37 @@ span.circle-event {
       }
     }
   }
+}
+
+.repeat-custom-option {
+  mat-form-field {
+    opacity: 0;
+  }
+
+  .repeat-custom-value {
+    position: absolute;
+    font-size: 16px;
+    left: 30px;
+
+    .week-values span {
+      text-transform: capitalize;
+
+      &:after {
+        content: ','
+      }
+
+      &:last-child {
+        &:after {
+          content: '';
+        }
+      }
+    }
+  }
+}
+
+.time-to:after {
+  content: '-';
+  position: absolute;
+  left: -3px;
+  top: 0;
 }
