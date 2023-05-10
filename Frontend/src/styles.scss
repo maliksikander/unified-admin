@@ -3274,11 +3274,14 @@ snack-bar-container {
   }
   .mat-form-field-suffix {
     position: absolute;
-    right: 0;
+    right: -12px;
     top: -9px;
   }
- .mat-date-range-input-start-wrapper {
-    min-width: 70px;
+ .mat-date-range-input-start-wrapper, .mat-date-range-input-end-wrapper {
+    min-width: 88px;
+  }
+  .mat-date-range-input-end-wrapper{
+    padding-left: 8px;
   }
 }
 
