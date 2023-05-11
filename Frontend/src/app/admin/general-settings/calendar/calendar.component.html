@@ -161,7 +161,7 @@
     </div>
     <div class="dialog-content event-dialog">
       <form class="form-horizontal form-bordered" [formGroup]="eventForm">
-        <mat-tab-group animationDuration="0ms">
+        <mat-tab-group animationDuration="0ms" (selectedTabChange)="onTabChanged($event);">
           <mat-tab label="Business Hours">
 
             <div class="col-md-12 p-0">

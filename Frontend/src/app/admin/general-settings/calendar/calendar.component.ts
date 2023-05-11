@@ -176,7 +176,7 @@ export class CalendarComponent implements OnInit {
   calendarPreviewData = {};
   selectedTimeTo = this.selectTime[0].value;
   selectedTimeFrom = this.selectTime[0].value;
-  allDayCheck:boolean = false;
+  allDayCheck: boolean = false;
   checkEventTab = 0;
   editView = false;
   underLineColor: ThemePalette = "accent";
@@ -220,11 +220,11 @@ export class CalendarComponent implements OnInit {
   endDateForm: FormGroup;
   formHeading = "Create New Attribute";
   saveBtnText = "Save";
-  repeatOption = 'does not repeat';
-  selected: 'never';
-  repeatType: 'week';
+  repeatOption = "does not repeat";
+  selected: "never";
+  repeatType: "week";
   allDayEvent: false;
-  endDate : Date = new Date();
+  endDate: Date = new Date();
   @ViewChild("colorMenuTrigger") colorMenuTrigger: MatMenuTrigger;
   recurrenceOptions = ["does not repeat", "custom"];
   recurrenceOptionsForBusiness = ["does not repeat", "daily", "custom"];
@@ -329,7 +329,7 @@ export class CalendarComponent implements OnInit {
   weekDays = [];
   selectedColor = "#25abcf";
   editCalendarData;
-  selectedCalendar = '';
+  selectedCalendar = "";
   yesterday = new Date();
 
   spinner = true;
@@ -459,8 +459,8 @@ export class CalendarComponent implements OnInit {
     // this.formHeading = 'Create Event';
     // this.saveBtnText = 'Save'
     // this.endDateForm.controls['endDate'].setValue(this.eventForm.controls['datePicker'].value);
-// this.endDate = this.eventForm.controls["datePicker"]
-this.endDate = new Date(this.eventForm.controls["datePicker"].value)
+    // this.endDate = this.eventForm.controls["datePicker"]
+    this.endDate = new Date(this.eventForm.controls["datePicker"].value);
     // console.log(    this.endDateForm.controls['endDate'].setValue(this.eventForm.controls['datePicker'].value), 'eeeeeeeeeeeee')
 
     let dialogRef = this.dialog.open(templateRef, {
@@ -626,7 +626,7 @@ this.endDate = new Date(this.eventForm.controls["datePicker"].value)
       this.setCurrentDay(d.getDay());
     }
   }
-  saveWeekDays(){
+  saveWeekDays() {
     // if (this.monday == false &&
     //     this.tuesday == false &&
     //     this.wednesday == false &&
@@ -637,11 +637,27 @@ this.endDate = new Date(this.eventForm.controls["datePicker"].value)
     //
     // }
     // this.weekDays = ['monday': this.monday, 'tuesday': this.tuesday]
-     const array3 = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+    const array3 = [
+      "monday",
+      "tuesday",
+      "wednesday",
+      "thursday",
+      "friday",
+      "saturday",
+      "sunday",
+    ];
 
-    const array1 = [this.monday, this.tuesday, this.wednesday, this.thursday, this.friday, this.saturday, this.sunday];
+    const array1 = [
+      this.monday,
+      this.tuesday,
+      this.wednesday,
+      this.thursday,
+      this.friday,
+      this.saturday,
+      this.sunday,
+    ];
     const array2 = [];
-this.weekDays = [];
+    this.weekDays = [];
     for (let i = 0; i < array1.length; i++) {
       if (array1[i] === true) {
         // if(i[0] )
@@ -655,13 +671,11 @@ this.weekDays = [];
     // if(text == 'monday,tuesday,wednesday,thursday,friday'){
     //   this.weekDays = ['weekday']
     // } else
-      if (text == 'monday,tuesday,wednesday,thursday,friday,saturday,sunday'){
-      this.weekDays = ['all days']
-
+    if (text == "monday,tuesday,wednesday,thursday,friday,saturday,sunday") {
+      this.weekDays = ["all days"];
     }
 
-
-    console.log(this.weekDays, 'selected week days');
+    console.log(this.weekDays, "selected week days");
   }
 
   setCurrentDay(val) {
@@ -702,7 +716,7 @@ this.weekDays = [];
   deleteSaveEvent(e) {
     let msg = "Are you sure you want to delete " + e.title + "?";
     return this.dialog.open(ConfirmDialogComponent, {
-      panelClass: ['confirm-dialog-container' , 'delete-confirmation'],
+      panelClass: ["confirm-dialog-container", "delete-confirmation"],
       disableClose: true,
       width: "450px",
       data: {
@@ -880,7 +894,7 @@ this.weekDays = [];
     let msg = "Are you sure you want to delete this calendar ?";
     return this.dialog
       .open(ConfirmDialogComponent, {
-        panelClass: ['confirm-dialog-container' , 'delete-confirmation'],
+        panelClass: ["confirm-dialog-container", "delete-confirmation"],
         disableClose: true,
         data: {
           heading: "Delete Calendar",
@@ -941,6 +955,17 @@ this.weekDays = [];
       this.calendarEvents = [...this.events, ...calendar];
       // console.log("calendar==>", this.calendarEvents);
       this.cd.detectChanges();
+    }
+  }
+
+  onTabChanged(event) {
+    console.log("event==>", event);
+    if(event.index ==2){
+  
+      this.recurrenceOptions = ["does not repeat", "yearly"];
+    }
+    else{
+      this.recurrenceOptions = ["does not repeat", "custom"];
     }
   }
 }
