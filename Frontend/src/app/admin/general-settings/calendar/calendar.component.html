@@ -246,7 +246,7 @@
 
               <div class="end-date-section event-fields {{eventForm.controls['endDateCriteria'].value === 'custom' ? 'repeat-custom-option':''}}" *ngIf="repeatOption !== 'does not repeat'">
                 <mat-icon>check_circle_outline</mat-icon>
-                <mat-label>End Date</mat-label>
+                <mat-label>Expiration</mat-label>
                 <mat-form-field appearance="fill">
                   <mat-select #selectEndDate  formControlName="endDateCriteria" [(value)]="selected">
                     <mat-option value="never">Never</mat-option>
@@ -350,7 +350,7 @@
               <div class="date-range-section event-fields" *ngIf="eventForm.controls['recurrenceCriteria'].value === 'does not repeat' ">
                 <!--                  <img src="/assets/images/check_outline.svg" alt="done">-->
                 <mat-icon>check_circle_outline</mat-icon>
-                <mat-label class="p-0">Select Date</mat-label>
+                <mat-label class="p-0">Expiration</mat-label>
 
                 <mat-form-field appearance="fill">
                   <mat-date-range-input [rangePicker]="picker1">
@@ -405,7 +405,7 @@
 
               <div class="date-range-section event-fields">
                 <mat-icon>access_time</mat-icon>
-                <mat-label>Valid for</mat-label>
+                <mat-label>Expiration</mat-label>
                 <!-- <img src="/assets/images/check_outline.svg" alt="done"> -->
                 <mat-form-field appearance="fill">
                   <mat-date-range-input [rangePicker]="picker2">

@@ -960,12 +960,17 @@ export class CalendarComponent implements OnInit {
 
   onTabChanged(event) {
     console.log("event==>", event);
-    if(event.index ==2){
-  
+    if(event.index ==2) {
       this.recurrenceOptions = ["does not repeat", "yearly"];
+      if (this.eventForm.controls["recurrenceCriteria"].value !== 'does not repeat' || this.eventForm.controls["recurrenceCriteria"].value !== 'yearly') {
+        this.eventForm.controls["recurrenceCriteria"].setValue('does not repeat');
+      }
     }
-    else{
+    else if(event.index ==1){
       this.recurrenceOptions = ["does not repeat", "custom"];
+      if (this.eventForm.controls["recurrenceCriteria"].value == 'daily') {
+        this.eventForm.controls["recurrenceCriteria"].setValue('does not repeat');
+      }
     }
   }
 }
