@@ -100,7 +100,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
         [
           Validators.required,
           Validators.minLength(3),
-          Validators.maxLength(256),
+          Validators.maxLength(50),
         ],
       ],
       mrd: ["", [Validators.required]],
