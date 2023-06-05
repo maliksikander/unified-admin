@@ -3651,3 +3651,9 @@ snack-bar-container {
     }
   }
 }
+
+.time-select-value.time-from .mat-select-min-line:after {
+  content: "-";
+  position: absolute;
+  right: 0;
+}
