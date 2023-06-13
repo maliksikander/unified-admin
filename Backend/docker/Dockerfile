@@ -26,7 +26,7 @@ WORKDIR /usr/src/app
 
 COPY . .
 
-RUN apk add tzdata gettext
+RUN apk add gettext
 
 EXPOSE 3000
 
