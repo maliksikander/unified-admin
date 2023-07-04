@@ -39,6 +39,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     mrd: "",
     serviceLevelType: "",
     serviceLevelThreshold: "",
+    agentSLA: "",
   };
   validations;
   conditionList = ["AND", "OR"];
@@ -109,6 +110,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
         [Validators.required, Validators.min(1), Validators.max(3)],
       ],
       serviceLevelThreshold: [1, [Validators.required, Validators.min(0)]],
+      agentSLA: ["", [Validators.required, Validators.min(30)]],
     });
 
     this.stepForm = this.fb.group({
@@ -206,7 +208,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     this.queueForm.reset();
     let dialogRef = this.dialog.open(templateRef, {
       width: "550px",
-      height: "445px",
+      height: "525px",
       panelClass: "add-attribute",
       disableClose: true,
     });

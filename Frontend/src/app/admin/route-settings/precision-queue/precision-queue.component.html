@@ -222,6 +222,15 @@
               </mat-error>
             </mat-form-field>
           </div>
+          <div class="form-group">
+            <mat-label>Agent SLA Time (sec)</mat-label>
+            <mat-form-field appearance="outline">
+              <input type="number" min="30" matInput formControlName="agentSLA">
+              <mat-error class="form-error">
+                Please enter min value 30
+              </mat-error>
+            </mat-form-field>
+          </div>
 
           <div class="template-action row">
             <div class="col-md-12">
