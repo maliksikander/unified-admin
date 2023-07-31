@@ -27,6 +27,7 @@ const envVarsSchema = Joi.object()
   .unknown();
 
 const { value: envVars, error } = envVarsSchema.prefs({ errors: { label: 'key' } }).validate(process.env);
+console.log("==>",envVars)
 
 if (error) {
   throw new Error(`Config validation error: ${error.message}`);
@@ -42,7 +43,7 @@ module.exports = {
   httpsCertPath: envVars.HTTPS_CERTIFICATE_PATH,
   httpsCertPassphrase: envVars.HTTPS_CERTIFICATE_PASSPHRASE,
   mongoose: {
-    url: `${envVars.MONGODB_HOST}/${envVars.MONGODB_NAME}` + (envVars.NODE_ENV === 'test' ? '-test' : ''),
+    url: `${this.mongoDB_URL}` + (envVars.NODE_ENV === 'test' ? '-test' : ''),
     options: {
       useCreateIndex: true,
       useNewUrlParser: true,
