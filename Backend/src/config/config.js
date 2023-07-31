@@ -37,12 +37,12 @@ module.exports = {
   Port: envVars.PORT,
   isSSL: envVars.isSSL,
   logLevel: envVars.LOG_LEVEL,
-  mongoDB_URL : "mongodb://" + envVars.MONGODB_HOST + "/" + envVars.MONGODB_NAME,
+  mongoDB_URL: envVars.MONGODB_HOST + "/" + envVars.MONGODB_NAME,
   httpsKeyPath: envVars.HTTPS_KEY_PATH,
   httpsCertPath: envVars.HTTPS_CERTIFICATE_PATH,
   httpsCertPassphrase: envVars.HTTPS_CERTIFICATE_PASSPHRASE,
   mongoose: {
-    url: "mongodb://" + envVars.MONGODB_HOST + "/" + envVars.MONGODB_NAME + (envVars.NODE_ENV === 'test' ? '-test' : ''),
+    url: envVars.MONGODB_HOST + "/" + envVars.MONGODB_NAME + (envVars.NODE_ENV === 'test' ? '-test' : ''),
     options: {
       useCreateIndex: true,
       useNewUrlParser: true,
