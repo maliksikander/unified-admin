@@ -165,7 +165,7 @@ node-artifacts-backend:
       artifacts: true
   script:
     - cd Backend
-    - npm install --legacy-peer-deps
+    - npm install
     #  - npm uninstall ef-keycloak-connect
     #  - npm install ef-keycloak-connect@1.0.0
     # - npm uninstall jest
