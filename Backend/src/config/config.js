@@ -11,6 +11,7 @@ const envVarsSchema = Joi.object()
     isSSL: Joi.boolean().default(false).required().description('HTTPS Flag'),
     MONGODB_HOST: Joi.string().required().description('Mongo DB url'),
     LOG_LEVEL: Joi.string().valid("error", "warn", "info", "http", "verbose", "debug", "silly").required(),
+    MONGODB_NAME: Joi.string().required().description('Mongo DB Name'),
     HTTPS_KEY_PATH: Joi.string().description('HTTPs Key Path'),
     HTTPS_CERTIFICATE_PATH: Joi.string().description('HTTPs Cartificate Path'),
     HTTPS_CERTIFICATE_PASSPHRASE: Joi.string().allow("").description('HTTPs Passphrase'),
@@ -36,12 +37,12 @@ module.exports = {
   Port: envVars.PORT,
   isSSL: envVars.isSSL,
   logLevel: envVars.LOG_LEVEL,
-  mongoDB_URL : envVars.MONGODB_HOST,
+  mongoDB_URL: envVars.MONGODB_HOST + "/" + envVars.MONGODB_NAME,
   httpsKeyPath: envVars.HTTPS_KEY_PATH,
   httpsCertPath: envVars.HTTPS_CERTIFICATE_PATH,
   httpsCertPassphrase: envVars.HTTPS_CERTIFICATE_PASSPHRASE,
   mongoose: {
-    url: envVars.MONGODB_HOST + (envVars.NODE_ENV === 'test' ? '-test' : ''),
+    url: envVars.MONGODB_HOST + "/" + envVars.MONGODB_NAME + (envVars.NODE_ENV === 'test' ? '-test' : ''),
     options: {
       useCreateIndex: true,
       useNewUrlParser: true,
