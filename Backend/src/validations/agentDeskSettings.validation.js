@@ -9,7 +9,9 @@ const updateSetting = {
     isConversationParticipantsEnabled: Joi.boolean(),
     isWrapUpEnabled: Joi.boolean(),
     wrapUpTime: Joi.number(),
-    id: Joi.string().required()
+    id: Joi.string().required(),
+    isOutboundSmsEnabled: Joi.boolean(),
+    prefixCode: Joi.string()
   }),
 };
 
