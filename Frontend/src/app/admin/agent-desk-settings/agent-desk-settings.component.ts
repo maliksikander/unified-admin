@@ -18,8 +18,8 @@ export class AgentDeskSettingsComponent implements OnInit {
   formErrors = {
     enableWrapup: "",
     displaywrapup: "please enter valid value between 15-1800",
-    prefixCode: "",
-    displayprefixcode:"please enter country code"
+    // prefixCode: "",
+    // displayprefixcode:"please enter country code"
   };
   managePermission: boolean = false;
 
@@ -48,9 +48,9 @@ export class AgentDeskSettingsComponent implements OnInit {
       ],
       isOutboundSmsEnabled:[false],
       prefixCode:[
-        "+92",
-        [ Validators.required,
-          Validators.pattern('^[+0]?[1-9]{1,3}$'),
+        "+1",
+        [ //Validators.required,
+          Validators.pattern('^(?:[+0]?[1-9]{1,3})?$'),
 
         ],
       ]
@@ -62,11 +62,11 @@ export class AgentDeskSettingsComponent implements OnInit {
       }
     });
 
-    this.AgentDeskConfigForm.get('isOutboundSmsEnabled').valueChanges.subscribe(() => {
-      if (!this.AgentDeskConfigForm.get('isOutboundSmsEnabled').value) {
-        this.AgentDeskConfigForm.patchValue({'prefixCode':"+92"})
-      }
-    });
+    // this.AgentDeskConfigForm.get('isOutboundSmsEnabled').valueChanges.subscribe(() => {
+    //   if (!this.AgentDeskConfigForm.get('isOutboundSmsEnabled').value) {
+    //     this.AgentDeskConfigForm.patchValue({'prefixCode':"+1"})
+    //   }
+    // });
 
 
     this.managePermission = this.commonService.checkManageScope("agent-desk");

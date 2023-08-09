@@ -11,7 +11,7 @@ const updateSetting = {
     wrapUpTime: Joi.number(),
     id: Joi.string().required(),
     isOutboundSmsEnabled: Joi.boolean(),
-    prefixCode: Joi.string()
+    prefixCode: Joi.string().allow(null, '')
   }),
 };
 

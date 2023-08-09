@@ -47,10 +47,10 @@ const agentDeskSettingSchema = mongoose.Schema(
     },
     prefixCode: {
       type: String,
-      required: true,
+      required: false,
       min: 1,
       max: 3,
-      default: '+92'
+      default: "+1"
 
     }
   },
