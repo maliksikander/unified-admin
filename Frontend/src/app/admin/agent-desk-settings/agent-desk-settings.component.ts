@@ -38,6 +38,7 @@ export class AgentDeskSettingsComponent implements OnInit {
       isEmojisEnabled:[false],
       isMessageFormattingEnabled:[false],
       isWrapUpEnabled: [false],
+      isDialogClosed: [false],
       wrapUpTime: [
         15,
         [ Validators.required,
