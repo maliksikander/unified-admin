@@ -39,6 +39,20 @@ const agentDeskSettingSchema = mongoose.Schema(
       default:15
 
     },
+    isOutboundSmsEnabled: {
+      type: Boolean,
+      required: true,
+      default: false
+      
+    },
+    prefixCode: {
+      type: String,
+      required: true,
+      min: 1,
+      max: 3,
+      default: '+92'
+
+    }
   },
   {
     timestamps: true,

@@ -57,3 +57,30 @@
 {
   margin-left: 15px;
 }
+.custom-prefix-field  {
+  mat-label {
+    display: block;
+  }
+
+  span {
+    color: #8B8B8B;
+    font-size: 12px;
+    padding: 0 5px;
+  }
+  .prefix-caption {
+    padding-top: 0;
+  
+    small {
+      display: block;
+      margin: 0;
+      padding-bottom: 20px;
+      color: #adaaaa;
+    }
+  }
+
+  .suffix{
+    right: -66px;
+    position: absolute;
+    top: -16px;
+  }
+}
