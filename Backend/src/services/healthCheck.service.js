@@ -44,7 +44,7 @@ const {
         {
           type: HealthTypes.Custom,
           name: "mongo",
-          host: 'mongodb://' + config.mongoDB_URL ,
+          host: config.mongoose.url ,
           customCheckerFunction: () => {
             logger.info("custom checker function started for mongoDB",
             {
@@ -53,7 +53,7 @@ const {
             });
             return new Promise(async (resolve, reject) => {
               try {
-                const db = await mongoose.createConnection(config.mongoDB_URL,config.mongoose.options);
+                const db = await mongoose.createConnection(config.mongoose.url,config.mongoose.options);
                 db.close(true).then(()=>
                 {
                   logger.info(
