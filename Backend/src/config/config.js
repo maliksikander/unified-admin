@@ -42,11 +42,12 @@ module.exports = {
   httpsCertPath: envVars.HTTPS_CERTIFICATE_PATH,
   httpsCertPassphrase: envVars.HTTPS_CERTIFICATE_PASSPHRASE,
   mongoose: {
-    url: envVars.MONGODB_HOST + "/" + envVars.MONGODB_NAME + (envVars.NODE_ENV === 'test' ? '-test' : ''),
+    url: envVars.MONGODB_HOST + (envVars.NODE_ENV === 'test' ? '-test' : ''),
     options: {
       useCreateIndex: true,
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      dbName: envVars.MONGODB_NAME
     },
   },
   // jwt: {
