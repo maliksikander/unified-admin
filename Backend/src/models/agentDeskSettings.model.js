@@ -39,7 +39,7 @@ const agentDeskSettingSchema = mongoose.Schema(
       default:15
 
     },
-    isDialogClosed: {
+    isOutboundSmsSendandClose: {
       type: Boolean,
       required: true,
       default:false

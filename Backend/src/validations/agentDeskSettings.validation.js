@@ -10,7 +10,7 @@ const updateSetting = {
     isWrapUpEnabled: Joi.boolean(),
     wrapUpTime: Joi.number(),
     id: Joi.string().required(),
-    isDialogClosed: Joi.boolean(),
+    isOutboundSmsSendandClose: Joi.boolean(),
     isOutboundSmsEnabled: Joi.boolean(),
     prefixCode: Joi.string().allow(null, '')
   }),

@@ -70,12 +70,7 @@
                         </div>
                         
 
-                        <div class="form-group adjust-toggle widget-toggle">
-                            <mat-label>isDialogClosed
-                                <small>Turn on to Close SMS Dialog After Outbound SMS sent</small>
-                            </mat-label>
-                            <mat-slide-toggle formControlName="isDialogClosed"></mat-slide-toggle>
-                        </div>
+                      
 
                         <div class="form-group adjust-toggle widget-toggle">
                             <mat-label>Outbound SMS
@@ -96,10 +91,16 @@
                             </mat-form-field>
 
                             <div class="prefix-caption">
-                                <small>Enter Country prefix-code(number should be in range 1-3 with '+')</small>
+                                <small>Enter Country prefix-code number should be in range 4 digits including with '+'</small>
 
                             </div>
 
+                        </div>
+                        <div class="form-group adjust-toggle widget-toggle" *ngIf="AgentDeskConfigForm.get('isOutboundSmsEnabled').value">
+                            <mat-label>Close Send SMS Dialog
+                                <small>Turn on to automatically close the  Send SMS Dialog after sending an SMS</small>
+                            </mat-label>
+                            <mat-slide-toggle formControlName="isOutboundSmsSendandClose"></mat-slide-toggle>
                         </div>
 
 
