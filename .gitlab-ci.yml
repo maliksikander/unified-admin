@@ -79,7 +79,6 @@ node-test-frontend:
 
 
 
-
 # node-format-frontend:
 #   stage: code_format_frontend
 #   when: on_success
