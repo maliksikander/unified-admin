@@ -68,7 +68,9 @@
                             </div>
 
                         </div>
+                        
 
+                      
 
                         <div class="form-group adjust-toggle widget-toggle">
                             <mat-label>Outbound SMS
@@ -82,17 +84,23 @@
                             <mat-form-field appearance="outline" mat>
                                 <input type="text" matInput formControlName="prefixCode" maxlength="4">
                                 <!-- <span class="suffix" matSuffix>Seconds</span>  -->
-                                <mat-error class="form-error">
+                                <!-- <mat-error class="form-error">
                                     {{formErrors?.prefixCode}}
 
-                                </mat-error>
+                                </mat-error> -->
                             </mat-form-field>
-
+                            <!-- class="prefix-caption" -->
                             <div class="prefix-caption">
-                                <small>Enter Country prefix-code(number should be in range 1-3 with '+')</small>
+                                <small>Enter Country prefix-code number should be in range 4 digits including '+'</small>
 
                             </div>
 
+                        </div>
+                        <div class="form-group adjust-toggle widget-toggle" *ngIf="AgentDeskConfigForm.get('isOutboundSmsEnabled').value">
+                            <mat-label>Close Send SMS Dialog
+                                <small>Turn on to automatically close the  Send SMS Dialog after sending an SMS</small>
+                            </mat-label>
+                            <mat-slide-toggle formControlName="isOutboundSmsSendandClose"></mat-slide-toggle>
                         </div>
 
 
