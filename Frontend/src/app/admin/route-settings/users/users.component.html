@@ -138,10 +138,15 @@
               </mat-form-field>
             </div>
           </div>
-
+          <div class="form-group col-md-6">
+            <mat-label>User Name</mat-label>
+            <mat-form-field appearance="outline">
+              <input matInput formControlName="username">
+            </mat-form-field>
+          </div>
           <div class="user-profile-section">
             <div class="form-group col-md-12">
-              <mat-label>Agent Roles</mat-label>
+              <mat-label>Roles</mat-label>
               <div class="chip-div">
                 <mat-chip-list #chipList formControlName="roles">
                   <ng-container *ngFor="let role of userForm.get('roles').value | slice :0:5">
