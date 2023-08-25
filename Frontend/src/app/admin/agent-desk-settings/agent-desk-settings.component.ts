@@ -17,7 +17,7 @@ export class AgentDeskSettingsComponent implements OnInit {
   agentDeskSettings:any;
   formErrors = {
     enableWrapup: "",
-    displaywrapup: "please enter valid value between 15-1800",
+    // displaywrapup: "please enter valid value between 15-1800",
     // prefixCode: "",
     // displayprefixcode:"please enter country code"
   };
@@ -37,15 +37,15 @@ export class AgentDeskSettingsComponent implements OnInit {
       isFileSharingEnabled:[false],
       isEmojisEnabled:[false],
       isMessageFormattingEnabled:[false],
-      isWrapUpEnabled: [false],
-      wrapUpTime: [
-        15,
-        [ Validators.required,
-          Validators.max(1800),
-          Validators.min(15),
-          Validators.pattern("^[0-9*_-]*$"),
-        ],
-      ],
+      // isWrapUpEnabled: [false],
+      // wrapUpTime: [
+      //   15,
+      //   [ Validators.required,
+      //     Validators.max(1800),
+      //     Validators.min(15),
+      //     Validators.pattern("^[0-9*_-]*$"),
+      //   ],
+      // ],
       isOutboundSmsEnabled:[false],
       isOutboundSmsSendandClose: [false],
       prefixCode:[
@@ -57,11 +57,11 @@ export class AgentDeskSettingsComponent implements OnInit {
       ]
     });
     this.getAgentDeskSettings();
-    this.AgentDeskConfigForm.get('isWrapUpEnabled').valueChanges.subscribe(() => {
-      if (!this.AgentDeskConfigForm.get('isWrapUpEnabled').value) {
-        this.AgentDeskConfigForm.patchValue({'wrapUpTime':15})
-      }
-    });
+    // this.AgentDeskConfigForm.get('isWrapUpEnabled').valueChanges.subscribe(() => {
+    //   if (!this.AgentDeskConfigForm.get('isWrapUpEnabled').value) {
+    //     this.AgentDeskConfigForm.patchValue({'wrapUpTime':15})
+    //   }
+    // });
 
     // this.AgentDeskConfigForm.get('isOutboundSmsEnabled').valueChanges.subscribe(() => {
     //   if (!this.AgentDeskConfigForm.get('isOutboundSmsEnabled').value) {
