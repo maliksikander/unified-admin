@@ -17,6 +17,7 @@
   .mat-expansion-panel-header {
     background: #fff !important;
     padding: 0 38px !important;
+
     &:hover {
       background: #fff !important;
     }
@@ -33,6 +34,7 @@
   position: relative;
   top: -10px;
   padding: 0 15px;
+
   span {
     font-size: 11px;
     padding: 0 5px;
@@ -54,6 +56,7 @@
 
   .search-filter-area {
     width: calc(100% - 10px);
+
     input {
       margin: 5px;
       padding: 2px 13px;
@@ -104,6 +107,7 @@
         font-size: 13px;
       }
     }
+
     input {
       position: relative !important;
       opacity: 0;
@@ -113,6 +117,7 @@
       z-index: 2 !important;
       left: -3px !important;
     }
+
     label {
       position: relative;
       top: -7px;
@@ -142,12 +147,12 @@
       width: 0;
     }
 
-    input:checked ~ .checkmark {
+    input:checked~.checkmark {
       border-color: #c2c2c2;
       border-radius: 3px;
     }
 
-    input:checked ~ .checkmark:after {
+    input:checked~.checkmark:after {
       display: block;
     }
   }
@@ -161,6 +166,7 @@
     background-color: transparent;
     border: 1px solid #d9d9d9;
     border-radius: 4px;
+
     &:after {
       position: absolute;
       display: none;
@@ -195,10 +201,12 @@
       background: #fff !important;
       padding: 0 10px !important;
       height: 30px !important;
+
       &:hover {
         background: #fff !important;
       }
     }
+
     p.group-name {
       padding: 25px 15px 15px 0px;
     }
@@ -216,6 +224,7 @@
 }
 
 .users-list {
+
   //padding: 0px 25px;
   .mat-chip.mat-standard-chip {
     background-color: #fff;
@@ -229,7 +238,9 @@
     position: relative;
     border: 1px solid;
   }
+
   .top-heading {
+
     //padding: 10px 0px;
     //display: block;
     //overflow: hidden;
@@ -239,6 +250,7 @@
     //padding: 0;
     //margin: 0;
     li {
+
       //color: #686868;
       //display: inline-block;
       //list-style: none;
@@ -246,6 +258,7 @@
       &:first-child {
         width: 25%;
       }
+
       &:nth-child(2) {
         width: 75%;
       }
@@ -274,9 +287,11 @@
       min-height: 40px;
       position: relative;
       line-height: 40px;
+
       //list-style: none;
       &:hover {
         background: #f3f6f8 !important;
+
         .list-action-area {
           span {
             display: inline-block;
@@ -347,6 +362,7 @@
     right: 5px;
     // width: 12%;
     border-left: 1px solid #d8d8d8;
+
     mat-icon {
       padding: 10px 8px;
       color: #909090;
@@ -377,10 +393,12 @@
   position: absolute;
   left: 45%;
   padding-top: 10px;
+
   i {
     font-size: 40px;
     color: #777777;
   }
+
   span {
     display: block;
     padding: 0;
@@ -392,17 +410,24 @@
   }
 }
 
-tr{
-  position: relative;
-  mat-chip-list {
-    line-height: 40px;
-    display: inline-flex;
-}
-   &:hover {
-    .list-action-area {
-      .list-actions {
-        display:inline-block;
-        transition: all 0.3s;
+table {
+  border: 1px solid #e2e2e2;
+  tr {
+    position: relative;
+
+    mat-chip-list {
+      line-height: 40px;
+      display: inline-flex;
+    }
+
+    &:hover {
+      background: #f3f6f8;
+
+      .list-action-area {
+        .list-actions {
+          display: inline-block;
+          transition: all 0.3s;
+        }
       }
     }
   }
