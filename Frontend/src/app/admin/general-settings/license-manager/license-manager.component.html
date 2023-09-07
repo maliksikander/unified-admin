@@ -151,8 +151,8 @@
                     <mat-form-field appearance="outline">
                       <input readonly style="display: none;" #file type="file" accept='.private'
                         (change)="fileUpload(file.files)" />
-                      <input [readonly]="true" matInput [formControl]="licenseFile" [value]="fileName">
-                      <button class="select-file-button" mat-icon-button matSuffix (click)="file.click()">
+                      <input [disabled]="managePermission" [readonly]="true" matInput [formControl]="licenseFile" [value]="fileName">
+                      <button *ngIf="managePermission" class="select-file-button" mat-icon-button matSuffix (click)="file.click()">
                         <img src="assets/images/upload.svg" alt="upload">
                       </button>
                       <mat-error *ngIf="licenseFile.invalid">
