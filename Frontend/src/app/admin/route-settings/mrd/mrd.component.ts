@@ -20,15 +20,17 @@ export class MrdComponent implements OnInit {
   formErrors = {
     name: "",
     description: "",
+    
     enabled: "",
     maxRequests: "",
-    managedByRe:""
+    managedByRe: ""
   };
   validations;
   mrdForm: FormGroup;
   formHeading = "Add New MRD";
   saveBtnText = "Create";
   mrdData = [];
+  mrdType = [];
   editData: any;
   managePermission: boolean = false;
 
@@ -38,12 +40,11 @@ export class MrdComponent implements OnInit {
     private endPointService: EndpointService,
     private formBuilder: FormBuilder,
     private snackbar: SnackbarService
-  ) {}
+  ) { }
 
   ngOnInit() {
     // this.commonService.checkTokenExistenceInStorage();
     this.validations = this.commonService.mrdFormErrorMessages;
-
     //setting local form validation messages
     this.mrdForm = this.formBuilder.group({
       name: [
@@ -55,11 +56,13 @@ export class MrdComponent implements OnInit {
         ],
       ],
       description: ["", [Validators.maxLength(500)]],
+      mrdType: ["", [
+        Validators.required,
+      ]],
       enabled: [],
-      maxRequests: ["", [Validators.required, Validators.min(1),Validators.max(2147483647)]],
+      maxRequests: ["", [Validators.required, Validators.min(1), Validators.max(2147483647)]],
       managedByRe: [],
     });
-
     let pageNumber = sessionStorage.getItem("currentMRDPage");
     if (pageNumber) this.p = pageNumber;
 
@@ -73,6 +76,7 @@ export class MrdComponent implements OnInit {
     });
 
     this.getMRD();
+    this.getMRDType();
     this.managePermission = this.commonService.checkManageScope("routing");
   }
 
@@ -82,6 +86,7 @@ export class MrdComponent implements OnInit {
       this.mrdForm.reset();
       this.mrdForm.controls["enabled"].patchValue(true);
       this.mrdForm.controls["managedByRe"].patchValue(true);
+      this.mrdForm.controls["mrdType"].patchValue(true);
       this.formHeading = "Add New MRD";
       this.saveBtnText = "Create";
       let dialogRef = this.dialog.open(templateRef, {
@@ -90,7 +95,7 @@ export class MrdComponent implements OnInit {
         panelClass: "add-attribute",
         disableClose: true,
       });
-      dialogRef.afterClosed().subscribe((result) => {});
+      dialogRef.afterClosed().subscribe((result) => { });
     } catch (e) {
       console.error("Error on open modal :", e);
     }
@@ -140,6 +145,20 @@ export class MrdComponent implements OnInit {
     );
   }
 
+  getMRDType() {
+    this.endPointService.getMrdType().subscribe(
+      (res: any) => {
+        this.spinner = false;
+        this.mrdType = res;
+      },
+      (error) => {
+        this.spinner = false;
+        console.error("Error Fetching MRD TYPE:", error);
+        if (error && error.status == 0)
+          this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
+      }
+    );
+  }
   //to update MRD and it accepts `data` object & `id` as parameter,`data` object (name:string, description:string, interruptible:string)
   //and updating the local list with the success response object
   updateMRD(data, id) {
@@ -205,7 +224,7 @@ export class MrdComponent implements OnInit {
     let msg = "Are you sure you want to delete this MRD ?";
     return this.dialog
       .open(ConfirmDialogComponent, {
-        panelClass: ['confirm-dialog-container' , 'delete-confirmation'],
+        panelClass: ['confirm-dialog-container', 'delete-confirmation'],
         disableClose: true,
         data: {
           heading: "Delete Media Routing Domain",
@@ -259,9 +278,10 @@ export class MrdComponent implements OnInit {
       this.mrdForm.patchValue({
         name: data.name,
         description: data.description,
-        enabled: data.interruptible,
+        mrdType:data.mrdType,
+        //enabled: data.interruptible,
         maxRequests: data.maxRequests,
-        managedByRe: data.managedByRe,
+        //managedByRe: data.managedByRe,
       });
 
       this.formHeading = "Edit MRD";
@@ -301,9 +321,14 @@ export class MrdComponent implements OnInit {
       let data: any = {};
       data.name = this.mrdForm.value.name;
       data.description = this.mrdForm.value.description;
-      data.interruptible = this.mrdForm.value.enabled;
+      const selectedMrdType = this.mrdForm.value.mrdType;
+      if (selectedMrdType) {
+        // Extract the ID from the selected MRD type object
+        data.mrdTypeId = selectedMrdType.id;
+      }
+      //data.interruptible = this.mrdForm.value.enabled;
       data.maxRequests = this.mrdForm.value.maxRequests;
-      data.managedByRe = this.mrdForm.value.managedByRe;
+      //data.managedByRe = this.mrdForm.value.managedByRe;
       return data;
     } catch (e) {
       console.error("Error on save object :", e);
@@ -318,6 +343,7 @@ export class MrdComponent implements OnInit {
         this.updateMRD(data, this.editData.id);
       } else {
         this.createMRD(data);
+        console.log("here is the saved data", data)
       }
     } catch (e) {
       console.error("Error on save :", e);

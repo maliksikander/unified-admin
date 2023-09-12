@@ -428,7 +428,20 @@ export class EndpointService {
 
   getMrd(): Observable<any> {
     return this.httpClient
-      .get(`${this.MRE_URL}/${this.endpoints.routing.mrd}`, {
+      //.get(`${this.MRE_URL}/${this.endpoints.routing.mrd}`, {
+        .get(`https://81f49c3b-a018-42c9-90d1-0effc2d97f84.mock.pstmn.io/media-routing-domains`, {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json"
+          // Authorization: "Bearer" + this.token,
+        }),
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  getMrdType(): Observable<any> {
+    return this.httpClient
+      //.get(`${this.MRE_URL}/${this.endpoints.routing.mrd}`, {
+        .get(`https://81f49c3b-a018-42c9-90d1-0effc2d97f84.mock.pstmn.io/mrd-types`, {
         headers: new HttpHeaders({
           "Content-Type": "application/json"
           // Authorization: "Bearer" + this.token,

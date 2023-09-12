@@ -287,6 +287,9 @@ export class CommonService {
       maxlength: "Max 500 characters allowed",
       pattern: "Not a valid pattern",
     },
+    mrdType:{
+      required: "This field is required", 
+    },
     enabled: {
       required: "This field is required",
     },

@@ -29,7 +29,7 @@
                 <tr>
                   <th scope="col">Name</th>
                   <th scope="col">Description</th>
-                  <th scope="col">Interruptible</th>
+                  <th scope="col">Type</th>
                 </tr>
               </thead>
               <tbody *ngIf="mrdData && mrdData.length != 0">
@@ -39,8 +39,8 @@
                     <td scope="row">{{data.name ? data.name : 'N/A'}}</td>
                     <td>{{data.description ? data.description : 'N/A'}}</td>
                     <td class="table-trigger">
-                      <mat-slide-toggle (change)="onStatusChange($event,data)" [checked]="data.interruptible">
-                      </mat-slide-toggle>
+                      <!-- <mat-slide-toggle (change)="onStatusChange($event,data)" [checked]="data.interruptible">
+                      </mat-slide-toggle> -->
 
                       <span *ngIf="managePermission" class="list-trigger-area">
                         <button matTooltip="Edit" (click)="editMrd(newMrd,data)" mat-mini-fab>
@@ -113,6 +113,17 @@
             </mat-form-field>
           </div>
           <div class="form-group">
+            <mat-label>MRD Type</mat-label>
+            <mat-form-field appearance="outline">
+              <mat-select formControlName="mrdType">
+                <mat-option *ngFor="let type of mrdType" [value]="type">{{ type.name }}</mat-option>
+                <mat-error class="form-error">
+                  {{formErrors.mrdType}}
+                </mat-error>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
             <mat-label>Max Task Request</mat-label>
             <mat-form-field appearance="outline">
               <input matInput type="number" formControlName="maxRequests">
@@ -121,14 +132,14 @@
               </mat-error>
             </mat-form-field>
           </div>
-          <div class="form-group mrd-toggle mrd-padding-btn">
+          <!-- <div class="form-group mrd-toggle mrd-padding-btn">
             <mat-label>Interruptible</mat-label>
             <mat-slide-toggle style="right:-91px" formControlName="enabled"></mat-slide-toggle>
           </div>
           <div class="form-group mrd-toggle mrd-padding-btn">
             <mat-label>Managed By Routing Engine</mat-label>
             <mat-slide-toggle formControlName="managedByRe"></mat-slide-toggle>
-          </div>
+          </div> -->
 
           <div class="template-action row">
             <div class="col-md-12">
