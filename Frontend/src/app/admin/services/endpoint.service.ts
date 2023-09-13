@@ -93,7 +93,7 @@ export class EndpointService {
     this.FILE_ENGINE_URL = e.FILE_ENGINE_URL;
     this.userRoles = e.BUSINESS_USER_ROLES;
 
-    //if (isDevMode()) this.ADMIN_URL = "https://cim-dev.expertflow.com/unified-admin";
+    if (isDevMode()) this.ADMIN_URL = "http://localhost:3000";
 
     this.getStorageValues();
   }
