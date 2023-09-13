@@ -12,43 +12,45 @@
                 <div class="panel-page-content web-widget-class agent-desk-controls ">
                     <form class="form-horizontal col-md-4" [formGroup]="AgentDeskConfigForm" (ngSubmit)="onSave()">
 
-                        <div class="form-group adjust-toggle widget-toggle" >
+                        <div class="form-group adjust-toggle widget-toggle">
                             <mat-label>Message Formatting
                                 <small>Turn on for agents to send formatted messages</small>
                             </mat-label>
                             <mat-slide-toggle formControlName="isMessageFormattingEnabled"></mat-slide-toggle>
                         </div>
 
-                        <div class="form-group adjust-toggle widget-toggle" >
+                        <div class="form-group adjust-toggle widget-toggle">
                             <mat-label>File Sharing
                                 <small>Turn on for agents to share and receive attachments</small>
                             </mat-label>
                             <mat-slide-toggle formControlName="isFileSharingEnabled"></mat-slide-toggle>
                         </div>
 
-                        <div class="form-group adjust-toggle widget-toggle" >
+                        <div class="form-group adjust-toggle widget-toggle">
                             <mat-label>Emojis
                                 <small>Turn on for agents to send and receive emojis</small>
                             </mat-label>
                             <mat-slide-toggle formControlName="isEmojisEnabled"></mat-slide-toggle>
                         </div>
 
-                        <div class="form-group adjust-toggle widget-toggle" >
+                        <div class="form-group adjust-toggle widget-toggle">
                             <mat-label>Conversation Participants
-                                <small>Turn on for agents to see conversation participants list for a conversation</small>
+                                <small>Turn on for agents to see conversation participants list for a
+                                    conversation</small>
                             </mat-label>
                             <mat-slide-toggle formControlName="isConversationParticipantsEnabled"></mat-slide-toggle>
 
                         </div>
 
-                        <div class="form-group adjust-toggle widget-toggle" >
+                        <!-- <div class="form-group adjust-toggle widget-toggle">
                             <mat-label>Wrap-up Time
                                 <small>Turn on for agents to add a wrap-up until the specified time</small>
                             </mat-label>
                             <mat-slide-toggle formControlName="isWrapUpEnabled"></mat-slide-toggle>
                         </div>
 
-                        <div class="form-group custom-wrap-field p-0" *ngIf="AgentDeskConfigForm.get('isWrapUpEnabled').value">
+                        <div class="form-group custom-wrap-field p-0"
+                            *ngIf="AgentDeskConfigForm.get('isWrapUpEnabled').value">
                             <mat-label>Wrap-up Timer</mat-label>
                             <mat-form-field appearance="outline" mat>
                                 <input type="number" matInput formControlName="wrapUpTime">
@@ -60,14 +62,64 @@
 
                             <div class="wrap-caption">
                                 <small>Enter value between 15-1800.</small>
-                                <small>(This is the time for agents to apply Wrap-up once a conversation goes into "Wrap-up" state)</small>
+                                <small>(This is the time for agents to apply Wrap-up once a conversation goes into
+                                    "Wrap-up" state)</small>
+
+                            </div>
+
+                        </div> -->
+                        
+
+                      
+
+                        <div class="form-group adjust-toggle widget-toggle">
+                            <mat-label>Outbound SMS
+                                <small>Turn on for using Outbound SMS Feature</small>
+                            </mat-label>
+                            <mat-slide-toggle formControlName="isOutboundSmsEnabled"></mat-slide-toggle>
+                        </div>
+                        <div class="form-group custom-prefix-field p-0"
+                            *ngIf="AgentDeskConfigForm.get('isOutboundSmsEnabled').value">
+                            <mat-label>Add Prefix Code </mat-label>
+                            <mat-form-field appearance="outline" mat>
+                                <input type="text" matInput formControlName="prefixCode" maxlength="4">
+                                <!-- <span class="suffix" matSuffix>Seconds</span>  -->
+                                <!-- <mat-error class="form-error">
+                                    {{formErrors?.prefixCode}}
+
+                                </mat-error> -->
+                            </mat-form-field>
+                            <!-- class="prefix-caption" -->
+                            <div class="prefix-caption">
+                                <small>Enter Country prefix-code number should be in range 4 digits including '+'</small>
 
                             </div>
 
                         </div>
+                        <div class="form-group adjust-toggle widget-toggle" *ngIf="AgentDeskConfigForm.get('isOutboundSmsEnabled').value">
+                            <mat-label>Close Send SMS Dialog
+                                <small>Turn on to automatically close the  Send SMS Dialog after sending an SMS</small>
+                            </mat-label>
+                            <mat-slide-toggle formControlName="isOutboundSmsSendandClose"></mat-slide-toggle>
+                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                         <div *ngIf="managePermission" class="action-area btn-margin pr-0">
-                            <button mat-raised-button class="blue-btn service-trigger" type="submit" [disabled]="!AgentDeskConfigForm.valid" *ngIf="AgentDeskConfigForm.dirty">Save</button>
+                            <button mat-raised-button class="blue-btn service-trigger" type="submit"
+                                [disabled]="!AgentDeskConfigForm.valid" *ngIf="AgentDeskConfigForm.dirty">Save</button>
                         </div>
 
                     </form>

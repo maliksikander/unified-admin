@@ -19,7 +19,7 @@ export class LicenseManagerComponent implements OnInit {
   fileName = "";
   fileToBeUploaded = new FormData();
   licenseKey = new FormControl("", [Validators.required]);
-  licenseFile = new FormControl("", [Validators.required]);
+  licenseFile = new FormControl({value:"", disabled: true}, [Validators.required]);
   managePermission: boolean = false;
 
   constructor(
