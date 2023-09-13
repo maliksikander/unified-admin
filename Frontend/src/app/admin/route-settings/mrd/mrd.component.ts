@@ -1,10 +1,11 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators,AbstractControl,ValidationErrors } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { ConfirmDialogComponent } from "../../../shared/confirm-dialog/confirm-dialog.component";
 import { CommonService } from "../../services/common.service";
 import { EndpointService } from "../../services/endpoint.service";
 import { SnackbarService } from "../../services/snackbar.service";
+import { even } from "@rxweb/reactive-form-validators";
 @Component({
   selector: "app-mrd",
   templateUrl: "./mrd.component.html",
@@ -20,7 +21,7 @@ export class MrdComponent implements OnInit {
   formErrors = {
     name: "",
     description: "",
-    
+    mrdType: "",
     enabled: "",
     maxRequests: "",
     managedByRe: ""
@@ -55,13 +56,15 @@ export class MrdComponent implements OnInit {
           Validators.maxLength(256),
         ],
       ],
-      description: ["", [Validators.maxLength(500)]],
-      mrdType: ["", [
+      description: ["", [
+        Validators.maxLength(500),
+      ]],
+      mrdType: [null, [
         Validators.required,
       ]],
       enabled: [],
-      maxRequests: ["", [Validators.required, Validators.min(1), Validators.max(2147483647)]],
-      managedByRe: [],
+      maxRequests: ['',[Validators.required, Validators.min(0), Validators.max(10)]],
+      ///managedByRe: [],
     });
     let pageNumber = sessionStorage.getItem("currentMRDPage");
     if (pageNumber) this.p = pageNumber;
@@ -80,12 +83,22 @@ export class MrdComponent implements OnInit {
     this.managePermission = this.commonService.checkManageScope("routing");
   }
 
+  getMaxRequestsValue(selectedType:any) {
+    if(selectedType.interruptible === false) {
+      this.mrdForm.get('maxRequests').setValidators([Validators.min(0), Validators.max(1)]);
+    } else {
+      this.mrdForm.get('maxRequests').setValidators([Validators.min(0), Validators.max(10)]);
+    }
+    this.mrdForm.get('maxRequests').updateValueAndValidity();
+    console.log(this.mrdForm.get('maxRequests'))
+  }
+
   //to open form dialog,this method accepts the `templateRef` as a parameter assigned to the form in html.
   openModal(templateRef) {
     try {
       this.mrdForm.reset();
       this.mrdForm.controls["enabled"].patchValue(true);
-      this.mrdForm.controls["managedByRe"].patchValue(true);
+      //this.mrdForm.controls["managedByRe"].patchValue(true);
       this.mrdForm.controls["mrdType"].patchValue(true);
       this.formHeading = "Add New MRD";
       this.saveBtnText = "Create";
@@ -159,9 +172,17 @@ export class MrdComponent implements OnInit {
       }
     );
   }
+
+  // Returning the ItemTypeID to ItemType Name
+  getMrdTypeByID(typeID) {
+    const mrdItem = this.mrdType.find(item => item.id === typeID);
+    return mrdItem ? mrdItem.name : 'N/A';
+    
+  }
   //to update MRD and it accepts `data` object & `id` as parameter,`data` object (name:string, description:string, interruptible:string)
   //and updating the local list with the success response object
   updateMRD(data, id) {
+    console.log("here is the data to be updated", data)
     this.endPointService.updateMrd(data, id).subscribe(
       (res: any) => {
         if (res.id) {
@@ -274,16 +295,16 @@ export class MrdComponent implements OnInit {
   //and patches the existing values with form controls and opens the form dialog
   editMrd(templateRef, data) {
     try {
+      //console.log("here is the data to be edited",data,"and tempplateRef", templateRef, )
       this.editData = data;
+      let selectedMrdType = this.mrdType.find(item =>item.id === data.type)
       this.mrdForm.patchValue({
         name: data.name,
         description: data.description,
-        mrdType:data.mrdType,
-        //enabled: data.interruptible,
         maxRequests: data.maxRequests,
-        //managedByRe: data.managedByRe,
       });
-
+      this.mrdForm.get('mrdType').setValue(selectedMrdType)
+      this.getMaxRequestsValue(selectedMrdType)
       this.formHeading = "Edit MRD";
       this.saveBtnText = "Update";
       let dialogRef = this.dialog.open(templateRef, {
@@ -321,10 +342,8 @@ export class MrdComponent implements OnInit {
       let data: any = {};
       data.name = this.mrdForm.value.name;
       data.description = this.mrdForm.value.description;
-      const selectedMrdType = this.mrdForm.value.mrdType;
-      if (selectedMrdType) {
-        // Extract the ID from the selected MRD type object
-        data.mrdTypeId = selectedMrdType.id;
+      if (this.mrdForm.value.mrdType) {
+        data.mrdTypeId = this.mrdForm.value.mrdType.id;
       }
       //data.interruptible = this.mrdForm.value.enabled;
       data.maxRequests = this.mrdForm.value.maxRequests;

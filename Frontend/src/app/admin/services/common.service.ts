@@ -288,15 +288,15 @@ export class CommonService {
       pattern: "Not a valid pattern",
     },
     mrdType:{
-      required: "This field is required", 
+      required: "Selection of Mrd Type is required", 
     },
     enabled: {
       required: "This field is required",
     },
     maxRequests: {
       required: "This field is required",
-      min: "Min value of 1 is required",
-      max: "Max value allowed is 2147483647"
+      min: "Min value of 0 is required",
+      max: "Max value allowed is ",
     },
     managedByRe: {
       required: "This field is required",

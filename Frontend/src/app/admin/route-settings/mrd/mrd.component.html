@@ -38,7 +38,7 @@
                     *ngFor="let data of mrdData | filter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
                     <td scope="row">{{data.name ? data.name : 'N/A'}}</td>
                     <td>{{data.description ? data.description : 'N/A'}}</td>
-                    <td class="table-trigger">
+                    <td class="table-trigger">{{getMrdTypeByID(data.type)}}
                       <!-- <mat-slide-toggle (change)="onStatusChange($event,data)" [checked]="data.interruptible">
                       </mat-slide-toggle> -->
 
@@ -115,21 +115,27 @@
           <div class="form-group">
             <mat-label>MRD Type</mat-label>
             <mat-form-field appearance="outline">
-              <mat-select formControlName="mrdType">
+              <mat-select formControlName="mrdType" (selectionChange)="getMaxRequestsValue($event.value)">
                 <mat-option *ngFor="let type of mrdType" [value]="type">{{ type.name }}</mat-option>
-                <mat-error class="form-error">
-                  {{formErrors.mrdType}}
-                </mat-error>
               </mat-select>
+              <mat-error class="form-error">
+                {{ formErrors?.mrdType }}
+              </mat-error>
             </mat-form-field>
           </div>
+          
           <div class="form-group">
             <mat-label>Max Task Request</mat-label>
             <mat-form-field appearance="outline">
               <input matInput type="number" formControlName="maxRequests">
               <mat-error class="form-error">
-                {{formErrors.maxRequests}}
+                {{formErrors.maxRequests}} <span style="font-size: 11px;" *ngIf="mrdForm.get('maxRequests').hasError('max')">
+                  {{mrdForm.get('mrdType').value?.interruptible === true ? '10' : '1'}}
+                </span>
               </mat-error>
+              <!-- <mat-error class="form-error" *ngIf="mrdForm.controls['maxRequests'].hasError('Interruptiblefalse')">
+               {{formErrors.maxRequestsInterruptible}}
+              </mat-error> -->
             </mat-form-field>
           </div>
           <!-- <div class="form-group mrd-toggle mrd-padding-btn">
