@@ -89,6 +89,7 @@ export class UsersComponent implements OnInit {
     this.userForm = this.formBuilder.group({
       firstName: [""],
       lastName: [""],
+      username:[""],
       roles: [""],
     });
 
@@ -99,6 +100,7 @@ export class UsersComponent implements OnInit {
     // to disable user form controls
     this.userForm.controls["firstName"].disable();
     this.userForm.controls["lastName"].disable();
+    this.userForm.controls["username"].disable();
 
     //checking for attribute form validation failure
     // this.userAttributeForm.valueChanges.subscribe((data) => {
@@ -336,6 +338,7 @@ export class UsersComponent implements OnInit {
         ? data.keycloakUser.firstName
         : "N/A",
       lastName: data.keycloakUser.lastName ? data.keycloakUser.lastName : "N/A",
+      username: data.keycloakUser.username ? data.keycloakUser.username : "N/A",
       roles: data.keycloakUser.roles,
     });
     let dialogRef = this.dialog.open(templateRef, {

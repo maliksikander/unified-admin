@@ -24,21 +24,35 @@
           </div>
 
           <div class="users-list">
-            <ul class="top-heading">
-              <li>Name</li>
-              <li>Attributes</li>
-            </ul>
-            <ul class="routing-user-list" *ngIf="(userData && userData.length != 0) && !warningBool">
-              <li
-                *ngFor="let data of userData | filter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
-                <div class="row">
-                  <div class="col-sm-3 col-md-3">
-                    <span>{{data?.keycloakUser.firstName ? data?.keycloakUser.firstName :
-                      data?.keycloakUser?.username}}</span>
-                    <!-- <span>{{data?.keycloakUser?.username ? data?.keycloakUser.username : -->
-                    <!-- 'N/A'}}</span> -->
-                  </div>
-                  <div class="list-view col-sm-9 col-md-9">
+            <table class="table" *ngIf="(userData && userData.length != 0) && !warningBool">
+              <thead>
+                <tr>
+                  <th scope="col">Username</th>
+                  <th scope="col">First Name</th>
+                  <th scope="col">Last Name</th>
+                  <th scope="col">Attributes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let data of userData | filter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
+
+                  <td>
+                    <span>
+                      {{data?.keycloakUser.username ? data?.keycloakUser.username :
+                        'N/A'}}
+                    </span>
+                  </td>
+                  <td>
+                    <span>{{data?.keycloakUser?.firstName ? data?.keycloakUser.firstName :
+                      'N/A'}}</span>
+                  </td>
+                  <td>
+                    <span>{{data?.keycloakUser?.lastName ? data?.keycloakUser.lastName :
+                      'N/A'}}</span>
+                  </td>
+  
+                  <td>
                     <mat-chip-list>
                       <mat-chip #attributeMenuTrigger="matMenuTrigger" [matMenuTriggerFor]="updateAttrMenu"
                         *ngFor="let attr of data?.associatedRoutingAttributes;let i=index"
@@ -55,6 +69,54 @@
                       </mat-chip>
                       <!-- <mat-chip *ngIf="data.attributes?.length > 3">+{{data.attributes?.length - 3}}</mat-chip> -->
                     </mat-chip-list>
+                  </td>
+                  <div class="list-action-area">
+                    <span class="list-actions">
+                      <button mat-mini-fab matTooltip="Add/Edit Attribute"
+                        (click)="editUserAttributes(assignAttributeForm,data)">
+                        <mat-icon>add</mat-icon>
+                      </button>
+                      <button mat-mini-fab matTooltip="View Profile" (click)="viewUserProfile(userProfileForm,data)">
+                        <mat-icon>person</mat-icon>
+                      </button>
+                    </span>
+                  </div>
+                </tr>
+              </tbody>
+            </table>
+            <!-- <ul class="top-heading">
+              <li>Name</li>
+              <li>First Name</li>
+              <li>Attributes</li>
+            </ul>
+            <ul class="routing-user-list" *ngIf="(userData && userData.length != 0) && !warningBool">
+              <li
+                *ngFor="let data of userData | filter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
+                <div class="row">
+                  <div class="col-sm-3 col-md-3">
+                    <span>
+                      {{data?.keycloakUser.firstName ? data?.keycloakUser.firstName :
+                      data?.keycloakUser?.username}}
+                    </span>
+                   <span>{{data?.keycloakUser?.username ? data?.keycloakUser.username :
+                   'N/A'}}</span> 
+                  </div>
+                  <div class="list-view col-sm-9 col-md-9">
+                    <mat-chip-list>
+                      <mat-chip #attributeMenuTrigger="matMenuTrigger" [matMenuTriggerFor]="updateAttrMenu"
+                        *ngFor="let attr of data?.associatedRoutingAttributes;let i=index"
+                        [ngStyle]="{'border-color':attr?.routingAttribute?.type === 'BOOLEAN' ? '#7ECCFF' : '#A2F565' }"
+                        (click)="updateAttributeValue(attr,data)">
+                  
+                        <ng-container *ngIf="attr?.routingAttribute?.type == 'BOOLEAN'">
+                          {{ attr?.routingAttribute?.name}}
+                        </ng-container>
+                        <ng-container *ngIf="attr?.routingAttribute?.type == 'PROFICIENCY_LEVEL'">
+                          {{ attr?.routingAttribute?.name}}({{attr?.value}})
+                        </ng-container>
+                      </mat-chip>
+                    
+                    </mat-chip-list>
                   </div>
                 </div>
                 <div class="list-action-area">
@@ -69,7 +131,7 @@
                   </span>
                 </div>
               </li>
-            </ul>
+            </ul> -->
 
             <div *ngIf="(userData && userData.length == 0) || warningBool" class="no-data-warning">
               <i class="material-icons">warning_amber</i>
@@ -138,10 +200,15 @@
               </mat-form-field>
             </div>
           </div>
-
+          <div class="form-group col-md-6">
+            <mat-label>User Name</mat-label>
+            <mat-form-field appearance="outline">
+              <input matInput formControlName="username">
+            </mat-form-field>
+          </div>
           <div class="user-profile-section">
             <div class="form-group col-md-12">
-              <mat-label>Agent Roles</mat-label>
+              <mat-label>Roles</mat-label>
               <div class="chip-div">
                 <mat-chip-list #chipList formControlName="roles">
                   <ng-container *ngFor="let role of userForm.get('roles').value | slice :0:5">
