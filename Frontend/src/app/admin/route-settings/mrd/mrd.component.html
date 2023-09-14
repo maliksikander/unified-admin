@@ -130,7 +130,7 @@
               <input matInput type="number" formControlName="maxRequests">
               <mat-error class="form-error">
                 {{formErrors.maxRequests}} <span style="font-size: 11px;" *ngIf="mrdForm.get('maxRequests').hasError('max')">
-                  {{mrdForm.get('mrdType').value?.interruptible === true ? '10' : '1'}}
+                  {{mrdForm.get('mrdType').value?.interruptible === false ? '1' : '10'}}
                 </span>
               </mat-error>
               <!-- <mat-error class="form-error" *ngIf="mrdForm.controls['maxRequests'].hasError('Interruptiblefalse')">

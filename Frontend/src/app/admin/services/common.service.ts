@@ -288,7 +288,7 @@ export class CommonService {
       pattern: "Not a valid pattern",
     },
     mrdType:{
-      required: "Selection of Mrd Type is required", 
+      required: "This field is required", 
     },
     enabled: {
       required: "This field is required",

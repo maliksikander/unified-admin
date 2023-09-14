@@ -22,9 +22,7 @@ export class MrdComponent implements OnInit {
     name: "",
     description: "",
     mrdType: "",
-    enabled: "",
     maxRequests: "",
-    managedByRe: ""
   };
   validations;
   mrdForm: FormGroup;
@@ -62,9 +60,7 @@ export class MrdComponent implements OnInit {
       mrdType: [null, [
         Validators.required,
       ]],
-      enabled: [],
       maxRequests: ['',[Validators.required, Validators.min(0), Validators.max(10)]],
-      ///managedByRe: [],
     });
     let pageNumber = sessionStorage.getItem("currentMRDPage");
     if (pageNumber) this.p = pageNumber;
@@ -90,16 +86,12 @@ export class MrdComponent implements OnInit {
       this.mrdForm.get('maxRequests').setValidators([Validators.min(0), Validators.max(10)]);
     }
     this.mrdForm.get('maxRequests').updateValueAndValidity();
-    console.log(this.mrdForm.get('maxRequests'))
   }
 
   //to open form dialog,this method accepts the `templateRef` as a parameter assigned to the form in html.
   openModal(templateRef) {
     try {
       this.mrdForm.reset();
-      this.mrdForm.controls["enabled"].patchValue(true);
-      //this.mrdForm.controls["managedByRe"].patchValue(true);
-      this.mrdForm.controls["mrdType"].patchValue(true);
       this.formHeading = "Add New MRD";
       this.saveBtnText = "Create";
       let dialogRef = this.dialog.open(templateRef, {
@@ -182,7 +174,6 @@ export class MrdComponent implements OnInit {
   //to update MRD and it accepts `data` object & `id` as parameter,`data` object (name:string, description:string, interruptible:string)
   //and updating the local list with the success response object
   updateMRD(data, id) {
-    console.log("here is the data to be updated", data)
     this.endPointService.updateMrd(data, id).subscribe(
       (res: any) => {
         if (res.id) {
@@ -345,9 +336,7 @@ export class MrdComponent implements OnInit {
       if (this.mrdForm.value.mrdType) {
         data.mrdTypeId = this.mrdForm.value.mrdType.id;
       }
-      //data.interruptible = this.mrdForm.value.enabled;
       data.maxRequests = this.mrdForm.value.maxRequests;
-      //data.managedByRe = this.mrdForm.value.managedByRe;
       return data;
     } catch (e) {
       console.error("Error on save object :", e);
@@ -362,7 +351,6 @@ export class MrdComponent implements OnInit {
         this.updateMRD(data, this.editData.id);
       } else {
         this.createMRD(data);
-        console.log("here is the saved data", data)
       }
     } catch (e) {
       console.error("Error on save :", e);
