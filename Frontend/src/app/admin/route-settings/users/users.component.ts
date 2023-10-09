@@ -87,6 +87,7 @@ export class UsersComponent implements OnInit {
     if (pageNumber) this.p = pageNumber;
 
     this.userForm = this.formBuilder.group({
+      username:[""],
       firstName: [""],
       lastName: [""],
       roles: [""],
@@ -99,7 +100,7 @@ export class UsersComponent implements OnInit {
     // to disable user form controls
     this.userForm.controls["firstName"].disable();
     this.userForm.controls["lastName"].disable();
-
+    this.userForm.controls["username"].disable();
     //checking for attribute form validation failure
     // this.userAttributeForm.valueChanges.subscribe((data) => {
     //   this.commonService.logValidationErrors(this.userAttributeForm, this.formErrors, this.validations);
@@ -332,6 +333,7 @@ export class UsersComponent implements OnInit {
     if (roleTip && roleTip.length > 5)
       this.rolesTooltip = roleTip.slice(5, roleTip.length);
     this.userForm.patchValue({
+      username: data.keycloakUser.username ? data.keycloakUser.username : "N/A",
       firstName: data.keycloakUser.firstName
         ? data.keycloakUser.firstName
         : "N/A",
