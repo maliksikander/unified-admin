@@ -39,7 +39,7 @@
                     <td scope="row">{{data.name ? data.name : 'N/A'}}</td>
                     <td>{{data.description ? data.description : 'N/A'}}</td>
                     <td class="table-trigger">
-                      <mat-slide-toggle (change)="onStatusChange($event,data)" [checked]="data.interruptible">
+                      <mat-slide-toggle [disabled]="!managePermission" (change)="onStatusChange($event,data)" [checked]="data.interruptible">
                       </mat-slide-toggle>
 
                       <span *ngIf="managePermission" class="list-trigger-area">

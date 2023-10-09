@@ -39,7 +39,7 @@
                                         <td scope="row">{{data?.keycloakUser?.lastname ? data?.keycloakUser.lastname :
                                             'N/A'}}</td>
                                         <td scope="row" *ngFor="let mrdData of mrdTasksData">
-                                            <select #reqSelect
+                                            <select [disabled]="managePermission" #reqSelect
                                                 (change)='onMrdSelect(reqSelect.value, data, mrdData.id)'>
                                                 <ng-container *ngFor="let a of taskArray(mrdData); let i = index">
                                                     <option *ngIf="mrdData.id != '6298b744b777de61844f616b'"

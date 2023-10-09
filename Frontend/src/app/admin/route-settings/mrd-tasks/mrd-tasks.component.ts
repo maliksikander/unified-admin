@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { EndpointService } from "../../services/endpoint.service";
 import { SnackbarService } from "../../services/snackbar.service";
+import { CommonService } from "../../services/common.service";
 
 @Component({
   selector: "app-mrd-tasks",
@@ -19,10 +20,12 @@ export class MrdTasksComponent implements OnInit {
   keycloakUsers = [];
   routingEngineUsers = [];
   mrdTasksData = [];
+  managePermission: boolean = false;
 
   constructor(
     private endPointService: EndpointService,
-    private snackbar: SnackbarService
+    private snackbar: SnackbarService,
+    private commonService: CommonService
   ) {}
 
   ngOnInit(): void {
@@ -30,6 +33,8 @@ export class MrdTasksComponent implements OnInit {
     if (pageNumber) this.p = pageNumber;
     this.getMrdTaskList();
     this.getUsers();
+
+    this.managePermission = this.commonService.checkManageScope("agent-mrd");
   }
 
   taskArray(mrd) {
