@@ -43,6 +43,11 @@ export class AdminMainComponent implements OnInit {
   routingBool: boolean = false;
   calendarBool: boolean = false;
   agentDeskBool: boolean = false;
+  agentMrdBool : boolean = false
+  routingArrtibuteBool : boolean = false
+  agentAttributeBool : boolean = false
+  mrdBool : boolean = false
+  queueBool : boolean = false
   subscription: Subscription;
 
   constructor(
@@ -146,10 +151,45 @@ export class AdminMainComponent implements OnInit {
           });
         }
 
-        if (item.rsname.includes("routing") && this.routingBool == false) {
+        if (item.rsname === "routing-engine" && this.routingBool == false) {
           let scopes: Array<any> = item?.scopes;
           scopes.forEach((scope: any) => {
             if (scope == "view") this.routingBool = true;
+          });
+        }
+
+        if (item.rsname === "routing-attribute") {
+          let scopes: Array<any> = item?.scopes;
+          scopes.forEach((scope: any) => {
+            if (scope == "view") this.routingArrtibuteBool = true;
+          });
+        }
+
+        if (item.rsname === "mrd") {
+          let scopes: Array<any> = item?.scopes;
+          scopes.forEach((scope: any) => {
+            if (scope == "view") this.mrdBool = true;
+          });
+        }
+
+        if (item.rsname === "agent-mrd") {
+          let scopes: Array<any> = item?.scopes;
+          scopes.forEach((scope: any) => {
+            if (scope == "view") this.agentMrdBool = true;
+          });
+        }
+
+        if (item.rsname === "queue") {
+          let scopes: Array<any> = item?.scopes;
+          scopes.forEach((scope: any) => {
+            if (scope == "view") this.queueBool = true;
+          });
+        }
+
+        if (item.rsname === "agent-attributes") {
+          let scopes: Array<any> = item?.scopes;
+          scopes.forEach((scope: any) => {
+            if (scope == "view") this.agentAttributeBool = true;
           });
         }
       });
