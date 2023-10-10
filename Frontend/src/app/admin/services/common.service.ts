@@ -676,7 +676,7 @@ export class CommonService {
       maxlength: "Max 500 characters allowed",
       pattern: 'Allowed special characters "[!@#$%^&*()-_=+~`"]+"',
     },
-   
+
   };
 
   constructor(private snackbar: SnackbarService, private router: Router) { }
@@ -716,7 +716,9 @@ export class CommonService {
         if (permittedResources[i].rsname.includes(resource)) {
           let resourceScopes: Array<any> = permittedResources[i].scopes;
           for (let j = 0; j <= resourceScopes.length; j++) {
-            if (resourceScopes[j] === "manage") return true;
+            if (resourceScopes[j] === "manage") {
+              return true
+            } 
           }
         }
       }
