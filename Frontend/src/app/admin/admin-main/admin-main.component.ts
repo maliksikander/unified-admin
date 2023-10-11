@@ -88,70 +88,70 @@ export class AdminMainComponent implements OnInit {
   enableResource(resources: Array<any>) {
     try {
       resources.forEach((item: any) => {
-        if (item.rsname.includes("general")) {
+        if (item.rsname === "general-settings") {
           let scopes: Array<any> = item?.scopes;
           scopes.forEach((scope: any) => {
             if (scope == "view") this.generalBool = true;
           });
         }
 
-        if (item.rsname.includes("bot")) {
+        if (item.rsname === "bot-settings") {
           let scopes: Array<any> = item?.scopes;
           scopes.forEach((scope: any) => {
             if (scope == "view") this.botBool = true;
           });
         }
 
-        if (item.rsname.includes("form")) {
+        if (item.rsname === "forms") {
           let scopes: Array<any> = item?.scopes;
           scopes.forEach((scope: any) => {
             if (scope == "view") this.formBool = true;
           });
         }
 
-        if (item.rsname.includes("reason")) {
+        if (item.rsname === "reason-code") {
           let scopes: Array<any> = item?.scopes;
           scopes.forEach((scope: any) => {
             if (scope == "view") this.reasonCodeBool = true;
           });
         }
 
-        if (item.rsname.includes("pull")) {
+        if (item.rsname === "pull-mode-list") {
           let scopes: Array<any> = item?.scopes;
           scopes.forEach((scope: any) => {
             if (scope == "view") this.pullModeBool = true;
           });
         }
 
-        if (item.rsname.includes("web")) {
+        if (item.rsname === "web-widget") {
           let scopes: Array<any> = item?.scopes;
           scopes.forEach((scope: any) => {
             if (scope == "view") this.webWidgetBool = true;
           });
         }
 
-        if (item.rsname.includes("calendar")) {
+        if (item.rsname === "business-calendar") {
           let scopes: Array<any> = item?.scopes;
           scopes.forEach((scope: any) => {
             if (scope == "view") this.calendarBool = true;
           });
         }
 
-        if (item.rsname.includes("channel") && this.channelBool == false) {
+        if (item.rsname === "channel-manager" && this.channelBool == false) {
           let scopes: Array<any> = item?.scopes;
           scopes.forEach((scope: any) => {
             if (scope == "view") this.channelBool = true;
           });
         }
 
-        if (item.rsname.includes("agent-desk") && this.agentDeskBool == false) {
+        if (item.rsname === "agent-desk-setting" && this.agentDeskBool == false) {
           let scopes: Array<any> = item?.scopes;
           scopes.forEach((scope: any) => {
             if (scope == "view") this.agentDeskBool = true;
           });
         }
 
-        if (item.rsname === "routing-engine" && this.routingBool == false) {
+        if (item.rsname === "routing-engine") {
           let scopes: Array<any> = item?.scopes;
           scopes.forEach((scope: any) => {
             if (scope == "view") this.routingBool = true;
