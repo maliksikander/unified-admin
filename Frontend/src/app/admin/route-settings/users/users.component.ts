@@ -107,7 +107,7 @@ export class UsersComponent implements OnInit {
     // });
 
     this.getUsers();
-    this.managePermission = this.commonService.checkManageScope("agent-attribute");
+    this.managePermission = this.commonService.checkManageScope("agent-attributes");
   }
 
   //resetting dialog

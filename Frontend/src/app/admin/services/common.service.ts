@@ -713,7 +713,7 @@ export class CommonService {
       );
 
       for (let i = 0; i < permittedResources.length; i++) {
-        if (permittedResources[i].rsname.includes(resource)) {
+        if (permittedResources[i].rsname === resource) {
           let resourceScopes: Array<any> = permittedResources[i].scopes;
           for (let j = 0; j <= resourceScopes.length; j++) {
             if (resourceScopes[j] === "manage") {
