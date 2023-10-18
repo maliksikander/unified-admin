@@ -155,6 +155,7 @@ export class MrdComponent implements OnInit {
       (res: any) => {
         this.spinner = false;
         this.mrdType = res;
+        //console.log("here is the mrd type", res)
       },
       (error) => {
         this.spinner = false;
