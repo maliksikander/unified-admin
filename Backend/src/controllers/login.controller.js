@@ -36,25 +36,22 @@ const login = async (req, res) => {
       });
     res.send(result);
   } catch (e) {
-    // console.error("[Login Error]==>", e);
+
     logger.error(`[ERROR] on login %o`, JSON.stringify(e), {
       className: "login.controller",
       methodName: "login",
     });
-    let msg;
-    if (e && e.status == 401) {
-      if (e.errorMessage && e.errorMessage.error_description)
-        msg = e.errorMessage.error_description;
-      else msg = "Invalid Credentials";
-      res.status(e.status).send(msg);
-    } else if (e && e.response && e.response.status) {
-      res.status(e.response.status).send(e.message);
-    } else {
-      let status = e.status ? e.status : 500;
-      if (e.message) msg = e.message;
-      else if (e.error) msg = e.error;
-      res.status(status).send(msg);
-    }
+    let errorResponse = {
+      error_message: e.error,
+      status: e.status,
+      error_detail: {
+        reason: e.errorMessage.error,
+        error_description: e.errorMessage.error_description,
+      }
+    };
+    res.status(errorResponse.status);
+  
+    res.json(errorResponse);
   }
 };
 

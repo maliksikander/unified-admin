@@ -41,25 +41,53 @@ export class HttpInterceptorService {
       }),
       catchError((error: HttpErrorResponse) => {
         this.url = error.url;
-        let code;
+      
+        let statusCode: number | undefined;
+        let description: string | undefined;
+        let reason: string | undefined;
         let msg: string;
-
-        if (error.error && error.error.message) {
-          msg = error.error.message;
-          if (msg) msg = msg.toUpperCase();
-          this.snackbar.snackbarMessage("error-snackbar", msg, 2);
+      
+        if (error.status) {
+          statusCode = error.status;
+        }
+      
+        if (error.error && error.error.error_message) {
+          msg = error.error.error_message;
         } else {
-          msg = error.error;
-          if (msg && typeof msg == "string") {
-            msg = msg.toUpperCase();
-            this.snackbar.snackbarMessage("error-snackbar", msg, 2);
-          } else {
-            this.snackbar.snackbarMessage("error-snackbar", error.message, 2);
+          msg = error.error || error.message;
+        }
+      
+        if (error.error && error.error.error_detail) {
+          if (error.error.error_detail.error_description) {
+            description = error.error.error_detail.error_description;
+          }
+          if (error.error.error_detail.reason) {
+            reason = error.error.error_detail.reason;
           }
         }
+      
+        // Construct the error message dynamically based on the available information
+        let errorMessage = `${statusCode}: ${msg}`;
+        if (description) {
+          errorMessage += ` Description: ${description}`;
+        }
+        if (reason) {
+          if (description) {
+            errorMessage += `, Reason: ${reason}`;
+          } else {
+            errorMessage += ` Reason: ${reason}`;
+          }
+        }
+        if (!statusCode && !description && !reason) {
+          errorMessage = 'An error occurred without specific details.';
+        }
+
+        this.snackbar.snackbarMessage("error-snackbar", errorMessage, 5);
         this.commonService._spinnerSubject.next(false);
+      
         return throwError(error);
       })
+      
     );
   }
 }
