@@ -165,29 +165,29 @@
             </a>
 
             <!-- Routing Configuration -->
-            <mat-expansion-panel *ngIf="routingBool">
+            <mat-expansion-panel>
               <mat-expansion-panel-header class='route-header-image-icon'>
                 <!-- <i style="font-size: 21px;" class="material-icons">compare_arrows</i> -->
                 <img src="assets/images/routing.svg" alt="">
                 <span class="sidebar-text">Routing Engine</span>
               </mat-expansion-panel-header>
-              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/routing/attributes']">
+              <a *ngIf = "routingArrtibuteBool" mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/routing/attributes']">
                 <img src="assets/images/attribute.svg" alt="attribute">
                 <span class="sidebar-text">Routing Attribute</span>
               </a>
-              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/routing/media-routing-domain']">
+              <a *ngIf = "mrdBool" mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/routing/media-routing-domain']">
                 <img src="assets/images/mrd.svg" alt="mrd">
                 <span class="sidebar-text">MRD</span>
               </a>
-              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/routing/mrd-tasks']">
+              <a *ngIf = "agentMrdBool" mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/routing/mrd-tasks']">
                 <img src="assets/images/users.svg" alt="agents">
                 <span class="sidebar-text">Agent MRDs</span>
               </a>
-              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/routing/precision-queue']">
+              <a *ngIf = "queueBool" mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/routing/precision-queue']">
                 <img src="assets/images/precision_queue.svg" alt="queue">
                 <span class="sidebar-text">Queue</span>
               </a>
-              <a mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/routing/agents']">
+              <a *ngIf = "agentAttributeBool" mat-list-item [routerLinkActive]="['active-link']" [routerLink]="['/routing/agents']">
                 <img src="assets/images/users.svg" alt="agents">
                 <span class="sidebar-text">Agent Attributes</span>
               </a>

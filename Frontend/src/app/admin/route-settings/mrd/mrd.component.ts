@@ -73,7 +73,7 @@ export class MrdComponent implements OnInit {
     });
 
     this.getMRD();
-    this.managePermission = this.commonService.checkManageScope("routing");
+    this.managePermission = this.commonService.checkManageScope("mrd");
   }
 
   //to open form dialog,this method accepts the `templateRef` as a parameter assigned to the form in html.

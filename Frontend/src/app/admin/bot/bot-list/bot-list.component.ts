@@ -31,7 +31,7 @@ export class BotListComponent implements OnInit {
   ngOnInit() {
     // this.commonService.checkTokenExistenceInStorage();
     this.endPointService.getStorageValues();
-    this.managePermission = this.commonService.checkManageScope("bot");
+    this.managePermission = this.commonService.checkManageScope("bot-settings");
   }
 
   //to get bot settings list, it accepts bot type as `type` parameter

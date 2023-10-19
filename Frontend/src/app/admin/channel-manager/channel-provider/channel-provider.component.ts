@@ -36,7 +36,7 @@ export class ChannelProviderComponent implements OnInit {
     if (pageNumber) this.p = pageNumber;
 
     this.getChannelProviders();
-    this.managePermission = this.commonService.checkManageScope("channel");
+    this.managePermission = this.commonService.checkManageScope("channel-manager");
   }
 
   //to get channel provider list
