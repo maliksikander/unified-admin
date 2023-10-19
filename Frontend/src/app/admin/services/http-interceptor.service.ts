@@ -41,51 +41,23 @@ export class HttpInterceptorService {
       }),
       catchError((error: HttpErrorResponse) => {
         this.url = error.url;
-      
-        let statusCode: number | undefined;
-        let description: string | undefined;
-        let reason: string | undefined;
-        let msg: string;
-      
-        if (error.status) {
-          statusCode = error.status;
-        }
-      
-        if (error.error && error.error.error_message) {
-          msg = error.error.error_message;
-        } else {
-          msg = error.error || error.message;
-        }
-      
-        if (error.error && error.error.error_detail) {
-          if (error.error.error_detail.error_description) {
-            description = error.error.error_detail.error_description;
-          }
-          if (error.error.error_detail.reason) {
-            reason = error.error.error_detail.reason;
-          }
-        }
+        
+        //console.log("here are the errors...", error)
+        let statusCode: number = error.status || 500;
+        let msg: string = error.error?.error_message || "Unknown Error without specific Details";
+        let reason: string | undefined = error.error?.error_detail?.reason?.error_description || error.error?.error_detail?.reason;
       
         // Construct the error message dynamically based on the available information
         let errorMessage = `${statusCode}: ${msg}`;
-        if (description) {
-          errorMessage += ` Description: ${description}`;
+        if (reason === undefined) {
+          reason = "No specific reason is provided"
         }
-        if (reason) {
-          if (description) {
-            errorMessage += `, Reason: ${reason}`;
-          } else {
-            errorMessage += ` Reason: ${reason}`;
-          }
-        }
-        if (!statusCode && !description && !reason) {
-          errorMessage = 'An error occurred without specific details.';
-        }
-
-        this.snackbar.snackbarMessage("error-snackbar", errorMessage, 5);
+          errorMessage += `. Reason: ${reason}`;
+        this.snackbar.snackbarMessage("error-snackbar", errorMessage, 8);
         this.commonService._spinnerSubject.next(false);
       
         return throwError(error);
+        
       })
       
     );

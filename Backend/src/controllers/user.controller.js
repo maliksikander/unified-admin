@@ -51,16 +51,14 @@ const getUsers = catchAsync(async (req, res) => {
 
     logger.error(`[ERROR] on get user %o` + err, { className: "user.controller", methodName: "getUsers"});
     let errorResponse = {
-      error_message: e.error,
-      status: e.status,
+      error_message: e.error_message,
       error_detail: {
-        reason: e.errorMessage.error,
-        error_description: e.errorMessage.error_description,
+        status: e.error_detail.status,
+        reason: e.error_detail.reason,
       }
     };
   
-    res.status(errorResponse.status);
-  
+    res.status(errorResponse.error_detail.status);
     res.json(errorResponse);
   });
 });
