@@ -53,7 +53,7 @@ export class HttpInterceptorService {
           reason = "No specific reason is provided"
         }
           errorMessage += `. Reason: ${reason}`;
-        this.snackbar.snackbarMessage("error-snackbar", errorMessage, 5);
+        this.snackbar.snackbarMessage("error-snackbar", errorMessage, 4);
         this.commonService._spinnerSubject.next(false);
       
         return throwError(error);
