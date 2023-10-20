@@ -335,7 +335,7 @@ export class MrdComponent implements OnInit {
       data.name = this.mrdForm.value.name;
       data.description = this.mrdForm.value.description;
       if (this.mrdForm.value.mrdType) {
-        data.mrdTypeId = this.mrdForm.value.mrdType.id;
+        data.type = this.mrdForm.value.mrdType.id;
       }
       data.maxRequests = this.mrdForm.value.maxRequests;
       return data;
