@@ -120,24 +120,24 @@
             </div>
             <div class="group-fields">
                 <div class="form-group">
-                    <mat-label>WSS Server IP 
-                        <small>String value of EFswitch IP or FQDN</small>
+                    <mat-label>WSS FS Server
+                        <small>FS Server URL + Port</small>
                     </mat-label>
                     <mat-form-field appearance="outline">
-                        <input matInput formControlName="wssServerIp">
+                        <input matInput formControlName="wssFs">
                         <mat-error class="form-error">
-                            {{formErrors?.wssServerIp}}
+                            {{formErrors?.wssFs}}
                         </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="form-group">
-                    <mat-label>WSS Server Port
-                        <small>String value of EFswitch webrtc port</small>
+                    <mat-label>URI FS
+                        <small>EF Switch Url + Port</small>
                     </mat-label>
                     <mat-form-field appearance="outline">
-                        <input matInput formControlName="wssServerPort">
+                        <input matInput formControlName="uriFs">
                         <mat-error class="form-error">
-                            {{formErrors?.wssServerPort}}
+                            {{formErrors?.uriFs}}
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -216,6 +216,87 @@
                 </mat-form-field>
             </div>
         </div>
+
+        <!-- Callback Config -->
+        <div class="form-group adjust-toggle widget-toggle col-md-5 pt-3">
+            <mat-label>Enable Callback
+                <small>Turn on to enable feature for scheduling callback options</small>
+            </mat-label>
+            <mat-slide-toggle formControlName="enableCallback"></mat-slide-toggle>
+        </div>
+        <div class="form-group col-md-5 pt-3" *ngIf="widgetConfigForm.get('enableCallback').value">
+            <div class="form-group adjust-toggle widget-toggle">
+                <mat-label>Enable Standalone Callback</mat-label>
+                <mat-slide-toggle formControlName="standalone_callback"></mat-slide-toggle>
+            </div>
+            <div class="group-fields">
+                <div class="form-group">
+                    <mat-label>Callback Url
+                        <small>ECM Machine IP/FQDN with or without Port</small>
+                    </mat-label>
+                    <mat-form-field appearance="outline">
+                        <input matInput formControlName="callbackUrl">
+                        <mat-error class="form-error">
+                            {{formErrors?.callbackUrl}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="form-group">
+                    <mat-label>Campaign ID
+                        <small>ECM Machine Campaign ID</small>
+                    </mat-label>
+                    <mat-form-field appearance="outline">
+                        <input matInput formControlName="campaignId">
+                        <mat-error class="form-error">
+                            {{formErrors?.campaignId}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="form-group">
+                <mat-label>Allow Duplicate
+                    <small>Option, to allow schedule duplicate callback requests</small>
+                </mat-label>
+                <mat-form-field appearance="outline">
+                    <input matInput formControlName="allowDuplicate">
+                    <mat-error class="form-error">
+                        {{formErrors?.allowDuplicate}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="form-group">
+                <mat-label>Select Callback Form</mat-label>
+                <mat-form-field appearance="outline">
+                    <mat-select placeholder="Select Form" formControlName="callBackForm">
+                        <mat-option *ngFor="let form of formsList" [value]="form?.id">{{form?.formTitle ?
+                            form?.formTitle: 'N/A'}}</mat-option>
+                    </mat-select>
+                    <mat-error class="form-error">
+                        {{formErrors?.callBackForm}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <!-- Webhook Config -->
+        <div class="form-group adjust-toggle widget-toggle col-md-5 pt-3">
+            <mat-label>Enable Webhook Notifications
+                <small>Turn on to enable feature for G-CHAT Space to receive notifications</small>
+            </mat-label>
+            <mat-slide-toggle formControlName="enableWebhook"></mat-slide-toggle>
+        </div>
+        <div class="form-group col-md-5 pt-3" *ngIf="widgetConfigForm.get('enableWebhook').value">
+            <div class="form-group">
+                <mat-label>Webhook URL</mat-label>
+                <mat-form-field appearance="outline">
+                    <input matInput formControlName="webhookUrl">
+                    <mat-error class="form-error">
+                        {{formErrors?.webhookUrl}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
         <div class="action-area btn-margin col-md-5">
             <button mat-raised-button (click)="onClose()" class="gray-btn">Cancel</button>
             <button [disabled]="!widgetConfigForm.valid" mat-raised-button class="blue-btn service-trigger"
