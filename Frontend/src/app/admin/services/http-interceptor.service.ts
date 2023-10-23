@@ -22,7 +22,7 @@ export class HttpInterceptorService {
   constructor(
     private snackbar: SnackbarService,
     private commonService: CommonService
-  ) {}
+  ) { }
 
   intercept(
     request: HttpRequest<any>,
@@ -41,25 +41,44 @@ export class HttpInterceptorService {
       }),
       catchError((error: HttpErrorResponse) => {
         this.url = error.url;
-        
-        //console.log("here are the errors...", error)
-        let statusCode: number = error.status || 500;
-        let msg: string = error.error?.error_message || "Unknown Error without specific Details";
-        let reason: string | undefined = error.error?.error_detail?.reason?.error_description || error.error?.error_detail?.reason.error || error.error?.error_detail?.reason;
-      
-        // Construct the error message dynamically based on the available information
-        let errorMessage = `${statusCode}: ${msg}`;
-        if (reason === undefined) {
-          reason = "No specific reason is provided"
-        }
+        let code;
+        let msg: string;
+
+        if (error && error?.error?.error_detail && error?.error?.error_detail?.reason && error?.error?.error_message) {
+         
+          let statusCode: number = error.status || 500;
+          let msg: string = error.error?.error_message || "Unknown Error without specific Details";
+          let reason: string | undefined = error.error?.error_detail?.reason?.error_description || error.error?.error_detail?.reason.error || error.error?.error_detail?.reason;
+
+          // Construct the error message dynamically based on the available information
+          let errorMessage = `${statusCode}: ${msg}`;
+          if (reason === undefined) {
+            reason = "No specific reason is provided";
+          }
           errorMessage += `. Reason: ${reason}`;
-        this.snackbar.snackbarMessage("error-snackbar", errorMessage, 4);
+          this.snackbar.snackbarMessage("error-snackbar", errorMessage, 4);
+        }
+        else {
+          // Handle other error cases here (if necessary)
+          if (error.error && error.error.message) {
+            msg = error.error.message;
+            if (msg) msg = msg.toUpperCase();
+            this.snackbar.snackbarMessage("error-snackbar", msg, 2);
+          } else {
+            msg = error.error;
+            if (msg && typeof msg == "string") {
+              msg = msg.toUpperCase();
+              this.snackbar.snackbarMessage("error-snackbar", msg, 2);
+            } else {
+              this.snackbar.snackbarMessage("error-snackbar", error.message, 2);
+            }
+          }
+        }
+
         this.commonService._spinnerSubject.next(false);
-      
         return throwError(error);
-        
+
       })
-      
     );
   }
 }
