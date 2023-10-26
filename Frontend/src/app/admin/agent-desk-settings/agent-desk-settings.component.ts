@@ -70,7 +70,7 @@ export class AgentDeskSettingsComponent implements OnInit {
     // });
 
 
-    this.managePermission = this.commonService.checkManageScope("agent-desk");
+    this.managePermission = this.commonService.checkManageScope("agent-desk-setting");
   }
   
 

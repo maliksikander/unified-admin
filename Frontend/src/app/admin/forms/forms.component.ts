@@ -35,7 +35,7 @@ export class FormsComponent implements OnInit {
     let pageNumber = sessionStorage.getItem("formsPage");
     if (pageNumber) this.p = pageNumber;
     this.getForms();
-    this.managePermission = this.commonService.checkManageScope("form");
+    this.managePermission = this.commonService.checkManageScope("forms");
   }
 
   // change the UI to form view and change page title

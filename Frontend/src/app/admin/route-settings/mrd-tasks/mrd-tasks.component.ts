@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { EndpointService } from "../../services/endpoint.service";
 import { SnackbarService } from "../../services/snackbar.service";
+import { CommonService } from "../../services/common.service";
 
 @Component({
   selector: "app-mrd-tasks",
@@ -19,15 +20,23 @@ export class MrdTasksComponent implements OnInit {
   keycloakUsers = [];
   routingEngineUsers = [];
   mrdTasksData = [];
+  managePermission: boolean = false;
 
   constructor(
     private endPointService: EndpointService,
-    private snackbar: SnackbarService
+    private snackbar: SnackbarService,
+    private commonService: CommonService
   ) {}
 
   ngOnInit(): void {
     let pageNumber = sessionStorage.getItem("currentMrdTaskPage");
     if (pageNumber) this.p = pageNumber;
+    this.getData();
+
+    this.managePermission = this.commonService.checkManageScope("agent-mrd");
+  }
+
+  getData() {
     this.getMrdTaskList();
     this.getUsers();
   }
@@ -100,7 +109,6 @@ export class MrdTasksComponent implements OnInit {
               }
             }
           }
-          // console.log("User Data of Routing Engine: ", this.routingEngineUsers);
         }
         this.spinner = false;
         if (usersListLength > 0) this.warningBool = false;
@@ -162,6 +170,7 @@ export class MrdTasksComponent implements OnInit {
             );
           }
           this.spinner = false;
+          this.getData();
           console.log("Response of APIs: ", res);
         },
         (error: any) => {
@@ -195,7 +204,7 @@ export class MrdTasksComponent implements OnInit {
     } catch (e) {
       console.error("Error on status change :", e);
     }
-    this.ngOnInit();
+    // this.ngOnInit();
   }
 
   getMaxAgentTasks(mrdId, associatedMrdList: any) {
