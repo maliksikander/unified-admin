@@ -45,18 +45,9 @@ export class HttpInterceptorService {
         let msg: string;
 
         if (error && error?.error?.error_detail && error?.error?.error_detail?.reason && error?.error?.error_message) {
-         
-          let statusCode: number = error.status || 500;
-          let msg: string = error.error?.error_message || "Unknown Error without specific Details";
-          let reason: string | undefined = error.error?.error_detail?.reason?.error_description || error.error?.error_detail?.reason.error || error.error?.error_detail?.reason;
 
-          // Construct the error message dynamically based on the available information
-          let errorMessage = `${statusCode}: ${msg}`;
-          if (reason === undefined) {
-            reason = "No specific reason is provided";
-          }
-          errorMessage += `. Reason: ${reason}`;
-          this.snackbar.snackbarMessage("error-snackbar", errorMessage, 4);
+          let reason: string = error.error?.error_detail?.reason;
+          this.snackbar.snackbarMessage("error-snackbar", reason, 3);
         }
         else {
           // Handle other error cases here (if necessary)

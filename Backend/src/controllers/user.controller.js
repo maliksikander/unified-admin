@@ -50,14 +50,17 @@ const getUsers = catchAsync(async (req, res) => {
   }).catch((err) => {
 
     logger.error(`[ERROR] on get user %o` + err, { className: "user.controller", methodName: "getUsers"});
-    let errorResponse = {
-      error_message: err.error_message,
+    
+    const errorResponse = {
+      error_message: err.error_message || "An unknown error occurred", // Default message
       error_detail: {
-        status: err.error_detail.status,
-        reason: err.error_detail.reason,
-      }
+        status: err.error_detail ? err.error_detail.status : 500, // Default status code
+        reason: err.error_detail
+          ? err.error_detail.reason
+          : "Internal Server Error", // Default reason
+      },
     };
-  
+
     res.status(errorResponse.error_detail.status);
     res.json(errorResponse);
   });

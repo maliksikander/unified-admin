@@ -32,24 +32,25 @@ const login = async (req, res) => {
     const result = await keycloak
       .authenticateUserViaKeycloak(username, password, realm, "", [], "")
       .then((response) => {
-        return response; 
+        return response;
       });
     res.send(result);
   } catch (e) {
-
     logger.error(`[ERROR] on login %o`, JSON.stringify(e), {
       className: "login.controller",
       methodName: "login",
     });
-    let errorResponse = {
-      error_message: e.error_message,
+
+    const errorResponse = {
+      error_message: e.error_message || "An unknown error occurred", // Default message
       error_detail: {
-        status: e.error_detail.status,
-        reason: e.error_detail.reason,
-      }
+        status: e.error_detail ? e.error_detail.status : 500, // Default status code
+        reason: e.error_detail
+          ? e.error_detail.reason
+          : "Internal Server Error", // Default reason
+      },
     };
     res.status(errorResponse.error_detail.status);
-  
     res.json(errorResponse);
   }
 };
