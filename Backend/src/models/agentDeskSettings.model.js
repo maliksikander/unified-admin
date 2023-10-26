@@ -26,19 +26,39 @@ const agentDeskSettingSchema = mongoose.Schema(
       default:false
 
     },
-    isWrapUpEnabled: {
+    // isWrapUpEnabled: {
+    //   type: Boolean,
+    //   required: true,
+    //   default:false
+    // },
+    // wrapUpTime: {
+    //   type: Number,
+    //   required: true,
+    //   min:15,
+    //   max:1800,
+    //   default:15
+
+    // },
+    isOutboundSmsSendandClose: {
       type: Boolean,
       required: true,
       default:false
     },
-    wrapUpTime: {
-      type: Number,
-      required: true,
-      min:15,
-      max:1800,
-      default:15
 
+    isOutboundSmsEnabled: {
+      type: Boolean,
+      required: true,
+      default: false
+      
     },
+    prefixCode: {
+      type: String,
+      required: false,
+      min: 1,
+      max: 3,
+      default: "+1"
+
+    }
   },
   {
     timestamps: true,
