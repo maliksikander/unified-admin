@@ -31,10 +31,14 @@ export class MrdTasksComponent implements OnInit {
   ngOnInit(): void {
     let pageNumber = sessionStorage.getItem("currentMrdTaskPage");
     if (pageNumber) this.p = pageNumber;
-    this.getMrdTaskList();
-    this.getUsers();
+    this.getData();
 
     this.managePermission = this.commonService.checkManageScope("agent-mrd");
+  }
+
+  getData() {
+    this.getMrdTaskList();
+    this.getUsers();
   }
 
   taskArray(mrd) {
@@ -105,7 +109,6 @@ export class MrdTasksComponent implements OnInit {
               }
             }
           }
-          
         }
         this.spinner = false;
         if (usersListLength > 0) this.warningBool = false;
@@ -167,6 +170,7 @@ export class MrdTasksComponent implements OnInit {
             );
           }
           this.spinner = false;
+          this.getData();
           console.log("Response of APIs: ", res);
         },
         (error: any) => {
@@ -200,7 +204,7 @@ export class MrdTasksComponent implements OnInit {
     } catch (e) {
       console.error("Error on status change :", e);
     }
-    this.ngOnInit();
+    // this.ngOnInit();
   }
 
   getMaxAgentTasks(mrdId, associatedMrdList: any) {
