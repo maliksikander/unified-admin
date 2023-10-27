@@ -432,3 +432,26 @@ table {
     }
   }
 }
+
+table {
+  border: 1px solid #e2e2e2;
+  tr {
+    position: relative;
+
+    mat-chip-list {
+      line-height: 40px;
+      display: inline-flex;
+    }
+
+    &:hover {
+      background: #f3f6f8;
+
+      .list-action-area {
+        .list-actions {
+          display: inline-block;
+          transition: all 0.3s;
+        }
+      }
+    }
+  }
+}

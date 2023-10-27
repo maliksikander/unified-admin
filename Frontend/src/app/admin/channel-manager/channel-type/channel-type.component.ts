@@ -35,7 +35,7 @@ export class ChannelTypeComponent implements OnInit {
     let pageNumber = sessionStorage.getItem("channelTypePage");
     if (pageNumber) this.p = pageNumber;
     this.getChannelTypes();
-    this.managePermission = this.commonService.checkManageScope("channel");
+    this.managePermission = this.commonService.checkManageScope("channel-manager");
   }
 
   //to get channel type list

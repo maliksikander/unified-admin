@@ -101,7 +101,7 @@ export class LocaleComponent implements OnInit {
       this.changeDetector.markForCheck();
     });
 
-    this.managePermission = this.commonService.checkManageScope("general");
+    this.managePermission = this.commonService.checkManageScope("general-settings");
   }
 
   //callback for language removed event

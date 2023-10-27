@@ -10,7 +10,7 @@ const enumerateErrorFormat = winston.format((info) => {
 
 
 const logger = winston.createLogger({
-  level: config.log_level,
+  level: config.logLevel,
   format: winston.format.combine(
     enumerateErrorFormat(),
     winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
