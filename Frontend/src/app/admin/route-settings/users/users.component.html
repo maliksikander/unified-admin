@@ -39,7 +39,7 @@
 
                     <td>
                       <span>
-                        {{data?.keycloakUser.username ? data?.keycloakUser.username :
+                        {{data?.keycloakUser?.username ? data?.keycloakUser.username :
                           'N/A'}}
                       </span>
                     </td>
@@ -157,12 +157,6 @@
                 <input matInput formControlName="lastName">
               </mat-form-field>
             </div>
-          </div>
-          <div class="form-group col-md-6">
-            <mat-label>User Name</mat-label>
-            <mat-form-field appearance="outline">
-              <input matInput formControlName="username">
-            </mat-form-field>
           </div>
           <div class="user-profile-section">
             <div class="form-group col-md-12">
