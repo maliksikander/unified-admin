@@ -46,10 +46,23 @@ const getUsers = catchAsync(async (req, res) => {
     logger.info(`Get keycloak users by role`, { className: "user.controller", methodName: "getUsers" });
     logger.debug(`[REQUEST] : %o` + result, { className: "user.controller", methodName: "getUsers" });
     res.send(result);
+
   }).catch((err) => {
+
     logger.error(`[ERROR] on get user %o` + err, { className: "user.controller", methodName: "getUsers"});
-    if (err.message == "Request failed with status code 401") return res.status(401).send(err);
-    res.status(500).send(err);
+    
+    const errorResponse = {
+      error_message: err.error_message || "An unknown error occurred", // Default message
+      error_detail: {
+        status: err.error_detail ? err.error_detail.status : 500, // Default status code
+        reason: err.error_detail
+          ? err.error_detail.reason
+          : "Internal Server Error", // Default reason
+      },
+    };
+
+    res.status(errorResponse.error_detail.status);
+    res.json(errorResponse);
   });
 });
 

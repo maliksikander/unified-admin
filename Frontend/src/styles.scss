@@ -1421,9 +1421,14 @@ snack-bar-container {
     span {
       overflow: hidden;
       text-overflow: ellipsis;
-      width: 65%;
-      text-align: center;
-      padding: 10px 0px;
+      width: calc(100% - 40px);
+      // text-align: center;
+      /* padding: 10px 0px; */
+      /* white-space: nowrap; */
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      margin: 10px 10px 10px 30px;
     }
   }
 

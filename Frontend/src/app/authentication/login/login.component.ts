@@ -79,19 +79,22 @@ export class LoginComponent implements OnInit {
     delete reqBody.rememberMe;
     // reqBody.username = CryptoJS.AES.encrypt(data.username, "undlusia").toString();
     // reqBody.password = CryptoJS.AES.encrypt(data.password, "undlusia").toString();
-
-    this.endPointService.login(reqBody).subscribe(
-      (res: any) => {
-        // console.log("value==>", res);
-        this.storeValues(res, data);
-        this.spinner = false;
-      },
-      (error: any) => {
-        this.spinner = false;
-        console.error("Error fetching:", error);
-      }
-    );
-  }
+      this.endPointService.login(reqBody).subscribe(
+        (res: any) => {
+          this.storeValues(res, data);
+          this.spinner = false;
+        },
+        (error: any) => {
+          // this.snackbar.snackbarMessage(
+          //   "error-snackbar",
+          //   error.error,
+          //   2
+          // );
+          this.spinner = false;
+          console.error("Error fetching:", error);
+        }
+      );
+  }  
 
   storeValues(res, data) {
     let resources: Array<any> = res.keycloak_User.permittedResources.Resources;
