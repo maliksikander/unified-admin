@@ -79,19 +79,22 @@ export class LoginComponent implements OnInit {
     delete reqBody.rememberMe;
     // reqBody.username = CryptoJS.AES.encrypt(data.username, "undlusia").toString();
     // reqBody.password = CryptoJS.AES.encrypt(data.password, "undlusia").toString();
-
-    this.endPointService.login(reqBody).subscribe(
-      (res: any) => {
-        // console.log("value==>", res);
-        this.storeValues(res, data);
-        this.spinner = false;
-      },
-      (error: any) => {
-        this.spinner = false;
-        console.error("Error fetching:", error);
-      }
-    );
-  }
+      this.endPointService.login(reqBody).subscribe(
+        (res: any) => {
+          this.storeValues(res, data);
+          this.spinner = false;
+        },
+        (error: any) => {
+          // this.snackbar.snackbarMessage(
+          //   "error-snackbar",
+          //   error.error,
+          //   2
+          // );
+          this.spinner = false;
+          console.error("Error fetching:", error);
+        }
+      );
+  }  
 
   storeValues(res, data) {
     let resources: Array<any> = res.keycloak_User.permittedResources.Resources;
@@ -115,7 +118,7 @@ export class LoginComponent implements OnInit {
       // let item = resources[0];
       let routeCheck = false;
       resources.forEach((item) => {
-        if (item.rsname.includes("general")) {
+        if (item.rsname === "general-settings") {
           let scopes: Array<any> = item?.scopes;
           scopes.forEach((scope: any) => {
             if (scope == "view") {
@@ -123,7 +126,7 @@ export class LoginComponent implements OnInit {
               this.router.navigate(["/general/license-manager"]);
             }
           });
-        } else if (item.rsname.includes("bot")) {
+        } else if (item.rsname === "bot-settings") {
           let scopes: Array<any> = item?.scopes;
           scopes.forEach((scope: any) => {
             if (scope == "view") {
@@ -131,7 +134,7 @@ export class LoginComponent implements OnInit {
               this.router.navigate(["/bot-settings"]);
             }
           });
-        } else if (item.rsname.includes("form")) {
+        } else if (item.rsname === "forms") {
           let scopes: Array<any> = item?.scopes;
           scopes.forEach((scope: any) => {
             if (scope == "view") {
@@ -139,7 +142,7 @@ export class LoginComponent implements OnInit {
               this.router.navigate(["/form"]);
             }
           });
-        } else if (item.rsname.includes("reason")) {
+        } else if (item.rsname === "reason-code") {
           let scopes: Array<any> = item?.scopes;
           scopes.forEach((scope: any) => {
             if (scope == "view") {
@@ -147,7 +150,7 @@ export class LoginComponent implements OnInit {
               this.router.navigate(["/reason-code"]);
             }
           });
-        } else if (item.rsname.includes("pull")) {
+        } else if (item.rsname === "pull-mode-list") {
           let scopes: Array<any> = item?.scopes;
           scopes.forEach((scope: any) => {
             if (scope == "view") {
@@ -155,7 +158,7 @@ export class LoginComponent implements OnInit {
               this.router.navigate(["/pull-mode-list"]);
             }
           });
-        } else if (item.rsname.includes("web")) {
+        } else if (item.rsname === "web-widget") {
           let scopes: Array<any> = item?.scopes;
           scopes.forEach((scope: any) => {
             if (scope == "view") {
@@ -163,7 +166,7 @@ export class LoginComponent implements OnInit {
               this.router.navigate(["/web-widget"]);
             }
           });
-        } else if (item.rsname.includes("agent-desk")) {
+        } else if (item.rsname === "agent-desk-setting") {
           let scopes: Array<any> = item?.scopes;
           scopes.forEach((scope: any) => {
             if (scope == "view") {
@@ -179,12 +182,44 @@ export class LoginComponent implements OnInit {
               this.router.navigate(["/channel/channel-type"]);
             }
           });
-        } else if (item.rsname.includes("routing")) {
+        } else if (item.rsname === "routing-attribute") {
           let scopes: Array<any> = item?.scopes;
           scopes.forEach((scope: any) => {
             if (scope == "view") {
               routeCheck = true;
               this.router.navigate(["/routing/attributes"]);
+            }
+          });
+        } else if (item.rsname === "mrd") {
+          let scopes: Array<any> = item?.scopes;
+          scopes.forEach((scope: any) => {
+            if (scope == "view") {
+              routeCheck = true;
+              this.router.navigate(["/routing/media-routing-domain"]);
+            }
+          });
+        } else if (item.rsname === "agent-mrd") {
+          let scopes: Array<any> = item?.scopes;
+          scopes.forEach((scope: any) => {
+            if (scope == "view") {
+              routeCheck = true;
+              this.router.navigate(["/routing/mrd-tasks"]);
+            }
+          });
+        } else if (item.rsname === "queue") {
+          let scopes: Array<any> = item?.scopes;
+          scopes.forEach((scope: any) => {
+            if (scope == "view") {
+              routeCheck = true;
+              this.router.navigate(["/routing/precision-queue"]);
+            }
+          });
+        } else if (item.rsname === "agent-attributes") {
+          let scopes: Array<any> = item?.scopes;
+          scopes.forEach((scope: any) => {
+            if (scope == "view") {
+              routeCheck = true;
+              this.router.navigate(["/routing/agents"]);
             }
           });
         }

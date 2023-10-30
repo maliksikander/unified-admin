@@ -80,7 +80,7 @@ export class ReasonCodesComponent implements OnInit {
     });
 
     this.getReasonCode();
-    this.managePermission = this.commonService.checkManageScope("reason");
+    this.managePermission = this.commonService.checkManageScope("reason-code");
   }
 
   //to get reason code list and set the local variable with response

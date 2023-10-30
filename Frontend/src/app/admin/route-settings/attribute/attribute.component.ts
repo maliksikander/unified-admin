@@ -75,7 +75,7 @@ export class AttributeComponent implements OnInit {
     });
 
     this.getAttribute();
-    this.managePermission = this.commonService.checkManageScope("routing");
+    this.managePermission = this.commonService.checkManageScope("routing-attribute");
   }
 
   //to open form dialog,this method accepts the `template variable` as a parameter assigned to the form in html.

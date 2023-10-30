@@ -38,7 +38,7 @@ export class ChannelConnectorComponent implements OnInit {
     if (pageNumber) this.p = pageNumber;
 
     this.getChannelConnector();
-    this.managePermission = this.commonService.checkManageScope("channel");
+    this.managePermission = this.commonService.checkManageScope("channel-manager");
   }
 
   //to get logo/image from file engine, it accepts the file name as parameter and returns the url

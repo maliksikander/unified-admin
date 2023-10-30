@@ -22,7 +22,7 @@ export class HttpInterceptorService {
   constructor(
     private snackbar: SnackbarService,
     private commonService: CommonService
-  ) {}
+  ) { }
 
   intercept(
     request: HttpRequest<any>,
@@ -44,21 +44,31 @@ export class HttpInterceptorService {
         let code;
         let msg: string;
 
-        if (error.error && error.error.message) {
-          msg = error.error.message;
-          if (msg) msg = msg.toUpperCase();
-          this.snackbar.snackbarMessage("error-snackbar", msg, 2);
-        } else {
-          msg = error.error;
-          if (msg && typeof msg == "string") {
-            msg = msg.toUpperCase();
+        if (error && error?.error?.error_detail && error?.error?.error_detail?.reason && error?.error?.error_message) {
+
+          let reason: string = error.error?.error_detail?.reason;
+          this.snackbar.snackbarMessage("error-snackbar", reason, 3);
+        }
+        else {
+          // Handle other error cases here (if necessary)
+          if (error.error && error.error.message) {
+            msg = error.error.message;
+            if (msg) msg = msg.toUpperCase();
             this.snackbar.snackbarMessage("error-snackbar", msg, 2);
           } else {
-            this.snackbar.snackbarMessage("error-snackbar", error.message, 2);
+            msg = error.error;
+            if (msg && typeof msg == "string") {
+              msg = msg.toUpperCase();
+              this.snackbar.snackbarMessage("error-snackbar", msg, 2);
+            } else {
+              this.snackbar.snackbarMessage("error-snackbar", error.message, 2);
+            }
           }
         }
+
         this.commonService._spinnerSubject.next(false);
         return throwError(error);
+
       })
     );
   }

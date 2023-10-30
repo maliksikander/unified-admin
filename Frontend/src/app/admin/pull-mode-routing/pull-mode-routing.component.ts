@@ -63,7 +63,7 @@ export class PullModeRoutingComponent implements OnInit {
     });
 
     this.getPullModeList();
-    this.managePermission = this.commonService.checkManageScope("pull");
+    this.managePermission = this.commonService.checkManageScope("pull-mode-list");
   }
 
   //to get pull mode list and set the local variable with response

@@ -32,17 +32,14 @@
                                 <tbody *ngIf="routingEngineUsers && routingEngineUsers.length != 0 && !warningBool">
                                     <tr
                                         *ngFor="let data of routingEngineUsers | filter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
-
-
                                         <td scope="row">{{data?.keycloakUser?.username ? data?.keycloakUser.username :
                                             'N/A'}}</td>
                                         <td scope="row">{{data?.keycloakUser?.firstName ? data?.keycloakUser.firstName :
                                             'N/A'}}</td>
-                                        <td scope="row">{{data?.keycloakUser?.lastname ? data?.keycloakUser.lastname :
+                                        <td scope="row">{{data?.keycloakUser?.lastName ? data?.keycloakUser.lastName :
                                             'N/A'}}</td>
-                
                                         <td scope="row" *ngFor="let mrdData of mrdTasksData">
-                                            <select #reqSelect
+                                            <select [disabled]="!managePermission" #reqSelect
                                                 (change)='onMrdSelect(reqSelect.value, data, mrdData.id)'>
                                                 <ng-container *ngFor="let a of taskArray(mrdData); let i = index">
                                                     <option *ngIf="mrdData.id != '6298b744b777de61844f616b'"
@@ -60,12 +57,13 @@
                                     </tr>
                                 </tbody>
 
-                                <div *ngIf="routingEngineUsers && routingEngineUsers.length == 0"
-                                    class="no-data-warning">
-                                    <i class="material-icons">warning_amber</i>
-                                    <span>No Data Found</span>
-                                </div>
-                            </table>
+
+                                <div *ngIf="routingEngineUsers && routingEngineUsers.length == 0" class="no-data-warning">
+                                <i class="material-icons">warning_amber</i>
+                                <span>No Data Found</span>
+                            </div>
+                        </table>
+
                         </div>
                         <div *ngIf="routingEngineUsers && routingEngineUsers.length >= 2" class="pagination-section">
                             <span class="page-span">
