@@ -48,46 +48,46 @@ export class AuthGuard implements CanActivate {
         resPath = "web-widget";
       } else if (path.includes("channel")) {
         resPath = "channel";
-      }
-
-        else if (path  === "routing/attributes") {
+      } else if (path === "routing/attributes") {
         resPath = "routing-attribute";
-      } else if (path  === "routing/media-routing-domain") {
+      } else if (path === "routing/media-routing-domain") {
         resPath = "mrd";
-      } else if (path  === "routing/mrd-tasks") {
+      } else if (path === "routing/mrd-tasks") {
         resPath = "agent-mrd";
-      } else if (path  === "routing/precision-queue") {
+      } else if (path === "routing/precision-queue") {
         resPath = "queue";
-      } else if (path  === "routing/agents") {
+      } else if (path === "routing/agents") {
         resPath = "agent-attributes";
-      }
-      
-      else if (path.includes("calendar")) {
+      } else if (path.includes("calendar")) {
         resPath = "calendar";
       } else if (path === "agent-desk") {
         resPath = "agent-desk";
-      } 
+      }
 
       let value = this.checkResource(resPath, resources);
       return value;
     } catch (e) {
-      console.log("[Route Access Error]:", e);
+      console.error("[Route Access Error]:", e);
     }
   }
 
   checkResource(path, resources) {
     try {
-      for (let i = 0; i < resources.length; i++) {
-        if (resources[i].rsname.includes(path)) {
-          let resourceScopes: Array<any> = resources[i].scopes;
-          for (let j = 0; j <= resourceScopes.length; j++) {
-            if (resourceScopes[j] === "view") return true;
+      if (resources) {
+        for (let i = 0; i < resources.length; i++) {
+          if (resources[i].rsname.includes(path)) {
+            let resourceScopes: Array<any> = resources[i].scopes;
+            for (let j = 0; j <= resourceScopes.length; j++) {
+              if (resourceScopes[j] === "view") return true;
+            }
           }
         }
+        return false;
+      } else {
+        console.log("[Guard Resource Check Error]: No resources found");
       }
-      return false;
     } catch (e) {
-      console.log("[Guard Resource Check Error]:", e);
+      console.error("[Guard Resource Check Error]:", e);
     }
   }
 
