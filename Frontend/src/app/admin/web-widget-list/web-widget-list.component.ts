@@ -35,7 +35,7 @@ export class WebWidgetListComponent implements OnInit {
     let pageNumber = sessionStorage.getItem("webWidgetPage");
     if (pageNumber) this.p = pageNumber;
     this.getWebWidgets();
-    this.managePermission = this.commonService.checkManageScope("web");
+    this.managePermission = this.commonService.checkManageScope("web-widget");
   }
 
   //to get web widget list

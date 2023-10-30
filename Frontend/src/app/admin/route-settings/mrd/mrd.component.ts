@@ -75,8 +75,7 @@ export class MrdComponent implements OnInit {
     });
 
     this.getMRD();
-    this.getMRDType();
-    this.managePermission = this.commonService.checkManageScope("routing");
+    this.managePermission = this.commonService.checkManageScope("mrd");
   }
 
   getMaxRequestsValue(selectedType:any) {

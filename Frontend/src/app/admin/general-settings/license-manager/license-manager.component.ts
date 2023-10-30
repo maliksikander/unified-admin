@@ -19,7 +19,7 @@ export class LicenseManagerComponent implements OnInit {
   fileName = "";
   fileToBeUploaded = new FormData();
   licenseKey = new FormControl("", [Validators.required]);
-  licenseFile = new FormControl("", [Validators.required]);
+  licenseFile = new FormControl({value:"", disabled: true}, [Validators.required]);
   managePermission: boolean = false;
 
   constructor(
@@ -39,7 +39,7 @@ export class LicenseManagerComponent implements OnInit {
     });
 
     this.getMasterKey();
-    this.managePermission = this.commonService.checkManageScope("general");
+    this.managePermission = this.commonService.checkManageScope("general-settings");
   }
 
   //to select file and save in local variable, it accepts selected file as 'file' parameter

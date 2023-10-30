@@ -36,47 +36,58 @@ export class AuthGuard implements CanActivate {
       let resPath;
       if (path.includes("general")) {
         resPath = "general";
-      } else if (path.includes("bot")) {
-        resPath = "bot";
-      } else if (path.includes("form")) {
+      } else if (path === "bot-settings") {
+        resPath = "bot-settings";
+      } else if (path === "form") {
         resPath = "form";
-      } else if (path.includes("reason")) {
-        resPath = "reason";
-      } else if (path.includes("pull")) {
-        resPath = "pull";
-      } else if (path.includes("web")) {
-        resPath = "web";
+      } else if (path === "reason-code") {
+        resPath = "reason-code";
+      } else if (path === "pull-mode-list") {
+        resPath = "pull-mode-list";
+      } else if (path === "web-widget") {
+        resPath = "web-widget";
       } else if (path.includes("channel")) {
         resPath = "channel";
-      } else if (path.includes("routing")) {
-        resPath = "routing";
+      } else if (path === "routing/attributes") {
+        resPath = "routing-attribute";
+      } else if (path === "routing/media-routing-domain") {
+        resPath = "mrd";
+      } else if (path === "routing/mrd-tasks") {
+        resPath = "agent-mrd";
+      } else if (path === "routing/precision-queue") {
+        resPath = "queue";
+      } else if (path === "routing/agents") {
+        resPath = "agent-attributes";
       } else if (path.includes("calendar")) {
         resPath = "calendar";
-      } else if (path.includes("agent-desk")) {
+      } else if (path === "agent-desk") {
         resPath = "agent-desk";
       }
-
 
       let value = this.checkResource(resPath, resources);
       return value;
     } catch (e) {
-      console.log("[Route Access Error]:", e);
+      console.error("[Route Access Error]:", e);
     }
   }
 
   checkResource(path, resources) {
     try {
-      for (let i = 0; i < resources.length; i++) {
-        if (resources[i].rsname.includes(path)) {
-          let resourceScopes: Array<any> = resources[i].scopes;
-          for (let j = 0; j <= resourceScopes.length; j++) {
-            if (resourceScopes[j] === "view") return true;
+      if (resources) {
+        for (let i = 0; i < resources.length; i++) {
+          if (resources[i].rsname.includes(path)) {
+            let resourceScopes: Array<any> = resources[i].scopes;
+            for (let j = 0; j <= resourceScopes.length; j++) {
+              if (resourceScopes[j] === "view") return true;
+            }
           }
         }
+        return false;
+      } else {
+        console.log("[Guard Resource Check Error]: No resources found");
       }
-      return false;
     } catch (e) {
-      console.log("[Guard Resource Check Error]:", e);
+      console.error("[Guard Resource Check Error]:", e);
     }
   }
 

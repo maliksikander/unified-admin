@@ -12,7 +12,7 @@ describe("MrdTasksComponent", () => {
 
   beforeEach(() => {
     component = new MrdTasksComponent(
-      // commonService,
+      commonService,
       // dialog,
       endPointService,
       // fb,

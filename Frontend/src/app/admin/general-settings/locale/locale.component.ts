@@ -83,7 +83,7 @@ export class LocaleComponent implements OnInit {
 
     this.timezoneList();
 
-    //checking for laocle setting form validation failures
+    //checking for laocle setting form validation failuressss
     this.localeSettingForm.valueChanges.subscribe((data) => {
       let result = this.commonService.logValidationErrors(
         this.localeSettingForm,
@@ -101,7 +101,7 @@ export class LocaleComponent implements OnInit {
       this.changeDetector.markForCheck();
     });
 
-    this.managePermission = this.commonService.checkManageScope("general");
+    this.managePermission = this.commonService.checkManageScope("general-settings");
   }
 
   //callback for language removed event

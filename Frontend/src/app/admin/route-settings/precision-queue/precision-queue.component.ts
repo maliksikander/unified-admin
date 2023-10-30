@@ -135,7 +135,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     });
 
     this.getQueue();
-    this.managePermission = this.commonService.checkManageScope("routing");
+    this.managePermission = this.commonService.checkManageScope("queue");
   }
 
   ngAfterViewInit() {

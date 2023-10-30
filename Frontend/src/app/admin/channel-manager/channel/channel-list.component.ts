@@ -32,7 +32,7 @@ export class ChannelListComponent implements OnInit {
   ngOnInit() {
     // this.commonService.checkTokenExistenceInStorage();
     this.getChannelType();
-    this.managePermission = this.commonService.checkManageScope("channel");
+    this.managePermission = this.commonService.checkManageScope("channel-manager");
   }
 
   //calling endpoint service method to get channel types list which accepts its request endpoint as parameter

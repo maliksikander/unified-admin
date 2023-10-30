@@ -35,6 +35,9 @@ node_artifacts_frontend:
    stage: artifacts-frontend
    image: node:14.16.1-alpine3.13
    script:
+
+   - apk add --no-cache python2 make g++
+   #- apk add python3
    - cd Frontend
    - rm -rf node_modules
    - npm install --legacy-peer-deps

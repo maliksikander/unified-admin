@@ -36,17 +36,27 @@ export class WebWidgetFormComponent implements OnInit, AfterViewInit {
     theme: "",
     title: "",
     widgetIdentifier: "",
+    // WebRtc Configs
     enableWebRtc: "",
-    // enableScreenSharing: "",
     enabledSipLogs: "",
-    wssServerIp: "",
-    wssServerPort: "",
     diallingUri: "",
     sipExtension: "",
     extensionPassword: "",
     channel: "",
-    websocket: ""
-  };
+    websocket: "",
+    wssFs: "",
+    uriFs: "",
+    // Callback Configs
+    enableCallback: "",
+    callbackUrl: "",
+    campaignId: "",
+    allowDuplicate: "",
+    callBackForm: "",
+    standaloneCallback: "",
+    // Webhook Configs
+    enableWebhook: "",
+    webhookUrl: "",
+  }
   inputValue: string = '';
   tokens: string[] = [];
   validations;
@@ -78,17 +88,30 @@ export class WebWidgetFormComponent implements OnInit, AfterViewInit {
       language: ["", [Validators.required]],
       subTitle: ["", [Validators.required, Validators.maxLength(100)]],
       theme: ["#2889e9", [Validators.required]],
+
+      //WebRtc Configs
       enableWebRtc: [false],
       enabledSipLogs: [false],
-
-      wssServerIp: [""],
-      wssServerPort: [""],
+      wssFs: [""],
+      uriFs: [""],
       diallingUri: [""],
       sipExtension: [""],
       extensionPassword: [""],
       channel: [""],
       websocket: [""],
       iceServers: [""],
+
+      // Callback Configs
+      enableCallback: [false],
+      callbackUrl: [""],
+      campaignId: [""],
+      allowDuplicate: [""],
+      callBackForm: [""],
+      standaloneCallback: [false],
+
+      // Webhook Configs
+      enableWebhook: [false],
+      webhookUrl: [""],
 
       title: [
         "",
@@ -129,23 +152,46 @@ export class WebWidgetFormComponent implements OnInit, AfterViewInit {
     this.widgetConfigForm.get('enableWebRtc').valueChanges.subscribe(() => {
       this.changeDetector.detectChanges();
       if (this.widgetConfigForm.get('enableWebRtc').value) {
-        this.widgetConfigForm.get('wssServerIp').setValidators([Validators.required, Validators.maxLength(50)]);
-        this.widgetConfigForm.get('wssServerPort').setValidators([Validators.required]);
+        this.widgetConfigForm.get('wssFs').setValidators([Validators.required, Validators.maxLength(50)]);
+        this.widgetConfigForm.get('uriFs').setValidators([Validators.required, Validators.maxLength(50)]);
         this.widgetConfigForm.get('diallingUri').setValidators([Validators.required]);
         this.widgetConfigForm.get('sipExtension').setValidators([Validators.required]);
         this.widgetConfigForm.get('extensionPassword').setValidators([Validators.required]);
         this.widgetConfigForm.get('channel').setValidators([Validators.required]);
         this.widgetConfigForm.get('websocket').setValidators([Validators.required]);
       }
-
       else if (!this.widgetConfigForm.get('enableWebRtc').value) {
-        this.widgetConfigForm.get('wssServerIp').setValidators(null);
-        this.widgetConfigForm.get('wssServerPort').setValidators(null);
+        this.widgetConfigForm.get('wssFs').setValidators(null);
+        this.widgetConfigForm.get('uriFs').setValidators(null);
         this.widgetConfigForm.get('diallingUri').setValidators(null);
         this.widgetConfigForm.get('sipExtension').setValidators(null);
         this.widgetConfigForm.get('extensionPassword').setValidators(null);
         this.widgetConfigForm.get('channel').setValidators(null);
         this.widgetConfigForm.get('websocket').setValidators(null);
+      }
+    });
+
+    this.widgetConfigForm.get('enableCallback').valueChanges.subscribe(() => {
+      this.changeDetector.detectChanges();
+      if (this.widgetConfigForm.get('enableCallback').value) {
+        this.widgetConfigForm.get('callbackUrl').setValidators([Validators.required, Validators.maxLength(50)]);
+        this.widgetConfigForm.get('campaignId').setValidators([Validators.required, Validators.maxLength(10)]);
+        this.widgetConfigForm.get('allowDuplicate').setValidators([Validators.required, Validators.maxLength(50)]);
+        this.widgetConfigForm.get('callBackForm').setValidators([Validators.required, Validators.maxLength(50)]);
+      } else if (!this.widgetConfigForm.get('enableCallback').value) {
+        this.widgetConfigForm.get('callbackUrl').setValidators(null);
+        this.widgetConfigForm.get('campaignId').setValidators(null);
+        this.widgetConfigForm.get('allowDuplicate').setValidators(null);
+        this.widgetConfigForm.get('callBackForm').setValidators(null);
+      }
+    });
+
+    this.widgetConfigForm.get('enableWebhook').valueChanges.subscribe(() => {
+      this.changeDetector.detectChanges();
+      if (this.widgetConfigForm.get('enableWebhook').value) {
+        this.widgetConfigForm.get('webhookUrl').setValidators([Validators.required, Validators.maxLength(250)]);
+      } else if (!this.widgetConfigForm.get('enableWebhook').value) {
+        this.widgetConfigForm.get('webhookUrl').setValidators(null);
       }
     });
   }
@@ -182,8 +228,9 @@ export class WebWidgetFormComponent implements OnInit, AfterViewInit {
       this.widgetConfigForm.patchValue(this.editWebWidgetData);
       this.widgetConfigForm.patchValue({
         language: languageIndex != -1 ? this.languageList[languageIndex] : null,
-        wssServerIp: this.editWebWidgetData.webRtc.wssServerIp,
-        wssServerPort: this.editWebWidgetData.webRtc.wssServerPort,
+        // webRtc Object
+        wssFs: this.editWebWidgetData.webRtc.wssFs,
+        uriFs: this.editWebWidgetData.webRtc.uriFs,
         websocket: this.editWebWidgetData.webRtc.websocket,
         sipExtension: this.editWebWidgetData.webRtc.sipExtension,
         diallingUri: this.editWebWidgetData.webRtc.diallingUri,
@@ -191,8 +238,18 @@ export class WebWidgetFormComponent implements OnInit, AfterViewInit {
         enableWebRtc: this.editWebWidgetData.webRtc.enableWebRtc,
         enabledSipLogs: this.editWebWidgetData.webRtc.enabledSipLogs,
         extensionPassword: this.editWebWidgetData.webRtc.extensionPassword,
+        // callback Object
+        enableCallback: this.editWebWidgetData.callback.enableCallback,
+        callbackUrl: this.editWebWidgetData.callback.callbackUrl,
+        campaignId: this.editWebWidgetData.callback.campaignId,
+        allowDuplicate: this.editWebWidgetData.callback.allowDuplicate,
+        callBackForm: this.editWebWidgetData.callback.callBackForm,
+        standaloneCallback: this.editWebWidgetData.callback.standaloneCallback,
+        // webhook Object
+        enableWebhook: this.editWebWidgetData.webhook.enableWebhook,
+        webhookUrl: this.editWebWidgetData.webhook.webhookUrl,
       });
-      if(this.editWebWidgetData.webRtc.enableWebRtc == true) this.getEditToken(this.editWebWidgetData.webRtc.iceServers[0].urls);
+      if (this.editWebWidgetData.webRtc.enableWebRtc == true) this.getEditToken(this.editWebWidgetData.webRtc.iceServers[0].urls);
       this.widgetConfigForm.controls["widgetIdentifier"].disable();
     } catch (e) {
       console.error("Error==>", e);
@@ -215,8 +272,8 @@ export class WebWidgetFormComponent implements OnInit, AfterViewInit {
   getWebRtcObj() {
     return {
       enableWebRtc: this.widgetConfigForm.value.enableWebRtc,
-      wssServerIp: this.widgetConfigForm.value.wssServerIp,
-      wssServerPort: this.widgetConfigForm.value.wssServerPort,
+      wssFs: this.widgetConfigForm.value.wssFs,
+      uriFs: this.widgetConfigForm.value.uriFs,
       diallingUri: this.widgetConfigForm.value.diallingUri,
       sipExtension: this.widgetConfigForm.value.sipExtension,
       enabledSipLogs: this.widgetConfigForm.value.enabledSipLogs,
@@ -231,9 +288,31 @@ export class WebWidgetFormComponent implements OnInit, AfterViewInit {
     }
   }
 
+  // To Get callback Object after submitting the form
+  getCallbackObj() {
+    return {
+      enableCallback: this.widgetConfigForm.value.enableCallback,
+      callbackUrl: this.widgetConfigForm.value.callbackUrl,
+      campaignId: this.widgetConfigForm.value.campaignId,
+      allowDuplicate: this.widgetConfigForm.value.allowDuplicate,
+      callBackForm: this.widgetConfigForm.value.callBackForm,
+      standaloneCallback: this.widgetConfigForm.value.standaloneCallback,
+    }
+  }
+
+  // To Get Webhook Object after submitting the form
+  getWebhookObj() {
+    return {
+      enableWebhook: this.widgetConfigForm.value.enableWebhook,
+      webhookUrl: this.widgetConfigForm.value.webhookUrl,
+    }
+  }
+
   // to create request payload
   setWidgetRequestPayload() {
     if (this.widgetConfigForm.value.enableWebRtc != null) { this.widgetConfigForm.value.webRtc = this.getWebRtcObj() }
+    if (this.widgetConfigForm.value.enableCallback != null) { this.widgetConfigForm.value.callback = this.getCallbackObj() }
+    if (this.widgetConfigForm.value.enableWebhook != null) { this.widgetConfigForm.value.webhook = this.getWebhookObj() }
     let data = JSON.parse(JSON.stringify(this.widgetConfigForm.value));
     if (this.editWebWidgetData) {
       if (!data.widgetIdentifier)
