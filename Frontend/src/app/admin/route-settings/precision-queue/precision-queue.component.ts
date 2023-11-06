@@ -36,6 +36,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
   searchTerm = "";
   formErrors = {
     name: "",
+    agentSlaDuration: "",
     mrd: "",
     serviceLevelType: "",
     serviceLevelThreshold: "",
@@ -83,7 +84,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     private fb: FormBuilder,
     private snackbar: SnackbarService,
     private cd: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnInit() {
     // this.commonService.checkTokenExistenceInStorage();
@@ -103,6 +104,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
           Validators.maxLength(50),
         ],
       ],
+      agentSlaDuration: ["", [Validators.pattern("^[0-9]*$")]],
       mrd: ["", [Validators.required]],
       serviceLevelType: [
         1,
@@ -112,7 +114,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     });
 
     this.stepForm = this.fb.group({
-      timeout: ["", [Validators.required, Validators.min(0),Validators.max(2147483647)]],
+      timeout: ["", [Validators.required, Validators.min(0), Validators.max(2147483647)]],
       expressions: this.fb.array([this.addExpressionGroup()]),
     });
 
@@ -210,7 +212,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
       panelClass: "add-attribute",
       disableClose: true,
     });
-    dialogRef.afterClosed().subscribe((result) => {});
+    dialogRef.afterClosed().subscribe((result) => { });
   }
 
   //resetting  dialog
@@ -410,7 +412,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     let msg = "Are you sure you want to delete this Queue ?";
     return this.dialog
       .open(ConfirmDialogComponent, {
-        panelClass: ['confirm-dialog-container' , 'delete-confirmation'],
+        panelClass: ['confirm-dialog-container', 'delete-confirmation'],
         disableClose: true,
         data: {
           heading: "Delete Queue",
@@ -592,7 +594,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     let msg = "Are you sure you want to delete this Step ?";
     return this.dialog
       .open(ConfirmDialogComponent, {
-        panelClass: ['confirm-dialog-container' , 'delete-confirmation'],
+        panelClass: ['confirm-dialog-container', 'delete-confirmation'],
         disableClose: true,
         data: {
           heading: "Delete Step",

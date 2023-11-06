@@ -94,7 +94,7 @@ export class EndpointService {
     this.FILE_ENGINE_URL = e.FILE_ENGINE_URL;
     this.userRoles = e.BUSINESS_USER_ROLES;
 
-    if (isDevMode()) this.ADMIN_URL = "http://localhost:3001";
+   // if (isDevMode()) this.ADMIN_URL = "http://localhost:3001";
 
     this.getStorageValues();
   }

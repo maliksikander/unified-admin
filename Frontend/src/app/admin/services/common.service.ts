@@ -287,8 +287,8 @@ export class CommonService {
       maxlength: "Max 500 characters allowed",
       pattern: "Not a valid pattern",
     },
-    mrdType:{
-      required: "This field is required", 
+    mrdType: {
+      required: "This field is required",
     },
     enabled: {
       required: "This field is required",
@@ -311,6 +311,7 @@ export class CommonService {
       pattern: "Not a valid pattern",
       validName: "Already exists",
     },
+    agentSlaDuration: { pattern: "Only accept numbers" },
     mrd: {
       required: "This field is required",
       pattern: 'Allowed special characters "[!@#$%^&*()-_=+~`"]+"',
@@ -562,6 +563,11 @@ export class CommonService {
       pattern: "Not a valid pattern",
       validName: "Already exists",
     },
+    agentSlaDuration: {
+      minlength: "Range between 8 - 500",
+      maxlength: "Range between 8 - 500",
+      pattern: "Only accept numbers",
+    },
     description: {
       required: "This field is required",
       maxlength: "Max 500 characters allowed",
@@ -721,7 +727,7 @@ export class CommonService {
           for (let j = 0; j <= resourceScopes.length; j++) {
             if (resourceScopes[j] === "manage") {
               return true
-            } 
+            }
           }
         }
       }

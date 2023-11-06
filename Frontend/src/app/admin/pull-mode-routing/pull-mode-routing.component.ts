@@ -20,6 +20,7 @@ export class PullModeRoutingComponent implements OnInit {
   searchTerm = "";
   formErrors = {
     name: "",
+    agentSlaDuration: "",
     description: "",
   };
   validations;
@@ -36,7 +37,7 @@ export class PullModeRoutingComponent implements OnInit {
     private endPointService: EndpointService,
     private formBuilder: FormBuilder,
     private snackbar: SnackbarService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     //to check if token exits in local/session storage
@@ -47,6 +48,7 @@ export class PullModeRoutingComponent implements OnInit {
 
     this.pullModeListForm = this.formBuilder.group({
       name: ["", [Validators.required, Validators.maxLength(100)]],
+      agentSlaDuration: ["", [Validators.pattern("^[0-9]*$")]],
       description: ["", [Validators.maxLength(500)]],
     });
 
@@ -92,7 +94,7 @@ export class PullModeRoutingComponent implements OnInit {
       panelClass: "add-attribute",
       disableClose: true,
     });
-    dialogRef.afterClosed().subscribe((result) => {});
+    dialogRef.afterClosed().subscribe((result) => { });
   }
 
   //to close dialog
@@ -107,7 +109,7 @@ export class PullModeRoutingComponent implements OnInit {
     let msg = "Are you sure you want to delete this pull mode list ?";
     return this.dialog
       .open(ConfirmDialogComponent, {
-        panelClass: ['confirm-dialog-container' , 'delete-confirmation'],
+        panelClass: ['confirm-dialog-container', 'delete-confirmation'],
         disableClose: true,
         data: {
           heading: "Delete Pull Mode List",
@@ -154,6 +156,7 @@ export class PullModeRoutingComponent implements OnInit {
   onSave() {
     this.spinner = true;
     let data = this.pullModeListForm.value;
+    console.log("data ", data);
     if (this.editPullModeListData) {
       data.id = this.editPullModeListData.id;
       this.updatePullModeList(data);
