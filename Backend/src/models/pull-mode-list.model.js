@@ -7,6 +7,10 @@ const pullModeListSchema = mongoose.Schema(
             type: String,
             required: true,
         },
+        agentSlaDuration: {
+            type: Number,
+            required: false,
+        },
         description: {
             type: String,
             required: false,

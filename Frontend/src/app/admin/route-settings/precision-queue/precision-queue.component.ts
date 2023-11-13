@@ -104,7 +104,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
           Validators.maxLength(50),
         ],
       ],
-      agentSlaDuration: ["", [Validators.pattern("^[0-9]*$")]],
+      agentSlaDuration: ["", [Validators.pattern("^[0-9]*$"), Validators.max(500), Validators.min(8)]],
       mrd: ["", [Validators.required]],
       serviceLevelType: [
         1,
@@ -441,6 +441,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     };
     data.name = temp.name;
     data.mrd.id = temp.mrd.id;
+    data.agentSlaDuration = temp.agentSlaDuration;
     data.serviceLevelThreshold = temp.serviceLevelThreshold;
     data.serviceLevelType = temp.serviceLevelType;
     return data;
@@ -448,9 +449,8 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
 
   //to save/update precision queue
   onQueueSave() {
-    this.spinner = true;
+     this.spinner = true;
     let data = this.saveObjFormation();
-
     if (this.editData) {
       data.id = this.editData.id;
       this.updateQueue(data, data.id);

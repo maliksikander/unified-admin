@@ -311,7 +311,10 @@ export class CommonService {
       pattern: "Not a valid pattern",
       validName: "Already exists",
     },
-    agentSlaDuration: { pattern: "Only accept numbers" },
+    agentSlaDuration: {
+      pattern: "Only accept numbers", min: "Range must be 8 - 500",
+      max: "Range must be 8 - 500"
+    },
     mrd: {
       required: "This field is required",
       pattern: 'Allowed special characters "[!@#$%^&*()-_=+~`"]+"',
@@ -561,12 +564,14 @@ export class CommonService {
       minlength: "Min 3 characters required",
       maxlength: "Max 100 characters allowed",
       pattern: "Not a valid pattern",
-      validName: "Already exists",
+      validName: "Already exists"
     },
     agentSlaDuration: {
       minlength: "Range between 8 - 500",
       maxlength: "Range between 8 - 500",
       pattern: "Only accept numbers",
+      min: "Range must be 8 - 500",
+      max: "Range must be 8 - 500"
     },
     description: {
       required: "This field is required",

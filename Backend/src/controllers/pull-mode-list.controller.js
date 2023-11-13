@@ -28,7 +28,7 @@ const getPullModeListByID = catchAsync(async (req, res) => {
         logger.debug(`[REQUEST] : %o` + req.body, { className: "pull-mode-list.controller", methodName: "getPullModeListByID", CID: coId });
 
         const id = req.params.listID;
-        result = await pullModeListService.getPullModeList(id,coId);
+        result = await pullModeListService.getPullModeList(id, coId);
         res.send(result);
     } catch (error) {
         logger.error(`[ERROR] on getPullModeListByID %o` + error, { className: "pull-mode-list.controller", methodName: "getPullModeListByID", CID: coId });
@@ -42,7 +42,7 @@ const createPullModeList = catchAsync(async (req, res) => {
         logger.info(`Create pull mode list`, { className: "pull-mode-list.controller", methodName: "createPullModeList", CID: coId });
         logger.debug(`[REQUEST] : %o` + req.body, { className: "pull-mode-list.controller", methodName: "createPullModeList", CID: coId });
 
-        const result = await pullModeListService.createPullModeList(req.body,coId);
+        const result = await pullModeListService.createPullModeList(req.body, coId);
         res.send(result);
     } catch (error) {
         logger.error(`[ERROR] on createPullModeList %o` + error, { className: "pull-mode-list.controller", methodName: "createPullModeList", CID: coId });
@@ -57,9 +57,9 @@ const updatePullModeList = catchAsync(async (req, res) => {
         logger.debug(`[REQUEST] : %o` + req.body, { className: "pull-mode-list.controller", methodName: "updatePullModeList", CID: coId });
 
         const id = req.params.listID;
-        const { name, description } = req.body;
-        let body = { name, description };
-        const result = await pullModeListService.updatePullModeList(body, id , coId);
+        const { name, agentSlaDuration, description } = req.body;
+        let body = { name, agentSlaDuration, description };
+        const result = await pullModeListService.updatePullModeList(body, id, coId);
         res.send(result);
     } catch (error) {
         logger.error(`[ERROR] on updatePullModeList %o` + error, { className: "pull-mode-list.controller", methodName: "updatePullModeList", CID: coId });
@@ -79,7 +79,7 @@ const deletePullModeList = catchAsync(async (req, res) => {
         logger.debug(`[REQUEST] : %o` + req.body, { className: "pull-mode-list.controller", methodName: "deletePullModeList", CID: coId });
 
         const id = req.params.listID;
-        const result = await pullModeListService.deletePullModeList(id,coId);
+        const result = await pullModeListService.deletePullModeList(id, coId);
         if (result._id) {
             res.send(response);
         }
