@@ -53,7 +53,7 @@ export class AttributeComponent implements OnInit {
         [
           Validators.required,
           Validators.minLength(3),
-          Validators.maxLength(256),
+          Validators.maxLength(50),
         ],
       ],
       description: ["", [Validators.maxLength(500)]],

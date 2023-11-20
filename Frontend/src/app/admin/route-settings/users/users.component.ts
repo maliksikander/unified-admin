@@ -342,7 +342,7 @@ export class UsersComponent implements OnInit {
     });
     let dialogRef = this.dialog.open(templateRef, {
       width: "650px",
-      height: "300px",
+      height: "350px",
       panelClass: "add-user",
       disableClose: true,
       data: data,
