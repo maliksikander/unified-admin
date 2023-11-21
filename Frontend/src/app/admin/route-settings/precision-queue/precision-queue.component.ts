@@ -330,6 +330,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     this.editData = data;
     this.queueForm.patchValue({
       name: data.name,
+      agentSlaDuration: data.agentSlaDuration,
       mrd: this.mrdData[mrdIndex],
       serviceLevelThreshold: data.serviceLevelThreshold,
       serviceLevelType: data.serviceLevelType,
