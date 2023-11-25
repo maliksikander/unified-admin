@@ -312,8 +312,8 @@ export class CommonService {
       validName: "Already exists",
     },
     agentSlaDuration: {
-      pattern: "Only accept numbers", min: "Range must be 8 - 500",
-      max: "Range must be 8 - 500"
+      pattern: "Only accept numbers", min: "Range must be 10 - 600",
+      max: "Range must be 10 - 600"
     },
     mrd: {
       required: "This field is required",
@@ -567,11 +567,11 @@ export class CommonService {
       validName: "Already exists"
     },
     agentSlaDuration: {
-      minlength: "Range between 8 - 500",
-      maxlength: "Range between 8 - 500",
+      minlength: "Range between 10 - 600",
+      maxlength: "Range between 10 - 600",
       pattern: "Only accept numbers",
-      min: "Range must be 8 - 500",
-      max: "Range must be 8 - 500"
+      min: "Range must be 10 - 600",
+      max: "Range must be 10 - 600"
     },
     description: {
       required: "This field is required",

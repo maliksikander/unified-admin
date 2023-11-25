@@ -48,7 +48,7 @@ export class PullModeRoutingComponent implements OnInit {
 
     this.pullModeListForm = this.formBuilder.group({
       name: ["", [Validators.required, Validators.maxLength(100)]],
-      agentSlaDuration: ["", [Validators.pattern("^[0-9]*$"), Validators.max(500), Validators.min(8)]],
+      agentSlaDuration: ["", [Validators.pattern("^[0-9]*$"), Validators.max(600), Validators.min(10)]],
       description: ["", [Validators.maxLength(500)]],
     });
 

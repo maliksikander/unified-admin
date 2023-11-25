@@ -27,7 +27,7 @@
 
                         <ul class="top-heading list-heading-section">
                             <li>Name</li>
-                            <li>Agent SLA Duration</li>
+                            <li>Agent Response Time</li>
                             <li>Description</li>
                         </ul>
                         <ng-container *ngIf="pullModeListData && pullModeListData.length != 0">
@@ -95,7 +95,7 @@
                     </div>
 
                     <div class="form-group">
-                        <mat-label>Agent SLA Duration (secs)</mat-label>
+                        <mat-label>Agent Response Time (secs)</mat-label>
                         <mat-form-field appearance="outline">
                             <input matInput formControlName="agentSlaDuration">
                             <mat-error class="form-error">
