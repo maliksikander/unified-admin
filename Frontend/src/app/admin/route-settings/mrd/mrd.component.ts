@@ -75,6 +75,7 @@ export class MrdComponent implements OnInit {
     });
 
     this.getMRD();
+    this.getMRDType();
     this.managePermission = this.commonService.checkManageScope("mrd");
   }
 
@@ -289,15 +290,19 @@ export class MrdComponent implements OnInit {
       //console.log("here is the data to be edited",data,"and tempplateRef", templateRef, )
       this.editData = data;
       let selectedMrdType = this.mrdType.find(item =>item.id === data.type)
+      
       this.mrdForm.patchValue({
         name: data.name,
         description: data.description,
         maxRequests: data.maxRequests,
       });
       this.mrdForm.get('mrdType').setValue(selectedMrdType)
+
       this.getMaxRequestsValue(selectedMrdType)
+
       this.formHeading = "Edit MRD";
       this.saveBtnText = "Update";
+      
       let dialogRef = this.dialog.open(templateRef, {
         width: "500px",
         height: "auto",
