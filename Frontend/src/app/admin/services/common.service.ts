@@ -260,7 +260,7 @@ export class CommonService {
     name: {
       required: "This field is required",
       minlength: "Min 3 characters required",
-      maxlength: "Max 500 characters allowed",
+      maxlength: "Max 50 characters allowed",
       pattern: "Not a valid pattern",
       validName: "Already exists",
     },

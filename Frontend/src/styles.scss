@@ -2146,6 +2146,14 @@ snack-bar-container {
     font-size: 13px;
     padding: 15px;
     line-height: 20px;
+
+    &.group-name {
+      max-width: 38ch;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      display: inline-block;
+    }
   }
 }
 
@@ -2427,7 +2435,7 @@ snack-bar-container {
     display: none;
   }
   .cal-month-view .cal-day-cell.cal-today {
-    background-color: $fill-color !important;
+    background-color: mat-color($ef-blue, 100) !important;
     color: #7b7b7b !important;
   }
 
@@ -2627,11 +2635,16 @@ snack-bar-container {
     // align-items: center;
     // white-space: nowrap;
     // position: relative;
-    color: #808080;
+    color: #535353;
+
+    &.mat-tab-label-active{
+      background: mat-color($ef-blue, 100);
+    }
   }
 
   .mat-form-field-underline {
     display: none;
+    bottom: 15px;
   }
 
   .mat-form-field.mat-focused {

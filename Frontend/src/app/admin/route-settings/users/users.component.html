@@ -54,7 +54,7 @@
                     </td>
                     <td>
                       <mat-chip-list>
-                        <mat-chip #attributeMenuTrigger="matMenuTrigger" [matMenuTriggerFor]="updateAttrMenu"
+                        <mat-chip #attributeMenuTrigger="matMenuTrigger" [matMenuTriggerFor]="updateAttrMenu"  matTooltip="{{ attr?.routingAttribute?.name}}"
                           *ngFor="let attr of data?.associatedRoutingAttributes;let i=index"
                           [ngStyle]="{'border-color':attr?.routingAttribute?.type === 'BOOLEAN' ? '#7ECCFF' : '#A2F565' }"
                           (click)="updateAttributeValue(attr,data)">
@@ -203,14 +203,14 @@
                 </div>
                 <ul class="attributes-area">
                   <li *ngFor="let i=index;let item of attrData | filter:attributeFilterTerm">
-                    <p class="checbox-custom checkbox-team">
+                    <p class="checkbox-custom checkbox-team">
                       <!-- <input class="mat-checkbox mat-accent" formControlName="attributes" type="checkbox"
                               (change)="checkFilterState($event,item);filterValue(item)" [checked]="item.isChecked">
                             <span class="checkmark"></span> -->
                       <input class="mat-checkbox mat-accent" type="checkbox"
                         (change)="availableToSelectedAttribute($event,item,i)" [checked]="item.isChecked">
                       <span class="checkmark"></span>
-                      <label class="attribute-name attr-field">{{item?.name | titlecase}}</label>
+                      <label class="attribute-name attr-field"  matTooltip="{{item?.name | titlecase}}">{{item?.name | titlecase}}</label>
                     </p>
                   </li>
                 </ul>
@@ -231,7 +231,7 @@
                       <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
                         [expandedHeight]="customExpandedHeight">
                         <mat-panel-title>
-                          <p class="group-name">
+                          <p class="group-name"  matTooltip="{{data?.routingAttribute?.name? data?.routingAttribute?.name : 'N/A'}}">
                             {{data?.routingAttribute?.name? data?.routingAttribute?.name : 'N/A'}} ({{data.value?
                             data.value : 'N/A'}})</p>
                         </mat-panel-title>
