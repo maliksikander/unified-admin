@@ -68,6 +68,65 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
       pattern: 'Allowed special characters "[!@#$%^&*()-_=+~`"]+"',
     },
   };
+  availableAgents = [
+    {
+      "id": "6540ac9790",
+      "firstName": "aclemits",
+      "lastName": "Clemits",
+      "email": 'aclemits0@pagesperso-orange.fr',
+    },{
+      "id": "87t0ac9790",
+      "firstName": "Bevvy",
+      "lastName": "Jays",
+      "email": 'bjays1@technorati.com',
+    },{
+      "id": "847c9790",
+      "firstName": "Rubina",
+      "lastName": "Fernandez",
+      "email": 'rfernandez3@elegantthemes.com',
+    },{
+      "id": "65484kh790",
+      "firstName": "Carmencita",
+      "lastName": "Nevin",
+      "email": 'aclemits0@pagesperso-orange.fr',
+    },{
+      "id": "6540ac9790",
+      "firstName": "aclemits",
+      "lastName": "Clemits",
+      "email": 'cnevin4@istockphoto.com',
+    },{
+      "id": "6540ac9790",
+      "firstName": "Norton",
+      "lastName": "Daria",
+      "email": 'aclemits0@pagesperso-orange.fr',
+    },{
+      "id": "6540ac9790",
+      "firstName": "aclemits",
+      "lastName": "Clemits",
+      "email": 'aclemits0@pagesperso-orange.fr',
+    },{
+      "id": "6590ac9790",
+      "firstName": "Rubina",
+      "lastName": "Clemits",
+      "email": 'aclemis0@pagesperso-orange.fr',
+    },{
+      "id": "6540ac9790",
+      "firstName": "aclemits",
+      "lastName": "Daria",
+      "email": 'aclemits0@pagesperso-orange.fr',
+    },{
+      "id": "6540ac9790",
+      "firstName": "Endrici",
+      "lastName": "Clemits",
+      "email": 'aclemits0@pagesperso-orange.fr',
+    },{
+      "id": "6540ac9790",
+      "firstName": "Willette",
+      "lastName": "Ruthen",
+      "email": 'wruthen9@dailymail.co.uk',
+    },
+
+  ];
   stepFormErrors = {
     timeout: "",
     expression: "",
@@ -769,5 +828,17 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
       let ele: any = document.getElementById(div);
       if (ele) ele.scrollIntoView({ block: "nearest", behavior: behavior });
     }, milliseconds);
+  }
+
+  agentLists(templateRef) {
+    let dialogRef = this.dialog.open(templateRef, {
+      width: "80vw",
+      maxWidth: "950px",
+      panelClass: ["add-attribute", "agents-list-dialog"],
+      disableClose: true,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+    });
   }
 }

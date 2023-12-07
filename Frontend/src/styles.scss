@@ -1534,6 +1534,12 @@ snack-bar-container {
     left: 14px;
     position: relative;
   }
+
+  &.add-team {
+    .mat-dialog-container {
+      overflow: visible;
+      }
+    }
 }
 
 .template-action {
@@ -3593,3 +3599,177 @@ snack-bar-container {
     line-height: 20px;
   }
 }
+
+//Multi select Options
+.form-control.multi-select-options {
+padding: 0;
+  margin-top: 5px;
+  .arrow-down.arrow-2, .arrow-down, .arrow-up.arrow-2, .arrow-up{
+    display: none;
+    }
+
+  .c-btn {
+
+    span {
+      font-size: 12px;
+      font-weight: 600;
+      border: 0 !important;
+
+      &:first-child {
+        color: rgba(0, 0, 0, 0.87);
+        }
+      }
+
+    .countplaceholder {
+      position: relative;
+      top: inherit !important;
+      right: inherit;
+      transform: inherit;
+
+      &:before {
+        content: '(';
+        }
+
+      &:after {
+        content: ')';
+        }
+      }
+    }
+
+  //.selected-list .c-angle-down,
+  //.selected-list .c-angle-up {
+  //  top: 50% !important;
+  //  transform: translate(0, -50%);
+  //
+  //  c-icon {
+  //    top: 4px;
+  //    width: 10px;
+  //    height: 10px;
+  //    border-left: 5px solid transparent;
+  //    border-right: 5px solid transparent;
+  //    border-top: 5px solid;
+  //    margin: 0 4px;
+  //    display: inline-block;
+  //    position: relative;
+  //    border-top-color: #757575;
+  //    }
+  //  }
+
+  .c-angle-up {
+    c-icon {
+      transform: rotate(180deg);
+      top: -1px !important;
+      }
+    }
+
+  .c-label {
+    margin: 0;
+    border: 0;
+    padding: 0;
+    display: inline-block !important;
+
+    .item-name {
+      height: 16px;
+      line-height: 14px;
+      margin: 0;
+      display: inline-block;
+      max-width: 100px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: left;
+      font-size: 13px;
+      }
+    }
+
+  .c-remove {
+    display: none !important;
+    }
+
+  .selected-list .c-list {
+    max-width: calc(100% - 20px);
+    width: auto;
+
+    .c-token {
+      border-radius: 20px;
+      border: 1px solid #E7EDF6;
+      background: #F3F6FA;
+      height: 26px;
+      line-height: 26px;
+      margin-top: 0;
+      span.c-remove{
+        display: inline-block !important;
+        color: #ACB7C6 !important;
+
+        svg {
+          fill: #ACB7C6;
+          border: 1px solid #ACB7C6;
+          padding: 2px;
+          width: 14px;
+          border-radius: 10px;
+          vertical-align: middle;
+          }
+
+        }
+      }
+    }
+
+  .dropdown-list {
+    top: 25px;
+    //width: auto;
+    input[type=checkbox]+label:before{
+      border: 1px solid #C2C2C2;
+      }
+
+    ul li {
+      padding: 10px !important;
+      cursor: pointer;
+      text-align: left;
+      display: inline-flex;
+      flex-direction: row;
+      width: 100%;
+      flex-wrap: nowrap;
+
+      label.item-list-name {
+        font-size: 13px;
+        font-weight: 600;
+        text-transform: capitalize;
+        cursor: pointer;
+        margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        width: calc(100% - 33px);
+        max-width: 330px;
+        text-overflow: ellipsis;
+        line-height: 16px;
+
+        }
+      }
+    }
+
+  .pure-checkbox.select-all span {
+    font-size: 13px;
+    }
+
+  .cuppa-dropdown {
+    ul {
+      height: auto !important;
+      max-height: 150px;
+      }
+    }
+
+  //.queue-list-dropdown {
+  //  .list-area {
+  //    position: absolute;
+  //    right: -70px;
+  //    width: max-content;
+  //    }
+  //  }
+
+  }
+
+.agents-list-dialog{
+  .dialog-container, .dialog-content{
+    max-width: 950px !important;
+    }
+  }

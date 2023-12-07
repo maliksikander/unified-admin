@@ -158,10 +158,17 @@
             </a>
 
             <!-- Reason Code -->
-            <a *ngIf="reasonCodeBool" class="single-menu-link" mat-list-item [routerLinkActive]="['active-link']"
+            <a *ngIf="reasonCodeBool" class="single-menu-link aa" mat-list-item [routerLinkActive]="['active-link']"
               [routerLink]="['/reason-code']">
               <img src="assets/images/reason-code.svg" class="img-size-adjustment" alt="reasons">
               <span class="sidebar-text">Reasons</span>
+            </a>
+
+            <!-- Teams -->
+            <a *ngIf="agentTeams" class="single-menu-link" mat-list-item [routerLinkActive]="['active-link']"
+              [routerLink]="['/teams']">
+              <img src="assets/images/teams.svg" class="img-size-adjustment" alt="agent Teams">
+              <span class="sidebar-text">Teams</span>
             </a>
 
             <!-- Routing Configuration -->

@@ -222,6 +222,14 @@ export class LoginComponent implements OnInit {
               this.router.navigate(["/routing/agents"]);
             }
           });
+        }else if (item.rsname === "teams") {
+          let scopes: Array<any> = item?.scopes;
+          scopes.forEach((scope: any) => {
+            if (scope == "view") {
+              routeCheck = true;
+              this.router.navigate(["teams"]);
+            }
+          });
         }
         //  else if (item.rsname.includes("calendar")) {
         //   let scopes: Array<any> = item?.scopes;

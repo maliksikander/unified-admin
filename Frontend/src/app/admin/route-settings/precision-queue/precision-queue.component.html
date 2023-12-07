@@ -364,13 +364,51 @@
           <div class="template-action row padding-class">
             <div class="col-md-12">
               <div class="form-action-area">
-                <button mat-raised-button class="gray-btn" [mat-dialog-close]="false">Cancel</button>
-                <button mat-raised-button [disabled]="!stepForm.valid" [mat-dialog-close]="save"
-                  class="blue-btn service-trigger">{{stepSaveBtnText}}</button>
-              </div>
+                <span class="available-agents-action" (click)="agentLists(agentsList)">View 76 agents</span>
+                <div >
+                  <button [mat-dialog-close]="false" class="gray-btn" mat-raised-button >Cancel</button >
+                  <button [disabled]="!stepForm.valid" [mat-dialog-close]="save" class="blue-btn service-trigger"
+                          mat-raised-button >{{stepSaveBtnText}}</button >
+                </div >
+              </div >
             </div>
           </div>
         </form>
+      </div>
+    </div>
+  </ng-template>
+
+
+  <ng-template #agentsList>
+    <div class="dialog-container agent-list">
+      <div class="mat-card-header">
+        <mat-icon (click)="dialog.closeAll()">close</mat-icon>
+        <h4 class="content-span full-width">Agents (76)</h4>
+      </div>
+      <div class="dialog-content">
+        <div class="routing-table">
+          <table class="table">
+            <thead>
+            <tr>
+              <th scope="col">User name / ID</th>
+              <th scope="col">Email</th>
+              <th scope="col">First Name</th>
+              <th scope="col">Last Name</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let data of availableAgents">
+
+              <td>{{data.id}}</td>
+              <td>{{data.email}}</td>
+              <td>{{data.firstName}}</td>
+              <td>{{data.lastName}}</td>
+
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
       </div>
     </div>
   </ng-template>

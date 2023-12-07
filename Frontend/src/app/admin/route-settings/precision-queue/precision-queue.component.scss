@@ -514,3 +514,38 @@
 .padding-class {
   padding: 0 20px;
 }
+.form-action-area {
+  text-align: right;
+  padding-top: 10px;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  div{
+    display: inline-flex;
+    }
+  .available-agents-action{
+    color: #1A50A1;
+    text-decoration: underline;
+    font-size: 13px;
+    cursor: pointer;
+    }
+  }
+
+.agent-list{
+  table{
+    border: 1px solid #E6E6E6;
+    border-radius: 3px;
+    th{
+      background: #F3F6FA;
+      }
+    };
+   .dialog-content {
+    padding: 20px;
+     overflow: hidden;
+    }
+
+  .routing-table {
+    overflow: auto;
+    max-height: 80vh;
+    }
+  }

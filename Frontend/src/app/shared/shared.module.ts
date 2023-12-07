@@ -42,6 +42,7 @@ import { RemoveCharacterFilterPipe } from "./remove-character.pipe";
 import { ConfirmDialogComponent } from "./confirm-dialog/confirm-dialog.component";
 import { NgxPaginationModule } from "ngx-pagination";
 import { Ng2SearchPipeModule } from "ng2-search-filter";
+import {AngularMultiSelectModule} from "angular2-multiselect-dropdown";
 
 @NgModule({
   declarations: [
@@ -105,6 +106,7 @@ import { Ng2SearchPipeModule } from "ng2-search-filter";
     MatTooltipModule,
     MatTreeModule,
     MatBottomSheetModule,
+    AngularMultiSelectModule
   ],
   exports: [
     DragDropModule,
