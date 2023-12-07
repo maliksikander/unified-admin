@@ -104,7 +104,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
           Validators.maxLength(50),
         ],
       ],
-      agentSlaDuration: ["", [Validators.pattern("^[0-9]*$"), Validators.max(100), Validators.min(10)]],
+      agentSlaDuration: ["", [Validators.pattern("^[0-9]*$"), Validators.max(600), Validators.min(10)]],
       mrd: ["", [Validators.required]],
       serviceLevelType: [
         1,
