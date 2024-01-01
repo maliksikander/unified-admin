@@ -27,12 +27,14 @@
 
                         <ul class="top-heading list-heading-section">
                             <li>Name</li>
+                            <li>Agent Response Time</li>
                             <li>Description</li>
                         </ul>
                         <ng-container *ngIf="pullModeListData && pullModeListData.length != 0">
                             <div class="pull-mode-data"
                                 *ngFor="let data of pullModeListData | filter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
                                 <span class="group-name">{{data?.name ? data.name : 'N/A'}}</span>
+                                <span class="group-name">{{data?.agentSlaDuration ? data.agentSlaDuration : 'N/A'}}</span>
                                 <span class="group-name">
                                     {{data?.description ? data.description :'N/A'}}
                                     <span *ngIf="managePermission" class="list-trigger-area">
@@ -88,6 +90,16 @@
                             <input matInput formControlName="name">
                             <mat-error class="form-error">
                                 {{formErrors?.name}}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="form-group">
+                        <mat-label>Agent Response Time (secs)</mat-label>
+                        <mat-form-field appearance="outline">
+                            <input matInput formControlName="agentSlaDuration">
+                            <mat-error class="form-error">
+                                {{formErrors?.agentSlaDuration}}
                             </mat-error>
                         </mat-form-field>
                     </div>

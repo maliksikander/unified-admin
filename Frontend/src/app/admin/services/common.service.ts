@@ -287,13 +287,16 @@ export class CommonService {
       maxlength: "Max 500 characters allowed",
       pattern: "Not a valid pattern",
     },
+    mrdType: {
+      required: "This field is required",
+    },
     enabled: {
       required: "This field is required",
     },
     maxRequests: {
       required: "This field is required",
-      min: "Min value of 1 is required",
-      max: "Max value allowed is 2147483647"
+      min: "Min value of 0 is required",
+      max: "Max value allowed is ",
     },
     managedByRe: {
       required: "This field is required",
@@ -307,6 +310,10 @@ export class CommonService {
       maxlength: "Max 50 characters allowed",
       pattern: "Not a valid pattern",
       validName: "Already exists",
+    },
+    agentSlaDuration: {
+      pattern: "Only accept numbers", min: "Range must be 10 - 600",
+      max: "Range must be 10 - 600"
     },
     mrd: {
       required: "This field is required",
@@ -557,7 +564,14 @@ export class CommonService {
       minlength: "Min 3 characters required",
       maxlength: "Max 100 characters allowed",
       pattern: "Not a valid pattern",
-      validName: "Already exists",
+      validName: "Already exists"
+    },
+    agentSlaDuration: {
+      minlength: "Range between 10 - 600",
+      maxlength: "Range between 10 - 600",
+      pattern: "Only accept numbers",
+      min: "Range must be 10 - 600",
+      max: "Range must be 10 - 600"
     },
     description: {
       required: "This field is required",
@@ -718,7 +732,7 @@ export class CommonService {
           for (let j = 0; j <= resourceScopes.length; j++) {
             if (resourceScopes[j] === "manage") {
               return true
-            } 
+            }
           }
         }
       }

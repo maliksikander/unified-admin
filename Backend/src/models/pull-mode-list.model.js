@@ -1,11 +1,16 @@
 const mongoose = require('mongoose');
 const { toJSON } = require('./plugins');
+const { number } = require('@hapi/joi');
 
 const pullModeListSchema = mongoose.Schema(
     {
         name: {
             type: String,
             required: true,
+        },
+        agentSlaDuration: {
+            type: Number,
+            required: false,
         },
         description: {
             type: String,

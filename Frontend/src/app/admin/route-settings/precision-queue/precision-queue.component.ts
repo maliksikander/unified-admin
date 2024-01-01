@@ -36,6 +36,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
   searchTerm = "";
   formErrors = {
     name: "",
+    agentSlaDuration: "",
     mrd: "",
     serviceLevelType: "",
     serviceLevelThreshold: "",
@@ -83,7 +84,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     private fb: FormBuilder,
     private snackbar: SnackbarService,
     private cd: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnInit() {
     // this.commonService.checkTokenExistenceInStorage();
@@ -103,6 +104,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
           Validators.maxLength(50),
         ],
       ],
+      agentSlaDuration: ["", [Validators.pattern("^[0-9]*$"), Validators.max(600), Validators.min(10)]],
       mrd: ["", [Validators.required]],
       serviceLevelType: [
         1,
@@ -112,7 +114,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     });
 
     this.stepForm = this.fb.group({
-      timeout: ["", [Validators.required, Validators.min(0),Validators.max(2147483647)]],
+      timeout: ["", [Validators.required, Validators.min(0), Validators.max(2147483647)]],
       expressions: this.fb.array([this.addExpressionGroup()]),
     });
 
@@ -210,7 +212,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
       panelClass: "add-attribute",
       disableClose: true,
     });
-    dialogRef.afterClosed().subscribe((result) => {});
+    dialogRef.afterClosed().subscribe((result) => { });
   }
 
   //resetting  dialog
@@ -328,6 +330,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     this.editData = data;
     this.queueForm.patchValue({
       name: data.name,
+      agentSlaDuration: data.agentSlaDuration,
       mrd: this.mrdData[mrdIndex],
       serviceLevelThreshold: data.serviceLevelThreshold,
       serviceLevelType: data.serviceLevelType,
@@ -410,7 +413,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     let msg = "Are you sure you want to delete this Queue ?";
     return this.dialog
       .open(ConfirmDialogComponent, {
-        panelClass: ['confirm-dialog-container' , 'delete-confirmation'],
+        panelClass: ['confirm-dialog-container', 'delete-confirmation'],
         disableClose: true,
         data: {
           heading: "Delete Queue",
@@ -439,6 +442,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     };
     data.name = temp.name;
     data.mrd.id = temp.mrd.id;
+    data.agentSlaDuration = temp.agentSlaDuration;
     data.serviceLevelThreshold = temp.serviceLevelThreshold;
     data.serviceLevelType = temp.serviceLevelType;
     return data;
@@ -446,9 +450,8 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
 
   //to save/update precision queue
   onQueueSave() {
-    this.spinner = true;
+     this.spinner = true;
     let data = this.saveObjFormation();
-
     if (this.editData) {
       data.id = this.editData.id;
       this.updateQueue(data, data.id);
@@ -592,7 +595,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     let msg = "Are you sure you want to delete this Step ?";
     return this.dialog
       .open(ConfirmDialogComponent, {
-        panelClass: ['confirm-dialog-container' , 'delete-confirmation'],
+        panelClass: ['confirm-dialog-container', 'delete-confirmation'],
         disableClose: true,
         data: {
           heading: "Delete Step",

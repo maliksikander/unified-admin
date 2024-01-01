@@ -66,11 +66,12 @@ export class EndpointService {
     routing: {
       attribute: "routing-attributes",
       mrd: "media-routing-domains",
+      mrdType: "mrd-types",
       pq: {
         queue: "precision-queues",
         step: "steps",
       },
-      agent: "agents",
+      agent: "agents"
     },
     webWidget: "widget-configs",
     keycloakLogin: "keycloakLogin",
@@ -93,7 +94,7 @@ export class EndpointService {
     this.FILE_ENGINE_URL = e.FILE_ENGINE_URL;
     this.userRoles = e.BUSINESS_USER_ROLES;
 
-    if (isDevMode()) this.ADMIN_URL = "http://localhost:3001";
+    //if (isDevMode()) this.ADMIN_URL = "http://localhost:3001";
 
     this.getStorageValues();
   }
@@ -429,6 +430,19 @@ export class EndpointService {
   getMrd(): Observable<any> {
     return this.httpClient
       .get(`${this.MRE_URL}/${this.endpoints.routing.mrd}`, {
+        //.get(`https://81f49c3b-a018-42c9-90d1-0effc2d97f84.mock.pstmn.io/media-routing-domains`, {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json"
+          // Authorization: "Bearer" + this.token,
+        }),
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  getMrdType(): Observable<any> {
+    return this.httpClient
+      .get(`${this.MRE_URL}/${this.endpoints.routing.mrdType}`, {
+        //.get(`https://81f49c3b-a018-42c9-90d1-0effc2d97f84.mock.pstmn.io/mrd-types`, {
         headers: new HttpHeaders({
           "Content-Type": "application/json"
           // Authorization: "Bearer" + this.token,
