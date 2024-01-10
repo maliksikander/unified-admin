@@ -265,7 +265,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     this.queueForm.reset();
     let dialogRef = this.dialog.open(templateRef, {
       width: "550px",
-      height: "445px",
+      height: "auto",
       panelClass: "add-attribute",
       disableClose: true,
     });

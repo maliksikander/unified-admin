@@ -31,6 +31,8 @@
                     <th scope="col">First Name</th>
                     <th scope="col">Last Name</th>
                     <th scope="col">Attributes</th>
+                    <th scope="col">Team</th>
+                    <th scope="col">Queue</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -69,6 +71,12 @@
                         </mat-chip>
                         <!-- <mat-chip *ngIf="data.attributes?.length > 3">+{{data.attributes?.length - 3}}</mat-chip> -->
                       </mat-chip-list>
+                    </td>
+                    <td>
+                      <span>Marketing</span>
+                    </td>
+                    <td>
+                      <span>Marketing 1, Marketing International, Marketing Local, Marketing Outbound</span>
                     </td>
                     <div class="list-action-area">
                       <span *ngIf="managePermission" class="list-actions">

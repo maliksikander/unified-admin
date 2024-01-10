@@ -124,6 +124,34 @@
 
                     </div >
 
+                <div class="form-group mb-4">
+                    <mat-label>Secondary Supervisor(s)</mat-label >
+                    <div class="multi-select-options form-control">
+                        <angular2-multiselect
+                                [data]="dropdownList"
+                                [(ngModel)]="selectedSupervisor"
+                                [settings]="dropdownSettings"
+                                [ngModelOptions]="{ standalone: true }"
+                                (onSelect)="onItemSelect($event)"
+                                (onDeSelect)="OnItemDeSelect($event)"
+                                (onSelectAll)="onSelectAll($event)"
+                                (onDeSelectAll)="onDeSelectAll($event)">
+                            <c-badge>
+                                <ng-template let-item="item">
+                                    <label class="item-name">{{ item.supervisor }}</label>
+                                </ng-template>
+                            </c-badge>
+                            <c-item>
+                                <ng-template let-item="item">
+                                    <label class="item-list-name">{{ item.supervisor }}</label>
+                                </ng-template>
+                            </c-item>
+                        </angular2-multiselect>
+                    </div>
+
+
+                </div >
+
 
                 <div class="form-group" >
                     <mat-label>Add agent(s) from list</mat-label >
