@@ -36,6 +36,7 @@ export class AgentDeskSettingsComponent implements OnInit {
       isConversationParticipantsEnabled:[false],
       isFileSharingEnabled:[false],
       isEmojisEnabled:[false],
+      isAutoAnswerEnabled:[false],
       isMessageFormattingEnabled:[false],
       // isWrapUpEnabled: [false],
       // wrapUpTime: [
