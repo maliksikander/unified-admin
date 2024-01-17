@@ -12,6 +12,7 @@ const updateSetting = {
     id: Joi.string().required(),
     isOutboundSmsSendandClose: Joi.boolean(),
     isOutboundSmsEnabled: Joi.boolean(),
+    isAutoAnswerEnabled: Joi.boolean(),
     prefixCode: Joi.string().allow(null, '')
   }),
 };

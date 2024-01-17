@@ -34,6 +34,13 @@
                         </div>
 
                         <div class="form-group adjust-toggle widget-toggle">
+                            <mat-label>Auto Answer
+                                <small>Turn on for agents to auto answer the chats</small>
+                            </mat-label>
+                            <mat-slide-toggle formControlName="isAutoAnswerEnabled"></mat-slide-toggle>
+                        </div>
+
+                        <div class="form-group adjust-toggle widget-toggle">
                             <mat-label>Conversation Participants
                                 <small>Turn on for agents to see conversation participants list for a
                                     conversation</small>
@@ -120,6 +127,9 @@
                         <div *ngIf="managePermission" class="action-area btn-margin pr-0">
                             <button mat-raised-button class="blue-btn service-trigger" type="submit"
                                 [disabled]="!AgentDeskConfigForm.valid" *ngIf="AgentDeskConfigForm.dirty">Save</button>
+                                <span *ngIf="AgentDeskConfigForm.dirty" style="color: gray;
+                                font-size: 10px;
+                                padding-left: 10px;">(Refresh Agent Desk after updating the settings)</span>
                         </div>
 
                     </form>

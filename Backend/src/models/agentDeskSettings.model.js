@@ -20,6 +20,12 @@ const agentDeskSettingSchema = mongoose.Schema(
       default:false
 
     },
+    isAutoAnswerEnabled: {
+      type: Boolean,
+      required: true,
+      default:false
+
+    },
     isConversationParticipantsEnabled: {
       type: Boolean,
       required: true,
