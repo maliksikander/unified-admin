@@ -128,7 +128,7 @@ export class MrdTasksComponent implements OnInit {
       this.endPointService.getMrd().subscribe(
         (res: any) => {
           this.mrdTasksData = JSON.parse(JSON.stringify(res));
-          const mrdTasksDataLength = this.mrdTasksData.length;
+          //const mrdTasksDataLength = this.mrdTasksData.length;
           // if (mrdTasksDataLength > 0) {
           //   console.log("mrdTasksDataLength: ", this.mrdTasksData);
           // }
