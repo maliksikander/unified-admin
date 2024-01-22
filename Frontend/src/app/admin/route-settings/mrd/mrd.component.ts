@@ -193,6 +193,7 @@ export class MrdComponent implements OnInit {
       (error: any) => {
         this.spinner = false;
         console.error("Error Updating MRD:", error);
+        this.snackbar.snackbarMessage("error-snackbar", error.error.reason,4)
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }
