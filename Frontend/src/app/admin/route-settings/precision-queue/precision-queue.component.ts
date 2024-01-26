@@ -40,6 +40,9 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     mrd: "",
     serviceLevelType: "",
     serviceLevelThreshold: "",
+    ewtMinValue:"",
+    ewtMaxValue:""
+
   };
   validations;
   conditionList = ["AND", "OR"];
@@ -111,6 +114,9 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
         [Validators.required, Validators.min(1), Validators.max(3)],
       ],
       serviceLevelThreshold: [1, [Validators.required, Validators.min(0)]],
+      ewtMinValue:[ "",[Validators.required, Validators.min(1), Validators.max(60)]],
+      ewtMaxValue:[ "",[Validators.required, Validators.min(1), Validators.max(60)]],
+          
     });
 
     this.stepForm = this.fb.group({
@@ -208,7 +214,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     this.queueForm.reset();
     let dialogRef = this.dialog.open(templateRef, {
       width: "550px",
-      height: "445px",
+      height: "auto",
       panelClass: "add-attribute",
       disableClose: true,
     });
@@ -445,6 +451,9 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     data.agentSlaDuration = temp.agentSlaDuration;
     data.serviceLevelThreshold = temp.serviceLevelThreshold;
     data.serviceLevelType = temp.serviceLevelType;
+    data.ewtMinValue=temp.ewtMinValue;
+    data.ewtMaxValue=temp.ewtMaxValue;
+
     return data;
   }
 

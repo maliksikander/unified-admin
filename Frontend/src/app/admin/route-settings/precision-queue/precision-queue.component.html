@@ -237,6 +237,29 @@
               </mat-error>
             </mat-form-field>
           </div>
+<!-- EWT -->
+
+          <div class=" row ewt-area">
+
+            <div class="form-group col-md-6">
+              <mat-label>EWT Min Value <small>Estimated wait time (Sec)</small></mat-label>
+              <mat-form-field appearance="outline">
+                <input type="number" min="1" matInput formControlName="ewtMinValue">
+                <mat-error class="form-error">
+                  {{formErrors.ewtMinValue}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-group col-md-6">
+              <mat-label>EWT Max Value <small>Estimated wait time (Sec)</small></mat-label>
+              <mat-form-field appearance="outline">
+                <input type="number" min="1" matInput formControlName="ewtMaxValue">
+                <mat-error class="form-error">
+                  {{formErrors.ewtMaxValue}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            </div>
 
           <div class="template-action row">
             <div class="col-md-12">
