@@ -43,14 +43,15 @@ export class LicenseManagerComponent implements OnInit {
   }
 
   //to select file and save in local variable, it accepts selected file as 'file' parameter
-  fileUpload(file) {
+  fileUpload(file): void {
     this.licenseFile.reset();
     this.fileName = "";
-    let fd = new FormData();
-    if (file[0]) {
-      this.licenseFile.setValue(file[0]);
-      this.fileName = file[0].name;
-      fd.append("file", file[0]);
+    const fd = new FormData();
+    if (file && file[0]) {
+      const selectedFile = file[0];
+      this.licenseFile.setValue(selectedFile);
+      this.fileName = selectedFile.name;
+      fd.append("file", selectedFile);
       this.fileToBeUploaded = fd;
     }
   }
@@ -81,7 +82,7 @@ export class LicenseManagerComponent implements OnInit {
       (res: any) => {
         this.spinner = false;
         if (res.ProductsList) {
-          this.snackbar.snackbarMessage("success-snackbar", "File Uploaded", 2);
+          this.snackbar.snackbarMessage("success-snackbar", res.message, 3);
         } else {
           this.snackbar.snackbarMessage("error-snackbar", res.message, 2);
         }
