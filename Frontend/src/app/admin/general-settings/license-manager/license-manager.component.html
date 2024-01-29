@@ -160,8 +160,8 @@
                       </mat-error>
                     </mat-form-field>
                   </div>
-                  <div *ngIf="managePermission"  class="key-btn">
-                    <button *ngIf="licenseFile.valid" mat-flat-button class="blue-btn service-trigger"
+                  <div *ngIf="managePermission" class="key-btn">
+                    <button *ngIf="licenseFile?.value?.name" mat-flat-button class="blue-btn service-trigger"
                       (click)="onUpload()">Upload</button>
                   </div>
                 </div>
