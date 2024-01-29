@@ -340,6 +340,8 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
       mrd: this.mrdData[mrdIndex],
       serviceLevelThreshold: data.serviceLevelThreshold,
       serviceLevelType: data.serviceLevelType,
+      ewtMinValue: data.ewtMinValue,
+      ewtMaxValue: data.ewtMaxValue
     });
     this.formHeading = "Edit Queue";
     this.saveBtnText = "Update";
