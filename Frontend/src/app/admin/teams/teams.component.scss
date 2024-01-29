@@ -271,3 +271,43 @@
     min-width: 85px;
     }
   }
+
+//Available agents list
+.agent-list{
+  table{
+    border: 1px solid #E6E6E6;
+    border-radius: 3px;
+    th{
+      background: #F3F6FA;
+      }
+    td{
+      border: 0;
+      }
+    }
+  .dialog-content {
+    padding: 20px;
+    overflow: hidden;
+    }
+
+  .routing-table {
+    overflow: auto;
+    max-height: 80vh;
+    }
+  }
+.routing-content {
+  td {
+    width: inherit;
+    }
+
+  .agents-list-data {
+    width: 120px !important;
+    max-width: 120px !important;
+    min-width: 120px !important;
+    span {
+      color: #1A50A2;
+      text-decoration: underline;
+      cursor: pointer;
+      }
+
+    }
+  }

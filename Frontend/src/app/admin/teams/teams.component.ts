@@ -46,28 +46,32 @@ export class TeamsComponent implements OnInit {
             'availableAgents': 45,
             'defaultValue': 1,
             'createdOn': '2023-02-03T08:47:03.066+00:00',
-            'supervisors': [{name: 'john Hamilton'}, {name: 'Maggie Jons'}, {name: 'Jason Reeds'}],
+            'supervisors': [{name: 'Jason Reeds'}],
+            'secondarySupervisors': [{name: 'john Hamilton'}, {name: 'Maggie Jons'}, {name: 'Jason Reeds'}],
         }, {
             'id': '6540acdaa91a5942kke99790',
             'name': 'Customer Support',
             'availableAgents': 36,
             'defaultValue': 1,
             'createdOn': '2023-04-03T08:47:03.066+00:00',
-            'supervisors': [{name: 'Andrew Trate'}, {name: 'Michal Jons'}],
+            'supervisors': [{name: 'Maggie Jons'}],
+            'secondarySupervisors': [{name: 'Andrew Trate'}, {name: 'Michal Jons'}],
         }, {
             'id': '6540acdaa9138a5942k99790',
             'name': 'Technical Support',
             'availableAgents': 23,
             'defaultValue': 1,
             'createdOn': '2023-04-03T08:47:03.066+00:00',
-            'supervisors': [{name: 'Poul Reeds'}, {name: 'Maggie Jons'}, {name: 'john Hamilton'}],
+            'supervisors': [{name: 'Poul Reeds'}],
+            'secondarySupervisors': [{name: 'Adam Reeds'}, {name: 'Maggie Jons'}, {name: 'john Hamilton'}],
         }, {
             'id': '6540acdaa9138a594ke99790',
             'name': 'Business Management',
             'availableAgents': 14,
             'defaultValue': 1,
             'createdOn': '2023-05-03T08:47:03.066+00:00',
-            'supervisors': [{name: 'Michal Hanery'}, {name: 'ashley graham'}],
+            'supervisors': [{name: 'john Hamilton'}],
+            'secondarySupervisors': [{name: 'Michal Hanery'}, {name: 'ashley graham'}],
         },
 
     ];
@@ -77,6 +81,7 @@ export class TeamsComponent implements OnInit {
             'userName': 'john-hamilton',
             'firstName': 'john ',
             'lastName': 'Hamilton',
+            "email": 'aclemits0@pagesperso-orange.fr',
             isSelected:false
 
         }, {
@@ -84,6 +89,7 @@ export class TeamsComponent implements OnInit {
             'userName': 'andrewT9',
             'firstName': 'Andrew ',
             'lastName': 'Trate',
+            "email": 'bjays1@technorati.com',
             isSelected:false
 
         }, {
@@ -91,6 +97,7 @@ export class TeamsComponent implements OnInit {
             'userName': 'mhanery98',
             'firstName': 'Michal ',
             'lastName': 'Hanery',
+            "email": 'rfernandez3@elegantthemes.com',
             isSelected:false
 
         }, {
@@ -98,6 +105,7 @@ export class TeamsComponent implements OnInit {
             'userName': 'g_ashley',
             'firstName': 'ashley ',
             'lastName': 'graham',
+            "email": 'aclemits0@pagesperso-orange.fr',
             isSelected:false
 
         }, {
@@ -105,6 +113,7 @@ export class TeamsComponent implements OnInit {
             'userName': 'a_miller54',
             'firstName': 'Adam ',
             'lastName': 'Miller',
+            "email": 'cnevin4@istockphoto.com',
             isSelected:false
 
         }, {
@@ -112,6 +121,7 @@ export class TeamsComponent implements OnInit {
             'userName': 'h_andy541',
             'firstName': 'Hamilton ',
             'lastName': 'Andu',
+            "email": 'aclemits0@pagesperso-orange.fr',
             isSelected:false
 
         }, {
@@ -119,6 +129,7 @@ export class TeamsComponent implements OnInit {
             'userName': 'j_trate55',
             'firstName': 'Json ',
             'lastName': 'Trate',
+            "email": 'aclemis0@pagesperso-orange.fr',
             isSelected:false
 
         }, {
@@ -126,6 +137,7 @@ export class TeamsComponent implements OnInit {
             'userName': 'ncawsy5',
             'firstName': 'Norton ',
             'lastName': 'Cawsy',
+            "email": 'aclemis0@pagesperso-orange.fr',
             isSelected:false
 
         },
@@ -278,6 +290,7 @@ export class TeamsComponent implements OnInit {
         let dialogRef = this.dialog.open(templateRef, {
             width: "100%",
             maxWidth: "1200px",
+            maxHeight: "70vh",
             panelClass: ["add-attribute", "assign-unassign-agents"],
             disableClose: true,
             data: data,
@@ -315,6 +328,18 @@ export class TeamsComponent implements OnInit {
                 this.checkedList.push(this.availabeAgentsLis[i]);
         }
         this.checkedList = JSON.stringify(this.checkedList);
+    }
+
+    agentLists(templateRef) {
+        let dialogRef = this.dialog.open(templateRef, {
+            width: "80vw",
+            maxWidth: "600px",
+            panelClass: ["add-attribute", "agents-list-dialog"],
+            disableClose: true,
+        });
+
+        dialogRef.afterClosed().subscribe((result) => {
+        });
     }
 
 
