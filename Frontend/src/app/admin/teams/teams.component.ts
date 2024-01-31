@@ -1,14 +1,16 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
-import {CommonService} from "../services/common.service";
-import {MatDialog} from "@angular/material/dialog";
-import {EndpointService} from "../services/endpoint.service";
-import {SnackbarService} from "../services/snackbar.service";
-import {ConfirmDialogComponent} from "../../shared/confirm-dialog/confirm-dialog.component";
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {CommonService} from '../services/common.service';
+import {MatDialog} from '@angular/material/dialog';
+import {EndpointService} from '../services/endpoint.service';
+import {SnackbarService} from '../services/snackbar.service';
+import {ConfirmDialogComponent} from '../../shared/confirm-dialog/confirm-dialog.component';
+
 interface Supervisor {
     value: string;
     viewValue: string;
 }
+
 @Component({
     selector: 'app-teams',
     templateUrl: './teams.component.html',
@@ -27,18 +29,18 @@ export class TeamsComponent implements OnInit {
     secondarySupervisor = [];
     teams = '';
     dropdownSettings = {};
-    searchTerm = "";
+    searchTerm = '';
     loginForm: FormGroup;
 
     formErrors = {
-        name: "",
-        description: "",
-        type: "",
+        name: '',
+        description: '',
+        type: '',
     };
     validations;
     attributeForm: FormGroup;
-    formHeading = "Create Team";
-    saveBtnText = "Add";
+    formHeading = 'Create Team';
+    saveBtnText = 'Add';
     teamData = [
         {
             'id': '6540acdaa9138a5942kke99790',
@@ -81,64 +83,64 @@ export class TeamsComponent implements OnInit {
             'userName': 'john-hamilton',
             'firstName': 'john ',
             'lastName': 'Hamilton',
-            "email": 'aclemits0@pagesperso-orange.fr',
-            isSelected:false
+            'email': 'aclemits0@pagesperso-orange.fr',
+            isSelected: false
 
         }, {
             'id': '42kke99790',
             'userName': 'andrewT9',
             'firstName': 'Andrew ',
             'lastName': 'Trate',
-            "email": 'bjays1@technorati.com',
-            isSelected:false
+            'email': 'bjays1@technorati.com',
+            isSelected: false
 
         }, {
             'id': '138a594244e9',
             'userName': 'mhanery98',
             'firstName': 'Michal ',
             'lastName': 'Hanery',
-            "email": 'rfernandez3@elegantthemes.com',
-            isSelected:false
+            'email': 'rfernandez3@elegantthemes.com',
+            isSelected: false
 
         }, {
             'id': '65138a5942',
             'userName': 'g_ashley',
             'firstName': 'ashley ',
             'lastName': 'graham',
-            "email": 'aclemits0@pagesperso-orange.fr',
-            isSelected:false
+            'email': 'aclemits0@pagesperso-orange.fr',
+            isSelected: false
 
         }, {
             'id': '54138a5942',
             'userName': 'a_miller54',
             'firstName': 'Adam ',
             'lastName': 'Miller',
-            "email": 'cnevin4@istockphoto.com',
-            isSelected:false
+            'email': 'cnevin4@istockphoto.com',
+            isSelected: false
 
         }, {
             'id': '6540ac4299',
             'userName': 'h_andy541',
             'firstName': 'Hamilton ',
             'lastName': 'Andu',
-            "email": 'aclemits0@pagesperso-orange.fr',
-            isSelected:false
+            'email': 'aclemits0@pagesperso-orange.fr',
+            isSelected: false
 
         }, {
             'id': '4758e99790',
             'userName': 'j_trate55',
             'firstName': 'Json ',
             'lastName': 'Trate',
-            "email": 'aclemis0@pagesperso-orange.fr',
-            isSelected:false
+            'email': 'aclemis0@pagesperso-orange.fr',
+            isSelected: false
 
         }, {
             'id': '588a594244e9',
             'userName': 'ncawsy5',
             'firstName': 'Norton ',
             'lastName': 'Cawsy',
-            "email": 'aclemis0@pagesperso-orange.fr',
-            isSelected:false
+            'email': 'aclemis0@pagesperso-orange.fr',
+            isSelected: false
 
         },
     ];
@@ -153,12 +155,13 @@ export class TeamsComponent implements OnInit {
         {'assignAgents': 33, 'secondarySupervisor': 'Maggie Jones'},
         {'assignAgents': 12, 'secondarySupervisor': 'Adam Miller'},
     ];
-    masterSelected:boolean;
-    checkedList:any;
+    masterSelected: boolean;
+    checkedList: any;
 
 
     SelectedSecondarySupervisorInTeam = 'Jason Wright';
     selected = 'ammamaria';
+
     constructor(
         private commonService: CommonService,
         private dialog: MatDialog,
@@ -166,34 +169,35 @@ export class TeamsComponent implements OnInit {
         this.masterSelected = false;
 
     }
-    ngOnInit(){
+
+    ngOnInit() {
         this.dropdownList = [
-            {"id":1,"agentName":"Ammamaria", "supervisor": "Ammamaria"},
-            {"id":2,"agentName":"Jason Reeds", "supervisor": "Carmencita"},
-            {"id":3,"agentName":"Maggie Jones", "supervisor": "Renato"},
-            {"id":4,"agentName":"Adam Miller", "supervisor": "Jacqueminot Ruthen"},
-            {"id":5,"agentName":"Andrew Trate" , "supervisor": "Beere Lymen"},
-            {"id":6,"agentName":"Simon Lee" , "supervisor": "Cairistiona"},
-            {"id":7,"agentName":"John Doe" , "supervisor": "Ruthen"},
-            {"id":8,"agentName":"Jason Wright" , "supervisor": "Jacqueminot"},
+            {'id': 1, 'agentName': 'Ammamaria', 'supervisor': 'Ammamaria'},
+            {'id': 2, 'agentName': 'Jason Reeds', 'supervisor': 'Carmencita'},
+            {'id': 3, 'agentName': 'Maggie Jones', 'supervisor': 'Renato'},
+            {'id': 4, 'agentName': 'Adam Miller', 'supervisor': 'Jacqueminot Ruthen'},
+            {'id': 5, 'agentName': 'Andrew Trate', 'supervisor': 'Beere Lymen'},
+            {'id': 6, 'agentName': 'Simon Lee', 'supervisor': 'Cairistiona'},
+            {'id': 7, 'agentName': 'John Doe', 'supervisor': 'Ruthen'},
+            {'id': 8, 'agentName': 'Jason Wright', 'supervisor': 'Jacqueminot'},
         ];
         this.selectedAgent = [
-            {"id":1,"agentName":"Ammamaria"},
-            {"id":2,"agentName":"Jason Reeds"},
+            {'id': 1, 'agentName': 'Ammamaria'},
+            {'id': 2, 'agentName': 'Jason Reeds'},
         ];
         this.selectedSupervisor = [
-            {"id":3,"supervisor":"Carmencita"},
+            {'id': 3, 'supervisor': 'Carmencita'},
         ];
         this.secondarySupervisor = [
-            {"id":4,"supervisor": "Jacqueminot Ruthen"},
+            {'id': 4, 'supervisor': 'Jacqueminot Ruthen'},
         ];
         this.dropdownSettings = {
             singleSelection: false,
-            text:"",
-            selectAllText:'Select All',
-            unSelectAllText:'UnSelect All',
+            text: '',
+            selectAllText: 'Select All',
+            unSelectAllText: 'UnSelect All',
             enableSearchFilter: true,
-            classes:"custom-class",
+            classes: 'custom-class',
             badgeShowLimit: 3,
             searchPlaceholderText: 'Search agent(s)'
 
@@ -203,10 +207,10 @@ export class TeamsComponent implements OnInit {
 
 
     addTeam(templateRef) {
-        this.formHeading = 'Add Team'
+        this.formHeading = 'Add Team';
         let dialogRef = this.dialog.open(templateRef, {
-            width: "550px",
-            panelClass: ["add-attribute", "add-team"],
+            width: '550px',
+            panelClass: ['add-attribute', 'add-team'],
             disableClose: true,
         });
         dialogRef.afterClosed().subscribe((result) => {
@@ -219,8 +223,8 @@ export class TeamsComponent implements OnInit {
         this.teams = data.name;
 
         let dialogRef = this.dialog.open(templateRef, {
-            width: "550px",
-            panelClass: ["add-attribute", "add-team"],
+            width: '550px',
+            panelClass: ['add-attribute', 'add-team'],
             disableClose: true,
             data: data,
         });
@@ -237,9 +241,9 @@ export class TeamsComponent implements OnInit {
                 disableClose: true,
                 width: '500px',
                 data: {
-                    heading: "Delete Team",
+                    heading: 'Delete Team',
                     message: msg,
-                    text: "confirm"
+                    text: 'confirm'
                 },
             })
             .afterClosed()
@@ -249,18 +253,19 @@ export class TeamsComponent implements OnInit {
 
     //save page number storage for reload
     pageChange(e) {
-        sessionStorage.setItem("currentAttributePage", e);
+        sessionStorage.setItem('currentAttributePage', e);
     }
 
     //page bound change and saving for reload
     pageBoundChange(e) {
         this.p = e;
-        sessionStorage.setItem("currentAttributePage", e);
+        sessionStorage.setItem('currentAttributePage', e);
     }
 
     selectPage() {
         this.itemsPerPage = this.selectedItem;
     }
+
     onClose() {
         this.dialog.closeAll();
     }
@@ -288,10 +293,10 @@ export class TeamsComponent implements OnInit {
     assignUnassignAgents(templateRef, data) {
 
         let dialogRef = this.dialog.open(templateRef, {
-            width: "100%",
-            maxWidth: "1200px",
-            maxHeight: "70vh",
-            panelClass: ["add-attribute", "assign-unassign-agents"],
+            width: '100%',
+            maxWidth: '1200px',
+            maxHeight: '100vh',
+            panelClass: ['add-attribute', 'assign-unassign-agents'],
             disableClose: true,
             data: data,
         });
@@ -299,13 +304,12 @@ export class TeamsComponent implements OnInit {
         dialogRef.afterClosed().subscribe((result) => {
         });
 
-        }
+    }
 
     selectedSecondary(e) {
         this.SelectedSecondarySupervisorInTeam = e;
 
     }
-
 
 
     checkUncheckAll() {
@@ -314,27 +318,29 @@ export class TeamsComponent implements OnInit {
         }
         this.getCheckedItemList();
     }
+
     isAllSelected() {
-        this.masterSelected = this.availabeAgentsLis.every(function(item:any) {
+        this.masterSelected = this.availabeAgentsLis.every(function(item: any) {
             return item.isSelected == true;
-        })
+        });
         this.getCheckedItemList();
     }
 
-    getCheckedItemList(){
+    getCheckedItemList() {
         this.checkedList = [];
         for (var i = 0; i < this.availabeAgentsLis.length; i++) {
-            if(this.availabeAgentsLis[i].isSelected)
+            if (this.availabeAgentsLis[i].isSelected) {
                 this.checkedList.push(this.availabeAgentsLis[i]);
+            }
         }
         this.checkedList = JSON.stringify(this.checkedList);
     }
 
     agentLists(templateRef) {
         let dialogRef = this.dialog.open(templateRef, {
-            width: "80vw",
-            maxWidth: "600px",
-            panelClass: ["add-attribute", "agents-list-dialog"],
+            width: '80vw',
+            maxWidth: '600px',
+            panelClass: ['add-attribute', 'agents-list-dialog'],
             disableClose: true,
         });
 
@@ -343,4 +349,4 @@ export class TeamsComponent implements OnInit {
     }
 
 
-    }
+}

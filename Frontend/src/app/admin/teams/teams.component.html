@@ -254,7 +254,7 @@
                                     <th class="select-check" scope="col">
                                         <mat-checkbox (change)="checkUncheckAll()" [(ngModel)]="masterSelected" type="checkbox"></mat-checkbox>
                                     </th>
-                                    <th scope="col">User ID</th>
+<!--                                    <th scope="col">User ID</th>-->
                                     <th scope="col">User Name</th>
                                     <th scope="col">First Name</th>
                                     <th scope="col">Last Name</th>
@@ -265,7 +265,7 @@
                                     <td class="select-check">
                                         <mat-checkbox (change)="isAllSelected()" [(ngModel)]="data.isSelected" name="list_name" type="checkbox" value="{{data.id}}"></mat-checkbox>
                                     </td>
-                                    <td>{{data.id}}</td>
+<!--                                    <td>{{data.id}}</td>-->
                                     <td>{{data.userName}}</td>
                                     <td>{{data.firstName}}</td>
                                     <td>{{data.lastName}}</td>
@@ -290,18 +290,19 @@
                                     <th class="select-check" scope="col">
                                         <mat-checkbox (change)="checkUncheckAll()" [(ngModel)]="masterSelected" type="checkbox"></mat-checkbox>
                                     </th>
-                                    <th scope="col">User ID</th>
+<!--                                    <th scope="col">User ID</th>-->
                                     <th scope="col">User Name</th>
                                     <th scope="col">First Name</th>
                                     <th scope="col">Last Name</th>
                                 </tr>
                                 </thead>
                                 <tbody>
+
                                 <tr *ngFor="let data of availabeAgentsLis | filter:searchTerm">
                                     <td class="select-check">
                                         <mat-checkbox (change)="isAllSelected()" [(ngModel)]="data.isSelected" name="list_name" type="checkbox" value="{{data.id}}"></mat-checkbox>
                                     </td>
-                                    <td>{{data.id}}</td>
+<!--                                    <td>{{data.id}}</td>-->
                                     <td>{{data.userName}}</td>
                                     <td>{{data.firstName}}</td>
                                     <td>{{data.lastName}}</td>
@@ -310,7 +311,7 @@
                                     <td class="select-check">
                                         <mat-checkbox (change)="isAllSelected()" [(ngModel)]="data.isSelected" name="list_name" type="checkbox" value="{{data.id}}"></mat-checkbox>
                                     </td>
-                                    <td>{{data.id}}</td>
+<!--                                    <td>{{data.id}}</td>-->
                                     <td>{{data.userName}}</td>
                                     <td>{{data.firstName}}</td>
                                     <td>{{data.lastName}}</td>
@@ -341,6 +342,9 @@
         </div>
         <div class="dialog-content p-3">
             <div class="routing-table">
+                <div class="search-area">
+                    <input [(ngModel)]="searchTerm" class="search-field" placeholder="Search" type="text">
+                </div>
                 <table class="table">
                     <thead>
                     <tr>
@@ -350,7 +354,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr *ngFor="let data of availabeAgentsLis">
+                    <tr *ngFor="let data of availabeAgentsLis  | filter:searchTerm">
                         <td>{{data.userName}}</td>
                         <td>{{data.firstName}}</td>
                         <td>{{data.lastName}}</td>

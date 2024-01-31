@@ -215,6 +215,7 @@
       top: 45px;
       margin: 0 auto;
       left: 8px;
+      z-index: 2;
       }
     table{
       thead{
@@ -292,6 +293,35 @@
   .routing-table {
     overflow: auto;
     max-height: 80vh;
+    position: relative;
+    .search-area{
+      position: absolute;
+      width: calc(100% - 15px);
+      top: 55px;
+      margin: 0 auto;
+      left: 8px;
+      z-index: 2;
+
+      .search-field{
+        width: 100%;
+        border: 1px solid #E2E2E2;
+        height: 34px;
+        line-height: 34px;
+        border-radius: 3px;
+        padding-left: 10px;
+        }
+      }
+    th{
+      border-bottom-width: 1px;
+      }
+
+    tbody:before {
+      opacity: 0;
+      content: "-";
+      display: block;
+      line-height: 3em;
+      color: transparent;
+      }
     }
   }
 .routing-content {
