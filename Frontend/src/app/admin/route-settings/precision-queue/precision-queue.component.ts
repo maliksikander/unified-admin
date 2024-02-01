@@ -114,8 +114,8 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
         [Validators.required, Validators.min(1), Validators.max(3)],
       ],
       serviceLevelThreshold: [1, [Validators.required, Validators.min(0)]],
-      ewtMinValue:[ "",[Validators.required, Validators.min(1), Validators.max(60)]],
-      ewtMaxValue:[ "",[Validators.required, Validators.min(1), Validators.max(60)]],
+      ewtMinValue:[ "", [Validators.pattern("^[0-9]*$"), Validators.min(0)]],
+      ewtMaxValue:[ "", [Validators.pattern("^[0-9]*$"), Validators.min(0)]],
           
     });
 

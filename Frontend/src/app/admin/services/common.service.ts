@@ -332,17 +332,17 @@ export class CommonService {
       min: "Min allowed value is 0",
       max: "Max 10 seconds allowed",
     },
-    ewtMinValue:{
-      required: "This field is required",
-      min: "Min allowed value is 1 second",
-      max: "Max 60 seconds allowed"
+    // ewtMinValue:{
+    //  required: "This field is required",
+    //  min: "Min allowed value is 0 second",
+    //   max: "Max 60 seconds allowed"
 
-    },
-    ewtMaxValue:{
-      required: "This field is required",
-      min: "Min allowed value is 1 second",
-      max: "Max 60 seconds allowed"
-    }
+    // },
+    // ewtMaxValue:{
+    //  required: "This field is required",
+    //  min: "Min allowed value is 0 second",
+    //   max: "Max 60 seconds allowed"
+    // }
 
   };
 
