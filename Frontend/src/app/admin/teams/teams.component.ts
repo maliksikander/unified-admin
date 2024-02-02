@@ -30,6 +30,8 @@ export class TeamsComponent implements OnInit {
     teams = '';
     dropdownSettings = {};
     searchTerm = '';
+    count = 0;
+    searchSecondary = '';
     loginForm: FormGroup;
 
     formErrors = {
@@ -50,6 +52,11 @@ export class TeamsComponent implements OnInit {
             'createdOn': '2023-02-03T08:47:03.066+00:00',
             'supervisors': [{name: 'Jason Reeds'}],
             'secondarySupervisors': [{name: 'john Hamilton'}, {name: 'Maggie Jons'}, {name: 'Jason Reeds'}],
+            'userName': 'mhanery98',
+            'firstName': 'Michal ',
+            'lastName': 'Hanery',
+            'email': 'rfernandez3@elegantthemes.com',
+            isSelected: false
         }, {
             'id': '6540acdaa91a5942kke99790',
             'name': 'Customer Support',
@@ -58,6 +65,11 @@ export class TeamsComponent implements OnInit {
             'createdOn': '2023-04-03T08:47:03.066+00:00',
             'supervisors': [{name: 'Maggie Jons'}],
             'secondarySupervisors': [{name: 'Andrew Trate'}, {name: 'Michal Jons'}],
+            'userName': 'g_ashley',
+            'firstName': 'ashley ',
+            'lastName': 'graham',
+            'email': 'aclemits0@pagesperso-orange.fr',
+            isSelected: false
         }, {
             'id': '6540acdaa9138a5942k99790',
             'name': 'Technical Support',
@@ -66,6 +78,11 @@ export class TeamsComponent implements OnInit {
             'createdOn': '2023-04-03T08:47:03.066+00:00',
             'supervisors': [{name: 'Poul Reeds'}],
             'secondarySupervisors': [{name: 'Adam Reeds'}, {name: 'Maggie Jons'}, {name: 'john Hamilton'}],
+            'userName': 'andrewT9',
+            'firstName': 'Andrew ',
+            'lastName': 'Trate',
+            'email': 'bjays1@technorati.com',
+            isSelected: false
         }, {
             'id': '6540acdaa9138a594ke99790',
             'name': 'Business Management',
@@ -74,6 +91,11 @@ export class TeamsComponent implements OnInit {
             'createdOn': '2023-05-03T08:47:03.066+00:00',
             'supervisors': [{name: 'john Hamilton'}],
             'secondarySupervisors': [{name: 'Michal Hanery'}, {name: 'ashley graham'}],
+            'userName': 'john-hamilton',
+            'firstName': 'john ',
+            'lastName': 'Hamilton',
+            'email': 'aclemits0@pagesperso-orange.fr',
+            isSelected: false
         },
 
     ];
@@ -157,6 +179,8 @@ export class TeamsComponent implements OnInit {
     ];
     masterSelected: boolean;
     checkedList: any;
+    masterSelected2: boolean;
+    checkedList2: any;
 
 
     SelectedSecondarySupervisorInTeam = 'Jason Wright';
@@ -167,19 +191,20 @@ export class TeamsComponent implements OnInit {
         private dialog: MatDialog,
     ) {
         this.masterSelected = false;
+        this.masterSelected2 = false;
 
     }
 
     ngOnInit() {
         this.dropdownList = [
-            {'id': 1, 'agentName': 'Ammamaria', 'supervisor': 'Ammamaria'},
-            {'id': 2, 'agentName': 'Jason Reeds', 'supervisor': 'Carmencita'},
-            {'id': 3, 'agentName': 'Maggie Jones', 'supervisor': 'Renato'},
-            {'id': 4, 'agentName': 'Adam Miller', 'supervisor': 'Jacqueminot Ruthen'},
-            {'id': 5, 'agentName': 'Andrew Trate', 'supervisor': 'Beere Lymen'},
-            {'id': 6, 'agentName': 'Simon Lee', 'supervisor': 'Cairistiona'},
-            {'id': 7, 'agentName': 'John Doe', 'supervisor': 'Ruthen'},
-            {'id': 8, 'agentName': 'Jason Wright', 'supervisor': 'Jacqueminot'},
+            {'id': 1, 'agentName': 'Ammamaria', 'agentUsername': 'ammamaria_001', 'supervisor': 'Ammamaria'},
+            {'id': 2, 'agentName': 'Jason Reeds', 'agentUsername': 'jreeds52', 'supervisor': 'Jason Reeds'},
+            {'id': 3, 'agentName': 'Maggie Jones', 'agentUsername': 'maggie_j', 'supervisor': 'Maggie Jones'},
+            {'id': 4, 'agentName': 'Adam Miller', 'agentUsername': 'adam_miller', 'supervisor': 'Adam Miller'},
+            {'id': 5, 'agentName': 'Andrew Trate', 'agentUsername': 'a_trate21', 'supervisor': 'Andrew Trate'},
+            {'id': 6, 'agentName': 'Simon Lee', 'agentUsername': 'simon_lee87', 'supervisor': 'Simon Lee'},
+            {'id': 7, 'agentName': 'John Doe', 'agentUsername': 'j_doe99', 'supervisor': 'John Doe'},
+            {'id': 8, 'agentName': 'Jason Wright', 'agentUsername': 'jason_wright1', 'supervisor': 'Jason Wright'},
         ];
         this.selectedAgent = [
             {'id': 1, 'agentName': 'Ammamaria'},
@@ -199,7 +224,7 @@ export class TeamsComponent implements OnInit {
             enableSearchFilter: true,
             classes: 'custom-class',
             badgeShowLimit: 3,
-            searchPlaceholderText: 'Search agent(s)'
+            searchPlaceholderText: 'Search'
 
 
         };
@@ -312,28 +337,56 @@ export class TeamsComponent implements OnInit {
     }
 
 
-    checkUncheckAll() {
-        for (var i = 0; i < this.availabeAgentsLis.length; i++) {
-            this.availabeAgentsLis[i].isSelected = this.masterSelected;
-        }
-        this.getCheckedItemList();
-    }
+    checkUncheckAll(e) {
+        if (e == 'unavail-agents') {
 
-    isAllSelected() {
-        this.masterSelected = this.availabeAgentsLis.every(function(item: any) {
-            return item.isSelected == true;
-        });
-        this.getCheckedItemList();
-    }
-
-    getCheckedItemList() {
-        this.checkedList = [];
-        for (var i = 0; i < this.availabeAgentsLis.length; i++) {
-            if (this.availabeAgentsLis[i].isSelected) {
-                this.checkedList.push(this.availabeAgentsLis[i]);
+            for (var i = 0; i < this.availabeAgentsLis.length; i++) {
+                this.availabeAgentsLis[i].isSelected = this.masterSelected;
             }
+            this.getCheckedItemList(e);
         }
-        this.checkedList = JSON.stringify(this.checkedList);
+        else {
+
+            for (var i = 0; i < this.teamData.length; i++) {
+                this.teamData[i].isSelected = this.masterSelected2;
+            }
+            this.getCheckedItemList('avail-agents');
+        }
+    }
+
+    isAllSelected(e) {
+        if (e == 'unavail-agents') {
+            this.masterSelected = this.availabeAgentsLis.every(function(item: any) {
+                return item.isSelected == true;
+            });
+            this.getCheckedItemList(e);
+        }else {
+            this.masterSelected2 = this.teamData.every(function(item: any) {
+                return item.isSelected == true;
+            });
+            this.getCheckedItemList('avail-agents');
+        }
+    }
+
+    getCheckedItemList(e) {
+        this.checkedList = [];
+        this.checkedList2 = [];
+        if (e == 'unavail-agents') {
+            for (var i = 0; i < this.availabeAgentsLis.length; i++) {
+                if (this.availabeAgentsLis[i].isSelected) {
+                    this.checkedList.push(this.availabeAgentsLis[i]);
+                }
+            }
+            this.checkedList = JSON.stringify(this.checkedList);
+        }
+        else {
+            for (var i = 0; i < this.teamData.length; i++) {
+                if (this.teamData[i].isSelected) {
+                    this.checkedList2.push(this.teamData[i]);
+                }
+            }
+            this.checkedList2 = JSON.stringify(this.checkedList2);
+        }
     }
 
     agentLists(templateRef) {

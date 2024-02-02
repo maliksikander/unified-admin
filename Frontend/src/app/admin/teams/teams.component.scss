@@ -118,7 +118,7 @@
     }
   }
 .selected-secondary-area {
-  border-top: 1px solid #E7EDF6;
+  //border-top: 1px solid #E7EDF6;
 
   //input{
   //  width: 100%;
@@ -169,6 +169,7 @@
     font-size: 14px;
     color: #5B5B5B;
     font-weight: 600;
+    padding: 0 2px;
 
     .selected-secondary-agent{
       color: #1A50A2;
@@ -276,7 +277,7 @@
 //Available agents list
 .agent-list{
   table{
-    border: 1px solid #E6E6E6;
+    //border: 1px solid #E6E6E6;
     border-radius: 3px;
     th{
       background: #F3F6FA;
@@ -294,6 +295,8 @@
     overflow: auto;
     max-height: 80vh;
     position: relative;
+    border: 1px solid #E6E6E6;
+
     .search-area{
       position: absolute;
       width: calc(100% - 15px);
@@ -313,6 +316,7 @@
       }
     th{
       border-bottom-width: 1px;
+      border-top-width: 0;
       }
 
     tbody:before {

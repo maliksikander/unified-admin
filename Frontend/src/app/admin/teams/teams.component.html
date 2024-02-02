@@ -124,7 +124,7 @@
                             </c-badge>
                             <c-item>
                                 <ng-template let-item="item">
-                                    <label class="item-list-name">{{ item.supervisor }}</label>
+                                    <label class="item-list-name">{{ item.agentUsername }} <small>({{ item.supervisor}})</small></label>
                                 </ng-template>
                             </c-item>
                         </angular2-multiselect>
@@ -152,7 +152,7 @@
                             </c-badge>
                             <c-item>
                                 <ng-template let-item="item">
-                                    <label class="item-list-name">{{ item.supervisor }}</label>
+                                    <label class="item-list-name">{{ item.agentUsername }} <small>({{ item.supervisor}})</small></label>
                                 </ng-template>
                             </c-item>
                         </angular2-multiselect>
@@ -163,13 +163,11 @@
 
 
                 <div class="form-group">
-                    <mat-label>Add agent(s) from list</mat-label>
+                    <mat-label>Add agent(s)</mat-label>
                     <div class="multi-select-options form-control">
                         <angular2-multiselect
                                 (onDeSelect)="OnItemDeSelect($event)"
-                                (onDeSelectAll)="onDeSelectAll($event)"
                                 (onSelect)="onItemSelect($event)"
-                                (onSelectAll)="onSelectAll($event)"
                                 [(ngModel)]="selectedAgent"
                                 [data]="dropdownList"
                                 [ngModelOptions]="{ standalone: true }"
@@ -181,7 +179,7 @@
                             </c-badge>
                             <c-item>
                                 <ng-template let-item="item">
-                                    <label class="item-list-name">{{ item.agentName }}</label>
+                                    <label class="item-list-name">{{ item.agentUsername }} <small>({{ item.agentName }})</small></label>
                                 </ng-template>
                             </c-item>
                         </angular2-multiselect>
@@ -214,28 +212,32 @@
         <div class="dialog-content pl-4 pr-4">
             <div class="assign-unassign-main row m-0">
                 <div class="assign-unassign-data secondary-list p-0">
-                    <h4>Supervisors</h4>
+                    <h4>Secondary Supervisors</h4>
 
                     <div class="selected-team-supervisor assign-data-area">
-                        <div class="pl-2 pr-2">
-                            <label>Primary</label>
-                            <mat-form-field appearance="outline" class="w-100">
-                                <mat-select [(value)]="selected">
-                                    <ng-container *ngFor="let supervisor of supervisors">
-                                        <mat-option [value]="supervisor.value">{{supervisor.viewValue}}</mat-option>
-                                    </ng-container>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
+<!--                        <div class="pl-2 pr-2">-->
+<!--                            <label>Primary</label>-->
+<!--                            <mat-form-field appearance="outline" class="w-100">-->
+<!--                                <mat-select [(value)]="selected">-->
+<!--                                    <ng-container *ngFor="let supervisor of supervisors">-->
+<!--                                        <mat-option [value]="supervisor.value">{{supervisor.viewValue}}</mat-option>-->
+<!--                                    </ng-container>-->
+<!--                                </mat-select>-->
+<!--                            </mat-form-field>-->
+<!--                        </div>-->
 
                         <div class="selected-secondary-area p-2">
-                            <label>Secondary</label>
-                            <input class="search-field" placeholder="search" type="text">
+<!--                            <label>Secondary</label>-->
+                            <input [(ngModel)]="searchSecondary" class="search-field" placeholder="Search" type="text">
+
                             <ul>
-                                <li (click)="selectedSecondary(secondary.secondarySupervisor)" *ngFor="let secondary of secondarySupervisorInTeam"
+                                <ng-container *ngFor="let secondary of secondarySupervisorInTeam | filter:searchSecondary; let i = index">
+                                <li (click)="selectedSecondary(secondary.secondarySupervisor)"
                                     [ngClass]="{'selected-secondary': secondary.secondarySupervisor == SelectedSecondarySupervisorInTeam }">
                                     <span>{{secondary.secondarySupervisor}}</span><span>{{secondary.assignAgents}}</span>
+
                                 </li>
+                                </ng-container>
                             </ul>
                         </div>
                     </div>
@@ -252,7 +254,7 @@
                                 <thead>
                                 <tr>
                                     <th class="select-check" scope="col">
-                                        <mat-checkbox (change)="checkUncheckAll()" [(ngModel)]="masterSelected" type="checkbox"></mat-checkbox>
+                                        <mat-checkbox (change)="checkUncheckAll('avail-agents')" [(ngModel)]="masterSelected2" type="checkbox"></mat-checkbox>
                                     </th>
 <!--                                    <th scope="col">User ID</th>-->
                                     <th scope="col">User Name</th>
@@ -261,9 +263,9 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr *ngFor="let data of availabeAgentsLis | filter:searchTerm">
+                                <tr *ngFor="let data of teamData | filter:searchTerm">
                                     <td class="select-check">
-                                        <mat-checkbox (change)="isAllSelected()" [(ngModel)]="data.isSelected" name="list_name" type="checkbox" value="{{data.id}}"></mat-checkbox>
+                                        <mat-checkbox (change)="isAllSelected('avail-agents')" [(ngModel)]="data.isSelected" name="list_name" type="checkbox" value="{{data.id}}"></mat-checkbox>
                                     </td>
 <!--                                    <td>{{data.id}}</td>-->
                                     <td>{{data.userName}}</td>
@@ -288,7 +290,7 @@
                                 <thead>
                                 <tr>
                                     <th class="select-check" scope="col">
-                                        <mat-checkbox (change)="checkUncheckAll()" [(ngModel)]="masterSelected" type="checkbox"></mat-checkbox>
+                                        <mat-checkbox (change)="checkUncheckAll('unavail-agents')" [(ngModel)]="masterSelected" type="checkbox"></mat-checkbox>
                                     </th>
 <!--                                    <th scope="col">User ID</th>-->
                                     <th scope="col">User Name</th>
@@ -300,22 +302,22 @@
 
                                 <tr *ngFor="let data of availabeAgentsLis | filter:searchTerm">
                                     <td class="select-check">
-                                        <mat-checkbox (change)="isAllSelected()" [(ngModel)]="data.isSelected" name="list_name" type="checkbox" value="{{data.id}}"></mat-checkbox>
+                                        <mat-checkbox (change)="isAllSelected('unavail-agents')" [(ngModel)]="data.isSelected" name="list_name" type="checkbox" value="{{data.id}}"></mat-checkbox>
                                     </td>
 <!--                                    <td>{{data.id}}</td>-->
                                     <td>{{data.userName}}</td>
                                     <td>{{data.firstName}}</td>
                                     <td>{{data.lastName}}</td>
                                 </tr>
-                                <tr *ngFor="let data of availabeAgentsLis | filter:searchTerm">
-                                    <td class="select-check">
-                                        <mat-checkbox (change)="isAllSelected()" [(ngModel)]="data.isSelected" name="list_name" type="checkbox" value="{{data.id}}"></mat-checkbox>
-                                    </td>
-<!--                                    <td>{{data.id}}</td>-->
-                                    <td>{{data.userName}}</td>
-                                    <td>{{data.firstName}}</td>
-                                    <td>{{data.lastName}}</td>
-                                </tr>
+<!--                                <tr *ngFor="let data of availabeAgentsLis | filter:searchTerm">-->
+<!--                                    <td class="select-check">-->
+<!--                                        <mat-checkbox (change)="isAllSelected('avail-agents')" [(ngModel)]="data.isSelected" name="list_name" type="checkbox" value="{{data.id}}"></mat-checkbox>-->
+<!--                                    </td>-->
+<!--&lt;!&ndash;                                    <td>{{data.id}}</td>&ndash;&gt;-->
+<!--                                    <td>{{data.userName}}</td>-->
+<!--                                    <td>{{data.firstName}}</td>-->
+<!--                                    <td>{{data.lastName}}</td>-->
+<!--                                </tr>-->
                                 </tbody>
                             </table>
                         </div>
