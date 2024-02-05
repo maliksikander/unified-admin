@@ -69,6 +69,147 @@ export class UsersComponent implements OnInit {
   newREUserData: any;
   managePermission: boolean = false;
 
+  teamAttributes = [
+    {
+      'id': '6540acdaa9138a5942kke99790',
+      'attributeName': 'English',
+      isSelected: false
+    },{
+      'id': '6540acdaa9138a5942kke99790',
+      'attributeName': 'french',
+      isSelected: false
+    },{
+      'id': '6540acdaa9138a5942kke99790',
+      'attributeName': 'voice',
+      isSelected: false
+    },{
+      'id': '6540acdaa9138a5942kke99790',
+      'attributeName': 'spanish',
+      isSelected: false
+    },{
+      'id': '6540acdaa9138a5942kke99790',
+      'attributeName': 'Technical Support',
+      isSelected: false
+    },{
+      'id': '6540acdaa9138a5942kke99790',
+      'attributeName': 'chat queue',
+      isSelected: false
+    },{
+      'id': '6540acdaa9138a5942kke99790',
+      'attributeName': 'Customer Support',
+      isSelected: false
+    },{
+      'id': '6540acdaa9138a5942kke99790',
+      'attributeName': 'channel team',
+      isSelected: false
+    },
+
+  ];
+  availabeAgentsLis = [
+    {
+      'id': '6540ac42kk',
+      'userName': 'john-hamilton',
+      'firstName': 'john ',
+      'lastName': 'Hamilton',
+      'email': 'aclemits0@pagesperso-orange.fr',
+      isSelected: false
+
+    }, {
+      'id': '42kke99790',
+      'userName': 'andrewT9',
+      'firstName': 'Andrew ',
+      'lastName': 'Trate',
+      'email': 'bjays1@technorati.com',
+      isSelected: false
+
+    }, {
+      'id': '138a594244e9',
+      'userName': 'mhanery98',
+      'firstName': 'Michal ',
+      'lastName': 'Hanery',
+      'email': 'rfernandez3@elegantthemes.com',
+      isSelected: false
+
+    }, {
+      'id': '65138a5942',
+      'userName': 'g_ashley',
+      'firstName': 'ashley ',
+      'lastName': 'graham',
+      'email': 'aclemits0@pagesperso-orange.fr',
+      isSelected: false
+
+    }, {
+      'id': '54138a5942',
+      'userName': 'a_miller54',
+      'firstName': 'Adam ',
+      'lastName': 'Miller',
+      'email': 'cnevin4@istockphoto.com',
+      isSelected: false
+
+    }, {
+      'id': '6540ac4299',
+      'userName': 'h_andy541',
+      'firstName': 'Hamilton ',
+      'lastName': 'Andu',
+      'email': 'aclemits0@pagesperso-orange.fr',
+      isSelected: false
+
+    }, {
+      'id': '138a594244e9',
+      'userName': 'mhanery98',
+      'firstName': 'Michal ',
+      'lastName': 'Hanery',
+      'email': 'rfernandez3@elegantthemes.com',
+      isSelected: false
+
+    }, {
+      'id': '65138a5942',
+      'userName': 'g_ashley',
+      'firstName': 'ashley ',
+      'lastName': 'graham',
+      'email': 'aclemits0@pagesperso-orange.fr',
+      isSelected: false
+
+    }, {
+      'id': '54138a5942',
+      'userName': 'a_miller54',
+      'firstName': 'Adam ',
+      'lastName': 'Miller',
+      'email': 'cnevin4@istockphoto.com',
+      isSelected: false
+
+    }, {
+      'id': '6540ac4299',
+      'userName': 'h_andy541',
+      'firstName': 'Hamilton ',
+      'lastName': 'Andu',
+      'email': 'aclemits0@pagesperso-orange.fr',
+      isSelected: false
+
+    }, {
+      'id': '4758e99790',
+      'userName': 'j_trate55',
+      'firstName': 'Json ',
+      'lastName': 'Trate',
+      'email': 'aclemis0@pagesperso-orange.fr',
+      isSelected: false
+
+    }, {
+      'id': '588a594244e9',
+      'userName': 'ncawsy5',
+      'firstName': 'Norton ',
+      'lastName': 'Cawsy',
+      'email': 'aclemis0@pagesperso-orange.fr',
+      isSelected: false
+
+    }
+  ];
+  masterSelected: boolean;
+  checkedList: any;
+  masterSelected2: boolean;
+  checkedList2: any;
+
+
   constructor(
     private commonService: CommonService,
     private dialog: MatDialog,
@@ -608,5 +749,73 @@ export class UsersComponent implements OnInit {
 
   selectPage() {
     this.itemsPerPage = this.selectedItem;
+  }
+
+  //assign bulk attributes
+  assignUnassignAgents(templateRef) {
+
+    let dialogRef = this.dialog.open(templateRef, {
+      width: '100%',
+      maxWidth: '1200px',
+      maxHeight: '100vh',
+      panelClass: ['add-attribute', 'assign-unassign-agents'],
+      disableClose: true,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+    });
+
+  }
+
+  checkUncheckAll(e) {
+    if (e == 'avail-agents') {
+
+      for (var i = 0; i < this.availabeAgentsLis.length; i++) {
+        this.availabeAgentsLis[i].isSelected = this.masterSelected;
+      }
+      this.getCheckedItemList(e);
+    }
+    else {
+
+      for (var i = 0; i < this.teamAttributes.length; i++) {
+        this.teamAttributes[i].isSelected = this.masterSelected2;
+      }
+      this.getCheckedItemList('avail-agents');
+    }
+  }
+
+  isAllSelected(e) {
+    if (e == 'avail-agents') {
+      this.masterSelected = this.availabeAgentsLis.every(function(item: any) {
+        return item.isSelected == true;
+      });
+      this.getCheckedItemList(e);
+    }else {
+      this.masterSelected2 = this.teamAttributes.every(function(item: any) {
+        return item.isSelected == true;
+      });
+      this.getCheckedItemList('avail-agents');
+    }
+  }
+
+  getCheckedItemList(e) {
+    this.checkedList = [];
+    this.checkedList2 = [];
+    if (e == 'avail-agents') {
+      for (var i = 0; i < this.availabeAgentsLis.length; i++) {
+        if (this.availabeAgentsLis[i].isSelected) {
+          this.checkedList.push(this.availabeAgentsLis[i]);
+        }
+      }
+      this.checkedList = JSON.stringify(this.checkedList);
+    }
+    else {
+      for (var i = 0; i < this.teamAttributes.length; i++) {
+        if (this.teamAttributes[i].isSelected) {
+          this.checkedList2.push(this.teamAttributes[i]);
+        }
+      }
+      this.checkedList2 = JSON.stringify(this.checkedList2);
+    }
   }
 }
