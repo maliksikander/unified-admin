@@ -189,7 +189,6 @@
   </div>
 </ng-template>
 
-
 <ng-template #assignAttributeForm>
   <div class="user-dialog-container dialog-container">
     <div class="mat-card-header">
@@ -286,11 +285,85 @@
       <h4 class="content-span full-width">Bulk assign attributes</h4>
     </div>
     <div class="dialog-content pl-4 pr-4">
+      <div class="main-filter-area m-0">
+        <div class="form-group ml-0">
+          <mat-label>Team</mat-label>
+          <div class="multi-select-options form-control">
+            <angular2-multiselect
+                    (onDeSelect)="OnItemDeSelect($event)"
+                    (onSelect)="onItemSelect($event)"
+                    [(ngModel)]="availableTeam"
+                    [data]="dropdownList"
+                    [ngModelOptions]="{ standalone: true }"
+                    [settings]="dropdownSettings">
+              <c-badge>
+                <ng-template let-item="item">
+                  <label class="item-name">{{ item.team }}</label>
+                </ng-template>
+              </c-badge>
+              <c-item>
+                <ng-template let-item="item">
+                  <label class="item-list-name">{{ item.team }}</label>
+                </ng-template>
+              </c-item>
+            </angular2-multiselect>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <mat-label>Queue</mat-label>
+          <div class="multi-select-options form-control">
+            <angular2-multiselect
+                    (onDeSelect)="OnItemDeSelect($event)"
+                    (onSelect)="onItemSelect($event)"
+                    [(ngModel)]="availableTeam"
+                    [data]="dropdownList"
+                    [ngModelOptions]="{ standalone: true }"
+                    [settings]="dropdownSettings">
+              <c-badge>
+                <ng-template let-item="item">
+                  <label class="item-name">{{ item.queue }}</label>
+                </ng-template>
+              </c-badge>
+              <c-item>
+                <ng-template let-item="item">
+                  <label class="item-list-name">{{ item.queue }}</label>
+                </ng-template>
+              </c-item>
+            </angular2-multiselect>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <mat-label>Attributes</mat-label>
+          <div class="multi-select-options form-control">
+            <angular2-multiselect
+                    (onDeSelect)="OnItemDeSelect($event)"
+                    (onSelect)="onItemSelect($event)"
+                    [(ngModel)]="availableTeam"
+                    [data]="dropdownList"
+                    [ngModelOptions]="{ standalone: true }"
+                    [settings]="dropdownSettings">
+              <c-badge>
+                <ng-template let-item="item">
+                  <label class="item-name">{{ item.attribute }}</label>
+                </ng-template>
+              </c-badge>
+              <c-item>
+                <ng-template let-item="item">
+                  <label class="item-list-name">{{ item.attribute }}</label>
+                </ng-template>
+              </c-item>
+            </angular2-multiselect>
+          </div>
+        </div>
+      </div>
+
       <div class="main-selected-filter row m-0">
         <ul class="m-0 p-0">
-          <li><label>Team</label> Marketing</li>
-          <li><label>Queue</label> English Marketing</li>
-          <li><label>Team</label> English, Spanish, French</li>
+          <li><label>Team</label> {{selectedData?.team}}</li>
+          <li><label>Queue</label> {{selectedData?.queue}}</li>
+          <li><label>Attribute</label> {{selectedData?.attribute}}</li>
         </ul>
       </div>
       <div class="assign-unassign-main row m-0">

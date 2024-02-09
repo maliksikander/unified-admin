@@ -208,6 +208,12 @@ export class UsersComponent implements OnInit {
   checkedList: any;
   masterSelected2: boolean;
   checkedList2: any;
+  dropdownList = [];
+  selectedTeam = [];
+  dropdownSettings: any;
+  availableTeam = [];
+  selectedData: any;
+
 
 
   constructor(
@@ -220,6 +226,28 @@ export class UsersComponent implements OnInit {
 
   ngOnInit() {
     // this.commonService.checkTokenExistenceInStorage();
+
+    this.dropdownList = [
+      {'id': 1, 'team': 'Marketing', 'queue': 'Technical support', 'attribute': 'channel team'},
+      {'id': 2, 'team': 'Sales', 'queue': 'Chat Queue', 'attribute': 'English'},
+      {'id': 3, 'team': 'Customer support','queue': 'voice Queue', 'attribute': 'voice'},
+      {'id': 4, 'team': 'Customer Interaction', 'queue':'support', 'attribute': 'chat only'},
+      {'id': 5, 'team': 'Technical support', 'queue':'Marketing', 'attribute': 'Andrew Trate'},
+      {'id': 6, 'team': 'Chat Support', 'queue':'customer support', 'attribute': 'Customer Support'},
+      {'id': 7, 'team': 'Voice support', 'queue':'telegram', 'attribute': 'seles'},
+    ];
+    this.selectedTeam = [
+      {'id': 1, 'team': 'Marketing'},
+      {'id': 2, 'team': 'Sales'},
+    ];
+    this.dropdownSettings = {
+      singleSelection: true,
+      text: '',
+      enableSearchFilter: true,
+      classes: 'custom-class',
+      badgeShowLimit: 3,
+      searchPlaceholderText: 'Search'
+    };
 
     //setting local form validation messages
     this.validations = this.commonService.userFormErrorMessages;
@@ -817,5 +845,17 @@ export class UsersComponent implements OnInit {
       }
       this.checkedList2 = JSON.stringify(this.checkedList2);
     }
+  }
+
+  onItemSelect(item: any) {
+    this.selectedData = item;
+    console.log('this.selectedData1', this.selectedData);
+    console.log('this.selectedTeam', this.selectedTeam);
+  }
+
+  OnItemDeSelect(item: any) {
+    this.selectedData = item;
+    console.log('this.selectedData', this.selectedData);
+    console.log(this.selectedTeam);
   }
 }

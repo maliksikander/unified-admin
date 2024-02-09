@@ -10,6 +10,18 @@
         </div>
         <div class="routing-content panel-page-content">
           <div class="filter-section">
+            <div class="filter-area">
+              <div class="form-group">
+                <mat-form-field appearance="outline">
+                  <mat-select
+                              formControlName="valueType">
+                    <mat-option *ngFor="let queue of queueData" [value]="queue.name">
+                      {{queue.name}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="main-search-area">
             <div class="form-group search-field">
               <mat-form-field appearance="outline">
                 <input matInput [(ngModel)]="searchTerm" placeholder="Search">
@@ -22,6 +34,7 @@
               <mat-icon>add</mat-icon>
               Create Queue
             </button>
+            </div>
           </div>
 
           <div class="routing-accordion pq-accordion">
@@ -67,13 +80,17 @@
                     </mat-panel-title>
                   </mat-expansion-panel-header>
                   <div class="manage-step">
-                    <p>{{ data.steps?.length > 0 ? 'Steps' : 'No Steps Added'}}</p>
+                    <p class="manage-step-sub">
+                      <span>{{ data.steps?.length > 0 ? 'Steps' : 'No Steps Added'}}</span>
+                      <span class="available-agents-action" (click)="agentLists(agentsList)">View agents</span>
+                    </p>
                     <div *ngIf="data.steps?.length > 0" class="routing-table">
                       <table class="table">
                         <thead>
                           <tr>
                             <th scope="col">Criteria</th>
                             <th scope="col">Timeout(sec)</th>
+                            <th scope="col">Agents</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -114,6 +131,7 @@
                                 </button>
                               </span>
                             </td>
+                            <td><span class="available-agents-action" (click)="agentLists(agentsList)">14</span></td>
                           </tr>
                         </tbody>
                         <!-- </div> -->

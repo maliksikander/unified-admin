@@ -523,12 +523,6 @@
   div{
     display: inline-flex;
     }
-  .available-agents-action{
-    color: #1A50A1;
-    text-decoration: underline;
-    font-size: 13px;
-    cursor: pointer;
-    }
   }
 
 .agent-list{
@@ -547,5 +541,28 @@
   .routing-table {
     overflow: auto;
     max-height: 80vh;
+    }
+  }
+.available-agents-action{
+  color: #1A50A1;
+  text-decoration: underline;
+  font-size: 13px;
+  cursor: pointer;
+  }
+.manage-step-sub {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  }
+.filter-section{
+  justify-content: space-between;
+  div{
+    flex: 2;
+    display: inline-flex;
+    justify-content: right;
+    }
+  .filter-area{
+    text-align: left;
+    justify-content: left;
     }
   }

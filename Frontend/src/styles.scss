@@ -3826,3 +3826,44 @@ padding: 0;
     }
   }
 
+.main-filter-area {
+  .filter-select-all {
+    display: none;
+    }
+
+  .c-remove {
+    display: none !important;
+    opacity: 0;
+    visibility: hidden;
+    z-index: -5;
+    }
+
+  .c-list .c-token {
+    padding: 4px 0px !important;
+    background: transparent !important;
+    border: 0 !important;
+    &:before{
+      content: ",";
+      width: 10px;
+      text-align: center;
+      position: absolute;
+      left: -15px;
+      top: -1px;
+      font-size: 17px;
+      }
+    &:first-child{
+      &:before{
+        content: '';
+        display: none;
+        }
+      }
+    }
+
+  .c-label .item-name {
+     max-width: inherit !important;
+    }
+  }
+.filter-section .main-filter-area  .form-group .mat-form-field .mat-form-field-wrapper {
+  max-height: inherit;
+  padding-bottom: 0;
+  }
