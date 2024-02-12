@@ -10,18 +10,50 @@
                 </div>
                 <div class="routing-content panel-page-content">
                     <div class="filter-section">
-                        <div class="form-group search-field">
-                            <mat-form-field appearance="outline">
-                                <input [(ngModel)]="searchTerm" matInput placeholder="Search">
-                                <mat-icon>search</mat-icon>
-                            </mat-form-field>
+                        <div class="filter-area">
+                            <div class="form-group">
+                                <mat-form-field appearance="outline">
+                                    <mat-select
+                                            formControlName="valueType">
+                                        <mat-option *ngFor="let team of teamData" [value]="team.name">
+                                            {{team.name}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
                         </div>
+                        <div class="main-search-area">
+                            <div class="form-group search-field">
+                                <mat-form-field appearance="outline">
+                                    <input matInput [(ngModel)]="searchTerm" placeholder="Search">
+                                    <mat-icon>search</mat-icon>
+                                </mat-form-field>
+                            </div>
 
-                        <button (click)="addTeam(teamDialog)" mat-flat-button>
-                            <mat-icon>add</mat-icon>
-                            New Team
-                        </button>
+                            <button (click)="addTeam(teamDialog)" mat-flat-button>
+                                <mat-icon>add</mat-icon>
+                                New Team
+                            </button>
+                        </div>
                     </div>
+
+
+
+<!--                    <div class="filter-section">-->
+
+
+
+<!--                        <div class="form-group search-field">-->
+<!--                            <mat-form-field appearance="outline">-->
+<!--                                <input [(ngModel)]="searchTerm" matInput placeholder="Search">-->
+<!--                                <mat-icon>search</mat-icon>-->
+<!--                            </mat-form-field>-->
+<!--                        </div>-->
+
+<!--                        <button (click)="addTeam(teamDialog)" mat-flat-button>-->
+<!--                            <mat-icon>add</mat-icon>-->
+<!--                            New Team-->
+<!--                        </button>-->
+<!--                    </div>-->
 
                     <div class="routing-table">
                         <table class="table">

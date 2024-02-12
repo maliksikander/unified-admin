@@ -345,3 +345,15 @@
 
     }
   }
+.filter-section{
+  justify-content: space-between;
+  div{
+    flex: 2;
+    display: inline-flex;
+    justify-content: right;
+    }
+  .filter-area{
+    text-align: left;
+    justify-content: left;
+    }
+  }
