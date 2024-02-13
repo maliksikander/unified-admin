@@ -28,6 +28,8 @@ import { NotFoundComponent } from "../authentication/not-found/not-found.compone
 import {MrdTasksComponent} from "./route-settings/mrd-tasks/mrd-tasks.component";
 import {AgentDeskSettingsComponent} from "./agent-desk-settings/agent-desk-settings.component";
 import {TeamsComponent} from "./teams/teams.component";
+import {EmailSignatureComponent} from './email/email-signature/email-signature.component';
+import {EmailAutoResponseComponent} from './email/email-auto-response/email-auto-response.component';
 
 export const adminRoutes: Routes = [
   {
@@ -130,6 +132,12 @@ export const adminRoutes: Routes = [
       {
         path: "teams",
         component: TeamsComponent,
+      }, {
+        path: "email/signature",
+        component: EmailSignatureComponent,
+      }, {
+        path: "email/auto-response",
+        component: EmailAutoResponseComponent,
       },
       {
         path: "not-found",

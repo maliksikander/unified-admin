@@ -51,6 +51,8 @@ import { MrdTasksComponent } from './route-settings/mrd-tasks/mrd-tasks.componen
 import {AgentDeskSettingsComponent} from "./agent-desk-settings/agent-desk-settings.component";
 import { TeamsComponent } from './teams/teams.component';
 import {AngularMultiSelectModule} from "angular2-multiselect-dropdown";
+import {EmailAutoResponseComponent} from './email/email-auto-response/email-auto-response.component';
+import {EmailSignatureComponent} from './email/email-signature/email-signature.component';
 
 @NgModule({
   imports: [
@@ -105,7 +107,9 @@ import {AngularMultiSelectModule} from "angular2-multiselect-dropdown";
     ChannelProviderSettingsComponent,
     MrdTasksComponent,
     AgentDeskSettingsComponent,
-    TeamsComponent
+    TeamsComponent,
+    EmailAutoResponseComponent,
+    EmailSignatureComponent
   ],
   providers: [
     HttpClientModule,

@@ -13,8 +13,7 @@
                         <div class="filter-area">
                             <div class="form-group">
                                 <mat-form-field appearance="outline">
-                                    <mat-select
-                                            formControlName="valueType">
+                                    <mat-select>
                                         <mat-option *ngFor="let team of teamData" [value]="team.name">
                                             {{team.name}}</mat-option>
                                     </mat-select>

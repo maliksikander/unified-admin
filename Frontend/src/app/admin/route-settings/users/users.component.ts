@@ -12,6 +12,7 @@ import {
   transition,
   trigger,
 } from "@angular/animations";
+import {ConfirmDialogComponent} from '../../../shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: "app-users",
@@ -857,5 +858,18 @@ export class UsersComponent implements OnInit {
     this.selectedData = item;
     console.log('this.selectedData', this.selectedData);
     console.log(this.selectedTeam);
+  }
+  assign(){
+   this.dialog.open(ConfirmDialogComponent, {
+          panelClass: ['confirm-dialog-container' , 'delete-confirmation'],
+          disableClose: true,
+          data: {
+            heading: "Assign Attributes",
+            message: 'Are you sure you want to assign attributes ‘English’, ‘French’, ‘German’ to \n' +
+                '278 agents?',
+            text: "confirm",
+            data: '',
+          },
+        })
   }
 }

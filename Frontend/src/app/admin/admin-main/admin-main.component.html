@@ -171,6 +171,25 @@
               <span class="sidebar-text">Teams</span>
             </a>
 
+            <!-- Email Configuration -->
+            <mat-expansion-panel>
+              <mat-expansion-panel-header class='route-header-image-icon'>
+                <!-- <i style="font-size: 21px;" class="material-icons">compare_arrows</i> -->
+                <img src="assets/images/email-config.svg" class="img-size-adjustment" alt="Email config">
+                <span class="sidebar-text">Email</span>
+              </mat-expansion-panel-header>
+              <a *ngIf="agentTeams"mat-list-item [routerLinkActive]="['active-link']"
+                 [routerLink]="['/email/signature']">
+                <img src="assets/images/license.svg" class="img-size-adjustment" alt="agent Teams">
+                <span class="sidebar-text">Signature</span>
+              </a>
+              <a *ngIf="agentTeams" mat-list-item [routerLinkActive]="['active-link']"
+                 [routerLink]="['/email/auto-response']">
+                <img src="assets/images/channel-type.svg" class="img-size-adjustment" alt="agent Teams">
+                <span class="sidebar-text">Auto Response</span>
+              </a>
+            </mat-expansion-panel>
+
             <!-- Routing Configuration -->
             <mat-expansion-panel>
               <mat-expansion-panel-header class='route-header-image-icon'>
