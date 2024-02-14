@@ -275,7 +275,7 @@ button:focus {
   }
 
   mat-label {
-    color: #8b8b8b;
+    color: #5b5b5b;
     font-size: 12px;
     font-weight: 700;
     position: relative;
@@ -1534,6 +1534,27 @@ snack-bar-container {
     left: 14px;
     position: relative;
   }
+
+  &.add-team {
+    .mat-dialog-container {
+      overflow: visible;
+      }
+
+    .list-filter{
+      border: 1px solid #DBDBDB;
+      margin: 5px 10px;
+      border-radius: 4px;
+      }
+    .select-all {
+      padding: 10px 10px 0;
+      border-bottom: 0;
+      text-align: left;
+      display: none !important;
+      }
+    .list-area{
+      border-top: 0;
+      }
+    }
 }
 
 .template-action {
@@ -1621,7 +1642,7 @@ snack-bar-container {
 
 .dialog-container {
   width: 100%;
-  max-width: 600px !important;
+  //max-width: 600px !important;
   mat-dialog-container {
     padding: 0;
   }
@@ -1657,7 +1678,7 @@ snack-bar-container {
 
   .dialog-content {
     padding: 10px 40px;
-    max-width: 550px;
+    //max-width: 550px;
     margin: 0 auto;
 
     button {
@@ -1790,6 +1811,9 @@ snack-bar-container {
     .delete-action{
       background: #CE0000;
     }
+    .action-area{
+      text-align: center;
+      }
   }
 
   mat-dialog-container {
@@ -1849,7 +1873,7 @@ snack-bar-container {
   }
 
   p {
-    color: #919191;
+    color: #737373;
     font-size: 13px;
     padding: 15px;
     line-height: 20px;
@@ -3498,6 +3522,9 @@ snack-bar-container {
   text-align: right;
   width: 100%;
   padding: 0 0 15px;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
 
   .form-group {
     max-width: 260px;
@@ -3537,12 +3564,11 @@ snack-bar-container {
     margin-left: 10px;
     padding-left: 5px !important;
     background: $header-background;
-    color: $text-color;
+    color: #535353;
     font-weight: 600;
     font-size: 13px !important;
-    height: 35px;
-    line-height: 35px;
-    top: -4px;
+    height: 37px;
+    line-height: 37px;
 
     mat-icon {
       font-size: 20px;
@@ -3593,3 +3619,246 @@ snack-bar-container {
     line-height: 20px;
   }
 }
+
+//Multi select Options
+.form-control.multi-select-options {
+padding: 0;
+  margin-top: 5px;
+  .arrow-down.arrow-2, .arrow-down, .arrow-up.arrow-2, .arrow-up{
+    display: none;
+    }
+
+  .c-btn {
+
+    span {
+      font-size: 12px;
+      font-weight: 600;
+      border: 0 !important;
+
+      &:first-child {
+        color: rgba(0, 0, 0, 0.87);
+        }
+      }
+
+    .countplaceholder {
+      position: relative;
+      top: inherit !important;
+      right: inherit;
+      transform: inherit;
+
+      &:before {
+        content: '(';
+        }
+
+      &:after {
+        content: ')';
+        }
+      }
+    }
+
+  //.selected-list .c-angle-down,
+  //.selected-list .c-angle-up {
+  //  top: 50% !important;
+  //  transform: translate(0, -50%);
+  //
+  //  c-icon {
+  //    top: 4px;
+  //    width: 10px;
+  //    height: 10px;
+  //    border-left: 5px solid transparent;
+  //    border-right: 5px solid transparent;
+  //    border-top: 5px solid;
+  //    margin: 0 4px;
+  //    display: inline-block;
+  //    position: relative;
+  //    border-top-color: #757575;
+  //    }
+  //  }
+
+  .c-angle-up {
+    c-icon {
+      transform: rotate(180deg);
+      top: -1px !important;
+      }
+    }
+
+  .c-label {
+    margin: 0;
+    border: 0;
+    padding: 0;
+    display: inline-block !important;
+
+    .item-name {
+      height: 16px;
+      line-height: 14px;
+      margin: 0;
+      display: inline-block;
+      max-width: 100px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: left;
+      font-size: 13px;
+      }
+    }
+
+  .c-remove {
+    display: none !important;
+    }
+
+  .selected-list .c-list {
+    max-width: calc(100% - 20px);
+    width: auto;
+
+    .c-token {
+      border-radius: 20px;
+      border: 1px solid #E7EDF6;
+      background: #F3F6FA;
+      height: 26px;
+      line-height: 26px;
+      margin-top: 0;
+      span.c-remove{
+        display: inline-block !important;
+        color: #ACB7C6 !important;
+
+        svg {
+          fill: #ACB7C6;
+          border: 1px solid #ACB7C6;
+          padding: 2px;
+          width: 14px;
+          border-radius: 10px;
+          vertical-align: middle;
+          }
+
+        }
+      }
+    }
+
+  .dropdown-list {
+    top: 25px;
+    //width: auto;
+    input[type=checkbox]+label:before{
+      border: 1px solid #C2C2C2;
+      }
+
+    ul li {
+      padding: 10px !important;
+      cursor: pointer;
+      text-align: left;
+      display: inline-flex;
+      flex-direction: row;
+      width: 100%;
+      flex-wrap: nowrap;
+
+      label.item-list-name {
+        font-size: 13px;
+        font-weight: 600;
+        text-transform: capitalize;
+        cursor: pointer;
+        margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        width: calc(100% - 33px);
+        max-width: 330px;
+        text-overflow: ellipsis;
+        line-height: 16px;
+
+        }
+      }
+    }
+
+  .pure-checkbox.select-all span {
+    font-size: 13px;
+    }
+
+  .cuppa-dropdown {
+    ul {
+      height: auto !important;
+      max-height: 150px;
+      }
+    }
+
+  //.queue-list-dropdown {
+  //  .list-area {
+  //    position: absolute;
+  //    right: -70px;
+  //    width: max-content;
+  //    }
+  //  }
+
+  }
+
+.agents-list-dialog{
+  .dialog-container, .dialog-content{
+    max-width: 950px !important;
+    }
+  }
+
+
+//Assign unassign agents
+.assign-unassign-agents{
+  .dialog-container{
+    max-width: inherit !important;
+    }
+  .mat-checkbox-frame {
+    border-color: #E7EDF6;
+    background: #ffffff !important;
+    }
+  .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+    background-color: #2b6fd9;
+    }
+  }
+.selected-team-supervisor {
+  .mat-form-field-outline {
+    background: #F3F6FA;
+    border-radius: 5px;
+    }
+  .mat-select-value-text span, .mat-select-arrow{
+    color: #1A50A2;
+    }
+  .mat-form-field-appearance-outline .mat-form-field-outline-start, .mat-form-field-appearance-outline .mat-form-field-outline-end{
+    border: 0;
+    }
+  }
+
+.main-filter-area {
+  .filter-select-all {
+    display: none;
+    }
+
+  .c-remove {
+    display: none !important;
+    opacity: 0;
+    visibility: hidden;
+    z-index: -5;
+    }
+
+  .c-list .c-token {
+    padding: 4px 0px !important;
+    background: transparent !important;
+    border: 0 !important;
+    &:before{
+      content: ",";
+      width: 10px;
+      text-align: center;
+      position: absolute;
+      left: -15px;
+      top: -1px;
+      font-size: 17px;
+      }
+    &:first-child{
+      &:before{
+        content: '';
+        display: none;
+        }
+      }
+    }
+
+  .c-label .item-name {
+     max-width: inherit !important;
+    }
+  }
+.filter-section .main-filter-area  .form-group .mat-form-field .mat-form-field-wrapper {
+  max-height: inherit;
+  padding-bottom: 0;
+  }

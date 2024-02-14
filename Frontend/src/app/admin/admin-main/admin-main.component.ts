@@ -37,6 +37,7 @@ export class AdminMainComponent implements OnInit {
   botBool: boolean = false;
   formBool: boolean = false;
   reasonCodeBool: boolean = false;
+  agentTeams: boolean = true;
   pullModeBool: boolean = false;
   webWidgetBool: boolean = false;
   channelBool: boolean = false;
@@ -113,6 +114,12 @@ export class AdminMainComponent implements OnInit {
           let scopes: Array<any> = item?.scopes;
           scopes.forEach((scope: any) => {
             if (scope == "view") this.reasonCodeBool = true;
+          });
+        }
+        if (item.rsname === "teams") {
+          let scopes: Array<any> = item?.scopes;
+          scopes.forEach((scope: any) => {
+            if (scope == "view") this.agentTeams = true;
           });
         }
 
