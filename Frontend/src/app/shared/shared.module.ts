@@ -43,6 +43,7 @@ import { ConfirmDialogComponent } from "./confirm-dialog/confirm-dialog.componen
 import { NgxPaginationModule } from "ngx-pagination";
 import { Ng2SearchPipeModule } from "ng2-search-filter";
 import {AngularMultiSelectModule} from "angular2-multiselect-dropdown";
+import {QuillModule} from 'ngx-quill';
 
 @NgModule({
   declarations: [
@@ -106,7 +107,8 @@ import {AngularMultiSelectModule} from "angular2-multiselect-dropdown";
     MatTooltipModule,
     MatTreeModule,
     MatBottomSheetModule,
-    AngularMultiSelectModule
+    AngularMultiSelectModule,
+    QuillModule.forRoot()
   ],
   exports: [
     DragDropModule,
@@ -167,6 +169,7 @@ import {AngularMultiSelectModule} from "angular2-multiselect-dropdown";
     RemoveCharacterFilterPipe,
     NgxPaginationModule,
     Ng2SearchPipeModule,
+    QuillModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   entryComponents: [ConfirmDialogComponent],

@@ -16,8 +16,32 @@ export class EmailSignatureComponent implements OnInit {
     searchTerm = '';
     spinner: any = false;
     formHeading = 'Create signature';
-    saveBtnText = 'Add';
+    saveBtnText = 'Create';
     signatures = '';
+    htmlText ="";
+    quillConfig = {
+        toolbar: {
+            container: [
+                ['bold', 'italic', 'underline', 'strike'], // toggled buttons
+                [{list: 'ordered'}, {list: 'bullet'}],
+                //  [{ script: "sub" }, { script: "super" }], // superscript/subscript
+                //  [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
+                // [{ direction: "rtl" }], // text direction
+
+                // [{ size: ["small", false, "large", "huge"] }], // custom dropdown
+                [{'header': [1, 2, 3, 4, 5, 6, false]}],
+                [{color: []}, {background: []}],
+
+                [{font: []}],
+                [{align: []}],
+
+                ['clean'], // remove formatting button
+
+                ['link', 'image'],
+                ['attachment']
+            ],
+        }
+    };
 
     signatureData = [
         {
@@ -65,7 +89,8 @@ export class EmailSignatureComponent implements OnInit {
         this.signatures = data.name;
 
         let dialogRef = this.dialog.open(templateRef, {
-            width: '550px',
+            width: '100%',
+            maxWidth: '800px',
             panelClass: ['add-attribute', 'add-team'],
             disableClose: true,
             data: data,
@@ -78,7 +103,8 @@ export class EmailSignatureComponent implements OnInit {
     addSignature(templateRef) {
         this.formHeading = 'Create signature';
         let dialogRef = this.dialog.open(templateRef, {
-            width: '550px',
+            width: '100%',
+            maxWidth: '800px',
             panelClass: ['add-attribute', 'add-team'],
             disableClose: true,
         });

@@ -357,3 +357,12 @@
     justify-content: left;
     }
   }
+
+.email-main{
+  position: relative;
+  }
+.email-signature-option{
+  mat-checkbox{
+    margin-right: 2em;
+    }
+  }
