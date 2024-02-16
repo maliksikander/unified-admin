@@ -1,1 +1,131 @@
-<p>email-auto-response works!</p>
+<div *ngIf="spinner" class="loading-area">
+    <mat-spinner></mat-spinner>
+</div>
+<div class="container main-custom-container">
+    <div class="row">
+        <div class="col-sm-12 p-0">
+            <div class="panel-body">
+                <div class="sub-heading">
+                    <h2>Email Settings - Auto Response</h2>
+                </div>
+                <div class="routing-content panel-page-content">
+                    <div class="filter-section">
+                        <div class="main-search-area">
+
+                            <button (click)="addSignature(signatureDialog)" mat-flat-button>
+                                <mat-icon>add</mat-icon>
+                                New Response
+                            </button>
+                        </div>
+                    </div>
+                    <div class="routing-table">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Response name</th>
+                                <th scope="col">Email ID</th>
+                                <th scope="col">Signature</th>
+                                <th scope="col">Team</th>
+                            </tr>
+                            </thead>
+                            <tbody *ngIf="signatureData && signatureData.length != 0">
+                            <tr *ngFor="let data of signatureData | filter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
+
+                                <td>{{data.user}}</td>
+                                <td>{{data.email}}</td>
+                                <td>{{data.signatureName}}</td>
+                                <td class="table-trigger">
+                                    {{data.team}}
+                                    <span class="list-trigger-area">
+                                            <button (click)="editSignature(signatureDialog,data)" mat-mini-fab matTooltip="Edit">
+                                        <!-- <i class="fa fa-pencil" aria-hidden="true"></i> -->
+                                        <mat-icon>mode_edit</mat-icon>
+                                        </button>
+                                        <button (click)="deleteConfirm(data)" mat-mini-fab matTooltip="Delete">
+                                        <!-- <i class="fa fa-trash-o" aria-hidden="true"></i> -->
+                                        <mat-icon>delete</mat-icon>
+                                        </button>
+                                        </span>
+                                </td>
+                            </tr>
+
+                            </tbody>
+
+                            <div *ngIf="signatureData && signatureData.length == 0" class="no-data-warning">
+                                <i class="material-icons">warning_amber</i>
+                                <span>No Data Found</span>
+                            </div>
+
+                        </table>
+                        <div *ngIf="signatureData && signatureData.length >= 6" class="pagination-section">
+                            <span class="page-span">
+                            <span>Entries Per Page</span>
+                            <select [(ngModel)]="selectedItem">
+                            <option *ngFor="let item of itemsPerPageList" [value]="item">{{ item }}
+                            </option>
+                            </select>
+                            </span>
+                            <pagination-controls (pageBoundsCorrection)="pageBoundChange($event)"
+                                                 (pageChange)="p = $event;pageChange($event)" nextLabel="" previousLabel="">
+                            </pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #signatureDialog>
+    <div class="dialog-container">
+        <div class="mat-card-header">
+            <mat-icon (click)="onClose()">close</mat-icon>
+            <h4 class="content-span full-width">{{formHeading}}</h4>
+        </div>
+        <div class="dialog-content">
+            <!--                <form class="form-horizontal form-bordered"  [formGroup]="loginForm">-->
+            <div class="form-group">
+                <mat-label>Response name</mat-label>
+                <mat-form-field appearance="outline">
+                    <input [(ngModel)]="signatures" matInput>
+                </mat-form-field>
+            </div>
+            <div class="form-group">
+                <mat-label>Include Email ID(s)</mat-label>
+                <mat-form-field appearance="outline">
+                    <input [(ngModel)]="signatures" matInput>
+                </mat-form-field>
+            </div>
+
+
+            <div class="form-group mb-4 email-main">
+                <mat-label>Auto-Response</mat-label>
+                <quill-editor [(ngModel)]="htmlText"
+                              [modules]="quillConfig"
+                              placeholder="Signature text"></quill-editor>
+            </div>
+
+
+            <div class="form-group mb-4">
+                <mat-label>Email ID</mat-label>
+                <mat-form-field appearance="outline">
+                    <mat-select>
+                        <mat-option *ngFor="let data of signatureData" [value]="data.email">
+                            {{data?.email}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="template-action row">
+                <div class="col-md-12">
+                    <div class="form-action-area">
+                        <button (click)="onClose()" class="gray-btn" mat-raised-button>Cancel</button>
+                        <button class="blue-btn service-trigger"
+                                mat-raised-button>{{saveBtnText}}</button>
+                    </div>
+                </div>
+            </div>
+            <!--                </form >-->
+        </div>
+    </div>
+</ng-template>
