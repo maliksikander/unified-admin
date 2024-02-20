@@ -42,6 +42,7 @@ import { RemoveCharacterFilterPipe } from "./remove-character.pipe";
 import { ConfirmDialogComponent } from "./confirm-dialog/confirm-dialog.component";
 import { NgxPaginationModule } from "ngx-pagination";
 import { Ng2SearchPipeModule } from "ng2-search-filter";
+import {QuillModule} from 'ngx-quill';
 
 @NgModule({
   declarations: [
@@ -105,6 +106,8 @@ import { Ng2SearchPipeModule } from "ng2-search-filter";
     MatTooltipModule,
     MatTreeModule,
     MatBottomSheetModule,
+    QuillModule.forRoot()
+
   ],
   exports: [
     DragDropModule,
@@ -165,6 +168,7 @@ import { Ng2SearchPipeModule } from "ng2-search-filter";
     RemoveCharacterFilterPipe,
     NgxPaginationModule,
     Ng2SearchPipeModule,
+    QuillModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   entryComponents: [ConfirmDialogComponent],

@@ -6,6 +6,8 @@
 @import "~material-design-icons/iconfont/material-icons.css";
 @import "../node_modules/angular-calendar/css/angular-calendar.css";
 @import "~src/assets/themes/blue-theme";
+@import "~quill/dist/quill.bubble.css";
+@import "~quill/dist/quill.snow.css";
 
 $dark-font-color: #333333;
 $light-font-color: #f1f1f1;
@@ -275,7 +277,7 @@ button:focus {
   }
 
   mat-label {
-    color: #8b8b8b;
+    color: #5b5b5b;
     font-size: 12px;
     font-weight: 700;
     position: relative;
@@ -1621,7 +1623,7 @@ snack-bar-container {
 
 .dialog-container {
   width: 100%;
-  max-width: 600px !important;
+  //max-width: 600px !important;
   mat-dialog-container {
     padding: 0;
   }
@@ -1657,7 +1659,7 @@ snack-bar-container {
 
   .dialog-content {
     padding: 10px 40px;
-    max-width: 550px;
+    //max-width: 550px;
     margin: 0 auto;
 
     button {
@@ -1790,6 +1792,9 @@ snack-bar-container {
     .delete-action{
       background: #CE0000;
     }
+    .action-area{
+      text-align: center;
+      }
   }
 
   mat-dialog-container {
@@ -1849,7 +1854,7 @@ snack-bar-container {
   }
 
   p {
-    color: #919191;
+    color: #737373;
     font-size: 13px;
     padding: 15px;
     line-height: 20px;
@@ -3593,3 +3598,132 @@ snack-bar-container {
     line-height: 20px;
   }
 }
+
+
+//Email compose
+
+quill-editor {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgb(0 0 0 / 13%);
+  border-radius: 5px;
+  margin-top: 7px;
+
+  .ql-editor.ql-blank::before {
+    font-size: 14px;
+    font-style: normal;
+    color: #E7EDF6 !important;
+    }
+  .ql-container .ql-editor {
+    min-height: 225px;
+    height: auto;
+    max-height: 230px;
+    overflow: auto;
+
+    p{
+      padding: 0;
+      color: inherit;
+      }
+    img {
+      max-width: 300px;
+      max-height: 40px;
+      }
+
+    }
+  .ql-snow .ql-picker.ql-expanded .ql-picker-options {
+    display: block;
+    margin-top: -1px;
+    //top: 100%;
+    z-index: 1;
+    top: auto;
+    bottom: 100%;
+    }
+  .ql-snow + .ql-container.ql-snow {
+    border: 0;
+    }
+  .ql-container {
+    border-radius: 0;
+    border: 0 !important;
+    }
+  .ql-toolbar {
+    order: 2;
+    border: 1px solid #EFF2F7 !important;
+    border-left-width: 0 !important;
+    border-right-width: 0 !important;
+    //position: absolute;
+    bottom: 1px;
+    z-index: 9;
+    //width: calc(100% - 2px);
+    background: #F2F4F7;
+    border-radius: 0 0 4px 4px;
+    }
+  //.ql-snow .ql-stroke, .ql-snow .ql-fill, .ql-snow .ql-stroke.ql-fill{
+  //  stroke: #888;
+  //}
+  .ql-formats{
+    position: relative;
+    margin: 0 !important;
+    padding: 0 5px;
+    button, .ql-picker{
+      opacity: .6;
+      z-index: 2;
+
+      &:hover{
+        background: rgba(0,0,0,.1);
+        }
+      }
+    &:after {
+      content: '';
+      background: #E5E5E5;
+      height: 15px;
+      position: absolute;
+      width: 1px;
+      top: 50%;
+      display: block;
+      transform: translate(0, -50%);
+      right: 0;
+      }
+    }
+  .ql-picker-label{
+    padding-top: 0 !important;
+    }
+  }
+button.ql-attachment {
+
+  &:after {
+    font-family: 'Material Icons';
+    font-style: normal;
+    color: #000000bd;
+    font-size: 22px;
+    line-height: 18px;
+    text-align: center;
+    margin: 0;
+    left: -2px;
+    position: relative;
+    content: 'attachment';
+    transform: rotate(-90deg);
+    display: inline-block;
+    }
+  &:hover{
+    &:after {
+      color: #06c;
+      }
+
+    }
+  }
+
+.signature-options {
+  //background: #ccc;
+
+  label {
+    margin: 0;
+    }
+  .mat-checkbox-inner-container {
+    height: 20px;
+    width: 20px;
+
+    .mat-checkbox-frame {
+      border-color: rgb(85 85 85 / 54%);
+      }
+    }
+  }

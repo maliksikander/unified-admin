@@ -49,6 +49,8 @@ import { ChannelProviderComponent } from "./channel-manager/channel-provider/cha
 import { ChannelProviderSettingsComponent } from "./channel-manager/channel-provider/channel-provider-settings/channel-provider-settings.component";
 import { MrdTasksComponent } from './route-settings/mrd-tasks/mrd-tasks.component';
 import {AgentDeskSettingsComponent} from "./agent-desk-settings/agent-desk-settings.component";
+import { EmailAutoResponseComponent } from './email/email-auto-response/email-auto-response.component';
+import { EmailSignatureComponent } from './email/email-signature/email-signature.component';
 
 @NgModule({
   imports: [
@@ -101,7 +103,9 @@ import {AgentDeskSettingsComponent} from "./agent-desk-settings/agent-desk-setti
     ChannelProviderComponent,
     ChannelProviderSettingsComponent,
     MrdTasksComponent,
-    AgentDeskSettingsComponent
+    AgentDeskSettingsComponent,
+    EmailAutoResponseComponent,
+    EmailSignatureComponent
   ],
   providers: [
     HttpClientModule,
