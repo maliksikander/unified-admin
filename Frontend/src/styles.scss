@@ -3894,6 +3894,10 @@ quill-editor {
       padding: 0;
       color: inherit;
       }
+     img {
+      max-width: 300px;
+      max-height: 40px;
+      }
 
     }
   .ql-snow .ql-picker.ql-expanded .ql-picker-options {

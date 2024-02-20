@@ -14,7 +14,7 @@ export class EmailAutoResponseComponent implements OnInit {
   selectedItem = this.itemsPerPageList[0];
   searchTerm = '';
   spinner: any = false;
-  formHeading = 'Create signature';
+  formHeading = 'Create Auto-Response';
   saveBtnText = 'Create';
   signatures = '';
   htmlText ="";
@@ -83,7 +83,7 @@ export class EmailAutoResponseComponent implements OnInit {
 
 
   editSignature(templateRef, data) {
-    this.formHeading = 'Edit signature';
+    this.formHeading = 'Edit Response';
     this.saveBtnText = 'Update';
     this.signatures = data.name;
 
@@ -100,7 +100,7 @@ export class EmailAutoResponseComponent implements OnInit {
   }
 
   addSignature(templateRef) {
-    this.formHeading = 'Create signature';
+    this.formHeading = 'Create Response';
     let dialogRef = this.dialog.open(templateRef, {
       width: '100%',
       maxWidth: '800px',
@@ -112,14 +112,14 @@ export class EmailAutoResponseComponent implements OnInit {
   }
 
   deleteConfirm(e) {
-    let msg = `Are you sure you want to delete " ${e.name} " signature ?`;
+    let msg = `Are you sure you want to delete " ${e.name} " Response ?`;
     return this.dialog
         .open(ConfirmDialogComponent, {
           panelClass: ['confirm-dialog-container', 'delete-confirmation'],
           disableClose: true,
           width: '500px',
           data: {
-            heading: 'Delete signature',
+            heading: 'Delete Response',
             message: msg,
             text: 'confirm'
           },

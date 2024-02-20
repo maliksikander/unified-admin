@@ -344,8 +344,7 @@ export class TeamsComponent implements OnInit {
                 this.availabeAgentsLis[i].isSelected = this.masterSelected;
             }
             this.getCheckedItemList(e);
-        }
-        else {
+        } else {
 
             for (var i = 0; i < this.teamData.length; i++) {
                 this.teamData[i].isSelected = this.masterSelected2;
@@ -360,7 +359,7 @@ export class TeamsComponent implements OnInit {
                 return item.isSelected == true;
             });
             this.getCheckedItemList(e);
-        }else {
+        } else {
             this.masterSelected2 = this.teamData.every(function(item: any) {
                 return item.isSelected == true;
             });
@@ -378,8 +377,7 @@ export class TeamsComponent implements OnInit {
                 }
             }
             this.checkedList = JSON.stringify(this.checkedList);
-        }
-        else {
+        } else {
             for (var i = 0; i < this.teamData.length; i++) {
                 if (this.teamData[i].isSelected) {
                     this.checkedList2.push(this.teamData[i]);
