@@ -49,11 +49,12 @@ import { ChannelProviderComponent } from "./channel-manager/channel-provider/cha
 import { ChannelProviderSettingsComponent } from "./channel-manager/channel-provider/channel-provider-settings/channel-provider-settings.component";
 import { MrdTasksComponent } from './route-settings/mrd-tasks/mrd-tasks.component';
 import {AgentDeskSettingsComponent} from "./agent-desk-settings/agent-desk-settings.component";
+import {AngularMultiSelectModule} from 'angular2-multiselect-dropdown';
 
 @NgModule({
   imports: [
     SharedModule,
-    RouterModule.forRoot(adminRoutes, { relativeLinkResolution: "legacy" }),
+    RouterModule.forRoot(adminRoutes, {relativeLinkResolution: 'legacy'}),
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
@@ -66,6 +67,7 @@ import {AgentDeskSettingsComponent} from "./agent-desk-settings/agent-desk-setti
     ColorSketchModule,
     ColorCircleModule,
     ColorPickerModule,
+    AngularMultiSelectModule,
   ],
   declarations: [
     AdminMainComponent,

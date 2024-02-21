@@ -21,6 +21,7 @@
               <mat-icon>sync</mat-icon>
               Sync
             </button> -->
+            <button mat-flat-button class="bulk-assign-trigger" (click)="assignUnassignAgents(assignBulkAttribute)">Bulk assign</button>
           </div>
 
           <div class="users-list">
@@ -31,6 +32,8 @@
                     <th scope="col">First Name</th>
                     <th scope="col">Last Name</th>
                     <th scope="col">Attributes</th>
+                    <th scope="col">Team</th>
+                    <th scope="col">Queue</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -69,6 +72,12 @@
                         </mat-chip>
                         <!-- <mat-chip *ngIf="data.attributes?.length > 3">+{{data.attributes?.length - 3}}</mat-chip> -->
                       </mat-chip-list>
+                    </td>
+                    <td>
+                      <span>Marketing</span>
+                    </td>
+                    <td>
+                      <span>Marketing 1, Marketing International, Marketing Local, Marketing Outbound</span>
                     </td>
                     <div class="list-action-area">
                       <span *ngIf="managePermission" class="list-actions">
@@ -266,3 +275,173 @@
     </div>
   </div>
 </ng-template>
+
+
+
+<!--assign Bulk attribute-->
+<ng-template #assignBulkAttribute>
+  <div class="dialog-container">
+    <div class="mat-card-header">
+      <mat-icon (click)="onClose()">close</mat-icon>
+      <h4 class="content-span full-width">Bulk assign attributes</h4>
+    </div>
+    <div class="dialog-content pl-4 pr-4">
+      <div class="main-filter-area m-0">
+        <div class="form-group ml-0">
+          <mat-label>Team</mat-label>
+          <div class="multi-select-options form-control">
+            <angular2-multiselect
+                    (onDeSelect)="OnItemDeSelect($event)"
+                    (onSelect)="onItemSelect($event)"
+                    [(ngModel)]="availableTeam"
+                    [data]="dropdownList"
+                    [ngModelOptions]="{ standalone: true }"
+                    [settings]="dropdownSettings">
+              <c-badge>
+                <ng-template let-item="item">
+                  <label class="item-name">{{ item.team }}</label>
+                </ng-template>
+              </c-badge>
+              <c-item>
+                <ng-template let-item="item">
+                  <label class="item-list-name">{{ item.team }}</label>
+                </ng-template>
+              </c-item>
+            </angular2-multiselect>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <mat-label>Queue</mat-label>
+          <div class="multi-select-options form-control">
+            <angular2-multiselect
+                    (onDeSelect)="OnItemDeSelect($event)"
+                    (onSelect)="onItemSelect($event)"
+                    [(ngModel)]="availableTeam"
+                    [data]="dropdownList"
+                    [ngModelOptions]="{ standalone: true }"
+                    [settings]="dropdownSettings">
+              <c-badge>
+                <ng-template let-item="item">
+                  <label class="item-name">{{ item.queue }}</label>
+                </ng-template>
+              </c-badge>
+              <c-item>
+                <ng-template let-item="item">
+                  <label class="item-list-name">{{ item.queue }}</label>
+                </ng-template>
+              </c-item>
+            </angular2-multiselect>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <mat-label>Attributes</mat-label>
+          <div class="multi-select-options form-control">
+            <angular2-multiselect
+                    (onDeSelect)="OnItemDeSelect($event)"
+                    (onSelect)="onItemSelect($event)"
+                    [(ngModel)]="availableTeam"
+                    [data]="dropdownList"
+                    [ngModelOptions]="{ standalone: true }"
+                    [settings]="dropdownSettings">
+              <c-badge>
+                <ng-template let-item="item">
+                  <label class="item-name">{{ item.attribute }}</label>
+                </ng-template>
+              </c-badge>
+              <c-item>
+                <ng-template let-item="item">
+                  <label class="item-list-name">{{ item.attribute }}</label>
+                </ng-template>
+              </c-item>
+            </angular2-multiselect>
+          </div>
+        </div>
+      </div>
+
+      <div class="main-selected-filter row m-0">
+        <ul class="m-0 p-0">
+          <li><label>Team</label> {{selectedData?.team}}</li>
+          <li><label>Queue</label> {{selectedData?.queue}}</li>
+          <li><label>Attribute</label> {{selectedData?.attribute}}</li>
+        </ul>
+      </div>
+      <div class="assign-unassign-main row m-0">
+        <div class="assign-unassign-data select-agents">
+          <div class="assigned-agents assign-data-area pt-0">
+            <div class="table-selected-data"><label>256 agents</label></div>
+            <div class="assigned-table">
+              <div class="search-area">
+                <input [(ngModel)]="searchTerm" class="search-field" placeholder="Search" type="text">
+              </div>
+              <table class="table">
+                <thead>
+                <tr>
+                  <th class="select-check" scope="col">
+                    <mat-checkbox (change)="checkUncheckAll('avail-agents')" [(ngModel)]="masterSelected" type="checkbox"></mat-checkbox>
+                  </th>
+                  <!--                                    <th scope="col">User ID</th>-->
+                  <th scope="col">User Name</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">First Name</th>
+                  <th scope="col">Last Name</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let data of availabeAgentsLis | filter:searchTerm">
+                  <td class="select-check">
+                    <mat-checkbox (change)="isAllSelected('avail-agents')" [(ngModel)]="data.isSelected" name="list_name" type="checkbox" value="{{data.id}}"></mat-checkbox>
+                  </td>
+                  <!--                                    <td>{{data.id}}</td>-->
+                  <td>{{data.userName}}</td>
+                  <td>{{data.email}}</td>
+                  <td>{{data.firstName}}</td>
+                  <td>{{data.lastName}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+        <div class="assign-unassign-data select-agents attribute-selection ml-3">
+          <div class="assigned-agents assign-data-area pt-0">
+            <div class="table-selected-data"><label>3 selected</label></div>
+            <div class="assigned-table">
+              <div class="search-area">
+                <input [(ngModel)]="searchTerm" class="search-field" placeholder="Search" type="text">
+              </div>
+              <table class="table">
+                <thead>
+                <tr>
+                  <th class="select-check" scope="col">
+                    <mat-checkbox (change)="checkUncheckAll('attributes')" [(ngModel)]="masterSelected2" type="checkbox"></mat-checkbox>
+                  </th>
+                  <!--                                    <th scope="col">User ID</th>-->
+                  <th scope="col">Attributes</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr *ngFor="let data of teamAttributes | filter:searchTerm">
+                  <td class="select-check">
+                    <mat-checkbox (change)="isAllSelected('unavail-agents')" [(ngModel)]="data.isSelected" name="list_name" type="checkbox" value="{{data.id}}"></mat-checkbox>
+                  </td>
+                  <td>{{data.attributeName}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="action-area assign-data-action">
+        <button mat-raised-button class="gray-btn" [mat-dialog-close]="true">Cancel</button>
+        <button mat-raised-button class="blue-btn service-trigger">Assign Attributes</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+
