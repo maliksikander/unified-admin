@@ -3867,3 +3867,31 @@ padding: 0;
   max-height: inherit;
   padding-bottom: 0;
   }
+//agent-list-accordion
+.agent-list-accordion {
+  mat-expansion-panel-header {
+    background: $fill-color !important;
+    padding: 0 10px;
+    border-radius: 0;
+
+    .mat-expansion-panel-header-title {
+      color: #1A50A2;
+      font-size: 12px;
+      font-weight: 600;
+      }
+    }
+  .mat-expansion-panel-body{
+    padding: 0 0 15px;
+
+    th {
+      color: #686868;
+      font-size: 13px;
+      font-weight: 500;
+      border-bottom: 0;
+      }
+    td, table{
+      border: 0 !important;
+      }
+    }
+
+  }

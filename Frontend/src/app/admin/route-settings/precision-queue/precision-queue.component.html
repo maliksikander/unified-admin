@@ -82,7 +82,7 @@
                   <div class="manage-step">
                     <p class="manage-step-sub">
                       <span>{{ data.steps?.length > 0 ? 'Steps' : 'No Steps Added'}}</span>
-                      <span class="available-agents-action" (click)="agentLists(agentsList)">View agents</span>
+                      <span class="available-agents-action" (click)="agentLists(agentsList, 'multiSteps')">View agents</span>
                     </p>
                     <div *ngIf="data.steps?.length > 0" class="routing-table">
                       <table class="table">
@@ -90,7 +90,7 @@
                           <tr>
                             <th scope="col">Criteria</th>
                             <th scope="col">Timeout(sec)</th>
-                            <th scope="col">Agents</th>
+<!--                            <th scope="col">Agents</th>-->
                           </tr>
                         </thead>
                         <tbody>
@@ -131,7 +131,7 @@
                                 </button>
                               </span>
                             </td>
-                            <td><span class="available-agents-action" (click)="agentLists(agentsList)">14</span></td>
+<!--                            <td><span class="available-agents-action" (click)="agentLists(agentsList)">14</span></td>-->
                           </tr>
                         </tbody>
                         <!-- </div> -->
@@ -398,7 +398,7 @@
           <div class="template-action row padding-class">
             <div class="col-md-12">
               <div class="form-action-area">
-                <span class="available-agents-action" (click)="agentLists(agentsList)">View 76 agents</span>
+                <span class="available-agents-action" (click)="agentLists(agentsList, 'singleStep')">View 76 agents</span>
                 <div >
                   <button [mat-dialog-close]="false" class="gray-btn" mat-raised-button >Cancel</button >
                   <button [disabled]="!stepForm.valid" [mat-dialog-close]="save" class="blue-btn service-trigger"
@@ -417,10 +417,108 @@
     <div class="dialog-container agent-list">
       <div class="mat-card-header">
         <mat-icon (click)="dialog.closeAll()">close</mat-icon>
-        <h4 class="content-span full-width">Agents (76)</h4>
+        <h4 class="content-span full-width">Agents (413)</h4>
       </div>
-      <div class="dialog-content">
-        <div class="routing-table">
+      <div class="dialog-content agent-list-accordion">
+        <mat-accordion *ngIf="!singleStepAgents">
+          <mat-expansion-panel expanded="true">
+            <mat-expansion-panel-header [collapsedHeight]="'30px'" [expandedHeight]="'30px'">
+              <mat-panel-title>
+                Step 1 Agents (234)
+              </mat-panel-title>
+              <mat-panel-description>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div class="routing-table">
+              <table class="table">
+                <thead>
+                <tr>
+                  <th scope="col">User name / ID</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">First Name</th>
+                  <th scope="col">Last Name</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let data of availableAgents">
+
+                  <td>{{data.id}}</td>
+                  <td>{{data.email}}</td>
+                  <td>{{data.firstName}}</td>
+                  <td>{{data.lastName}}</td>
+
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </mat-expansion-panel>
+          <mat-expansion-panel (opened)="panelOpenState = true"
+                               (closed)="panelOpenState = false">
+            <mat-expansion-panel-header [collapsedHeight]="'30px'" [expandedHeight]="'30px'">
+              <mat-panel-title>
+                Step 2 Agents (55)
+              </mat-panel-title>
+
+            </mat-expansion-panel-header>
+            <div class="routing-table">
+              <table class="table">
+                <thead>
+                <tr>
+                  <th scope="col">User name / ID</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">First Name</th>
+                  <th scope="col">Last Name</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let data of availableAgents">
+
+                  <td>{{data.id}}</td>
+                  <td>{{data.email}}</td>
+                  <td>{{data.firstName}}</td>
+                  <td>{{data.lastName}}</td>
+
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header [collapsedHeight]="'30px'" [expandedHeight]="'30px'">
+              <mat-panel-title>
+                Step 3 Agents (124)
+              </mat-panel-title>
+
+            </mat-expansion-panel-header>
+            <div class="routing-table">
+              <table class="table">
+                <thead>
+                <tr>
+                  <th scope="col">User name / ID</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">First Name</th>
+                  <th scope="col">Last Name</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let data of availableAgents">
+
+                  <td>{{data.id}}</td>
+                  <td>{{data.email}}</td>
+                  <td>{{data.firstName}}</td>
+                  <td>{{data.lastName}}</td>
+
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+
+
+
+        <div class="routing-table" *ngIf="singleStepAgents">
           <table class="table">
             <thead>
             <tr>

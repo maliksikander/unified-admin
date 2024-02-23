@@ -26,6 +26,8 @@ import { SnackbarService } from "../../services/snackbar.service";
   styleUrls: ["./precision-queue.component.scss"],
 })
 export class PrecisionQueueComponent implements OnInit, AfterViewInit {
+
+  panelOpenState = true;
   stepSaveBtnText = "Add";
   spinner: any = true;
   save = "save";
@@ -40,6 +42,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     serviceLevelType: "",
     serviceLevelThreshold: "",
   };
+  singleStepAgents = false;
   validations;
   conditionList = ["AND", "OR"];
   formHeading = "Add New Queue";
@@ -830,7 +833,13 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     }, milliseconds);
   }
 
-  agentLists(templateRef) {
+  agentLists(templateRef, e) {
+    if (e == 'singleStep') {
+      this.singleStepAgents = true;
+    }else {
+      this.singleStepAgents = false;
+
+    }
     let dialogRef = this.dialog.open(templateRef, {
       width: "80vw",
       maxWidth: "950px",
