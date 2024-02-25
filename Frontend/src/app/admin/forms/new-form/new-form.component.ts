@@ -41,23 +41,38 @@ export class NewFormComponent implements OnInit, AfterViewInit {
     formDescription: "",
   };
   validations;
-  attributeTypeList = ["INPUT", "OPTIONS"];
+  attributeTypeList = ["INPUT", "OPTIONS", "TEXTAREA"];
   valueTypeList = [
-    "Alphanum100",
-    "AlphanumSpecial200",
-    "Boolean",
-    "Email",
-    "IP",
-    "Number",
-    "Password",
-    "PhoneNumber",
-    "PositiveNumber",
-    "String50",
-    "String100",
-    "String2000",
-    "StringList",
-    "URL",
+    "alphaNumeric",
+    "alphaNumericSpecial",
+    "boolean",
+    "email",
+    "url",
+    "ip",
+    "number",
+    "password",
+    "phoneNumber",
+    "positiveNumber",
+    "shortAnswer",
+    "paragraph",
+    "date",
+    "time",
+    "dateTime",
+    "file",
+    "mcq",
+    "checkbox",
+    "dropdown",
+    "rating",
+    "nps"
   ];
+
+  formTypeList = [
+    "Questionnaire",
+    "Survey",
+    "Wrap-up",
+    "Pre-conversation",
+    "default"
+  ]
 
   constructor(
     private commonService: CommonService,
@@ -72,8 +87,12 @@ export class NewFormComponent implements OnInit, AfterViewInit {
     this.validations = this.commonService.formErrorMessages;
 
     this.newForm = this.fb.group({
+      formType: ['', Validators.required],
       formTitle: ["New Form", [Validators.required, Validators.maxLength(500)]],
       formDescription: ["", [Validators.maxLength(500)]],
+      enableSections: [true],
+      enableWeightage: [true],
+      sections: this.fb.array([]),
       attributes: this.fb.array([this.addAttributeGroup()]),
     });
 

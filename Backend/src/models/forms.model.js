@@ -7,6 +7,11 @@ const formSchema = mongoose.Schema(
             type: mongoose.Types.ObjectId,
             required: true,
         },
+        formType: {
+            type: String,
+            enum: ['Questionnaire', 'Survey', 'Wrap-up', 'Pre-chat', 'Other'],
+            required: true,
+        },
         formTitle: {
             type: String,
             required: true,
@@ -15,16 +20,61 @@ const formSchema = mongoose.Schema(
             type: String,
             required: false,
         },
-        attributes: [
+        enableSection: {
+            type: Boolean,
+        },
+        enableWeightage: {
+            type: Boolean,
+        },
+        activeVersion: {
+            type: String,
+            required: true,
+        },
+        versions: [
             {
-                label: { type: String, required: true },
-                helpText: { type: String },
-                key: { type: String },
-                valueType: { type: String, enum: ["Alphanum100", "AlphanumSpecial200", "Boolean", "Email", "IP", "Number", "Password", "PhoneNumber", "PositiveNumber", "String50", "String100", "String2000", "StringList", "URL"] },
-                attributeType: { type: String, enum: ['INPUT', 'OPTIONS'] },
-                isRequired: { type: Boolean },
-                categoryOptions: { type: Object }
-            },
+                v1: {
+                    status: {
+                        type: String,
+                        enum: ['published', 'unpublished', 'draft']
+                    },
+                    createdAt: {
+                        type: String,
+                        required: true,
+                    },
+                    section: [
+                        {
+                            sectionId: {
+                                type: String,
+                                required: true,
+                            },
+                            sectionName: {
+                                type: String,
+                                required: true,
+                            },
+                            sectionWeightage: {
+                                type: Number,
+                                required: false,
+                            },
+                            attributes: [
+                                {
+                                    label: { type: String, required: true },
+                                    helpText: { type: String },
+                                    key: { type: String },
+                                    valueType: { type: String, enum: ["alphaNumeric", "alphaNumericSpecial", "email", "number", "password", "positiveNumber", "url", "phoneNumber", "date", "time", "dateTime", "shortAnswer", "file", "paragraph", "boolean", "mcq", "checkbox", "dropdown", "rating", "nps"] },
+                                    attributeType: { type: String, enum: ['INPUT', 'OPTIONS', 'TEXTAREA'] },
+                                    isRequired: { type: Boolean },
+                                    enableEmoji: { type: Boolean, default: false },
+                                    attributeWeightage: { type: Number, default: null },
+                                    enableCategory: { type: Boolean, default: false },
+                                    allowMultipleSelect: { type: Boolean, default: false },
+                                    allowOther: { type: Boolean, default: false },
+                                    attributeOptions: { type: Object }
+                                },
+                            ],
+                        }
+                    ]
+                }
+            }
         ],
     },
     {

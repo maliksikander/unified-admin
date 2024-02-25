@@ -24,8 +24,9 @@
                     </div>
                     <div class="forms-list">
                         <ul class="top-heading">
-                            <li class="col-md-4">ID</li>
-                            <li class="col-md-4">Name</li>
+                            <li class="col-md-3">ID</li>
+                            <li class="col-md-3">Name</li>
+                            <li class="col-md-3">Type</li>
                             <li class="col-md-3">Created On</li>
                         </ul>
                         <ng-container *ngIf="formsList && formsList.length > 0">
@@ -33,11 +34,14 @@
                                 <li
                                     *ngFor="let data of formsList | filter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
                                     <div class="row">
-                                        <div class="col-sm-4 col-md-4">
+                                        <div class="col-sm-3 col-md-3">
                                             {{data?.id ? data?.id : 'N/A'}}
                                         </div>
 
-                                        <div class="col-sm-4 col-md-4">
+                                        <div class="col-sm-3 col-md-3">
+                                            {{data?.formTitle ? data?.formTitle : 'N/A'}}
+                                        </div>
+                                        <div class="col-sm-3 col-md-3">
                                             {{data?.formTitle ? data?.formTitle : 'N/A'}}
                                         </div>
                                         <div class="col-sm-3 col-md-3">
