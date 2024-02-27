@@ -516,16 +516,22 @@ export class CommonService {
   };
 
   formErrorMessages = {
-    attributes: {
-      // 'required': "This field is required",
-      // 'minlength': "More characters required",
-      // 'maxlength': "Max 500 characters required",
-      // 'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
-      label: {
+    sections: {
+      sectionName: {
         required: "This field is required",
-        maxlength: "Less characters required",
-      },
+        maxlength: "Less Characters required",
+      }
     },
+    // attributes: {
+    //   // 'required': "This field is required",
+    //   // 'minlength': "More characters required",
+    //   // 'maxlength': "Max 500 characters required",
+    //   // 'pattern': 'Allowed special characters "[!@#\$%^&*()-_=+~`\"]+"'
+    //   label: {
+    //     required: "This field is required",
+    //     maxlength: "Less characters required",
+    //   },
+    // },
     formTitle: {
       required: "This field is required",
       maxlength: "Max 500 characters allowed",
@@ -695,28 +701,30 @@ export class CommonService {
 
   constructor(private snackbar: SnackbarService, private router: Router) { }
 
-  //assign form validation errors dynamically
+  // Assign form validation errors dynamically
   logValidationErrors(group: FormGroup, formErrors, validations) {
-    let result = [];
     Object.keys(group.controls).forEach((key: string) => {
       const abstractControl = group.get(key);
+
       if (abstractControl instanceof FormGroup) {
         this.logValidationErrors(abstractControl, formErrors, validations);
       } else {
         formErrors[key] = "";
         if (abstractControl && !abstractControl.valid) {
-          const messages = validations[key];
-          for (const errorKey in abstractControl.errors) {
-            if (errorKey) {
-              formErrors[key] += messages[errorKey] + " ";
+          const messages = validations && validations[key];
+
+          if (messages) {
+            for (const errorKey in abstractControl.errors) {
+              if (errorKey && messages[errorKey]) {
+                formErrors[key] += messages[errorKey] + " ";
+              }
             }
           }
         }
       }
     });
 
-    result = [formErrors, validations];
-    return result;
+    return [formErrors, validations];
   }
 
   //to verify manage scope in permitted resource
