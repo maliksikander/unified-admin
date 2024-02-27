@@ -510,7 +510,7 @@ table {
     }
 
   .assigned-table{
-    height: 100%;
+    height: calc(100% - 30px);
     overflow: auto;
     position: relative;
     max-height: 505px;
@@ -554,6 +554,11 @@ table {
   .assign-unassign-data{
     min-width: 260px;
     flex: 100%;
+    .table-selected-data{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
 
     &.attribute-selection{
       flex: 50%;

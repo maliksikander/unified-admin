@@ -32,7 +32,7 @@
                     <th scope="col">First Name</th>
                     <th scope="col">Last Name</th>
                     <th scope="col">Attributes</th>
-                    <th scope="col">Team</th>
+                    <!-- <th scope="col">Team</th> -->
                     <th scope="col">Queue</th>
                   </tr>
                 </thead>
@@ -73,9 +73,9 @@
                         <!-- <mat-chip *ngIf="data.attributes?.length > 3">+{{data.attributes?.length - 3}}</mat-chip> -->
                       </mat-chip-list>
                     </td>
-                    <td>
+                    <!-- <td>
                       <span>Marketing</span>
-                    </td>
+                    </td> -->
                     <td>
                       <span>Marketing 1, Marketing International, Marketing Local, Marketing Outbound</span>
                     </td>
@@ -287,7 +287,7 @@
     </div>
     <div class="dialog-content pl-4 pr-4">
       <div class="main-filter-area m-0">
-        <div class="form-group ml-0">
+        <!-- <div class="form-group ml-0">
           <mat-label>Team</mat-label>
           <div class="multi-select-options form-control">
             <angular2-multiselect
@@ -309,12 +309,12 @@
               </c-item>
             </angular2-multiselect>
           </div>
-        </div>
+        </div> -->
 
         <div class="form-group">
           <mat-label>Queue</mat-label>
           <div class="multi-select-options form-control">
-            <angular2-multiselect
+            <angular2-multiselect class="singleselect"
                     (onDeSelect)="OnItemDeSelect($event)"
                     (onSelect)="onItemSelect($event)"
                     [(ngModel)]="availableTeam"
@@ -338,13 +338,13 @@
         <div class="form-group">
           <mat-label>Attributes</mat-label>
           <div class="multi-select-options form-control">
-            <angular2-multiselect
+            <angular2-multiselect 
                     (onDeSelect)="OnItemDeSelect($event)"
                     (onSelect)="onItemSelect($event)"
                     [(ngModel)]="availableTeam"
                     [data]="dropdownList"
                     [ngModelOptions]="{ standalone: true }"
-                    [settings]="dropdownSettings">
+                    [settings]="attributeDropdownSettings">
               <c-badge>
                 <ng-template let-item="item">
                   <label class="item-name">{{ item.attribute }}</label>
@@ -362,15 +362,18 @@
 
       <div class="main-selected-filter row m-0">
         <ul class="m-0 p-0">
-          <li><label>Team</label> {{selectedData?.team}}</li>
+          <!-- <li><label>Team</label> {{selectedData?.team}}</li> -->
           <li><label>Queue</label> {{selectedData?.queue}}</li>
           <li><label>Attribute</label> {{selectedData?.attribute}}</li>
         </ul>
       </div>
+
+
+      <!-- HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH -->
       <div class="assign-unassign-main row m-0">
         <div class="assign-unassign-data select-agents">
           <div class="assigned-agents assign-data-area pt-0">
-            <div class="table-selected-data"><label>256 agents</label></div>
+            <div class="table-selected-data"><label>Select Users from the list </label><label>256 agents</label></div>
             <div class="assigned-table">
               <div class="search-area">
                 <input [(ngModel)]="searchTerm" class="search-field" placeholder="Search" type="text">
@@ -405,9 +408,11 @@
           </div>
 
         </div>
+
+        <!-- Attributes Row -->
         <div class="assign-unassign-data select-agents attribute-selection ml-3">
           <div class="assigned-agents assign-data-area pt-0">
-            <div class="table-selected-data"><label>3 selected</label></div>
+            <div class="table-selected-data"><label>Select Attributes from the list </label><label>3 selected</label></div>
             <div class="assigned-table">
               <div class="search-area">
                 <input [(ngModel)]="searchTerm" class="search-field" placeholder="Search" type="text">

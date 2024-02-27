@@ -70,139 +70,139 @@ export class UsersComponent implements OnInit {
   managePermission: boolean = false;
 
   teamAttributes = [
-    {
-      'id': '6540acdaa9138a5942kke99790',
-      'attributeName': 'English',
-      isSelected: false
-    },{
-      'id': '6540acdaa9138a5942kke99790',
-      'attributeName': 'french',
-      isSelected: false
-    },{
-      'id': '6540acdaa9138a5942kke99790',
-      'attributeName': 'voice',
-      isSelected: false
-    },{
-      'id': '6540acdaa9138a5942kke99790',
-      'attributeName': 'spanish',
-      isSelected: false
-    },{
-      'id': '6540acdaa9138a5942kke99790',
-      'attributeName': 'Technical Support',
-      isSelected: false
-    },{
-      'id': '6540acdaa9138a5942kke99790',
-      'attributeName': 'chat queue',
-      isSelected: false
-    },{
-      'id': '6540acdaa9138a5942kke99790',
-      'attributeName': 'Customer Support',
-      isSelected: false
-    },{
-      'id': '6540acdaa9138a5942kke99790',
-      'attributeName': 'channel team',
-      isSelected: false
-    },
+    // {
+    //   'id': '6540acdaa9138a5942kke99790',
+    //   'attributeName': 'English',
+    //   isSelected: false
+    // },{
+    //   'id': '6540acdaa9138a5942kke99790',
+    //   'attributeName': 'french',
+    //   isSelected: false
+    // },{
+    //   'id': '6540acdaa9138a5942kke99790',
+    //   'attributeName': 'voice',
+    //   isSelected: false
+    // },{
+    //   'id': '6540acdaa9138a5942kke99790',
+    //   'attributeName': 'spanish',
+    //   isSelected: false
+    // },{
+    //   'id': '6540acdaa9138a5942kke99790',
+    //   'attributeName': 'Technical Support',
+    //   isSelected: false
+    // },{
+    //   'id': '6540acdaa9138a5942kke99790',
+    //   'attributeName': 'chat queue',
+    //   isSelected: false
+    // },{
+    //   'id': '6540acdaa9138a5942kke99790',
+    //   'attributeName': 'Customer Support',
+    //   isSelected: false
+    // },{
+    //   'id': '6540acdaa9138a5942kke99790',
+    //   'attributeName': 'channel team',
+    //   isSelected: false
+    // },
 
   ];
-  availabeAgentsLis = [
-    {
-      'id': '6540ac42kk',
-      'userName': 'john-hamilton',
-      'firstName': 'john ',
-      'lastName': 'Hamilton',
-      'email': 'aclemits0@pagesperso-orange.fr',
-      isSelected: false
+   availabeAgentsLis = [
+  //   {
+  //     'id': '6540ac42kk',
+  //     'userName': 'john-hamilton',
+  //     'firstName': 'john ',
+  //     'lastName': 'Hamilton',
+  //     'email': 'aclemits0@pagesperso-orange.fr',
+  //     isSelected: false
 
-    }, {
-      'id': '42kke99790',
-      'userName': 'andrewT9',
-      'firstName': 'Andrew ',
-      'lastName': 'Trate',
-      'email': 'bjays1@technorati.com',
-      isSelected: false
+  //   }, {
+  //     'id': '42kke99790',
+  //     'userName': 'andrewT9',
+  //     'firstName': 'Andrew ',
+  //     'lastName': 'Trate',
+  //     'email': 'bjays1@technorati.com',
+  //     isSelected: false
 
-    }, {
-      'id': '138a594244e9',
-      'userName': 'mhanery98',
-      'firstName': 'Michal ',
-      'lastName': 'Hanery',
-      'email': 'rfernandez3@elegantthemes.com',
-      isSelected: false
+  //   }, {
+  //     'id': '138a594244e9',
+  //     'userName': 'mhanery98',
+  //     'firstName': 'Michal ',
+  //     'lastName': 'Hanery',
+  //     'email': 'rfernandez3@elegantthemes.com',
+  //     isSelected: false
 
-    }, {
-      'id': '65138a5942',
-      'userName': 'g_ashley',
-      'firstName': 'ashley ',
-      'lastName': 'graham',
-      'email': 'aclemits0@pagesperso-orange.fr',
-      isSelected: false
+  //   }, {
+  //     'id': '65138a5942',
+  //     'userName': 'g_ashley',
+  //     'firstName': 'ashley ',
+  //     'lastName': 'graham',
+  //     'email': 'aclemits0@pagesperso-orange.fr',
+  //     isSelected: false
 
-    }, {
-      'id': '54138a5942',
-      'userName': 'a_miller54',
-      'firstName': 'Adam ',
-      'lastName': 'Miller',
-      'email': 'cnevin4@istockphoto.com',
-      isSelected: false
+  //   }, {
+  //     'id': '54138a5942',
+  //     'userName': 'a_miller54',
+  //     'firstName': 'Adam ',
+  //     'lastName': 'Miller',
+  //     'email': 'cnevin4@istockphoto.com',
+  //     isSelected: false
 
-    }, {
-      'id': '6540ac4299',
-      'userName': 'h_andy541',
-      'firstName': 'Hamilton ',
-      'lastName': 'Andu',
-      'email': 'aclemits0@pagesperso-orange.fr',
-      isSelected: false
+  //   }, {
+  //     'id': '6540ac4299',
+  //     'userName': 'h_andy541',
+  //     'firstName': 'Hamilton ',
+  //     'lastName': 'Andu',
+  //     'email': 'aclemits0@pagesperso-orange.fr',
+  //     isSelected: false
 
-    }, {
-      'id': '138a594244e9',
-      'userName': 'mhanery98',
-      'firstName': 'Michal ',
-      'lastName': 'Hanery',
-      'email': 'rfernandez3@elegantthemes.com',
-      isSelected: false
+  //   }, {
+  //     'id': '138a594244e9',
+  //     'userName': 'mhanery98',
+  //     'firstName': 'Michal ',
+  //     'lastName': 'Hanery',
+  //     'email': 'rfernandez3@elegantthemes.com',
+  //     isSelected: false
 
-    }, {
-      'id': '65138a5942',
-      'userName': 'g_ashley',
-      'firstName': 'ashley ',
-      'lastName': 'graham',
-      'email': 'aclemits0@pagesperso-orange.fr',
-      isSelected: false
+  //   }, {
+  //     'id': '65138a5942',
+  //     'userName': 'g_ashley',
+  //     'firstName': 'ashley ',
+  //     'lastName': 'graham',
+  //     'email': 'aclemits0@pagesperso-orange.fr',
+  //     isSelected: false
 
-    }, {
-      'id': '54138a5942',
-      'userName': 'a_miller54',
-      'firstName': 'Adam ',
-      'lastName': 'Miller',
-      'email': 'cnevin4@istockphoto.com',
-      isSelected: false
+  //   }, {
+  //     'id': '54138a5942',
+  //     'userName': 'a_miller54',
+  //     'firstName': 'Adam ',
+  //     'lastName': 'Miller',
+  //     'email': 'cnevin4@istockphoto.com',
+  //     isSelected: false
 
-    }, {
-      'id': '6540ac4299',
-      'userName': 'h_andy541',
-      'firstName': 'Hamilton ',
-      'lastName': 'Andu',
-      'email': 'aclemits0@pagesperso-orange.fr',
-      isSelected: false
+  //   }, {
+  //     'id': '6540ac4299',
+  //     'userName': 'h_andy541',
+  //     'firstName': 'Hamilton ',
+  //     'lastName': 'Andu',
+  //     'email': 'aclemits0@pagesperso-orange.fr',
+  //     isSelected: false
 
-    }, {
-      'id': '4758e99790',
-      'userName': 'j_trate55',
-      'firstName': 'Json ',
-      'lastName': 'Trate',
-      'email': 'aclemis0@pagesperso-orange.fr',
-      isSelected: false
+  //   }, {
+  //     'id': '4758e99790',
+  //     'userName': 'j_trate55',
+  //     'firstName': 'Json ',
+  //     'lastName': 'Trate',
+  //     'email': 'aclemis0@pagesperso-orange.fr',
+  //     isSelected: false
 
-    }, {
-      'id': '588a594244e9',
-      'userName': 'ncawsy5',
-      'firstName': 'Norton ',
-      'lastName': 'Cawsy',
-      'email': 'aclemis0@pagesperso-orange.fr',
-      isSelected: false
+  //   }, {
+  //     'id': '588a594244e9',
+  //     'userName': 'ncawsy5',
+  //     'firstName': 'Norton ',
+  //     'lastName': 'Cawsy',
+  //     'email': 'aclemis0@pagesperso-orange.fr',
+  //     isSelected: false
 
-    }
+  //   }
   ];
   masterSelected: boolean;
   checkedList: any;
@@ -211,6 +211,7 @@ export class UsersComponent implements OnInit {
   dropdownList = [];
   selectedTeam = [];
   dropdownSettings: any;
+  attributeDropdownSettings:any;
   availableTeam = [];
   selectedData: any;
 
@@ -226,7 +227,7 @@ export class UsersComponent implements OnInit {
 
   ngOnInit() {
     // this.commonService.checkTokenExistenceInStorage();
-
+    console.log("ATTRIBUTE ===>", this.attrData)
     this.dropdownList = [
       {'id': 1, 'team': 'Marketing', 'queue': 'Technical support', 'attribute': 'channel team'},
       {'id': 2, 'team': 'Sales', 'queue': 'Chat Queue', 'attribute': 'English'},
@@ -248,6 +249,15 @@ export class UsersComponent implements OnInit {
       badgeShowLimit: 3,
       searchPlaceholderText: 'Search'
     };
+
+this.attributeDropdownSettings = {
+  singleSelection: false,
+  text: '',
+  enableSearchFilter: true,
+  classes: 'custom-class',
+  badgeShowLimit: 3,
+  searchPlaceholderText: 'Search'
+};
 
     //setting local form validation messages
     this.validations = this.commonService.userFormErrorMessages;
@@ -290,6 +300,7 @@ export class UsersComponent implements OnInit {
     this.endPointService.getAttribute().subscribe(
       (res: any) => {
         this.attrData = JSON.parse(JSON.stringify(res));
+        console.log("ATTRIBUTE ===>", this.attrData)
         if (this.attrData && this.attrData.length > 0) {
           this.attrData.map((item) => {
             item.isChecked = false;

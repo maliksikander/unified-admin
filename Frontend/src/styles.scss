@@ -3867,3 +3867,23 @@ padding: 0;
   max-height: inherit;
   padding-bottom: 0;
   }
+  //for queue single selection
+  .singleselect {
+    .multiselect-item-checkbox {
+      padding: 0px !important;
+    }
+  
+   input[type=checkbox] + label {
+      padding: 0px !important;
+  
+      &:before, &:after {
+        display: none;
+      }
+    }
+  
+    input[type=checkbox]:checked + label {
+      background-color: transparent !important;
+      color: transparent !important;
+      opacity: 0;
+    }
+  }
