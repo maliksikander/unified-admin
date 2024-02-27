@@ -9,6 +9,7 @@ const logSettingRoute = require('./logSetting.route');
 const reportSettingRoute = require('./reportSetting.route');
 const securitySettingRoute = require('./securitySetting.route');
 const formsRoute = require('./forms.route');
+const emailSignatureRoute = require('./emailSignatures.route')
 const loginRoute = require('./login.route');
 const userRoute = require('./user.route');
 const formValidationRoute = require('./formValidation.route');
@@ -44,6 +45,7 @@ router.use('/agent-desk-settings', agentDeskSettingsRoute);
 router.use('/log-level', logLevelRoute);
 router.use('/metrics', prometheusRoute);
 router.use('/health', healthCheckRoute);
+router.use('/email-signatures' ,emailSignatureRoute)
 
 
 module.exports = router;

@@ -8,6 +8,7 @@ module.exports.LogSetting = require('./logSettings.model');
 module.exports.ReportSetting = require('./reportSettings.model');
 module.exports.SecuritySetting = require('./securitySettings.model');
 module.exports.FormsModel = require('./forms.model');
+module.exports.EmailSignaturesModel = require('./emailSignatures.model');
 module.exports.FormValidationModel = require('./formValidation.model');
 module.exports.ReasonCodeModel = require('./reason.model');
 module.exports.PullModeListModel = require('./pull-mode-list.model');
