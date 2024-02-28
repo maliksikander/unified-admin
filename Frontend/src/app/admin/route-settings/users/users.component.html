@@ -317,18 +317,18 @@
             <angular2-multiselect class="singleselect"
                     (onDeSelect)="OnItemDeSelect($event)"
                     (onSelect)="onItemSelect($event)"
-                    [(ngModel)]="availableTeam"
+                    [(ngModel)]="ngSelectedQueues"
                     [data]="dropdownList"
                     [ngModelOptions]="{ standalone: true }"
-                    [settings]="dropdownSettings">
+                    [settings]="queueDropdownSettings">
               <c-badge>
                 <ng-template let-item="item">
-                  <label class="item-name">{{ item.queue }}</label>
+                  <label class="item-name">{{ item.name }}</label>
                 </ng-template>
               </c-badge>
               <c-item>
                 <ng-template let-item="item">
-                  <label class="item-list-name">{{ item.queue }}</label>
+                  <label class="item-list-name">{{ item.name }}</label>
                 </ng-template>
               </c-item>
             </angular2-multiselect>
@@ -341,18 +341,18 @@
             <angular2-multiselect 
                     (onDeSelect)="OnItemDeSelect($event)"
                     (onSelect)="onItemSelect($event)"
-                    [(ngModel)]="availableTeam"
-                    [data]="dropdownList"
+                    [(ngModel)]="ngSelectedAttributes"
+                    [data]="teamAttributes"
                     [ngModelOptions]="{ standalone: true }"
                     [settings]="attributeDropdownSettings">
               <c-badge>
                 <ng-template let-item="item">
-                  <label class="item-name">{{ item.attribute }}</label>
+                  <label class="item-name">{{ item.name }}</label>
                 </ng-template>
               </c-badge>
               <c-item>
                 <ng-template let-item="item">
-                  <label class="item-list-name">{{ item.attribute }}</label>
+                  <label class="item-list-name">{{ item.name }}</label>
                 </ng-template>
               </c-item>
             </angular2-multiselect>
@@ -363,8 +363,8 @@
       <div class="main-selected-filter row m-0">
         <ul class="m-0 p-0">
           <!-- <li><label>Team</label> {{selectedData?.team}}</li> -->
-          <li><label>Queue</label> {{selectedData?.queue}}</li>
-          <li><label>Attribute</label> {{selectedData?.attribute}}</li>
+          <li><label>Queue</label> {{selectedQueue?.name}}</li>
+          <li><label>Attribute</label> {{selectedAttribute?.name}}</li>
         </ul>
       </div>
 
@@ -433,7 +433,7 @@
                   <td class="select-check">
                     <mat-checkbox (change)="isAllSelected('unavail-agents')" [(ngModel)]="data.isSelected" name="list_name" type="checkbox" value="{{data.id}}"></mat-checkbox>
                   </td>
-                  <td>{{data.attributeName}}</td>
+                  <td>{{data.name}}</td>
                 </tr>
                 </tbody>
               </table>

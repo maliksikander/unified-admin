@@ -68,43 +68,11 @@ export class UsersComponent implements OnInit {
   editREUserData: any;
   newREUserData: any;
   managePermission: boolean = false;
+  selectedQueueItems: any[] = []; // Array to store selected Queue items
+  selectedAttributeItems: any[] = []; // Array to store selected Attribute items
 
-  teamAttributes = [
-    // {
-    //   'id': '6540acdaa9138a5942kke99790',
-    //   'attributeName': 'English',
-    //   isSelected: false
-    // },{
-    //   'id': '6540acdaa9138a5942kke99790',
-    //   'attributeName': 'french',
-    //   isSelected: false
-    // },{
-    //   'id': '6540acdaa9138a5942kke99790',
-    //   'attributeName': 'voice',
-    //   isSelected: false
-    // },{
-    //   'id': '6540acdaa9138a5942kke99790',
-    //   'attributeName': 'spanish',
-    //   isSelected: false
-    // },{
-    //   'id': '6540acdaa9138a5942kke99790',
-    //   'attributeName': 'Technical Support',
-    //   isSelected: false
-    // },{
-    //   'id': '6540acdaa9138a5942kke99790',
-    //   'attributeName': 'chat queue',
-    //   isSelected: false
-    // },{
-    //   'id': '6540acdaa9138a5942kke99790',
-    //   'attributeName': 'Customer Support',
-    //   isSelected: false
-    // },{
-    //   'id': '6540acdaa9138a5942kke99790',
-    //   'attributeName': 'channel team',
-    //   isSelected: false
-    // },
 
-  ];
+   teamAttributes = [];
    availabeAgentsLis = [
   //   {
   //     'id': '6540ac42kk',
@@ -210,11 +178,14 @@ export class UsersComponent implements OnInit {
   checkedList2: any;
   dropdownList = [];
   selectedTeam = [];
-  dropdownSettings: any;
+  queueDropdownSettings: any;
   attributeDropdownSettings:any;
   availableTeam = [];
   selectedData: any;
-
+  ngSelectedQueues: any; // for ng model data model
+  ngSelectedAttributes: any; // for ng model data model
+  selectedQueue: any;
+  selectedAttribute: any;
 
 
   constructor(
@@ -227,21 +198,21 @@ export class UsersComponent implements OnInit {
 
   ngOnInit() {
     // this.commonService.checkTokenExistenceInStorage();
-    console.log("ATTRIBUTE ===>", this.attrData)
-    this.dropdownList = [
-      {'id': 1, 'team': 'Marketing', 'queue': 'Technical support', 'attribute': 'channel team'},
-      {'id': 2, 'team': 'Sales', 'queue': 'Chat Queue', 'attribute': 'English'},
-      {'id': 3, 'team': 'Customer support','queue': 'voice Queue', 'attribute': 'voice'},
-      {'id': 4, 'team': 'Customer Interaction', 'queue':'support', 'attribute': 'chat only'},
-      {'id': 5, 'team': 'Technical support', 'queue':'Marketing', 'attribute': 'Andrew Trate'},
-      {'id': 6, 'team': 'Chat Support', 'queue':'customer support', 'attribute': 'Customer Support'},
-      {'id': 7, 'team': 'Voice support', 'queue':'telegram', 'attribute': 'seles'},
-    ];
-    this.selectedTeam = [
-      {'id': 1, 'team': 'Marketing'},
-      {'id': 2, 'team': 'Sales'},
-    ];
-    this.dropdownSettings = {
+    
+    // this.dropdownList = [
+    //   {'id': 1, 'team': 'Marketing', 'queue': 'Technical support', 'attribute': 'channel team'},
+    //   {'id': 2, 'team': 'Sales', 'queue': 'Chat Queue', 'attribute': 'English'},
+    //   {'id': 3, 'team': 'Customer support','queue': 'voice Queue', 'attribute': 'voice'},
+    //   {'id': 4, 'team': 'Customer Interaction', 'queue':'support', 'attribute': 'chat only'},
+    //   {'id': 5, 'team': 'Technical support', 'queue':'Marketing', 'attribute': 'Andrew Trate'},
+    //   {'id': 6, 'team': 'Chat Support', 'queue':'customer support', 'attribute': 'Customer Support'},
+    //   {'id': 7, 'team': 'Voice support', 'queue':'telegram', 'attribute': 'seles'},
+    // ];
+    // this.selectedTeam = [
+    //   {'id': 1, 'team': 'Marketing'},
+    //   {'id': 2, 'team': 'Sales'},
+    // ];
+    this.queueDropdownSettings = {
       singleSelection: true,
       text: '',
       enableSearchFilter: true,
@@ -300,6 +271,7 @@ this.attributeDropdownSettings = {
     this.endPointService.getAttribute().subscribe(
       (res: any) => {
         this.attrData = JSON.parse(JSON.stringify(res));
+        this.teamAttributes=this.attrData;
         console.log("ATTRIBUTE ===>", this.attrData)
         if (this.attrData && this.attrData.length > 0) {
           this.attrData.map((item) => {
@@ -329,6 +301,25 @@ this.attributeDropdownSettings = {
         if (error && error.status == 0)
           this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
       }
+    );
+  }
+
+  //to get RE queues
+  getQueue() {
+   
+    this.endPointService.getQueue().subscribe(
+      (res: any) => {
+        this.dropdownList=res;
+        console.log("QUEUE ===>", this.dropdownList)
+       
+        
+      },
+      (error) => {
+       
+        console.error("Error fetching:", error);
+      //   if (error && error.status == 0)
+      //     this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
+       }
     );
   }
 
@@ -792,7 +783,9 @@ this.attributeDropdownSettings = {
 
   //assign bulk attributes
   assignUnassignAgents(templateRef) {
-
+    this.getAttribute()
+    this.getQueue();
+    
     let dialogRef = this.dialog.open(templateRef, {
       width: '100%',
       maxWidth: '1200px',
@@ -859,14 +852,30 @@ this.attributeDropdownSettings = {
   }
 
   onItemSelect(item: any) {
-    this.selectedData = item;
-    console.log('this.selectedData1', this.selectedData);
-    console.log('this.selectedTeam', this.selectedTeam);
+  // this.selectedData = item;
+    if(item.serviceLevelType){
+      this.selectedQueue = item;
+      console.log('this.selectedQueue', this.selectedQueue);
+    }else{
+      this.selectedAttribute = item;
+      console.log('this.selectedAttribute', this.selectedAttribute);
+  }
+    
+    //call add agent API here
   }
 
   OnItemDeSelect(item: any) {
-    this.selectedData = item;
-    console.log('this.selectedData', this.selectedData);
-    console.log(this.selectedTeam);
+  //   this.selectedData = item;
+  //   console.log('this.selectedData', this.selectedData);   
+  // }
+  if (item.serviceLevelType) {
+    // Remove the item from the selectedQueueItems array
+    this.selectedQueueItems = this.selectedQueueItems.filter(q => q !== item);
+    console.log('Delected Queue Items', this.selectedQueueItems);
+  } else {
+    // Remove the item from the selectedAttributeItems array
+    this.selectedAttributeItems = this.selectedAttributeItems.filter(a => a !== item);
+    console.log('Delected Attribute Items', this.selectedAttributeItems);
   }
+}
 }
