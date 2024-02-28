@@ -211,6 +211,7 @@ export class UsersComponent implements OnInit {
   dropdownList = [];
   selectedTeam = [];
   dropdownSettings: any;
+  attributesDropdownSettings: any;
   availableTeam = [];
   selectedData: any;
 

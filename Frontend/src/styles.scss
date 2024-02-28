@@ -3895,3 +3895,24 @@ padding: 0;
     }
 
   }
+
+//for single queue selection
+.single-select {
+  .multiselect-item-checkbox {
+    padding: 0px !important;
+    }
+
+  input[type=checkbox] + label {
+    padding: 0px !important;
+
+    &:before, &:after {
+      display: none;
+      }
+    }
+
+  input[type=checkbox]:checked + label {
+    background-color: transparent !important;
+    color: transparent !important;
+    opacity: 0;
+    }
+  }

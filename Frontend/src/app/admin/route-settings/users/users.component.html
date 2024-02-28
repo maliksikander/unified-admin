@@ -289,7 +289,7 @@
         <div class="form-group ml-0">
           <mat-label>Team</mat-label>
           <div class="multi-select-options form-control">
-            <angular2-multiselect
+            <angular2-multiselect class="single-select"
                     (onDeSelect)="OnItemDeSelect($event)"
                     (onSelect)="onItemSelect($event)"
                     [(ngModel)]="availableTeam"
@@ -313,7 +313,7 @@
         <div class="form-group">
           <mat-label>Queue</mat-label>
           <div class="multi-select-options form-control">
-            <angular2-multiselect
+            <angular2-multiselect class="single-select"
                     (onDeSelect)="OnItemDeSelect($event)"
                     (onSelect)="onItemSelect($event)"
                     [(ngModel)]="availableTeam"
@@ -337,7 +337,7 @@
         <div class="form-group">
           <mat-label>Attributes</mat-label>
           <div class="multi-select-options form-control">
-            <angular2-multiselect
+            <angular2-multiselect class="single-select"
                     (onDeSelect)="OnItemDeSelect($event)"
                     (onSelect)="onItemSelect($event)"
                     [(ngModel)]="availableTeam"
@@ -369,7 +369,9 @@
       <div class="assign-unassign-main row m-0">
         <div class="assign-unassign-data select-agents">
           <div class="assigned-agents assign-data-area pt-0">
-            <div class="table-selected-data"><label>256 agents</label></div>
+            <div class="table-selected-data">
+              <label>Select users from the list</label>
+              <label>256 agents</label></div>
             <div class="assigned-table">
               <div class="search-area">
                 <input [(ngModel)]="searchTerm" class="search-field" placeholder="Search" type="text">
@@ -406,7 +408,10 @@
         </div>
         <div class="assign-unassign-data select-agents attribute-selection ml-3">
           <div class="assigned-agents assign-data-area pt-0">
-            <div class="table-selected-data"><label>3 selected</label></div>
+            <div class="table-selected-data">
+              <label>Select attributes from the list</label>
+              <label>3 selected</label>
+            </div>
             <div class="assigned-table">
               <div class="search-area">
                 <input [(ngModel)]="searchTerm" class="search-field" placeholder="Search" type="text">
