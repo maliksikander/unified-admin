@@ -129,7 +129,7 @@ export const adminRoutes: Routes = [
         canActivate: [AuthGuard],
       },
       {
-        path: "email/signature",
+        path: "email-signatures",
         component: EmailSignatureComponent,
       }, {
         path: "email/auto-response",

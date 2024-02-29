@@ -13,7 +13,9 @@ const updateEmailSignature = {
         signatureName: Joi.string().required(),
         channelIdentifer: Joi.string().max(500).required(),
         signatureBody: Joi.string().required(),
-        id:Joi.string().required()
+        id:Joi.string().required(),
+        createdAt: Joi.string(),
+        updatedAt: Joi.string()
     }),
 };
 

@@ -38,11 +38,11 @@
                                 <th scope="col">Team</th>
                             </tr>
                             </thead>
-                            <tbody *ngIf="signatureData && signatureData.length != 0">
-                            <tr *ngFor="let data of signatureData | filter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
+                            <tbody *ngIf="signatureData && signatureData.response && signatureData.response.length != 0">
+                            <tr *ngFor="let data of signatureData.response | filter:searchTerm | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
 
                                 <td>{{data.signatureName}}</td>
-                                <td>{{data.email}}</td>
+                                <td>{{data.channelIdentifer}}</td>
                                 <td>{{data.user}}</td>
                                 <td class="table-trigger">
                                     {{data.team}}
@@ -61,13 +61,13 @@
 
                             </tbody>
 
-                            <div *ngIf="signatureData && signatureData.length == 0" class="no-data-warning">
+                            <div *ngIf="signatureData.response && signatureData.response.length == 0" class="no-data-warning">
                                 <i class="material-icons">warning_amber</i>
                                 <span>No Data Found</span>
                             </div>
 
                         </table>
-                        <div *ngIf="signatureData && signatureData.length >= 6" class="pagination-section">
+                        <div *ngIf="signatureData.response && signatureData.response.length >= 6" class="pagination-section">
                             <span class="page-span">
                             <span>Entries Per Page</span>
                             <select [(ngModel)]="selectedItem">
@@ -93,49 +93,52 @@
             <h4 class="content-span full-width">{{formHeading}}</h4>
         </div>
         <div class="dialog-content">
-            <!--                <form class="form-horizontal form-bordered"  [formGroup]="loginForm">-->
-            <div class="form-group">
-                <mat-label>Signature name</mat-label>
-                <mat-form-field appearance="outline">
-                    <input [(ngModel)]="signatures" matInput>
-                </mat-form-field>
-            </div>
-
-            <div class="form-group mb-4">
-                <mat-label>Email ID</mat-label>
-                <mat-form-field appearance="outline">
-                    <mat-select>
-                        <mat-option *ngFor="let data of signatureData" [value]="data.email">
-                            {{data?.email}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-
-            <div class="form-group mb-4 email-main">
-                <mat-label>Signature</mat-label>
-                <quill-editor [(ngModel)]="htmlText"
-                              [modules]="quillConfig"
-                              placeholder="Signature text"></quill-editor>
-            </div>
-
-
-            <div class="template-action row m-0 email-signature-option">
-                <div class="signature-options">
-                    <mat-checkbox>For new email use</mat-checkbox>
-                    <mat-checkbox>On reply / forward use</mat-checkbox>
+            <form class="form-horizontal form-bordered"  [formGroup]="signatureForm">
+                <div class="form-group">
+                    <mat-label>Signature name</mat-label>
+                    <mat-form-field appearance="outline">
+                        <input matInput formControlName="signatureName">
+                        <!-- <input [(ngModel)]="signatures" matInput> -->
+                    </mat-form-field>
                 </div>
-            </div>
 
-            <div class="template-action row">
-                <div class="col-md-12">
-                    <div class="form-action-area">
-                        <button (click)="onClose()" class="gray-btn" mat-raised-button>Cancel</button>
-                        <button class="blue-btn service-trigger"
-                                mat-raised-button>{{saveBtnText}}</button>
+                <div class="form-group mb-4">
+                    <mat-label>Channel Identifer</mat-label>
+                    <mat-form-field appearance="outline">
+                        <!-- <input matInput formControlName="channelIdentifier"> -->
+                        <mat-select formControlName="channelIdentifer">
+                            <mat-option *ngFor="let data of channelDataByName" [value]="data.serviceIdentifier">
+                                {{data?.serviceIdentifier}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="form-group mb-4 email-main">
+                    <mat-label>Signature</mat-label>
+                    <quill-editor [formControl]="signatureForm.controls['signatureBody']"
+                                [modules]="quillConfig"
+                                placeholder="Signature text"></quill-editor>
+                </div>
+
+
+                <div class="template-action row m-0 email-signature-option">
+                    <div class="signature-options">
+                        <!-- <mat-checkbox>For new email use</mat-checkbox>
+                        <mat-checkbox>On reply / forward use</mat-checkbox> -->
                     </div>
                 </div>
-            </div>
-            <!--                </form >-->
+
+                <div class="template-action row">
+                    <div class="col-md-12">
+                        <div class="form-action-area">
+                            <button (click)="onClose()" class="gray-btn" mat-raised-button>Cancel</button>
+                            <button class="blue-btn service-trigger" (click)="onSave()" mat-raised-button>
+                                {{saveBtnText}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form >
         </div>
     </div>
 </ng-template>

@@ -146,7 +146,7 @@ const updateSignature = catchAsync(async (req, res) => {
            res.status(200).json({
             status: 200,
             message: "Signature Updated Successfully",
-            response: null
+            response: result
         });
     } catch (error) {
         logger.error(`[ERROR] on update email signature: %o` + error, { className: "emailSignature.controller", methodName: "updateSignature", CID: coId });

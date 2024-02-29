@@ -76,7 +76,10 @@ export class EndpointService {
     webWidget: "widget-configs",
     keycloakLogin: "keycloakLogin",
     keycloakUsers: "users",
-    agentDeskSettings:"agent-desk-settings"
+    agentDeskSettings:"agent-desk-settings",
+    emailSignatures: {
+      signatures: "email-signatures"
+    }
   };
 
   constructor(
@@ -871,6 +874,20 @@ export class EndpointService {
       .pipe(catchError(this.handleError));
   }
 
+  getChannelByChannelTypeName(typeName): Observable<any> {
+    return this.httpClient
+      .get(
+        `${this.CCM_URL}/${this.endpoints.ccm.channel}?channelTypeName=${typeName}`,
+        {
+          headers: new HttpHeaders({
+            "Content-Type": "application/json",
+            Authorization: "Bearer" + this.token,
+          }),
+        }
+      )
+      .pipe(catchError(this.handleError));
+  }
+
   updateChannel(data, id): Observable<any> {
     return this.httpClient
       .put<any>(`${this.CCM_URL}/${this.endpoints.ccm.channel}/${id}`, data, {
@@ -1440,4 +1457,53 @@ export class EndpointService {
       })
       .pipe(catchError(this.handleError));
   }
+
+
+////////////////////// Email  Signatures CRUD /////////////////////////////////
+
+
+  getSignature(): Observable<any> {
+    return this.httpClient
+      .get<any>(`${this.ADMIN_URL}/${this.endpoints.emailSignatures.signatures}`, {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.token,
+        }),
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  createSignature(data): Observable<any> {
+    return this.httpClient
+      .post<any>(`${this.ADMIN_URL}/${this.endpoints.emailSignatures.signatures}`,data, {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.token,
+        }),
+      })
+      .pipe(catchError(this.handleError));
+  }
+  
+  updateSignature(data, id): Observable<any> {
+    return this.httpClient
+      .put<any>(`${this.ADMIN_URL}/${this.endpoints.emailSignatures.signatures}/${id}`,data, {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.token,
+        }),
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  deleteSignature(id): Observable<any> {
+    return this.httpClient
+      .delete<any>(`${this.ADMIN_URL}/${this.endpoints.emailSignatures.signatures}/${id}`, {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.token,
+        }),
+      })
+      .pipe(catchError(this.handleError));
+  }
+
 }
