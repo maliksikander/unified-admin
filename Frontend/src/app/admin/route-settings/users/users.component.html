@@ -362,9 +362,12 @@
 
       <div class="main-selected-filter row m-0">
         <ul class="m-0 p-0">
-          <!-- <li><label>Team</label> {{selectedData?.team}}</li> -->
           <li><label>Queue</label> {{selectedQueue?.name}}</li>
-          <li><label>Attribute</label> {{selectedAttribute?.name}}</li>
+          <li><label>Attribute</label> 
+            <ul>
+              <li *ngFor="let attribute of selectedAttribute">{{ attribute.name }}</li>
+            </ul>
+          </li>
         </ul>
       </div>
 

@@ -185,7 +185,7 @@ export class UsersComponent implements OnInit {
   ngSelectedQueues: any; // for ng model data model
   ngSelectedAttributes: any; // for ng model data model
   selectedQueue: any;
-  selectedAttribute: any;
+  selectedAttribute: any[] = [];
 
 
   constructor(
@@ -851,13 +851,34 @@ this.attributeDropdownSettings = {
     }
   }
 
+  getAgentOfAttributeSelected(queueObj:any){
+    this.endPointService.getAgentOfAttributeSelected(queueObj).subscribe(
+      (res: any) => {
+        console.log("Agents of selected Queue")
+        this.snackbar.snackbarMessage(
+          "success-snackbar",
+          "Created Successfully",
+          1
+        );
+      },
+      (error: any) => {
+        console.error("Error fetching:", error);
+        if (error && error.status == 0)
+          this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
+      }
+    );
+
+
+  }
+
   onItemSelect(item: any) {
-  // this.selectedData = item;
+  
     if(item.serviceLevelType){
       this.selectedQueue = item;
       console.log('this.selectedQueue', this.selectedQueue);
-    }else{
-      this.selectedAttribute = item;
+      
+    }else if(!this.selectedAttribute.includes(item)){
+      this.selectedAttribute.push(item);
       console.log('this.selectedAttribute', this.selectedAttribute);
   }
     
@@ -865,17 +886,20 @@ this.attributeDropdownSettings = {
   }
 
   OnItemDeSelect(item: any) {
-  //   this.selectedData = item;
-  //   console.log('this.selectedData', this.selectedData);   
-  // }
   if (item.serviceLevelType) {
-    // Remove the item from the selectedQueueItems array
-    this.selectedQueueItems = this.selectedQueueItems.filter(q => q !== item);
-    console.log('Delected Queue Items', this.selectedQueueItems);
+    const index = this.selectedQueue.indexOf(item);
+    if (index !== -1) {
+      this.selectedQueue.splice(index, 1);
+      console.log('Deleted Queue Item', item);
+    }
   } else {
-    // Remove the item from the selectedAttributeItems array
-    this.selectedAttributeItems = this.selectedAttributeItems.filter(a => a !== item);
-    console.log('Delected Attribute Items', this.selectedAttributeItems);
+    const index = this.selectedAttribute.indexOf(item);
+    if (index !== -1) {
+      this.selectedAttribute.splice(index, 1);
+      console.log('Deleted Attribute Item', item);
+    }
   }
-}
+  }
+
+
 }

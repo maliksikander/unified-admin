@@ -488,6 +488,18 @@ export class EndpointService {
       .pipe(catchError(this.handleError));
   }
 
+  getAgentOfAttributeSelected(data): Observable<any>{
+    return this.httpClient
+    .post<any>(`${this.MRE_URL}/${this.endpoints.routing.attribute}/agents`, data, {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json"
+        // Authorization: "Bearer" + this.token,
+      }),
+    })
+    .pipe(catchError(this.handleError));
+  }
+
+
   getQueue(): Observable<any> {
     return this.httpClient
       .get(`${this.MRE_URL}/${this.endpoints.routing.pq.queue}`, {
@@ -524,6 +536,8 @@ export class EndpointService {
       })
       .pipe(catchError(this.handleError));
   }
+
+
 
   ///////////////  Step CRUD ///////////
 
