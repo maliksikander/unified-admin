@@ -86,7 +86,7 @@ export class NewFormComponent implements OnInit, AfterViewInit {
     this.validations = this.commonService.formErrorMessages;
 
     this.newForm = this.fb.group({
-      formType: ['', Validators.required],
+      formType: ['Default', Validators.required],
       formTitle: ["New Form", [Validators.required, Validators.maxLength(500)]],
       formDescription: ["", [Validators.maxLength(500)]],
       enableSections: [true],
@@ -114,7 +114,7 @@ export class NewFormComponent implements OnInit, AfterViewInit {
       sectionName: ["New Section"],
       sectionKey: ["new_section"],
       sectionWeightage: [0],
-      attributes: new FormArray([this.addAttributeGroup()]),
+      attributes: new FormArray([]),
     });
   }
 
@@ -225,18 +225,16 @@ export class NewFormComponent implements OnInit, AfterViewInit {
 
   addSectionButton() {
     const sections = this.newForm.get('sections') as FormArray;
-    // const attributes = sections.at(sectionIndex).get('sec') as FormArray;
-
-    sections.push(this.addSectionGroup());  // Add a new attribute group to the attributes FormArray
+    sections.push(this.addSectionGroup());  // Add a new section group to the sections FormArray
 
     const index = sections.length - 1;
     const control = sections.at(index);
 
-    // Patch default values
+    // Patch default values for the section
     control.patchValue({
       sectionName: "New Section" + index,
       sectionKey: "new_section" + index,
-      attributes: this.addAttributeGroup(),
+      sectionWeightage: 0,
     });
 
     // this.clearOutCategory(sectionIndex, index);
@@ -313,7 +311,7 @@ export class NewFormComponent implements OnInit, AfterViewInit {
   removeSection(i) {
     const section: any = this.newForm.get("sections");
     section.removeAt(i);
-    // this.expanded = !this.expanded;
+    this.expanded = !this.expanded;
   }
 
   // to add new category definition in existing attribute category list ,it accepts attribute index as parameter

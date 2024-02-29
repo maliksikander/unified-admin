@@ -50,7 +50,8 @@
             <mat-accordion cdkDropList (cdkDropListDropped)="drop($event)">
                 <ng-container formArrayName="sections">
                     <ng-container *ngFor="let section of getSection(newForm); let i = index">
-                        <mat-expansion-panel [formGroupName]="i">
+                        <mat-expansion-panel #panel [expanded]="true" cdkDrag [formGroupName]="i"
+                            (opened)="panelExpanded()" (closed)="panelExpanded()">
                             <mat-expansion-panel-header>
                                 <mat-panel-title>
                                     <span>{{section?.value?.sectionName}}</span>
