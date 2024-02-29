@@ -851,8 +851,8 @@ this.attributeDropdownSettings = {
     }
   }
 
-  getAgentOfAttributeSelected(queueObj:any){
-    this.endPointService.getAgentOfAttributeSelected(queueObj).subscribe(
+  getAgentOfAttributeSelected(attributeObj:any){
+    this.endPointService.getAgentOfAttributeSelected(attributeObj).subscribe(
       (res: any) => {
         console.log("Agents of selected Queue")
         this.snackbar.snackbarMessage(
@@ -870,12 +870,34 @@ this.attributeDropdownSettings = {
 
 
   }
+  getAgentOfQueueSelected(queueId:any){
+    this.endPointService.getAgentOfQueueSelected(queueId).subscribe(
+      (res: any) => {
+        console.log("Agents of selected Queue",res)
+        this.snackbar.snackbarMessage(
+          "success-snackbar",
+          "Created Successfully",
+          1
+        );
+      },
+      (error: any) => {
+        console.error("Error fetching:", error);
+        if (error && error.status == 0)
+          this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
+      }
+    );
+
+
+  }
+
 
   onItemSelect(item: any) {
   
     if(item.serviceLevelType){
       this.selectedQueue = item;
       console.log('this.selectedQueue', this.selectedQueue);
+      //call queue based Agents API
+      this.getAgentOfQueueSelected("65cde5428113de25a520fa39");
       
     }else if(!this.selectedAttribute.includes(item)){
       this.selectedAttribute.push(item);

@@ -499,6 +499,21 @@ export class EndpointService {
     .pipe(catchError(this.handleError));
   }
 
+  getAgentOfQueueSelected(queueId){
+    return this.httpClient
+    .get(
+      `${this.MRE_URL}/${this.endpoints.routing.pq.queue}/${queueId}/agents`,
+      {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json",
+          Authorization: "Bearer" + this.token,
+        }),
+      }
+    )
+    .pipe(catchError(this.handleError));
+
+  }
+
 
   getQueue(): Observable<any> {
     return this.httpClient
