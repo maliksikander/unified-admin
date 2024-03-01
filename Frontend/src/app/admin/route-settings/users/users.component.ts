@@ -852,14 +852,24 @@ this.attributeDropdownSettings = {
   }
 
   getAgentOfAttributeSelected(attributeObj:any){
-    this.endPointService.getAgentOfAttributeSelected(attributeObj).subscribe(
+    let attribute=[{
+      "id": attributeObj.id,
+        "name": attributeObj.name,
+        "description": attributeObj.description,
+        "type": attributeObj.type,
+        "defaultValue": attributeObj.defaultValue
+    }]
+    console.log("Attributee POst",attribute)
+    this.endPointService.getAgentOfAttributeSelected(attribute).subscribe(
       (res: any) => {
-        console.log("Agents of selected Queue")
-        this.snackbar.snackbarMessage(
-          "success-snackbar",
-          "Created Successfully",
-          1
-        );
+        console.log("Agents of selected Attribute",res)
+        this.availabeAgentsLis=this.availabeAgentsLis.concat(res);
+        
+        // this.snackbar.snackbarMessage(
+        //   "success-snackbar",
+        //   "Created Successfully",
+        //   1
+        // );
       },
       (error: any) => {
         console.error("Error fetching:", error);
@@ -874,11 +884,8 @@ this.attributeDropdownSettings = {
     this.endPointService.getAgentOfQueueSelected(queueId).subscribe(
       (res: any) => {
         console.log("Agents of selected Queue",res)
-        this.snackbar.snackbarMessage(
-          "success-snackbar",
-          "Created Successfully",
-          1
-        );
+        this.availabeAgentsLis=this.availabeAgentsLis.concat(res);
+        
       },
       (error: any) => {
         console.error("Error fetching:", error);
@@ -897,11 +904,12 @@ this.attributeDropdownSettings = {
       this.selectedQueue = item;
       console.log('this.selectedQueue', this.selectedQueue);
       //call queue based Agents API
-      this.getAgentOfQueueSelected("65cde5428113de25a520fa39");
+      this.getAgentOfQueueSelected(this.selectedQueue.id);
       
     }else if(!this.selectedAttribute.includes(item)){
       this.selectedAttribute.push(item);
       console.log('this.selectedAttribute', this.selectedAttribute);
+      this.getAgentOfAttributeSelected(item);
   }
     
     //call add agent API here

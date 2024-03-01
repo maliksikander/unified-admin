@@ -493,7 +493,7 @@ export class EndpointService {
     .post<any>(`${this.MRE_URL}/${this.endpoints.routing.attribute}/agents`, data, {
       headers: new HttpHeaders({
         "Content-Type": "application/json"
-        // Authorization: "Bearer" + this.token,
+       
       }),
     })
     .pipe(catchError(this.handleError));
@@ -506,7 +506,7 @@ export class EndpointService {
       {
         headers: new HttpHeaders({
           "Content-Type": "application/json",
-          Authorization: "Bearer" + this.token,
+         // Authorization: "Bearer" + this.token,
         }),
       }
     )

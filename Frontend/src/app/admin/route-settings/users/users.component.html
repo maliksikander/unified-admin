@@ -376,7 +376,7 @@
       <div class="assign-unassign-main row m-0">
         <div class="assign-unassign-data select-agents">
           <div class="assigned-agents assign-data-area pt-0">
-            <div class="table-selected-data"><label>Select Users from the list </label><label>256 agents</label></div>
+            <div class="table-selected-data"><label>Select Users from the list </label><label>{{availabeAgentsLis.length}} agents</label></div>
             <div class="assigned-table">
               <div class="search-area">
                 <input [(ngModel)]="searchTerm" class="search-field" placeholder="Search" type="text">
@@ -400,10 +400,10 @@
                     <mat-checkbox (change)="isAllSelected('avail-agents')" [(ngModel)]="data.isSelected" name="list_name" type="checkbox" value="{{data.id}}"></mat-checkbox>
                   </td>
                   <!--                                    <td>{{data.id}}</td>-->
-                  <td>{{data.userName}}</td>
-                  <td>{{data.email}}</td>
-                  <td>{{data.firstName}}</td>
-                  <td>{{data.lastName}}</td>
+                  <td>{{data.username}}</td>
+                  <td>{{data.id}}</td>
+                  <td>{{data.firstName || 'N/A' }}</td>
+                  <td>{{data.lastName || 'N/A'}}</td>
                 </tr>
                 </tbody>
               </table>
@@ -415,7 +415,7 @@
         <!-- Attributes Row -->
         <div class="assign-unassign-data select-agents attribute-selection ml-3">
           <div class="assigned-agents assign-data-area pt-0">
-            <div class="table-selected-data"><label>Select Attributes from the list </label><label>3 selected</label></div>
+            <div class="table-selected-data"><label>Select Attributes from the list </label><label>{{attrData.length}} selected</label></div>
             <div class="assigned-table">
               <div class="search-area">
                 <input [(ngModel)]="searchTerm" class="search-field" placeholder="Search" type="text">
