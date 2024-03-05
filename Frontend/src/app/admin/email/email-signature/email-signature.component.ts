@@ -3,7 +3,8 @@ import {ConfirmDialogComponent} from '../../../shared/confirm-dialog/confirm-dia
 import {MatDialog} from '@angular/material/dialog';
 import { EndpointService } from '../../services/endpoint.service';
 import { SnackbarService } from '../../services/snackbar.service';
-import { FormBuilder, FormGroup, Validators,AbstractControl,ValidationErrors } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators,AbstractControl,ValidationErrors, FormControl } from "@angular/forms";
+import { DomSanitizer } from '@angular/platform-browser';
 import { CommonService } from "../../services/common.service";
 
 @Component({
@@ -26,13 +27,13 @@ export class EmailSignatureComponent implements OnInit {
   formHeading = 'Create signature';
   saveBtnText = 'Create';
   signatureForm: FormGroup;
+  validations;
   formErrors = {
-    signatureName: "",
-    channelIdentifer: "",
-    signatureBody: "",
+    signatureName: "Signature Name is Required",
+    channelIdentifer: "Select a channel Identifier",
+    signatureBody: "This field cannot be empty",
   };
-  signatures = '';
-  htmlText ="";
+  
   quillConfig = {
     toolbar: {
       container: [
@@ -62,32 +63,31 @@ export class EmailSignatureComponent implements OnInit {
     private endPointService: EndpointService,
     private snackbar: SnackbarService,
     private formBuilder: FormBuilder,
-    private commonService: CommonService,
     ) {}
 
   ngOnInit(): void {
 
+    this.signatureForm =  new FormGroup ({
 
-    this.signatureForm = this.formBuilder.group({
-      signatureName: [
-        "",
+      signatureName:  new FormControl(
+        '',
         [
           Validators.required,
           Validators.minLength(3),
-          Validators.maxLength(256),
+          Validators.maxLength(100),
         ],
-      ],
-      channelIdentifer: ['', [
-        Validators.maxLength(500),
-      ]],
-      signatureBody: ['']
+      ),
+      channelIdentifer: new FormControl('', [
+        Validators.required,
+        Validators.maxLength(100),
+      ]),
+      signatureBody: new FormControl('', [Validators.required])
     });
 
     this.getSignatures();
     this.getChannelsTypeByName()
 
   }
-
 
 
    async getSignatures() {
@@ -124,43 +124,16 @@ export class EmailSignatureComponent implements OnInit {
 
   async getChannelsTypeByName() {
     try {
-      const id = "65a9406d6a07914e2f360799"
-        const res: any = await this.endPointService.getChannelByChannelType(id).toPromise();
+      const channelTypeName = "EMAIL"
+        const res: any = await this.endPointService.getChannelByChannelTypeName(channelTypeName).toPromise();
         this.channelDataByName = res
+        
         this.spinner = false;
     } catch (error) {
         console.error("Error fetching Email Signatures:", error);
         throw new Error("Error fetching Email Signatures");
     }
 
-  }
-
-
-
-  editSignature(templateRef, data) {
-    
-    this.editData = data
-    this.signatureForm.patchValue({
-      signatureName: data.signatureName,
-      channelIdentifer: data.channelIdentifer,
-      signatureBody: data.signatureBody
-    });
-
-    this.formHeading = 'Edit signature';
-    this.saveBtnText = 'Update';
-    this.signatures = data.name;
-
-    let dialogRef = this.dialog.open(templateRef, {
-      width: '100%',
-      maxWidth: '800px',
-      panelClass: ['add-attribute', 'add-team'],
-      disableClose: true,
-      data: data,
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      this.editData = undefined;
-    });
   }
 
   updateSignature(data, id) {
@@ -192,16 +165,41 @@ export class EmailSignatureComponent implements OnInit {
     );
   }
 
-  addSignature(templateRef) {
-    this.signatureForm.reset()
-    this.formHeading = 'Create signature';
+
+
+  editSignature(templateRef, data) {
+    this.editData = data;
+    this.formHeading = 'Edit signature';
+    this.saveBtnText = 'Update';
+  
     let dialogRef = this.dialog.open(templateRef, {
       width: '100%',
       maxWidth: '800px',
       panelClass: ['add-attribute', 'add-team'],
       disableClose: true,
+      data: data,
     });
+  
     dialogRef.afterClosed().subscribe((result) => {
+      this.editData = undefined;
+    });
+  
+    // Rendering HTML into Rich Text from DB
+    const htmlString = data.signatureBody;
+    const parser = new DOMParser();
+    const decodedHtml = parser.parseFromString(htmlString, 'text/html').body.textContent;
+  
+    const channelIdentifierToCheck = data.channelIdentifer;
+    const isChannelIdentifierInList = this.channelDataByName.some((item) => item.serviceIdentifier === channelIdentifierToCheck);
+  
+    // Set the channelIdentifer based on whether it's in the list
+    const channelIdentiferValue = isChannelIdentifierInList ? data.channelIdentifer : '';
+  
+    // Patch the form with the values
+    this.signatureForm.patchValue({
+      signatureName: data.signatureName,
+      channelIdentifer: channelIdentiferValue,
+      signatureBody: decodedHtml,
     });
   }
 
@@ -230,6 +228,23 @@ export class EmailSignatureComponent implements OnInit {
       }
     );
   }
+  
+
+
+  addSignature(templateRef) {
+    this.signatureForm.reset()
+    this.formHeading = 'Create signature';
+    let dialogRef = this.dialog.open(templateRef, {
+      width: '100%',
+      maxWidth: '800px',
+      panelClass: ['add-attribute', 'add-team'],
+      disableClose: true,
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+    });
+  }
+
+  
 
   deleteConfirm(data) {
     
@@ -259,10 +274,11 @@ export class EmailSignatureComponent implements OnInit {
   onSaveObject() {
     try {
       let data: any = {};
+
       data.signatureName = this.signatureForm.value.signatureName;
       data.channelIdentifer = this.signatureForm.value.channelIdentifer;
-
       data.signatureBody = this.signatureForm.value.signatureBody;
+
       return data;
     } catch (e) {
       console.error("Error on save object :", e);
@@ -275,6 +291,7 @@ export class EmailSignatureComponent implements OnInit {
       if (this.editData) {
 
         let editedSignature = Object.assign({}, this.editData);
+        
         editedSignature.signatureName = data.signatureName;
         editedSignature.channelIdentifer = data.channelIdentifer;
         editedSignature.signatureBody = data.signatureBody;
@@ -291,6 +308,8 @@ export class EmailSignatureComponent implements OnInit {
       console.error("Error on save :", e);
     }
   }
+
+
   selectPage() {
     this.itemsPerPage = this.selectedItem;
   }

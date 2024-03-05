@@ -1474,6 +1474,7 @@ export class EndpointService {
   }
 
   createSignature(data): Observable<any> {
+    console.log("here is the data for the creation of a new signature", data)
     return this.httpClient
       .post<any>(`${this.ADMIN_URL}/${this.endpoints.emailSignatures.signatures}`,data, {
         headers: new HttpHeaders({
