@@ -645,6 +645,16 @@ export class EndpointService {
       })
       .pipe(catchError(this.handleError));
   }
+  updateBulkAttributesAgent(data): Observable<any> {
+    return this.httpClient
+      .put<any>(`${this.MRE_URL}/${this.endpoints.routing.agent}`, data, {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json"
+          
+        }),
+      })
+      .pipe(catchError(this.handleError));
+  }
 
   deleteAgent(id): Observable<any> {
     return this.httpClient

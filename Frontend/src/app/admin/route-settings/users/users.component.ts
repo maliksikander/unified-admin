@@ -29,6 +29,8 @@ import {
   ],
 })
 export class UsersComponent implements OnInit {
+  dialogRef: any;
+  bulkAgentsWithAttribute = []
   p: any = 1;
   warningBool: boolean = true;
   itemsPerPageList = [5, 10, 15, 30, 50];
@@ -72,105 +74,105 @@ export class UsersComponent implements OnInit {
   selectedAttributeItems: any[] = []; // Array to store selected Attribute items
 
 
-   teamAttributes = [];
-   availabeAgentsLis = [
-  //   {
-  //     'id': '6540ac42kk',
-  //     'userName': 'john-hamilton',
-  //     'firstName': 'john ',
-  //     'lastName': 'Hamilton',
-  //     'email': 'aclemits0@pagesperso-orange.fr',
-  //     isSelected: false
+  teamAttributes = [];
+  availabeAgentsLis = [
+    //   {
+    //     'id': '6540ac42kk',
+    //     'userName': 'john-hamilton',
+    //     'firstName': 'john ',
+    //     'lastName': 'Hamilton',
+    //     'email': 'aclemits0@pagesperso-orange.fr',
+    //     isSelected: false
 
-  //   }, {
-  //     'id': '42kke99790',
-  //     'userName': 'andrewT9',
-  //     'firstName': 'Andrew ',
-  //     'lastName': 'Trate',
-  //     'email': 'bjays1@technorati.com',
-  //     isSelected: false
+    //   }, {
+    //     'id': '42kke99790',
+    //     'userName': 'andrewT9',
+    //     'firstName': 'Andrew ',
+    //     'lastName': 'Trate',
+    //     'email': 'bjays1@technorati.com',
+    //     isSelected: false
 
-  //   }, {
-  //     'id': '138a594244e9',
-  //     'userName': 'mhanery98',
-  //     'firstName': 'Michal ',
-  //     'lastName': 'Hanery',
-  //     'email': 'rfernandez3@elegantthemes.com',
-  //     isSelected: false
+    //   }, {
+    //     'id': '138a594244e9',
+    //     'userName': 'mhanery98',
+    //     'firstName': 'Michal ',
+    //     'lastName': 'Hanery',
+    //     'email': 'rfernandez3@elegantthemes.com',
+    //     isSelected: false
 
-  //   }, {
-  //     'id': '65138a5942',
-  //     'userName': 'g_ashley',
-  //     'firstName': 'ashley ',
-  //     'lastName': 'graham',
-  //     'email': 'aclemits0@pagesperso-orange.fr',
-  //     isSelected: false
+    //   }, {
+    //     'id': '65138a5942',
+    //     'userName': 'g_ashley',
+    //     'firstName': 'ashley ',
+    //     'lastName': 'graham',
+    //     'email': 'aclemits0@pagesperso-orange.fr',
+    //     isSelected: false
 
-  //   }, {
-  //     'id': '54138a5942',
-  //     'userName': 'a_miller54',
-  //     'firstName': 'Adam ',
-  //     'lastName': 'Miller',
-  //     'email': 'cnevin4@istockphoto.com',
-  //     isSelected: false
+    //   }, {
+    //     'id': '54138a5942',
+    //     'userName': 'a_miller54',
+    //     'firstName': 'Adam ',
+    //     'lastName': 'Miller',
+    //     'email': 'cnevin4@istockphoto.com',
+    //     isSelected: false
 
-  //   }, {
-  //     'id': '6540ac4299',
-  //     'userName': 'h_andy541',
-  //     'firstName': 'Hamilton ',
-  //     'lastName': 'Andu',
-  //     'email': 'aclemits0@pagesperso-orange.fr',
-  //     isSelected: false
+    //   }, {
+    //     'id': '6540ac4299',
+    //     'userName': 'h_andy541',
+    //     'firstName': 'Hamilton ',
+    //     'lastName': 'Andu',
+    //     'email': 'aclemits0@pagesperso-orange.fr',
+    //     isSelected: false
 
-  //   }, {
-  //     'id': '138a594244e9',
-  //     'userName': 'mhanery98',
-  //     'firstName': 'Michal ',
-  //     'lastName': 'Hanery',
-  //     'email': 'rfernandez3@elegantthemes.com',
-  //     isSelected: false
+    //   }, {
+    //     'id': '138a594244e9',
+    //     'userName': 'mhanery98',
+    //     'firstName': 'Michal ',
+    //     'lastName': 'Hanery',
+    //     'email': 'rfernandez3@elegantthemes.com',
+    //     isSelected: false
 
-  //   }, {
-  //     'id': '65138a5942',
-  //     'userName': 'g_ashley',
-  //     'firstName': 'ashley ',
-  //     'lastName': 'graham',
-  //     'email': 'aclemits0@pagesperso-orange.fr',
-  //     isSelected: false
+    //   }, {
+    //     'id': '65138a5942',
+    //     'userName': 'g_ashley',
+    //     'firstName': 'ashley ',
+    //     'lastName': 'graham',
+    //     'email': 'aclemits0@pagesperso-orange.fr',
+    //     isSelected: false
 
-  //   }, {
-  //     'id': '54138a5942',
-  //     'userName': 'a_miller54',
-  //     'firstName': 'Adam ',
-  //     'lastName': 'Miller',
-  //     'email': 'cnevin4@istockphoto.com',
-  //     isSelected: false
+    //   }, {
+    //     'id': '54138a5942',
+    //     'userName': 'a_miller54',
+    //     'firstName': 'Adam ',
+    //     'lastName': 'Miller',
+    //     'email': 'cnevin4@istockphoto.com',
+    //     isSelected: false
 
-  //   }, {
-  //     'id': '6540ac4299',
-  //     'userName': 'h_andy541',
-  //     'firstName': 'Hamilton ',
-  //     'lastName': 'Andu',
-  //     'email': 'aclemits0@pagesperso-orange.fr',
-  //     isSelected: false
+    //   }, {
+    //     'id': '6540ac4299',
+    //     'userName': 'h_andy541',
+    //     'firstName': 'Hamilton ',
+    //     'lastName': 'Andu',
+    //     'email': 'aclemits0@pagesperso-orange.fr',
+    //     isSelected: false
 
-  //   }, {
-  //     'id': '4758e99790',
-  //     'userName': 'j_trate55',
-  //     'firstName': 'Json ',
-  //     'lastName': 'Trate',
-  //     'email': 'aclemis0@pagesperso-orange.fr',
-  //     isSelected: false
+    //   }, {
+    //     'id': '4758e99790',
+    //     'userName': 'j_trate55',
+    //     'firstName': 'Json ',
+    //     'lastName': 'Trate',
+    //     'email': 'aclemis0@pagesperso-orange.fr',
+    //     isSelected: false
 
-  //   }, {
-  //     'id': '588a594244e9',
-  //     'userName': 'ncawsy5',
-  //     'firstName': 'Norton ',
-  //     'lastName': 'Cawsy',
-  //     'email': 'aclemis0@pagesperso-orange.fr',
-  //     isSelected: false
+    //   }, {
+    //     'id': '588a594244e9',
+    //     'userName': 'ncawsy5',
+    //     'firstName': 'Norton ',
+    //     'lastName': 'Cawsy',
+    //     'email': 'aclemis0@pagesperso-orange.fr',
+    //     isSelected: false
 
-  //   }
+    //   }
   ];
   masterSelected: boolean;
   checkedList: any;
@@ -179,7 +181,7 @@ export class UsersComponent implements OnInit {
   dropdownList = [];
   selectedTeam = [];
   queueDropdownSettings: any;
-  attributeDropdownSettings:any;
+  attributeDropdownSettings: any;
   availableTeam = [];
   selectedData: any;
   ngSelectedQueues: any; // for ng model data model
@@ -194,11 +196,11 @@ export class UsersComponent implements OnInit {
     private endPointService: EndpointService,
     private formBuilder: FormBuilder,
     private snackbar: SnackbarService
-  ) {}
+  ) { }
 
   ngOnInit() {
     // this.commonService.checkTokenExistenceInStorage();
-    
+
     // this.dropdownList = [
     //   {'id': 1, 'team': 'Marketing', 'queue': 'Technical support', 'attribute': 'channel team'},
     //   {'id': 2, 'team': 'Sales', 'queue': 'Chat Queue', 'attribute': 'English'},
@@ -221,14 +223,14 @@ export class UsersComponent implements OnInit {
       searchPlaceholderText: 'Search'
     };
 
-this.attributeDropdownSettings = {
-  singleSelection: false,
-  text: '',
-  enableSearchFilter: true,
-  classes: 'custom-class',
-  badgeShowLimit: 3,
-  searchPlaceholderText: 'Search'
-};
+    this.attributeDropdownSettings = {
+      singleSelection: false,
+      text: '',
+      enableSearchFilter: true,
+      classes: 'custom-class',
+      badgeShowLimit: 3,
+      searchPlaceholderText: 'Search'
+    };
 
     //setting local form validation messages
     this.validations = this.commonService.userFormErrorMessages;
@@ -237,7 +239,7 @@ this.attributeDropdownSettings = {
     if (pageNumber) this.p = pageNumber;
 
     this.userForm = this.formBuilder.group({
-      username:[""],
+      username: [""],
       firstName: [""],
       lastName: [""],
       roles: [""],
@@ -271,7 +273,7 @@ this.attributeDropdownSettings = {
     this.endPointService.getAttribute().subscribe(
       (res: any) => {
         this.attrData = JSON.parse(JSON.stringify(res));
-        this.teamAttributes=this.attrData;
+        this.teamAttributes = this.attrData;
         console.log("ATTRIBUTE ===>", this.attrData)
         if (this.attrData && this.attrData.length > 0) {
           this.attrData.map((item) => {
@@ -306,20 +308,20 @@ this.attributeDropdownSettings = {
 
   //to get RE queues
   getQueue() {
-   
+
     this.endPointService.getQueue().subscribe(
       (res: any) => {
-        this.dropdownList=res;
+        this.dropdownList = res;
         console.log("QUEUE ===>", this.dropdownList)
-       
-        
+
+
       },
       (error) => {
-       
+
         console.error("Error fetching:", error);
-      //   if (error && error.status == 0)
-      //     this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
-       }
+        //   if (error && error.status == 0)
+        //     this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
+      }
     );
   }
 
@@ -785,8 +787,8 @@ this.attributeDropdownSettings = {
   assignUnassignAgents(templateRef) {
     this.getAttribute()
     this.getQueue();
-    
-    let dialogRef = this.dialog.open(templateRef, {
+
+       this.dialogRef = this.dialog.open(templateRef, {
       width: '100%',
       maxWidth: '1200px',
       maxHeight: '100vh',
@@ -794,7 +796,7 @@ this.attributeDropdownSettings = {
       disableClose: true,
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    this.dialogRef.afterClosed().subscribe((result) => {
     });
 
   }
@@ -804,6 +806,8 @@ this.attributeDropdownSettings = {
 
       for (var i = 0; i < this.availabeAgentsLis.length; i++) {
         this.availabeAgentsLis[i].isSelected = this.masterSelected;
+        //console.log("this.masterSelected",this.masterSelected)
+        console.log(" availabeAgentsLis[i].isSelected====>", this.availabeAgentsLis[i].isSelected)
       }
       this.getCheckedItemList(e);
     }
@@ -811,124 +815,306 @@ this.attributeDropdownSettings = {
 
       for (var i = 0; i < this.teamAttributes.length; i++) {
         this.teamAttributes[i].isSelected = this.masterSelected2;
+        console.log(" this.teamAttributes[i].isSelected====>", this.teamAttributes[i].isSelected)
       }
       this.getCheckedItemList('avail-agents');
     }
   }
 
   isAllSelected(e) {
+    // if (e == 'avail-agents') {
+    //   this.masterSelected = this.availabeAgentsLis.every(function (item: any) {
+    //     return item.isSelected == true;
+    //   });
+    //   const selectedAgent = this.availabeAgentsLis.find(item => item.isSelected);
+    //     if (selectedAgent) {
+    //         console.log("Data of the selected checkbox:", selectedAgent);
+    //     }
+    //   this.getCheckedItemList(e);
+
+    // } else {
+    //   this.masterSelected2 = this.teamAttributes.every(function (item: any) {
+    //     return item.isSelected == true;
+    //   });
+    //   this.getCheckedItemList('avail-agents');
+    // }
     if (e == 'avail-agents') {
-      this.masterSelected = this.availabeAgentsLis.every(function(item: any) {
-        return item.isSelected == true;
-      });
-      this.getCheckedItemList(e);
-    }else {
-      this.masterSelected2 = this.teamAttributes.every(function(item: any) {
-        return item.isSelected == true;
-      });
-      this.getCheckedItemList('avail-agents');
-    }
+      this.masterSelected = this.availabeAgentsLis.every(item => item.isSelected);
+      const selectedAgents = this.getCheckedItemList(e);
+
+      if (selectedAgents.length === this.availabeAgentsLis.length) {
+          console.log("All agents selected:", selectedAgents);
+      } else {
+          console.log("Not all agents selected:", selectedAgents);
+      }
+  } else {
+      this.masterSelected2 = this.teamAttributes.every(item => item.isSelected);
+      const selectedAttributes = this.getCheckedItemList('avail-agents');
+
+      if (selectedAttributes.length === this.teamAttributes.length) {
+          console.log("All attributes selected:", selectedAttributes);
+      } else {
+          console.log("Not all attributes selected:", selectedAttributes);
+      }
+  }
   }
 
   getCheckedItemList(e) {
     this.checkedList = [];
     this.checkedList2 = [];
     if (e == 'avail-agents') {
-      for (var i = 0; i < this.availabeAgentsLis.length; i++) {
-        if (this.availabeAgentsLis[i].isSelected) {
-          this.checkedList.push(this.availabeAgentsLis[i]);
-        }
-      }
-      this.checkedList = JSON.stringify(this.checkedList);
-    }
-    else {
-      for (var i = 0; i < this.teamAttributes.length; i++) {
-        if (this.teamAttributes[i].isSelected) {
-          this.checkedList2.push(this.teamAttributes[i]);
-        }
-      }
-      this.checkedList2 = JSON.stringify(this.checkedList2);
+      return this.availabeAgentsLis.filter(item => item.isSelected);
+    } else {
+      return this.teamAttributes.filter(item => item.isSelected);
     }
   }
 
-  getAgentOfAttributeSelected(attributeObj:any){
-    let attribute=[{
-      "id": attributeObj.id,
-        "name": attributeObj.name,
-        "description": attributeObj.description,
-        "type": attributeObj.type,
-        "defaultValue": attributeObj.defaultValue
-    }]
-    console.log("Attributee POst",attribute)
-    this.endPointService.getAgentOfAttributeSelected(attribute).subscribe(
-      (res: any) => {
-        console.log("Agents of selected Attribute",res)
-        this.availabeAgentsLis=this.availabeAgentsLis.concat(res);
-        
-        // this.snackbar.snackbarMessage(
-        //   "success-snackbar",
-        //   "Created Successfully",
-        //   1
-        // );
-      },
-      (error: any) => {
-        console.error("Error fetching:", error);
-        if (error && error.status == 0)
-          this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
+  // assignAttributes() {
+
+  //   if (this.teamAttributes && this.teamAttributes.length > 0) {
+  //     const selectedRoutingAttribute = this.getCheckedItemList('team-attributes');//give us selected Attr
+  //     console.log("routingAttribute", selectedRoutingAttribute)
+
+  //     if (selectedRoutingAttribute.length > 0) {
+  //       this.availabeAgentsLis.forEach(agent => {
+  //         // Check if associatedRoutingAttributes array exists, otherwise create it
+  //         if (!agent.associatedRoutingAttributes) {
+  //           agent.associatedRoutingAttributes = [];
+  //         }
+  //         selectedRoutingAttribute.forEach(attr => {
+  //           const routingAttributeObj = {
+  //             id: attr.id,
+  //             name: attr.name,
+  //             description: attr.description,
+  //             type: attr.type,
+  //             defaultValue: attr.defaultValue
+  //           };
+  //           agent.associatedRoutingAttributes.push({
+  //             routingAttribute: routingAttributeObj,
+  //             value: attr.value
+  //           });
+  //         });
+  //       });
+  //       this.endPointService.updateBulkAttributesAgent(this.availabeAgentsLis).subscribe(
+  //         (res: any) => {
+  //           console.log("Agents of BULK ATTR", res)
+  //           this.bulkAgentsWithAttribute = res;
+  //           this.snackbar.snackbarMessage(
+  //             "success-snackbar",
+  //             "Bulk Attributes updated Successfully",
+  //             1
+  //           );
+  //           if (this.dialogRef) {
+  //             this.dialogRef.close();
+  //           }
+
+  //         },
+  //         (error: any) => {
+  //           console.error("Error fetching:", error);
+  //           if (error && error.status == 0)
+  //             this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
+  //         }
+  //       );
+
+
+  //     } else {
+  //       console.log("No attributes selected.");
+  //     }
+  //   } else {
+  //     console.log("teamAttributes is empty.");
+  //   }
+
+  // }
+  assignAttributes() {
+    if (this.teamAttributes && this.teamAttributes.length > 0) {
+      const selectedAgents = this.getCheckedItemList('avail-agents');
+      const selectedAttributes = this.getCheckedItemList('team-attributes');
+  
+      if (selectedAttributes.length > 0 && selectedAgents.length > 0) {
+        selectedAgents.forEach(agent => {
+          // Check if associatedRoutingAttributes array exists, otherwise create it
+          if (!agent.associatedRoutingAttributes) {
+            agent.associatedRoutingAttributes = [];
+          }
+          selectedAttributes.forEach(attr => {
+            const routingAttributeObj = {
+              id: attr.id,
+              name: attr.name,
+              description: attr.description,
+              type: attr.type,
+              defaultValue: attr.defaultValue
+            };
+            agent.associatedRoutingAttributes.push({
+              routingAttribute: routingAttributeObj,
+              value: attr.value
+            });
+          });
+        });
+  
+        this.endPointService.updateBulkAttributesAgent(selectedAgents).subscribe(
+          (res: any) => {
+            console.log("Agents of BULK ATTR", res);
+            this.bulkAgentsWithAttribute = res;
+            this.snackbar.snackbarMessage(
+              "success-snackbar",
+              "Bulk Attributes updated Successfully",
+              1
+            );
+            if (this.dialogRef) {
+              this.dialogRef.close();
+            }
+          },
+          (error: any) => {
+            console.error("Error fetching:", error);
+            if (error && error.status == 0)
+              this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
+          }
+        );
+      } else {
+        console.log("No attributes or agents selected.");
       }
-    );
-
-
+    } else {
+      console.log("teamAttributes is empty.");
+    }
   }
-  getAgentOfQueueSelected(queueId:any){
-    this.endPointService.getAgentOfQueueSelected(queueId).subscribe(
-      (res: any) => {
-        console.log("Agents of selected Queue",res)
-        this.availabeAgentsLis=this.availabeAgentsLis.concat(res);
-        
-      },
-      (error: any) => {
-        console.error("Error fetching:", error);
-        if (error && error.status == 0)
-          this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
-      }
-    );
 
 
-  }
+
+  // getAgentOfAttributeSelected(attributeObj: any) {
+  //   let attribute = [{
+  //     "id": attributeObj.id,
+  //     "name": attributeObj.name,
+  //     "description": attributeObj.description,
+  //     "type": attributeObj.type,
+  //     "defaultValue": attributeObj.defaultValue
+  //   }]
+  //   console.log("Attributee POst", attribute)
+  //   this.endPointService.getAgentOfAttributeSelected(attribute).subscribe(
+  //     (res: any) => {
+  //       console.log("Agents of selected Attribute", res)
+  //       this.availabeAgentsLis = this.availabeAgentsLis.concat(res);
+  //     },
+  //     (error: any) => {
+  //       console.error("Error fetching:", error);
+  //       if (error && error.status == 0)
+  //         this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
+  //     }
+  //   );
+
+
+  // }
+
+  // testing new code
+
+  // getAgentOfQueueSelected(queueId: any) {
+  //   this.endPointService.getAgentOfQueueSelected(queueId).subscribe(
+  //     (res: any) => {
+  //       console.log("Agents of selected Queue", res)
+  //       this.availabeAgentsLis = this.availabeAgentsLis.concat(res);
+  //       console.log(this.availabeAgentsLis, "<===this.availabeAgentsList===>")
+
+  //     },
+  //     (error: any) => {
+  //       console.error("Error fetching:", error);
+  //       if (error && error.status == 0)
+  //         this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
+  //     }
+  //   );
+
+
+  // }
+
+///////////////////////////////////////////
+
+getAgentOfAttributeSelected(attributeObj: any) {
+  let attribute = [{
+    "id": attributeObj.id,
+    "name": attributeObj.name,
+    "description": attributeObj.description,
+    "type": attributeObj.type,
+    "defaultValue": attributeObj.defaultValue
+  }];
+
+  console.log("Attributee POst", attribute);
+
+  this.endPointService.getAgentOfAttributeSelected(attribute).subscribe(
+    (res: any) => {
+      console.log("Agents of selected Attribute", res);
+
+      // Filter out agents that are already present in availabeAgentsLis
+      const newAgents = res.filter(newAgent => !this.availabeAgentsLis.some(oldAgent => oldAgent.id === newAgent.id));
+
+      // Concatenate only the new agents to availabeAgentsLis
+      this.availabeAgentsLis = this.availabeAgentsLis.concat(newAgents);
+    },
+    (error: any) => {
+      console.error("Error fetching:", error);
+      if (error && error.status == 0)
+        this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
+    }
+  );
+}
+
+getAgentOfQueueSelected(queueId: any) {
+  this.endPointService.getAgentOfQueueSelected(queueId).subscribe(
+    (res: any) => {
+      console.log("Agents of selected Queue", res);
+
+      // Filter out agents that are already present in availabeAgentsLis
+      const newAgents = res.filter(newAgent => !this.availabeAgentsLis.some(oldAgent => oldAgent.id === newAgent.id));
+
+      // Concatenate only the new agents to availabeAgentsLis
+      this.availabeAgentsLis = this.availabeAgentsLis.concat(newAgents);
+
+      console.log(this.availabeAgentsLis, "<===this.availabeAgentsList===>");
+    },
+    (error: any) => {
+      console.error("Error fetching:", error);
+      if (error && error.status == 0)
+        this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
+    }
+  );
+}
+
+
+
+
+/////////////////////////////////////////
+
+
 
 
   onItemSelect(item: any) {
-  
-    if(item.serviceLevelType){
+
+    if (item.serviceLevelType) {
       this.selectedQueue = item;
       console.log('this.selectedQueue', this.selectedQueue);
       //call queue based Agents API
       this.getAgentOfQueueSelected(this.selectedQueue.id);
-      
-    }else if(!this.selectedAttribute.includes(item)){
+
+    } else if (!this.selectedAttribute.includes(item)) {
       this.selectedAttribute.push(item);
       console.log('this.selectedAttribute', this.selectedAttribute);
       this.getAgentOfAttributeSelected(item);
-  }
-    
+    }
+
     //call add agent API here
   }
 
   OnItemDeSelect(item: any) {
-  if (item.serviceLevelType) {
-    const index = this.selectedQueue.indexOf(item);
-    if (index !== -1) {
-      this.selectedQueue.splice(index, 1);
-      console.log('Deleted Queue Item', item);
+    if (item.serviceLevelType) {
+      const index = this.selectedQueue.indexOf(item);
+      if (index !== -1) {
+        this.selectedQueue.splice(index, 1);
+        console.log('Deleted Queue Item', item);
+      }
+    } else {
+      const index = this.selectedAttribute.indexOf(item);
+      if (index !== -1) {
+        this.selectedAttribute.splice(index, 1);
+        console.log('Deleted Attribute Item', item);
+      }
     }
-  } else {
-    const index = this.selectedAttribute.indexOf(item);
-    if (index !== -1) {
-      this.selectedAttribute.splice(index, 1);
-      console.log('Deleted Attribute Item', item);
-    }
-  }
   }
 
 

@@ -33,7 +33,7 @@
                     <th scope="col">Last Name</th>
                     <th scope="col">Attributes</th>
                     <!-- <th scope="col">Team</th> -->
-                    <th scope="col">Queue</th>
+                    <!-- <th scope="col">Queue</th> -->
                   </tr>
                 </thead>
                 <tbody>
@@ -76,9 +76,9 @@
                     <!-- <td>
                       <span>Marketing</span>
                     </td> -->
-                    <td>
+                    <!-- <td>
                       <span>Marketing 1, Marketing International, Marketing Local, Marketing Outbound</span>
-                    </td>
+                    </td> -->
                     <div class="list-action-area">
                       <span *ngIf="managePermission" class="list-actions">
                         <button mat-mini-fab matTooltip="Add/Edit Attribute"
@@ -400,10 +400,10 @@
                     <mat-checkbox (change)="isAllSelected('avail-agents')" [(ngModel)]="data.isSelected" name="list_name" type="checkbox" value="{{data.id}}"></mat-checkbox>
                   </td>
                   <!--                                    <td>{{data.id}}</td>-->
-                  <td>{{data.username}}</td>
-                  <td>{{data.id}}</td>
-                  <td>{{data.firstName || 'N/A' }}</td>
-                  <td>{{data.lastName || 'N/A'}}</td>
+                  <td>{{data.keycloakUser.username}}</td>
+                  <td>{{data.keycloakUser.id}}</td>
+                  <td>{{data.keycloakUser.firstName || 'N/A' }}</td>
+                  <td>{{data.keycloakUser.lastName || 'N/A'}}</td>
                 </tr>
                 </tbody>
               </table>
@@ -416,6 +416,7 @@
         <div class="assign-unassign-data select-agents attribute-selection ml-3">
           <div class="assigned-agents assign-data-area pt-0">
             <div class="table-selected-data"><label>Select Attributes from the list </label><label>{{attrData.length}} selected</label></div>
+            <!-- Attribute table -->
             <div class="assigned-table">
               <div class="search-area">
                 <input [(ngModel)]="searchTerm" class="search-field" placeholder="Search" type="text">
@@ -446,7 +447,7 @@
       </div>
       <div class="action-area assign-data-action">
         <button mat-raised-button class="gray-btn" [mat-dialog-close]="true">Cancel</button>
-        <button mat-raised-button class="blue-btn service-trigger">Assign Attributes</button>
+        <button mat-raised-button class="blue-btn service-trigger" (click)="assignAttributes()">Assign Attributes</button>
       </div>
     </div>
   </div>
