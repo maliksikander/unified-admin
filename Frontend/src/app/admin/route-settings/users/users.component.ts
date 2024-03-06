@@ -869,62 +869,8 @@ export class UsersComponent implements OnInit {
     }
   }
 
-  // assignAttributes() {
-
-  //   if (this.teamAttributes && this.teamAttributes.length > 0) {
-  //     const selectedRoutingAttribute = this.getCheckedItemList('team-attributes');//give us selected Attr
-  //     console.log("routingAttribute", selectedRoutingAttribute)
-
-  //     if (selectedRoutingAttribute.length > 0) {
-  //       this.availabeAgentsLis.forEach(agent => {
-  //         // Check if associatedRoutingAttributes array exists, otherwise create it
-  //         if (!agent.associatedRoutingAttributes) {
-  //           agent.associatedRoutingAttributes = [];
-  //         }
-  //         selectedRoutingAttribute.forEach(attr => {
-  //           const routingAttributeObj = {
-  //             id: attr.id,
-  //             name: attr.name,
-  //             description: attr.description,
-  //             type: attr.type,
-  //             defaultValue: attr.defaultValue
-  //           };
-  //           agent.associatedRoutingAttributes.push({
-  //             routingAttribute: routingAttributeObj,
-  //             value: attr.value
-  //           });
-  //         });
-  //       });
-  //       this.endPointService.updateBulkAttributesAgent(this.availabeAgentsLis).subscribe(
-  //         (res: any) => {
-  //           console.log("Agents of BULK ATTR", res)
-  //           this.bulkAgentsWithAttribute = res;
-  //           this.snackbar.snackbarMessage(
-  //             "success-snackbar",
-  //             "Bulk Attributes updated Successfully",
-  //             1
-  //           );
-  //           if (this.dialogRef) {
-  //             this.dialogRef.close();
-  //           }
-
-  //         },
-  //         (error: any) => {
-  //           console.error("Error fetching:", error);
-  //           if (error && error.status == 0)
-  //             this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
-  //         }
-  //       );
-
-
-  //     } else {
-  //       console.log("No attributes selected.");
-  //     }
-  //   } else {
-  //     console.log("teamAttributes is empty.");
-  //   }
-
-  // }
+  
+  ///////////////////////////
   assignAttributes() {
     if (this.teamAttributes && this.teamAttributes.length > 0) {
       const selectedAgents = this.getCheckedItemList('avail-agents');
@@ -936,18 +882,27 @@ export class UsersComponent implements OnInit {
           if (!agent.associatedRoutingAttributes) {
             agent.associatedRoutingAttributes = [];
           }
+  
           selectedAttributes.forEach(attr => {
-            const routingAttributeObj = {
-              id: attr.id,
-              name: attr.name,
-              description: attr.description,
-              type: attr.type,
-              defaultValue: attr.defaultValue
-            };
-            agent.associatedRoutingAttributes.push({
-              routingAttribute: routingAttributeObj,
-              value: attr.value
-            });
+            // Check if the attribute is not already associated with the agent
+            const isAttributeAlreadyAssigned = agent.associatedRoutingAttributes.some(
+              assignedAttr => assignedAttr.routingAttribute.id === attr.id
+            );
+  
+            if (!isAttributeAlreadyAssigned) {
+              const routingAttributeObj = {
+                id: attr.id,
+                name: attr.name,
+                description: attr.description,
+                type: attr.type,
+                defaultValue: attr.defaultValue
+              };
+  
+              agent.associatedRoutingAttributes.push({
+                routingAttribute: routingAttributeObj,
+                value: attr.value
+              });
+            }
           });
         });
   
@@ -977,6 +932,65 @@ export class UsersComponent implements OnInit {
       console.log("teamAttributes is empty.");
     }
   }
+  
+  
+
+
+
+//////////////////////////
+
+  // assignAttributes() {
+  //   if (this.teamAttributes && this.teamAttributes.length > 0) {
+  //     const selectedAgents = this.getCheckedItemList('avail-agents');
+  //     const selectedAttributes = this.getCheckedItemList('team-attributes');
+  
+  //     if (selectedAttributes.length > 0 && selectedAgents.length > 0) {
+  //       selectedAgents.forEach(agent => {
+  //         // Check if associatedRoutingAttributes array exists, otherwise create it
+  //         if (!agent.associatedRoutingAttributes) {
+  //           agent.associatedRoutingAttributes = [];
+  //         }
+  //         selectedAttributes.forEach(attr => {
+  //           const routingAttributeObj = {
+  //             id: attr.id,
+  //             name: attr.name,
+  //             description: attr.description,
+  //             type: attr.type,
+  //             defaultValue: attr.defaultValue
+  //           };
+  //           agent.associatedRoutingAttributes.push({
+  //             routingAttribute: routingAttributeObj,
+  //             value: attr.value
+  //           });
+  //         });
+  //       });
+  
+  //       this.endPointService.updateBulkAttributesAgent(selectedAgents).subscribe(
+  //         (res: any) => {
+  //           console.log("Agents of BULK ATTR", res);
+  //           this.bulkAgentsWithAttribute = res;
+  //           this.snackbar.snackbarMessage(
+  //             "success-snackbar",
+  //             "Bulk Attributes updated Successfully",
+  //             1
+  //           );
+  //           if (this.dialogRef) {
+  //             this.dialogRef.close();
+  //           }
+  //         },
+  //         (error: any) => {
+  //           console.error("Error fetching:", error);
+  //           if (error && error.status == 0)
+  //             this.snackbar.snackbarMessage("error-snackbar", error.statusText, 1);
+  //         }
+  //       );
+  //     } else {
+  //       console.log("No attributes or agents selected.");
+  //     }
+  //   } else {
+  //     console.log("teamAttributes is empty.");
+  //   }
+  // }
 
 
 
