@@ -9,7 +9,7 @@ const formSchema = mongoose.Schema(
         },
         formType: {
             type: String,
-            enum: ['Questionnaire', 'Survey', 'Wrap-up', 'Pre-chat', 'Other'],
+            enum: ['Questionnaire', 'Survey', 'Wrap-up', 'Pre-conversation', 'Default'],
             required: true,
         },
         formTitle: {
@@ -26,54 +26,37 @@ const formSchema = mongoose.Schema(
         enableWeightage: {
             type: Boolean,
         },
-        activeVersion: {
-            type: String,
-            required: true,
-        },
-        versions: [
+        section: [
             {
-                v1: {
-                    status: {
-                        type: String,
-                        enum: ['published', 'unpublished', 'draft']
+                sectionName: {
+                    type: String,
+                    required: true,
+                },
+                sectionKey: {
+                    type: String,
+                    required: true,
+                },
+                sectionWeightage: {
+                    type: Number,
+                    required: false,
+                },
+                attributes: [
+                    {
+                        label: { type: String, required: true },
+                        helpText: { type: String },
+                        key: { type: String },
+                        valueType: { type: String, enum: ["alphaNumeric", "alphaNumericSpecial", "email", "number", "password", "positiveNumber", "url", "phoneNumber", "date", "time", "dateTime", "shortAnswer", "file", "paragraph", "boolean", "mcq", "checkbox", "dropdown", "rating", "nps"] },
+                        attributeType: { type: String, enum: ['INPUT', 'OPTIONS', 'TEXTAREA'] },
+                        isRequired: { type: Boolean },
+                        enableEmojis: { type: Boolean, default: false },
+                        attributeWeightage: { type: Number, default: null },
+                        allowOther: { type: Boolean, default: false },
+                        otherInput: { type: Object },
+                        ratingData: { type: Object },
+                        fileData: { type: Object },
+                        attributeOptions: { type: Object }
                     },
-                    createdAt: {
-                        type: String,
-                        required: true,
-                    },
-                    section: [
-                        {
-                            sectionId: {
-                                type: String,
-                                required: true,
-                            },
-                            sectionName: {
-                                type: String,
-                                required: true,
-                            },
-                            sectionWeightage: {
-                                type: Number,
-                                required: false,
-                            },
-                            attributes: [
-                                {
-                                    label: { type: String, required: true },
-                                    helpText: { type: String },
-                                    key: { type: String },
-                                    valueType: { type: String, enum: ["alphaNumeric", "alphaNumericSpecial", "email", "number", "password", "positiveNumber", "url", "phoneNumber", "date", "time", "dateTime", "shortAnswer", "file", "paragraph", "boolean", "mcq", "checkbox", "dropdown", "rating", "nps"] },
-                                    attributeType: { type: String, enum: ['INPUT', 'OPTIONS', 'TEXTAREA'] },
-                                    isRequired: { type: Boolean },
-                                    enableEmoji: { type: Boolean, default: false },
-                                    attributeWeightage: { type: Number, default: null },
-                                    enableCategory: { type: Boolean, default: false },
-                                    allowMultipleSelect: { type: Boolean, default: false },
-                                    allowOther: { type: Boolean, default: false },
-                                    attributeOptions: { type: Object }
-                                },
-                            ],
-                        }
-                    ]
-                }
+                ],
             }
         ],
     },

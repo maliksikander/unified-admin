@@ -1,5 +1,5 @@
 {
-  "ADMIN_URL": "https://cim.expertflow.com/unified-admin",
+  "ADMIN_URL": "http://localhost:3001",
   "MRE_URL": "https://cim.expertflow.com/routing-engine",
   "BUSINESS_USER_ROLES": [
     "agent",
