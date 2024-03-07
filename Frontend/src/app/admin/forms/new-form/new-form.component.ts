@@ -71,7 +71,7 @@ export class NewFormComponent implements OnInit, AfterViewInit {
     "Survey",
     "Wrap-up",
     "Pre-conversation",
-    "default"
+    "Default"
   ]
 
   constructor(
@@ -109,33 +109,55 @@ export class NewFormComponent implements OnInit, AfterViewInit {
   }
 
   // section form group definition
+  // addSectionGroup(): FormGroup {
+  //   return this.fb.group({
+  //     sectionName: ["New Section"],
+  //     sectionKey: ["new_section"],
+  //     sectionWeightage: [0],
+  //     attributes: new FormArray([]),
+  //   });
+  // }
+
   addSectionGroup(): FormGroup {
     return this.fb.group({
       sectionName: ["New Section"],
       sectionKey: ["new_section"],
       sectionWeightage: [0],
-      attributes: new FormArray([]),
+      attributes: this.fb.array([]),
     });
   }
 
   // attribute form group definition
+  // addAttributeGroup(): FormGroup {
+  //   return this.fb.group({
+  //     attributeType: ["", [Validators.required]],
+  //     attributeOptions: new FormArray([this.addAttributeOptionGroup()]),
+  //     helpText: [""],
+  //     isRequired: [true],
+  //     key: ["new_question"],
+  //     label: ["New Question", [Validators.required, RxwebValidators.unique()]],
+  //     valueType: ["shortAnswer"],
+  //     attributeWeightage: [0],
+  //   });
+  // }
+
   addAttributeGroup(): FormGroup {
     return this.fb.group({
       attributeType: ["", [Validators.required]],
-      categories: new FormArray([this.addCategoryGroup()]),
+      attributeOptions: this.fb.array([]),
       helpText: [""],
       isRequired: [true],
       key: ["new_question"],
       label: ["New Question", [Validators.required, RxwebValidators.unique()]],
       valueType: ["shortAnswer"],
-      isMultipleChoice: [false],
+      attributeWeightage: [0],
     });
   }
 
   // attribute category form group definition
-  addCategoryGroup(): FormGroup {
+  addAttributeOptionGroup(): FormGroup {
     return this.fb.group({
-      categoryName: [""],
+      label: [""],
       values: new FormArray([this.addCategoryOptionGroup()]),
     });
   }
@@ -151,15 +173,38 @@ export class NewFormComponent implements OnInit, AfterViewInit {
     return form.controls["attributes"].controls;
   }
 
-  //to get categories list it accepts the parent form group as parameter
   getCategories(form) {
+    console.log('getCategories: ===> ', form);
     return form.controls["categories"].controls;
   }
 
+  //to get attributeOptions list it accepts the parent form group as parameter
+  getattributeOptions(form) {
+    console.log('getattributeOptions: ===> ', form);
+    return form.controls["attributeOptions"].controls;
+  }
+
   // category option form group definition
+  // addCategoryOptionGroup(): FormGroup {
+  //   return this.fb.group({
+  //     // options: ["", Validators.required],
+  //     label: ["", Validators.required],
+  //     value: ["", Validators.required],
+  //     color: [""],
+  //     emoji: [""],
+  //     emojiStyle: [""],
+  //     weightage: [0],
+  //   });
+  // }
+
   addCategoryOptionGroup(): FormGroup {
     return this.fb.group({
-      options: ["", Validators.required],
+      label: ["", Validators.required],
+      value: ["", Validators.required],
+      color: [""],
+      emoji: [""],
+      emojiStyle: [""],
+      weightage: [0],
     });
   }
 
@@ -178,20 +223,20 @@ export class NewFormComponent implements OnInit, AfterViewInit {
   get attributes(): FormGroup {
     return this.fb.group({
       attributeType: ["", [Validators.required]],
-      categories: new FormArray([]),
+      attributeOptions: new FormArray([]),
       helpText: [""],
       isRequired: [true],
       key: [""],
       label: ["", [Validators.required]],
       valueType: [""],
-      isMultipleChoice: [],
+      attributeWeightage: [0],
     });
   }
 
   // get category form group definition
-  get categories(): FormGroup {
+  get attributeOptions(): FormGroup {
     return this.fb.group({
-      categoryName: [""],
+      label: [""],
       values: new FormArray([]),
     });
   }
@@ -203,42 +248,95 @@ export class NewFormComponent implements OnInit, AfterViewInit {
     });
   }
 
-  addAttributeButton(sectionIndex: number) {
+  /**
+ * Adds a new attribute to the specified section.
+ * 
+ * @param sectionIndex The index of the section to which the attribute will be added.
+ * @returns void
+ */
+  // addAttributeButton(sectionIndex: number): void {
+  //   // Get the FormArray containing all sections in the form
+  //   const sections = this.newForm.get('sections') as FormArray;
+
+  //   // Get the attributes FormArray for the specified section
+  //   const attributes = sections.at(sectionIndex).get('attributes') as FormArray;
+
+  //   // Add a new attribute group to the attributes FormArray
+  //   attributes.push(this.addAttributeGroup());
+
+  //   // Determine the index of the newly added attribute
+  //   const index = attributes.length;
+  //   const control = attributes.at(index - 1); // Adjust the index to start from 0
+
+  //   // Patch default values for the attribute
+  //   const attributeIndex = index; // Start attribute index from 1
+  //   control.patchValue({
+  //     label: "New Question" + attributeIndex,
+  //     key: "new_question" + attributeIndex,
+  //     attributeType: "INPUT",
+  //   });
+
+  //   // Call the clearOutCategory function to perform additional actions
+  //   this.clearOutCategory(sectionIndex, index - 1);
+
+  //   // Detect changes in the component's view
+  //   this.cd.detectChanges();
+  // }
+
+  addAttributeButton(sectionIndex: number): void {
     const sections = this.newForm.get('sections') as FormArray;
     const attributes = sections.at(sectionIndex).get('attributes') as FormArray;
-
-    attributes.push(this.addAttributeGroup());  // Add a new attribute group to the attributes FormArray
-
+    attributes.push(this.addAttributeGroup());
     const index = attributes.length - 1;
     const control = attributes.at(index);
-
-    // Patch default values
     control.patchValue({
-      label: "New Attribute" + index,
-      key: "New_Attribute" + index,
+      label: "New Question" + (index + 1),
+      key: "new_question" + (index + 1),
       attributeType: "INPUT",
     });
-
     this.clearOutCategory(sectionIndex, index);
-    this.cd.detectChanges();
   }
 
-  addSectionButton() {
-    const sections = this.newForm.get('sections') as FormArray;
-    sections.push(this.addSectionGroup());  // Add a new section group to the sections FormArray
+  /**
+ * Adds a new section to the form.
+ * 
+ * @returns void
+ */
+  // addSectionButton(): void {
+  //   // Get the FormArray containing all sections in the form
+  //   const sections = this.newForm.get('sections') as FormArray;
 
+  //   // Determine the index of the newly added section
+  //   const index = sections.length;
+
+  //   // Add a new section group to the sections FormArray
+  //   sections.push(this.addSectionGroup());
+
+  //   // Get the newly added section control
+  //   const control = sections.at(index);
+
+  //   // Patch default values for the section
+  //   const sectionIndex = index + 1; // Increment index by 1 to start from 1
+  //   control.patchValue({
+  //     sectionName: "New Section" + sectionIndex,
+  //     sectionKey: "new_section" + sectionIndex,
+  //     sectionWeightage: 0,
+  //   });
+
+  //   // Detect changes in the component's view
+  //   this.cd.detectChanges();
+  // }
+
+  addSectionButton(): void {
+    const sections = this.newForm.get('sections') as FormArray;
+    sections.push(this.addSectionGroup());
     const index = sections.length - 1;
     const control = sections.at(index);
-
-    // Patch default values for the section
     control.patchValue({
-      sectionName: "New Section" + index,
-      sectionKey: "new_section" + index,
+      sectionName: "New Section" + (index + 1),
+      sectionKey: "new_section" + (index + 1),
       sectionWeightage: 0,
     });
-
-    // this.clearOutCategory(sectionIndex, index);
-    this.cd.detectChanges();
   }
 
   // to check DOM change manaually
@@ -249,105 +347,140 @@ export class NewFormComponent implements OnInit, AfterViewInit {
   ngOnChanges(changes: SimpleChanges) { }
 
   //to clear category form control list, it accepts attribute index as parameter
-  clearOutCategory(sectionIndex, attributeIndex) {
+  // clearOutCategory(sectionIndex, attributeIndex) {
+  //   const sectionsArray = this.newForm.get('sections') as FormArray;
+
+  //   if (!sectionsArray || sectionIndex >= sectionsArray.length) {
+  //     console.error('Sections array or section at index is undefined.');
+  //     return;
+  //   }
+
+  //   const section = sectionsArray.at(sectionIndex) as FormGroup;
+
+  //   if (!section) {
+  //     console.error(`Section control at index ${sectionIndex} is undefined.`);
+  //     return;
+  //   }
+
+  //   const attributesArray = section.get('attributes') as FormArray;
+
+  //   if (!attributesArray || attributeIndex >= attributesArray.length) {
+  //     console.error(`Attributes array or attribute at index ${attributeIndex} is undefined.`);
+  //     return;
+  //   }
+
+  //   const attribute = attributesArray.at(attributeIndex) as FormGroup;
+
+  //   if (!attribute) {
+  //     console.error(`Attribute control at index ${attributeIndex} is undefined.`);
+  //     return;
+  //   }
+
+  //   const category = attribute.get('attributeOptions') as FormArray;
+  //   category.reset();
+
+  //   for (let i = category.length - 1; i >= 0; i--) {
+  //     category.removeAt(i);
+  //   }
+  // }
+
+  clearOutCategory(sectionIndex: number, attributeIndex: number) {
     const sectionsArray = this.newForm.get('sections') as FormArray;
-
-    if (!sectionsArray || sectionIndex >= sectionsArray.length) {
-      console.error('Sections array or section at index is undefined.');
-      return;
-    }
-
     const section = sectionsArray.at(sectionIndex) as FormGroup;
-
-    if (!section) {
-      console.error(`Section control at index ${sectionIndex} is undefined.`);
-      return;
-    }
-
     const attributesArray = section.get('attributes') as FormArray;
-
-    if (!attributesArray || attributeIndex >= attributesArray.length) {
-      console.error(`Attributes array or attribute at index ${attributeIndex} is undefined.`);
-      return;
-    }
-
     const attribute = attributesArray.at(attributeIndex) as FormGroup;
-
-    if (!attribute) {
-      console.error(`Attribute control at index ${attributeIndex} is undefined.`);
-      return;
-    }
-
-    const category = attribute.get('categories') as FormArray;
-    category.reset();
-
-    for (let i = category.length - 1; i >= 0; i--) {
-      category.removeAt(i);
-    }
+    const category = attribute.get('attributeOptions') as FormArray;
+    category.clear();
   }
 
   // to remove attribute definition from existing attribute list it accepts section index and attribute index as parameters
-  removeAttribute(sectionIndex: number, attributeIndex: number) {
-    const sectionsArray = this.newForm.get('sections') as FormArray;
+  // removeAttribute(sectionIndex: number, attributeIndex: number) {
+  //   const sectionsArray = this.newForm.get('sections') as FormArray;
 
-    if (!sectionsArray || sectionIndex >= sectionsArray.length) {
-      console.error(`Sections array or section at index ${sectionIndex} is undefined.`);
-      return;
-    }
+  //   if (!sectionsArray || sectionIndex >= sectionsArray.length) {
+  //     console.error(`Sections array or section at index ${sectionIndex} is undefined.`);
+  //     return;
+  //   }
 
-    const section = sectionsArray.at(sectionIndex) as FormGroup;
-    const attributesArray = section.get('attributes') as FormArray;
+  //   const section = sectionsArray.at(sectionIndex) as FormGroup;
+  //   const attributesArray = section.get('attributes') as FormArray;
 
-    if (!attributesArray || attributeIndex >= attributesArray.length) {
-      console.error(`Attributes array or attribute at index ${attributeIndex} is undefined.`);
-      return;
-    }
+  //   if (!attributesArray || attributeIndex >= attributesArray.length) {
+  //     console.error(`Attributes array or attribute at index ${attributeIndex} is undefined.`);
+  //     return;
+  //   }
 
-    attributesArray.removeAt(attributeIndex);
+  //   attributesArray.removeAt(attributeIndex);
+  //   this.expanded = !this.expanded;
+  // }
+
+  removeAttribute(sectionIndex: number, attributeIndex: number): void {
+    const sections = this.newForm.get('sections') as FormArray;
+    const section = sections.at(sectionIndex) as FormGroup;
+    const attributes = section.get('attributes') as FormArray;
+    attributes.removeAt(attributeIndex);
     this.expanded = !this.expanded;
   }
 
   // to remove attribute definition from existing attribute list it accepts attribute index as parameter
-  removeSection(i) {
-    const section: any = this.newForm.get("sections");
-    section.removeAt(i);
+  // removeSection(i) {
+  //   const section: any = this.newForm.get("sections");
+  //   section.removeAt(i);
+  //   this.expanded = !this.expanded;
+  // }
+
+  removeSection(sectionIndex: number): void {
+    const sections = this.newForm.get('sections') as FormArray;
+    sections.removeAt(sectionIndex);
     this.expanded = !this.expanded;
   }
 
   // to add new category definition in existing attribute category list ,it accepts attribute index as parameter
-  addCategoryButton(sectionIndex: number, attributeIndex: number) {
-    const sectionsArray = this.newForm.get('sections') as FormArray;
+  // addCategoryButton(sectionIndex: number, attributeIndex: number) {
+  //   const sectionsArray = this.newForm.get('sections') as FormArray;
 
-    if (!sectionsArray || sectionIndex >= sectionsArray.length) {
-      console.error('Sections array or section at index is undefined.');
-      return;
-    }
+  //   if (!sectionsArray || sectionIndex >= sectionsArray.length) {
+  //     console.error('Sections array or section at index is undefined.');
+  //     return;
+  //   }
 
-    const section = sectionsArray.at(sectionIndex) as FormGroup;
+  //   const section = sectionsArray.at(sectionIndex) as FormGroup;
 
-    if (!section) {
-      console.error(`Section control at index ${sectionIndex} is undefined.`);
-      return;
-    }
+  //   if (!section) {
+  //     console.error(`Section control at index ${sectionIndex} is undefined.`);
+  //     return;
+  //   }
 
-    const attributesArray = section.get('attributes') as FormArray;
+  //   const attributesArray = section.get('attributes') as FormArray;
 
-    if (!attributesArray || attributeIndex >= attributesArray.length) {
-      console.error(`Attributes array or attribute at index ${attributeIndex} is undefined.`);
-      return;
-    }
+  //   if (!attributesArray || attributeIndex >= attributesArray.length) {
+  //     console.error(`Attributes array or attribute at index ${attributeIndex} is undefined.`);
+  //     return;
+  //   }
 
-    const attribute = attributesArray.at(attributeIndex) as FormGroup;
+  //   const attribute = attributesArray.at(attributeIndex) as FormGroup;
 
-    if (!attribute) {
-      console.error(`Attribute control at index ${attributeIndex} is undefined.`);
-      return;
-    }
+  //   if (!attribute) {
+  //     console.error(`Attribute control at index ${attributeIndex} is undefined.`);
+  //     return;
+  //   }
 
-    const control = attribute.get('categories') as FormArray;
-    control.push(this.addCategoryGroup());
+  //   const control = attribute.get('attributeOptions') as FormArray;
+  //   control.push(this.addAttributeOptionGroup());
+  //   const index = control.length - 1;
+  //   control.controls[index].get('label').setValidators([Validators.required, RxwebValidators.unique()]);
+  //   this.cd.detectChanges();
+  // }
+
+  addCategoryButton(sectionIndex: number, attributeIndex: number): void {
+    const sections = this.newForm.get('sections') as FormArray;
+    const section = sections.at(sectionIndex) as FormGroup;
+    const attributes = section.get('attributes') as FormArray;
+    const attribute = attributes.at(attributeIndex) as FormGroup;
+    const control = attribute.get('attributeOptions') as FormArray;
+    control.push(this.addCategoryOptionGroup());
     const index = control.length - 1;
-    control.controls[index].get('categoryName').setValidators([Validators.required, RxwebValidators.unique()]);
+    control.controls[index].get('label').setValidators([Validators.required, RxwebValidators.unique()]);
     this.cd.detectChanges();
   }
 
@@ -355,42 +488,134 @@ export class NewFormComponent implements OnInit, AfterViewInit {
   removeCategory(i, j) {
     const control = (<FormArray>this.newForm.controls["attributes"])
       .at(i)
-      .get("categories") as FormArray;
+      .get("attributeOptions") as FormArray;
     control.removeAt(j);
   }
 
   //to get category options list, it accepts the parent form group and category index as parameter
-  getCategoryOptions(form, j) {
-    return form.controls["categories"].controls[j].controls["values"].controls;
+
+  getCategoryOptions(form: FormGroup, j: number) {
+    // Check if the form and its controls are defined
+    if (!form || !form.controls) {
+      console.error('Form or form controls are not defined.');
+      return [];
+    }
+  
+    // Check if the control at index j is a FormArray
+    const controlAtIndex = form.controls['controls'] as FormArray;
+    if (!(controlAtIndex instanceof FormArray)) {
+      console.error('Form control at index j is not a FormArray.');
+      return [];
+    }
+  
+    // Check if the index j is within range
+    if (j < 0 || j >= controlAtIndex.length) {
+      console.error('Index j is out of range.');
+      return [];
+    }
+  
+    // Get the FormArray control at index j
+    const formArrayAtIndex = controlAtIndex.at(j) as FormGroup;
+  
+    // Check if the FormGroup contains attributeOptions control
+    if (!formArrayAtIndex.get('attributeOptions')) {
+      console.error('FormGroup at index j does not contain attributeOptions control.');
+      return [];
+    }
+  
+    // Get the attributeOptions control
+    const attributeOptionsControl = formArrayAtIndex.get('attributeOptions') as FormGroup;
+  
+    // Check if attributeOptions control contains values control
+    if (!attributeOptionsControl.get('values')) {
+      console.error('attributeOptions control does not contain values control.');
+      return [];
+    }
+  
+    // Get the values control
+    const valuesControl = attributeOptionsControl.get('values') as FormArray;
+  
+    // Return the controls of the values control
+    return valuesControl.controls;
   }
+  
 
   // to add new category option definition in existing category option list,it accepts attribute and category index as parameter
-  addCategoryOptionButton(i, j) {
-    const control = (
-      (<FormArray>this.newForm.controls["attributes"])
-        .at(i)
-        .get("categories") as FormArray
-    )
-      .at(j)
-      .get("values") as FormArray;
 
-    control.push(this.addCategoryOptionGroup());
-    let index = control.length - 1;
-    control.controls[index]
-      .get("options")
-      .setValidators([Validators.required, RxwebValidators.unique()]);
+  addCategoryOptionButton(i, j) {
+    const attributesArray = this.newForm.get('attributes') as FormArray;
+    if (!attributesArray) {
+      console.error('Attributes array is not defined.');
+      return;
+    }
+
+    const attribute = attributesArray.at(i) as FormGroup;
+    if (!attribute) {
+      console.error(`Attribute at index ${i} is not defined.`);
+      return;
+    }
+
+    const attributeOptions = attribute.get('attributeOptions') as FormArray;
+    if (!attributeOptions) {
+      console.error('Attribute options are not defined.');
+      return;
+    }
+
+    const valuesArray = attributeOptions.at(j).get('values') as FormArray;
+    if (!valuesArray) {
+      console.error('Values array is not defined.');
+      return;
+    }
+
+    const control = this.addCategoryOptionGroup();
+    valuesArray.push(control);
+
+    const index = valuesArray.length - 1;
+
+    const optionsControl = valuesArray.at(index).get('options');
+    if (!optionsControl) {
+      console.error('Options control is not defined.');
+      return;
+    }
+
+    optionsControl.setValidators([Validators.required, RxwebValidators.unique()]);
   }
 
+  // addCategoryOptionButton(i, j) {
+  //   const control = (
+  //     (<FormArray>this.newForm.controls["attributes"])
+  //       .at(i)
+  //       .get("attributeOptions") as FormArray
+  //   )
+  //     .at(j)
+  //     .get("values") as FormArray;
+
+  //   control.push(this.addCategoryOptionGroup());
+  //   let index = control.length - 1;
+  //   control.controls[index]
+  //     .get("options")
+  //     .setValidators([Validators.required, RxwebValidators.unique()]);
+  // }
+
   // to remove category option definition from existing category option list, it accepts attribute,category and option index (i,j,k) respectively as parameter
-  removeCategoryOption(i, j, k) {
-    const control = (
-      (<FormArray>this.newForm.controls["attributes"])
-        .at(i)
-        .get("categories") as FormArray
-    )
-      .at(j)
-      .get("values") as FormArray;
-    control.removeAt(k);
+  // removeCategoryOption(i, j, k) {
+  //   const control = (
+  //     (<FormArray>this.newForm.controls["attributes"])
+  //       .at(i)
+  //       .get("attributeOptions") as FormArray
+  //   )
+  //     .at(j)
+  //     .get("values") as FormArray;
+  //   control.removeAt(k);
+  // }
+
+  removeCategoryOption(sectionIndex: number, attributeIndex: number, categoryIndex: number): void {
+    const sections = this.newForm.get('sections') as FormArray;
+    const section = sections.at(sectionIndex) as FormGroup;
+    const attributes = section.get('attributes') as FormArray;
+    const attribute = attributes.at(attributeIndex) as FormGroup;
+    const category = attribute.get('attributeOptions') as FormArray;
+    category.removeAt(categoryIndex);
   }
 
   // generate key using user typed section Name
@@ -446,7 +671,7 @@ export class NewFormComponent implements OnInit, AfterViewInit {
   }
 
   // to copy an existing attribute in a form, it accepts attribute definition to be copied as parameter
-  copyAttribute(sectionIndex: number, originalAttributeIndex: number) {
+  copyAttribute(sectionIndex: number, attributeIndex: number) {
     const sectionsArray = this.newForm.get('sections') as FormArray;
 
     if (!sectionsArray || sectionIndex >= sectionsArray.length) {
@@ -463,8 +688,8 @@ export class NewFormComponent implements OnInit, AfterViewInit {
 
     const attributesArray = section.get('attributes') as FormArray;
 
-    if (!attributesArray || originalAttributeIndex >= attributesArray.length) {
-      console.error(`Attributes array in section at index ${sectionIndex} or original attribute at index ${originalAttributeIndex} is undefined.`);
+    if (!attributesArray || attributeIndex >= attributesArray.length) {
+      console.error(`Attributes array in section at index ${sectionIndex} or original attribute at index ${attributeIndex} is undefined.`);
       return;
     }
 
@@ -479,59 +704,112 @@ export class NewFormComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    const originalAttribute = attributesArray.at(originalAttributeIndex) as FormGroup;
+    const originalAttribute = attributesArray.at(attributeIndex) as FormGroup;
 
     if (!originalAttribute) {
-      console.error(`Original Attribute control at index ${originalAttributeIndex} is undefined.`);
+      console.error(`Original Attribute control at index ${attributeIndex} is undefined.`);
       return;
     }
 
     attr.patchValue({
       attributeType: originalAttribute.get('attributeType').value,
-      categories: originalAttribute.get('categories').value,
+      attributeOptions: originalAttribute.get('attributeOptions').value,
       helpText: originalAttribute.get('helpText').value,
       isRequired: originalAttribute.get('isRequired').value,
       key: 'copy_of' + originalAttribute.get('key').value,
       label: 'Copy of ' + originalAttribute.get('label').value,
       valueType: originalAttribute.get('valueType').value,
-      isMultipleChoice: originalAttribute.get('isMultipleChoice').value,
+      attributeWeightage: originalAttribute.get('attributeWeightage').value,
     });
 
-    this.typeSelectChange(attr.get('attributeType').value, sectionIndex, length - 1);
+    this.typeSelectChange(attr.get('valueType').value, sectionIndex, length - 1);
   }
 
-  copySection(section) {
-    console.log('copySection :', section);
-    (<FormArray>this.newForm.controls["sections"]).push(
-      this.addSectionGroup()
-    );
-    this.cd.detectChanges();
-    let length = this.newForm.value.attributes.length; // form attribute list length
-    let sect = (<FormArray>this.newForm.controls["sections"]).at(length - 1);
-    sect.patchValue({
-      sectionKey: "copy_of" + section.value.key,
-      sectionName: "Copy of" + " " + section.value.label,
-      attributes: section.value.attributes,
+  /**
+   * Copies a section within a form, including its attributes, and adds the copied section to the form.
+   * 
+   * @param sectionIndex The index of the section to be copied within the form's sections array.
+   * @returns void
+   */
+  copySection(sectionIndex: number): void {
+    // Log the section index for debugging purposes
+    console.log('copySection :', sectionIndex);
+
+    // Get the FormArray containing all sections in the form
+    const sectionsArray = this.newForm.get('sections') as FormArray;
+
+    // Check if sectionsArray or section at index is undefined
+    if (!sectionsArray || sectionIndex >= sectionsArray.length) {
+      console.error('Sections array or section at index is undefined.');
+      return;
+    }
+
+    // Get the FormGroup representing the section to be copied
+    const section = sectionsArray.at(sectionIndex) as FormGroup;
+
+    // Check if the section to be copied is undefined
+    if (!section) {
+      console.error(`Section control at index ${sectionIndex} is undefined.`);
+      return;
+    }
+
+    // Add a new section to the form
+    sectionsArray.push(this.addSectionGroup());
+
+    // Get the newly added section
+    const newSection = sectionsArray.at(sectionsArray.length - 1) as FormGroup;
+
+    // Check if the newly added section is undefined
+    if (!newSection) {
+      console.error(`New section control is undefined.`);
+      return;
+    }
+
+    // Patch the value of the new section with values from the original section
+    newSection.patchValue({
+      sectionKey: "copy_of_" + section.value.sectionKey,
+      sectionName: "Copy of " + section.value.sectionName,
+      sectionWeightage: section.value.sectionWeightage,
     });
 
-    // this.typeSelectChange(sect.get('attributeType').value, sectionIndex, length - 1);
+    // Get the FormArray representing attributes of the original section
+    const attributesArray = section.get('attributes') as FormArray;
+
+    // Get the FormArray representing attributes of the new section
+    const newAttributesArray = newSection.get('attributes') as FormArray;
+
+    // Iterate over each attribute in the original attributes array
+    attributesArray.controls.forEach(control => {
+      // Push a copy of each attribute to the new attributes array
+      newAttributesArray.push(this.fb.group(control.value));
+    });
   }
 
   // to drag & drop the attribute lsit item and update the local list variable
-  drop(event: CdkDragDrop<string[]>) {
-    let d = this.getAttribute(this.newForm);
+  // drop(event: CdkDragDrop<string[]>) {
+  //   let d = this.getAttribute(this.newForm);
+  //   let value = [];
+  //   moveItemInArray(d, event.previousIndex, event.currentIndex);
+  //   d.forEach((item, i) => {
+  //     value.push(item.value);
+  //   });
+  //   this.newForm.value.attributes = value;
+  // }
+
+  drop(event: CdkDragDrop<string[]>): void {
+    let sections = this.newForm.get('sections') as FormArray;
     let value = [];
-    moveItemInArray(d, event.previousIndex, event.currentIndex);
-    d.forEach((item, i) => {
+    moveItemInArray(sections.controls, event.previousIndex, event.currentIndex);
+    sections.controls.forEach((item, i) => {
       value.push(item.value);
     });
-    this.newForm.value.attributes = value;
+    this.newForm.value.sections = value;
   }
 
   // Modify typeSelectChange
-  typeSelectChange(e, sectionIndex, attributeIndex) {
+  typeSelectChange(e: any, sectionIndex: number, attributeIndex: number) {
     console.log('Form Value:', this.newForm.value);
-
+    console.log('TypeSelectionChange parameters: ===>', e, sectionIndex, attributeIndex);
     const sectionsArray = this.newForm.get('sections') as FormArray;
 
     if (!sectionsArray || sectionIndex >= sectionsArray.length) {
@@ -564,15 +842,21 @@ export class NewFormComponent implements OnInit, AfterViewInit {
 
     let type = e;
 
-    if (type == 'OPTIONS') {
-      attribute.get('valueType').setValue('StringList');
-      const categoriesControl = attribute.get('categories') as FormArray;
+    // shortAnswer, alphaNumeric, alphaNumericSpecial, email, ip, number, password, url, dateTime, phoneNumber, date, time, positiveNumber,
+    //  boolean, mcq, dropdown, rating, nps
+
+    if (type == 'boolean' || type == 'mcq' || type == 'dropdown' || type == 'rating' || type == 'nps') {
+      attribute.get('attributeType').setValue('OPTIONS');
+      const categoriesControl = attribute.get('attributeOptions') as FormArray;
 
       if (categoriesControl && categoriesControl.controls.length === 0) {
         this.addCategoryButton(sectionIndex, attributeIndex);
       }
+    } else if (type == 'paragraph') {
+      attribute.get('attributeType').setValue('TEXTAREA');
+      this.clearOutCategory(sectionIndex, attributeIndex);
     } else {
-      attribute.get('valueType').setValue('shortAnswer');
+      attribute.get('attributeType').setValue('INPUT');
       this.clearOutCategory(sectionIndex, attributeIndex);
     }
 
@@ -580,7 +864,88 @@ export class NewFormComponent implements OnInit, AfterViewInit {
   }
 
   //to set validation dynamically on the basis of selected attribute type, it accepts selected value and attribute index as parameter
-  setValidation(val, sectionIndex, attributeIndex) {
+  // setValidation(val: string, sectionIndex: number, attributeIndex: number) {
+  //   const sectionsArray = this.newForm.get('sections') as FormArray;
+
+  //   if (!sectionsArray || sectionIndex >= sectionsArray.length) {
+  //     console.error('Sections array or section at index is undefined.');
+  //     return;
+  //   }
+
+  //   const section = sectionsArray.at(sectionIndex) as FormGroup;
+
+  //   if (!section) {
+  //     console.error(`Section control at index ${sectionIndex} is undefined.`);
+  //     return;
+  //   }
+
+  //   const attributesArray = section.get('attributes') as FormArray;
+
+  //   if (!attributesArray || attributeIndex >= attributesArray.length) {
+  //     console.error(`Attributes array or attribute at index ${attributeIndex} is undefined.`);
+  //     return;
+  //   }
+
+  //   const attribute = attributesArray.at(attributeIndex) as FormGroup;
+
+  //   if (!attribute) {
+  //     console.error(`Attribute control at index ${attributeIndex} is undefined.`);
+  //     return;
+  //   }
+
+  //   const attributeOptions = attribute.get('attributeOptions') as FormArray;
+
+  //   if (!attributeOptions) {
+  //     console.error('Attribute options are not defined.');
+  //     return;
+  //   }
+
+  //   attributeOptions.controls.forEach((item: FormGroup) => {
+  //     const categoryValues = item.get('values') as FormArray;
+
+  //     if (!categoryValues) {
+  //       console.error('Category values are not defined.');
+  //       return;
+  //     }
+
+  //     categoryValues.controls.forEach((option: FormGroup) => {
+  //       if (!option) {
+  //         console.error('Option control is not defined.');
+  //         return;
+  //       }
+
+  //       const optionsControl = option.get('options');
+
+  //       if (!optionsControl) {
+  //         console.error('Options control is not defined.');
+  //         return;
+  //       }
+
+  //       if (val == 'boolean') {
+  //         optionsControl.setValidators([Validators.required]);
+  //       } else {
+  //         optionsControl.setValidators(null);
+  //       }
+  //     });
+
+  //     const labelControl = item.get('label');
+
+  //     if (!labelControl) {
+  //       console.error('Label control is not defined.');
+  //       return;
+  //     }
+
+  //     if (val == 'boolean') {
+  //       labelControl.setValidators([Validators.required]);
+  //     } else {
+  //       labelControl.setValidators(null);
+  //     }
+  //   });
+
+  //   this.cd.detectChanges();
+  // }
+
+  setValidation(val: string, sectionIndex: number, attributeIndex: number) {
     const sectionsArray = this.newForm.get('sections') as FormArray;
 
     if (!sectionsArray || sectionIndex >= sectionsArray.length) {
@@ -609,28 +974,49 @@ export class NewFormComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    const categories = attribute.get('categories') as FormArray;
+    const attributeOptions = attribute.get('attributeOptions') as FormGroup;
 
-    categories.controls.forEach((item: FormGroup) => {
-      const categoryValues = item.get('values') as FormArray;
+    if (!attributeOptions) {
+      console.error('Attribute options are not defined.');
+      return;
+    }
 
-      categoryValues.controls.forEach((option: FormGroup) => {
-        if (val == 'OPTIONS') {
-          option.get('options').setValidators([Validators.required]);
-        } else {
-          option.get('options').setValidators(null);
-        }
-      });
+    const categories = attributeOptions.get('categories') as FormArray;
 
-      if (val == 'OPTIONS') {
-        item.get('categoryName').setValidators([Validators.required]);
-      } else {
-        item.get('categoryName').setValidators(null);
+    if (!categories) {
+      console.error('Categories are not defined.');
+      return;
+    }
+
+    categories.controls.forEach((category: FormGroup) => {
+      const values = category.get('values') as FormArray;
+
+      if (!values) {
+        console.error('Category values are not defined.');
+        return;
       }
+
+      values.controls.forEach((option: FormGroup) => {
+        const weightageControl = option.get('weightage');
+
+        if (!weightageControl) {
+          console.error('Weightage control is not defined.');
+          return;
+        }
+
+        if (val === 'boolean') {
+          weightageControl.setValidators([Validators.required]);
+        } else {
+          weightageControl.setValidators(null);
+        }
+
+        weightageControl.updateValueAndValidity();
+      });
     });
 
     this.cd.detectChanges();
   }
+
 
   // expansion panel state updation in local variable
   panelExpanded() {
@@ -656,12 +1042,12 @@ export class NewFormComponent implements OnInit, AfterViewInit {
   editObjectFormation(data) {
     let attr: Array<any> = data.attributes;
     attr.forEach((item) => {
-      item.categories = [];
+      item.attributeOptions = [];
       if (item.attributeType == "OPTIONS") {
         item.isMultipleChoice = item.categoryOptions.isMultipleChoice;
-        item.categories = item.categoryOptions.categories;
-        let categories: Array<any> = item.categories;
-        categories.forEach((cat) => {
+        item.attributeOptions = item.categoryOptions.attributeOptions;
+        let attributeOptions: Array<any> = item.attributeOptions;
+        attributeOptions.forEach((cat) => {
           let mutatedValues = [];
           cat.values.forEach((item) => {
             let obj = {
@@ -678,7 +1064,7 @@ export class NewFormComponent implements OnInit, AfterViewInit {
           values: [{ options: null }],
         };
         item.isMultipleChoice = false;
-        item.categories.push(defCategoryObj);
+        item.attributeOptions.push(defCategoryObj);
       }
       delete item.categoryOptions;
       if (item._id) delete item._id;
@@ -693,14 +1079,14 @@ export class NewFormComponent implements OnInit, AfterViewInit {
     for (let i = 0; i < attribute.length; i++) {
       const attributeArray = this.newForm.get("attributes") as FormArray;
       attributeArray.push(this.attributes);
-      for (let j = 0; j < attribute[i].categories.length; j++) {
+      for (let j = 0; j < attribute[i].attributeOptions.length; j++) {
         const categoryArray = attributeArray
           .at(i)
-          .get("categories") as FormArray;
-        categoryArray.push(this.categories);
+          .get("attributeOptions") as FormArray;
+        categoryArray.push(this.attributeOptions);
         for (
           let k = 0;
-          k < data.attributes[i].categories[j].values.length;
+          k < data.attributes[i].attributeOptions[j].values.length;
           k++
         ) {
           const categoryValuesArray = categoryArray
@@ -754,8 +1140,8 @@ export class NewFormComponent implements OnInit, AfterViewInit {
 
   // convert category option list according to object model
   formatOptionList(item) {
-    let categories = item.categories;
-    categories.forEach((category) => {
+    let attributeOptions = item.attributeOptions;
+    attributeOptions.forEach((category) => {
       let newVal = [];
       let values = category.values;
       values.forEach((val) => {
@@ -774,10 +1160,10 @@ export class NewFormComponent implements OnInit, AfterViewInit {
       if (item.attributeType == "OPTIONS") {
         item = this.formatOptionList(item);
         item.categoryOptions.isMultipleChoice = item.isMultipleChoice;
-        item.categoryOptions.categories = item.categories;
+        item.categoryOptions.attributeOptions = item.attributeOptions;
       }
       delete item.isMultipleChoice;
-      delete item.categories;
+      delete item.attributeOptions;
     });
     return list;
   }
@@ -787,6 +1173,7 @@ export class NewFormComponent implements OnInit, AfterViewInit {
     let data = JSON.parse(JSON.stringify(this.newForm.value));
     let attributeList = this.attrListFormation(data.attributes);
     data.attributes = attributeList;
+    console.log('save predecessor function ==> :', data)
     return data;
   }
 
@@ -797,14 +1184,15 @@ export class NewFormComponent implements OnInit, AfterViewInit {
 
   // to save form object, it accepts save type(Attribute,Form) as parameter
   onSave(saveType) {
+    console.log('on save form: ==> ', this.newForm.value);
     this.spinner = true;
-    let saveObj = this.savePredecessor();
-    if (this.formData) {
-      saveObj.id = this.formData.id;
-      this.updateForm(saveObj, saveType);
-    } else {
-      this.createForm(saveObj, saveType);
-    }
+    // let saveObj = this.savePredecessor();
+    // if (this.formData) {
+    //   this.newForm.value.id = this.formData.id;
+    //   this.updateForm(this.newForm.value, saveType);
+    // } else {
+    //   this.createForm(this.newForm.value, saveType);
+    // }
   }
 
   //to reset view and form in case of form cancelellation
