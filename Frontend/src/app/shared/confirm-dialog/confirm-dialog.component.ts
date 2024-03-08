@@ -17,6 +17,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 export class ConfirmDialogComponent implements OnInit {
   public confirmMessage: string;
   delete = "delete";
+  assign ="assign"
 
   constructor(
     public dialogRef: MatDialogRef<ConfirmDialogComponent>,

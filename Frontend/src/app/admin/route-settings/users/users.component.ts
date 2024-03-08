@@ -12,6 +12,7 @@ import {
   transition,
   trigger,
 } from "@angular/animations";
+import { ConfirmDialogComponent } from "src/app/shared/confirm-dialog/confirm-dialog.component";
 
 @Component({
   selector: "app-users",
@@ -806,6 +807,31 @@ export class UsersComponent implements OnInit {
       this.snackbar.snackbarMessage("error-snackbar", "No attributes in list available", 1);
       //console.log("Attributes is empty.");
     }
+  }
+
+  confirmation() {
+    let msg = "Are you sure to assign Attribute to these agents ?";
+    return this.dialog
+      .open(ConfirmDialogComponent, {
+        width:"490px",
+        panelClass: ['confirm-dialog-container'],
+        disableClose: true,
+        data: {
+          heading: "Assign Bulk Attribte",
+          message: msg,
+          text: "assign",
+        },
+      })
+      .afterClosed()
+      .subscribe((res: any) => {
+        this.spinner = true;
+        if (res === "assign") {
+          this.assignAttributes();
+          this.spinner = false;
+        } else {
+          this.spinner = false;
+        }
+      });
   }
 
   getAgentOfAttributeSelected(attributeObj: any | any[]) {
