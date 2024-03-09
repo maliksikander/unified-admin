@@ -161,38 +161,31 @@
                                                                             formControlName="helpText">
                                                                     </mat-form-field>
                                                                 </div>
-
-                                                                <!-- <div
-                                                                    class="form-group col-md-3 toggle-section multi-toggle">
-                                                                    <mat-slide-toggle
-                                                                        (change)="changeAttrValueType($event,attribute?.value)"
-                                                                        formControlName="isMultipleChoice">Multiple
-                                                                        Choice
-                                                                    </mat-slide-toggle>
-                                                                </div> -->
                                                             </div>
 
                                                             <ng-container formArrayName="attributeOptions">
                                                                 <div class="attribute-col">
                                                                     <ng-container
-                                                                        *ngFor="let category of getattributeOptions(attribute); let categoryIndex = index">
+                                                                        *ngFor="let attrOption of getattributeOptions(attribute); let attributeOptionIndex = index">
                                                                         <div class="form-group col-md-7 p-0"
-                                                                            [formGroupName]="categoryIndex">
+                                                                            [formGroupName]="attributeOptionIndex">
                                                                             <mat-form-field class="category-name-field"
                                                                                 appearance="outline">
-                                                                                <input matInput placeholder="Category"
+                                                                                <input matInput
+                                                                                    placeholder="Attribute Option"
                                                                                     formControlName="label">
 
                                                                                 <mat-error
-                                                                                    *ngIf="category?.get('label').errors?.unique"
+                                                                                    *ngIf="attrOption?.get('label').errors?.unique"
                                                                                     class="category-error">
 
-                                                                                    *Category name should be unique
+                                                                                    *Attribute Option name should be
+                                                                                    unique
                                                                                 </mat-error>
 
                                                                                 <button
                                                                                     *ngIf="getattributeOptions(attribute)?.length > 1"
-                                                                                    (click)="removeCategory(questionIndex,categoryIndex)"
+                                                                                    (click)="removeAttributeOption(questionIndex,attributeOptionIndex)"
                                                                                     mat-mini-fab
                                                                                     class="remove-category-btn">
                                                                                     <mat-icon>close</mat-icon>
@@ -202,14 +195,14 @@
 
                                                                             <ng-container formArrayName="values">
                                                                                 <ng-container
-                                                                                    *ngFor="let option of getCategoryOptions(attribute,categoryIndex); let k = index">
-                                                                                    <div [formGroupName]="k"
+                                                                                    *ngFor="let option of getCategoryOptions(attrOption,attributeOptionIndex); let valueIndex = index">
+                                                                                    <div [formGroupName]="valueIndex"
                                                                                         class="form-group col-md-9 category-option-container">
                                                                                         <mat-form-field
                                                                                             appearance="outline">
                                                                                             <input matInput
                                                                                                 placeholder="Option"
-                                                                                                formControlName="options">
+                                                                                                formControlName="label">
 
                                                                                             <mat-error
                                                                                                 *ngIf="option?.get('options').errors?.unique"
@@ -222,16 +215,16 @@
                                                                                         <div
                                                                                             class="add-category-option form-group">
                                                                                             <button
-                                                                                                *ngIf="getCategoryOptions(attribute,categoryIndex)?.length > 1"
+                                                                                                *ngIf="getCategoryOptions(attrOption,attributeOptionIndex)?.length > 1"
                                                                                                 mat-mini-fab
                                                                                                 class="remove-btn"
-                                                                                                (click)="removeCategoryOption(questionIndex,categoryIndex,k)">
+                                                                                                (click)="removeCategoryOption(questionIndex,attributeOptionIndex,valueIndex)">
                                                                                                 <mat-icon>close</mat-icon>
                                                                                             </button>
                                                                                         </div>
                                                                                         <button
-                                                                                            *ngIf="k == getCategoryOptions(attribute,categoryIndex)?.length - 1"
-                                                                                            (click)="addCategoryOptionButton(questionIndex,categoryIndex)"
+                                                                                            *ngIf="valueIndex == getCategoryOptions(attrOption,attributeOptionIndex)?.length - 1"
+                                                                                            (click)="addCategoryOptionButton(questionIndex,attributeOptionIndex)"
                                                                                             class="add-option-btn"
                                                                                             mat-button>
                                                                                             <mat-icon>add</mat-icon>
@@ -243,7 +236,7 @@
 
                                                                         </div>
 
-                                                                        <div *ngIf="categoryIndex == getattributeOptions(attribute)?.length - 1"
+                                                                        <div *ngIf="attributeOptionIndex == getattributeOptions(attribute)?.length - 1"
                                                                             class="add-category-btn form-group col-md-3">
                                                                             <button mat-button
                                                                                 (click)="addCategoryButton(questionIndex)">
