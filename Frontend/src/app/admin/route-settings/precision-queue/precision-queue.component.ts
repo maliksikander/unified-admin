@@ -40,6 +40,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     mrd: "",
     serviceLevelType: "",
     serviceLevelThreshold: "",
+    queuePriority: ""
   };
   validations;
   conditionList = ["AND", "OR"];
@@ -111,6 +112,10 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
         [Validators.required, Validators.min(1), Validators.max(3)],
       ],
       serviceLevelThreshold: [1, [Validators.required, Validators.min(0)]],
+      queuePriority: [
+        1,
+        [Validators.required, Validators.min(1), Validators.max(10)],
+      ]
     });
 
     this.stepForm = this.fb.group({
@@ -254,7 +259,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     );
   }
 
-  //to create PQ and it accepts `data` object as parameter with following properties (name:string, mrd:object, agentSelectcriteria:string, serviceLevelType:string ,serviceLevelThreshold:number)
+  //to create PQ and it accepts `data` object as parameter with following properties (name:string, mrd:object, agentSelectcriteria:string, serviceLevelType:string ,serviceLevelThreshold:number, queuePriority:number)
   //and update the local list
   createQueue(data) {
     this.endPointService.createQueue(data).subscribe(
@@ -295,7 +300,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     );
   }
 
-  //to update PQ and it accepts `data` object & `id` as parameter,`data` object (name:string, mrd:object, agentSelectcriteria:string, serviceLevelType:string ,serviceLevelThreshold:number)
+  //to update PQ and it accepts `data` object & `id` as parameter,`data` object (name:string, mrd:object, agentSelectcriteria:string, serviceLevelType:string ,serviceLevelThreshold:number, queuePriority:number)
   //and updating the local list with the success response object
   updateQueue(data, id) {
     this.endPointService.updateQueue(data, id).subscribe(
@@ -323,7 +328,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     );
   }
 
-  //to edit PQ,it accepts `templateRef' & `data` object as parameter,`data` object (name:string, mrd:object, agentSelectcriteria:string, serviceLevelType:string ,serviceLevelThreshold:number)
+  //to edit PQ,it accepts `templateRef' & `data` object as parameter,`data` object (name:string, mrd:object, agentSelectcriteria:string, serviceLevelType:string ,serviceLevelThreshold:number, queuePriority:number)
   //and patches the existing values with form controls and opens the form dialog
   editQueue(templateRef, data) {
     const mrdIndex = this.mrdData.findIndex((item) => item.id == data.mrd.id);
@@ -334,6 +339,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
       mrd: this.mrdData[mrdIndex],
       serviceLevelThreshold: data.serviceLevelThreshold,
       serviceLevelType: data.serviceLevelType,
+      queuePriority: data.queuePriority,
     });
     this.formHeading = "Edit Queue";
     this.saveBtnText = "Update";
@@ -379,7 +385,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     );
   }
 
-  //to delete PQ and it accepts `data` object & `id` as parameter,`data` object (name:string, mrd:object, agentSelectcriteria:string, serviceLevelType:string ,serviceLevelThreshold:number)
+  //to delete PQ and it accepts `data` object & `id` as parameter,`data` object (name:string, mrd:object, agentSelectcriteria:string, serviceLevelType:string ,serviceLevelThreshold:number, queuePriority:number)
   //and to update the local list when the operation is successful
   deleteQueue(data, id) {
     this.endPointService.deleteQueue(id).subscribe(
@@ -445,6 +451,7 @@ export class PrecisionQueueComponent implements OnInit, AfterViewInit {
     data.agentSlaDuration = temp.agentSlaDuration;
     data.serviceLevelThreshold = temp.serviceLevelThreshold;
     data.serviceLevelType = temp.serviceLevelType;
+    data.queuePriority = temp.queuePriority;
     return data;
   }
 

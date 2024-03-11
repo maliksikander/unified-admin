@@ -332,6 +332,11 @@ export class CommonService {
       min: "Min allowed value is 0",
       max: "Max 10 seconds allowed",
     },
+    queuePriority: {
+      required: "This field is required",
+      min: "Min 1 required",
+      max: "Max allowed value is 10",
+    },
   };
 
   userFormErrorMessages = {
